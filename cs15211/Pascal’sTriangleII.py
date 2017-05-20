@@ -1,0 +1,58 @@
+__author__ = 'July'
+# https://github.com/kamyu104/LeetCode/blob/master/Python/pascals-triangle-ii.py
+# Time:  O(n^2)
+# Space: O(n)
+# Array
+#
+# Given an index k, return the kth row of the Pascal's triangle.
+#
+# For example, given k = 3,
+# Return [1,3,3,1].
+#
+# Note:
+# Could you optimize your algorithm to use only O(k) extra space?
+#
+
+class Solution:
+    # @return a list of integers
+    def getRow(self, rowIndex):
+        result = [1]
+        for i in xrange(rowIndex):
+        #for i in xrange(1, rowIndex + 1):
+            #print [result[j-1] + result[j] for j in xrange(1,i + 1)]
+            result = [1] + [result[j-1] + result[j] for j in xrange(1,i + 1)] + [1]
+            #result = [1] + [result[j-1] + result[j] for j in xrange(1, i)] + [1]
+        return result
+
+class Solution2:
+    # @return a list of integers
+    def getRow(self, rowIndex):
+        result = [0] * (rowIndex + 1)
+        print result
+        for i in xrange(rowIndex + 1):
+            old = result[0] = 1
+            for j in xrange(1, i + 1) :
+                #print old, result[j], j, old + result[j]
+                old, result[j] = result[j], old + result[j]
+        return result
+
+
+if __name__ == "__main__":
+    print Solution().getRow(3)
+    #print Solution2().getRow(3)
+
+class SolutionOther:
+    # @return a list of integers
+    def getRow(self, rowIndex):
+        ans = [ 0 for n in range(rowIndex+1)]
+        ans[0] = 1
+
+        for i in range(1, rowIndex+1):
+            ans[i]= ans[i-1]*(rowIndex - i + 1) / i
+            #print i, ans
+        return ans
+
+
+#test
+test = SolutionOther()
+#print test.getRow(5)
