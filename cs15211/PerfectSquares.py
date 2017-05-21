@@ -1,4 +1,4 @@
-__author__ = 'July'
+__source__ = ''
 # https://github.com/kamyu104/LeetCode/blob/master/Python/perfect-squares.py
 
 # Time:  O(n * sqrt(n))
@@ -10,7 +10,10 @@ __author__ = 'July'
 # For example, given n = 12, return 3 because 12 = 4 + 4 + 4;
 # given n = 13, return 2 because 13 = 4 + 9.
 #
-# Google
+#  Google
+# Hide Tags Dynamic Programming Breadth-first Search Math
+# Hide Similar Problems (E) Count Primes (M) Ugly Number II
+#
 
 #dp
 # http://bookshadow.com/weblog/2015/09/09/leetcode-perfect-squares/
@@ -127,8 +130,10 @@ if __name__ == "__main__":
     #print Solution2().numSquares(12)
     print Solution3().numSquares(12)
     print SolutionDFS().numSquares(10)
+
 #java
-js = '''
+java = '''
+thought: https://leetcode.com/problems/perfect-squares/#/solutions
 public class Solution {
     public int numSquares(int n) {
         int[] dp = new int[n + 1];

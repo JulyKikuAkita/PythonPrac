@@ -1,4 +1,4 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/symmetric-tree/#/description'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/symmetric-tree.py
 # Time:  O(n)
 # Space: O(h), h is height of binary tree
@@ -20,6 +20,9 @@ __author__ = 'July'
 #    3    3
 # Note:
 # Bonus points if you could solve it both recursively and iteratively.
+#
+# LinkedIn Bloomberg Microsoft
+# Hide Tags Tree Depth-first Search Breadth-first Search
 #
 
 # Definition for a  binary tree node
@@ -155,3 +158,57 @@ qtree2.right=qtree6
 #end of creating BST tree ####
 #test = Solutioniter()
 #print test.isSymmetric(qroot0)
+
+java = '''
+Thought:  https://leetcode.com/articles/symmetric-tree/
+# DFS
+public boolean isSymmetric(TreeNode root) {
+    return isMirror(root, root);
+}
+
+public boolean isMirror(TreeNode t1, TreeNode t2) {
+    if (t1 == null && t2 == null) return true;
+    if (t1 == null || t2 == null) return false;
+    return (t1.val == t2.val)
+        && isMirror(t1.right, t2.left)
+        && isMirror(t1.left, t2.right);
+}
+private boolean isMirror2(TreeNode t1, TreeNode t2){
+    if(t1==null || t2==null)
+        return t1==t2;
+    if(t1.val!=t2.val)
+        return false;
+    return isMirror2(t1.left, t2.right) && isMirror2(t1.right, t2.left);
+}
+
+# BFS
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+public class Solution {
+    public boolean isSymmetric(TreeNode root) {
+        Queue<TreeNode> q = new LinkedList<TreeNode>();
+        if(root == null) return true;
+        q.add(root);
+        q.add(root);
+        while(!q.isEmpty()) {
+            TreeNode t1 = q.poll();
+            TreeNode t2 = q.poll();
+            if ( t1 == null && t2 == null) continue;
+            if ( t1 == null || t2 == null) return false;
+            if ( t1.val != t2.val) return false;
+            q.offer(t1.left);
+            q.offer(t2.right);
+            q.offer(t1.right);
+            q.offer(t2.left);
+        }
+        return true;
+    }
+}
+'''

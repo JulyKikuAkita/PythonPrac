@@ -2,44 +2,48 @@ __author__ = 'July'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/factor-combinations.py
 # Time:  O(nlogn)
 # Space: O(logn)
-'''
-Numbers can be regarded as product of its factors. For example,
+#
+# Numbers can be regarded as product of its factors. For example,
+#
+# 8 = 2 x 2 x 2;
+#   = 2 x 4.
+# Write a function that takes an integer n and return all possible combinations of its factors.
+#
+# Note:
+# Each combination's factors must be sorted ascending, for example: The factors of 2 and 6 is [2, 6], not [6, 2].
+# You may assume that n is always positive.
+# Factors should be greater than 1 and less than n.
+# Examples:
+# input: 1
+# output:
+# []
+# input: 37
+# output:
+# []
+# input: 12
+# output:
+# [
+#   [2, 6],
+#   [2, 2, 3],
+#   [3, 4]
+# ]
+# input: 32
+# output:
+# [
+#   [2, 16],
+#   [2, 2, 8],
+#   [2, 2, 2, 4],
+#   [2, 2, 2, 2, 2],
+#   [2, 4, 4],
+#   [4, 8]
+# ]
+#
+#
+#  LinkedIn Uber
+# Hide Tags Backtracking
+# Hide Similar Problems (M) Combination Sum
 
-8 = 2 x 2 x 2;
-  = 2 x 4.
-Write a function that takes an integer n and return all possible combinations of its factors.
 
-Note:
-Each combination's factors must be sorted ascending, for example: The factors of 2 and 6 is [2, 6], not [6, 2].
-You may assume that n is always positive.
-Factors should be greater than 1 and less than n.
-Examples:
-input: 1
-output:
-[]
-input: 37
-output:
-[]
-input: 12
-output:
-[
-  [2, 6],
-  [2, 2, 3],
-  [3, 4]
-]
-input: 32
-output:
-[
-  [2, 16],
-  [2, 2, 8],
-  [2, 2, 2, 4],
-  [2, 2, 2, 2, 2],
-  [2, 4, 4],
-  [4, 8]
-]
-Show Company Tags LinkedIn
-
-'''
 # best performance
 class Solution(object):
     def getFactors(self, n):
@@ -120,7 +124,53 @@ class Solution2(object):
 
 
 #java
-js = '''
+java = '''
+//template
+public class Solution {
+    public List<List<Integer>> getFactors(int n) {
+        List<List<Integer>> res = new ArrayList<>();
+        if (n <= 1) return res;
+        backtrack2(res, new ArrayList<Integer>(), n, 2); //use 1, stack overflow
+        return res;
+    }
+
+    //45.6%
+    private void backtrack(List<List<Integer>> list, List<Integer> tempList, int n, int start){
+        if (n <= 1 && tempList.size() > 1) { //in case of [n]
+            list.add(new ArrayList<>(tempList));
+            return;
+        }
+
+        for (int i = start; i <= n; i++) {
+            if ( n % i == 0) {
+                tempList.add(i);
+                backtrack(list, tempList, n / i, i);
+                tempList.remove(tempList.size() - 1);
+            }
+        }
+    }
+
+    //61.44%
+     private void backtrack2(List<List<Integer>> list, List<Integer> tempList, int n, int start){
+        if (n == 1 && tempList.size() > 1) { //incase of [n]
+            list.add(new ArrayList<>(tempList));
+            return;
+        }
+
+        for (int i = start; i * i <= n; i++) {
+            if ( n % i == 0) {
+                tempList.add(i);
+                backtrack(list, tempList, n / i, i);
+                tempList.remove(tempList.size() - 1);
+            }
+        }
+        tempList.add(n);
+        backtrack(list, tempList, 1, n);
+        tempList.remove(tempList.size() - 1);
+    }
+}
+
+95%
 public class Solution {
     public List<List<Integer>> getFactors(int n) {
         List<List<Integer>> res = new ArrayList<>();
@@ -144,33 +194,4 @@ public class Solution {
     }
 }
 
-public class Solution {
-    public List<List<Integer>> getFactors(int n) {
-        List<List<Integer>> result = new ArrayList<>();
-        if (n <= 1) {
-            return result;
-        }
-        getFactors(n, result, new ArrayList<>());
-        return result;
-    }
-
-    private void getFactors(int n, List<List<Integer>> result, List<Integer> cur) {
-        if (n == 1) {
-            result.add(new ArrayList<>(cur));
-            return;
-        }
-        if (cur.size() > 0) {
-            cur.add(n);
-            result.add(new ArrayList<>(cur));
-            cur.remove(cur.size() - 1);
-        }
-        for (int i = cur.size() == 0 ? 2 : cur.get(cur.size() - 1); i * i <= n; i++) {
-            if (n % i == 0) {
-                cur.add(i);
-                getFactors(n / i, result, cur);
-                cur.remove(cur.size() - 1);
-            }
-        }
-    }
-}
 '''

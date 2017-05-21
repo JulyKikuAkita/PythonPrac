@@ -9,7 +9,9 @@ __author__ = 'July'
 #
 # Hint:
 # A linked list can be reversed either iteratively or recursively. Could you implement both?
-#
+#  Uber Facebook Twitter Zenefits Amazon Microsoft Snapchat Apple Yahoo Bloomberg Yelp Adobe
+# Hide Tags Linked List
+# Hide Similar Problems (M) Reverse Linked List II (M) Binary Tree Upside Down (E) Palindrome Linked List
 
 # Definition for singly-linked list.
 import unittest
@@ -83,7 +85,8 @@ if __name__ == "__main__":
     print Solution3().reverseList(head)
 
 #java
-js = '''
+java = '''
+thought: https://leetcode.com/articles/reverse-linked-list/
 /**
  * Definition for singly-linked list.
  * public class ListNode {
@@ -92,7 +95,8 @@ js = '''
  *     ListNode(int x) { val = x; }
  * }
  */
-public class Solution {
+ #recursion
+public class Solution1 {
     public ListNode reverseList(ListNode head) {
         if(head == null || head.next == null) return head;
 
@@ -107,22 +111,46 @@ public class Solution {
     }
 }
 
+#recursion
 public class Solution {
     public ListNode reverseList(ListNode head) {
-        if(head == null || head.next == null) return head;
-        ListNode prev = head;
-        ListNode cur = head.next;
-        prev.next = null;
-
-        while(prev != null && cur != null){
-            ListNode last = cur.next;
-            cur.next = prev;
-            prev = cur;
-            cur = last;
-        }
-        return prev;
+        if ( head == null) return head;
+        return helper2(head, null);
+        # return helper1(head);
     }
 
+    public ListNode helper1(ListNode head) {
+        if ( head.next == null) return head;
+        ListNode prev = head.next;
+        head.next = null;
+        ListNode node = reverseList(prev);
+        prev.next = head;
+        return node;
+    }
+
+    private ListNode helper2(ListNode head, ListNode newHead) {
+    if (head == null)
+        return newHead;
+    ListNode next = head.next;
+    head.next = newHead;
+    return helper2(next, head);
+    }
+}
+
+#iteration
+public class Solution3 {
+    public ListNode reverseList(ListNode head) {
+        if( head == null || head.next == null) return head;
+        ListNode dummy = null;
+        ListNode tmp;
+        while (head != null) {
+            tmp = head.next;
+            head.next = dummy;
+            dummy = head;
+            head = tmp;
+        }
+        return dummy;
+    }
 }
 
 // import org.junit.*;

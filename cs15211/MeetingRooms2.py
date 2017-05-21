@@ -1,19 +1,19 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/meeting-rooms-ii/#/description'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/meeting-rooms-ii.py
 # Time:  O(nlogn)
 # Space: O(n)
-'''
-Given an array of meeting time intervals consisting of start and end times [[s1,e1],[s2,e2],...] (si < ei),
-find the minimum number of conference rooms required.
+#
+# Given an array of meeting time intervals consisting of start and end times [[s1,e1],[s2,e2],...] (si < ei),
+# find the minimum number of conference rooms required.
+#
+# For example,
+# Given [[0, 30],[5, 10],[15, 20]],
+# return 2.
+#
+#  Google Snapchat Facebook
+# Hide Tags Heap Greedy Sort
+# Hide Similar Problems (M) Merge Intervals (E) Meeting Rooms (M) Minimum Number of Arrows to Burst Balloons
 
-For example,
-Given [[0, 30],[5, 10],[15, 20]],
-return 2.
-
-Google Facebook
-Heap Greedy Sort
-
-'''
 
 # Definition for an interval.
 # class Interval:
@@ -49,12 +49,8 @@ class Solution:
         return min_rooms
 #
 # Java :
-#
-# http://buttercola.blogspot.com/2015/08/leetcode-meeting-rooms-ii.html
-# with priority queue
-# http://blog.csdn.net/pointbreak1/article/details/48840671
 #test
-js = '''
+java = '''
 /**
  * Definition for an interval.
  * public class Interval {
@@ -64,6 +60,7 @@ js = '''
  *     Interval(int s, int e) { start = s; end = e; }
  * }
  */
+ 80.43%
 public class Solution {
     public int minMeetingRooms(Interval[] intervals) {
         int len = intervals.length;
@@ -91,5 +88,90 @@ public class Solution {
         }
         return result;
     }
+}
+
+47% //sort only intervals.end
+public class Solution {
+    public int minMeetingRooms(Interval[] intervals) {
+        if(intervals == null || intervals.length == 0) return 0;
+        Arrays.sort(intervals, (Interval a, Interval b) -> a.start - b.start);
+        PriorityQueue<Integer> minHeap = new PriorityQueue<>();
+        minHeap.offer(intervals[0].end);
+        for (int i = 1; i < intervals.length; i++) {
+            int end= minHeap.poll();
+            if (intervals[i].start < end) {
+                minHeap.offer(intervals[i].end);
+                minHeap.offer(end);
+            }else {
+                minHeap.offer(intervals[i].end);
+            }
+        }
+        return minHeap.size();
+    }
+}
+
+53.4%
+public class Solution {
+    public int minMeetingRooms(Interval[] intervals) {
+         if (intervals == null || intervals.length == 0)
+            return 0;
+
+        // Sort the intervals by start time
+        Arrays.sort(intervals, new Comparator<Interval>() {
+            public int compare(Interval a, Interval b) { return a.start - b.start; }
+        });
+
+        // Use a min heap to track the minimum end time of merged intervals
+        PriorityQueue<Interval> heap = new PriorityQueue<Interval>(intervals.length, new Comparator<Interval>() {
+            public int compare(Interval a, Interval b) { return a.end - b.end; }
+        });
+
+        // start with the first meeting, put it to a meeting room
+        heap.offer(intervals[0]);
+
+        for (int i = 1; i < intervals.length; i++) {
+            // get the meeting room that finishes earliest
+            Interval interval = heap.poll();
+
+            if (intervals[i].start >= interval.end) {
+                // if the current meeting starts right after
+                // there's no need for a new room, merge the interval
+                interval.end = intervals[i].end;
+            } else {
+                // otherwise, this meeting needs a new room
+                heap.offer(intervals[i]);
+            }
+
+            // don't forget to put the meeting room back
+            heap.offer(interval);
+        }
+
+        return heap.size();
+        }
+}
+
+same as above
+public class Solution {
+    public int minMeetingRooms(Interval[] intervals) {
+         if (intervals == null || intervals.length == 0)
+            return 0;
+
+        Arrays.sort(intervals, (Interval a, Interval b) -> (a.start - b.start));
+        PriorityQueue<Interval> heap = new PriorityQueue<Interval>(intervals.length, (a, b) -> (a.end - b.end));
+        heap.offer(intervals[0]);
+
+        for (int i = 1; i < intervals.length; i++) {
+            Interval interval = heap.poll();
+
+            if (intervals[i].start < interval.end) { //needs a new room
+                heap.offer(interval);
+            } else {
+                //use the same room
+            }
+            heap.offer(intervals[i]);
+        }
+
+        return heap.size();
+        }
 }
 '''

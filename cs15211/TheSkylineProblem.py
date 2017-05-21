@@ -1,6 +1,6 @@
-__author__ = 'July'
-# https://github.com/kamyu104/LeetCode/blob/master/Python/the-skyline-problem.py
+__source__ = 'https://github.com/kamyu104/LeetCode/blob/master/Python/the-skyline-problem.py'
 # https://leetcode.com/problems/the-skyline-problem/
+# http://www.geeksforgeeks.org/divide-and-conquer-set-7-the-skyline-problem/ //Divide and Conquer
 # Time:  O(nlogn)
 # Space: O(n)
 #
@@ -34,8 +34,9 @@ __author__ = 'July'
 # in the final output as such: [...[2 3], [4 5], [12 7], ...]
 #
 #
-#   Microsoft Google Facebook Twitter Yelp
+# Microsoft Google Facebook Twitter Yelp
 # Binary Indexed Tree Segment Tree Heap Divide and Conquer
+#
 
 # Divide and conquer solution.
 start, end, height = 0, 1, 2
@@ -260,5 +261,185 @@ public class Solution {
         }
         return result;
     }
+}
+
+89%:
+import java.util.SortedMap;
+
+public class Solution {
+    public List<int[]> getSkyline(int[][] buildings) {
+        List<int[]> result = new ArrayList<>();
+        Wall[] walls = new Wall[buildings.length << 1];
+        SortedMap<Integer, Integer> heightMap = new TreeMap<>();
+        int index = 0;
+        int curHeight = 0;
+
+        for (int i = 0; i < buildings.length; i++) {
+            walls[i << 1] = new Wall(buildings[i][0], buildings[i][2]);
+            walls[(i << 1) + 1] = new Wall(buildings[i][1], -buildings[i][2]);
+        }
+        Arrays.sort(walls);
+        while (index < walls.length) {
+            do {
+                if (walls[index].height > 0) {
+                    Integer val = heightMap.get(walls[index].height);
+                    heightMap.put(walls[index].height, val == null ? 1 : val + 1);
+                } else {
+                    Integer val = heightMap.get(-walls[index].height);
+                    if (val == 1) {
+                        heightMap.remove(-walls[index].height);
+                    } else {
+                        heightMap.put(-walls[index].height, val - 1);
+                    }
+                }
+                index++;
+            } while (index < walls.length && walls[index].position == walls[index - 1].position);
+            int maxHeight = heightMap.isEmpty() ? 0 : heightMap.lastKey();
+            if (curHeight != maxHeight) {
+                result.add(new int[] {walls[index - 1].position, maxHeight});
+                curHeight = maxHeight;
+            }
+        }
+        return result;
+    }
+
+    private class Wall implements Comparable<Wall> {
+        private int position;
+        private int height;
+
+        public Wall(int position, int height) {
+            this.position = position;
+            this.height = height;
+        }
+
+        @Override
+        public int compareTo(Wall other) {
+            if (other == null) {
+                return 0;
+            }
+            return Integer.compare(this.position, other.position);
+        }
+    }
+}
+
+100%
+public class Solution {
+    class KeyPoint {
+        public int key;
+        public int height;
+        public KeyPoint next = null;
+
+        public KeyPoint(int key, int height) {
+            this.key = key;
+            this.height = height;
+        }
+
+    }
+
+    public static int[] getKeyPoint(int key, int height) {
+        int[] kp = new int[2];
+        kp[0] = key;
+        kp[1] = height;
+        return kp;
+    }
+
+    public List<int[]> getSkyline(int[][] buildings) {
+        KeyPoint head = new KeyPoint(-1,0);
+        KeyPoint prevKP = head;
+        for (int[] building:buildings) {
+            int l = building[0], r = building[1], h= building[2];
+            // insert left point
+            while (prevKP.next != null && prevKP.next.key <= l) prevKP = prevKP.next;
+            int preHeight = prevKP.height;
+            if (prevKP.key == l) prevKP.height = Math.max(prevKP.height, h);
+            else if (prevKP.height < h) {
+                KeyPoint next = prevKP.next;
+                prevKP.next = new KeyPoint(l, h);
+                prevKP = prevKP.next;
+                prevKP.next = next;
+            }
+            // insert right point and update points in between
+            KeyPoint prev = prevKP, cur = prevKP.next;
+            while (cur != null && cur.key < r) {
+                preHeight = cur.height;
+                cur.height = Math.max(cur.height, h);
+                if (cur.height == prev.height)
+                    prev.next = cur.next;
+                else
+                    prev = cur;
+                cur = cur.next;
+            }
+            if (prev.height != preHeight && prev.key != r && (cur == null || cur.key != r)) {
+                KeyPoint next = prev.next;
+                prev.next = new KeyPoint(r, preHeight);
+                prev.next.next = next;
+            }
+        }
+        // convert to List<int[]>
+        List<int[]> list = new ArrayList<int[]>();
+        KeyPoint prev = head, cur = head.next;
+        while (cur != null) {
+            if (cur.height != prev.height)
+                list.add(getKeyPoint(cur.key, cur.height));
+            prev = cur;
+            cur = cur.next;
+        }
+        return list;
+    }
+}
+
+
+Divide and conquer:
+public class Solution {
+	public List<int[]> getSkyline(int[][] buildings) {
+		if (buildings.length == 0)
+			return new LinkedList<int[]>();
+		return recurSkyline(buildings, 0, buildings.length - 1);
+	}
+
+	private LinkedList<int[]> recurSkyline(int[][] buildings, int p, int q) {
+		if (p < q) {
+			int mid = p + (q - p) / 2;
+			return merge(recurSkyline(buildings, p, mid),
+					recurSkyline(buildings, mid + 1, q));
+		} else {
+			LinkedList<int[]> rs = new LinkedList<int[]>();
+			rs.add(new int[] { buildings[p][0], buildings[p][2] });
+			rs.add(new int[] { buildings[p][1], 0 });
+			return rs;
+		}
+	}
+
+	private LinkedList<int[]> merge(LinkedList<int[]> l1, LinkedList<int[]> l2) {
+		LinkedList<int[]> rs = new LinkedList<int[]>();
+		int h1 = 0, h2 = 0;
+		while (l1.size() > 0 && l2.size() > 0) {
+			int x = 0, h = 0;
+			if (l1.getFirst()[0] < l2.getFirst()[0]) {
+				x = l1.getFirst()[0];
+				h1 = l1.getFirst()[1];
+				h = Math.max(h1, h2);
+				l1.removeFirst();
+			} else if (l1.getFirst()[0] > l2.getFirst()[0]) {
+				x = l2.getFirst()[0];
+				h2 = l2.getFirst()[1];
+				h = Math.max(h1, h2);
+				l2.removeFirst();
+			} else {
+				x = l1.getFirst()[0];
+				h1 = l1.getFirst()[1];
+				h2 = l2.getFirst()[1];
+				h = Math.max(h1, h2);
+				l1.removeFirst();
+				l2.removeFirst();
+			}
+			if (rs.size() == 0 || h != rs.getLast()[1]) {
+				rs.add(new int[] { x, h });
+			}
+		}
+		rs.addAll(l1);
+		rs.addAll(l2);
+		return rs;
+	}
 }
 '''

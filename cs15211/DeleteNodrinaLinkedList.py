@@ -32,7 +32,11 @@ class Solution:
             del node_to_delete
 
 #java
-js = '''
+java= '''
+Thought: We can't really delete the node, but we can kinda achieve the same effect
+by instead removing the next node after copying its data into the node that we were asked to delete.
+
+
 /**
  * Definition for singly-linked list.
  * public class ListNode {

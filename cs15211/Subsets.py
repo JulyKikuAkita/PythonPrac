@@ -22,7 +22,10 @@ __author__ = 'July'
 #   [1,2],
 #   []
 # ]
-# Amazon Uber Facebook
+#
+#  Amazon Uber Facebook
+# Hide Tags Array Backtracking Bit Manipulation
+# Hide Similar Problems (M) Generalized Abbreviation
 
 
 #combination way
@@ -66,7 +69,6 @@ class Solution2:
     # @return a list of lists of integer
     def subsets(self, S):
         return self.subsetsRecu([], sorted(S))
-
 
     def subsetsRecu(self, cur, S):
         if not S:
@@ -175,7 +177,46 @@ if __name__ == "__main__":
 #            print  "x =",x,"binary =" , i >> x & 1 , "no value"
 
 #java
-js = '''
+java = '''
+public class Solution {
+    public List<List<Integer>> subsets(int[] nums) {
+        List<List<Integer>> list = new ArrayList<>();
+        backtrack(list, new ArrayList<>(), nums, 0);
+        return list;
+    }
+    private void backtrack(List<List<Integer>> list , List<Integer> tempList, int [] nums, int start){
+        list.add(new ArrayList<>(tempList));
+        //Set<Integer> s = new HashSet<>();
+        for (int i = start ; i < nums.length; i++) {
+            //if( !s.contains(nums[i])) {
+                tempList.add(nums[i]);
+                //s.add(nums[i]);
+                backtrack(list, tempList, nums, i + 1);
+                tempList.remove(tempList.size() - 1);
+            //}
+        }
+    }
+}
+
+public class Solution {
+    public List<List<Integer>> subsets(int[] nums) {
+        List<List<Integer>> list = new ArrayList<>();
+        backtrack(list, new ArrayList<>(), nums, 0);
+        return list;
+    }
+    private void backtrack(List<List<Integer>> list , List<Integer> tempList, int [] nums, int start){
+        if (start == nums.length) {
+            list.add(new ArrayList<>(tempList));
+            return;
+        }
+
+        backtrack(list, tempList, nums, start + 1); //[]
+        tempList.add(nums[start]);
+        backtrack(list, tempList, nums, start + 1);
+        tempList.remove(tempList.size() - 1);
+    }
+}
+
 public class Solution {
     public List<List<Integer>> subsets(int[] nums) {
         List<List<Integer>> result = new ArrayList<>();

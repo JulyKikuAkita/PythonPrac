@@ -207,6 +207,55 @@ B = [2,4,6,8,9,10]
 
 #java
 js = '''
+100%
+public class Solution {
+    public double findMedianSortedArrays(int[] nums1, int[] nums2) {
+        int len = nums1.length + nums2.length;
+        if ((len & 1) == 0) {
+            return ((double) findKthNumber(nums1, nums2, (len >> 1)) + findKthNumber(nums1, nums2, (len >> 1) + 1)) / 2;
+        } else {
+            return findKthNumber(nums1, nums2, (len >> 1) + 1);
+        }
+    }
+
+    private int findKthNumber(int[] nums1, int[] nums2, int k) {
+        int left1 = 0;
+        int right1 = nums1.length;
+        int left2 = 0;
+        int right2 = nums2.length;
+        while (k > 0) {
+            if (right1 - left1 > right2 - left2) {
+                int[] arr = nums1;
+                nums1 = nums2;
+                nums2 = arr;
+                int tmp = left1;
+                left1 = left2;
+                left2 = tmp;
+                tmp = right1;
+                right1 = right2;
+                right2 = tmp;
+                continue;
+            } else if (left1 == right1) {
+                return nums2[left2 + k - 1];
+            } else if (k == 1) {
+                return Math.min(nums1[left1], nums2[left2]);
+            }
+            int mid1 = Math.min(k >> 1, right1 - left1);
+            int mid2 = k - mid1;
+            if (nums1[left1 + mid1 - 1] < nums2[left2 + mid2 - 1]) {
+                left1 += mid1;
+                k -= mid1;
+            } else if (nums1[left1 + mid1 - 1] > nums2[left2 + mid2 - 1]) {
+                left2 += mid2;
+                k -= mid2;
+            } else {
+                return nums1[left1 + mid1 - 1];
+            }
+        }
+        return 0;
+    }
+}
+
 public class Solution {
     public double findMedianSortedArrays(int[] nums1, int[] nums2) {
         int len1 = nums1.length;

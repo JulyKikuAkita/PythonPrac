@@ -13,8 +13,9 @@ __author__ = 'July'
 # The right subtree of a node contains only nodes with keys greater than the node's key.
 # Both the left and right subtrees must also be binary search trees.
 #
-# Amazon Microsoft Bloomberg
-
+#  Amazon Microsoft Bloomberg Facebook
+# Hide Tags Tree Depth-first Search
+# Hide Similar Problems (M) Binary Tree Inorder Traversal (E) Find Mode in Binary Search Tree
 
 # Definition for a  binary tree node
 class TreeNode:
@@ -135,6 +136,7 @@ js = '''
  *     TreeNode(int x) { val = x; }
  * }
  */
+ Note: buggy to rely on Integer.MAX_VALUE, Integer.MIN_VALUE, prefer for inorder traversal
 public class Solution {
     public boolean isValidBST(TreeNode root) {
         return isValidBST(root, Integer.MIN_VALUE, Integer.MAX_VALUE);
@@ -144,6 +146,39 @@ public class Solution {
         return root == null ||
             (root.val >= min && root.val <= max &&
                 isValidBST(root.left, min, (long) root.val - 1) && isValidBST(root.right, (long) root.val + 1, max));
+    }
+}
+
+public class Solution {
+    public boolean isValidBST(TreeNode root) {
+        return isValidBST(root, Long.MIN_VALUE, Long.MAX_VALUE);
+    }
+
+    public boolean isValidBST(TreeNode root, long minVal, long maxVal) {
+        if (root == null) return true;
+        if (root.val >= maxVal || root.val <= minVal) return false;
+        return isValidBST(root.left, minVal, root.val) && isValidBST(root.right, root.val, maxVal);
+    }
+}
+
+# inOrder traversal
+# https://discuss.leetcode.com/topic/4659/c-in-order-traversal-and-please-do-not-rely-on-buggy-int_max-int_min-solutions-any-more
+public class Solution {
+    public boolean isValidBST(TreeNode root) {
+        if (root == null) return true;
+        Stack<TreeNode> stack = new Stack<>();
+        TreeNode pre = null;
+        while (root != null || !stack.isEmpty()) {
+            while( root != null) {
+                stack.push(root);
+                root = root.left;
+            }
+            root = stack.pop();
+            if (pre != null && root.val <= pre.val) return false;
+            pre = root;
+            root = root.right;
+        }
+        return true;
     }
 }
 '''

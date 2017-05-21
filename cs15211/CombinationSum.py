@@ -17,6 +17,10 @@ __author__ = 'July'
 # [7]
 # [2, 2, 3]
 #
+#  Snapchat Uber
+# Hide Tags Array Backtracking
+# Hide Similar Problems (M) Letter Combinations of a Phone Number (M) Combination Sum II (M) Combinations (M) Combination Sum III (M) Factor Combinations (M) Combination Sum IV
+
 
 class Solution:
     # @param candidates, a list of integers
@@ -66,27 +70,24 @@ if __name__ == "__main__":
     result = Solution().combinationSum(candidates, target)
     print result
 #java
-js = '''
+java = '''
 public class Solution {
     public List<List<Integer>> combinationSum(int[] candidates, int target) {
-        List<List<Integer>> result = new ArrayList<>();
-        Arrays.sort(candidates);
-        List<Integer> curr = new ArrayList<>();
-        combinationSum(candidates, 0, target, result, curr);
-        return result;
+        List<List<Integer>> list = new ArrayList<>();
+        //Arrays.sort(nums);
+        backtrack(list, new ArrayList<>(), candidates, target, 0);
+        return list;
     }
-
-    private void combinationSum(int[] candidates, int index, int target, List<List<Integer>> result, List<Integer> curr) {
-        if (index < 0 || target < 0) {
-            return;
-        } else if (target == 0) {
-            result.add(new ArrayList<Integer>(curr));
+    private void backtrack(List<List<Integer>> list, List<Integer> tempList, int [] nums, int remain, int start){
+        if (remain < 0) return;
+        if (remain == 0) {
+            list.add(new ArrayList<>(tempList));
             return;
         }
-        for (int i = index; i < candidates.length && candidates[i] <= target; i++) {
-            curr.add(candidates[i]);
-            combinationSum(candidates, i, target - candidates[i], result, curr);
-            curr.remove(curr.size() - 1);
+        for (int i = start; i < nums.length; i++) {
+            tempList.add(nums[i]);
+            backtrack(list, tempList, nums, remain - nums[i], i); // not i + 1 because we can reuse same elements
+            tempList.remove(tempList.size() - 1);
         }
     }
 }

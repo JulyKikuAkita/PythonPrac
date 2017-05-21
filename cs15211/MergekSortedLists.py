@@ -1,10 +1,11 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/merge-k-sorted-lists/#/description'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/merge-k-sorted-lists.py
 # Time:  O(nlogk)
 # Space: O(1)
 # heap
-# LinkedIn Google Uber Airbnb Facebook Twitter Amazon Microsoft
+#  LinkedIn Google Uber Airbnb Facebook Twitter Amazon Microsoft
 # Hide Tags Divide and Conquer Linked List Heap
+# Hide Similar Problems
 #
 # Merge k sorted linked lists and return it as one sorted list. Analyze and describe its complexity.
 import heapq
@@ -152,6 +153,32 @@ js = '''
  *     ListNode(int x) { val = x; }
  * }
  */
+
+ //use minHeap
+ public class Solution {
+    public ListNode mergeKLists(ListNode[] lists) {
+        if (lists == null || lists.length == 0) return null;
+        PriorityQueue<ListNode> pq = new PriorityQueue<>((ListNode a, ListNode b) -> a.val - b.val);
+
+        for (ListNode node : lists) { //adding the first node
+             if (node!=null) pq.add(node);
+        }
+
+        ListNode dummy = new ListNode(0);
+        ListNode tmp = dummy;
+        while(!pq.isEmpty()) {
+            tmp.next = pq.poll();
+            tmp = tmp.next;
+
+            if (tmp.next != null) {
+                pq.offer(tmp.next);
+            }
+        }
+        return dummy.next;
+    }
+}
+
+ //idea of merge sort
 public class Solution {
     public ListNode mergeKLists(ListNode[] lists) {
         return mergeKLists(lists, 0, lists.length - 1);

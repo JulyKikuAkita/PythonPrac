@@ -152,4 +152,173 @@ public class LFUCache {
         }
     }
 }
+
+Java solutions of three different ways. PriorityQueue : O(capacity) TreeMap : O(log(capacity)) DoubleLinkedList : O(1)
+The first one: PriorityQueue + HashMap set O(capacity) get O(capacity)
+The second one: TreeMap + HashMap set O(log(capacity)) get O(log(capacity))
+The third one: HashMap + HashMap + DoubleLinkedList set O(1) get O(1)
+
+1. PriorityQueue + HashMap: set O(capacity) get O(capacity) w/ Pair compareTo
+public class LFUCache {
+    long mStamp;
+    int mCapacity;
+    int mNum;
+    PriorityQueue<Pair> mMinHeap;
+    HashMap<Integer, Pair> mHashMap;
+
+    public LFUCache(int capacity) {
+        mCapacity = capacity;
+        mNum = 0;
+        mMinHeap = new PriorityQueue<Pair>();
+        mHashMap = new HashMap<Integer, Pair>();
+        mStamp = 0;
+    }
+
+    public int get(int key) {
+        if (mCapacity == 0) return -1;
+        if (mHashMap.containsKey(key)){
+            Pair old = mHashMap.get(key);
+            mMinHeap.remove(old);
+            Pair newNode = new Pair(key, old.mValue, old.mTimes + 1, mStamp++);
+            mHashMap.put(key, newNode);
+            mMinHeap.offer(newNode);
+            return mHashMap.get(key).mValue;
+        }else {
+            return -1;
+        }
+    }
+
+    public void put(int key, int value) {
+        if (mCapacity == 0) return;
+        if (mHashMap.containsKey(key)) {
+            Pair old = mHashMap.get(key);
+            mMinHeap.remove(old);
+
+            Pair newNode = new Pair(key, value, old.mTimes + 1, mStamp++);
+            mHashMap.put(key, newNode);
+            mMinHeap.offer(newNode);
+        }else if(mNum == mCapacity) {
+            Pair old = mMinHeap.poll();
+            mHashMap.remove(old.mKey);
+
+            Pair newNode = new Pair(key, value, 1, mStamp++);
+            mHashMap.put(key, newNode);
+            mMinHeap.offer(newNode);
+        }else {
+            mNum++;
+            Pair p = new Pair(key, value, 1, mStamp++);
+            mHashMap.put(key, p);
+            mMinHeap.offer(p);
+        }
+    }
+}
+
+/**
+ * Your LFUCache object will be instantiated and called as such:
+ * LFUCache obj = new LFUCache(capacity);
+ * int param_1 = obj.get(key);
+ * obj.put(key,value);
+ */
+ class Pair implements Comparable<Pair> {
+     long mStamp;
+     int mKey;
+     int mValue;
+     int mTimes;
+
+     public Pair (int key, int value, int times, long stamp) {
+         mStamp = stamp;
+         mKey = key;
+         mValue = value;
+         mTimes = times;
+     }
+
+     public int compareTo(Pair that) {
+         if (mTimes == that.mTimes) {
+             return (int) (mStamp - that.mStamp);
+         } else {
+             return mTimes - that.mTimes;
+         }
+     }
+ }
+
+ 2. TreeMap + HashMap: set O(log(capacity)) get O(log(capacity))
+public class LFUCache {
+    private int mCapacity;
+    private int mStamp;
+    private HashMap<Integer, Tuple> mHashMap;
+    private TreeMap<Tuple, Integer> mTreeMap;
+
+    public LFUCache(int capacity) {
+        mCapacity = capacity;
+        mStamp = 0;
+        mHashMap = new HashMap<Integer, Tuple>();
+        mTreeMap = new TreeMap<Tuple, Integer>( new Comparator<Tuple>(){
+            public int compare(Tuple t1, Tuple t2) {
+                if (t1.mTimes == t2.mTimes) {
+                    return t1.mStamp - t2.mStamp;
+                }
+                return t1.mTimes - t2.mTimes;
+            }
+        });
+    }
+
+    public int get(int key) {
+        if (mCapacity == 0) {
+            return -1;
+        }
+
+        if (!mHashMap.containsKey(key)){
+            return -1;
+        }
+
+        Tuple old = mHashMap.get(key);
+        mTreeMap.remove(old);
+        Tuple t = new Tuple(old.mVal, mStamp++, old.mTimes + 1);
+
+        mTreeMap.put(t, key);
+        mHashMap.put(key, t);
+        return old.mVal;
+    }
+
+    public void put(int key, int value) {
+        if (mCapacity == 0) return;
+
+        if (mHashMap.containsKey(key)){
+            Tuple old = mHashMap.get(key);
+            Tuple t = new Tuple(value, mStamp++, old.mTimes + 1);
+            mTreeMap.remove(old);
+            mHashMap.put(key, t);
+            mTreeMap.put(t, key);
+        } else {
+            if (mTreeMap.size() == mCapacity) {
+                int endKey = mTreeMap.pollFirstEntry().getValue();
+                mHashMap.remove(endKey);
+            }
+            Tuple t = new Tuple(value, mStamp++, 1);
+            mHashMap.put(key, t);
+            mTreeMap.put(t, key);
+        }
+    }
+    private class Tuple {
+         int mVal;
+         int mTimes;
+         int mStamp;
+         public Tuple (int val, int stamp, int times) {
+             mVal = val;
+             mTimes = times;
+             mStamp = stamp;
+         }
+    }
+}
+
+/**
+ * Your LFUCache object will be instantiated and called as such:
+ * LFUCache obj = new LFUCache(capacity);
+ * int param_1 = obj.get(key);
+ * obj.put(key,value);
+ */
+
+
+ 3. The third one: HashMap + HashMap + DoubleLinkedList set O(1) get O(1)
+
 '''

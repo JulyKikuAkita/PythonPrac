@@ -26,6 +26,7 @@ __author__ = 'July'
 # Follow up:
 # What if negative numbers are allowed in the given array?
 # How does it change the problem?
+#
 # What limitation we need to add to the question to allow negative numbers?
 # Google Snapchat Facebook
 # Hide Tags Dynamic Programming
@@ -126,5 +127,31 @@ public int combinationSum4(int[] nums, int target) {
         }
     }
     return comb[target];
+}
+
+//Submission Result: Memory Limit Exceeded
+//Last executed input:
+//[4,2,1]
+//32
+public class Solution {
+    public int combinationSum4(int[] nums, int target) {
+        List<List<Integer>> result = new ArrayList<>();
+        backtrack(result, new ArrayList<Integer>(), nums, target, 0);
+        return result.size();
+    }
+
+    private void backtrack(List<List<Integer>> list, List<Integer> tempList, int[] nums, int remain, int start) {
+        if (start >= nums.length || remain < 0) return;
+        if (remain == 0) {
+            list.add(new ArrayList<>(tempList));
+            return;
+        }
+        for (int i = 0; i < nums.length; i++) { // i always start with 0 to reuse same arr element
+            tempList.add(nums[i]);
+            backtrack(list, tempList, nums, remain - nums[i], i);
+            tempList.remove(tempList.size() - 1);
+        }
+
+    }
 }
 '''

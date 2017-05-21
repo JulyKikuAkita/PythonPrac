@@ -10,6 +10,10 @@ __author__ = 'July'
 # The brackets must close in the correct order, "()" and "()[]{}"
 # are all valid but "(]" and "([)]" are not.
 #
+# Google Airbnb Facebook Twitter Zenefits Amazon Microsoft Bloomberg
+# Hide Tags Stack String
+# Hide Similar Problems (M) Generate Parentheses (H) Longest Valid Parentheses (H) Remove Invalid Parentheses
+
 
 class Solution:
     # @return a boolean

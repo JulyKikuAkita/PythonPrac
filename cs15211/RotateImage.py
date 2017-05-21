@@ -10,8 +10,11 @@ __author__ = 'July'
 #
 # Follow up:
 # Could you do this in-place?
-#  Amazon Microsoft
+#  Amazon Microsoft Apple
+# Hide Tags Array
 
+# https://discuss.leetcode.com/topic/15295/seven-short-solutions-1-to-7-lines
+# Python 7 solutions
 
 # Time:  O(n^2)
 # Space: O(1)
@@ -76,8 +79,8 @@ test = SolutionOther()
 #print test.rotate([[1,2],[3,4]])
 print test.rotate([[1,2,3],[4,5,6], [7,8,9]])
 
-#java
-js = '''
+# https://leetcode.com/problems/rotate-image/#/solutions
+java= '''
 public class Solution {
     public void rotate(int[][] matrix) {
         int n = matrix.length;

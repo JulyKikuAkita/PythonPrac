@@ -11,9 +11,9 @@ __author__ = 'July'
 # Follow up:
 # What if the BST is modified (insert/delete operations) often and
 # you need to find the kth smallest frequently? How would you optimize the kthSmallest routine?
-#  Bloomberg Google
-
-
+# Bloomberg Uber Google
+# Hide Tags Binary Search Tree
+# Hide Similar Problems (M) Binary Tree Inorder Traversal
 
 # Definition for a binary tree node.
 # class TreeNode:
@@ -41,9 +41,7 @@ class Solution:
                 cur = cur.right
         return float("-inf")
 
-
-class Solution2(object):
-    def kthSmallest(self, root, k):
+    def kthSmallest2(self, root, k):
         """
         :type root: TreeNode
         :type k: int
@@ -64,6 +62,24 @@ class Solution2(object):
         if not root:
             return 0
         return 1 + self.count(root.left) + self.count(root.right)
+
+    def kthSmallest3(self, root, k):
+        """
+        :type root: TreeNode
+        :type k: int
+        :rtype: int
+        """
+        count = []
+        self.helper(root, count)
+        return count[k-1]
+
+    def helper(self, node, count):
+        if not node:
+            return
+
+        self.helper(node.left, count)
+        count.append(node.val)
+        self.helper(node.right, count)
 
 #java
 js = '''
@@ -100,27 +116,60 @@ public class Solution {
     }
 }
 
-
-public class Solution2 {
+ # Binary Search (dfs): most preferable
     public int kthSmallest(TreeNode root, int k) {
-        int rank = 0;
-        Stack<TreeNode> stack = new Stack<>();
-        TreeNode cur = root;
+        int count = countNodes(root.left);
+        if (k <= count) {
+            return kthSmallest(root.left, k);
+        } else if (k > count + 1) {
+            return kthSmallest(root.right, k-1-count); // 1 is counted as current node
+        }
+        return root.val;
+    }
 
-        while(stack != null || cur != null){
-            if (cur != null){
-                stack.add(cur);
-                cur = cur.left;
-            }else{
-                cur = stack.pop();
-                rank++;
-                if(rank == k){
-                    return cur.val;
-                }
-                cur = cur.right;
+    public int countNodes(TreeNode n) {
+        if (n == null) return 0;
+        return 1 + countNodes(n.left) + countNodes(n.right);
+    }
+
+
+
+# Inorder traverse for BST gives the natural order of numbers.
+No need to use array.
+Recursive:
+public class Solution {
+    int count = 0;
+    int result = Integer.MIN_VALUE;
+
+    public int kthSmallest(TreeNode root, int k) {
+        Stack<TreeNode> stack = new Stack<TreeNode>();
+        TreeNode p = root;
+        int cnt = 0;
+        while(!stack.isEmpty() || p != null) {
+            if (p != null) {
+                stack.push(p);
+                p = p.left;
+            } else {
+                TreeNode node = stack.pop();
+                cnt++;
+                if (cnt == k) return node.val;
+                p = node.right;
             }
         }
         return -1;
+    }
+
+    public int kthSmallestDFS(TreeNode root, int k) {
+        dfs(root, k);
+        return result;
+    }
+
+    public void dfs(TreeNode root, int k) {
+        if (root == null) return;
+        dfs(root.left, k);
+        count++;
+        if (count == k) result = root.val;
+        dfs(root.right, k);
     }
 }
 '''

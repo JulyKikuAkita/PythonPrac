@@ -28,7 +28,10 @@ __author__ = 'July'
 #         self.val = x
 #         self.left = None
 #         self.right = None
-# LinkedIn Facebook Microsoft Amazon  Apple
+#  Amazon LinkedIn Apple Facebook Microsoft
+# Hide Tags Tree
+# Hide Similar Problems (E) Lowest Common Ancestor of a Binary Search Tree
+
 
 #DFS
 class Solution:
@@ -87,6 +90,17 @@ class Solution(object):
             q = parent[q]
 
         return q
+    def lowestCommonAncestor2(self, root, p, q):
+        if root in (None, p, q): return root
+        left, right = (self.lowestCommonAncestor(kid, p, q)
+                   for kid in (root.left, root.right))
+        return root if left and right else left or right
+
+    def lowestCommonAncestor3(self, root, p, q):
+        if root in (None, p, q): return root
+        subs = [self.lowestCommonAncestor(kid, p, q)
+                for kid in (root.left, root.right)]
+        return root if all(subs) else max(subs)
 
 
 
@@ -97,21 +111,11 @@ class Solution(object):
 js = '''
 public class Solution {
     public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
-        if (root == null) {
-            return null;
-        } else if (root == p || root == q) {
-            return root;
-        } else {
-            TreeNode left = lowestCommonAncestor(root.left, p, q);
-            TreeNode right = lowestCommonAncestor(root.right, p, q);
-            if (left == null) {
-                return right;
-            } else if (right == null) {
-                return left;
-            } else {
-                return root;
-            }
-        }
+        if (root == null || root == p || root == q) return root;
+        TreeNode left = lowestCommonAncestor(root.left, p, q);
+        TreeNode right = lowestCommonAncestor(root.right, p, q);
+        if (left != null && right != null) return root;
+        return left == null ? right : left;
     }
 }
 

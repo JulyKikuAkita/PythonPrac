@@ -8,8 +8,9 @@ __author__ = 'July'
 #
 # Note:
 # You may assume k is always valid, 1 <= k <= array's length.
-# Microsoft Bloomberg Facebook
-
+# Facebook Amazon Microsoft Apple Bloomberg Pocket Gems
+# Hide Tags Heap Divide and Conquer
+# Hide Similar Problems (M) Wiggle Sort II (M) Top K Frequent Elements (E) Third Maximum Number
 
 from random import randint
 
@@ -90,6 +91,40 @@ nums = [4999,4998,4997,4996,4995,4994,4993,4992,4991,4990,4989,4988,4987,4986,49
 
 #java
 js= '''
+#https://discuss.leetcode.com/topic/14597/solution-explained
+1)
+O(N lg N) running time + O(1) memory
+The simplest approach is to sort the entire input array and then access the element
+by it's index (which is O(1)) operation:
+
+public int findKthLargest(int[] nums, int k) {
+        final int N = nums.length;
+        Arrays.sort(nums);
+        return nums[N - k];
+}
+
+2)
+O(N lg K) running time + O(K) memory
+Other possibility is to use a min oriented priority queue that will store the K-th largest values.
+The algorithm iterates over the whole input and maintains the size of priority queue.
+
+public int findKthLargest(int[] nums, int k) {
+
+    final PriorityQueue<Integer> pq = new PriorityQueue<>();
+    for(int val : nums) {
+        pq.offer(val);
+
+        if(pq.size() > k) {
+            pq.poll();
+        }
+    }
+    return pq.peek();
+}
+
+3) O(N) best case / O(N^2) worst case running time + O(1) memory
+The smart approach for this problem is to use the selection algorithm
+(based on the partion method - the same one as used in quicksort).
+
 public class Solution {
     public int findKthLargest(int[] nums, int k) {
         int start = 0;
@@ -129,6 +164,11 @@ public class Solution {
         nums[j] = tmp;
     }
 }
+
+4) O(N) guaranteed running time + O(1) space
+So how can we improve the above solution and make it O(N) guaranteed?
+The answer is quite simple, we can randomize the input, so that even when the worst case input would
+be provided the algorithm wouldn't be affected. So all what it is needed to be done is to shuffle the input.
 
 
 import java.util.Random;
@@ -175,6 +215,45 @@ public class Solution1 {
         nums[y] = nums[x];
         nums[x] = tmp;
     }
+
+}
+
+//details
+public class Solution {
+
+  public int findKthLargest(int[] a, int k) {
+    int n = a.length;
+    int p = quickSelect(a, 0, n - 1, n - k + 1);
+    return a[p];
+  }
+
+  // return the index of the kth smallest number.
+  int quickSelect(int[] a, int lo, int hi, int k) {
+    // use quick sort's idea
+    // put nums that are <= pivot to the left
+    // put nums that are  > pivot to the right
+    int i = lo, j = hi, pivot = a[hi];
+    while (i < j) {
+      if (a[i++] > pivot) swap(a, --i, --j);
+    }
+    swap(a, i, hi);
+
+    // count the nums that are <= pivot from lo
+    int m = i - lo + 1;
+
+    // pivot is the one!
+    if (m == k)     return i;
+    // pivot is too big, so it must be on the left
+    else if (m > k) return quickSelect(a, lo, i - 1, k);
+    // pivot is too small, so it must be on the right
+    else            return quickSelect(a, i + 1, hi, k - m);
+  }
+
+  void swap(int[] a, int i, int j) {
+    int tmp = a[i];
+    a[i] = a[j];
+    a[j] = tmp;
+  }
 
 }
 '''

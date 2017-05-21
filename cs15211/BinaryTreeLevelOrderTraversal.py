@@ -21,9 +21,12 @@ __author__ = 'July'
 #   [15,7]
 # ]
 #
-# LinkedIn Uber Facebook Amazon Microsoft Bloomberg
-
-
+#  LinkedIn Facebook Amazon Microsoft Apple Bloomberg
+# Hide Tags Tree Breadth-first Search
+# Hide Similar Problems (M) Binary Tree Zigzag Level Order Traversal
+# (E) Binary Tree Level Order Traversal II (E) Minimum Depth of Binary Tree
+# (M) Binary Tree Vertical Order Traversal
+#
 
 # Definition for a  binary tree node
 class TreeNode:
@@ -106,7 +109,7 @@ if __name__ == "__main__":
     print result
 
 #java
-js='''
+java='''
 public class Solution {
     public List<List<Integer>> levelOrder(TreeNode root) {
         List<List<Integer>> res = new ArrayList<List<Integer>>();
@@ -126,39 +129,36 @@ public class Solution {
     }
 }
 
-
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
 public class Solution {
     public List<List<Integer>> levelOrder(TreeNode root) {
-        List<List<Integer>> result = new ArrayList<>();
-        if (root == null) {
-            return result;
-        }
-        Queue<TreeNode> queue = new LinkedList<>();
-        queue.add(root);
-        queue.add(null);
-        List<Integer> list = new ArrayList<>();
-        while (!queue.isEmpty()) {
-            TreeNode curr = queue.poll();
-            if (curr == null) {
-                if (queue.isEmpty()) {
-                    result.add(list);
-                    break;
-                } else {
-                    queue.add(null);
-                    result.add(list);
-                    list = new ArrayList<>();
-                }
-            } else {
-                list.add(curr.val);
-                if (curr.left != null) {
-                    queue.add(curr.left);
-                }
-                if (curr.right != null) {
-                    queue.add(curr.right);
-                }
+        Queue<TreeNode> q = new LinkedList<TreeNode>();
+        List<List<Integer>> res = new LinkedList<List<Integer>>();
+
+        if(root == null) return res;
+
+        q.offer(root);
+        while(!q.isEmpty()) {
+            int size = q.size();
+            List<Integer> tmp = new LinkedList<Integer>();
+            for (int i = 0 ; i < size; i++) {
+                TreeNode cur = q.poll();
+                if (cur.left != null) q.offer(cur.left);
+                if (cur.right != null) q.offer(cur.right);
+                tmp.add(cur.val);
             }
+            res.add(tmp);
         }
-        return result;
+        return res;
     }
 }
+
 '''

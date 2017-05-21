@@ -1,4 +1,4 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/reverse-words-in-a-string/#/description'
 #https://github.com/kamyu104/LeetCode/blob/master/Python/reverse-words-in-a-string.py
 # Time:  O(n)
 # Space: O(n)
@@ -20,6 +20,10 @@ __author__ = 'July'
 # How about multiple spaces between two words?
 # Reduce them to a single space in the reversed string.
 #  Bloomberg
+#  Microsoft Snapchat Apple Bloomberg Yelp
+# Hide Tags String
+# Hide Similar Problems (M) Reverse Words in a String II
+#
 
 import unittest
 class Solution:
@@ -67,7 +71,29 @@ class SalesForceTest(unittest.TestCase):
 
 #Java
 #inplace
-js1 = '''
+java = '''
+Thought:
+//First, reverse the whole string, then reverse each word.
+
+public class Solution {
+    public String reverseWords(String s) {
+        String[] parts = s.trim().split("\\s+");
+        String out = "";
+        for (int i = parts.length - 1; i > 0; i--) {
+            out += parts[i] + " ";
+        }
+        return out + parts[0];
+    }
+
+    // use collections
+    public String reverseWords2(String s) {
+        String[] parts = s.trim().split("\\s+");
+        Collections.reverse(Arrays.asList(parts));
+        return String.join(" ", parts);
+    }
+}
+
+// inplace
 public class Solution {
     public String reverseWords(String s) {
         if (s == null || s.length() == 0) {
@@ -140,7 +166,7 @@ public class Solution {
     }
 }
 '''
-#Differnet question but similar, so put it her
+#Differnet question but similar, so put it here
 "!dlroW wolleH"
 
 js3 = '''
@@ -204,54 +230,6 @@ public class Solution {
 }
 
 Assert.assertEquals("Expected", Solution().reverseWords(str));
-'''
-
-#Sales Force:
-# Write a function reverse the words in a string
-# eg: "Today is Tuesday"
-# returns : "yadoT si yadseuT"
-'''
-public String reverseString(String s){
-    // corner case
-    if(s == null || s.length() == 0){
-        return null;
-    }
-
-    s = s.trim();
-    String[] cur = s.split(" ");  // Today is Tuesday
-    StringBuilder sb = new StringBuilder();
-    for(int i = 0; i < cur.length; i++){
-        String tmp = reverseWord(cur[i]);
-        sb.append(tmp);
-        sb.append(" ");
-    }
-    sb.deleteCharAt(sb.length()-1);
-    return sb.toString();
-
-}
-
-private String reverseWord(String s){
-
-    int start = 0;
-    int end = s.length()-1;
-    char[] chars = s.toCharArray();
-    while(start < end){ // double check for out of index  //(start + end) / 2
-        swap(chars, start, end);
-        start++;
-        end--;
-    }
-    return new String(chars);
-
-}
-
-private void swap(char[] chars, int start, int end){
-    char tmp = chars[start];
-    chars[start] = chars[end];
-    chars[end] = tmp;
-}
-
-
-}
 '''
 
 

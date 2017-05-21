@@ -1,4 +1,4 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/spiral-matrix/#/description'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/spiral-matrix.py
 # Time:  O(m * n)
 # Space: O(1)
@@ -15,8 +15,10 @@ __author__ = 'July'
 #  [ 7, 8, 9 ]
 # ]
 # You should return [1,2,3,6,9,8,7,4,5].
-#  Microsoft
-
+#  Microsoft Google Uber
+# Hide Tags Array
+# Hide Similar Problems (M) Spiral Matrix II
+#
 
 class Solution:
     # @param matrix, a list of lists of integers
@@ -41,10 +43,7 @@ class Solution:
 
         return result
 
-class Solutionif:
-    # @param matrix, a list of lists of integers
-    # @return a list of integers
-    def spiralOrder(self, matrix):
+    def spiralOrder2(self, matrix):
         result = []
         if matrix == []:
             return result
@@ -68,6 +67,12 @@ class Solutionif:
 
         return result
 
+    def spiralOrder3(self, matrix):
+        """
+        :type matrix: List[List[int]]
+        :rtype: List[int]
+        """
+        return matrix and list(matrix.pop(0)) + self.spiralOrder(zip(*matrix)[::-1])
 
 class SolutionOther:
     # @param matrix, a list of lists of integers
@@ -103,7 +108,6 @@ class SolutionOther:
 
             direct = (direct + 1) % 4
 
-
 if __name__ == "__main__":
     matrix = [
     [ 1, 2, 3 ],
@@ -116,7 +120,62 @@ if __name__ == "__main__":
     print SolutionOther().spiralOrder([[2,3]])
 
 #java
-js = '''
+java = '''
+This is a very simple and easy to understand solution. I traverse right and increment rowBegin,
+then traverse down and decrement colEnd, then I traverse left and decrement rowEnd,
+and finally I traverse up and increment colBegin.
+
+The only tricky part is that when I traverse left or up I have to check whether the row
+or col still exists to prevent duplicates.
+
+public class Solution {
+    public List<Integer> spiralOrder(int[][] matrix) {
+
+        List<Integer> res = new ArrayList<Integer>();
+
+        if (matrix.length == 0) {
+            return res;
+        }
+
+        int rowBegin = 0;
+        int rowEnd = matrix.length-1;
+        int colBegin = 0;
+        int colEnd = matrix[0].length - 1;
+
+        while (rowBegin <= rowEnd && colBegin <= colEnd) {
+            // Traverse Right
+            for (int j = colBegin; j <= colEnd; j ++) {
+                res.add(matrix[rowBegin][j]);
+            }
+            rowBegin++;
+
+            // Traverse Down
+            for (int j = rowBegin; j <= rowEnd; j ++) {
+                res.add(matrix[j][colEnd]);
+            }
+            colEnd--;
+
+            if (rowBegin <= rowEnd) {
+                // Traverse Left
+                for (int j = colEnd; j >= colBegin; j --) {
+                    res.add(matrix[rowEnd][j]);
+                }
+            }
+            rowEnd--;
+
+            if (colBegin <= colEnd) {
+                // Traver Up
+                for (int j = rowEnd; j >= rowBegin; j --) {
+                    res.add(matrix[j][colBegin]);
+                }
+            }
+            colBegin ++;
+        }
+
+        return res;
+    }
+}
+
 public class Solution {
     public List<Integer> spiralOrder(int[][] matrix) {
         List<Integer> result = new ArrayList<>();

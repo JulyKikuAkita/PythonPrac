@@ -25,6 +25,10 @@ __author__ = 'July'
 # 00011
 # Answer: 3
 #
+# Amazon Microsoft Google Facebook Zenefits
+# Hide Tags Depth-first Search Breadth-first Search Union Find
+# Hide Similar Problems (M) Surrounded Regions (M) Walls and Gates
+# (H) Number of Islands II (M) Number of Connected Components in an Undirected Graph
 
 #idea is to merge individual islands
 class Solution:
@@ -97,7 +101,19 @@ class Solution2:
         #if j != len(grid[0]) - 1:
         self.mergeIsland(grid, i , j+1)
 
-
+class Solution3(object):
+    def numIslands(self, grid):
+        """
+        :type grid: List[List[str]]
+        :rtype: int
+        """
+        def merge(i, j):
+            if 0 <= i < len(grid) and 0 <= j < len(grid[0]) and grid[i][j] == '1':
+                grid[i][j] = '0'
+                map(merge, (i+1, i-1, i, i), (j,j,j+1,j-1))
+                return 1
+            return 0
+        return sum(merge(i, j) for i in xrange(len(grid)) for j in xrange(len(grid[0])))
 #test
 grid = [
     ['1', '1', '0', '0', '0'],
@@ -108,3 +124,155 @@ grid = [
 if __name__ == "__main__":
     print Solution().numIslands(grid)
     print Solution2().numIslands(grid)
+java = '''
+public class Solution {
+    private static final int[][] DIRECTIONS = new int[][] {{0, -1}, {0, 1}, {-1, 0}, {1, 0}};
+
+    public int numIslands(char[][] grid) {
+        int result = 0;
+        int m = grid.length;
+        int n = m == 0 ? 0 : grid[0].length;
+        if (m == 0 || n == 0) {
+            return 0;
+        }
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                if (grid[i][j] == '1') {
+                    grid[i][j] = '2';
+                    bfs(grid, i, j);
+                    result++;
+                }
+            }
+        }
+        return result;
+    }
+
+    private void bfs(char[][] grid, int i, int j) {
+        Queue<Integer> queue = new LinkedList<>();
+        queue.add(i * grid[0].length + j);
+        while (!queue.isEmpty()) {
+            int cur = queue.poll();
+            int curI = cur / grid[0].length;
+            int curJ = cur % grid[0].length;
+            for (int[] direction : DIRECTIONS) {
+                int newI = curI + direction[0];
+                int newJ = curJ + direction[1];
+                if (newI >= 0 && newI < grid.length && newJ >= 0 && newJ < grid[0].length && grid[newI][newJ] == '1') {
+                    grid[newI][newJ] = '2';
+                    queue.add(newI * grid[0].length + newJ);
+                }
+            }
+        }
+    }
+}
+
+
+2. DFS:
+public class Solution {
+    private static final int[][] DIRECTIONS = new int[][] {{0, -1}, {0, 1}, {-1, 0}, {1, 0}};
+
+    public int numIslands(char[][] grid) {
+        int result = 0;
+        int m = grid.length;
+        int n = m == 0 ? 0 : grid[0].length;
+        if (m == 0 || n == 0) {
+            return 0;
+        }
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                if (grid[i][j] == '1') {
+                    grid[i][j] = '2';
+                    dfs(grid, i, j);
+                    result++;
+                }
+            }
+        }
+        return result;
+    }
+
+    private void dfs(char[][] grid, int i, int j) {
+        for (int[] direction : DIRECTIONS) {
+            int newI = i + direction[0];
+            int newJ = j + direction[1];
+            if (newI >= 0 && newI < grid.length && newJ >= 0 && newJ < grid[0].length && grid[newI][newJ] == '1') {
+                grid[newI][newJ] = '2';
+                dfs(grid, newI, newJ);
+            }
+        }
+    }
+}
+
+//Union Find
+public class Solution {
+    public int numIslands(char[][] grid) {
+        if(grid.length == 0 || grid[0].length == 0) return 0;
+        int m = grid.length, n = grid[0].length;
+        UF uf = new UF(m, n, grid);
+
+        for (int i = 0; i < grid.length; i++) {
+            for (int j = 0; j < grid[0].length; j++) {
+                if(grid[i][j] == '0') continue;
+                int p = i * n + j;
+                int q;
+                if (i > 0 && grid[i-1][j] == '1') {
+                    q = p - n;
+                    uf.union(p,q);
+                }
+                if (i < m-1 && grid[i+1][j] == '1') {
+                    q = p + n;
+                    uf.union(p, q);
+                }
+                if (j > 0 && grid[i][j-1] == '1') {
+                    q = p - 1;
+                    uf.union(p,q);
+                }
+                if (j < n - 1 && grid[i][j+1] == '1') {
+                    q = p + 1;
+                    uf.union(p, q);
+                }
+            }
+        }
+        return uf.count;
+    }
+
+    class UF{
+        public int count = 0;
+        public int[] id = null;
+
+        public UF(int m, int n, char[][] grid) {
+            for (int i = 0; i < m; i++) {
+                for (int j = 0; j < n; j++) {
+                    if (grid[i][j] == '1') count++;
+                }
+            }
+            id = new int[m * n];
+            for (int i = 0; i < m*n ;i++) {
+                id[i] = i;
+            }
+        }
+
+        public int find(int p) {
+            while (p != id[p]) {
+                id[p] = id[id[p]];
+                p = id[p];
+            }
+            return p;
+        }
+
+        public boolean isConnected(int p, int q) {
+            int pRoot = find(p);
+            int qRoot = find(q);
+            if (pRoot != qRoot) return false;
+            else return true;
+        }
+
+        public void union(int p, int q) {
+            int pRoot = find(p);
+            int qRoot = find(q);
+            if (pRoot == qRoot) return;
+            id[pRoot] = qRoot;
+            count--;
+        }
+    }
+}
+'''

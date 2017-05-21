@@ -2,15 +2,19 @@ __author__ = 'July'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/meeting-rooms.py
 # Time:  O(nlogn)
 # Space: O(n)
-# Facebook
-'''
-Given an array of meeting time intervals consisting of start and end times [[s1,e1],[s2,e2],...] (si < ei),
-determine if a person could attend all meetings.
-
-For example,
-Given [[0, 30],[5, 10],[15, 20]],
-return false.
-'''
+#
+#Given an array of meeting time intervals consisting of start and end times [[s1,e1],[s2,e2],...] (si < ei),
+# determine if a person could attend all meetings.
+#
+# For example,
+# Given [[0, 30],[5, 10],[15, 20]],
+# return false.
+#
+#  Facebook
+# Hide Tags Sort
+# Hide Similar Problems (M) Merge Intervals (M) Meeting Rooms II
+#
+#
 # Definition for an interval.
 # class Interval:
 #     def __init__(self, s=0, e=0):
@@ -50,8 +54,7 @@ public class Solution {
         }
         return true;
     }
-    
-    
+
     public class IntervalComparator implements Comparator<Interval>{
         public int compare(Interval a, Interval b){
             return a.start - b.start;
@@ -60,6 +63,18 @@ public class Solution {
     
     private boolean isOverlappered(Interval a, Interval b){
         return a.end > b.start;
+    }
+}
+
+#Java 8:
+public class Solution {
+    public boolean canAttendMeetings(Interval[] intervals) {
+        if(intervals == null || intervals.length == 0) return true;
+        Arrays.sort(intervals, (Interval a, Interval b) -> a.start - b.start); //asc
+        for (int i = 1; i < intervals.length; i++) {
+            if (intervals[i].start < intervals[i-1].end) return false;
+        }
+        return true;
     }
 }
 
