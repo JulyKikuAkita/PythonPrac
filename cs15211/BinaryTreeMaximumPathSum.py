@@ -1,4 +1,4 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/binary-tree-maximum-path-sum/#/description'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/binary-tree-maximum-path-sum.py
 # Time:  O(n)
 # Space: O(h), h is height of binary tree
@@ -17,8 +17,13 @@ __author__ = 'July'
 # Return 6.
 #
 #
+# Topics:
 # Tree Depth-first Search
-# Microsoft
+# You might like:
+# (E) Path Sum (M) Sum Root to Leaf Numbers
+# Company:
+# Microsoft Baidu
+
 
 
 # Definition for a  binary tree node
@@ -88,7 +93,15 @@ if __name__ == "__main__":
 # 2) Get largest left sum and right sum
 # 3) Compare to the stored maximum
 #java
-js = '''
+java = '''
+Thought: Here's my ideas:
+A path from start to end, goes up on the tree for 0 or more steps,
+then goes down for 0 or more steps. Once it goes down, it can't go up.
+Each path has a highest node, which is also the lowest common ancestor of all other nodes on the path.
+A recursive method maxPathDown(TreeNode node)
+(1) computes the maximum path sum with highest node is the input node, update maximum if necessary
+(2) returns the maximum sum of the path that can be extended to input node's parent.
+
 /**
  * Definition for a binary tree node.
  * public class TreeNode {
@@ -111,6 +124,25 @@ public class Solution {
         int rightMax = Math.max(0, maxPathSum(root.right, res));
         res[0] = Math.max(res[0], root.val + leftMax + rightMax);
         return root.val + Math.max(leftMax, rightMax);
+    }
+}
+
+#with global var
+public class Solution {
+   int maxValue;
+
+    public int maxPathSum(TreeNode root) {
+        maxValue = Integer.MIN_VALUE;
+        maxPathDown(root);
+        return maxValue;
+    }
+
+    public int maxPathDown(TreeNode root) {
+        if (root == null) return 0;
+        int left = Math.max(maxPathDown(root.left), 0 );
+        int right = Math.max(maxPathDown(root.right), 0);
+        maxValue = Math.max(maxValue, left + right + root.val);
+        return Math.max(left, right) + root.val;
     }
 }
 '''

@@ -1,4 +1,4 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/binary-tree-inorder-traversal/#/description'
 #https://github.com/kamyu104/LeetCode/blob/master/Python/binary-tree-inorder-traversal.py
 # Time:  O(n)
 # Space: O(1)
@@ -16,7 +16,15 @@ __author__ = 'July'
 # return [1,3,2].
 #
 # Note: Recursive solution is trivial, could you do it iteratively?
+#Topics:
+# Tree Hash Table Stack
+# You might like:
+# (M) Validate Binary Search Tree (M) Binary Tree Preorder Traversal (H) Binary Tree Postorder Traversal
+# (M) Binary Search Tree Iterator (M) Kth Smallest Element in a BST (H) Closest Binary Search Tree Value II
+# (M) Inorder Successor in BST
+# Company:
 # Microsoft
+
 
 
 # Definition for a  binary tree node
@@ -104,72 +112,6 @@ class Solution3:
         return result
 
 
-# http://www.programcreek.com/2012/12/leetcode-solution-of-binary-tree-inorder-traversal-in-java/
-class javaSolution:
-    # @param root, a tree node
-    # @return a list of integers
-    def inorderTraversal(self, root):
-        result, stack, ptr = [], [], root
-        if not root:
-            return result
-        while stack or ptr:
-            if ptr:
-                stack.append(ptr)
-                ptr = ptr.left
-            else:
-                tmp = stack.pop()
-                result.append(tmp.val)
-                ptr = tmp.right
-        return result
-
-class SolutionOther:
-    # @param root, a tree node
-    # @return a list of integers
-    def inorderTraversal1(self, root):
-        ans = []
-        p =root
-
-        def inorder(p, ans):
-            if p is None:
-                return
-            if p.left != None:
-                inorder(p.left, ans)
-            ans += [p.val]
-            if p.right != None:
-                inorder(p.right, ans)
-
-        inorder(p,ans)
-        return ans
-
-    def inorderTraversal2(self, root):
-        ans = []
-        p =root
-
-        if p is None:
-            return
-        if p.left != None:
-           for node in self.inorderTraversal2(p.left): yield node
-        yield p.node
-        if p.right != None:
-           for node in self.inorderTraversal2(p.right): yield node
-
-# need to implement Stack
-    def inorderTraversal3(self, root):
-        s= []
-        ans = []
-        p =root
-
-        while (p != None or len(s) != 0):
-            if p != None:
-                s.append(p)
-                p = p.left
-            else:
-                p = s.pop()
-                ans += [p.val]
-                p=p.right
-        return ans
-
-
 #create tree
 root1=TreeNode(0)
 root2=TreeNode(1)
@@ -206,7 +148,7 @@ tree52.right=tree522
 tree522.left=tree5221
 tree5221.right=tree52212
 
-my_test=SolutionOther()
+my_test=Solution()
 #print my_test.inorderTraversal1(root2)
 #print my_test.inorderTraversal3(root2)
 
@@ -214,33 +156,12 @@ if __name__ == "__main__":
     root = TreeNode(1)
     root.right = TreeNode(2)
     root.right.left = TreeNode(3)
-    print javaSolution().inorderTraversal(root)
+    print Solution().inorderTraversal(root)
     print Solution3().inorderTraversal(root)
 
-#java
-js = '''
-public class Solution {
-    public List<Integer> inorderTraversal(TreeNode root) {
-        List<Integer> result = new ArrayList<>();
-        Stack<TreeNode> stack = new Stack<>();
-        while (root != null) {
-            stack.push(root);
-            root = root.left;
-        }
-        while (!stack.isEmpty()) {
-            TreeNode curr = stack.pop();
-            result.add(curr.val);
-            curr = curr.right;
-            while (curr != null) {
-                stack.push(curr);
-                curr = curr.left;
-            }
-        }
-        return result;
-    }
-}
-
-
+#Java
+Java = '''
+# DFS
 public class Solution {
     public List<Integer> inorderTraversal(TreeNode root) {
         List<Integer> res = new ArrayList<>();
@@ -255,3 +176,59 @@ public class Solution {
         dfs(root.right, res);
     }
 }
+
+#BFS
+public class Solution {
+    public List<Integer> inorderTraversal(TreeNode root) {
+        List<Integer> result = new ArrayList<>();
+        Deque<TreeNode> stack = new ArrayDeque<>();
+        TreeNode p = root;
+        while(!stack.isEmpty() || p != null) {
+            if ( p != null) {
+                stack.push(p);
+                p = p.left;
+            } else {
+                TreeNode node = stack.pop();
+                result.add(node.val);
+                p = node.right;
+            }
+        }
+        return result;
+    }
+}
+
+     # PostOrder
+     public List<Integer> postorderBFS(TreeNode root) {
+        LinkedList<Integer> result = new LinkedList<>();
+        Deque<TreeNode> stack = new ArrayDeque<>();
+        while(!stack.isEmpty() || root != null) {
+            if (root != null) {
+                stack.push(root);
+                result.addFirst(root.val); // Reverse the process of preorder
+                root = root.right; // Reverse the process of preorder
+            } else {
+                TreeNode node = stack.pop();
+                root = node.left; // Reverse the process of preorder
+            }
+        }
+        return result;
+     }
+
+     # Pre Order Traverse
+    public List<Integer> preorderTraversal(TreeNode root) {
+        List<Integer> result = new ArrayList<>();
+        Deque<TreeNode> stack = new ArrayDeque<>();
+        TreeNode p = root;
+        while(!stack.isEmpty() || p != null) {
+            if(p != null) {
+                stack.push(p);
+                result.add(p.val);  // Add before going to children
+                p = p.left;
+            } else {
+                TreeNode node = stack.pop();
+                p = node.right;
+            }
+        }
+        return result;
+    }
+'''

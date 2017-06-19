@@ -1,4 +1,4 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/serialize-and-deserialize-binary-tree/#/description'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/serialize-and-deserialize-binary-tree.py
 # Time:  O(n)
 # Space: O(h)
@@ -27,10 +27,13 @@ __author__ = 'July'
 # Note: Do not use class member/global/static variables to store states.
 # Your serialize and deserialize algorithms should be stateless.
 #
+# Topics:
+# Tree Design
+# You might like:
+# (M) Encode and Decode Strings (M) Serialize and Deserialize BST
+# Company:
 # LinkedIn Google Uber Facebook Amazon Microsoft Yahoo Bloomberg
-# Hide Tags Tree Design
-# Hide Similar Problems (M) Encode and Decode Strings (M) Serialize and Deserialize BST
-
+#
 
 # Definition for a binary tree node.
 class TreeNode(object):
@@ -142,7 +145,7 @@ class Codec:
 # codec.deserialize(codec.serialize(root))
 
 #java
-js = '''
+java = '''
 /**
  * Definition for a binary tree node.
  * public class TreeNode {

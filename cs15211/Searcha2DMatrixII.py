@@ -1,4 +1,4 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/search-a-2d-matrix-ii/#/description'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/search-a-2d-matrix-ii.py
 # Time:  O(m + n)
 # Space: O(1)
@@ -23,7 +23,10 @@ __author__ = 'July'
 #
 # Given target = 20, return false.
 #
-# Google
+#  Amazon Google Apple
+# Hide Tags Binary Search Divide and Conquer
+# Hide Similar Problems (M) Search a 2D Matrix
+
 
 
 class Solution:
@@ -49,31 +52,33 @@ class Solution:
         return False
 
 #java
-js = '''
+java = '''
+Thought:
+We start search the matrix from top right corner, initialize the current position to top right corner,
+if the target is greater than the value in current position,
+then the target can not be in entire row of current position because the row is sorted,
+if the target is less than the value in current position,
+then the target can not in the entire column because the column is sorted too.
+We can rule out one row or one column each time, so the time complexity is O(m+n).
+
 public class Solution {
     public boolean searchMatrix(int[][] matrix, int target) {
-        if (matrix.length == 0) {
+         if(matrix == null || matrix.length < 1 || matrix[0].length <1) {
             return false;
-        }
-        int m = matrix.length;
-        int n = matrix[0].length;
-        int i = m - 1;
-        int j = 0;
-        while (true) {
-            if (matrix[i][j] > target) {
-                i--;
-                if (i < 0) {
-                    return false;
-                }
-            } else if (matrix[i][j] < target) {
-                j++;
-                if (j == n) {
-                    return false;
-                }
-            } else {
+         }
+         int col = matrix[0].length-1;
+         int row = 0;
+
+         while (col >= 0 && row <= matrix.length - 1) {
+             if(target == matrix[row][col]) {
                 return true;
-            }
-        }
+             } else if ( target > matrix[row][col]) {
+                 row++;
+             } else {
+                 col--;
+             }
+         }
+         return false;
     }
 }
 '''

@@ -1,4 +1,4 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/path-sum-ii/#/description'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/path-sum-ii.py
 # Time:  O(n)
 # Space: O(h), h is height of binary tree
@@ -20,7 +20,14 @@ __author__ = 'July'
 #    [5,4,11,2],
 #    [5,8,4,5]
 # ]
-
+#
+# Topics:
+# Tree Depth-first Search
+# You might like:
+# (E) Path Sum (E) Binary Tree Paths (E) Path Sum III
+# Company:
+# Bloomberg
+#
 
 # Definition for a  binary tree node
 class TreeNode:
@@ -81,3 +88,42 @@ if __name__ == "__main__":
     root.left.left.right = TreeNode(2)
     print Solution().pathSum(root, 22)
     print Solution2().pathSum(root, 77)
+
+#Java
+java = '''
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+
+ #48%
+public class Solution {
+    public List<List<Integer>> pathSum(TreeNode root, int sum) {
+        List<List<Integer>> result = new ArrayList<>();
+        if (root == null) {
+            return result;
+        }
+        dfs(root, sum, result, new ArrayList<>());
+        return result;
+    }
+
+    public void dfs(TreeNode root, int sum, List<List<Integer>> res, List<Integer> tmp) {
+        if ( root == null) return;
+        if (root.left == null && root.right == null && root.val == sum){
+            tmp.add(root.val);
+            res.add(new ArrayList<>(tmp));  //add new list, otherwise only save pointers and thus empty list
+            tmp.remove(tmp.size() - 1);
+            return;
+        }
+        tmp.add(root.val);
+        dfs(root.left, sum - root.val, res, tmp);
+        dfs(root.right, sum - root.val, res, tmp);
+        tmp.remove(tmp.size() - 1);
+    }
+}
+'''

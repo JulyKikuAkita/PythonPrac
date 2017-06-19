@@ -1,4 +1,4 @@
-__source__ = ''
+__source__ = 'https://leetcode.com/problems/word-abbreviation/#/description'
 # Time:  O()
 # Space: O()
 #

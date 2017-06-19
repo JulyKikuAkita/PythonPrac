@@ -1,4 +1,4 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/binary-search-tree-iterator/#/description'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/binary-search-tree-iterator.py
 # Time:  O(1)
 # Space: O(h), h is height of binary tree
@@ -13,10 +13,13 @@ __author__ = 'July'
 # Credits:
 # Special thanks to @ts for adding this problem and creating all test cases.
 #
-# Hide Company Tags LinkedIn Google Facebook Microsoft
-# Hide Tags Tree Stack Design
-# Hide Similar Problems (M) Binary Tree Inorder Traversal (M) Flatten 2D Vector
-# (M) Zigzag Iterator (M) Peeking Iterator (M) Inorder Successor in BST
+#Topics:
+# Tree Stack Design
+# You might like:
+# (M) Binary Tree Inorder Traversal (M) Flatten 2D Vector (M) Zigzag Iterator (M) Peeking Iterator (M) Inorder Successor in BST
+# Company:
+# LinkedIn Google Facebook Microsoft
+#
 
 # Definition for a  binary tree node
 class TreeNode:
@@ -62,8 +65,6 @@ if __name__ == "__main__":
     while i.hasNext(): v.append(i.next())
 
     print v
-
-
 
 # Your BSTIterator will be called like this:
 # i, v = BSTIterator(root), []

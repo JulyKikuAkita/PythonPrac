@@ -1,4 +1,4 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/implement-queue-using-stacks/#/description'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/implement-queue-using-stacks.py
 # Time:  O(1), amortized
 # Space: O(n)
@@ -19,7 +19,13 @@ __author__ = 'July'
 # You may assume that all operations are valid
 # (for example, no pop or peek operations will be called on an empty queue).
 #
-# Microsoft
+# Topics:
+# Stack Design
+# You might like:
+# (E) Implement Stack using Queues
+# Company:
+# Microsoft Bloomberg
+#
 
 class Queue:
     # initialize your data structure here.
@@ -51,44 +57,51 @@ class Queue:
 
 
 #java
-js='''
-class MyQueue {
-    Stack<Integer> a ;
-    Stack<Integer> b ;
+java='''
+Thought: https://leetcode.com/articles/implement-queue-using-stacks/
 
-    public MyQueue(){
-        a = new Stack<>();
-        b = new Stack<>();
+public class MyQueue {
+    Stack<Integer> input;
+    Stack<Integer> output;
+    /** Initialize your data structure here. */
+    public MyQueue() {
+        input = new Stack();
+        output = new Stack();
     }
 
-    // Push element x to the back of queue.
+    /** Push element x to the back of queue. */
     public void push(int x) {
-        a.push(x);
+        input.push(x);
     }
 
-    // Removes the element from in front of queue.
-    public void pop() {
-        if(b.empty()){
-            while(! a.empty()){
-                b.push(a.pop());
+    /** Removes the element from in front of queue and returns that element. */
+    public int pop() {
+        peek();
+        return output.pop();
+    }
+
+    /** Get the front element. */
+    public int peek() {
+        if (output.empty()) {
+            while(!input.empty()){
+                output.push(input.pop());
             }
         }
-        b.pop();
+        return output.peek();
     }
 
-    // Get the front element.
-    public int peek() {
-       if( b.empty()){
-            while(! a.empty())
-                b.push(a.pop());
-        }
-        return b.peek();
-    }
-
-    // Return whether the queue is empty.
+    /** Returns whether the queue is empty. */
     public boolean empty() {
-        return a.size() == 0 && b.size() == 0;
-        //return a.empty() && b.empty();
+        return input.empty() && output.empty();
     }
 }
+
+/**
+ * Your MyQueue object will be instantiated and called as such:
+ * MyQueue obj = new MyQueue();
+ * obj.push(x);
+ * int param_2 = obj.pop();
+ * int param_3 = obj.peek();
+ * boolean param_4 = obj.empty();
+ */
 '''

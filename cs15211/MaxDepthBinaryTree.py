@@ -1,13 +1,19 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/maximum-depth-of-binary-tree/#/description'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/maximum-depth-of-binary-tree.py
 # Time:  O(n)
 # Space: O(h), h is height of binary tree
-# divide and conquer
 #
 # Given a binary tree, find its maximum depth.
 #
-# The maximum depth is the number of nodes along the longest path from the root node down to the farthest leaf node.
+# The maximum depth is the number of nodes along the longest path
+# from the root node down to the farthest leaf node.
 #
+#  Depth-first Search
+# You might like:
+# (E) Balanced Binary Tree (E) Minimum Depth of Binary Tree
+# Company:
+# LinkedIn Uber Apple Yahoo
+
 
 # Definition for a  binary tree node
 class TreeNode:
@@ -128,13 +134,6 @@ class SolutionOther:
         # need to add root node
         return  deepestNode(root)+1
 
-
-
-
-
-
-
-
 #create tree
 root1=TreeNode(0)
 root2=TreeNode(1)
@@ -186,3 +185,55 @@ if __name__ == "__main__":
     root.left.left = TreeNode(4)
     print Solution().maxDepth(root5)
 
+#Java
+java = '''
+
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+
+#DFS: 16%
+public class Solution {
+    public int maxDepth(TreeNode root) {
+        if (root == null) return 0;
+        return 1 + Math.max(maxDepth(root.left), maxDepth(root.right));
+    }
+}
+
+#DFS: 96%
+public class Solution {
+    public int maxDepth(TreeNode root) {
+        if (root == null){ return 0; }
+        int l = 1 + maxDepth(root.left);
+        int r = 1 + maxDepth(root.right);
+        if (l > r){ return l; }
+        return r;
+    }
+}
+
+#BFS: 4.3%
+public class Solution {
+    public int maxDepth(TreeNode root) {
+        if (root == null) return 0;
+        Queue<TreeNode> q = new LinkedList<>();
+        q.add(root);
+        int res = 0;
+        while (!q.isEmpty()) {
+            int len = q.size();
+            for (int i = 0; i < len; i++) {
+                TreeNode cur = q.poll();
+                if (cur.left != null) q.offer(cur.left);
+                if (cur.right != null) q.offer(cur.right);
+            }
+            res++;
+        }
+        return res;
+    }
+}
+'''

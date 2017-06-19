@@ -1,4 +1,4 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/count-complete-tree-nodes/#/description'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/count-complete-tree-nodes.py
 # Time:  O(h * logn) = O((logn)^2)
 # Space: O(1)
@@ -9,7 +9,11 @@ __author__ = 'July'
 # is completely filled, and all nodes in the last level are as far
 # left as possible. It can have between 1 and 2h nodes inclusive at
 # the last level h.
-#
+#Topics:
+# Tree Binary Search
+# You might like:
+# (E) Closest Binary Search Tree Value
+
 
 # Definition for a binary tree node.
 class TreeNode:
@@ -58,32 +62,54 @@ class Solution:
 
 #Java
 # http://bookshadow.com/weblog/2015/06/06/leetcode-count-complete-tree-nodes/
-java = '''
+Java = '''
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+
+#DFS #47%
 public class Solution {
     public int countNodes(TreeNode root) {
-        if(root == null) return 0;
-        int leftlevel = 0;
-        int rightlevel = 0;
+        int h = height(root);
+        return h < 0 ? 0 :
+               height(root.right) == h-1 ? (1 << h) + countNodes(root.right)
+                                         : (1 << h-1) + countNodes(root.left);
+    }
 
-        TreeNode leftnode = root;
-        TreeNode rightnode = root;
-
-        while(leftnode != null){
-            leftnode = leftnode.left;
-            leftlevel++;
-        }
-
-        while(rightnode != null){
-            rightnode = rightnode.right;
-            rightlevel++;
-        }
-
-        if(leftlevel == rightlevel){
-            return (1 << leftlevel) - 1;
-        }else{
-            return 1 + countNodes(root.left) + countNodes(root.right);
-        }
-
+    public int height(TreeNode root) {
+        return root == null ? -1 : 1 + height(root.left);
     }
 }
-'''
+
+# BFS # 96%
+public class Solution {
+    private int depth(TreeNode root) {
+        int ans = 0;
+        while (root != null) {
+            ans++;
+            root = root.left;
+        }
+        return ans;
+    }
+    public int countNodes(TreeNode root) {
+        int depth = depth(root), count = (1 << depth)-1;
+        TreeNode cur = root;
+        while (cur != null) {
+            depth--;
+            int rightdepth = depth(cur.right);
+            if (depth == rightdepth) {
+                cur = cur.right;
+            } else {
+                count -= 1 << (depth-1);
+                cur = cur.left;
+            }
+        }
+        return count;
+    }
+}'''

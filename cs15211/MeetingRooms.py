@@ -1,9 +1,9 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/meeting-rooms/#/description'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/meeting-rooms.py
 # Time:  O(nlogn)
 # Space: O(n)
 #
-#Given an array of meeting time intervals consisting of start and end times [[s1,e1],[s2,e2],...] (si < ei),
+# Given an array of meeting time intervals consisting of start and end times [[s1,e1],[s2,e2],...] (si < ei),
 # determine if a person could attend all meetings.
 #
 # For example,
@@ -35,6 +35,7 @@ class Solution:
 # Java
 # http://buttercola.blogspot.com/2015/08/leetcode-meeting-rooms.html
 var = '''
+Thought: https://leetcode.com/articles/meeting-rooms/
 /**
  * Definition for an interval.
  * public class Interval {

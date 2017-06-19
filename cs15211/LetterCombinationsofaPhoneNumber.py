@@ -1,4 +1,4 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/letter-combinations-of-a-phone-number/#/description'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/letter-combinations-of-a-phone-number.py
 # Time:  O(n * 4^n)
 # Space: O(n)
@@ -15,10 +15,13 @@ __author__ = 'July'
 # Note:
 # Although the above answer is in lexicographical order, your answer could be in any order you want.
 #
-#  Amazon Dropbox Google Uber Facebook
-# Hide Tags Backtracking String
-# Hide Similar Problems (M) Generate Parentheses (M) Combination Sum (E) Binary Watch
-
+# Topics:
+# Backtracking String
+# You might like:
+# (M) Generate Parentheses (M) Combination Sum (E) Binary Watch
+# Company:
+# Amazon Dropbox Google Uber Facebook
+#
 class Solution:
     # @return a list of strings, [s1, s2]
     def letterCombinations(self, digits):
@@ -107,7 +110,7 @@ test = SolutionOther()
 # [].extend("") = []
 
 #java
-js = '''
+Java = '''
 Recursion:
 public class Solution {
     private static final String[] PHONE_NUMBERS = new String[] {"abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
@@ -134,35 +137,7 @@ public class Solution {
     }
 }
 
-//use template but need to take care of 2 double while loop
-public class Solution {
-    public static String[] dict = new String[] {null, null, "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
-
-    public List<String> letterCombinations(String digits) { //"23"
-        List<String> res = new LinkedList<>();
-        if (digits == null || digits.length() == 0) return res;
-        backtrack(res, new StringBuilder(), digits, 0);
-        return res;
-    }
-
-    private void backtrack(List<String> res, StringBuilder sb, String digits, int start) {
-        if (sb.length() == digits.length()) {
-            res.add(sb.toString());
-            return;
-        }
-        for (int j = start; j < digits.length(); j++) {
-            char c = digits.charAt(j);
-            char[] poolChars = dict[ c- '0'].toCharArray();
-            for (int i = 0; i < poolChars.length; i++) {
-                sb.append(poolChars[i]);
-                backtrack(res, sb, digits, j + 1); //use j here
-                sb.setLength(sb.length() - 1);
-            }
-        }
-    }
-}
 Iteration:
-
  public class Solution {
         public static String[] dict = new String[] {null, null, "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
 

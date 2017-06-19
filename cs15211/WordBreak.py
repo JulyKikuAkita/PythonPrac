@@ -1,4 +1,4 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/word-break/#/description'
 # Time:  O(n^2)
 # Space: O(n)
 # DP
@@ -13,9 +13,13 @@ __author__ = 'July'
 #
 # Return true because "leetcode" can be segmented as "leet code".
 #
-#  Bloomberg
-
-
+# Topics:
+# Dynamic Programming
+# You might like:
+# (H) Word Break II
+# Company:
+# Google Uber Facebook Amazon Yahoo Bloomberg Pocket Gems
+#
 
 class Solution2:
     # @param s, a string
@@ -108,20 +112,87 @@ if __name__ == "__main__":
 
 #java
 js = '''
+Thought: https://leetcode.com/articles/word-break/
+
 public class Solution {
-    public boolean wordBreak(String s, Set<String> wordDict) {
+    public boolean wordBreak(String s, List<String> wordDict) {
+        //return dfs(s, new HashSet(wordDict), 0);
+        //return dfsMemo(s, new HashSet(wordDict), 0, new Boolean[s.length()]);
+        return bfs(s, wordDict);
+        //return dp(s, wordDict);
+        //return dpLen(s, wordDict);
+    }
+
+    // Time" O(n^n) considering "aaaaa", Space:O(n)
+    public boolean dfs(String s, Set<String> wordDict, int start) {
+        if (start == s.length()) return true;
+        for (int i = start + 1; i <= s.length(); i++) {
+            String cur = s.substring(start, i);
+            if (wordDict.contains(cur) && dfs(s, wordDict, i)) return true;
+        }
+        return false;
+    }
+
+     // Time" O(n^2), Space:O(n)  26%
+    public boolean dfsMemo(String s, Set<String> wordDict, int start, Boolean[] memo) {
+        if (start == s.length()) return true;
+        if (memo[start] != null) return memo[start];
+        for (int i = start + 1; i <= s.length(); i++) {
+            String cur = s.substring(start, i);
+            if (wordDict.contains(cur) && dfsMemo(s, wordDict, i, memo))
+                return memo[start] = true;
+        }
+        return memo[start] = false;
+    }
+
+    //BFS // Time" O(n^2), Space:O(n)
+    public boolean bfs(String s, List<String> wordDict) {
+        Set<String> wordDictSet=new HashSet(wordDict);
+        Queue<Integer> queue = new LinkedList<>();
+        int[] visited = new int[s.length()];
+        queue.add(0);
+        while (!queue.isEmpty()) {
+            int start = queue.poll();
+            if (visited[start] == 0) {
+                for (int end = start + 1; end <= s.length(); end++) {
+                    if (wordDictSet.contains(s.substring(start, end))) {
+                        if (end == s.length()) return true;
+                        queue. add(end);
+                    }
+                }
+                visited[start] = 1;
+            }
+        }
+        return false;
+    }
+
+    //DP: Time" O(n^2), Space:O(n) 45%
+    public boolean dp(String s, List<String> wordDict) {
+        Set<String> wordDictSet=new HashSet(wordDict);
+        boolean[] dp = new boolean[s.length() + 1];
+        dp[0] = true;
+        for (int i = 1; i <= s.length(); i++) { //i need to extends to s.length()
+            for (int j = 0; j < i; j++) {
+                if (dp[j] && wordDictSet.contains(s.substring(j, i)))
+                    dp[i] = true;
+                    //break <-- here gave wrong answer when s = leetcode
+            }
+        }
+        return dp[s.length()];
+    }
+
+    //DP: Time" O(n^2), Space:O(n)  93%
+    public boolean dpLen(String s, List<String> wordDict) {
+        Set<String> wordDictSet=new HashSet(wordDict);
         int len = s.length();
-        int maxLen = getMaxLength(wordDict);
+        int maxLen = getMaxLength(wordDictSet);
         boolean[] dp = new boolean[len + 1];
         dp[0] = true;
         for (int i = 0; i < s.length(); i++) {
-            if (!dp[i]) {
-                continue;
-            }
-            for (int j = i + 1; j <= Math.min(i + maxLen, len); j++) {
-                if (dp[j] || wordDict.contains(s.substring(i, j))) {
+            if(!dp[i]) continue;
+            for (int j = i + 1; j <= Math.min(len, i + maxLen); j++) {
+                if (dp[j] || wordDictSet.contains(s.substring(i, j)))
                     dp[j] = true;
-                }
             }
         }
         return dp[len];
@@ -129,27 +200,10 @@ public class Solution {
 
     private int getMaxLength(Set<String> wordDict) {
         int max = 0;
-        for (String word : wordDict) {
-            max = Math.max(max, word.length());
+        for (String s : wordDict) {
+            max = Math.max(max, s.length());
         }
         return max;
-    }
-}
-
-public class Solution {
-    public boolean wordBreak(String s, Set<String> wordDict) {
-        boolean[] dp = new boolean[s.length() + 1];
-        dp[0] = true;
-
-        for(int i = 1; i<= s.length() ;++i){
-            for(int j = 0; j < i; j++){
-                if(dp[j] == true && wordDict.contains(s.substring(j,i)) ){
-                    dp[i] = true;
-                }
-            }
-
-        }
-        return dp[s.length()];
     }
 }
 '''

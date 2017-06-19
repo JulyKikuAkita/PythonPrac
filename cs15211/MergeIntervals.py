@@ -1,4 +1,4 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/merge-intervals/#/description'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/merge-intervals.py
 # Time:  O(nlogn)
 # Space: O(1)
@@ -10,8 +10,13 @@ __author__ = 'July'
 # Given [1,3],[2,6],[8,10],[15,18],
 # return [1,6],[8,10],[15,18].
 #
-#  LinkedIn Google Bloomberg Microsoft
-
+# Topics:
+# Array Sort
+# You might like:
+# (H) Insert Interval (E) Meeting Rooms (M) Meeting Rooms II (M) Teemo Attacking (M) Add Bold Tag in String
+# Company:
+# LinkedIn Google Facebook Twitter Microsoft Bloomberg Yelp
+#
 # Definition for an interval.
 class Interval:
     def __init__(self, s=0, e=0):
@@ -56,33 +61,55 @@ js = '''
  *     Interval(int s, int e) { start = s; end = e; }
  * }
  */
+#16%
+public List<Interval> merge(List<Interval> intervals) {
+    if (intervals.size() <= 1)
+        return intervals;
+
+    // Sort by ascending starting point using an anonymous Comparator
+    intervals.sort((i1, i2) -> Integer.compare(i1.start, i2.start));
+
+    List<Interval> result = new LinkedList<Interval>();
+    int start = intervals.get(0).start;
+    int end = intervals.get(0).end;
+
+    for (Interval interval : intervals) {
+        if (interval.start <= end) // Overlapping intervals, move the end if needed
+            end = Math.max(end, interval.end);
+        else {                     // Disjoint intervals, add the previous one and reset bounds
+            result.add(new Interval(start, end));
+            start = interval.start;
+            end = interval.end;
+        }
+    }
+
+    // Add the last interval
+    result.add(new Interval(start, end));
+    return result;
+}
+
+#99%
 public class Solution {
     public List<Interval> merge(List<Interval> intervals) {
-        List<Interval> result = new ArrayList<>();
-        if (intervals.isEmpty()) {
-            return result;
+        int n = intervals.size();
+        int[] starts = new int[n];
+        int[] ends = new int[n];
+        for (int i = 0; i < n; i++) {
+            starts[i] = intervals.get(i).start;
+            ends[i] = intervals.get(i).end;
         }
-        Collections.sort(intervals, new Comparator<Interval>() {
-            @Override
-            public int compare(Interval i1, Interval i2) {
-                int val = Integer.compare(i1.start, i2.start);
-                return val == 0 ? Integer.compare(i1.end, i2.end) : val;
-            }
-        });
-        int start = intervals.get(0).start;
-        int end = intervals.get(0).end;
-        for (int i = 1; i < intervals.size(); i++) {
-            Interval cur = intervals.get(i);
-            if (end < cur.start) {
-                result.add(new Interval(start, end));
-                start = cur.start;
-                end = cur.end;
-            } else {
-                end = Math.max(end, cur.end);
+        Arrays.sort(starts);
+        Arrays.sort(ends);
+        List<Interval> res = new ArrayList<Interval>();
+        int startP = 0;
+        for (int endP = 0; endP < n; endP++) {
+            // when we begin a new intervals
+            if (endP == n - 1 || starts[endP + 1] > ends[endP]) {
+                res.add(new Interval(starts[startP], ends[endP]));
+                startP = endP + 1;
             }
         }
-        result.add(new Interval(start, end));
-        return result;
+        return res;
     }
 }
 '''

@@ -1,4 +1,4 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/binary-tree-level-order-traversal-ii/#/description'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/binary-tree-level-order-traversal-ii.py
 # Time:  O(n)
 # Space: O(n)
@@ -21,7 +21,11 @@ __author__ = 'July'
 #   [3]
 # ]
 #
-
+# Topics:
+# Tree Breadth-first Search
+# You might like:
+# (M) Binary Tree Level Order Traversal
+#
 # Definition for a  binary tree node
 class TreeNode:
      def __init__(self, x):
@@ -123,83 +127,76 @@ if __name__ == "__main__":
     print result
 
 # Java
-js ='''
-public class Solution {
-    public List<List<Integer>> levelOrderBottom(TreeNode root) {
-        List<List<Integer>> result = new ArrayList<>();
-        if (root == null) {
-            return result;
-        }
-        Queue<TreeNode> queue = new LinkedList<>();
-        queue.add(root);
-        queue.add(null);
-        List<Integer> list = new ArrayList<>();
-        while (!queue.isEmpty()) {
-            TreeNode curr = queue.poll();
-            if (curr == null) {
-                if (queue.isEmpty()) {
-                    result.add(0, list);
-                    break;
-                } else {
-                    result.add(0, list);
-                    list = new ArrayList<>();
-                    queue.add(null);
-                }
-            } else {
-                list.add(curr.val);
-                if (curr.left != null) {
-                    queue.add(curr.left);
-                }
-                if (curr.right != null) {
-                    queue.add(curr.right);
-                }
-            }
-        }
-        return result;
-    }
-}
-
+java ='''
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
 
 public class Solution {
     public List<List<Integer>> levelOrderBottom(TreeNode root) {
-        List<List<Integer>> res = new ArrayList<List<Integer>>();
-        dfs(root, 0, res);
-        Collections.reverse(res);
+        //return levelOrderBottomBFS(root);
+
+        //below for DFS
+        List<List<Integer>> res = new LinkedList<List<Integer>>();
+        if(root == null) return res;
+
+        //User Collections
+        //levelOrderBottomDFS(root, res, 0);
+        //Collections.reverse(res);
+
+        //no user Collecitons.reverse
+        levelOrderBottomDFS2(root, res, 0);
         return res;
     }
 
-    public void dfs(TreeNode root, int level, List<List<Integer>> res) {
-        if (root == null) return;
-        if (res.size() < level + 1){
-            res.add(new ArrayList<Integer>());
-        }
-        res.get(level).add(root.val);
-        dfs(root.left, level + 1, res);
-        dfs(root.right, level + 1, res);
-    }
-}
+    #70%
+    public List<List<Integer>> levelOrderBottomBFS(TreeNode root) {
+        Queue<TreeNode> q = new LinkedList<TreeNode>();
+        List<List<Integer>> res = new LinkedList<List<Integer>>();
+        if(root == null) return res;
 
-public class Solution {
-    public List<List<Integer>> levelOrderBottom(TreeNode root) {
-        if(root == null) return new ArrayList<>();
-
-        List<List<Integer>> res = new ArrayList<>();
-        List<TreeNode> q = new LinkedList<>();
-        q.add(root);
-
-        while(!q.isEmpty()){
-            List<Integer> tmp = new ArrayList<>();
-            List<TreeNode> next = new LinkedList<>();
-            for(TreeNode node : q){
-                tmp.add(node.val);
-                if(node.left != null) next.add(node.left);
-                if(node.right != null ) next.add(node.right);
+        q.offer(root);
+        while(!q.isEmpty()) {
+            int len = q.size();
+            List<Integer> tmp = new LinkedList<Integer>();
+            for (int i = 0; i < len; i++) {
+                TreeNode cur = q.poll();
+                if (cur.left != null) q.add(cur.left);
+                if (cur.right != null) q.offer(cur.right);
+                tmp.add(cur.val);
             }
             res.add(0, tmp);
-            q = next;
         }
         return res;
+    }
 
+    public void levelOrderBottomDFS(TreeNode root, List<List<Integer>> res, int level) {
+        if(root == null) return;
+
+        if (res.size() <= level) {
+            res.add(level, new LinkedList<Integer>());
+        }
+        res.get(level).add(root.val);
+        levelOrderBottomDFS(root.left, res, level + 1);
+        levelOrderBottomDFS(root.right, res, level + 1);
+    }
+
+    #11.25%
+    public void levelOrderBottomDFS2(TreeNode root, List<List<Integer>> res, int level) {
+        if(root == null) return;
+
+        if (res.size() <= level) {
+            res.add(0, new LinkedList<Integer>());
+        }
+        levelOrderBottomDFS2(root.left, res, level + 1);
+        levelOrderBottomDFS2(root.right, res, level + 1);
+        res.get(res.size() - level - 1).add(root.val);
     }
 }
 '''

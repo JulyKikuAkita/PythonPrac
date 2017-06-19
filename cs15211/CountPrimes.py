@@ -1,4 +1,4 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/count-primes/#/solutions'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/count-primes.py
 # Time:  O(n)
 # Space: O(n)
@@ -8,7 +8,10 @@ __author__ = 'July'
 #
 # Hint: The number n could be in the order of 100,000 to 5,000,000.
 #
-# Amazon
+#  Amazon Microsoft
+# Hide Tags Hash Table Math
+# Hide Similar Problems (E) Ugly Number (M) Ugly Number II (M) Perfect Squares
+#
 
 from math import sqrt
 
@@ -91,6 +94,30 @@ public class Solution {
         int ans = 0;
         for (boolean b: isPrime) if (b) ans++;
         return ans;
+    }
+}
+
+#98%
+#Note, prime number % 6 will either be 1 or 5
+public class Solution {
+    public int countPrimes(int n) {
+        if (n <= 2) {
+            return 0;
+        }
+        boolean[] is = new boolean[n];
+        int count = n / 2;
+        for (int i = 3; i * i < n; i += 2) {
+            if (is[i]) {
+                continue;
+            }
+            for (int j = i * i; j < n; j += 2 * i) {
+                if (!is[j]) {
+                    is[j] = true;
+                    count--;
+                }
+            }
+        }
+        return count;
     }
 }
 '''

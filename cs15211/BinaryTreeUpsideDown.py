@@ -1,4 +1,4 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/binary-tree-upside-down/#/description'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/binary-tree-upside-down.py
 # Time:  O(n)
 # Space: O(1)
@@ -105,8 +105,9 @@ if __name__ == "__main__":
     #ans = Solution2().upsideDownBinaryTree(root0)
     #print Solution2().preorderTraversal1(ans)
 
-#java
-js1= '''
+#Java
+Java= '''
+Thought: https://leetcode.com/problems/binary-tree-upside-down/#/solutions
 /**
  * Definition for a binary tree node.
  * public class TreeNode {
@@ -116,6 +117,7 @@ js1= '''
  *     TreeNode(int x) { val = x; }
  * }
  */
+ #BFS:
 public class Solution {
     public TreeNode upsideDownBinaryTree(TreeNode root) {
         TreeNode cur = root;
@@ -132,12 +134,30 @@ public class Solution {
         }
         return parent;
     }
-}
-'''
 
-js2= '''
-public class Solution {
     public TreeNode upsideDownBinaryTree(TreeNode root) {
+        TreeNode curr = root;
+        TreeNode next = null;
+        TreeNode temp = null;
+        TreeNode prev = null;
+
+        while(curr != null){
+            next = curr.left;
+
+            // swapping nodes now, need temp to keep the previous right child
+            curr.left = temp;
+            temp = curr.right;
+            curr.right = prev;
+
+            prev = curr;
+            curr = next;
+        }
+       return prev;
+    }
+}
+# DFS:
+public class Solution {
+    public TreeNode upsideDownBinaryTree1(TreeNode root) {
         if (root == null || root.left == null) {
             return root;
         }
@@ -148,6 +168,18 @@ public class Solution {
         root.left = null;
         root.right = null;
         return parent;
+    }
+
+    public TreeNode upsideDownBinaryTree2(TreeNode root) {
+        if(root == null || root.left == null) {
+            return root;
+        }
+        TreeNode newRoot = upsideDownBinaryTree(root.left);
+        root.left.left = root.right; // node 2 left children
+        root.left.right = root; // node 2 right children
+        root.left = null;
+        root.right = null;
+        return newRoot;
     }
 }
 '''

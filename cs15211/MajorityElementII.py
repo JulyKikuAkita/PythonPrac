@@ -1,4 +1,4 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/majority-element-ii/#/description'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/majority-element-ii.py
 # Time:  O(n)
 # Space: O(1)
@@ -6,6 +6,10 @@ __author__ = 'July'
 # Given an integer array of size n,
 # find all elements that appear more than [n/3] times.
 # The algorithm should run in linear time and in O(1) space.
+#
+#  Zenefits
+# Hide Tags Array
+# Hide Similar Problems (E) Majority Element
 #
 
 class Solution:
@@ -46,4 +50,74 @@ class Solution:
 
         return ret
 
+    def majorityElement2(self, nums):
+        if not nums:
+            return []
+        count1, count2, candidate1, candidate2 = 0, 0, 0, 1
+        for n in nums:
+            if n == candidate1:
+                count1 += 1
+            elif n == candidate2:
+                count2 += 1
+            elif count1 == 0:
+                candidate1, count1 = n, 1
+            elif count2 == 0:
+                candidate2, count2 = n, 1
+            else:
+                count1, count2 = count1 - 1, count2 - 1
+        return [n for n in (candidate1, candidate2)
+                        if nums.count(n) > len(nums) // 3]
+
+Java = '''
+For those who aren't familiar with Boyer-Moore Majority Vote algorithm,
+I found a great article (http://goo.gl/64Nams) that helps me to understand this fantastic algorithm!!
+Please check it out!
+
+The essential concepts is you keep a counter for the majority number X. If you find a number Y that is not X,
+the current counter should deduce 1. The reason is that if there is 5 X and 4 Y, there would be one (5-4) more X than Y.
+This could be explained as "4 X being paired out by 4 Y".
+
+And since the requirement is finding the majority for more than ceiling of [n/3],
+the answer would be less than or equal to two numbers.
+So we can modify the algorithm to maintain two counters for two majorities.
+
+
+public class Solution {
+    public List<Integer> majorityElement(int[] nums) {
+    	if (nums == null || nums.length == 0)
+    		return new ArrayList<Integer>();
+    	List<Integer> result = new ArrayList<Integer>();
+    	int number1 = nums[0], number2 = nums[0], count1 = 0, count2 = 0, len = nums.length;
+    	for (int i = 0; i < len; i++) {
+    		if (nums[i] == number1)
+    			count1++;
+    		else if (nums[i] == number2)
+    			count2++;
+    		else if (count1 == 0) {
+    			number1 = nums[i];
+    			count1 = 1;
+    		} else if (count2 == 0) {
+    			number2 = nums[i];
+    			count2 = 1;
+    		} else {
+    			count1--;
+    			count2--;
+    		}
+    	}
+    	count1 = 0;
+    	count2 = 0;
+    	for (int i = 0; i < len; i++) {
+    		if (nums[i] == number1)
+    			count1++;
+    		else if (nums[i] == number2)
+    			count2++;
+    	}
+    	if (count1 > len / 3)
+    		result.add(number1);
+    	if (count2 > len / 3)
+    		result.add(number2);
+    	return result;
+    }
+}
+'''
 

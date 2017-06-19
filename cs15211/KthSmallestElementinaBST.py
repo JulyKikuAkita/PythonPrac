@@ -1,4 +1,4 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/kth-smallest-element-in-a-bst/#/description'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/kth-smallest-element-in-a-bst.py
 # Time:  O(max(h, k))
 # Space: O(h)
@@ -11,9 +11,13 @@ __author__ = 'July'
 # Follow up:
 # What if the BST is modified (insert/delete operations) often and
 # you need to find the kth smallest frequently? How would you optimize the kthSmallest routine?
+# Companines
 # Bloomberg Uber Google
-# Hide Tags Binary Search Tree
-# Hide Similar Problems (M) Binary Tree Inorder Traversal
+# Related Topics
+# Binary Search Tree
+# Similar question
+# Binary Tree Inorder Traversal
+#
 
 # Definition for a binary tree node.
 # class TreeNode:
@@ -81,8 +85,9 @@ class Solution:
         count.append(node.val)
         self.helper(node.right, count)
 
-#java
-js = '''
+#Java
+Java = '''
+1. InOrder with BFS/DFS, and Binary search (most preferably)
 /**
  * Definition for a binary tree node.
  * public class TreeNode {
@@ -93,83 +98,54 @@ js = '''
  * }
  */
 public class Solution {
+    int dfsCnt = 0;
+    int result = Integer.MIN_VALUE;
+
     public int kthSmallest(TreeNode root, int k) {
-        while (root != null) {
-            int leftCount = countNodes(root.left);
-            if (leftCount == k - 1) {
-                return root.val;
-            } else if (leftCount < k - 1) {
-                root = root.right;
-                k -= leftCount + 1;
-            } else {
-                root = root.left;
-            }
-        }
-        return 0;
+        //dfs(root,k);
+        //return result;
+        //return bfs(root, k);
+        return bs(root, k);
     }
 
-    private int countNodes(TreeNode root) {
-        if (root == null) {
-            return 0;
-        }
-        return countNodes(root.left) + countNodes(root.right) + 1;
-    }
-}
-
- # Binary Search (dfs): most preferable
-    public int kthSmallest(TreeNode root, int k) {
+    public int bs(TreeNode root, int k) {
         int count = countNodes(root.left);
         if (k <= count) {
-            return kthSmallest(root.left, k);
-        } else if (k > count + 1) {
-            return kthSmallest(root.right, k-1-count); // 1 is counted as current node
+            return bs(root.left, k);
+        } else if(k > count + 1) {
+            return bs(root.right, k - 1 - count); // 1 is counted as current node
         }
         return root.val;
     }
 
-    public int countNodes(TreeNode n) {
-        if (n == null) return 0;
-        return 1 + countNodes(n.left) + countNodes(n.right);
-    }
-
-
-
-# Inorder traverse for BST gives the natural order of numbers.
-No need to use array.
-Recursive:
-public class Solution {
-    int count = 0;
-    int result = Integer.MIN_VALUE;
-
-    public int kthSmallest(TreeNode root, int k) {
-        Stack<TreeNode> stack = new Stack<TreeNode>();
-        TreeNode p = root;
-        int cnt = 0;
-        while(!stack.isEmpty() || p != null) {
-            if (p != null) {
-                stack.push(p);
-                p = p.left;
-            } else {
-                TreeNode node = stack.pop();
-                cnt++;
-                if (cnt == k) return node.val;
-                p = node.right;
-            }
-        }
-        return -1;
-    }
-
-    public int kthSmallestDFS(TreeNode root, int k) {
-        dfs(root, k);
-        return result;
+    public int countNodes(TreeNode node) {
+        if (node == null) return 0;
+        return countNodes(node.left) + countNodes(node.right) + 1;
     }
 
     public void dfs(TreeNode root, int k) {
         if (root == null) return;
-        dfs(root.left, k);
-        count++;
-        if (count == k) result = root.val;
+        dfs(root.left, k); //cannot use k--
+        dfsCnt ++;
+        if(dfsCnt == k) result = root.val;
         dfs(root.right, k);
     }
-}
-'''
+
+    public int bfs(TreeNode root, int k) {
+        Stack<TreeNode> stack = new Stack<TreeNode>();
+        TreeNode p = root;
+        int count = 0;
+
+        while(!stack.isEmpty() || p != null) {
+            if ( p != null) {
+                stack.push(p);
+                p = p.left;
+            } else {
+                TreeNode node = stack.pop();
+                if (++ count == k) return node.val;
+                p = node.right;
+            }
+        }
+        return Integer.MIN_VALUE;
+    }
+}'''

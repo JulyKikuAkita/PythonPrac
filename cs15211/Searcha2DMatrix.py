@@ -1,4 +1,4 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/search-a-2d-matrix/#/description'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/search-a-2d-matrix.py
 # Time:  O(logm + logn)
 # Space: O(1)
@@ -18,7 +18,9 @@ __author__ = 'July'
 #   [23, 30, 34, 50]
 # ]
 # Given target = 3, return true.
-#
+# Array Binary Search
+# Hide Similar Problems (M) Search a 2D Matrix II
+
 
 class Solution:
     # @param matrix, a list of lists of integers
@@ -78,7 +80,32 @@ print test.searchMatrix(matrix, 0)
 #print 11 >> 1 # // 2
 
 #java
-js = '''
+java = '''
+Thought: Don't treat it as a 2D matrix, just treat it as a sorted list
+
+public class Solution {
+    public boolean searchMatrix(int[][] matrix, int target) {
+        int n = matrix.length;
+        if (n == 0) {
+            return false;
+        }
+        int m = matrix[0].length;
+        if (m == 0) {
+            return false;
+        }
+        int l = 0, r = m * n - 1;
+        while (l < r) {
+            int mid = l + (r - l ) / 2;
+            if (matrix[mid / m][mid % m] < target ) {
+                l = mid + 1;
+            } else {
+                r = mid;
+            }
+        }
+        return matrix[r / m][r % m] == target;
+    }
+}
+
 public class Solution {
     public boolean searchMatrix(int[][] matrix, int target) {
         int m = matrix.length;

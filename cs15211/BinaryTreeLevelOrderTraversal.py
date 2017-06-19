@@ -1,4 +1,4 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/binary-tree-level-order-traversal/#/description'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/binary-tree-level-order-traversal.py
 # Time:  O(n)
 # Space: O(n)
@@ -21,11 +21,13 @@ __author__ = 'July'
 #   [15,7]
 # ]
 #
-#  LinkedIn Facebook Amazon Microsoft Apple Bloomberg
-# Hide Tags Tree Breadth-first Search
-# Hide Similar Problems (M) Binary Tree Zigzag Level Order Traversal
-# (E) Binary Tree Level Order Traversal II (E) Minimum Depth of Binary Tree
-# (M) Binary Tree Vertical Order Traversal
+# Topics:
+# Tree Breadth-first Search
+# You might like:
+# (M) Binary Tree Zigzag Level Order Traversal (E) Binary Tree Level Order Traversal II
+# (E) Minimum Depth of Binary Tree (M) Binary Tree Vertical Order Traversal
+# Company:
+# LinkedIn Facebook Amazon Microsoft Apple Bloomberg
 #
 
 # Definition for a  binary tree node
@@ -110,25 +112,6 @@ if __name__ == "__main__":
 
 #java
 java='''
-public class Solution {
-    public List<List<Integer>> levelOrder(TreeNode root) {
-        List<List<Integer>> res = new ArrayList<List<Integer>>();
-        dfs(root, 0, res);
-        return res;
-    }
-
-    public void dfs(TreeNode root, int level, List<List<Integer>> res) {
-        if(root == null) return;
-        if(level + 1 > res.size()){
-            res.add(new ArrayList<Integer>());
-        }
-        res.get(level).add(root.val);
-        dfs(root.left, level+1, res);
-        dfs(root.right, level+1, res);
-
-    }
-}
-
 /**
  * Definition for a binary tree node.
  * public class TreeNode {
@@ -138,6 +121,28 @@ public class Solution {
  *     TreeNode(int x) { val = x; }
  * }
  */
+
+# DFS 43%
+public class Solution {
+    public List<List<Integer>> levelOrder(TreeNode root) {
+        List<List<Integer>> res = new ArrayList<List<Integer>>();
+        dfs(root, 0, res);
+        return res;
+    }
+
+    public void dfs(TreeNode root, int level, List<List<Integer>> res) {
+        if(root == null) return;
+        if(level + 1 > res.size()){ //same as if (res.size() <= level) {
+            res.add(new ArrayList<Integer>());
+        }
+        res.get(level).add(root.val);
+        dfs(root.left, level+1, res);
+        dfs(root.right, level+1, res);
+
+    }
+}
+
+#BFS 43%
 public class Solution {
     public List<List<Integer>> levelOrder(TreeNode root) {
         Queue<TreeNode> q = new LinkedList<TreeNode>();

@@ -1,4 +1,4 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/path-sum/#/description'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/path-sum.py
 # Time:  O(n)
 # Space: O(h), h is height of binary tree
@@ -17,6 +17,13 @@ __author__ = 'July'
 #          /  \      \
 #         7    2      1
 # return true, as there exist a root-to-leaf path 5->4->11->2 which sum is 22.
+#
+# Topics:
+# Tree Depth-first Search
+# You might like:
+# (M) Path Sum II (H) Binary Tree Maximum Path Sum (M) Sum Root to Leaf Numbers (E) Path Sum III
+# Company:
+# Microsoft
 #
 
 # Definition for a  binary tree node
@@ -70,3 +77,24 @@ if __name__ == "__main__":
     print Solution().hasPathSum(root, 22)
     print javaSolution().hasPathSum(root, 22)
 
+#Java
+java = '''
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+public class Solution {
+    public boolean hasPathSum(TreeNode root, int sum) {
+        if ( root == null) return false;
+        if (root.left == null && root.right == null){
+            return root.val == sum;
+        }
+           return hasPathSum(root.left, sum - root.val) || hasPathSum(root.right, sum - root.val);
+    }
+}
+'''

@@ -10,10 +10,13 @@ __source__ = 'https://leetcode.com/problems/meeting-rooms-ii/#/description'
 # Given [[0, 30],[5, 10],[15, 20]],
 # return 2.
 #
-#  Google Snapchat Facebook
-# Hide Tags Heap Greedy Sort
-# Hide Similar Problems (M) Merge Intervals (E) Meeting Rooms (M) Minimum Number of Arrows to Burst Balloons
-
+#Topics:
+# Heap Greedy Sort
+# You might like:
+# (M) Merge Intervals (E) Meeting Rooms (M) Minimum Number of Arrows to Burst Balloons
+# Company:
+# Google Snapchat Facebook
+#
 
 # Definition for an interval.
 # class Interval:
@@ -49,7 +52,6 @@ class Solution:
         return min_rooms
 #
 # Java :
-#test
 java = '''
 /**
  * Definition for an interval.
@@ -87,26 +89,6 @@ public class Solution {
             }
         }
         return result;
-    }
-}
-
-47% //sort only intervals.end
-public class Solution {
-    public int minMeetingRooms(Interval[] intervals) {
-        if(intervals == null || intervals.length == 0) return 0;
-        Arrays.sort(intervals, (Interval a, Interval b) -> a.start - b.start);
-        PriorityQueue<Integer> minHeap = new PriorityQueue<>();
-        minHeap.offer(intervals[0].end);
-        for (int i = 1; i < intervals.length; i++) {
-            int end= minHeap.poll();
-            if (intervals[i].start < end) {
-                minHeap.offer(intervals[i].end);
-                minHeap.offer(end);
-            }else {
-                minHeap.offer(intervals[i].end);
-            }
-        }
-        return minHeap.size();
     }
 }
 
@@ -173,5 +155,25 @@ public class Solution {
 
         return heap.size();
         }
+}
+
+47% //sort only intervals.end
+public class Solution {
+    public int minMeetingRooms(Interval[] intervals) {
+        if(intervals == null || intervals.length == 0) return 0;
+        Arrays.sort(intervals, (Interval a, Interval b) -> a.start - b.start);
+        PriorityQueue<Integer> minHeap = new PriorityQueue<>();
+        minHeap.offer(intervals[0].end);
+        for (int i = 1; i < intervals.length; i++) {
+            int end= minHeap.poll();
+            if (intervals[i].start < end) {
+                minHeap.offer(intervals[i].end);
+                minHeap.offer(end);
+            }else {
+                minHeap.offer(intervals[i].end);
+            }
+        }
+        return minHeap.size();
+    }
 }
 '''

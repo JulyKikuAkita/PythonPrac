@@ -1,4 +1,4 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/balanced-binary-tree/#/description'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/balanced-binary-tree.py
 # Time:  O(n)
 # Space: O(h), h is height of binary tree
@@ -9,6 +9,12 @@ __author__ = 'July'
 # For this problem, a height-balanced binary tree is defined as a binary tree
 # in which the depth of the two subtrees of every node never differ by more than 1.
 #
+# Topics:
+# Tree Depth-first Search
+# You might like:
+# (E) Maximum Depth of Binary Tree
+# Company:
+# Bloomberg
 
 # Definition for a  binary tree node
 class TreeNode:
@@ -107,3 +113,58 @@ if __name__ == "__main__":
     root.left.left = TreeNode(2)
     result = javaSolution().isBalanced(root)
     print result
+
+#Java
+java = '''
+
+Thought:  This problem is generally believed to have two solutions:
+the top down approach and the bottom up way.
+
+DFS 1) The first method checks whether the tree is balanced strictly according to the definition
+of balanced binary tree: the difference between the heights of the two sub trees are not bigger than 1,
+and both the left sub tree and right sub tree are also balanced. With the helper function depth(),
+we could easily write the code;
+For the current node root, calling depth() for its left and right children actually has to access all of its children,
+thus the complexity is O(N). We do this for each node in the tree,
+so the overall complexity of isBalanced will be O(N^2). This is a top down approach.
+
+DFS 2)The second method is based on DFS. Instead of calling depth() explicitly for each child node,
+we return the height of the current node in DFS recursion.
+When the sub tree of the current node (inclusive) is balanced, the function dfsHeight()
+returns a non-negative value as the height.
+Otherwise -1 is returned. According to the leftHeight and rightHeight of the two children,
+the parent node could check if the sub tree is balanced, and decides its return value.
+
+public class Solution {
+
+    //DFS1
+    public boolean isBalanced2(TreeNode root) {
+        if (root == null) return true;
+        int left = maxDepth(root.left);
+        int right = maxDepth(root.right);
+        return Math.abs(left - right) <= 1 && isBalanced2(root.left) && isBalanced2(root.right);
+    }
+
+    public int getDpeth(TreeNode root) {
+        if (root == null) return 0;
+        return Math.max(getDpeth(root.left), getDpeth(root.right)) + 1;
+    }
+
+     //DFS2
+    public boolean isBalanced(TreeNode root) {
+         return dfsHeight(root) != -1;
+    }
+
+    public int dfsHeight(TreeNode root) {
+        if (root == null) return 0;
+        int left_count = dfsHeight(root.left);
+        int right_count = dfsHeight(root.right);
+        if ( left_count == -1 || right_count == -1
+            || Math.abs(left_count - right_count) > 1){
+                return -1;
+            } else {
+                return Math.max(left_count, right_count) + 1;
+            }
+    }
+}
+'''

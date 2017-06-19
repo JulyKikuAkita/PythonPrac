@@ -1,4 +1,4 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/invert-binary-tree/#/description'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/invert-binary-tree.py
 # Time:  O(n)
 # Space: O(h)
@@ -20,8 +20,11 @@ __author__ = 'July'
 #
 # Trivia:
 # This problem was inspired by this original tweet by Max Howell:
-# Google: 90% of our engineers use the software you wrote (Homebrew), but you can’t invert a binary tree on a whiteboard so fuck off.
-#
+# Google: 90% of our engineers use the software you wrote (Homebrew),
+# but you can't invert a binary tree on a whiteboard so fuck off.
+# Topics:
+# Tree
+
 
 # Time:  O(n)
 # Space: O(w), w is the max number of the nodes of the levels.
@@ -101,3 +104,67 @@ class Solution3:
             root.left, root.right = self.invertTree(root.right), self.invertTree(root.left)
 
         return root
+
+#JAVA
+java = '''
+Thought: https://leetcode.com/articles/invert-binary-tree/
+
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+
+public class Solution {
+    //DFS3
+    public TreeNode invertTree(TreeNode root) {
+         if (root != null) {
+            TreeNode tmp = root.left;
+            root.left = root.right;
+            root.right = tmp;
+            invertTree(root.left);
+            invertTree(root.right);
+        }
+        return root;
+    }
+    //DFS1
+    public TreeNode invertTree1(TreeNode root) {
+        if (root == null) return null;
+        //TreeNode tmp = root.left;
+        TreeNode left = root.left;
+        TreeNode right = root.right;
+        root.left = invertTree(right);
+        root.right = invertTree(left);
+        return root;
+    }
+    //DFS2
+    public TreeNode invertTree2(TreeNode root) {
+        if (root == null) { return null;}
+        TreeNode right = invertTree(root.right);
+        TreeNode left = invertTree(root.left);
+        root.left = right;
+        root.right = left;
+        return root;
+    }
+
+    //BFS1
+    public TreeNode invertTreeBFS(TreeNode root) {
+        if (root == null) return null;
+        Queue<TreeNode> queue = new LinkedList<TreeNode>();
+        queue.add(root);
+        while (!queue.isEmpty()) {
+            TreeNode current = queue.poll();
+            TreeNode temp = current.left;
+            current.left = current.right;
+            current.right = temp;
+            if (current.left != null) queue.add(current.left);
+            if (current.right != null) queue.add(current.right);
+        }
+        return root;
+    }
+}
+'''

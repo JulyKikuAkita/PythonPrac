@@ -1,4 +1,4 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/reverse-linked-list/#/solutions'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/reverse-linked-list.py
 # Time:  O(n)
 # Space: O(1)
@@ -9,9 +9,13 @@ __author__ = 'July'
 #
 # Hint:
 # A linked list can be reversed either iteratively or recursively. Could you implement both?
-#  Uber Facebook Twitter Zenefits Amazon Microsoft Snapchat Apple Yahoo Bloomberg Yelp Adobe
-# Hide Tags Linked List
-# Hide Similar Problems (M) Reverse Linked List II (M) Binary Tree Upside Down (E) Palindrome Linked List
+#Topics:
+# Linked List
+# You might like:
+# (M) Reverse Linked List II (M) Binary Tree Upside Down (E) Palindrome Linked List
+# Company:
+# Uber Facebook Twitter Zenefits Amazon Microsoft Snapchat Apple Yahoo Bloomberg Yelp Adobe
+#
 
 # Definition for singly-linked list.
 import unittest
@@ -95,50 +99,32 @@ thought: https://leetcode.com/articles/reverse-linked-list/
  *     ListNode(int x) { val = x; }
  * }
  */
- #recursion
-public class Solution1 {
-    public ListNode reverseList(ListNode head) {
-        if(head == null || head.next == null) return head;
 
-        ListNode p2 = head.next;
-        head.next = null;
-
-        ListNode rest = reverseList(p2);
-        p2.next = head;
-
-        return rest;
-
-    }
-}
-
-#recursion
-public class Solution {
+// recursion
     public ListNode reverseList(ListNode head) {
         if ( head == null) return head;
-        return helper2(head, null);
-        # return helper1(head);
+        return dfs2(head, null);
+        //return dfs1(head);
     }
 
-    public ListNode helper1(ListNode head) {
+    public ListNode dfs1(ListNode head) {
         if ( head.next == null) return head;
-        ListNode prev = head.next;
-        head.next = null;
-        ListNode node = reverseList(prev);
-        prev.next = head;
-        return node;
+            ListNode prev = head.next;
+            head.next = null;
+            ListNode node = dfs1(prev);
+            prev.next = head;
+            return node;
     }
 
-    private ListNode helper2(ListNode head, ListNode newHead) {
-    if (head == null)
-        return newHead;
-    ListNode next = head.next;
-    head.next = newHead;
-    return helper2(next, head);
+    private ListNode dfs2(ListNode head, ListNode newHead) {
+        if (head == null)
+            return newHead;
+        ListNode next = head.next;
+        head.next = newHead;
+        return dfs2(next, head);
     }
-}
 
-#iteration
-public class Solution3 {
+//iteration
     public ListNode reverseList(ListNode head) {
         if( head == null || head.next == null) return head;
         ListNode dummy = null;
@@ -151,7 +137,7 @@ public class Solution3 {
         }
         return dummy;
     }
-}
+
 
 // import org.junit.*;
 // StringBuilder sb = new StringBuilder();

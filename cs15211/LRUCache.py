@@ -1,4 +1,4 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/lru-cache/#/description'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/lru-cache.py
 # Time:  O(1)
 # Space: O(n)
@@ -27,10 +27,15 @@ __author__ = 'July'
 # cache.get(1);       // returns -1 (not found)
 # cache.get(3);       // returns 3
 # cache.get(4);       // returns 4
-# Hide Company Tags Google Uber Facebook Twitter Zenefits Amazon Microsoft Snapchat Yahoo Bloomberg Palantir
-# Hide Tags Design
-# Hide Similar Problems (H) LFU Cache (H) Design In-Memory File System
-
+#
+#
+# Topics:
+# Design
+# You might like:
+# (H) LFU Cache (H) Design In-Memory File System (E) Design Compressed String Iterator
+# Company:
+# Google Uber Facebook Twitter Zenefits Amazon Microsoft Snapchat Yahoo Bloomberg Palantir
+#
 
 # (1)
 class LRUCache(object):
@@ -241,9 +246,10 @@ print test.get(0)
 test.set(2,1)
 print test.get(2)
 
-#java
+# java
 # HashMap + doubly-linked list implementation:
-js1 = '''
+# Without dummyhead tail
+Java = '''
 public class LRUCache {
     private int capacityLeft;
     private Map<Integer, DoublyLinkedNode<KeyValuePair>> keyElementMap;
@@ -340,89 +346,7 @@ class KeyValuePair {
 }
 '''
 
-# bad performance
-# bad design
-js2= '''
-public class LRUCache {
-    private int capacity, count;
-    private Map<Integer, Node> map;
-    private Node head, tail;
-
-    public LRUCache(int capacity) {
-        this.capacity = capacity;
-        this.count = 0;
-        map = new HashMap<>();
-        head = new Node();
-        tail = new Node();
-        head.next = tail;
-        tail.prev = head;
-    }
-
-    public int get(int key) {
-        Node n = map.get(key);
-        if (n == null) return -1;
-        update(n);
-        return n.value;
-    }
-
-    public void put(int key, int value) {
-        Node n = map.get(key);
-        if (n == null) {
-            n = new Node(key, value);
-            map.put(key, n);
-            add(n);
-            ++count;
-        } else {
-          n.value = value;
-          update(n);
-        }
-        if(count > capacity) {
-            Node toDel = tail.prev;
-            remove(toDel);
-            map.remove(toDel.key);
-            --count;
-        }
-    }
-
-    private void update(Node node) {
-        remove(node);
-        add(node);
-    }
-
-    private void add(Node node){
-        Node after = head.next;
-        head.next = node;
-        node.prev = head;
-        node.next = after;
-        after.prev = node;
-    }
-
-    private void remove(Node node){
-        Node before = node.prev;
-        Node after = node.next;
-        before.next = after;
-        after.prev = before;
-    }
-
-    private class Node{
-        int key, value;
-        Node prev, next;
-        Node(int k, int v){
-            this.key = k;
-            this.value = v;
-        }
-        Node(){
-            this(0, 0);
-        }
-    }
-}
-
-/**
- * Your LRUCache object will be instantiated and called as such:
- * LRUCache obj = new LRUCache(capacity);
- * int param_1 = obj.get(key);
- * obj.put(key,value);
- */
+Java2= '''
 
 #https://discuss.leetcode.com/topic/43961/laziest-implementation-java-s-linkedhashmap-takes-care-of-everything
 This is the laziest implementation using Java's LinkedHashMap. In the real interview,
@@ -463,4 +387,122 @@ public class LRUCache {
  * int param_1 = obj.get(key);
  * obj.put(key,value);
  */
+'''
+
+Java3 = '''
+The problem can be solved with a hashtable that keeps track of the keys and its values in the double linked list.
+One interesting property about double linked list is that the node can remove itself without other reference.
+In addition, it takes constant time to add and remove nodes from the head or tail.
+
+One particularity about the double linked list that I implemented is that I create a pseudo head
+and tail to mark the boundary, so that we don't need to check the NULL node during the update.
+This makes the code more concise and clean, and also it is good for the performance as well.
+
+Voila, here is the code.
+
+class DLinkedNode {
+	int key;
+	int value;
+	DLinkedNode pre;
+	DLinkedNode post;
+}
+
+/**
+ * Always add the new node right after head;
+ */
+private void addNode(DLinkedNode node){
+	node.pre = head;
+	node.post = head.post;
+
+	head.post.pre = node;
+	head.post = node;
+}
+
+/**
+ * Remove an existing node from the linked list.
+ */
+private void removeNode(DLinkedNode node){
+	DLinkedNode pre = node.pre;
+	DLinkedNode post = node.post;
+
+	pre.post = post;
+	post.pre = pre;
+}
+
+/**
+ * Move certain node in between to the head.
+ */
+private void moveToHead(DLinkedNode node){
+	this.removeNode(node);
+	this.addNode(node);
+}
+
+// pop the current tail.
+private DLinkedNode popTail(){
+	DLinkedNode res = tail.pre;
+	this.removeNode(res);
+	return res;
+}
+
+private Hashtable<Integer, DLinkedNode> cache = new Hashtable<Integer, DLinkedNode>();
+private int count;
+private int capacity;
+private DLinkedNode head, tail;
+
+public LRUCache(int capacity) {
+	this.count = 0;
+	this.capacity = capacity;
+
+	head = new DLinkedNode();
+	head.pre = null;
+
+	tail = new DLinkedNode();
+	tail.post = null;
+
+	head.post = tail;
+	tail.pre = head;
+}
+
+public int get(int key) {
+
+	DLinkedNode node = cache.get(key);
+	if(node == null){
+		return -1; // should raise exception here.
+	}
+
+	// move the accessed node to the head;
+	this.moveToHead(node);
+
+	return node.value;
+}
+
+
+public void set(int key, int value) {
+	DLinkedNode node = cache.get(key);
+
+	if(node == null){
+
+		DLinkedNode newNode = new DLinkedNode();
+		newNode.key = key;
+		newNode.value = value;
+
+		this.cache.put(key, newNode);
+		this.addNode(newNode);
+
+		++count;
+
+		if(count > capacity){
+			// pop the tail
+			DLinkedNode tail = this.popTail();
+			this.cache.remove(tail.key);
+			--count;
+		}
+	}else{
+		// update the value.
+		node.value = value;
+		this.moveToHead(node);
+	}
+
+}
+
 '''

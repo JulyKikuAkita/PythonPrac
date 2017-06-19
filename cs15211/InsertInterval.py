@@ -1,4 +1,4 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/insert-interval/#/description'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/insert-interval.py
 # Time:  O(n)
 # Space: O(1)
@@ -15,6 +15,12 @@ __author__ = 'July'
 # Given [1,2],[3,5],[6,7],[8,10],[12,16], insert and merge [4,9] in as [1,2],[3,10],[12,16].
 #
 # This is because the new interval [4,9] overlaps with [3,5],[6,7],[8,10].
+#Topics:
+# Array Sort
+# You might like:
+# (M) Merge Intervals
+# Company:
+# LinkedIn Google Facebook
 #
 
 # Definition for an interval.
@@ -70,9 +76,6 @@ class SolutionOther:
                     res.append(intervals[i])
         return res
 
-#java solution
-#http://www.programcreek.com/2012/12/leetcode-insert-interval/
-
 #test
 test = SolutionOther()
 i1 = Interval(1,3)
@@ -85,3 +88,40 @@ ans1 = test.insert(a1, i3)
 ans2 = test.insert(a2, i9)
 for item in ans2:
     print item.start, item.end
+
+#java
+java = '''
+
+/**
+ * Definition for an interval.
+ * public class Interval {
+ *     int start;
+ *     int end;
+ *     Interval() { start = 0; end = 0; }
+ *     Interval(int s, int e) { start = s; end = e; }
+ * }
+ */
+public class Solution {
+    public List<Interval> insert(List<Interval> intervals, Interval newInterval) {
+        List<Interval> result = new ArrayList<>();
+        int index = 0;
+        while (index < intervals.size()) {
+            Interval cur = intervals.get(index);
+            if (cur.end < newInterval.start) {
+                result.add(cur);
+            } else if (newInterval.end < cur.start) {
+                break; //newInterval might be the last one
+            } else {
+                newInterval.start = Math.min(newInterval.start, cur.start);
+                newInterval.end = Math.max(newInterval.end, cur.end);
+            }
+            index++;
+        }
+        result.add(newInterval);
+        while (index < intervals.size()) {
+            result.add(intervals.get(index++));
+        }
+        return result;
+    }
+}
+'''

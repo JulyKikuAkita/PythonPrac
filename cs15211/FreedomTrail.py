@@ -1,6 +1,6 @@
 __source__ = 'https://leetcode.com/problems/freedom-trail/#/description'
-# Time:  O()
-# Space: O()
+# Time:  O(m*n) dp
+# Space: O(m*n)
 #
 # Description:
 # In the video game Fallout 4, the quest "Road to Freedom" requires players to reach a metal dial

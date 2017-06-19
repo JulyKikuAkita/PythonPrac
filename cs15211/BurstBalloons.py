@@ -1,4 +1,4 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/different-ways-to-add-parentheses/#/description'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/burst-balloons.py
 # Time:  O(n^3)
 # Space: O(n^2)
@@ -30,8 +30,11 @@ __author__ = 'July'
 #     nums = [3,1,5,8] --> [3,5,8] -->   [3,8]   -->  [8]  --> []
 #   coins =  3*1*5      +  3*5*8    +  1*3*8      + 1*8*1   = 167
 #
-# Google
 # dp[l][r] = max(dp[l][r], nums[l] * nums[m] * nums[r] + dp[l][m] + dp[m][r])
+#
+#  Google Snapchat
+#Hide Tags Dynamic Programming Divide and Conquer
+#
 
 # https://leetcode.com/discuss/72216/share-some-analysis-and-explanations
 class Solution(object):
@@ -74,7 +77,7 @@ class Solution2(object):
         return dp[i][j]
 
 #java
-js = '''
+java = '''
 https://discuss.leetcode.com/topic/30746/share-some-analysis-and-explanations/6
 Side notes: In case you are curious, for the problem "leetcode 312. Burst Balloons",
 the external information to subarray nums[i, j] is the two numbers (denoted as left and right)
@@ -142,26 +145,68 @@ Here comes the final solutions. Note that we put 2 balloons with 1 as boundaries
 and also burst all the zero balloons in the first round since they won't give any coins.
 The algorithm runs in O(n^3) which can be easily seen from the 3 loops in dp solution.
 
-
+#DP 41%
 public class Solution {
     public int maxCoins(int[] nums) {
-        int len = nums.length + 2;
-        int[] newNums = new int[len];
-        newNums[0] = 1;
-        newNums[len - 1] = 1;
-        for (int i = 0; i < len - 2; i++) {
-            newNums[i + 1] = nums[i];
+        int[] newNums = new int[nums.length + 2];
+	    int n = 1;
+	    // do not keep ballon value == 0
+	    for (int x : nums) if (x > 0) newNums[n++] = x;
+	    newNums[0] = newNums[n++] = 1;
+
+	    int[][] dp = new int[n][n];
+	    for (int k = 2; k < n; k++) {
+	        for (int left = 0; left < n - k; left++ ) {
+	            int right = left + k;
+	            for (int i = left + 1; i < right; i++) {
+	                dp[left][right] = Math.max( dp[left][right],
+	                    newNums[left]*newNums[i]*newNums[right] + dp[left][i] + dp[i][right]);
+	            }
+	        }
+	    }
+	    /*
+	    for (int[] row : dp) {
+	        for (int each : row) {
+	            System.out.print(each + " ");
+	        }
+	        System.out.println(" ");
+	    }
+	    */
+	    return dp[0][n-1];
+    }
+}
+DP table: if use [3,1,5,8]
+0 0 3 30 159 167
+0 0 0 15 135 159
+0 0 0  0  40  48
+0 0 0  0   0  40
+0 0 0  0   0   0
+0 0 0  0   0   0
+
+
+# 64%  Java D&C with Memoization
+public class Solution {
+    public int maxCoins(int[] nums) {
+        int[] newNums = new int[nums.length + 2];
+	    int n = 1;
+	    // do not keep ballon value == 0
+	    for (int x : nums) if (x > 0) newNums[n++] = x;
+	    newNums[0] = newNums[n++] = 1;
+	    int[][] memo = new int[n][n];
+        return burst(memo, newNums, 0, n-1);
+    }
+
+    public int burst(int[][] memo,int[] nums,int left, int right){
+        if (left + 1 == right) return 0; //left -> i -> right
+        if (memo[left][right] > 0) return memo[left][right];
+        int res = 0;
+        for (int i = left + 1; i < right; i++) {
+            res = Math.max(res, nums[left] * nums[i] * nums[right]
+                                + burst(memo, nums, left, i)
+                                + burst(memo, nums, i, right));
         }
-        int[][] dp = new int[len][len];
-        for (int diff = 2; diff < len; diff++) {
-            for (int i = 0; i < len - diff; i++) {
-                int j = i + diff;
-                for (int k = i + 1; k < j; k++) {
-                    dp[i][j] = Math.max(dp[i][j], newNums[i] * newNums[k] * newNums[j] + dp[i][k] + dp[k][j]);
-                }
-            }
-        }
-        return dp[0][len - 1];
+        memo[left][right] = res;
+        return res;
     }
 }
 '''
