@@ -219,6 +219,7 @@ class Solution_TLE(object):
 
 #java
 js = '''
+Thought: https://leetcode.com/articles/android-unlock-patterns/
 'public class Solution {
     public static final int[][] SKIP_LIST;
     static {

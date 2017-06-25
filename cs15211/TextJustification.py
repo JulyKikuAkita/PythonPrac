@@ -1,16 +1,19 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/text-justification/#/description'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/text-justification.py
 # Time:  O(n)
 # Space: O(1)
 # String
 #
-# Given an array of words and a length L, format the text such that each line has exactly L characters and is fully (left and right) justified.
+# Given an array of words and a length L, format the text such that each line has exactly L characters
+# and is fully (left and right) justified.
 #
-# You should pack your words in a greedy approach; that is, pack as many words as you can in each line. Pad extra spaces ' '
+# You should pack your words in a greedy approach; that is, pack as many words as you can in each line.
+# Pad extra spaces ' '
 # when necessary so that each line has exactly L characters.
 #
 # Extra spaces between words should be distributed as evenly as possible.
-# If the number of spaces on a line do not divide evenly between words, the empty slots on the left will be assigned more spaces than the slots on the right.
+# If the number of spaces on a line do not divide evenly between words, the empty slots on the left
+# will be assigned more spaces than the slots on the right.
 #
 # For the last line of text, it should be left justified and no extra space is inserted between words.
 #
@@ -25,8 +28,11 @@ __author__ = 'July'
 #    "justification.  "
 # ]
 # Note: Each word is guaranteed not to exceed L in length.
-# LinkedIn Airbnb
-
+# Companies
+# LinkedIn Airbnb Facebook
+# Related Topics
+# String
+#
 
 class Solution:
     # @param words, a list of strings
@@ -81,7 +87,7 @@ class Solution:
 if __name__ == "__main__":
     #print Solution().fullJustify(["This", "is", "an", "example", "of", "text", "justification."], 16)
     #print Solution().fullJustify(["What","must","be","shall","be."], 12)
-    print Solution2().fullJustify(["What","must","be","shall","be."], 12)
+    print Solution().fullJustify(["What","must","be","shall","be."], 12)
     #print Solution().fullJustify(['012','34','56','7890'] , 6)
 
 
@@ -131,45 +137,53 @@ words = ["This", "is", "an", "example", "of", "text", "justification."]
 #print test.fullJustify(words, 16)
 
 #java
-js = '''
+Java = '''
 public class Solution {
     public List<String> fullJustify(String[] words, int maxWidth) {
-        List<String> result = new ArrayList<>();
-        int start = 0;
-        int end = 0;
-        while (end < words.length) {
-            int len = 0;
-            while (end < words.length && len + words[end].length() <= maxWidth) {
-                len += words[end++].length() + 1;
-            }
-            len--;
+        List<String> res = new ArrayList<>();
+        int start = 0, end = 0, wc = words.length;
+        while (start < wc) {
+            int len = 0; //len for each word
+            while (end < wc && words[end].length() + len <= maxWidth) {
+                len = words[end].length() + len + 1;
+                end++;
+            } //note: [start, end)
             StringBuilder sb = new StringBuilder();
-            if (end == words.length || end - start == 1) {
-                for (int i = start; i < end; i++) {
+            if (start == end) { //word > maxWidth
+                throw new IllegalArgumentException(String.format("%s > maxWidth == %s", words[start], maxWidth));
+            } else if (end - start == 1) { //only add one word
+                sb.append(words[start]);
+                addSpace(sb, maxWidth - words[start].length());
+            } else if (end == wc){ //add last word
+                for (int i = start; i < end - 1; i++) {
                     sb.append(words[i]).append(' ');
                 }
-                sb.setLength(sb.length() - 1);
-                addSpaces(sb, maxWidth - sb.length());
-            } else {
-                int numIntervals = end - start - 1;
-                int spaces = numIntervals + (maxWidth - len);
+                sb.append(words[end - 1]);
+                addSpace(sb, maxWidth - len + 1);
+            } else { //justified space between words
+                int allSpace = maxWidth - len + 1;
+                int holes = end - start - 1;
+                int avg_padding = allSpace / holes;
                 for (int i = start; i < end - 1; i++) {
                     sb.append(words[i]);
-                    addSpaces(sb, spaces / numIntervals + (spaces % numIntervals > i - start ? 1 : 0));
+                    int offset = 0;
+                    if (allSpace % holes > i - start) offset = 1;
+                    addSpace(sb, avg_padding + 1 + offset);
                 }
                 sb.append(words[end - 1]);
             }
             start = end;
-            result.add(sb.toString());
+            res.add(sb.toString());
         }
-        return result;
+        return res;
     }
 
-    private void addSpaces(StringBuilder sb, int count) {
-        for (int i = 0; i < count; i++) {
+    public void addSpace(StringBuilder sb, int num) {
+        for (int i = 0; i < num ; i++) {
             sb.append(' ');
         }
     }
+
 }
 
 
