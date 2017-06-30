@@ -1,4 +1,4 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/house-robber/#/description'
 # Time:  O(n)
 # Space: O(1)
 #
@@ -10,8 +10,13 @@ __author__ = 'July'
 # Given a list of non-negative integers representing the amount of money of each house,
 # determine the maximum amount of money you can rob tonight without alerting the police.
 #
+# Companies
 # LinkedIn Airbnb
-# Hide Tags Dynamic Programming
+# Related Topics
+# Dynamic Programming
+# Similar Questions
+# Maximum Product Subarray House Robber II Paint House Paint Fence House Robber III Non-negative Integers without Consecutive Ones
+#
 
 class Solution:
     # @param num, a list of integer
@@ -52,8 +57,11 @@ if __name__ == '__main__':
         print Solution().rob([10,100,1000,10000])
         print SolutionJava().rob([10,100,1000,10000])
 
-#java
-js = '''
+#Java
+Java = '''
+Thought: https://leetcode.com/problems/house-robber/#/solution
+f(k) = max(f(k-2) + Ak, f(k-1))
+
 public class Solution {
     public int rob(int[] nums) {
         if (nums.length == 0) {
@@ -70,6 +78,7 @@ public class Solution {
     }
 }
 
+37.20%
 public class Solution {
     public int rob(int[] nums) {
         if(nums == null || nums.length == 0) return 0;
@@ -84,6 +93,20 @@ public class Solution {
             dp[i] = Math.max(dp[i-2] + nums[i], dp[i-1]);
         }
         return dp[nums.length-1];
+    }
+}
+
+37.20%
+public class Solution {
+    public int rob(int[] nums) {
+        int prevMax = 0;
+        int currMax = 0;
+        for (int n : nums) {
+            int tmp = currMax;
+            currMax = Math.max(prevMax + n, currMax);
+            prevMax = tmp;
+        }
+        return currMax;
     }
 }
 '''

@@ -1,4 +1,4 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/house-robber-ii/#/description'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/house-robber-ii.py
 # Time:  O(n)
 # Space: O(1)
@@ -13,10 +13,14 @@ __author__ = 'July'
 #
 # Given a list of non-negative integers representing the amount of money of each house,
 # determine the maximum amount of money you can rob tonight without alerting the police.
-#  Microsoft
-# Hide Tags Dynamic Programming
-
-
+#
+# Companies
+# Microsoft
+# Related Topics
+# Dynamic Programming
+# Similar Questions
+# House Robber Paint House Paint Fence House Robber III Non-negative Integers without Consecutive Ones
+#
 class Solution:
     # @param {integer[]} nums
     # @return {integer}
@@ -64,6 +68,7 @@ public class Solution {
     }
 }
 
+60%
 public class Solution {
     public int rob(int[] nums) {
         if(nums == null || nums.length == 0) return 0;
@@ -76,7 +81,7 @@ public class Solution {
         if (end - start <= 1) return nums[start];  //for case: [0,0]
         int[] dp = new int[nums.length];
         dp[start] = nums[start];
-        dp[start + 1] = Math.max(nums[start], nums[start+1]);
+        dp[start + 1] = Math.max(nums[start], nums[start+1]); //same as nums.length = 2
 
         for (int i = start + 2; i <= end ; i++){
             dp[i] = Math.max(dp[i-2] + nums[i], dp[i-1]);

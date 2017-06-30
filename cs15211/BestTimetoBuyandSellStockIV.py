@@ -1,4 +1,4 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/best-time-to-buy-and-sell-stock-iv/#/description'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/best-time-to-buy-and-sell-stock-iv.py
 # Dynamic Programming
 # Time:  O(k * n)
@@ -11,6 +11,11 @@ __author__ = 'July'
 #
 # Note:
 # You may not engage in multiple transactions at the same time (ie, you must sell the stock before you buy again).
+#
+# Related Topics
+# Dynamic Programming
+# Similar Questions
+# Best Time to Buy and Sell Stock Best Time to Buy and Sell Stock II Best Time to Buy and Sell Stock III
 #
 #
 '''
@@ -91,8 +96,9 @@ if __name__ == '__main__':
     print JavaSol2DDP().maxProfit(2, prices)
     print JavaSol1DDP().maxProfit(2, prices)
 
-#java
-js = '''
+#Java
+Java = '''
+46.88%
 public class Solution {
     public int maxProfit(int k, int[] prices) {
         int len = prices.length;
@@ -122,6 +128,7 @@ public class Solution {
     }
 }
 
+27%
 public class Solution {
     public int maxProfit(int k, int[] prices) {
         int n = prices.length;
@@ -150,4 +157,68 @@ public class Solution {
         return res;
     }
 }
+
+27%
+public class Solution {
+    public int maxProfit(int k, int[] prices) {
+        int len = prices.length;
+        if (k >= len / 2) return quickSolve(prices);
+
+        int[][] dp = new int[k + 1][len];
+        for (int i = 1; i <= k; i++) {
+            int tmpMax = -prices[0];
+            for (int j = 1; j < len; j++) {
+                dp[i][j] = Math.max(dp[i][j-1], prices[j] + tmpMax);
+                tmpMax = Math.max(tmpMax, dp[i-1][j-1] - prices[j]);
+            }
+        }
+        return dp[k][len-1];
+    }
+
+    private int quickSolve(int[] prices) {
+        int len = prices.length, profit = 0;
+        for (int i = 1; i < len; i++) {
+            // as long as there is a price gap, we gain a profit.
+            if (prices[i] > prices[i-1]) profit += prices[i] - prices[i-1];
+        }
+        return profit;
+    }
+}
+
+87%
+public class Solution {
+    public int maxProfit(int k, int[] prices) {
+        if(prices == null || prices.length < 2) {
+            return 0;
+        }
+        if(k >= prices.length >> 1) {
+            int max = 0;
+            for(int i = 1; i < prices.length; i++) {
+                if(prices[i] > prices[i - 1]) {
+                    max += prices[i] - prices[i - 1];
+                }
+            }
+            return max;
+        }
+        int[] positions = new int[2 * k + 1];
+        for(int i = 0; i < k; i++) {
+            positions[2 * i + 1] = - prices[0];
+        }
+        for(int i = 1; i < prices.length; i++) {
+            for(int j = k; j > 0; j--) {
+                int index = 2 * j;
+                if(positions[index - 1] + prices[i] > positions[index]) {
+                    positions[index] = positions[index - 1] + prices[i];
+                }
+                if(positions[index - 2] - prices[i] > positions[index - 1]) {
+                    positions[index - 1] = positions[index - 2] - prices[i];
+                }
+            }
+        }
+        return positions[2 * k];
+    }
+}
+
+
+
 '''

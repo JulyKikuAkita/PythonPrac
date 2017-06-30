@@ -1,4 +1,4 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/house-robber-iii/#/description'
 # Time:  O(n)
 # Space: O(h)
 # https://github.com/kamyu104/LeetCode/blob/master/Python/house-robber-iii.py
@@ -29,15 +29,19 @@ __author__ = 'July'
 #  1   3   1
 # Maximum amount of money the thief can rob = 4 + 5 = 9.
 #
+# Companies
+# Uber
+# Related Topics
+# Tree Depth-first Search
+# Similar Questions
+# House Robber House Robber II
+#
 # Definition for a binary tree node.
-# class TreeNode(object):
-#     def __init__(self, x):
-#         self.val = x
-#         self.left = None
-#         self.right = None
-#  Uber
-# Hide Tags Tree Depth-first Search
-
+class TreeNode(object):
+    def __init__(self, x):
+        self.val = x
+        self.left = None
+        self.right = None
 
 class Solution(object):
     def rob(self, root):
@@ -72,10 +76,94 @@ class Solution2(object):
         rob_R, no_rob_R = self.dfs(root.right)
         return max(rob_L + rob_R,  no_rob_L + no_rob_R + root.val) , rob_L + rob_R
 
-#java
-js = '''
-Java
+#Java
+Java = '''
+Thought: https://discuss.leetcode.com/topic/39834/step-by-step-tackling-of-the-problem
+why we have overlapping subproblems.
+If you trace all the way back to the beginning, you'll find the answer lies in the way how we have defined rob(root).
+As I mentioned, for each tree root, there are two scenarios: it is robbed or is not. rob(root)
+does not distinguish between these two cases, so "information is lost as the recursion goes deeper and deeper",
+which results in repeated subproblems.
 
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+# Naive 4.38%
+public class Solution {
+    public int rob(TreeNode root) {
+        if (root == null) return 0;
+        return Math.max(robInclude(root), robExclude(root));
+    }
+
+    public int robInclude(TreeNode node) {
+        if (node == null) return 0;
+        return node.val + robExclude(node.left) + robExclude(node.right);
+    }
+
+    public int robExclude(TreeNode node) {
+        if (node == null) return 0;
+        return rob(node.left) + rob(node.right);
+    }
+}
+
+#Naive 13.41%
+public class Solution {
+    public int rob(TreeNode root) {
+        return robSub(root);
+    }
+
+    private int robSub(TreeNode root) {
+        if (root == null) return 0;
+
+        int val = 0;
+
+        if (root.left != null) {
+            val += robSub(root.left.left) + robSub(root.left.right);
+        }
+
+        if (root.right != null) {
+            val += robSub(root.right.left) + robSub(root.right.right);
+        }
+
+        val = Math.max(val + root.val, robSub(root.left) + robSub(root.right));
+        return val;
+    }
+}
+
+#DFS + memorization 37.2%
+public class Solution {
+    public int rob(TreeNode root) {
+        return robSub(root, new HashMap<>());
+    }
+
+    private int robSub(TreeNode root, Map<TreeNode, Integer> map) {
+        if (root == null) return 0;
+        if (map.containsKey(root)) return map.get(root);
+
+        int val = 0;
+
+        if (root.left != null) {
+            val += robSub(root.left.left, map) + robSub(root.left.right, map);
+        }
+
+        if (root.right != null) {
+            val += robSub(root.right.left, map) + robSub(root.right.right, map);
+        }
+
+        val = Math.max(val + root.val, robSub(root.left, map) + robSub(root.right, map));
+        map.put(root, val);
+
+        return val;
+    }
+}
+
+# 86%
 public class Solution {
     public int rob(TreeNode root) {
         return dfs(root)[0];

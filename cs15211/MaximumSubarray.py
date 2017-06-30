@@ -95,7 +95,7 @@ sum in the first I elements is either the maximum sum in the first i - 1 element
 
 MaxEndingHere is either A[i] plus the previous MaxEndingHere, or just A[i], whichever is larger.
 
-
+29%
 public class Solution {
     public int maxSubArray(int[] A) {
         int maxSoFar=A[0], maxEndingHere=A[0];
@@ -132,6 +132,7 @@ because there's a limitation that A[i] should be contained in that sequence and 
 maxSubArray(A, i) = maxSubArray(A, i - 1) > 0 ? maxSubArray(A, i - 1) : 0 + A[i];
 And here's the code
 
+46%
 public int maxSubArray(int[] A) {
         int n = A.length;
         int[] dp = new int[n];//dp[i] means the maximum subarray ending with A[i];

@@ -1,4 +1,4 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/longest-palindromic-substring/#/description'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/longest-palindromic-substring.py
 # Time:  O(n)
 # Space: O(n)
@@ -7,14 +7,33 @@ __author__ = 'July'
 # Given a string S, find the longest palindromic substring in S.
 # You may assume that the maximum length of S is 1000,
 #  and there exists one unique longest palindromic substring.
+# Example:
 #
-#  Amazon Microsoft Bloomberg
-
+# Input: "babad"
+#
+# Output: "bab"
+#
+# Note: "aba" is also a valid answer.
+# Example:
+#
+# Input: "cbbd"
+#
+# Output: "bb"
+# Companies
+# Amazon Microsoft Bloomberg
+# Related Topics
+# String
+# Similar Questions
+# Shortest Palindrome Palindrome Permutation Palindrome Pairs Longest Palindromic Subsequence
+#
 # Manacher's Algorithm
 # Manacher (1975) found a linear time algorithm for listing all the palindromes that appear at the start of a given string.
-#  However, as observed e.g., by Apostolico, Breslauer & Galil (1995), the same algorithm can also be used to find all maximal palindromic substrings anywhere within the input string,
-# again in linear time. Therefore, it provides a linear time solution to the longest palindromic substring problem. Alternative linear time solutions were provided by Jeuring (1994),
-# and by Gusfield (1997), who described a solution based on suffix trees. Efficient parallel algorithms are also known for the problem.[1]
+#  However, as observed e.g., by Apostolico, Breslauer & Galil (1995), the same algorithm can also be used
+# to find all maximal palindromic substrings anywhere within the input string, again in linear time.
+# Therefore, it provides a linear time solution to the longest palindromic substring problem.
+# Alternative linear time solutions were provided by Jeuring (1994),
+# and by Gusfield (1997), who described a solution based on suffix trees.
+# Efficient parallel algorithms are also known for the problem.[1]
 # http://en.wikipedia.org/wiki/Longest_palindromic_substring
 class Solution:
     def longestPalindrome(self, s):
@@ -193,38 +212,12 @@ test = SolutionOther()
 #str = "abcd"
 #print str[0:2]
 
-#java
-js = '''
-public class Solution {
-    public String longestPalindrome(String s) {
-        if (s.length() < 2) {
-            return s;
-        }
-        int start = 0;
-        int end = 0;
-        for (int i = 1; i < s.length(); i++) {
-            if (i - end + start - 1 >= 0 && isPalindrome(s, i - end + start - 1, i)) {
-                start = i - end + start - 1;
-                end = i;
-            } else if (i - end + start - 2 >= 0 && isPalindrome(s, i - end + start - 2, i)) {
-                start = i - end + start - 2;
-                end = i;
-            }
-        }
-        return s.substring(start, end + 1);
-    }
-
-    private boolean isPalindrome(String s, int start, int end) {
-        while (start < end) {
-            if (s.charAt(start++) != s.charAt(end--)) {
-                return false;
-            }
-        }
-        return true;
-    }
-}
-
-
+#Java
+Java = '''
+Thought: https://leetcode.com/problems/longest-palindromic-substring/#/solution
+# Manacher's Algorithm
+# O(n)
+# 96%
 public class Solution {
     public String longestPalindrome(String s) {
         if (s == null || s.length() == 0) {
@@ -279,6 +272,29 @@ public class Solution {
 
 
 #dp
+dp(i, j) represents whether s(i ... j) can form a palindromic substring,
+dp(i, j) is true when s(i) equals to s(j) and s(i+1 ... j-1) is a palindromic substring.
+When we found a palindrome, check if it's the longest one. Time complexity O(n^2).
+
+18.73%
+O(n^2)
+public class Solution {
+    public String longestPalindrome(String s) {
+        int n = s.length();
+        String res = null;
+
+        boolean[][] dp = new boolean[n][n];
+        for (int i = n - 1; i >= 0; i--) {
+            for (int j = i; j < n; j++) {
+                dp[i][j] = s.charAt(i) == s.charAt(j) && (j - i < 3 || dp[i+1][j-1]);
+                if (dp[i][j] && (res == null || j - i + 1 > res.length())) res = s.substring(i, j+1);
+            }
+        }
+        return res;
+    }
+}
+
+11.39%
 public class Solution {
     public String longestPalindrome(String s) {
         if(s.length() < 2) return s;
@@ -307,6 +323,92 @@ public class Solution {
             }
         }
         return res;
+    }
+}
+
+91%
+public class Solution {
+    private int lo, maxLen;
+    public String longestPalindrome(String s) {
+        int len = s.length();
+        if (len < 2) return s;
+        for (int i = 0; i < len - 1; i++) {
+            extendPalindrome(s, i, i);  //assume odd length, try to extend Palindrome as possible
+     	    extendPalindrome(s, i, i+1); //assume even length.
+        }
+        return s.substring(lo, lo + maxLen);
+    }
+
+    private void extendPalindrome(String s, int left, int right) {
+        while(left >= 0 && right < s.length() && s.charAt(left) == s.charAt(right)) {
+            left--;
+            right++;
+        }
+        if (maxLen < right - left - 1) {
+            lo = left + 1;
+            maxLen = right - left - 1;
+        }
+    }
+}
+
+63%
+public class Solution {
+    public String longestPalindrome(String s) {
+        String res = "";
+        int currLength = 0;
+        for(int i=0;i<s.length();i++){
+            if(isPalindrome(s,i-currLength-1,i)){
+                res = s.substring(i-currLength-1,i+1);
+                currLength = currLength+2;
+            }
+            else if(isPalindrome(s,i-currLength,i)){
+                res = s.substring(i-currLength,i+1);
+                currLength = currLength+1;
+            }
+        }
+        return res;
+    }
+
+    public boolean isPalindrome(String s, int begin, int end){
+        if(begin<0) return false;
+        while(begin<end){
+        	if(s.charAt(begin++)!=s.charAt(end--)) return false;
+        }
+        return true;
+    }
+}
+
+79%
+public class Solution {
+    public String longestPalindrome(String s) {
+        int len = s.length();
+        if (len < 2) {
+            return s;
+        }
+        int start = 0;
+        int end = 0;
+        for (int newEnd = 1; newEnd < len; newEnd++) {
+            int newStart = newEnd - (end - start + 1);
+            if (newStart >= 0 && isPalindrome(s, newStart, newEnd)) {
+                start = newStart;
+                end = newEnd;
+            }
+            newStart--;
+            if (newStart >= 0 && isPalindrome(s, newStart, newEnd)) {
+                start = newStart;
+                end = newEnd;
+            }
+        }
+        return s.substring(start, end + 1);
+    }
+
+    private boolean isPalindrome(String s, int start, int end) {
+        while (start < end) {
+            if (s.charAt(start++) != s.charAt(end--)) {
+                return false;
+            }
+        }
+        return true;
     }
 }
 '''
