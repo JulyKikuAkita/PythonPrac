@@ -1,21 +1,24 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/count-univalue-subtrees/#/description'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/count-univalue-subtrees.py
-'''
-Given a binary tree, count the number of uni-value subtrees.
-
-A Uni-value subtree means all nodes of the subtree have the same value.
-
-For example:
-Given binary tree,
-              5
-             / \
-            1   5
-           / \   \
-          5   5   5
-return 4.
-
-Show Tags
-'''
+# Given a binary tree, count the number of uni-value subtrees.
+#
+# A Uni-value subtree means all nodes of the subtree have the same value.
+#
+# For example:
+# Given binary tree,
+#
+#               5
+#              / \
+#             1   5
+#            / \   \
+#           5   5   5
+#
+# return 4.
+# Related Topics
+# Tree
+# Similar Questions
+# Subtree of Another Tree
+#
 
 # Time:  O(n)
 # Space: O(h)
@@ -76,8 +79,8 @@ class Solution2:
         return not child or (is_uni and root.val == child.val)
 
 
-#java
-js = '''
+#Java
+Java = '''
 /**
  * Definition for a binary tree node.
  * public class TreeNode {
@@ -87,36 +90,46 @@ js = '''
  *     TreeNode(int x) { val = x; }
  * }
  */
+
+1) 13%
 public class Solution {
     public int countUnivalSubtrees(TreeNode root) {
-        if (root == null) {
-            return 0;
-        }
-        int[] result = new int[1];
-        countUnivalSubtrees(root, result);
-        return result[0];
+        if (root == null) return 0;
+        int[] res = new int[1];
+        all(root, 0, res);
+        return res[0];
     }
-
-    private Integer countUnivalSubtrees(TreeNode root, int[] result) {
-        boolean flag = true;
-        if (root.left != null) {
-            Integer left = countUnivalSubtrees(root.left, result);
-            if (left == null || left != root.val) {
-                flag = false;
-            }
-        }
-        if (root.right != null) {
-            Integer right = countUnivalSubtrees(root.right, result);
-            if (right == null || right != root.val) {
-                flag = false;
-            }
-        }
-        if (flag) {
-            result[0]++;
-            return root.val;
-        } else {
-            return null;
-        }
+    
+    private boolean all(TreeNode root, int val, int[] count) {
+        if (root == null) return true;
+        //use '|' so it needs to judge both side
+        if (!all(root.left, root.val, count) | !all(root.right, root.val, count)) return false;
+        count[0]++;
+        return root.val == val;
     }
 }
+
+2) Postorder 13.91%
+public class Solution {
+    public int countUnivalSubtrees(TreeNode root) {
+        if (root == null) return 0;
+        int[] res = new int[1];
+        postOrder(root, res);
+        return res[0];
+    }
+    
+    private boolean postOrder(TreeNode root, int[] arr) {
+        if (root == null) return true;
+        boolean left = postOrder(root.left, arr);
+        boolean right = postOrder(root.right, arr);
+        if (left && right) {
+            if (root.left != null && root.left.val != root.val) return false;
+            if (root.right != null && root.right.val != root.val) return false;
+            arr[0]++;
+            return true;
+        }
+        return false;
+    }
+}
+
 '''

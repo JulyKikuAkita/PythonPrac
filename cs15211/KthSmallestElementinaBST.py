@@ -108,14 +108,16 @@ public class Solution {
         return bs(root, k);
     }
 
+    #49% binary seach
     public int bs(TreeNode root, int k) {
         int count = countNodes(root.left);
-        if (k <= count) {
+       if (k == cnt + 1) {
+            return root.val;
+        } else if (k <= cnt) {
             return bs(root.left, k);
-        } else if(k > count + 1) {
-            return bs(root.right, k - 1 - count); // 1 is counted as current node
+        } else{ // k > cnt + 1
+            return bs(root.right, k - cnt - 1);
         }
-        return root.val;
     }
 
     public int countNodes(TreeNode node) {
@@ -123,6 +125,7 @@ public class Solution {
         return countNodes(node.left) + countNodes(node.right) + 1;
     }
 
+    # dfs 49%
     public void dfs(TreeNode root, int k) {
         if (root == null) return;
         dfs(root.left, k); //cannot use k--
@@ -131,6 +134,7 @@ public class Solution {
         dfs(root.right, k);
     }
 
+    # bfs 22%
     public int bfs(TreeNode root, int k) {
         Stack<TreeNode> stack = new Stack<TreeNode>();
         TreeNode p = root;
