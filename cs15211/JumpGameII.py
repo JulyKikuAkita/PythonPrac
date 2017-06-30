@@ -72,22 +72,42 @@ if __name__ == '__main__':
 
 #Java
 js = '''
+The main idea is based on greedy. Let's say the range of the current jump is [curBegin, curEnd],
+curFarthest is the farthest point that all points in [curBegin, curEnd] can reach.
+Once the current point reaches curEnd, then trigger another jump,
+and set the new curEnd with curFarthest,
+then keep the above steps, as the following:
+
 public class Solution {
     public int jump(int[] nums) {
-        int len = nums.length;
-        int round = 0;
-        int start = 0;
-        int end = 0;
-        while (end < len - 1) {
-            int max = end;
-            for (int i = start; i <= end; i++) {
-                max = Math.max(max, i + nums[i]);
+        if ( nums.length < 2 ) return 0;
+        int count = 0;
+        int current_max = 0;
+        int cur_end = 0;
+        for (int i = 0; i < nums.length -1; i++) { //note:  i < nums.length -1, notworking if set if( cur_end >= nums.length) return count;
+            current_max = Math.max(current_max, i + nums[i]);
+            if (i == cur_end) {
+                count++;
+                cur_end = current_max;
             }
-            start = end + 1;
-            end = max;
-            round++;
         }
-        return round;
+        return count;
+    }
+}
+
+public class Solution {
+    public int jump(int[] nums) {
+        if ( nums.length < 2) return 0;
+        int level = 0, currentMax = 0, moveSteps = 0, nextMax = 0;
+        while (currentMax - moveSteps + 1 > 0) {
+            level++;
+            for (; moveSteps <= currentMax; moveSteps++) {
+                nextMax = Math.max(nextMax, moveSteps + nums[moveSteps]);
+                if (nextMax >= nums.length - 1) return level;
+            }
+            currentMax = nextMax;
+        }
+        return 0;
     }
 }
 '''

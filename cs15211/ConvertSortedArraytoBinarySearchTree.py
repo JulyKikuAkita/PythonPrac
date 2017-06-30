@@ -1,4 +1,4 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/convert-sorted-array-to-binary-search-tree/#/description'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/convert-sorted-array-to-binary-search-tree.py
 # Time:  O(n)
 # Space: O(logn)
@@ -6,6 +6,13 @@ __author__ = 'July'
 #
 # Given an array where elements are sorted in ascending order,
 # convert it to a height balanced BST.
+#
+# Topics:
+# Tree Depth-first Search
+# You might like:
+# (M) Convert Sorted List to Binary Search Tree
+# Company:
+# Airbnb
 #
 
 # Definition for a  binary tree node
@@ -111,4 +118,45 @@ public class Solution {
         return root;
     }
 }
+
+I came up with the recursion solution first and tried to translate it into an iterative solution.
+It is very similar to doing a tree inorder traversal, I use three stacks - nodeStack stores the node
+I am going to process next, and leftIndexStack and rightIndexStack store the range
+where this node need to read from the nums.
+
+public class Solution {
+    public TreeNode sortedArrayToBST(int[] nums) {
+        int len = nums.length;
+        if ( len == 0 ) { return null; }
+
+        // 0 as a placeholder
+        TreeNode head = new TreeNode(0);
+
+        Deque<TreeNode> nodeStack       = new LinkedList<TreeNode>() {{ push(head); }};
+        Deque<Integer>  leftIndexStack  = new LinkedList<Integer>()  {{ push(0); }};
+        Deque<Integer>  rightIndexStack = new LinkedList<Integer>()  {{ push(len - 1); }};
+
+        while ( !nodeStack.isEmpty() ) {
+            TreeNode cur = nodeStack.pop();
+            int left = leftIndexStack.pop();
+            int right = rightIndexStack.pop();
+            int mid = left + (right - left) / 2;
+            cur.val = nums[mid];
+            if ( left < mid) {
+                cur.left = new TreeNode(0);  // 0 as a placeholder
+                nodeStack.push(cur.left);
+                leftIndexStack.push(left);
+                rightIndexStack.push(mid - 1);
+            }
+            if (right > mid) {
+                cur.right = new TreeNode(0);  // 0 as a placeholder
+                nodeStack.push(cur.right);
+                leftIndexStack.push(mid + 1);
+                rightIndexStack.push(right);
+            }
+        }
+        return head;
+    }
+}
+
 '''

@@ -1,4 +1,4 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/lru-cache/#/description'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/lru-cache.py
 # Time:  O(1)
 # Space: O(n)
@@ -11,8 +11,31 @@ __author__ = 'July'
 # set(key, value) - Set or insert the value if the key is not already present.
 # When the cache reached its capacity, it should invalidate the least recently used item before inserting a new item.
 #
-# Google Uber Facebook Twitter Zenefits Amazon Microsoft Snapchat Bloomberg Yahoo Palantir
-
+# Follow up:
+# Could you do both operations in O(1) time complexity?
+#
+# Example:
+#
+# LRUCache cache = new LRUCache( 2 /* capacity */ );
+#
+# cache.put(1, 1);
+# cache.put(2, 2);
+# cache.get(1);       // returns 1
+# cache.put(3, 3);    // evicts key 2
+# cache.get(2);       // returns -1 (not found)
+# cache.put(4, 4);    // evicts key 1
+# cache.get(1);       // returns -1 (not found)
+# cache.get(3);       // returns 3
+# cache.get(4);       // returns 4
+#
+#
+# Topics:
+# Design
+# You might like:
+# (H) LFU Cache (H) Design In-Memory File System (E) Design Compressed String Iterator
+# Company:
+# Google Uber Facebook Twitter Zenefits Amazon Microsoft Snapchat Yahoo Bloomberg Palantir
+#
 
 # (1)
 class LRUCache(object):
@@ -223,8 +246,10 @@ print test.get(0)
 test.set(2,1)
 print test.get(2)
 
-#java
-js1 = '''
+# java
+# HashMap + doubly-linked list implementation:
+# Without dummyhead tail
+Java = '''
 public class LRUCache {
     private int capacityLeft;
     private Map<Integer, DoublyLinkedNode<KeyValuePair>> keyElementMap;
@@ -321,100 +346,163 @@ class KeyValuePair {
 }
 '''
 
-# bad performance
-# bad design
-js2= '''
-public class LRUCache {
+Java2= '''
 
-    private Map<Integer, DoublyLinkedNode> map;
-    private DoublyLinkedNode first;
-    private DoublyLinkedNode last;
-    private int capacity;
-    private int size;
+#https://discuss.leetcode.com/topic/43961/laziest-implementation-java-s-linkedhashmap-takes-care-of-everything
+This is the laziest implementation using Java's LinkedHashMap. In the real interview,
+however, it is definitely not what interviewer expected.
+
+import java.util.LinkedHashMap;
+public class LRUCache {
+    private LinkedHashMap<Integer, Integer> map;
+    private final int CAPACITY;
 
     public LRUCache(int capacity) {
-        map = new HashMap<Integer, DoublyLinkedNode>();
-        first = null;
-        last = null;
-        this.capacity = capacity;
-        size = 0;
+        CAPACITY = capacity;
+        //In the constructor, the third boolean parameter specifies the ordering mode.
+        //If we set it to true, it will be in access order.
+        //(https://docs.oracle.com/javase/8/docs/api/java/util/LinkedHashMap.html#LinkedHashMap-int-float-boolean-)
+        //By overriding removeEldestEntry in this way, we do not need to take care of it ourselves.
+        //It will automatically remove the least recent one when the size of map exceeds the specified capacity.
+        //(https://docs.oracle.com/javase/8/docs/api/java/util/LinkedHashMap.html#removeEldestEntry-java.util.Map.Entry-)
+        map = new LinkedHashMap<Integer, Integer>(capacity, 0.75f, true){
+                protected boolean removeEldestEntry(Map.Entry eldest) {
+                    return size() > CAPACITY;
+                }
+            };
     }
 
     public int get(int key) {
-        if (map.containsKey(key)) {
-            DoublyLinkedNode node = map.get(key);
-            moveToFirst(node);
-            return node.val;
-        } else {
-            return -1;
-        }
+        return map.getOrDefault(key, -1);
     }
 
-    public void set(int key, int value) {
-        if (map.containsKey(key)) {
-            DoublyLinkedNode node = map.get(key);
-            moveToFirst(node);
-            node.val = value;
-        } else {
-            DoublyLinkedNode node = new DoublyLinkedNode(key, value);
-            map.put(key, node);
-            if (size < capacity) {
-                addToFirst(node);
-                size++;
-            } else {
-                removeLast();
-                addToFirst(node);
-            }
-        }
-    }
-
-    private void addToFirst(DoublyLinkedNode node) {
-        if (first == null) {
-            first = node;
-            last = node;
-        } else {
-            node.prev = null;
-            node.next = first;
-            first.prev = node;
-            first = node;
-        }
-    }
-
-    private void moveToFirst(DoublyLinkedNode node) {
-        if (node != first) {
-            node.prev.next = node.next;
-            if (node == last) {
-                last = last.prev;
-            } else {
-                node.next.prev = node.prev;
-            }
-            addToFirst(node);
-        }
-    }
-
-    private void removeLast() {
-        map.remove(last.key);
-        if (first == last) {
-            first = null;
-            last = null;
-        } else {
-            last = last.prev;
-            last.next.prev = null;
-            last.next = null;
-        }
-
+    public void put(int key, int value) {
+        map.put(key, value);
     }
 }
 
-class DoublyLinkedNode {
-    DoublyLinkedNode prev;
-    DoublyLinkedNode next;
-    int key;
-    int val;
+/**
+ * Your LRUCache object will be instantiated and called as such:
+ * LRUCache obj = new LRUCache(capacity);
+ * int param_1 = obj.get(key);
+ * obj.put(key,value);
+ */
+'''
 
-    public DoublyLinkedNode(int key, int val) {
-        this.key = key;
-        this.val = val;
-    }
+Java3 = '''
+The problem can be solved with a hashtable that keeps track of the keys and its values in the double linked list.
+One interesting property about double linked list is that the node can remove itself without other reference.
+In addition, it takes constant time to add and remove nodes from the head or tail.
+
+One particularity about the double linked list that I implemented is that I create a pseudo head
+and tail to mark the boundary, so that we don't need to check the NULL node during the update.
+This makes the code more concise and clean, and also it is good for the performance as well.
+
+Voila, here is the code.
+
+class DLinkedNode {
+	int key;
+	int value;
+	DLinkedNode pre;
+	DLinkedNode post;
 }
+
+/**
+ * Always add the new node right after head;
+ */
+private void addNode(DLinkedNode node){
+	node.pre = head;
+	node.post = head.post;
+
+	head.post.pre = node;
+	head.post = node;
+}
+
+/**
+ * Remove an existing node from the linked list.
+ */
+private void removeNode(DLinkedNode node){
+	DLinkedNode pre = node.pre;
+	DLinkedNode post = node.post;
+
+	pre.post = post;
+	post.pre = pre;
+}
+
+/**
+ * Move certain node in between to the head.
+ */
+private void moveToHead(DLinkedNode node){
+	this.removeNode(node);
+	this.addNode(node);
+}
+
+// pop the current tail.
+private DLinkedNode popTail(){
+	DLinkedNode res = tail.pre;
+	this.removeNode(res);
+	return res;
+}
+
+private Hashtable<Integer, DLinkedNode> cache = new Hashtable<Integer, DLinkedNode>();
+private int count;
+private int capacity;
+private DLinkedNode head, tail;
+
+public LRUCache(int capacity) {
+	this.count = 0;
+	this.capacity = capacity;
+
+	head = new DLinkedNode();
+	head.pre = null;
+
+	tail = new DLinkedNode();
+	tail.post = null;
+
+	head.post = tail;
+	tail.pre = head;
+}
+
+public int get(int key) {
+
+	DLinkedNode node = cache.get(key);
+	if(node == null){
+		return -1; // should raise exception here.
+	}
+
+	// move the accessed node to the head;
+	this.moveToHead(node);
+
+	return node.value;
+}
+
+
+public void set(int key, int value) {
+	DLinkedNode node = cache.get(key);
+
+	if(node == null){
+
+		DLinkedNode newNode = new DLinkedNode();
+		newNode.key = key;
+		newNode.value = value;
+
+		this.cache.put(key, newNode);
+		this.addNode(newNode);
+
+		++count;
+
+		if(count > capacity){
+			// pop the tail
+			DLinkedNode tail = this.popTail();
+			this.cache.remove(tail.key);
+			--count;
+		}
+	}else{
+		// update the value.
+		node.value = value;
+		this.moveToHead(node);
+	}
+
+}
+
 '''

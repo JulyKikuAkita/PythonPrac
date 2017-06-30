@@ -21,6 +21,8 @@ __author__ = 'July'
 #   []
 # ]
 #
+#  Facebook
+# Hide Tags Array Backtracking
 
 class SolutionCC150:
     # @param num, a list of integer
@@ -118,28 +120,49 @@ S = [1,2,2]
 #      print "i=", i, "bin = ", (x >> (i-1)&0x03)
 
 #java
-js = '''
+java = '''
+//definitely need to sort array
+//Otherwise still see [4, 4, 1, 4,4]
+// without sort array: [[],[4],[4,4],[4,4,1],[4,4,1,4],[4,4,1,4,4],[4,4,4],[4,4,4,4],[4,1],[4,1,4],[4,1,4,4],[1],[1,4],[1,4,4]]
+// correct answer: [[],[1],[1,4],[1,4,4],[1,4,4,4],[1,4,4,4,4],[4],[4,4],[4,4,4],[4,4,4,4]]
+
 public class Solution {
     public List<List<Integer>> subsetsWithDup(int[] nums) {
-        List<List<Integer>> result = new ArrayList<>();
-        if (nums.length == 0) {
-            return result;
-        }
+        List<List<Integer>> list = new ArrayList<>();
         Arrays.sort(nums);
-        subsetsWithDup(nums, 0, result, new ArrayList<>(), false);
-        return result;
+        backtrack(list, new ArrayList<>(), nums, 0);
+        return list;
     }
 
-    private void subsetsWithDup(int[] nums, int index, List<List<Integer>> result, List<Integer> cur, boolean hasLast) {
-        if (index == nums.length) {
-            result.add(new ArrayList<>(cur));
-            return;
+    private void backtrack(List<List<Integer>> list , List<Integer> tempList, int [] nums, int start){
+        list.add(new ArrayList<>(tempList));
+        Set<Integer> s = new HashSet<>();
+        for (int i = start ; i < nums.length; i++) {
+            if( !s.contains(nums[i]) ) {
+                tempList.add(nums[i]);
+                s.add(nums[i]);
+                backtrack(list, tempList, nums, i + 1);
+                tempList.remove(tempList.size() - 1);
+            }
         }
-        subsetsWithDup(nums, index + 1, result, cur, false);
-        if (index == 0 || nums[index] != nums[index - 1] || hasLast) {
-            cur.add(nums[index]);
-            subsetsWithDup(nums, index + 1, result, cur, true);
-            cur.remove(cur.size() - 1);
+    }
+}
+
+public class Solution {
+    public List<List<Integer>> subsetsWithDup(int[] nums) {
+        List<List<Integer>> list = new ArrayList<>();
+        Arrays.sort(nums);
+        backtrack(list, new ArrayList<>(), nums, 0);
+        return list;
+    }
+
+    private void backtrack(List<List<Integer>> list, List<Integer> tempList, int [] nums, int start){
+        list.add(new ArrayList<>(tempList));
+        for(int i = start; i < nums.length; i++){
+            if(i > start && nums[i] == nums[i-1]) continue; // skip duplicates
+            tempList.add(nums[i]);
+            backtrack(list, tempList, nums, i + 1);
+            tempList.remove(tempList.size() - 1);
         }
     }
 }

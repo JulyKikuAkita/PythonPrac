@@ -1,4 +1,4 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/populating-next-right-pointers-in-each-node/#/description'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/populating-next-right-pointers-in-each-node.py
 # Time:  O(n)
 # Space: O(1)
@@ -32,6 +32,12 @@ __author__ = 'July'
 #       2 -> 3 -> NULL
 #      / \  / \
 #     4->5->6->7 -> NULL
+# Topics:
+# Tree Depth-first Search
+# You might like:
+# (M) Populating Next Right Pointers in Each Node II (M) Binary Tree Right Side View
+# Company:
+# Microsoft
 
 
 #Definition for a  binary tree node
@@ -144,7 +150,23 @@ test.connect(root0)
 #print test.preorderTraversal1(root0)
 
 #java
-js = '''
+java = '''
+#DFS:
+public void connect(TreeLinkNode root) {
+    if(root == null)
+        return;
+
+    if(root.left != null){
+        root.left.next = root.right;
+        if(root.next != null)
+            root.right.next = root.next.left;
+    }
+
+    connect(root.left);
+    connect(root.right);
+}
+
+# BFS
 public class Solution {
     public void connect(TreeLinkNode root) {
         if( root == null || root.left == null) return ;
@@ -162,6 +184,5 @@ public class Solution {
         }
 
     }
-
 }
 '''

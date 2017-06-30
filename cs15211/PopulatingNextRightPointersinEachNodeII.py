@@ -1,4 +1,4 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/populating-next-right-pointers-in-each-node-ii/#/description'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/populating-next-right-pointers-in-each-node-ii.py
 # Time:  O(n)
 # Space: O(1)
@@ -26,9 +26,12 @@ __author__ = 'July'
 #     4-> 5 -> 7 -> NULL
 #
 #
-# http://chaoren.is-programmer.com/posts/43820.html
+# Topics:
+# Tree Depth-first Search
+# You might like:
+# (M) Populating Next Right Pointers in Each Node
+# Company:
 # Microsoft Bloomberg Facebook
-
 
 # Definition for a  binary tree node
 class TreeNode:
@@ -111,7 +114,31 @@ if __name__ == "__main__":
     print root.left.left
 
 #java
-js = '''
+java = '''
+public class Solution {
+    //hint to have pre point at root.left
+    public void connect(TreeLinkNode root) {
+        TreeLinkNode dummyHead = new TreeLinkNode(0);
+        TreeLinkNode pre = dummyHead;
+        while (root != null) {
+            if (root.left != null) {
+                pre.next = root.left;
+                pre = pre.next;
+            }
+            if (root.right != null) {
+                pre.next = root.right;
+                pre = pre.next;
+            }
+            root = root.next;
+            if (root == null) {
+                pre = dummyHead;
+                root = dummyHead.next;
+                dummyHead.next = null;
+            }
+        }
+    }
+}
+
 public class Solution {
     public void connect(TreeLinkNode root) {
         if (root == null) {

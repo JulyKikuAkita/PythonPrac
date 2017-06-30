@@ -1,4 +1,4 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/word-break-ii/#/description'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/word-break-ii.py
 # Time:  O(2^n)
 # Space: O(n)
@@ -15,9 +15,14 @@ __author__ = 'July'
 # dict = ["cat", "cats", "and", "sand", "dog"].
 #
 # A solution is ["cats and dog", "cat sand dog"].
-# Google Uber
-
-
+#
+# Topics:
+# Dynamic Programming Backtracking
+# You might like:
+# (M) Word Break (H) Concatenated Words
+# Company:
+# Dropbox Google Uber Snapchat Twitter
+#
 
 class Solution:
     # @param s, a string
@@ -132,51 +137,65 @@ if __name__ == "__main__":
     print Solution().wordBreak("catsanddog", ["cat", "cats", "and", "sand", "dog"])
 
 #java
-js = '''
+javas = '''
+Thought: https://leetcode.com/articles/word-break-ii/
+
+77.81 %
+
+Time O(n^3), Size of recursion tree can go up to n^2. The creation of list takes n time.
+Space O(n^3) The depth of the recursion tree can go up to n and each activation record can contains a string list of size n.
+
 public class Solution {
-    public List<String> wordBreak(String s, Set<String> wordDict) {
-        List<String> result = new ArrayList<String>();
-        boolean[] isImpossible = new boolean[s.length() + 1];
-        if (s == null || s.length() == 0 || wordDict.size() == 0) {
-            return result;
-        }
-        wordBreak(s, wordDict, result, new ArrayList<String>(), isImpossible, 0);
-        return result;
+    public List<String> wordBreak(String s, List<String> wordDict) {
+            return DFS(s, wordDict, new HashMap<String, LinkedList<String>>());
     }
 
-    private boolean wordBreak(String s, Set<String> wordDict, List<String> result, List<String> curr, boolean[] isImpossible, int index) {
-        if (isImpossible[index]) {
-            return false;
-        }
+    // DFS function returns an array including all substrings derived from s.
+    List<String> DFS(String s, List<String> wordDict, HashMap<String, LinkedList<String>> map) {
+        if (map.containsKey(s)) return map.get(s);
+
+        LinkedList<String>res = new LinkedList<String>();
         if (s.length() == 0) {
-            result.add(convertString(curr));
-            return true;
+            res.add("");
+            return res;
         }
-        boolean found = false;
-        for (String str : wordDict) {
-            if (s.startsWith(str)) {
-                curr.add(str);
-                found |= wordBreak(s.substring(str.length()), wordDict, result, curr, isImpossible, index + str.length());
-                curr.remove(curr.size() - 1);
+
+        for (String word: wordDict) {
+            if (s.startsWith(word)) {
+                List<String>sublist = DFS(s.substring(word.length()), wordDict, map);
+                for (String sub : sublist) {
+                    res.add(word + (sub.isEmpty() ? "" : " ") + sub);
+                }
             }
         }
-        if (!found) {
-            isImpossible[index] = true;
-        }
-        return found;
-    }
 
-    private String convertString(List<String> curr) {
-        if (curr.size() == 0) {
-            return null;
-        }
-        StringBuilder sb = new StringBuilder();
-        for (String str : curr) {
-            sb.append(str);
-            sb.append(' ');
-        }
-        sb.delete(sb.length() - 1, sb.length());
-        return sb.toString();
+        map.put(s, res);
+        return res;
     }
 }
+
+#DP TLE
+public class Solution {
+    public List<String> wordBreak(String s, Set<String> wordDict) {
+        LinkedList<String>[] dp = new LinkedList[s.length() + 1];
+        LinkedList<String> initial = new LinkedList<>();
+        initial.add("");
+        dp[0] = initial;
+        for (int i = 1; i <= s.length(); i++) {
+            LinkedList<String> list = new LinkedList<>();
+            for (int j = 0; j < i; j++) {
+                if (dp[j].size() > 0 && wordDict.contains(s.substring(j, i))) {
+                    for (String l : dp[j]) {
+                        list.add(l + (l.equals("") ? "" : " ") + s.substring(j, i));
+                    }
+                }
+            }
+            dp[i] = list;
+        }
+        return dp[s.length()];
+    }
+}
+
+
+
 '''

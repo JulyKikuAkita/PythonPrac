@@ -1,6 +1,5 @@
-__author__ = 'July'
-# https://github.com/kamyu104/LeetCode/blob/master/Python/count-of-smaller-numbers-after-self.py
-
+__source__ = 'https://github.com/kamyu104/LeetCode/blob/master/Python/count-of-smaller-numbers-after-self.py'
+# https://leetcode.com/problems/count-of-smaller-numbers-after-self/#/description
 # Time:  O(nlogn)
 # Space: O(n)
 
@@ -18,8 +17,10 @@ __author__ = 'July'
 # To the right of 6 there is 1 smaller element (1).
 # To the right of 1 there is 0 smaller element.
 # Return the array [2, 1, 1, 0].
-# Google
-# BIT, Segment tree, Binary Search Tree, Divide and Conquer
+#  Google
+# Hide Tags Divide and Conquer Binary Indexed Tree Segment Tree Binary Search Tree
+# Hide Similar Problems (H) Count of Range Sum (M) Queue Reconstruction by Height (H) Reverse Pairs
+#
 # BIT solution.
 class Solution(object):
     def countSmaller(self, nums):
@@ -131,7 +132,138 @@ class Solution2(object):
                     return count + curr.count
             return 0
 
+#java
+Java = '''
+Thought:
+1. building BST:
+Every node will maintain a val sum recording the total of number on it's left bottom side,
+dup counts the duplication. For example, [3, 2, 2, 6, 1], from back to beginning,we would have:
 
+                1(0, 1)
+                     \
+                     6(3, 1)
+                     /
+                   2(0, 2)
+                       \
+                        3(0, 1)
+When we try to insert a number,
+the total number of smaller number would be adding dup and sum of the nodes where we turn right.
+for example, if we insert 5,
+it should be inserted on the way down to the right of 3,
+the nodes where we turn right is 1(0,1), 2,(0,2), 3(0,1), so the answer should be (0 + 1)+(0 + 2)+ (0 + 1) = 4
+
+if we insert 7, the right-turning nodes are 1(0,1), 6(3,1), so answer should be (0 + 1) + (3 + 1) = 5
+
+public class Solution {
+    class Node {
+        Node left, right;
+        int val, sum, dup = 1;
+        public Node(int v, int s) {
+            val = v;
+            sum = s;
+        }
+    }
+    public List<Integer> countSmaller(int[] nums) {
+        Integer[] ans = new Integer[nums.length];
+        Node root = null;
+        for (int i = nums.length - 1; i >= 0; i--) {
+            root = insert(nums[i], root, ans, i, 0);
+        }
+        return Arrays.asList(ans);
+    }
+    private Node insert(int num, Node node, Integer[] ans, int i, int preSum) {
+        if (node == null) {
+            node = new Node(num, 0);
+            ans[i] = preSum;
+        } else if (node.val == num) {
+            node.dup++;
+            ans[i] = preSum + node.sum;
+        } else if (node.val > num) {
+            node.sum++;
+            node.left = insert(num, node.left, ans, i, preSum);
+        } else {
+            node.right = insert(num, node.right, ans, i, preSum + node.dup + node.sum);
+        }
+        return node;
+    }
+}
+
+# building BST
+public class Solution {
+    public List<Integer> countSmaller(int[] nums) {
+        List<Integer> result = new ArrayList<>();
+        Tree tree = new Tree();
+        for (int i = nums.length - 1; i >= 0; i--) {
+            result.add(tree.insert(nums[i]));
+        }
+        Collections.reverse(result);
+        return result;
+    }
+
+    private class Tree {
+        private TreeNode root;
+
+        private int insert(int val) {
+            if (root == null) {
+                root = new TreeNode(val);
+                return 0;
+            }
+            int count = 0;
+            TreeNode cur = root;
+            while (true) {
+                if (cur.val > val) {
+                    cur.leftCount++;
+                    if (cur.left != null) {
+                        cur = cur.left;
+                    } else {
+                        cur.left = new TreeNode(val);
+                        break;
+                    }
+                } else if (cur.val < val) {
+                    count += cur.leftCount + cur.selfCount;
+                    if (cur.right != null) {
+                        cur = cur.right;
+                    } else {
+                        cur.right = new TreeNode(val);
+                        break;
+                    }
+                } else {
+                    cur.selfCount++;
+                    count += cur.leftCount;
+                    break;
+                }
+            }
+            return count;
+        }
+    }
+
+    private class TreeNode {
+        private TreeNode left;
+        private TreeNode right;
+        private int val;
+        private int leftCount;
+        private int selfCount;
+
+        TreeNode(int val) {
+            this.val = val;
+            this.selfCount = 1;
+        }
+    }
+}
+
+
+
+2.Traverse from the back to the beginning of the array, maintain an sorted array of numbers have been visited.
+Use findIndex() to find the first element in the sorted array which is larger or equal to target number.
+For example, [5,2,3,6,1], when we reach 2, we have a sorted array[1,3,6], findIndex() returns 1,
+which is the index where 2 should be inserted and is also the number smaller than 2.
+Then we insert 2 into the sorted array to form [1,2,3,6].
+Due to the O(n) complexity of ArrayList insertion,
+the total runtime complexity is not very fast, but anyway it got AC for around 53ms.
+
+
+
+'''
 
 
 

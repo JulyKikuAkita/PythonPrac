@@ -1,4 +1,4 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/binary-tree-postorder-traversal/#/solutions'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/binary-tree-postorder-traversal.py
 # Time:  O(n)
 # Space: O(1)
@@ -16,6 +16,10 @@ __author__ = 'July'
 # return [3,2,1].
 #
 # Note: Recursive solution is trivial, could you do it iteratively?
+#Topics:
+# Tree Stack
+# You might like:
+# (M) Binary Tree Inorder Traversal
 #
 
 from collections import deque
@@ -85,55 +89,6 @@ class Solution2:
                 else:
                     current = parent.right
         return result
-
-# http://www.programcreek.com/2012/12/leetcode-solution-of-iterative-binary-tree-postorder-traversal-in-java/
-# The order of "Postorder" is: left child -> right child -> parent node.
-# Find the relation between the previously visited node and the current node
-# Use a stack to track nodes
-# As we go down the tree, check the previously visited node.
-# If it is the parent of the current node, we should add current node to stack.
-# When there is no children for current node, pop it from stack.
-# Then the previous node become to be under the current node for next loop.
-class javaSolution:
-    # @param root, a tree node
-    # @return a list of integers
-    def postorderTraversal(self, root):
-        result, stack, prev = [], [root], None
-        if not root:
-            return result
-        while stack:
-            cur = stack.peek()
-            # go down the tree.
-            # check if current node is leaf, if so, process it and pop stack,
-            # otherwise, keep going down
-            if prev == None or prev.left == cur or prev.right == cur:
-                # prev == null is the situation for the root node
-                if cur.left != None:
-                    stack.push(cur.left)
-                elif cur.right != None:
-                    stack.push(cur.right)
-                else:
-                    stack.pop()
-                    result.append(cur.val)
-
-            # go up the tree from left node
-            # need to check if there is a right child
-            # if yes, push it to stack
-            # otherwise, process parent and pop stack
-            elif cur.left == prev:
-                if cur.right != None:
-                    stack.push(cur.right)
-                else:
-                    stack.pop()
-                    result.append(cur.val)
-            # go up the tree from right node
-            # after coming back from right node, process parent node and pop stack.
-            elif cur.right == prev:
-                stack.pop()
-                result.append(cur.val)
-            prev = cur
-        return result
-
 
 class SolutionOther(object):
     def postorderTraversal(self, root):
@@ -219,8 +174,35 @@ if __name__ == "__main__":
     root.right.left = TreeNode(3)
     result = Solution().postorderTraversal(root)
     print result
-#java
-js = '''
+#Java
+# http://www.programcreek.com/2012/12/leetcode-solution-of-iterative-binary-tree-postorder-traversal-in-java/
+# The order of "Postorder" is: left child -> right child -> parent node.
+# Find the relation between the previously visited node and the current node
+# Use a stack to track nodes
+# As we go down the tree, check the previously visited node.
+# If it is the parent of the current node, we should add current node to stack.
+# When there is no children for current node, pop it from stack.
+# Then the previous node become to be under the current node for next loop.
+java = '''
+1. DFS:
+public class Solution {
+    public List<Integer> postorderTraversal(TreeNode root) {
+        List<Integer> result = new ArrayList<>();
+        postorder(root, result);
+        return result;
+    }
+
+    private void postorder(TreeNode root, List<Integer> result) {
+        if (root == null) {
+            return;
+        }
+        postorder(root.left, result);
+        postorder(root.right, result);
+        result.add(root.val);
+    }
+}
+
+2. BFS
 public class Solution {
     public List<Integer> postorderTraversal(TreeNode root) {
         List<Integer> result = new ArrayList<>();
@@ -242,23 +224,62 @@ public class Solution {
         Collections.reverse(result);
         return result;
     }
-}
 
-public class Solution {
-    public List<Integer> postorderTraversal(TreeNode root) {
+     # PostOrder
+     public List<Integer> postorderBFS(TreeNode root) {
+        LinkedList<Integer> result = new LinkedList<>();
+        Deque<TreeNode> stack = new ArrayDeque<>();
+        while(!stack.isEmpty() || root != null) {
+            if (root != null) {
+                stack.push(root);
+                result.addFirst(root.val); // Reverse the process of preorder
+                root = root.right; // Reverse the process of preorder
+            } else {
+                TreeNode node = stack.pop();
+                root = node.left; // Reverse the process of preorder
+            }
+        }
+        return result;
+     }
+
+    # In Order Traverse
+    public List<Integer> inorderTraversal(TreeNode root) {
         List<Integer> result = new ArrayList<>();
-        postorder(root, result);
+        Deque<TreeNode> stack = new ArrayDeque<>();
+        TreeNode p = root;
+        while(!stack.isEmpty() || p != null) {
+            if(p != null) {
+                stack.push(p);
+                p = p.left;
+            } else {
+                TreeNode node = stack.pop();
+                result.add(node.val);  // Add after all left children
+                p = node.right;
+            }
+        }
         return result;
     }
 
-    private void postorder(TreeNode root, List<Integer> result) {
-        if (root == null) {
-            return;
+    # Pre Order Traverse
+    public List<Integer> preorderTraversal(TreeNode root) {
+        List<Integer> result = new ArrayList<>();
+        Deque<TreeNode> stack = new ArrayDeque<>();
+        TreeNode p = root;
+        while(!stack.isEmpty() || p != null) {
+            if(p != null) {
+                stack.push(p);
+                result.add(p.val);  // Add before going to children
+                p = p.left;
+            } else {
+                TreeNode node = stack.pop();
+                p = node.right;
+            }
         }
-        postorder(root.left, result);
-        postorder(root.right, result);
-        result.add(root.val);
+        return result;
     }
 }
+
+
+
 
 '''

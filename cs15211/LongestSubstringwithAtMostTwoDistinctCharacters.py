@@ -10,7 +10,11 @@ __author__ = 'July'
 # For example, Given s = "eceba",
 #
 # T is "ece" which its length is 3.
-#
+#  Google
+# Hide Tags Hash Table Two Pointers String
+# Hide Similar Problems (M) Longest Substring Without Repeating Characters (H) Sliding Window Maximum
+# (H) Longest Substring with At Most K Distinct Characters
+
 class Solution:
     # @param s, a string
     # @return an integer
@@ -59,3 +63,94 @@ class Solution:
 if __name__ =="__main__":
     print Solution().lengthOfLongestSubstringTwoDistinct("eceba")
     print Solution().lengthOfLongestSubstringTwoDistinctleetcode("eceba")
+
+java = '''
+public class Solution {
+    public int lengthOfLongestSubstringTwoDistinct(String s) {
+        int i = 0, j = -1;
+        int maxLen = 0;
+        for (int k = 1; k < s.length(); k++) {
+            if (s.charAt(k) == s.charAt(k-1)) continue;
+            if (j > -1 && s.charAt(k) != s.charAt(j)) {
+                maxLen = Math.max(maxLen, k - i);
+                i = j + 1;
+            }
+            j = k - 1;
+        }
+        return maxLen > (s.length() - i) ? maxLen : s.length() - i;
+    }
+}
+
+# https://discuss.leetcode.com/topic/71662/sliding-window-algorithm-template-to-solve-all-the-leetcode-substring-search-problem
+public class Solution {
+    public int lengthOfLongestSubstringTwoDistinct(String s) {
+        if(s.length() < 1) return 0;
+        HashMap<Character,Integer> index = new HashMap<Character,Integer>();
+        int lo = 0;
+        int hi = 0;
+        int maxLength = 0;
+        while(hi < s.length()) {
+            if(index.size() <= 2) {
+                char c = s.charAt(hi);
+                index.put(c, hi);
+                hi++;
+            }
+            if(index.size() > 2) {
+                int leftMost = s.length();
+                for(int i : index.values()) {
+                    leftMost = Math.min(leftMost,i);
+                }
+                char c = s.charAt(leftMost);
+                index.remove(c);
+                lo = leftMost+1;
+            }
+            maxLength = Math.max(maxLength, hi-lo);
+        }
+        return maxLength;
+    }
+}
+97.12%
+public class Solution {
+    public int lengthOfLongestSubstringTwoDistinct(String s) {
+        int len = s.length();
+        if (len == 0) {
+            return 0;
+        }
+        char[] arr = s.toCharArray();
+        int start = 0;
+        int end = 1;
+        int result = 0;
+        char[] chars = new char[2];
+        int[] lastIndex = new int[2];
+        chars[0] = arr[0];
+        while (end < len && arr[end] == chars[0]) {
+            end++;
+        }
+        if (end == len) {
+            return len;
+        }
+        chars[1] = arr[end];
+        lastIndex[0] = end - 1;
+        lastIndex[1] = end;
+        while (++end < len) {
+            if (arr[end] == chars[0]) {
+                lastIndex[0] = end;
+            } else if (arr[end] == chars[1]) {
+                lastIndex[1] = end;
+            } else {
+                result = Math.max(result, end - start);
+                if (lastIndex[0] < lastIndex[1]) {
+                    start = lastIndex[0] + 1;
+                    chars[0] = arr[end];
+                    lastIndex[0] = end;
+                } else {
+                    start = lastIndex[1] + 1;
+                    chars[1] = arr[end];
+                    lastIndex[1] = end;
+                }
+            }
+        }
+        return Math.max(result, len - start);
+    }
+}
+'''

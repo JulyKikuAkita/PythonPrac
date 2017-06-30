@@ -12,8 +12,9 @@ __author__ = 'July'
 # Output: 7 -> 0 -> 8
 #
 # Definition for singly-linked list.
-# Bloomberg
-
+#  Amazon Microsoft Bloomberg Airbnb Adobe
+# Hide Tags Linked List Math
+# Hide Similar Problems (M) Multiply Strings (E) Add Binary (E) Sum of Two Integers (E) Add Strings (M) Add Two Numbers II
 
 class ListNode:
     def __init__(self, x):

@@ -15,10 +15,10 @@ __author__ = 'July'
 # Input: numbers={2, 7, 11, 15}, target=9
 # Output: index1=1, index2=2
 #
-#  LinkedIn Uber Airbnb Facebook Amazon Microsoft Apple Yahoo Dropbox Bloomberg Yelp Adobe
-# Array Hash Table
-
-
+# LinkedIn Uber Airbnb Facebook Amazon Microsoft Apple Yahoo Dropbox Bloomberg Yelp Adobe
+# Hide Tags Array Hash Table
+# Hide Similar Problems (M) 3Sum (M) 4Sum (E) Two Sum II - Input array is sorted (E) Two Sum III - Data structure design (M) Subarray Sum Equals K
+#old solution index starts with 1
 class Solution:
     def twoSum(self, nums, target):
         lookup = {}

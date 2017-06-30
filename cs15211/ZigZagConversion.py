@@ -1,4 +1,4 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/zigzag-conversion/#/solutions'
 # Time:  O(n)
 # Space: O(1)
 #
@@ -14,8 +14,7 @@ __author__ = 'July'
 # string convert(string text, int nRows);
 # convert("PAYPALISHIRING", 3) should return "PAHNAPLSIIGYIR".
 #
-#
-#
+# String
 #
 
 class Solution:
@@ -34,9 +33,7 @@ class Solution:
                     zigzag += s[j+ step - 2 * i]
         return zigzag
 
-
-'''
-#explanation
+explanation = '''
 nRows= 5, then step = 2 * nRows - 2 ( derived by, 0, the next expected to be 10, but show up 8)
 0     8         16          24
 1   7 9      15 17       23 25
@@ -50,6 +47,16 @@ nRows= 5, then step = 2 * nRows - 2 ( derived by, 0, the next expected to be 10,
 2  6 10 14 18 22 26  <--- 2*nRows -2 for 2, 10, 18, 26 ; i + (2*nRows -2) - (2 * i) for 6, 14, 22
 3  5 11 13 19 21 27  <--- 2*nRows -2 for 3, 11, 19, 27 ; i + (2*nRows -2) - (2 * i) for 5, 13, 21
 4  12  20 28
+
+/*n=numRows
+#=2n-2    1                           2n-1                         4n-3
+#=        2                     2n-2  2n                    4n-4   4n-2
+#=        3               2n-3        2n+1              4n-5       .
+#=        .           .               .               .            .
+#=        .       n+2                 .           3n               .
+#=        n-1 n+1                     3n-3    3n-1                 5n-5
+#=2n-2    n                           3n-2                         5n-4
+*/
 '''
 
 if __name__ == "__main__":
@@ -92,3 +99,59 @@ test = SolutionOther()
 #should return "PINALSHIGYAHRPI"
 
 print test.convert("abcd",3)
+
+#Java =
+java = '''
+80%
+public class Solution {
+    public String convert(String s, int numRows) {
+        char[] c = s.toCharArray();
+        int len = c.length;
+        StringBuilder[] sb = new StringBuilder[numRows];
+        for (int i = 0; i < sb.length; i++)
+            sb[i] = new StringBuilder();
+
+        int i = 0;
+        while ( i < len) {
+            for (int down = 0; down < numRows && i < len; down++) { // vertically down
+                sb[down].append(c[i++]);
+            }
+
+            for (int slash = numRows - 2; slash >= 1 && i < len; slash--) { // obliquely up
+                sb[slash].append(c[i++]);
+            }
+        }
+
+        for (int k = 1; k < sb.length; k++) {
+            sb[0].append(sb[k]);
+        }
+        return sb[0].toString();
+    }
+}
+
+100%
+public class Solution {
+    public String convert(String s, int numRows) {
+        if (numRows <= 1) {
+            return s;
+        }
+        int len = s.length();
+        StringBuilder sb = new StringBuilder();
+        int interval = (numRows - 1) << 1;
+        for (int i = 0; i < len; i += interval) {
+            sb.append(s.charAt(i));
+        }
+        for (int i = 1; i < numRows - 1; i++) {
+            int next = interval - ((numRows - i - 1) << 1);
+            for (int j = i; j < len; j += next) {
+                sb.append(s.charAt(j));
+                next = interval - next;
+            }
+        }
+        for (int i = numRows - 1; i < len; i += interval) {
+            sb.append(s.charAt(i));
+        }
+        return sb.toString();
+    }
+}
+'''

@@ -15,15 +15,10 @@ __author__ = 'July'
 #    A solution set is:
 #    (-1, 0, 1)
 #    (-1, -1, 2)
-#  Amazon Microsoft Bloomberg Facebook Adobe
+# Amazon Microsoft Bloomberg Facebook Adobe Works Applications
 # Hide Tags Array Two Pointers
 # Hide Similar Problems (E) Two Sum (M) 3Sum Closest (M) 4Sum (M) 3Sum Smaller
 
-
-
-#
-# Java solution
-# http://www.programcreek.com/2012/12/leetcode-3sum/
 class Solution:
     # @return a list of lists of length 3, [[val1,val2,val3]]
     def threeSum(self, nums):

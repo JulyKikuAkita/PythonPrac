@@ -1,4 +1,4 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/binary-tree-preorder-traversal/#/description'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/binary-tree-preorder-traversal.py
 # Time:  O(n)
 # Space: O(1)
@@ -16,6 +16,10 @@ __author__ = 'July'
 # return [1,2,3].
 #
 # Note: Recursive solution is trivial, could you do it iteratively?
+#Topics:
+# Tree Stack
+# You might like:
+# (M) Binary Tree Inorder Traversal (M) Verify Preorder Sequence in Binary Search Tree
 #
 
 # Definition for a  binary tree node
@@ -55,9 +59,6 @@ class Solution:
                     cur = cur.right
         return result
 
-
-
-
 # Time:  O(n)
 # Space: O(n)
 # Stack Solution
@@ -80,9 +81,6 @@ class Solution2:
                     current = parent.right
         return result
 
-
-
-
 class Solution3:
     # @param root, a tree node
     # @return a list of integers
@@ -98,61 +96,6 @@ class Solution3:
                 stack.pop()
                 current = current.right
         return result
-
-# http://www.programcreek.com/2012/12/leetcode-solution-for-binary-tree-preorder-traversal-in-java/
-class javaSolution:
-    # @param root, a tree node
-    # @return a list of integers
-    def preorderTraversal(self, root):
-        result, stack  = [], [root]
-        if not root:
-            return result
-        while stack:
-            node = stack.pop()
-            result.append(node.val)
-            if node.right:
-                stack.append(node.right)
-            if node.left:
-                stack.append(node.left)
-        return result
-
-class SolutionOther:
-    # @param root, a tree node
-    # @return a list of integers
-    def preorderTraversal1(self, root):
-        ans = []
-        p =root
-
-        def preorder(p, ans):
-            if p is None:
-                return
-            ans += [p.val]
-            if p.left != None:
-                preorder(p.left, ans)
-
-            if p.right != None:
-                preorder(p.right, ans)
-
-        preorder(p,ans)
-        return ans
-
-    def preorderTraversal3(self, root):
-        s= []
-        ans = []
-        p =root
-
-        while (p != None or len(s) != 0):
-
-            if p != None:
-                ans += [p.val]
-                if p.right != None:
-                    s.append(p.right)
-                p = p.left
-            else:
-                p = s.pop()
-
-        return ans
-
 
 
 #create tree
@@ -191,7 +134,7 @@ tree52.right=tree522
 tree522.left=tree5221
 tree5221.right=tree52212
 
-my_test=SolutionOther()
+my_test=Solution()
 print my_test.preorderTraversal1(root5)
 print my_test.preorderTraversal3(root2)
 
@@ -199,15 +142,16 @@ if __name__ == "__main__":
     root = TreeNode(1)
     root.right = TreeNode(2)
     root.right.left = TreeNode(3)
-    result1 = javaSolution().preorderTraversal(root)
+    result1 = Solution().preorderTraversal(root)
     result2 = Solution2().preorderTraversal(root)
     result3 = Solution3().preorderTraversal(root)
     print result1
     print result2
     print result3
 
-#java
-js = '''
+#Java
+java = '''
+#DFS
 public class Solution {
     public List<Integer> preorderTraversal(TreeNode root) {
         List<Integer> result = new ArrayList<>();
@@ -225,6 +169,7 @@ public class Solution {
     }
 }
 
+#BFS
 public class Solution {
     public List<Integer> preorderTraversal(TreeNode root) {
         List<Integer> result = new ArrayList<>();
@@ -246,4 +191,57 @@ public class Solution {
         return result;
     }
 }
+
+    public List<Integer> inorderTraversal(TreeNode root) {
+        List<Integer> result = new ArrayList<>();
+        Deque<TreeNode> stack = new ArrayDeque<>();
+        TreeNode p = root;
+        while(!stack.isEmpty() || p != null) {
+            if ( p != null) {
+                stack.push(p);
+                p = p.left;
+            } else {
+                TreeNode node = stack.pop();
+                result.add(node.val);
+                p = node.right;
+            }
+        }
+        return result;
+    }
+
+     # PostOrder
+     public List<Integer> postorderBFS(TreeNode root) {
+        LinkedList<Integer> result = new LinkedList<>();
+        Deque<TreeNode> stack = new ArrayDeque<>();
+        while(!stack.isEmpty() || root != null) {
+            if (root != null) {
+                stack.push(root);
+                result.addFirst(root.val); // Reverse the process of preorder
+                root = root.right; // Reverse the process of preorder
+            } else {
+                TreeNode node = stack.pop();
+                root = node.left; // Reverse the process of preorder
+            }
+        }
+        return result;
+     }
+
+     # Pre Order Traverse
+    public List<Integer> preorderTraversal(TreeNode root) {
+        List<Integer> result = new ArrayList<>();
+        Deque<TreeNode> stack = new ArrayDeque<>();
+        TreeNode p = root;
+        while(!stack.isEmpty() || p != null) {
+            if(p != null) {
+                stack.push(p);
+                result.add(p.val);  // Add before going to children
+                p = p.left;
+            } else {
+                TreeNode node = stack.pop();
+                p = node.right;
+            }
+        }
+        return result;
+    }
+
 '''

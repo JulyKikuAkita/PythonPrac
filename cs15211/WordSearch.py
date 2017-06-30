@@ -1,4 +1,4 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/word-search/#/description'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/word-search.py
 # Time:  O(m * n * 3^p)
 # Space: O(m * n + p)
@@ -23,8 +23,12 @@ __author__ = 'July'
 # word = "SEE", -> returns true,
 # word = "ABCB", -> returns false.
 #
+# Companines
 # Microsoft Bloomberg Facebook
+# Related Topics
 # Array Backtracking
+# Similar question
+# Word Search II
 
 class SolutionSlow(object):
     dir = (0,1), (0,-1),(1,0),(-1,0)
@@ -162,7 +166,8 @@ if __name__ == "__main__":
     print Solution2().exist(board, "ABCB")
 
 #java
-js = '''
+java = '''
+#unble to use BFS as elegant as DFS due to for BFS, hard to mark what is unvisited node for each popup point
 public class Solution {
     public static final int[][] DIRECTIONS = new int[][] {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
 

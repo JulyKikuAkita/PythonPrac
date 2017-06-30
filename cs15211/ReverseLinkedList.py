@@ -1,4 +1,4 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/reverse-linked-list/#/solutions'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/reverse-linked-list.py
 # Time:  O(n)
 # Space: O(1)
@@ -9,6 +9,12 @@ __author__ = 'July'
 #
 # Hint:
 # A linked list can be reversed either iteratively or recursively. Could you implement both?
+#Topics:
+# Linked List
+# You might like:
+# (M) Reverse Linked List II (M) Binary Tree Upside Down (E) Palindrome Linked List
+# Company:
+# Uber Facebook Twitter Zenefits Amazon Microsoft Snapchat Apple Yahoo Bloomberg Yelp Adobe
 #
 
 # Definition for singly-linked list.
@@ -83,7 +89,8 @@ if __name__ == "__main__":
     print Solution3().reverseList(head)
 
 #java
-js = '''
+java = '''
+thought: https://leetcode.com/articles/reverse-linked-list/
 /**
  * Definition for singly-linked list.
  * public class ListNode {
@@ -92,38 +99,45 @@ js = '''
  *     ListNode(int x) { val = x; }
  * }
  */
-public class Solution {
+
+// recursion
     public ListNode reverseList(ListNode head) {
-        if(head == null || head.next == null) return head;
-
-        ListNode p2 = head.next;
-        head.next = null;
-
-        ListNode rest = reverseList(p2);
-        p2.next = head;
-
-        return rest;
-
+        if ( head == null) return head;
+        return dfs2(head, null);
+        //return dfs1(head);
     }
-}
 
-public class Solution {
+    public ListNode dfs1(ListNode head) {
+        if ( head.next == null) return head;
+            ListNode prev = head.next;
+            head.next = null;
+            ListNode node = dfs1(prev);
+            prev.next = head;
+            return node;
+    }
+
+    private ListNode dfs2(ListNode head, ListNode newHead) {
+        if (head == null)
+            return newHead;
+        ListNode next = head.next;
+        head.next = newHead;
+        return dfs2(next, head);
+    }
+
+//iteration
     public ListNode reverseList(ListNode head) {
-        if(head == null || head.next == null) return head;
-        ListNode prev = head;
-        ListNode cur = head.next;
-        prev.next = null;
-
-        while(prev != null && cur != null){
-            ListNode last = cur.next;
-            cur.next = prev;
-            prev = cur;
-            cur = last;
+        if( head == null || head.next == null) return head;
+        ListNode dummy = null;
+        ListNode tmp;
+        while (head != null) {
+            tmp = head.next;
+            head.next = dummy;
+            dummy = head;
+            head = tmp;
         }
-        return prev;
+        return dummy;
     }
 
-}
 
 // import org.junit.*;
 // StringBuilder sb = new StringBuilder();

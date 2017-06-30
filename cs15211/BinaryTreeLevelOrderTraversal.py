@@ -1,4 +1,4 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/binary-tree-level-order-traversal/#/description'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/binary-tree-level-order-traversal.py
 # Time:  O(n)
 # Space: O(n)
@@ -21,9 +21,14 @@ __author__ = 'July'
 #   [15,7]
 # ]
 #
-# LinkedIn Uber Facebook Amazon Microsoft Bloomberg
-
-
+# Topics:
+# Tree Breadth-first Search
+# You might like:
+# (M) Binary Tree Zigzag Level Order Traversal (E) Binary Tree Level Order Traversal II
+# (E) Minimum Depth of Binary Tree (M) Binary Tree Vertical Order Traversal
+# Company:
+# LinkedIn Facebook Amazon Microsoft Apple Bloomberg
+#
 
 # Definition for a  binary tree node
 class TreeNode:
@@ -106,7 +111,18 @@ if __name__ == "__main__":
     print result
 
 #java
-js='''
+java='''
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+
+# DFS 43%
 public class Solution {
     public List<List<Integer>> levelOrder(TreeNode root) {
         List<List<Integer>> res = new ArrayList<List<Integer>>();
@@ -116,7 +132,7 @@ public class Solution {
 
     public void dfs(TreeNode root, int level, List<List<Integer>> res) {
         if(root == null) return;
-        if(level + 1 > res.size()){
+        if(level + 1 > res.size()){ //same as if (res.size() <= level) {
             res.add(new ArrayList<Integer>());
         }
         res.get(level).add(root.val);
@@ -126,39 +142,28 @@ public class Solution {
     }
 }
 
-
+#BFS 43%
 public class Solution {
     public List<List<Integer>> levelOrder(TreeNode root) {
-        List<List<Integer>> result = new ArrayList<>();
-        if (root == null) {
-            return result;
-        }
-        Queue<TreeNode> queue = new LinkedList<>();
-        queue.add(root);
-        queue.add(null);
-        List<Integer> list = new ArrayList<>();
-        while (!queue.isEmpty()) {
-            TreeNode curr = queue.poll();
-            if (curr == null) {
-                if (queue.isEmpty()) {
-                    result.add(list);
-                    break;
-                } else {
-                    queue.add(null);
-                    result.add(list);
-                    list = new ArrayList<>();
-                }
-            } else {
-                list.add(curr.val);
-                if (curr.left != null) {
-                    queue.add(curr.left);
-                }
-                if (curr.right != null) {
-                    queue.add(curr.right);
-                }
+        Queue<TreeNode> q = new LinkedList<TreeNode>();
+        List<List<Integer>> res = new LinkedList<List<Integer>>();
+
+        if(root == null) return res;
+
+        q.offer(root);
+        while(!q.isEmpty()) {
+            int size = q.size();
+            List<Integer> tmp = new LinkedList<Integer>();
+            for (int i = 0 ; i < size; i++) {
+                TreeNode cur = q.poll();
+                if (cur.left != null) q.offer(cur.left);
+                if (cur.right != null) q.offer(cur.right);
+                tmp.add(cur.val);
             }
+            res.add(tmp);
         }
-        return result;
+        return res;
     }
 }
+
 '''

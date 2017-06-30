@@ -25,6 +25,9 @@ __author__ = 'July'
 #
 # [[1,2,6], [1,3,5], [2,3,4]]
 #
+# Array Backtracking
+# Hide Similar Problems (M) Combination Sum
+#
 
 class Solution:
     # @param {integer} k
@@ -50,29 +53,24 @@ if __name__ == "__main__":
     print Solution().combinationSum3(3, 9)
 
 #Java
-# http://www.programcreek.com/2014/05/leetcode-combination-sum-iii-java/
-
-js = '''
+java = '''
 public class Solution {
     public List<List<Integer>> combinationSum3(int k, int n) {
-        List<List<Integer>> res = new ArrayList<List<Integer>>();
-        List<Integer> tmp = new ArrayList<Integer>();
-
-        dfs(k, n, res,tmp, 0, 1);
-        return res;
+         List<List<Integer>> result = new ArrayList<>();
+         backtrack(result, new ArrayList<Integer>(), k, n, 1);
+         return result;
     }
 
-    public void dfs(int k, int n, List<List<Integer>> res, List<Integer> tmp, int sum, int start ) {
-        if(sum > n || tmp.size() > k) return;
-
-        if(sum == n && tmp.size() == k) {
-            res.add(new ArrayList<Integer>(tmp));
+    private void backtrack(List<List<Integer>> list, List<Integer> tempList, int k, int remain, int start) {
+        if (tempList.size() > k) return;
+        if (tempList.size() == k && remain == 0) {
+            list.add(new ArrayList<>(tempList));
+            return;
         }
-
-        for(int i = start; i <=9; i++){
-            tmp.add(i);
-            dfs(k, n, res, tmp, sum + i, i+1);
-            tmp.remove(tmp.size()-1);
+        for (int i = start; i <= 9; i++) {
+            tempList.add(i);
+            backtrack(list, tempList, k, remain - i, i + 1);
+            tempList.remove(tempList.size() - 1);
         }
 
     }

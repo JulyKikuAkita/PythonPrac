@@ -20,6 +20,9 @@ __author__ = 'July'
 # [2, 6]
 # [1, 1, 6]
 #
+#  Snapchat
+# Hide Tags Array Backtracking
+# Hide Similar Problems (M) Combination Sum
 
 class Solution:
     # @param candidates, a list of integers
@@ -65,45 +68,6 @@ class SolutionOther:
             self.DFS(candidates, target - candidates[i], i+1, valuelist+[candidates[i]])
 
 
-######### below solution OT #####################################
-    def combinationSum2i(self, candidates, target):
-        candidates.sort()
-        self.ans, tmp = [], []
-        use = [0] * len(candidates)
-        self.dfs(candidates, target, 0, 0, tmp, use)
-        return self.ans
-
-    def dfs(self, candidates, target, p, now, tmp, use):
-        if now == target:
-            self.ans.append(tmp[:])
-            print  p, now, candidates, tmp
-            return
-        for i in range(p, len(candidates)):
-            print "i = ", i
-            if now + candidates[i] <= target and (i == 0 or candidates[i] != candidates[i-1] or use[i-1] == 1 ):
-                tmp.append(candidates[i])
-                use[i] = 1
-                print  "i = ", i , p, now, candidates[i], tmp
-                self.dfs(candidates, target, i+1, now+candidates[i] , tmp, use)
-                print  "i = ", i , p, now, candidates[i], tmp
-                tmp.pop()
-                use[i] = 0
-
-    def combinationSum2p(self, candidates, target):
-        candidates.sort()
-        solution = []
-        self.combinationSum2Rec(candidates, target, 0, 0, [], solution)
-        return solution
-    def combinationSum2Rec(self, candidates, target, index, sum, tempList, solution):
-        if sum == target:
-            solution.append(list(tempList))
-            return
-        for i in range(index, len(candidates)):
-            if (i == index or candidates[i-1] != candidates[i] and sum+candidates[i] <= target):
-                tempList.append(candidates[i])
-                self.combinationSum2Rec(candidates, target, i+1, sum+candidates[i], tempList, solution)
-                tempList.pop()
-
 #test
 test = SolutionOther()
 #print test.combinationSum2([6,2,3], 7)
@@ -111,30 +75,51 @@ test = SolutionOther()
 #print test.combinationSum2p([10,1,2,7,6,1,5] , 8)
 
 #java
-js = '''
+java = '''
+//hashset + sort to avoid duplicates result
 public class Solution {
-    public List<List<Integer>> combinationSum2(int[] candidates, int target) {
-        if (candidates == null || candidates.length == 0) {
-            return new ArrayList<List<Integer>>();
-        }
-        Set<List<Integer>> result = new HashSet<>();
+     public List<List<Integer>> combinationSum2(int[] candidates, int target) {
+        List<List<Integer>> list = new ArrayList<>();
         Arrays.sort(candidates);
-        List<Integer> curr = new ArrayList<>();
-        combinationSum2(candidates, 0, target, result, curr);
-        return new ArrayList<List<Integer>>(result);
+        backtrack(list, new ArrayList<>(), candidates, target, 0);
+        return list;
     }
 
-    private void combinationSum2(int[] candidates, int index, int target, Set<List<Integer>> result, List<Integer> curr) {
-        if (target == 0) {
-            result.add(new ArrayList<Integer>(curr));
-            return;
-        } else if (index == candidates.length) {
+     private void backtrack(List<List<Integer>> list, List<Integer> tempList, int [] nums, int remain, int start){
+        if (remain < 0) return;
+        if (remain == 0) {
+            list.add(new ArrayList<>(tempList));
             return;
         }
-        for (int i = index; i < candidates.length && candidates[i] <= target; i++) {
-            curr.add(candidates[i]);
-            combinationSum2(candidates, i + 1, target - candidates[i], result, curr);
-            curr.remove(curr.size() - 1);
+        Set<Integer> set = new HashSet<>();
+        for (int i = start; i < nums.length; i++) {
+            if ( !set.contains(nums[i])) {
+                tempList.add(nums[i]);
+                set.add(nums[i]);
+                backtrack(list, tempList, nums, remain - nums[i], i + 1); // not i + 1 because we can reuse same elements
+                tempList.remove(tempList.size() - 1);
+            }
+        }
+    }
+}
+
+public List<List<Integer>> combinationSum2(int[] nums, int target) {
+    List<List<Integer>> list = new ArrayList<>();
+    Arrays.sort(nums);
+    backtrack(list, new ArrayList<>(), nums, target, 0);
+    return list;
+
+}
+
+private void backtrack(List<List<Integer>> list, List<Integer> tempList, int [] nums, int remain, int start){
+    if(remain < 0) return;
+    else if(remain == 0) list.add(new ArrayList<>(tempList));
+    else{
+        for(int i = start; i < nums.length; i++){
+            if(i > start && nums[i] == nums[i-1]) continue; // skip duplicates
+            tempList.add(nums[i]);
+            backtrack(list, tempList, nums, remain - nums[i], i + 1);
+            tempList.remove(tempList.size() - 1);
         }
     }
 }

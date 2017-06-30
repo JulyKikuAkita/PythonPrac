@@ -1,4 +1,4 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/letter-combinations-of-a-phone-number/#/description'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/letter-combinations-of-a-phone-number.py
 # Time:  O(n * 4^n)
 # Space: O(n)
@@ -14,7 +14,29 @@ __author__ = 'July'
 # Output: ["ad", "ae", "af", "bd", "be", "bf", "cd", "ce", "cf"].
 # Note:
 # Although the above answer is in lexicographical order, your answer could be in any order you want.
-# Uber Facebook
+#
+# Topics:
+# Backtracking String
+# You might like:
+# (M) Generate Parentheses (M) Combination Sum (E) Binary Watch
+# Company:
+# Amazon Dropbox Google Uber Facebook
+#
+class Solution:
+    # @return a list of strings, [s1, s2]
+    def letterCombinations(self, digits):
+        if '' == digits: return []
+        kvmaps = {
+            '2': 'abc',
+            '3': 'def',
+            '4': 'ghi',
+            '5': 'jkl',
+            '6': 'mno',
+            '7': 'pqrs',
+            '8': 'tuv',
+            '9': 'wxyz'
+        }
+        return reduce(lambda acc, digit: [x + y for x in acc for y in kvmaps[digit]], digits, [''])
 #
 # Iterative Solution
 class Solution:
@@ -88,29 +110,53 @@ test = SolutionOther()
 # [].extend("") = []
 
 #java
-js = '''
+Java = '''
+Recursion:
 public class Solution {
-    public static String[] dict = new String[] {"abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
+    private static final String[] PHONE_NUMBERS = new String[] {"abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
 
     public List<String> letterCombinations(String digits) {
         List<String> result = new ArrayList<>();
-        if (digits == null || digits.length() == 0) {
+        if (digits.length() == 0) {
             return result;
         }
-        letterCombinations(digits, 0, new char[digits.length()], result);
+        letterCombinations(digits, 0, result, new StringBuilder());
         return result;
     }
 
-    private void letterCombinations(String digits, int index, char[] curr, List<String> result) {
+    private void letterCombinations(String digits, int index, List<String> result, StringBuilder sb) {
         if (index == digits.length()) {
-            result.add(new String(curr));
+            result.add(sb.toString());
             return;
         }
-        String chars = dict[digits.charAt(index) - '2'];
-        for (int i = 0; i < chars.length(); i++) {
-            curr[index] = chars.charAt(i);
-            letterCombinations(digits, index + 1, curr, result);
+        for (char c : PHONE_NUMBERS[digits.charAt(index) - '2'].toCharArray()) {
+            sb.append(c);
+            letterCombinations(digits, index + 1, result, sb);
+            sb.setLength(sb.length() - 1);
         }
+    }
+}
+
+Iteration:
+ public class Solution {
+        public static String[] dict = new String[] {null, null, "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
+
+    public List<String> letterCombinations(String digits) {
+        LinkedList<String> res = new LinkedList<>();
+        if (digits == null || digits.length() == 0) return res;
+
+        res.add(""); //why? -> enter the first peek() while loop
+        for (int i = 0; i < digits.length();i++){
+            int idx = digits.charAt(i) - '0';
+            //int idx = Integer.parseInt(digits.substring(i, i + 1));
+            while (res.peek().length() == i) {
+                String top = res.remove();
+                for (char c : dict[idx].toCharArray()) {
+                    res.add(top + c);
+                }
+            }
+        }
+        return res;
     }
 }
 '''

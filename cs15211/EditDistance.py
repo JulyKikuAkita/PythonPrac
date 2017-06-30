@@ -1,4 +1,4 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/edit-distance/#/solutions'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/edit-distance.py
 # Time:  O(n * m)
 # Space: O(n + m)
@@ -15,6 +15,10 @@ __author__ = 'July'
 # a) Insert a character
 # b) Delete a character
 # c) Replace a character
+#Related Topics
+# Dynamic Programming String
+# Similar Questions
+# One Edit Distance Delete Operation for Two Strings
 #
 '''
 Let dp[i][j] stands for the edit distance between two strings with length i and j, i.e., word1[0,...,i-1] and word2[0,...,j-1].
@@ -152,7 +156,73 @@ if __name__ == "__main__":
     #print Solution().minDistance("Rabbit", "Rabbitt")
 
 #java
-js = '''
+Java = '''
+Thought:
+This is a classic problem of Dynamic Programming. We define the state dp[i][j]
+to be the minimum number of operations to convert word1[0..i - 1] to word2[0..j - 1].
+The state equations have two cases: the boundary case and the general case.
+Note that in the above notations, both i and j take values starting from 1.
+
+For the boundary case, that is, to convert a string to an empty string,
+it is easy to see that the mininum number of operations to convert word1[0..i - 1]
+to "" requires at least i operations (deletions). In fact, the boundary case is simply:
+
+dp[i][0] = i;
+dp[0][j] = j.
+Now let's move on to the general case, that is, convert a non-empty word1[0..i - 1]
+to another non-empty word2[0..j - 1]. Well, let's try to break this problem down
+into smaller problems (sub-problems).
+Suppose we have already known how to convert word1[0..i - 2] to word2[0..j - 2], which is dp[i - 1][j - 1].
+Now let's consider word[i - 1] and word2[j - 1]. If they are euqal,
+then no more operation is needed and dp[i][j] = dp[i - 1][j - 1]. Well, what if they are not equal?
+
+If they are not equal, we need to consider three cases:
+
+Replace word1[i - 1] by word2[j - 1] (dp[i][j] = dp[i - 1][j - 1] + 1 (for replacement));
+Delete word1[i - 1] and word1[0..i - 2] = word2[0..j - 1] (dp[i][j] = dp[i - 1][j] + 1 (for deletion));
+Insert word2[j - 1] to word1[0..i - 1] and word1[0..i - 1] + word2[j - 1] = word2[0..j - 1] (dp[i][j]
+= dp[i][j - 1] + 1 (for insertion)).
+Make sure you understand the subtle differences between the equations for deletion and insertion.
+For deletion, we are actually converting word1[0..i - 2] to word2[0..j - 1], which costs dp[i - 1][j],
+and then deleting the word1[i - 1], which costs 1. The case is similar for insertion.
+
+Putting these together, we now have:
+
+dp[i][0] = i;
+dp[0][j] = j;
+dp[i][j] = dp[i - 1][j - 1], if word1[i - 1] = word2[j - 1];
+dp[i][j] = min(dp[i - 1][j - 1] + 1, dp[i - 1][j] + 1, dp[i][j - 1] + 1), otherwise.
+The above state equations can be turned into the following code directly.
+
+Let following be the function definition :-
+
+f(i, j) := minimum cost (or steps) required to convert first i characters of word1 to first j characters of word2
+
+Case 1: word1[i] == word2[j], i.e. the ith the jth character matches.
+
+f(i, j) = f(i - 1, j - 1)
+Case 2: word1[i] != word2[j], then we must either insert, delete or replace, whichever is cheaper
+
+f(i, j) = 1 + min { f(i, j - 1), f(i - 1, j), f(i - 1, j - 1) }
+f(i, j - 1) represents insert operation
+f(i - 1, j) represents delete operation
+f(i - 1, j - 1) represents replace operation
+Here, we consider any operation from word1 to word2. It means, when we say insert operation,
+we insert a new character after word1 that matches the jth character of word2.
+So, now have to match i characters of word1 to j - 1 characters of word2.
+Same goes for other 2 operations as well.
+
+Note that the problem is symmetric. The insert operation in one direction (i.e. from word1 to word2)
+is same as delete operation in other. So, we could choose any direction.
+
+Above equations become the recursive definitions for DP.
+
+Base Case:
+
+f(0, k) = f(k, 0) = k
+Below is the direct bottom-up translation of this recurrent relation.
+t is only important to take care of 0-based index with actual code :-
+
 public class Solution {
     public int minDistance(String word1, String word2) {
         int len1 = word1.length();

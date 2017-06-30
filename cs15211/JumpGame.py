@@ -14,7 +14,7 @@ __author__ = 'July'
 # A = [2,3,1,1,4], return true.
 #
 # A = [3,2,1,0,4], return false.
-#  Microsoft
+#  Microsoft, Amazon
 #  Array Greedy
 
 class Solution:
@@ -42,35 +42,6 @@ class Solution2:
             jumpdis = max(jumpdis, A[i])
         return True
 
-# http://www.programcreek.com/2014/03/leetcode-jump-game-java/
-'''
-We can track the maximum length a position can reach.
-The key to solve this problem is to find 2 conditions:
-1) the position can not reach next step (return false) , and
-2) the maximum reach the end (return true).
-'''
-
-class SolutionJava:
-    # @param A, a list of integers
-    # @return a boolean
-    def canJump(self, A):
-        if len(A) < 1:
-            return True
-        dis = A[0]
-        for i in xrange(1, len(A)):
-            #if not enough to go to next
-            if dis <= i and A[i] == 0:
-                return False
-            # update max
-            if i + A[i] > dis:
-                dis = i + A[i]
-
-            #max is enough to reach the end
-            if dis >= len(A) - 1:
-                return True
-        return False
-
-
 #test
 test = Solution2()
 A1 = [2,3,1,1,4]
@@ -83,7 +54,12 @@ if __name__ == "__main__":
     print Solution().canJump([3,2,1,0,4])
 
 #java
-js = '''
+java = '''
+# We can track the maximum length a position can reach.
+# The key to solve this problem is to find 2 conditions:
+# 1) the position can not reach next step (return false) , and
+# 2) the maximum reach the end (return true).
+
 public class Solution {
     public boolean canJump(int[] nums) {
         int end = 0;
@@ -93,6 +69,18 @@ public class Solution {
             cur++;
         }
         return end >= nums.length - 1;
+    }
+}
+
+public class Solution {
+    public boolean canJump(int[] nums) {
+        if (nums.length < 2) return true;
+
+        for(int i = 0, max = 0; i < nums.length && i <= max; i++) {
+            max = Math.max(max, i + nums[i]);
+            if (max >= nums.length - 1) return true;
+        }
+        return false;
     }
 }
 '''

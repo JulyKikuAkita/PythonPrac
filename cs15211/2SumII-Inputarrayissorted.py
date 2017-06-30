@@ -16,6 +16,9 @@ __author__ = 'July'
 # Input: numbers={2, 7, 11, 15}, target=9
 # Output: index1=1, index2=2
 # Amazon
+# Hide Tags Array Two Pointers Binary Search
+# Hide Similar Problems (E) Two Sum
+
 #Hide Tags Array Two Pointers Binary Search
 class Solution:
     # @return a tuple, (index1, index2)
@@ -37,47 +40,29 @@ if __name__ == "__main__":
 
 # java:
 js = ''' 40.13%
+O(n)
 public class Solution {
     public int[] twoSum(int[] numbers, int target) {
         int start = 0;
         int end = numbers.length - 1;
         while (start < end) {
-            int tmpStart = start + 1;
-            int tmpEnd = end;
-            while (tmpStart <= tmpEnd) {
-                int mid = tmpStart + (tmpEnd - tmpStart) / 2;
-                long sum = (long) numbers[mid] + numbers[start];
-                if (sum < target) {
-                    tmpStart = mid + 1;
-                } else if (sum > target) {
-                    tmpEnd = mid - 1;
-                } else {
-                    return new int[] {start + 1, mid + 1};
-                }
+            int sum = numbers[start] + numbers[end];
+            if (sum < target) {
+                start++;
+            } else if (sum > target) {
+                end--;
+            } else {
+                return new int[] {start + 1, end + 1};
             }
-            end = tmpEnd;
-            tmpStart = start;
-            tmpEnd = end - 1;
-            while (tmpStart <= tmpEnd) {
-                int mid = tmpStart + (tmpEnd - tmpStart) / 2;
-                long sum = (long) numbers[mid] + numbers[end];
-                if (sum < target) {
-                    tmpStart = mid + 1;
-                } else if (sum > target) {
-                    tmpEnd = mid - 1;
-                } else {
-                    return new int[] {mid + 1, end + 1};
-                }
-            }
-            start = tmpStart;
         }
-        return null;
+        return new int[0];
     }
 }
 
 '''
 
 js2 = ''' 97.81%
+O(logn)
 public class Solution {
     public int[] twoSum(int[] numbers, int target) {
         int start = 0;

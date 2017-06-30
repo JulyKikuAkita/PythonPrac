@@ -1,4 +1,4 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/ugly-number/#/solutions'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/ugly-number.py
 # Time:  O(logn)
 # Space: O(1)
@@ -10,6 +10,8 @@ __author__ = 'July'
 # includes another prime factor 7.
 #
 # Note that 1 is typically treated as an ugly number.
+#  Math
+# Hide Similar Problems (E) Happy Number (E) Count Primes (M) Ugly Number II
 #
 class Solution:
     # @param {integer} num
@@ -23,19 +25,13 @@ class Solution:
         return num == 1
 
 #Java
-js = '''
+java = '''
 public class Solution {
     public boolean isUgly(int num) {
         if(num < 1) return false;
-        while(num % 5 == 0){
-            num /= 5;
-        }
-        while(num % 3 == 0){
-            num /= 3;
-        }
-        while(num %2 ==0){
-            num /= 2;
-        }
+        while (num % 2 == 0) num = num >>> 1;
+        while (num % 3 == 0) num = num / 3;
+        while (num % 5 == 0) num = num / 5;
         return num == 1;
     }
 }

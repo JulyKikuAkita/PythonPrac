@@ -1,4 +1,4 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/expression-add-operators/#/description'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/expression-add-operators.py
 # Time:  O(4^n)
 # Space: O(n)
@@ -13,8 +13,11 @@ __author__ = 'July'
 # "232", 8 -> ["2*3+2", "2+3*2"]
 # "00", 0 -> ["0+0", "0-0", "0*0"]
 # "3456237490", 9191 -> []
-# Google Cryptic Studios
-#
+#  Google Facebook
+# Hide Tags Divide and Conquer
+# Hide Similar Problems (M) Evaluate Reverse Polish Notation
+# (H) Basic Calculator (M) Basic Calculator II (M) Different Ways to Add Parentheses (M) Target Sum
+
 
 class Solution(object):
     def addOperators(self, num, target):
@@ -69,7 +72,15 @@ class Solution(object):
                 i += 1
 
 #java
-js = '''
+java = '''
+Thought:
+This problem has a lot of edge cases to be considered:
+
+overflow: we use a long type once it is larger than Integer.MAX_VALUE or minimum, we get over it.
+0 sequence: because we can't have numbers with multiple digits started with zero, we have to deal with it too.
+a little trick is that we should save the value that is to be multiplied in the next recursion.
+
+# 53%
 public class Solution {
     public List<String> addOperators(String num, int target) {
         List<String> result = new ArrayList<String>();
@@ -99,4 +110,42 @@ public class Solution {
         }
     }
 }
+
+# 90%
+public class Solution {
+    public List<String> addOperators(String num, int target) {
+        List<String> result = new ArrayList<>();
+        addOperators(num, target, 0, result, new StringBuilder(), 0, 0);
+        return result;
+    }
+
+    private void addOperators(String num, long target, int index, List<String> result, StringBuilder sb, long curNum, long lastNum) {
+        if (index == num.length()) {
+            if (curNum == target) {
+                result.add(sb.toString());
+            }
+            return;
+        }
+        int len = sb.length();
+        long cur = 0;
+        for (int i = index; i < num.length(); i++) {
+            cur = cur * 10 + num.charAt(i) - '0';
+            if (len == 0) {
+                addOperators(num, target, i + 1, result, sb.append(cur), cur, cur);
+                sb.setLength(len);
+            } else {
+                addOperators(num, target, i + 1, result, sb.append('+').append(cur), curNum + cur, cur);
+                sb.setLength(len);
+                addOperators(num, target, i + 1, result, sb.append('-').append(cur), curNum - cur, -cur);
+                sb.setLength(len);
+                addOperators(num, target, i + 1, result, sb.append('*').append(cur), curNum - lastNum + lastNum * cur, lastNum * cur);
+                sb.setLength(len);
+            }
+            if (num.charAt(index) == '0') { // check index (not i) do not start with 0
+                break;
+            }
+        }
+    }
+}
+
 '''

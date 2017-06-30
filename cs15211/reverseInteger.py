@@ -15,11 +15,17 @@ __author__ = 'July'
 #
 # If the integer's last digit is 0, what should the output be? ie, cases such as 10, 100.
 #
-# Did you notice that the reversed integer might overflow? Assume the input is a 32-bit integer,
-# then the reverse of 1000000003 overflows. How should you handle such cases?
+# Did you notice that the reversed integer might overflow? Assume the input is a 32-bit integer, then the reverse of 1000000003 overflows. How should you handle such cases?
 #
-# Throw an exception? Good, but what if throwing an exception is not an option?
-# You would then have to re-design the function (ie, add an extra parameter).
+# For the purpose of this problem, assume that your function returns 0 when the reversed integer overflows.
+#
+# Note:
+# The input is assumed to be a 32-bit signed integer. Your function should return 0 when the reversed integer overflows.
+#
+# Hide Company Tags Bloomberg Apple
+# Hide Tags Math
+# Hide Similar Problems (M) String to Integer (atoi)
+#
 #
 
 class Solution:
@@ -70,6 +76,7 @@ if __name__ == "__main__":
 
 #java
 js = '''
+36%
 public class Solution {
     public int reverse(int x) {
         long origin = Math.abs((long) x);
@@ -84,6 +91,25 @@ public class Solution {
             return 0;
         }
         return x < 0 ? -ret : ret;
+    }
+}
+
+40%
+// no type change for overflow
+public class Solution {
+    public int reverse(int x) {
+        int res = 0;
+        int orig = Math.abs(x);
+        while ( orig > 0 ) {
+            int tail = orig % 10;
+            int cur = res * 10 + tail;
+            if ((cur - tail) / 10 != res) { //overflow
+                return 0;
+            }
+            res = cur;
+            orig /= 10;
+        }
+        return x < 0 ? -res : res;
     }
 }
 '''

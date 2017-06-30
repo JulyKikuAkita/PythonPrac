@@ -9,10 +9,10 @@ __author__ = 'July'
 # For example,
 # [1,1,2] have the following unique permutations:
 # [1,1,2], [1,2,1], and [2,1,1].
-# LinkedIn Microsoft
-
-
-
+#
+#  LinkedIn Microsoft
+# Hide Tags Backtracking
+# Hide Similar Problems (M) Next Permutation (M) Permutations (M) Palindrome Permutation II
 
 class Solution:
     # @param num, a list of integer
@@ -37,31 +37,53 @@ if __name__ == "__main__":
     #print Solution().permuteUnique([1, -1, 1, 2, -1, 2, 2, -1])
 
 #Java
-js = '''
+java = '''
+//permutation usually use boolean[] to track if element is used
+//permutation forloop index start with 0
+//use start index result in multiple duplication as below example of backtrackErr
+//Use HashSet to remove duplicate
 public class Solution {
     public List<List<Integer>> permuteUnique(int[] nums) {
-        Arrays.sort(nums);
-        return permuteUnique(nums, 0);
+        List<List<Integer>> list = new ArrayList<>();
+        backtrack(list, new ArrayList<>(), nums, new boolean[nums.length]);
+        return list;
     }
 
-    private List<List<Integer>> permuteUnique(int[] nums, int index) {
-        List<List<Integer>> result = new ArrayList<>();
-        if (index == nums.length) {
-            result.add(new ArrayList<Integer>());
-            return result;
+    //start index does not work in permutation
+    //[[1,1,1],[1,1,2],[1,2,1],[1,2,2],[2,1,1],[2,1,2],[2,2,1],[2,2,2]]
+    private void backtrackErr(List<List<Integer>> list, List<Integer> tempList, int [] nums, int start){
+        if (tempList.size() == nums.length) {
+             list.add(new ArrayList<>(tempList));
+             return;
         }
-        List<List<Integer>> next = permuteUnique(nums, index + 1);
-        for (List<Integer> list : next) {
-            for (int i = 0; i <= list.size(); i++) {
-                List<Integer> curr = new ArrayList<>(list);
-                curr.add(i, nums[index]);
-                result.add(curr);
-                if (i < curr.size() - 1 && curr.get(i) == curr.get(i + 1)) {
-                    break;
-                }
+        Set<Integer> set = new HashSet<>();
+        for (int i = 0; i < nums.length; i++) {
+            if (!set.contains(nums[i])) {
+                tempList.add(nums[i]);
+                set.add(nums[i]);
+                backtrackErr(list, tempList, nums, i + 1);
+                tempList.remove(tempList.size() - 1);
             }
         }
-        return result;
+    }
+
+    //[[1,1,2],[1,2,1],[2,1,1]]
+    private void backtrack(List<List<Integer>> list, List<Integer> tempList, int [] nums, boolean[] used){
+        if (tempList.size() == nums.length) {
+             list.add(new ArrayList<>(tempList));
+             return;
+        }
+        Set<Integer> set = new HashSet<>();
+        for (int i = 0; i < nums.length; i++) {
+            if (!used[i] && !set.contains(nums[i])) {
+                tempList.add(nums[i]);
+                used[i] = true;
+                set.add(nums[i]);
+                backtrack(list, tempList, nums, used);
+                tempList.remove(tempList.size() - 1);
+                used[i] = false;
+            }
+        }
     }
 }
 '''

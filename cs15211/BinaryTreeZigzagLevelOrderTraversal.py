@@ -1,10 +1,11 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/zigzag-conversion/#/description'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/binary-tree-zigzag-level-order-traversal.py
 # Time:  O(n)
 # Space: O(n)
 # BFS
 #
-# Given a binary tree, return the zigzag level order traversal of its nodes' values. (ie, from left to right, then right to left for the next level and alternate between).
+# Given a binary tree, return the zigzag level order traversal of its nodes' values.
+# (ie, from left to right, then right to left for the next level and alternate between).
 #
 # For example:
 # Given binary tree {3,9,20,#,#,15,7},
@@ -105,41 +106,71 @@ if __name__ == "__main__":
 
 #java
 js = '''
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+ #BFS 40%
 public class Solution {
     public List<List<Integer>> zigzagLevelOrder(TreeNode root) {
-        List<List<Integer>> result = new ArrayList<>();
-        if (root == null) {
-            return result;
-        }
-        Queue<TreeNode> queue = new LinkedList<>();
-        queue.add(root);
-        queue.add(null);
-        List<Integer> list = new ArrayList<>();
-        while (!queue.isEmpty()) {
-            TreeNode curr = queue.poll();
-            if (curr == null) {
-                if (queue.isEmpty()) {
-                    result.add(list);
-                    break;
+         List<List<Integer>> res = new ArrayList<>();
+         if ( root == null) return res;
+         Queue<TreeNode> q = new LinkedList<>();
+         q.offer(root);
+         boolean fromRight = false;
+         while (!q.isEmpty()) {
+             int len = q.size();
+             List<Integer> tmp = new LinkedList<>();
+             for (int i = 0; i < len; i++) {
+                TreeNode cur = q.poll();
+                if (cur.left != null) q.offer(cur.left);
+                if (cur.right != null) q.offer(cur.right);
+                if (fromRight) {
+                    tmp.add(0, cur.val);
                 } else {
-                    result.add(list);
-                    queue.add(null);
-                    list = new ArrayList<>();
+                    tmp.add(cur.val);
                 }
-            } else {
-                list.add(curr.val);
-                if (curr.left != null) {
-                    queue.add(curr.left);
-                }
-                if (curr.right != null) {
-                    queue.add(curr.right);
-                }
-            }
-        }
-        for (int i = 1; i < result.size(); i += 2) {
-            Collections.reverse(result.get(i));
-        }
-        return result;
+             }
+             res.add(tmp);
+             fromRight = !fromRight;
+         }
+         return res;
     }
 }
+
+#40%
+#DFS:
+public class Solution {
+    public List<List<Integer>> zigzagLevelOrder(TreeNode root) {
+        List<List<Integer>> res = new ArrayList<>();
+        dfs(root, res, 0);
+        return res;
+    }
+
+    private void dfs(TreeNode root, List<List<Integer>> res, int level) {
+        if (root == null) return;
+
+        //== when level == 0
+        //res.get(level) == null got java.lang.IndexOutOfBoundsException: Index: 0, Size: 0
+        if (res.size() <= level) {
+            List<Integer> tmp = new LinkedList<>();
+            res.add(level, tmp);
+        }
+
+        if ( (level & 1) == 0) { // even ( 1 & 1 = 1, otherwise all 0)
+            res.get(level).add(root.val);
+        } else {
+            res.get(level).add(0, root.val);
+        }
+
+        dfs(root.left, res, level+1);
+        dfs(root.right, res, level+1);
+    }
+}
+
 '''

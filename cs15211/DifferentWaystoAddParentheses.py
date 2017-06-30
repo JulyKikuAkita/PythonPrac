@@ -1,4 +1,4 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/different-ways-to-add-parentheses/#/description'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/different-ways-to-add-parentheses.py
 # Time:  O(n * 4^n / n^(3/2)) ~= n * Catalan numbers = n * (C(2n, n) - C(2n, n - 1)),
 #                                due to the size of the results is Catalan numbers,
@@ -30,7 +30,9 @@ __author__ = 'July'
 # Output: [-34, -14, -10, -10, 10]
 #
 # Cryptic Studios
-
+#  Divide and Conquer
+# Hide Similar Problems (M) Unique Binary Search Trees II (H) Basic Calculator (H) Expression Add Operators
+#
 import re
 import operator
 class Solution:
@@ -84,50 +86,9 @@ class Solution2:
 
         return diffWaysToComputeRecu(0, len(input))
 
-#java thinking
-class Solution3(object):
-    def diffWaysToCompute(self, input):
-        """
-        :type input: str
-        :rtype: List[int]
-        """
-        if not input:
-            return
-        dp = [[None for _ in xrange(len(input) + 1)] for _ in xrange(len(input) + 1)]
-        return self.dfs(0, len(input), input , dp )
-
-    def dfs(self, left, right, input, dp):
-        if dp[left][right]:
-            return dp[left][right]
-
-        res = []
-        '''
-        if left == right:
-            res.append(int(input[left]))
-            return res
-        '''
-        for i in xrange(left,right):
-            if not input[i].isdigit():
-                leftset = self.dfs(left, i, input, dp)
-                rightset = self.dfs(i+1, right, input, dp)
-
-                for l in leftset:
-                    for r in rightset:
-                        if input[i] == '+':
-                            res.append(l + r)
-                        elif input[i] == '-':
-                            res.append(l - r)
-                        elif input[i] == '*':
-                            res.append(l * r)
-
-        if len(res) == 0:
-            res = [int(input[left:right])]
-        dp[left][right] = res
-
-        return res
-
 #java
-js = '''
+java = '''
+1. 91%
 public class Solution {
     public List<Integer> diffWaysToCompute(String input) {
         return diffWaysToCompute(input, new HashMap<>());
@@ -170,8 +131,54 @@ public class Solution {
         return result;
     }
 }
-'''
 
+# Separate compute part, easier to read:
+# 91%
+public class Solution {
+    public List<Integer> diffWaysToCompute(String input) {
+        return diffWaysToCompute(input, new HashMap<>());
+    }
+
+    private List<Integer> diffWaysToCompute(String input, Map<String, List<Integer>> cache) {
+        if (input.length() == 0) {
+            return new ArrayList<>();
+        } else if (cache.containsKey(input)) {
+            return cache.get(input);
+        }
+        List<Integer> result = new ArrayList<>();
+        for (int i = 1; i < input.length() - 1; i++) {
+            char c = input.charAt(i);
+            if (!Character.isDigit(c)) {
+                List<Integer> leftList = diffWaysToCompute(input.substring(0, i), cache);
+                List<Integer> rightList = diffWaysToCompute(input.substring(i + 1), cache);
+                for (int left : leftList) {
+                    for (int right : rightList) {
+                        result.add(compute(left, right, c));
+                    }
+                }
+            }
+        }
+        if (result.isEmpty()) {
+            result.add(Integer.valueOf(input));
+        }
+        cache.put(input, result);
+        return result;
+    }
+
+    private int compute(int left, int right, char c) {
+        switch (c) {
+            case '+':
+                return left + right;
+            case '-':
+                return left - right;
+            case '*':
+                return left * right;
+            default:
+                throw new IllegalArgumentException("Invalid operator:" + c);
+        }
+    }
+}
+'''
 #similar question:
 # Give a integer array, return all possible ans of +, -, * operation
 '''

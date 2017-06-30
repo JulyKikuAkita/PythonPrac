@@ -1,4 +1,4 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-search-tree/#/solutions'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/lowest-common-ancestor-of-a-binary-search-tree.py
 # Time:  O(n)
 # Space: O(1)
@@ -6,9 +6,9 @@ __author__ = 'July'
 # Given a binary search tree (BST), find the lowest common ancestor (LCA)
 # of two given nodes in the BST.
 #
-# According to the definition of LCA on Wikipedia: “The lowest common ancestor
+# According to the definition of LCA on Wikipedia: "The lowest common ancestor
 # is defined between two nodes v and w as the lowest node in T that has both v
-# and w as descendants (where we allow a node to be a descendant of itself).”
+# and w as descendants (where we allow a node to be a descendant of itself).
 #
 #         _______6______
 #       /              \
@@ -21,16 +21,17 @@ __author__ = 'July'
 # Another example is LCA of nodes 2 and 4 is 2, since a node can be a
 # descendant of itself according to the LCA definition.
 #
-# Amazon, Microsoft FB Twitter
-
-
-
+# Amazon LinkedIn Apple Facebook Microsoft
+# Hide Tags Tree
+# Hide Similar Problems (E) Lowest Common Ancestor of a Binary Search Tree
+#
+#
 # Definition for a binary tree node.
-# class TreeNode:
-#     def __init__(self, x):
-#         self.val = x
-#         self.left = None
-#         self.right = None
+class TreeNode:
+    def __init__(self, x):
+        self.val = x
+        self.left = None
+        self.right = None
 
 class Solution:
     # @param {TreeNode} root
@@ -58,32 +59,24 @@ js = '''
  * }
  */
 
- public class Solution {
+public class Solution {
     public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
-        if(p.val > q.val){
-            return lowestCommonAncestor(root, q, p);
+        if (root.val > p.val && root.val > q.val) {
+            return lowestCommonAncestor(root.left, p, q);
+        } else if (root.val < p.val && root.val < q.val) {
+            return lowestCommonAncestor(root.right, p, q);
+        } else {
+            return root;
         }
-
-        while(!(p.val <= root.val && root.val <= q.val)){
-            root = root.val >= p.val ? root.left : root.right;
-        }
-        return root;
     }
 }
 
 public class Solution {
     public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
-        if(p.val > q.val){
-            return lowestCommonAncestor(root, q, p);
-        }
-
-        if(root.val >= p.val && root.val <= q.val) return root;
-
-        else if(root.val >= p.val)
-            return lowestCommonAncestor(root.left, p, q);
-        else
-            return lowestCommonAncestor(root.right, p, q);
-
+        if (root == null) return null;
+        if ((p.val - root.val) * (q.val - root.val) <= 0) return root;
+        else if (p.val > root.val) return lowestCommonAncestor(root.right, p, q);
+        else return lowestCommonAncestor(root.left, p, q);
     }
 }
 '''

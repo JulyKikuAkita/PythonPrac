@@ -17,7 +17,11 @@ __author__ = 'July'
 #   [1,3],
 #   [1,4],
 # ]
-#
+# # Snapchat Uber
+# Hide Tags Array Backtracking
+# Hide Similar Problems (M) Letter Combinations of a Phone Number (M) Combination Sum II
+# (M) Combinations (M) Combination Sum III (M) Factor Combinations (M) Combination Sum IV
+
 
 class Solution:
     # @return a list of lists of integers
@@ -127,50 +131,76 @@ my_test = SolutionOther()
 
 #java
 js = '''
+//template, 39.12% without optimize i <= n - k +!
 public class Solution {
     public List<List<Integer>> combine(int n, int k) {
         List<List<Integer>> result = new ArrayList<>();
-        if (k > n) {
-            return result;
-        }
-        combine(n, 1, k, result, new ArrayList<Integer>());
+        backtrack(result, new ArrayList<Integer>(), n, k, 1);
         return result;
     }
 
-    private void combine(int n, int index, int k, List<List<Integer>> result, List<Integer> curr) {
-        if (k == 0) {
-            result.add(new ArrayList<Integer>(curr));
-            return;
-        } else if (index > n) {
+    private void backtrack(List<List<Integer>> list, List<Integer> tempList, int n, int k, int start) {
+        if (start > n + 1 ) return; // when start == n+1, tempList has correct set needs to be append to list
+        if ( k == 0) {
+            list.add(new ArrayList<>(tempList));
             return;
         }
-        combine(n, index + 1, k, result, curr);
-        curr.add(index);
-        combine(n, index + 1, k - 1, result, curr);
-        curr.remove(curr.size() - 1);
+        // if (start > n ) return; //same as line above but with out "n + 1"
+        for ( int i = start; i <= n; i++ ) { //can be optimized by i <= n - k + 1
+            tempList.add(i);
+            backtrack(list, tempList, n, k-1, i + 1);
+            tempList.remove(tempList.size() - 1);
+        }
     }
 }
 
-
+//100% , optimize by n - k + 1
 public class Solution {
     public List<List<Integer>> combine(int n, int k) {
-        if ( k > n) return new ArrayList<>();
-        List<List<Integer>> res = new ArrayList<>();
-        dfs(n, k, 1, new ArrayList<>(), res);
-        return res;
+        List<List<Integer>> result = new ArrayList<>();
+        if (k <= 0 || n < k) {
+            return result;
+        }
+        combine(n, k, 1, result, new ArrayList<>());
+        return result;
     }
 
-    private void dfs(int n, int k, int idx, List<Integer> tmp, List<List<Integer>> res){
-         if(tmp.size() == k){
-             res.add(new ArrayList<>(tmp));
-             return;
-         }
+    private void combine(int n, int k, int cur, List<List<Integer>> result, List<Integer> list) {
+        if (k == 0) {
+            result.add(new ArrayList<>(list));
+            return;
+        }
+        int size = list.size();
+        for (int i = cur; i <= n - k + 1; i++) {  //here with lopp
+            list.add(i);
+            combine(n, k - 1, i + 1, result, list);
+            list.remove(size);
+        }
+    }
+}
 
-         for(int i = idx; i <= n; i++){
-             tmp.add(i);
-             dfs(n, k, i + 1, tmp, res);
-             tmp.remove(tmp.size()-1);
-         }
+//100%
+public class Solution {
+    public List<List<Integer>> combine(int n, int k) {
+        List<List<Integer>> result = new ArrayList<>();
+        if (k <= 0 || n < k) {
+            return result;
+        }
+        combine(n, k, 1, result, new ArrayList<>());
+        return result;
+    }
+
+    private void combine(int n, int k, int index, List<List<Integer>> result, List<Integer> cur) {
+        if (k == 0) {
+            result.add(new ArrayList<>(cur));
+            return;
+        } else if (n - index < k - 1) {
+            return;
+        }
+        combine(n, k, index + 1, result, cur);  //orig case
+        cur.add(index);
+        combine(n, k - 1, index + 1, result, cur);
+        cur.remove(cur.size() - 1);
     }
 }
 '''

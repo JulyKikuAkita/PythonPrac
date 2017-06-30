@@ -1,4 +1,4 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-tree/#/description'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/lowest-common-ancestor-of-a-binary-tree.py
 # Time:  O(h)
 # Space: O(h)
@@ -18,18 +18,25 @@ __author__ = 'July'
 #   6      _2       0       8
 #          /  \
 #          7   4
+#
 # For example, the lowest common ancestor (LCA) of nodes 5 and 1 is 3.
 # Another example is LCA of nodes 5 and 4 is 5, since a node can be a
 # descendant of itself according to the LCA definition.
 #
-# Definition for a binary tree node.
-# class TreeNode:
-#     def __init__(self, x):
-#         self.val = x
-#         self.left = None
-#         self.right = None
-# LinkedIn Facebook Microsoft Amazon  Apple
+# Topics:
+# Tree
+# You might like:
+# (E) Lowest Common Ancestor of a Binary Search Tree
+# Company:
+# Amazon LinkedIn Apple Facebook Microsoft
 
+
+# Definition for a binary tree node.
+class TreeNode:
+    def __init__(self, x):
+        self.val = x
+        self.left = None
+        self.right = None
 #DFS
 class Solution:
     # @param {TreeNode} root
@@ -87,36 +94,24 @@ class Solution(object):
             q = parent[q]
 
         return q
+    def lowestCommonAncestor2(self, root, p, q):
+        if root in (None, p, q): return root
+        left, right = (self.lowestCommonAncestor(kid, p, q)
+                   for kid in (root.left, root.right))
+        return root if left and right else left or right
+
+    def lowestCommonAncestor3(self, root, p, q):
+        if root in (None, p, q): return root
+        subs = [self.lowestCommonAncestor(kid, p, q)
+                for kid in (root.left, root.right)]
+        return root if all(subs) else max(subs)
 
 
 
 
 # http://algobox.org/lowest-common-ancestor-of-a-binary-tree/
 #java
-#DFS
-js = '''
-public class Solution {
-    public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
-        if (root == null) {
-            return null;
-        } else if (root == p || root == q) {
-            return root;
-        } else {
-            TreeNode left = lowestCommonAncestor(root.left, p, q);
-            TreeNode right = lowestCommonAncestor(root.right, p, q);
-            if (left == null) {
-                return right;
-            } else if (right == null) {
-                return left;
-            } else {
-                return root;
-            }
-        }
-    }
-}
-
-#BFS
-
+java = '''
 /**
  * Definition for a binary tree node.
  * public class TreeNode {
@@ -126,6 +121,19 @@ public class Solution {
  *     TreeNode(int x) { val = x; }
  * }
  */
+
+#DFS
+public class Solution {
+    public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+        if (root == null || root == p || root == q) return root;
+        TreeNode left = lowestCommonAncestor(root.left, p, q);
+        TreeNode right = lowestCommonAncestor(root.right, p, q);
+        if (left != null && right != null) return root;
+        return left == null ? right : left;
+    }
+}
+
+#BFS
 public class Solution {
     public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
         Map<TreeNode, TreeNode> parent = new HashMap<>();

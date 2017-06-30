@@ -10,9 +10,10 @@ __author__ = 'July'
 # The longest consecutive elements sequence is [1, 2, 3, 4]. Return its length: 4.
 #
 # Your algorithm should run in O(n) complexity.
-# Google Facebook
+#  Google Facebook
 # Hide Tags Array Union Find
-#
+# Hide Similar Problems (M) Binary Tree Longest Consecutive Sequence
+
 class Solution:
     # @param num, a list of integer
     # @return an integer
@@ -70,29 +71,22 @@ if __name__ =="__main__":
 js = '''
 public class Solution {
     public int longestConsecutive(int[] nums) {
-        Set<Integer> set = new HashSet<>();
-        for (int num : nums) {
-            set.add(num);
-        }
-        int result = 0;
-        for (int num : nums) {
-            if (set.contains(num)) {
-                int count = 1;
-                set.remove(num);
-                int cur = num + 1;
-                while (set.contains(cur)) {
-                    count++;
-                    set.remove(cur++);
+        if(nums == null || nums.length == 0) return 0;
+
+        Set<Integer> set = new HashSet<Integer>();
+
+        for(int num: nums) set.add(num);
+        int max = 0;
+        for(int x: nums) {
+            if ( !set.contains(x - 1)) {
+                int y = x + 1;
+                while( set.contains(y)){
+                    y++;
                 }
-                cur = num - 1;
-                while (set.contains(cur)) {
-                    count++;
-                    set.remove(cur--);
-                }
-                result = Math.max(result, count);
+                max = Math.max(max, y -x);
             }
         }
-        return result;
+        return max;
     }
 }
 '''

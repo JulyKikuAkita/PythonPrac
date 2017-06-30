@@ -1,9 +1,8 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/count-of-range-sum/#/description'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/count-of-range-sum.py
-
 # Time:  O(nlogn)
 # Space: O(n)
-
+#
 # Given an integer array nums, return the number of range
 # sums that lie in [lower, upper] inclusive.
 # Range sum S(i, j) is defined as the sum of the elements
@@ -17,7 +16,10 @@ __author__ = 'July'
 # Return 3.
 # The three ranges are : [0, 0], [2, 2], [0, 2] and
 # their respective sums are: -2, -1, 2.
-# google
+#  Google
+# Hide Tags Divide and Conquer Binary Search Tree
+# Hide Similar Problems (H) Count of Smaller Numbers After Self (H) Reverse Pairs
+#
 
 
 # Divide and Conquer solution.
@@ -102,7 +104,36 @@ class Solution2(object):
         return countAndMergeSort(sums, 0, len(sums) - 1, lower, upper)
 
 #java
-js = '''
+java = '''
+# Able to use Segment Tree as well
+Thought: https://discuss.leetcode.com/topic/33738/share-my-solution
+Recall count smaller number after self where we encountered the problem
+
+count[i] = count of nums[j] - nums[i] < 0 with j > i
+Here, after we did the preprocess, we need to solve the problem
+
+count[i] = count of a <= S[j] - S[i] <= b with j > i
+ans = sum(count[:])
+Therefore the two problems are almost the same.
+We can use the same technique used in that problem to solve this problem.
+One solution is merge sort based; another one is Balanced BST based.
+The time complexity are both O(n log n).
+
+The merge sort based solution counts the answer while doing the merge.
+During the merge stage, we have already sorted the left half [start, mid)
+and right half [mid, end). We then iterate through the left half with index i.
+For each i, we need to find two indices k and j in the right half where
+
+j is the first index satisfy sums[j] - sums[i] > upper and
+k is the first index satisfy sums[k] - sums[i] >= lower.
+Then the number of sums in [lower, upper] is j-k. We also use another index t to copy
+the elements satisfy sums[t] < sums[i] to a cache in order to complete the merge sort.
+
+Despite the nested loops, the time complexity of the "merge & count" stage is still linear.
+Because the indices k, j, t will only increase but not decrease, each of them will only traversal
+the right half once at most. The total time complexity of this divide and conquer solution is then O(n log n).
+
+One other concern is that the sums may overflow integer. So we use long instead.
 public class Solution {
     public int countRangeSum(int[] nums, int lower, int upper) {
         int len = nums.length;

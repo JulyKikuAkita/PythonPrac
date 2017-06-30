@@ -1,4 +1,4 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/min-stack/#/solutions'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/min-stack.py
 # Time:  O(n)
 # Space: O(1)
@@ -11,9 +11,13 @@ __author__ = 'July'
 # top() -- Get the top element.
 # getMin() -- Retrieve the minimum element in the stack.
 #
-#  Google Uber Zenefits Amazon Snapchat Bloomberg
-#  Hide Tags Stack Design
-
+# Topics:
+# Stack Design
+# You might like:
+# (H) Sliding Window Maximum
+# Company:
+# Google Uber Zenefits Amazon Snapchat Bloomberg
+#
 
 class MinStack:
     def __init__(self):
@@ -87,7 +91,43 @@ class MinStackOther:
         return self.minStack[-1]
 
 #Java
-js = '''
+java = '''
+//use only one stack:
+//pop min twice
+public class MinStack {
+    int min;
+    Stack<Integer> s;
+
+    /** initialize your data structure here. */
+    public MinStack() {
+        s = new Stack();
+        min = Integer.MAX_VALUE;
+    }
+
+    public void push(int x) {
+        if ( x <= min) {
+            s.push(min);
+            min = x;
+        }
+        s.push(x);
+    }
+
+    public void pop() {
+        if (s.pop() == min) {
+            min = s.pop();
+        }
+    }
+
+    public int top() {
+        return s.peek();
+    }
+
+    public int getMin() {
+        return min;
+    }
+}
+
+
 public class MinStack {
     Stack<Integer> dataStack;
     Stack<Integer> minStack;

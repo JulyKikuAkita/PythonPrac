@@ -1,4 +1,4 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/serialize-and-deserialize-binary-tree/#/description'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/serialize-and-deserialize-binary-tree.py
 # Time:  O(n)
 # Space: O(h)
@@ -26,6 +26,13 @@ __author__ = 'July'
 # please be creative and come up with different approaches yourself.
 # Note: Do not use class member/global/static variables to store states.
 # Your serialize and deserialize algorithms should be stateless.
+#
+# Topics:
+# Tree Design
+# You might like:
+# (M) Encode and Decode Strings (M) Serialize and Deserialize BST
+# Company:
+# LinkedIn Google Uber Facebook Amazon Microsoft Yahoo Bloomberg
 #
 
 # Definition for a binary tree node.
@@ -84,12 +91,61 @@ class Codec:
         vals = iter(isplit(data, ' '))
         return deserializeHelper()
 
+# Definition for a binary tree node.
+# class TreeNode(object):
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+class Codec:
+
+    def serialize(self, root):
+        """Encodes a tree to a single string.
+
+        :type root: TreeNode
+        :rtype: str
+        """
+        def encode(node):
+            if node:
+                vals.append(str(node.val))
+                encode(node.left)
+                encode(node.right)
+            else:
+                vals.append('#')
+        vals = []
+        encode(root)
+        return ' '.join(vals)
+
+    def deserialize(self, data):
+        """Decodes your encoded data to tree.
+
+        :type data: str
+        :rtype: TreeNode
+        """
+        def decode():
+            val = next(vals)
+            if val == '#':
+                return None
+            node = TreeNode(int(val))
+            node.left = decode()
+            node.right = decode()
+            return node
+
+        vals = iter(data.split())
+        return decode()
+
+
+# Your Codec object will be instantiated and called as such:
+# codec = Codec()
+# codec.deserialize(codec.serialize(root))
+
 # Your Codec object will be instantiated and called as such:
 # codec = Codec()
 # codec.deserialize(codec.serialize(root))
 
 #java
-js = '''
+java = '''
 /**
  * Definition for a binary tree node.
  * public class TreeNode {
@@ -149,6 +205,103 @@ public class Codec {
 
     private TreeNode createNode(String val) {
         return val.equals(NULL_NODE) ? null : new TreeNode(Integer.parseInt(val));
+    }
+}
+
+// Your Codec object will be instantiated and called as such:
+// Codec codec = new Codec();
+// codec.deserialize(codec.serialize(root));
+
+The idea is simple: print the tree in pre-order traversal and use "X" to
+denote null node and split node with ",". We can use a StringBuilder for
+building the string on the fly. For deserializing, we use a Queue to store
+the pre-order traversal and since we have "X" as null node, we know exactly
+how to where to end building subtress.
+
+public class Codec {
+    private static final String spliter = ",";
+    private static final String NN = "X";
+
+    // Encodes a tree to a single string.
+    public String serialize(TreeNode root) {
+        StringBuilder sb = new StringBuilder();
+        buildString(root, sb);
+        return sb.toString();
+    }
+
+    private void buildString(TreeNode node, StringBuilder sb) {
+        if (node == null) {
+            sb.append(NN).append(spliter);
+        } else {
+            sb.append(node.val).append(spliter);
+            buildString(node.left, sb);
+            buildString(node.right,sb);
+        }
+    }
+    // Decodes your encoded data to tree.
+    public TreeNode deserialize(String data) {
+        Deque<String> nodes = new LinkedList<>();
+        nodes.addAll(Arrays.asList(data.split(spliter)));
+        return buildTree(nodes);
+    }
+
+    private TreeNode buildTree(Deque<String> nodes) {
+        String val = nodes.remove();
+        if (val.equals(NN)) return null;
+        else {
+            TreeNode node = new TreeNode(Integer.valueOf(val));
+            node.left = buildTree(nodes);
+            node.right = buildTree(nodes);
+            return node;
+        }
+    }
+}
+
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+public class Codec {
+    private static final String spliter = ",";
+    private static final String NN = "X";
+    // Encodes a tree to a single string.
+    public String serialize(TreeNode root) {
+        StringBuilder sb = new StringBuilder();
+        encode(root, sb);
+        return sb.toString();
+    }
+
+    private void encode(TreeNode node, StringBuilder sb) {
+        if (node == null) {
+            sb.append(NN).append(spliter);
+        } else {
+            sb.append(node.val).append(spliter);
+            encode(node.left, sb);
+            encode(node.right, sb);
+        }
+    }
+
+    // Decodes your encoded data to tree.
+    public TreeNode deserialize(String data) {
+        Deque<String> nodes = new LinkedList<>();
+        nodes.addAll(Arrays.asList(data.split(spliter)));
+        return decode(nodes);
+    }
+
+    private TreeNode decode(Deque<String> nodes) {
+        String val = nodes.remove();
+        if (val.equals(NN)) return null;
+        else {
+            TreeNode node = new TreeNode(Integer.valueOf(val));
+            node.left = decode(nodes);
+            node.right = decode(nodes);
+            return node;
+        }
     }
 }
 
