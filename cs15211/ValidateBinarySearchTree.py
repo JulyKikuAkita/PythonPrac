@@ -1,4 +1,4 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/validate-binary-search-tree/#/description'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/validate-binary-search-tree.py
 # Time:  O(n)
 # Space: O(1)
@@ -161,7 +161,7 @@ public class Solution {
     }
 }
 
-# inOrder traversal
+# inOrder traversal BFS :23%
 # https://discuss.leetcode.com/topic/4659/c-in-order-traversal-and-please-do-not-rely-on-buggy-int_max-int_min-solutions-any-more
 public class Solution {
     public boolean isValidBST(TreeNode root) {
@@ -181,4 +181,21 @@ public class Solution {
         return true;
     }
 }
+
+Note: Not working with min/max
+Fail at [3,1,5,0,2,4,6,null,null,null,3]
+public class Solution {
+    public boolean isValidBST(TreeNode root) {
+        return validate(root, null);
+    }
+    
+    private boolean validate(TreeNode root, TreeNode prev) {
+        if ( root == null ) return true;
+        if ( root.left != null && root.val <= root.left.val) return false;
+        if (!validate(root.left, prev)) return false;
+        if ( prev != null && prev.val >= root.val) return false;
+        return validate(root.right, root);
+    }
+}
+
 '''

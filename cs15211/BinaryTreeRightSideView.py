@@ -1,4 +1,4 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/binary-tree-right-side-view/#/description'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/binary-tree-right-side-view.py
 # Time:  O(n)
 # Space: O(h)
@@ -15,6 +15,13 @@ __author__ = 'July'
 #  \     \
 #   5     4       <---
 # You should return [1, 3, 4].
+#
+# Companies
+# Amazon
+# Related Topics
+# Tree, Depth-first Search, Breadth-first Search
+# Similar Questions
+# Populating Next Right Pointers in Each Node Boundary of Binary Tree
 #
 
 # Definition for a  binary tree node
@@ -74,3 +81,110 @@ if __name__ == "__main__":
     root.right.right = TreeNode(4)
     result = Solution().rightSideView(root)
     print result
+
+#Java
+#Java =
+'''
+Thought:
+The core idea of this algorithm:
+1.Each depth of the tree only select one node.
+2. View depth is current size of result list.
+
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+# DFS
+public class Solution {
+    public List<Integer> rightSideView(TreeNode root) {
+        List<Integer> result = new ArrayList<>();
+        rightSideView(root, result, 0);
+        return result;
+    }
+    
+    #loop left tree first, need to reset every node val
+    #74%
+    private void rightSideView(TreeNode root, List<Integer> result, int depth) {
+        if (root == null) {
+            return;
+        }
+        if (result.size() == depth) {
+            result.add(root.val);
+        } else {
+            result.set(depth, root.val);
+        }
+        rightSideView(root.left, result, depth + 1);
+        rightSideView(root.right, result, depth + 1);
+    }
+        
+    # loop right tree first  
+    # 74%
+    private void dfs2(TreeNode root, List<Integer> res, int currDepth){
+        if (root == null) return;
+        if (res.size() == currDepth) {
+            res.add(root.val);
+        }
+        dfs2(root.right, res, currDepth + 1);
+        dfs2(root.left, res, currDepth + 1);
+    }
+}
+
+
+# BFS
+# 31 % loop to right child first
+public List<Integer> rightSideViewBFS(TreeNode root) {
+        List<Integer> res = new ArrayList<Integer>();
+        if (root == null) return res;
+        Queue<TreeNode> q = new LinkedList<>();
+        q.add(root);
+        
+        while(!q.isEmpty()) {
+            int len = q.size();
+            for (int i = 0; i < len; i++) {
+                TreeNode cur = q.poll();
+                if (i == 0) res.add(cur.val);
+                if (cur.right != null) q.offer(cur.right);
+                if (cur.left != null) q.offer(cur.left);
+            }
+        }
+        return res;
+    }
+
+
+#31%
+# loopto left child first
+public class Solution {
+    public List<Integer> rightSideView(TreeNode root) {
+        List<Integer> result = new ArrayList<>();
+        if (root == null) {
+            return result;
+        }
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.add(root);
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+            for (int i = 0; i < size - 1; i++) {
+                traverse(queue, queue.poll());
+            }
+            TreeNode cur = queue.poll();
+            result.add(cur.val);
+            traverse(queue, cur);
+        }
+        return result;
+    }
+    
+    private void traverse(Queue<TreeNode> queue, TreeNode cur) {
+        if (cur.left != null) {
+            queue.add(cur.left);
+        }
+        if (cur.right != null) {
+            queue.add(cur.right);
+        }
+    }
+}
+'''

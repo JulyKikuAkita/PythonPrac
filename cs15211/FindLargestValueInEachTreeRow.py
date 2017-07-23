@@ -1,6 +1,4 @@
-from TreeSerizalize import drawtree, deserialize
-
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/find-largest-value-in-each-tree-row/#/description'
 #You need to find the largest value in each row of a binary tree.
 #
 #
@@ -18,6 +16,7 @@ __author__ = 'July'
 #Hide Tags Tree Depth-first Search Breadth-first Search
 #
 # Definition for a binary tree node.
+from TreeSerizalize import drawtree, deserialize
 class TreeNode(object):
      def __init__(self, x):
          self.val = x
@@ -91,7 +90,8 @@ if __name__ == "__main__":
     print Solution().largestValues(drawtree(deserialize('[0,-1]')))
     #print Solution().largestValues(root2)
 
-'''
+Java = '''
+# 39%
 public class Solution {
     public List<Integer> largestValues(TreeNode root) {
         List<Integer> res = new ArrayList<Integer>();
@@ -116,34 +116,30 @@ public class Solution {
 }
 
 Verbose Java Solution, Binary tree level order traversal, again.
-Alright, two binary tree level order traversal problems in one contest. This time, mission is to find the max of each level...
+Alright, two binary tree level order traversal problems in one contest. 
+This time, mission is to find the max of each level
 
+#BFS
+75%
 public class Solution {
-    public int[] findValueMostElement(TreeNode root) {
+    public List<Integer> largestValues(TreeNode root) {
         List<Integer> res = new ArrayList<>();
-        if (root == null) return new int[0];
+        if (root == null) return res;
 
         Queue<TreeNode> queue = new LinkedList<>();
         queue.add(root);
-
         while (!queue.isEmpty()) {
-            int size = queue.size();
+            int len = queue.size();
             int max = Integer.MIN_VALUE;
-            for (int i = 0; i < size; i++) {
-                TreeNode node = queue.poll();
-                max = Math.max(max, node.val);
-                if (node.left != null) queue.add(node.left);
-                if (node.right != null) queue.add(node.right);
+            for (int i = 0; i < len ; i++) {
+                TreeNode cur = queue.poll();
+                max= Math.max(max, cur.val);
+                if (cur.left != null) queue.add(cur.left);
+                if (cur.right != null) queue.add(cur.right);
             }
             res.add(max);
         }
-
-        int[] result = new int[res.size()];
-        for (int i = 0; i < res.size(); i++) {
-            result[i] = res.get(i);
-        }
-
-        return result;
+        return res;
     }
 }
 '''

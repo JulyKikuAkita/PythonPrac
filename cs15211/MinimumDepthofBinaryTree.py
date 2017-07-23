@@ -1,4 +1,4 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/minimum-depth-of-binary-tree/#/description'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/minimum-depth-of-binary-tree.py
 # Time:  O(n)
 # Space: O(h), h is height of binary tree
@@ -7,8 +7,12 @@ __author__ = 'July'
 # Given a binary tree, find its minimum depth.
 #
 # The minimum depth is the number of nodes along the shortest path from the root node down to the nearest leaf node.
+# Related Topics
+# Tree, Depth-first Search, Breadth-first Search
+# Similar Questions
+# Binary Tree Level Order Traversal Maximum Depth of Binary Tree
 #
-
+#
 # Definition for a  binary tree node
 class TreeNode:
     def __init__(self, x):
@@ -100,3 +104,70 @@ tree2.right=tree6
 #end of creating BST tree ####
 test = SolutionOther()
 #print test.minDepth(root0)
+
+#Java
+Java = '''
+#DFS 16.84%
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+public class Solution {
+    public int minDepth(TreeNode root) {
+        if (root == null) return 0;
+        int left = minDepth(root.left);
+        int right = minDepth(root.right);
+        return (left == 0 || right == 0) ? left + right + 1 : Math.min(left, right) + 1; 
+    }
+}
+
+public class Solution {
+    public int minDepth(TreeNode root) {
+        if(root==null)        
+            return 0;
+        int left=minDepth(root.left);
+        int right=minDepth(root.right);
+        if(left==0)
+            return 1+right;
+        else if(right==0)
+            return 1+left;
+        else
+            return Math.min(left,right)+1;
+    }
+}
+
+#BFS: 16%
+public class Solution {
+    public int minDepth(TreeNode root) {
+        if (root == null) {
+            return 0;
+        }
+        Queue<TreeNode> queue = new LinkedList<>();
+        int depth = 1;
+        queue.add(root);
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+            for (int i = 0; i < size; i++) {
+                TreeNode cur = queue.poll();
+                if (cur.left == null && cur.right == null) {
+                    return depth;
+                }
+                if (cur.left != null) {
+                    queue.add(cur.left);
+                }
+                if (cur.right != null) {
+                    queue.add(cur.right);
+                }
+            }
+            depth++;
+        }
+        return depth;
+    }
+}
+
+'''

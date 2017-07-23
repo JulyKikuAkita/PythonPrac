@@ -1,9 +1,8 @@
-import collections
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/serialize-and-deserialize-bst/#/description'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/serialize-and-deserialize-bst.py
 # Time:  O(n)
 # Space: O(h)
-
+#
 # Serialization is the process of converting a data structure or
 # object into a sequence of bits so that it can be stored in a file or
 # memory buffer, or transmitted across a network connection link to be
@@ -18,7 +17,15 @@ __author__ = 'July'
 #
 # Note: Do not use class member/global/static variables to store states.
 # Your serialize and deserialize algorithms should be stateless.
+#
+# Companies
+# Amazon
+# Related Topics
+# Tree
+# Similar Questions
+# Serialize and Deserialize Binary Tree
 
+import collections
 # Definition for a binary tree node.
 class TreeNode(object):
      def __init__(self, x):
@@ -74,7 +81,7 @@ class Codec:
 # codec = Codec()
 # codec.deserialize(codec.serialize(root))
 
-java = '''
+Java = '''
 Java PreOrder + Queue solution
 Hi all, I think my solution is pretty straightforward and easy to understand,
 not that efficient though. And the serialized tree is compact.
@@ -133,9 +140,9 @@ public class Codec {
     private TreeNode getNode(Queue<Integer> q) { //q: 5,3,2,6,7
         if (q.isEmpty()) return null;
         TreeNode root = new TreeNode(q.poll());//root (5)
-        Queue<Integer> samllerQueue = new LinkedList<>();
+        Queue<Integer> smallerQueue = new LinkedList<>();
         while (!q.isEmpty() && q.peek() < root.val) {
-            samllerQueue.offer(q.poll());
+            smallerQueue.offer(q.poll());
         }
         //smallerQueue : 3,2   storing elements smaller than 5 (root)
         root.left = getNode(samllerQueue);

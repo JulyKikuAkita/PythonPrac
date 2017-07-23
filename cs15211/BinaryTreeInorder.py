@@ -16,16 +16,15 @@ __source__ = 'https://leetcode.com/problems/binary-tree-inorder-traversal/#/desc
 # return [1,3,2].
 #
 # Note: Recursive solution is trivial, could you do it iteratively?
-#Topics:
+# Company:
+# Microsoft
+# Topics:
 # Tree Hash Table Stack
 # You might like:
 # (M) Validate Binary Search Tree (M) Binary Tree Preorder Traversal (H) Binary Tree Postorder Traversal
 # (M) Binary Search Tree Iterator (M) Kth Smallest Element in a BST (H) Closest Binary Search Tree Value II
 # (M) Inorder Successor in BST
-# Company:
-# Microsoft
-
-
+#
 
 # Definition for a  binary tree node
 class TreeNode:
@@ -161,7 +160,7 @@ if __name__ == "__main__":
 
 #Java
 Java = '''
-# DFS
+# DFS 37%
 public class Solution {
     public List<Integer> inorderTraversal(TreeNode root) {
         List<Integer> res = new ArrayList<>();
@@ -178,6 +177,7 @@ public class Solution {
 }
 
 #BFS
+4.33%
 public class Solution {
     public List<Integer> inorderTraversal(TreeNode root) {
         List<Integer> result = new ArrayList<>();
@@ -194,6 +194,29 @@ public class Solution {
             }
         }
         return result;
+    }
+}
+
+#37.89%
+public class Solution {
+    public List<Integer> inorderTraversal(TreeNode root) {
+        List<Integer> res = new ArrayList<>();
+        Stack<TreeNode> stack = new Stack<TreeNode>();
+        while(root != null) {
+            stack.push(root);
+            root = root.left;
+        }
+        
+        while(!stack.isEmpty()) {
+            TreeNode cur = stack.pop();
+            res.add(cur.val);
+            cur = cur.right;
+            while( cur != null) {
+                stack.push(cur);
+                cur = cur.left;
+            }
+        }
+        return res;
     }
 }
 

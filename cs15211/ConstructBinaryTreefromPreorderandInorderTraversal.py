@@ -94,7 +94,7 @@ if __name__ ==  "__main__":
 # Java
 Java = '''
 Thought:
-1. DFS
+1. DFS 85%
 In this questions, most of people just loop through inorder[] to find the root.
 However, by caching positions of inorder[] indices using a HashMap, the run time can drop from 20ms to 5ms.
 /**
@@ -133,6 +133,35 @@ public TreeNode buildTree(int[] preorder, int preStart, int preEnd, int[] inorde
 }
 
 2. BFS
-
+    public TreeNode buildTree(int[] preorder, int[] inorder) {
+        if (preorder.length == 0 || inorder.length == 0) return null;
+        Stack<TreeNode> s = new Stack<>();
+        TreeNode root = new TreeNode(preorder[0]), tmp = root;
+        int preStart = 0, inStart = 0;
+        s.push(tmp);
+        preStart++;
+        int flag = 0;
+        while (preStart < preorder.length) {
+            if (!s.isEmpty() && s.peek().val == inorder[inStart]) { //reach left end
+                tmp = s.pop();
+                inStart++;
+                flag = 1;
+            } else {
+                if (flag == 0) { //left subtree
+                    tmp.left = new TreeNode(preorder[preStart]);
+                    tmp = tmp.left;
+                    s.push(tmp);
+                    preStart++;
+                } else { //right subtree
+                    flag = 0;
+                    tmp.right = new TreeNode(preorder[preStart]);
+                    tmp = tmp.right;
+                    s.push(tmp);
+                    preStart++;
+                }
+            }
+        }
+        return root;
+    }
 
 '''

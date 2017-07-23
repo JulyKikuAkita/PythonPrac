@@ -103,6 +103,8 @@ Java = '''
  *     TreeNode(int x) { val = x; }
  * }
  */
+
+#64%
 public class Solution {
     private int maxSize;
 
@@ -117,7 +119,9 @@ public class Solution {
         }
         Result left = helper(root.left);
         Result right = helper(root.right);
-        if (left.size == -1 || right.size == -1 || (root.left != null && left.max >= root.val) || (root.right != null && right.min <= root.val)) {
+        if (left.size == -1 || right.size == -1 
+        || (root.left != null && left.max >= root.val) 
+        || (root.right != null && right.min <= root.val)) {
             return new Result(-1);
         }
         int curSize = left.size + right.size + 1;
@@ -141,12 +145,14 @@ public class Solution {
     }
 }
 
-
+#64.79%
 public int largestBSTSubtree(TreeNode root) {
     if (root == null) return 0;
     if (root.left == null && root.right == null) return 1;
     if (isValid(root, null, null)) return countNode(root);
     return Math.max(largestBSTSubtree(root.left), largestBSTSubtree(root.right));
+    // return largestBSTSubtree(root); //fail
+    // stack overflow with [10,5,15,1,8,null,7]
 }
 
 public boolean isValid(TreeNode root, Integer min, Integer max) {

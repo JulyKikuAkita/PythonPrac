@@ -81,32 +81,27 @@ public class Solution {
 37.20%
 public class Solution {
     public int rob(int[] nums) {
-        if(nums == null || nums.length == 0) return 0;
-        else if (nums.length == 1) return nums[0];
-        else if (nums.length == 2) return Math.max(nums[0], nums[1]);
-
-        int[] dp = new int[nums.length];
-        dp[0] = nums[0];
-        dp[1] = Math.max(nums[0], nums[1]);
-
-        for(int i = 2; i < nums.length ; i++){
-            dp[i] = Math.max(dp[i-2] + nums[i], dp[i-1]);
+        int rob = 0; //max monney can get if rob current house
+        int notRob = 0; //max money can get if not rob current house
+        for(int i = 0; i < nums.length; i++) {
+            int curRob = notRob + nums[i];
+            notRob = Math.max(notRob, rob); //if not rob ith house, take the max value of robbed (i-1)th house and not rob (i-1)th house
+            rob = curRob;
         }
-        return dp[nums.length-1];
+        return Math.max(rob, notRob);
     }
 }
 
-37.20%
-public class Solution {
-    public int rob(int[] nums) {
-        int prevMax = 0;
-        int currMax = 0;
-        for (int n : nums) {
-            int tmp = currMax;
-            currMax = Math.max(prevMax + n, currMax);
-            prevMax = tmp;
-        }
-        return currMax;
+40%
+public int rob(int[] num) {
+    int prevMax = 0;
+    int currMax = 0;
+    for (int x : num) {
+        int temp = currMax;
+        currMax = Math.max(prevMax + x, currMax);
+        prevMax = temp;
     }
+    return currMax;
 }
+
 '''

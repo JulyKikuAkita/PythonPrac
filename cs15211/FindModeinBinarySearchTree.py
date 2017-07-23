@@ -1,7 +1,8 @@
+source = 'https://leetcode.com/problems/find-mode-in-binary-search-tree/#/description'
 # Time:  O(n)
 # Space: O(1)
 # https://github.com/kamyu104/LeetCode/blob/master/Python/find-mode-in-binary-search-tree.py
-
+#
 # Given a binary search tree (BST) with duplicates,
 # find all the mode(s) (the most frequently occurred element) in the given BST.
 #
@@ -23,7 +24,13 @@
 #
 # Follow up: Could you do that without using any extra space?
 # (Assume that the implicit stack space incurred due to recursion does not count).
+# Companies
+# Google
+# Related Topics
+# Tree
+# Similar Questions
 
+# Validate Binary Search Tree
 # Definition for a binary tree node.
 # class TreeNode(object):
 #     def __init__(self, x):
@@ -60,3 +67,87 @@ class Solution(object):
         result = []
         inorder(root, None, 1, 0, result);
         return result
+
+Java = '''
+Thought:
+1. With map: Just travel the tree and count, find the those with max counts. 
+Nothing much. Spent 10min on figuring out what is mode....
+If using this method (hashmap), inorder/preorder/postorder gives the same result. 
+Because essentially you just travel the entire nodes and count. And BST is not necessary. 
+This method works for any tree.
+
+#32%
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+public class Solution {
+    public int[] findMode(TreeNode root) {
+        Map<Integer, Integer> map = new HashMap<>();
+        int[] ans = new int[1];
+        dfs(root, map, ans);
+        List<Integer> res = new ArrayList<>();
+        
+        for (Map.Entry<Integer,Integer> entry : map.entrySet()) {
+            if (entry.getValue() == ans[0]) { //ans[0] is max count
+                res.add(entry.getKey());
+            }            
+        }
+        //turns count(value) to key
+        ans = new int[res.size()];
+        for(int i = 0; i < ans.length; i++) ans[i] = res.get(i);
+        return ans;
+    }
+    
+    private void dfs(TreeNode root, Map<Integer, Integer> map, int[] ans){
+        if (root == null) return;
+        map.put(root.val, map.getOrDefault(root.val, 0) + 1);
+        ans[0] = Math.max(ans[0], map.get(root.val));
+        dfs(root.left, map, ans);
+        dfs(root.right,map, ans);
+    }
+}
+
+2. No map
+44%
+public class Solution {
+    Integer prev = null;
+    int count = 1;
+    int max = 0;
+    public int[] findMode(TreeNode root) {
+        if (root == null) return new int[0];
+        
+        List<Integer> list = new ArrayList<>();
+        traverse(root, list);
+        
+        int[] res = new int[list.size()];
+        for (int i = 0; i < list.size(); ++i) res[i] = list.get(i);
+        return res;
+    }
+    
+    private void traverse(TreeNode root, List<Integer> list) {
+        if (root == null) return;
+        traverse(root.left, list);
+        if (prev != null) {
+            if (root.val == prev)
+                count++;
+            else
+                count = 1;
+        }
+        if (count > max) {
+            max = count;
+            list.clear();
+            list.add(root.val);
+        } else if (count == max) {
+            list.add(root.val);
+        }
+        prev = root.val;
+        traverse(root.right, list);
+    }
+}
+'''

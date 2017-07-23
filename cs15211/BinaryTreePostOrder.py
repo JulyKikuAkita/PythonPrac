@@ -184,7 +184,7 @@ if __name__ == "__main__":
 # When there is no children for current node, pop it from stack.
 # Then the previous node become to be under the current node for next loop.
 java = '''
-1. DFS:
+1. DFS: 51%
 public class Solution {
     public List<Integer> postorderTraversal(TreeNode root) {
         List<Integer> result = new ArrayList<>();
@@ -202,7 +202,7 @@ public class Solution {
     }
 }
 
-2. BFS
+2. BFS 51%
 public class Solution {
     public List<Integer> postorderTraversal(TreeNode root) {
         List<Integer> result = new ArrayList<>();
@@ -225,7 +225,7 @@ public class Solution {
         return result;
     }
 
-     # PostOrder
+     # PostOrder 5.82%
      public List<Integer> postorderBFS(TreeNode root) {
         LinkedList<Integer> result = new LinkedList<>();
         Deque<TreeNode> stack = new ArrayDeque<>();
