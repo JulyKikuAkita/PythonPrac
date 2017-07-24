@@ -77,8 +77,8 @@ print test.numTrees(2)
 #print test.numTrees(-1)
 #print test.numTrees(5)
 
-#java
-js = '''
+#Java
+Java = '''
 Fantastic Clean Java DP Solution with Detail Explaination
 First note that dp[k] represents the number of BST trees built from 1....k;
 
@@ -126,6 +126,8 @@ public class Solution {
 }
 '''
 DP = '''
+Thought: https://discuss.leetcode.com/topic/8398/dp-solution-in-6-lines-with-explanation-f-i-n-g-i-1-g-n-i
+
 The problem can be solved in a dynamic programming way. I'll explain the intuition and formulas in the following.
 
 Given a sequence 1...n, to construct a Binary Search Tree (BST) out of the sequence,

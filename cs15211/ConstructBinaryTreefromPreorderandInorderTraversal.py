@@ -1,4 +1,4 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/#/description'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/construct-binary-tree-from-inorder-and-postorder-traversal.py#L8
 # Time:  O(n)
 # Space: O(n)
@@ -11,9 +11,14 @@ __author__ = 'July'
 # Note:
 # You may assume that duplicates do not exist in the tree.
 #
+# Companies
 # Bloomberg
-
-
+# Related Topics
+# Tree Array Depth-first Search
+# Similar Questions
+# Construct Binary Tree from Inorder and Postorder Traversal
+#
+#
 # Definition for a  binary tree node
 class TreeNode:
      def __init__(self, x):
@@ -86,37 +91,77 @@ if __name__ ==  "__main__":
     print result.left.val
     print result.right.val
 
-# java
-js = '''
+# Java
+Java = '''
+Thought:
+1. DFS 85%
+In this questions, most of people just loop through inorder[] to find the root.
+However, by caching positions of inorder[] indices using a HashMap, the run time can drop from 20ms to 5ms.
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
 public class Solution {
     public TreeNode buildTree(int[] preorder, int[] inorder) {
-        if (preorder.length != inorder.length) {
-            return null;
-        }
-        return buildTree(preorder, 0, preorder.length - 1, inorder, 0, inorder.length - 1);
-    }
+        Map<Integer, Integer> inMap = new HashMap<Integer, Integer>();
 
-    private TreeNode buildTree(int[] preorder, int preStart, int preEnd, int[] inorder, int inStart, int inEnd) {
-        if (preStart > preEnd) {
-            return null;
+        for(int i = 0; i < inorder.length; i++) {
+            inMap.put(inorder[i], i);
         }
+
+        TreeNode root = buildTree(preorder, 0, preorder.length - 1, inorder, 0, inorder.length - 1, inMap);
+        return root;
+}
+
+public TreeNode buildTree(int[] preorder, int preStart, int preEnd, int[] inorder, int inStart, int inEnd, Map<Integer, Integer> inMap) {
+        if(preStart > preEnd || inStart > inEnd) return null;
+
         TreeNode root = new TreeNode(preorder[preStart]);
-        int inIndex = find(inorder, preorder[preStart], inStart, inEnd);
-        if (inIndex == -1) {
-            return root;
+        int inRoot = inMap.get(root.val);
+        int numsLeft = inRoot - inStart;
+
+        root.left = buildTree(preorder, preStart + 1, preStart + numsLeft, inorder, inStart, inRoot - 1, inMap);
+        root.right = buildTree(preorder, preStart + numsLeft + 1, preEnd, inorder, inRoot + 1, inEnd, inMap);
+
+        return root;
+    }
+}
+
+2. BFS
+    public TreeNode buildTree(int[] preorder, int[] inorder) {
+        if (preorder.length == 0 || inorder.length == 0) return null;
+        Stack<TreeNode> s = new Stack<>();
+        TreeNode root = new TreeNode(preorder[0]), tmp = root;
+        int preStart = 0, inStart = 0;
+        s.push(tmp);
+        preStart++;
+        int flag = 0;
+        while (preStart < preorder.length) {
+            if (!s.isEmpty() && s.peek().val == inorder[inStart]) { //reach left end
+                tmp = s.pop();
+                inStart++;
+                flag = 1;
+            } else {
+                if (flag == 0) { //left subtree
+                    tmp.left = new TreeNode(preorder[preStart]);
+                    tmp = tmp.left;
+                    s.push(tmp);
+                    preStart++;
+                } else { //right subtree
+                    flag = 0;
+                    tmp.right = new TreeNode(preorder[preStart]);
+                    tmp = tmp.right;
+                    s.push(tmp);
+                    preStart++;
+                }
+            }
         }
-        root.left = buildTree(preorder, preStart + 1, preStart + inIndex - inStart, inorder, inStart, inIndex - 1);
-        root.right = buildTree(preorder, preStart + inIndex - inStart + 1, preEnd, inorder, inIndex + 1, inEnd);
         return root;
     }
 
-    private int find(int[] arr, int target, int start, int end) {
-        for (int i = start; i <= end; i++) {
-            if (arr[i] == target) {
-                return i;
-            }
-        }
-        return -1;
-    }
-}
 '''

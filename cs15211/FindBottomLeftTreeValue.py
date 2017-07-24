@@ -67,7 +67,8 @@ Doing BFS right-to-left means we can simply return the last node's value
 and don't have to keep track of the first node in the current row or
 even care about rows at all.
 Inspired by @fallcreek's solution (not published) which uses two nested loops
- to go row by row but already had the right-to-left idea making it easier. I just took that further.
+to go row by row but already had the right-to-left idea making it easier. 
+I just took that further.
 
 
 /**

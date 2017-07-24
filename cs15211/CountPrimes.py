@@ -14,7 +14,6 @@ __source__ = 'https://leetcode.com/problems/count-primes/#/solutions'
 #
 
 from math import sqrt
-
 class Solution:
     # @param {integer} n
     # @return {integer}

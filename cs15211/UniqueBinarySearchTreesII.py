@@ -1,4 +1,4 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/unique-binary-search-trees-ii/#/description'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/unique-binary-search-trees.py
 # Time:  O(n^2)
 # Space: O(n)
@@ -17,9 +17,14 @@ __author__ = 'July'
 #
 # (Catalan_number: combination C(m,n) ex: C5(3,2) = 5*4*3/3*2*1)
 # http://en.wikipedia.org/wiki/Catalan_number#Applications_in_combinatorics
-#explanation: http://fisherlei.blogspot.com/2013/03/leetcode-unique-binary-search-trees.html
+# explanation: http://fisherlei.blogspot.com/2013/03/leetcode-unique-binary-search-trees.html
 # Count[i] = Sigma Count[0...k] * [ k+1....i]     0<=k<i-1
-
+#
+# Related Topics
+# Tree Dynamic Programming
+# Similar Questions
+# Unique Binary Search Trees Different Ways to Add Parentheses
+#
 # Definition for a  binary tree node
 class TreeNode:
     def __init__(self, x):
@@ -113,8 +118,9 @@ test = SolutionOther()
 #    print i
 #    print test.preorderTraversal1(ans[i])
 
-#java
-js = '''
+#Java
+Java = '''
+1. Divide-and-conquer. F(i) = G(i-1) * G(n-i)
 public class Solution {
     public List<TreeNode> generateTrees(int n) {
         if (n <= 0) {
@@ -142,6 +148,48 @@ public class Solution {
             }
         }
         return result;
+    }
+}
+
+#2 
+I start by noting that 1..n is the in-order traversal for any BST with nodes 1 to n. 
+So if I pick i-th node as my root, the left subtree will contain elements 1 to (i-1), 
+and the right subtree will contain elements (i+1) to n. 
+I use recursive calls to get back all possible trees for left and right subtrees 
+and combine them in all possible ways with the root.
+
+public class Solution {
+    public List<TreeNode> generateTrees(int n) {
+        if ( n < 1) return new ArrayList<TreeNode>();
+        return genTrees(1, n);
+    }
+    
+    public List<TreeNode> genTrees(int start, int end){
+        List<TreeNode> res = new ArrayList<TreeNode>();
+        if (start > end) {
+            res.add(null);
+            return res;
+        }
+        
+        if (start == end) {
+            res.add(new TreeNode(start));
+            return res;
+        }
+        
+        List<TreeNode> leftTree, rightTree;
+        for (int i = start; i <= end; i++) {
+            leftTree = genTrees(start, i - 1);
+            rightTree = genTrees(i + 1, end);
+            for (TreeNode leftNode : leftTree) {
+                for (TreeNode rightNode : rightTree) {
+                    TreeNode root = new TreeNode(i);
+                    root.left = leftNode;
+                    root.right = rightNode;
+                    res.add(root);
+                }
+            }
+        }
+        return res;
     }
 }
 '''

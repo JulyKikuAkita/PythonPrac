@@ -1,4 +1,4 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/best-time-to-buy-and-sell-stock-ii/#/description'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/best-time-to-buy-and-sell-stock-ii.py
 # Greedy
 # Time:  O(n)
@@ -13,15 +13,21 @@ __author__ = 'July'
 # However, you may not engage in multiple transactions at the same time
 # (ie, you must sell the stock before you buy again).
 #
-#  Bloomberg
-# Hide Tags Array Greedy
+# Companies
+# Bloomberg
+# Related Topics
+# Array Greedy
+# Similar Questions
+# Best Time to Buy and Sell Stock Best Time to Buy and Sell Stock III
+# Best Time to Buy and Sell Stock IV Best Time to Buy and Sell Stock with Cooldown
 
-'''
-This problem can be viewed as finding all ascending sequences.
-For example, given {5, 1, 2, 3, 4}, buy at 1 & sell at 4 is the same as buy at 1 &sell at 2 & buy at 2& sell at 3 & buy at 3 & sell at 4.
+# Thought
+# This problem can be viewed as finding all ascending sequences.
+# For example, given {5, 1, 2, 3, 4}, buy at 1 & sell at 4 is
+# the same as buy at 1 &sell at 2 & buy at 2& sell at 3 & buy at 3 & sell at 4.
+#
+# We can scan the array once, and find all pairs of elements that are in ascending order.
 
-We can scan the array once, and find all pairs of elements that are in ascending order.
-'''
 
 class Solution:
     # @param prices, a list of integer
@@ -59,14 +65,26 @@ if __name__ == '__main__':
     print SolutionIf().maxProfit(prices)
     print SolutionIf2().maxProfit(prices)
 
-#java
-js = '''
+#Java
+Java = '''
+Thought: https://leetcode.com/problems/best-time-to-buy-and-sell-stock-ii/#/solution
+61%
+public class Solution {
+    public int maxProfit(int[] prices) {
+        int res = 0;
+        for (int i = 0; i < prices.length - 1; i++) {
+            if ((prices[i+1] - prices[i]) > 0) res += prices[i+1] - prices[i];
+        }
+        return res;
+    }
+}
+
+10%
 public class Solution {
     public int maxProfit(int[] prices) {
         int result = 0;
         for (int i = 0; i < prices.length - 1; i++) {
-            int diff = prices[i + 1] - prices[i];
-            result += Math.max(0, diff);
+            result += Math.max(prices[i + 1] - prices[i], 0);
         }
         return result;
     }

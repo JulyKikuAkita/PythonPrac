@@ -1,4 +1,4 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/house-robber/#/description'
 # Time:  O(n)
 # Space: O(1)
 #
@@ -10,8 +10,13 @@ __author__ = 'July'
 # Given a list of non-negative integers representing the amount of money of each house,
 # determine the maximum amount of money you can rob tonight without alerting the police.
 #
+# Companies
 # LinkedIn Airbnb
-# Hide Tags Dynamic Programming
+# Related Topics
+# Dynamic Programming
+# Similar Questions
+# Maximum Product Subarray House Robber II Paint House Paint Fence House Robber III Non-negative Integers without Consecutive Ones
+#
 
 class Solution:
     # @param num, a list of integer
@@ -52,8 +57,11 @@ if __name__ == '__main__':
         print Solution().rob([10,100,1000,10000])
         print SolutionJava().rob([10,100,1000,10000])
 
-#java
-js = '''
+#Java
+Java = '''
+Thought: https://leetcode.com/problems/house-robber/#/solution
+f(k) = max(f(k-2) + Ak, f(k-1))
+
 public class Solution {
     public int rob(int[] nums) {
         if (nums.length == 0) {
@@ -70,20 +78,30 @@ public class Solution {
     }
 }
 
+37.20%
 public class Solution {
     public int rob(int[] nums) {
-        if(nums == null || nums.length == 0) return 0;
-        else if (nums.length == 1) return nums[0];
-        else if (nums.length == 2) return Math.max(nums[0], nums[1]);
-
-        int[] dp = new int[nums.length];
-        dp[0] = nums[0];
-        dp[1] = Math.max(nums[0], nums[1]);
-
-        for(int i = 2; i < nums.length ; i++){
-            dp[i] = Math.max(dp[i-2] + nums[i], dp[i-1]);
+        int rob = 0; //max monney can get if rob current house
+        int notRob = 0; //max money can get if not rob current house
+        for(int i = 0; i < nums.length; i++) {
+            int curRob = notRob + nums[i];
+            notRob = Math.max(notRob, rob); //if not rob ith house, take the max value of robbed (i-1)th house and not rob (i-1)th house
+            rob = curRob;
         }
-        return dp[nums.length-1];
+        return Math.max(rob, notRob);
     }
 }
+
+40%
+public int rob(int[] num) {
+    int prevMax = 0;
+    int currMax = 0;
+    for (int x : num) {
+        int temp = currMax;
+        currMax = Math.max(prevMax + x, currMax);
+        prevMax = temp;
+    }
+    return currMax;
+}
+
 '''

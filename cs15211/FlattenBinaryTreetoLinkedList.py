@@ -1,4 +1,4 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/flatten-binary-tree-to-linked-list/#/description'
 # Time:  O(n)
 # Space: O(h), h is height of binary tree
 #
@@ -25,10 +25,13 @@ __author__ = 'July'
 #             \
 #              6
 #
-
+#
 # Definition for a  binary tree node
+# Related Topics
+# Tree, Depth-first Search
+# Companies
 # Microsoft
-
+#
 class TreeNode:
     def __init__(self, x):
         self.val = x
@@ -146,8 +149,8 @@ tree2.right=tree6
 test = SolutionOther()
 #test.flatten(root0)
 
-#java
-js = '''
+#Java
+Java = '''
 /**
  * Definition for a binary tree node.
  * public class TreeNode {
@@ -159,18 +162,37 @@ js = '''
  */
 public class Solution {
     public void flatten(TreeNode root) {
-        flatten(root, null);
+        dfs_flatten(root, null);
     }
 
-    private TreeNode flatten(TreeNode root, TreeNode prev) {
+    #25.77%
+    private TreeNode dfs_flatten(TreeNode root, TreeNode prev) {
         if (root == null) {
             return prev;
         }
-        prev = flatten(root.right, prev);
-        prev = flatten(root.left, prev);
+        prev = dfs_flatten(root.right, prev);
+        prev = dfs_flatten(root.left, prev);
         root.right = prev;
         root.left = null;
         return root;
+    }
+    
+    #25.77%
+    private void bfs_flatten(TreeNode root) {
+        TreeNode cur = root;
+        while (cur != null) {
+            if (cur.left != null) {
+                //Find current node's prenode that links to current node's right subtree
+                TreeNode pre = cur.left;
+                while (pre.right != null) pre = pre.right;
+                pre.right = cur.right;
+                //Use current node's left subtree to replace its right subtree(original right 
+                //subtree is already linked by current node's prenode
+                cur.right = cur.left;
+                cur.left = null;
+            }
+            cur = cur.right;
+        }
     }
 }
 '''

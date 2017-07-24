@@ -1,4 +1,4 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/best-time-to-buy-and-sell-stock-iii/#/description'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/best-time-to-buy-and-sell-stock-iii.py
 # Time:  O(n)
 # Space: O(1)
@@ -14,16 +14,22 @@ __author__ = 'July'
 # You may not engage in multiple transactions at the same time
 # (ie, you must sell the stock before you buy again).
 #
-#  Array Dynamic Programming
-'''
-Analysis
-
-Comparing to I and II, III limits the number of transactions to 2. This can be solve by "devide and conquer". We use left[i] to track the maximum profit for transactions before i, and use right[i] to track the maximum profit for transactions after i. You can use the following example to understand the Java solution:
-
-Prices: 1 4 5 7 6 3 2 9
-left = [0, 3, 4, 6, 6, 6, 6, 8]
-right= [8, 7, 7, 7, 7, 7, 7, 0]
-'''
+# Related Topics
+# Array Dynamic Programming
+# Similar Questions
+# Best Time to Buy and Sell Stock Best Time to Buy and Sell Stock II Best Time to Buy and Sell Stock IV
+#
+# Thought:
+# Comparing to I and II, III limits the number of transactions to 2.
+# This can be solve by "devide and conquer".
+# We use left[i] to track the maximum profit for transactions before i,
+# and use right[i] to track the maximum profit for transactions after i.
+# You can use the following example to understand the Java solution:
+#
+# Prices: 1 4 5 7 6 3 2 9
+# left = [0, 3, 4, 6, 6, 6, 6, 8]
+# right= [8, 7, 7, 7, 7, 7, 7, 0]
+#
 # Time:  O(n)
 # Space: O(1)
 class Solution:
@@ -126,34 +132,12 @@ if __name__ == '__main__':
     #print Solution().maxProfit(prices)
     #print Solution_GitHub2().maxProfit(prices)
     print Solution_GitHub3().maxProfit(prices)
-#java
-js = '''
-public class Solution {
-    public int maxProfit(int[] prices) {
-        if (prices.length < 2) {
-            return 0;
-        }
-        int[] first = new int[prices.length];
-        int min = prices[0];
-        for (int i = 1; i < prices.length; i++) {
-            first[i] = Math.max(first[i - 1], prices[i] - min);
-            min = Math.min(min, prices[i]);
-        }
-        int[] second = new int[prices.length];
-        int max = prices[prices.length - 1];
-        for (int i = prices.length - 2; i >= 0; i--) {
-            second[i] = Math.max(second[i + 1], max - prices[i]);
-            max = Math.max(max, prices[i]);
-        }
-        int result = 0;
-        for (int i = 0; i < prices.length; i++) {
-            result = Math.max(result, first[i] + second[i]);
-        }
-        return result;
-    }
-}
 
+#Java
+Java = '''
+Thought:
 
+21.84%
 public class Solution {
     public int maxProfit(int[] prices) {
         if ( prices == null || prices.length == 0) return 0;
@@ -181,6 +165,48 @@ public class Solution {
             res = Math.max(res, left[i] + right[i]);
         }
         return res;
+    }
+}
+
+34%
+public class Solution {
+    public int maxProfit(int[] prices) {
+        int hold1 = Integer.MIN_VALUE, hold2 = Integer.MIN_VALUE;
+        int release1 = 0, release2 = 0;
+        for(int i:prices){                              // Assume we only have 0 money at first
+            release2 = Math.max(release2, hold2+i);     // The maximum if we've just sold 2nd stock so far.
+            hold2    = Math.max(hold2,    release1-i);  // The maximum if we've just buy  2nd stock so far.
+            release1 = Math.max(release1, hold1+i);     // The maximum if we've just sold 1nd stock so far.
+            hold1    = Math.max(hold1,    -i);          // The maximum if we've just buy  1st stock so far.
+        }
+        return release2; ///Since release1 is initiated as 0, so release2 will always higher than release1.
+    }
+}
+
+76%
+public class Solution {
+    public int maxProfit(int[] prices) {
+        if(prices == null || prices.length <= 1){
+            return 0;
+        }
+        int firstBuy = Integer.MIN_VALUE, secondBuy = Integer.MIN_VALUE;
+        int firstSell = 0, secondSell = 0;
+        for(int curPrice : prices){
+            if(firstBuy < -curPrice){
+                firstBuy = -curPrice;
+            }
+            if(firstSell < firstBuy + curPrice){
+                firstSell = firstBuy + curPrice;
+            }
+            if(secondBuy < firstSell - curPrice){
+                secondBuy = firstSell - curPrice;
+            }
+            if(secondSell < secondBuy + curPrice){
+                secondSell = secondBuy + curPrice;
+            }
+        }
+
+        return secondSell;
     }
 }
 '''
