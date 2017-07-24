@@ -1,6 +1,10 @@
 __source__ = 'https://leetcode.com/problems/zigzag-iterator/#/description'
-#
 # # https://github.com/kamyu104/LeetCode/blob/master/Python/zigzag-iterator.py
+# Time:  O(n)
+# Space: O(k)
+#
+# Description: Leetcode # 281. Zigzag Iterator
+#
 # Given two 1d vectors, implement an iterator to return their elements alternately.
 #
 # For example, given two 1d vectors:
@@ -20,18 +24,15 @@ __source__ = 'https://leetcode.com/problems/zigzag-iterator/#/description'
 # [4,5,6,7]
 # [8,9]
 # It should return [1,4,8,2,5,9,3,6,7].
-# Topics:
-# Design
-# You might like:
-# (M) Binary Search Tree Iterator (M) Flatten 2D Vector (M) Peeking Iterator (M) Flatten Nested List Iterator
-# Company:
-# Google
 #
-
-
-# Time:  O(n)
-# Space: O(k)
-
+# Companies
+# Google
+# Related Topics
+# Design
+# Similar Questions
+# Binary Search Tree Iterator Flatten 2D Vector Peeking Iterator Flatten Nested List Iterator
+#
+import unittest
 import collections
 class ZigzagIterator(object):
 
@@ -58,11 +59,23 @@ class ZigzagIterator(object):
         """
         return bool(self.q)
 
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+
+
+if __name__ == '__main__':
+    unittest.main()
+
+
+
 # Your ZigzagIterator object will be instantiated and called as such:
 # i, v = ZigzagIterator(v1, v2), []
 # while i.hasNext(): v.append(i.next())
-# java
-java = '''
+
+Java = '''
+#Thought:
+#18.55% 6ms
 public class ZigzagIterator {
     LinkedList<Iterator> list;
 
@@ -84,12 +97,47 @@ public class ZigzagIterator {
     }
 }
 
-/**
- * Your ZigzagIterator object will be instantiated and called as such:
- * ZigzagIterator i = new ZigzagIterator(v1, v2);
- * while (i.hasNext()) v[f()] = i.next();
- */
+#93.94% 3ms
+public class ZigzagIterator {
+    private Iterator<Integer> i, j, tmp;
 
+    public ZigzagIterator(List<Integer> v1, List<Integer> v2) {
+        i = v2.iterator();
+        j = v1.iterator();
+    }
+
+    public int next() {
+        if (j.hasNext()) { tmp = j; j = i; i = tmp; }
+        return i.next();
+    }
+
+    public boolean hasNext() {
+        return i.hasNext() || j.hasNext();
+    }
+}
+
+#93.94% 3ms
+public class ZigzagIterator {
+    int c1 = 0;
+    int c2 = 0;
+    List<Integer> l1;
+    List<Integer> l2;
+    public ZigzagIterator(List<Integer> v1, List<Integer> v2) {
+        l1 = v1;
+        l2 = v2;
+    }
+
+    public int next() {
+        if(c1==l1.size()) return l2.get(c2++);
+        else if(c2 == l2.size()) return l1.get(c1++);
+        else if(c1<=c2) return l1.get(c1++);
+        else return l2.get(c2++);
+    }
+
+    public boolean hasNext() {
+        return c1+c2==l1.size()+l2.size()? false : true;
+    }
+}
 /**
  * Your ZigzagIterator object will be instantiated and called as such:
  * ZigzagIterator i = new ZigzagIterator(v1, v2);

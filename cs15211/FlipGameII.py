@@ -1,27 +1,36 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/flip-game-ii/tabs/description'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/flip-game-ii.py
-'''
-You are playing the following Flip Game with your friend: Given a string that contains only these two characters: + and -,
-you and your friend take turns to flip two consecutive "++" into "--". The game ends when a person can no longer make a move and therefore the other person will be the winner.
-
-Write a function to determine if the starting player can guarantee a win.
-
-For example, given s = "++++", return true. The starting player can guarantee a win by flipping the middle "++" to become "+--+".
-
-Follow up:
-Derive your algorithm's runtime complexity.
-'''
+# Time:  O(n + c^2)
+# Space: O(c)
+# You are playing the following Flip Game with your friend: Given a string
+# that contains only these two characters: + and -,
+# you and your friend take turns to flip two consecutive "++" into "--".
+# The game ends when a person can no longer make a move and therefore the other person will be the winner.
+#
+# Write a function to determine if the starting player can guarantee a win.
+#
+# For example, given s = "++++", return true.
+# The starting player can guarantee a win by flipping the middle "++" to become "+--+".
+#
+# Follow up:
+# Derive your algorithm's runtime complexity.
+# Companies
+# Google
+# Related Topics
+# Backtracking
+# Similar Questions
+# Nim Game Flip Game Guess Number Higher or Lower II Can I Win
+# '''
 
 # Time:  O(n + c^2)
 # Space: O(c)
-
-
 
 # The best theory solution (DP, O(n + c^2)) could be seen here:
 # https://leetcode.com/discuss/64344/theory-matters-from-backtracking-128ms-to-dp-0m
 
 # The imap() function returns an iterator that calls a function on the values in the input iterators, and returns the results.
-# It works like the built-in map(), except that it stops when any input iterator is exhausted (instead of inserting None values to completely consume all of the inputs).
+# It works like the built-in map(), except that it stops when any input iterator is exhausted
+# (instead of inserting None values to completely consume all of the inputs).
 
 # izip() returns an iterator that combines the elements of several iterators into tuples.
 # It works like the built-in function zip(), except that it returns an iterator instead of a list.
@@ -92,7 +101,8 @@ class Solution3(object):
 
 # Java:
 # http://buttercola.blogspot.com/2015/10/leetcode-flip-game-ii.html
-jv='''
+Java='''
+#60.16%
 public class Solution {
     public boolean canWin(String s) {
         if(s == null || s.length() == 0 ) return false;
@@ -116,6 +126,51 @@ public class Solution {
         }
         return false;
 
+    }
+}
+
+# backtracking + memorization 68%
+public class Solution {
+    public boolean canWin(String s) {
+        return canWin(s, new HashMap<>());
+    }
+
+    public boolean canWin(String s, Map<String, Boolean> cache) {
+        if (cache.containsKey(s)) {
+            return cache.get(s);
+        }
+        int index = -1;
+        while ((index = s.indexOf("++", index + 1)) >= 0) {
+            String next = new StringBuilder().append(s.substring(0, index)).append("--").append(s.substring(index + 2)).toString();
+            if (!canWin(next, cache)) {
+                cache.put(s, true);
+                return true;
+            }
+        }
+        cache.put(s, false);
+        return false;
+    }
+}
+
+# 76%
+public class Solution {
+    HashMap<String, Boolean> map = new HashMap<>();
+
+    public boolean canWin(String s) {
+        if(map.containsKey(s))  return map.get(s);
+
+        for (int start = 0; start < s.length();) {
+            int index = s.indexOf("++", start);
+            if (index < 0) break;
+            String newS = s.substring(0, index) + "--" + s.substring(index + 2);
+            if (!canWin(newS)) {
+                map.put(s, true);
+                return true;
+            }
+            start = index + 1;
+        }
+        map.put(s, false);
+        return false;
     }
 }
 '''

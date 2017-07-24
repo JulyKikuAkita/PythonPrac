@@ -4,12 +4,102 @@ __source__ = 'https://leetcode.com/problems/median-of-two-sorted-arrays/#/descri
 # Space: O(1)
 # Binary Search
 #
+# Description: Leetcode # 4. Median of Two Sorted Arrays
 # There are two sorted arrays A and B of size m and n respectively.
 # Find the median of the two sorted arrays. The overall run time complexity should be O(log (m+n)).
 #
+# Companies
 # Google Zenefits Microsoft Apple Yahoo Dropbox Adobe
-# Hide Tags Binary Search Array Divide and Conquer
+# Related Topics
+# Binary Search Array Divide and Conquer
+#
+# using list slicing (O(k)) may be slower than solution1
+import unittest
+#95ms
+class Solution4:
+    # @return a float
+    def median(A, B):
+        m, n = len(A), len(B)
+        if m > n:
+            A, B, m, n = B, A, n, m
+        if n == 0:
+            raise ValueError
 
+        imin, imax, half_len = 0, m, (m + n + 1) / 2
+        while imin <= imax:
+            i = (imin + imax) / 2
+            j = half_len - i
+            if i < m and B[j-1] > A[i]:
+                # i is too small, must increase it
+                imin = i + 1
+            elif i > 0 and A[i-1] > B[j]:
+                # i is too big, must decrease it
+                imax = i - 1
+            else:
+                # i is perfect
+
+                if i == 0: max_of_left = B[j-1]
+                elif j == 0: max_of_left = A[i-1]
+                else: max_of_left = max(A[i-1], B[j-1])
+
+                if (m + n) % 2 == 1:
+                    return max_of_left
+
+                if i == m: min_of_right = B[j]
+                elif j == n: min_of_right = A[i]
+                else: min_of_right = min(A[i], B[j])
+
+                return (max_of_left + min_of_right) / 2.0
+
+# Time:  O(log(m + n))
+# Space: O(log(m + n))
+class Solution3:
+    # @return a float
+    def findMedianSortedArrays(self, A, B):
+        lenA, lenB = len(A), len(B)
+        if (lenA + lenB) % 2 == 1:
+            return self.getKth(A, 0, B, 0, (lenA + lenB)/ 2 + 1)
+        else:
+            return (self.getKth(A, 0, B, 0, (lenA + lenB) / 2) + self.getKth(A, 0, B, 0, (lenA + lenB) / 2 + 1)) * 0.5
+
+    def getKth(self, A, i, B, j, k):
+        lenA, lenB = len(A) - i, len(B) - j
+        if lenA > lenB:
+            return self.getKth(B, j, A, i, k)
+
+        if lenA == 0:
+            return B[j + k - 1]
+
+        if k == 1:
+            return min(A[i], B[j])
+        pa = min(k/2, lenA)
+        pb = k - pa
+
+        if A[ i + pa - 1] < B[j + pb - 1]:
+            return self.getKth(A, i + pa, B, j , k - pa)
+        elif A[i + pa - 1] > B[j + pb - 1]:
+            return self.getKth(A, i , B, j + pb, k - pb)
+        else:
+            return A[ i + pa - 1]
+
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+        print Solution3().findMedianSortedArrays([1, 3, 5, 7], [2, 4, 6])
+        print Solution4().findMedianSortedArrays([1, 3, 5], [2, 4, 6])
+        #test
+        test = Solution4()
+        #A = [1,1,1]
+        #B = [0,0,0]
+        A = [1,3,5,7]
+        B = [2,4,6,8,9,10]
+        #print test.findMedianSortedArrays(A, B)
+
+if __name__ == '__main__':
+    unittest.main()
+
+Java = '''
+#Thought: https://leetcode.com/problems/contains-duplicate/solution/
 #Thought:
 # https://discuss.leetcode.com/topic/4996/share-my-o-log-min-m-n-solution-with-explanation
 # To solve this problem, we need to understand "What is the use of median".
@@ -116,93 +206,9 @@ __source__ = 'https://leetcode.com/problems/median-of-two-sorted-arrays/#/descri
 # m <= n, i > 0 ==> j = (m+n+1)/2 - i < (m+n+1)/2 <= (2*n+1)/2 <= n
 # So in situation <b> and <c>, we don't need to check whether j > 0 and whether j < n.
 
-# using list slicing (O(k)) may be slower than solution1
-class Solution4:
-    # @return a float
-    def median(A, B):
-        m, n = len(A), len(B)
-        if m > n:
-            A, B, m, n = B, A, n, m
-        if n == 0:
-            raise ValueError
 
-        imin, imax, half_len = 0, m, (m + n + 1) / 2
-        while imin <= imax:
-            i = (imin + imax) / 2
-            j = half_len - i
-            if i < m and B[j-1] > A[i]:
-                # i is too small, must increase it
-                imin = i + 1
-            elif i > 0 and A[i-1] > B[j]:
-                # i is too big, must decrease it
-                imax = i - 1
-            else:
-                # i is perfect
-
-                if i == 0: max_of_left = B[j-1]
-                elif j == 0: max_of_left = A[i-1]
-                else: max_of_left = max(A[i-1], B[j-1])
-
-                if (m + n) % 2 == 1:
-                    return max_of_left
-
-                if i == m: min_of_right = B[j]
-                elif j == n: min_of_right = A[i]
-                else: min_of_right = min(A[i], B[j])
-
-                return (max_of_left + min_of_right) / 2.0
-
-# Time:  O(log(m + n))
-# Space: O(log(m + n))
-class Solution3:
-    # @return a float
-    def findMedianSortedArrays(self, A, B):
-        lenA, lenB = len(A), len(B)
-        if (lenA + lenB) % 2 == 1:
-            return self.getKth(A, 0, B, 0, (lenA + lenB)/ 2 + 1)
-        else:
-            return (self.getKth(A, 0, B, 0, (lenA + lenB) / 2) + self.getKth(A, 0, B, 0, (lenA + lenB) / 2 + 1)) * 0.5
-
-    def getKth(self, A, i, B, j, k):
-        lenA, lenB = len(A) - i, len(B) - j
-        if lenA > lenB:
-            return self.getKth(B, j, A, i, k)
-
-        if lenA == 0:
-            return B[j + k - 1]
-
-        if k == 1:
-            return min(A[i], B[j])
-        pa = min(k/2, lenA)
-        pb = k - pa
-
-        if A[ i + pa - 1] < B[j + pb - 1]:
-            return self.getKth(A, i + pa, B, j , k - pa)
-        elif A[i + pa - 1] > B[j + pb - 1]:
-            return self.getKth(A, i , B, j + pb, k - pb)
-        else:
-            return A[ i + pa - 1]
-
-
-if __name__ == "__main__":
-    print Solution3().findMedianSortedArrays([1, 3, 5, 7], [2, 4, 6])
-    print Solution4().findMedianSortedArrays([1, 3, 5], [2, 4, 6])
-
-
-
-#test
-test = Solution4()
-#A = [1,1,1]
-#B = [0,0,0]
-A = [1,3,5,7]
-B = [2,4,6,8,9,10]
-#print test.findMedianSortedArrays(A, B)
-
-#java
-java = '''
-100%
-
-BFS
+# BFS
+# 75.36% 66ms
 public class Solution {
     public double findMedianSortedArrays(int[] nums1, int[] nums2) {
         int len = nums1.length + nums2.length;
@@ -251,7 +257,9 @@ public class Solution {
     }
 }
 
-DFS
+# DFS
+# 75.36% 66ms
+
 public class Solution {
     public double findMedianSortedArrays(int[] nums1, int[] nums2) {
         int len1 = nums1.length;
@@ -290,28 +298,62 @@ public class Solution {
     }
 }
 
-Thought: https://discuss.leetcode.com/topic/16797/very-concise-o-log-min-m-n-iterative-solution-with-detailed-explanation
+#99.70% 57ms
 public class Solution {
-    public double findMedianSortedArrays(int[] A, int[] B) {
-	    int m = A.length, n = B.length;
-	    int l = (m + n + 1) / 2;
-	    int r = (m + n + 2) / 2;
-	    return (getkth(A, 0, B, 0, l) + getkth(A, 0, B, 0, r)) / 2.0;
-	}
+    public double findMedianSortedArrays(int[] nums1, int[] nums2) {
+        int n = nums1.length;
+        int m = nums2.length;
+        if (n > m)
+            return findMedianSortedArrays(nums2, nums1);
+        int k = (n + m - 1) / 2;
+        int l = 0, r = Math.min(k, n);
+        while (l < r)
+        {
+            int mid1 = (l + r) / 2;
+            int mid2 = k - mid1;
+            if (nums1[mid1] < nums2[mid2])
+                l = mid1 + 1;
+            else
+                r = mid1;
+        }
+        int a = Math.max(l > 0 ? nums1[l - 1] : Integer.MIN_VALUE, k - l >= 0 ? nums2[k - l] : Integer.MIN_VALUE);
+        if (((n + m) & 1) == 1)
+        return (double) a;
+        int b = Math.min(l < n ? nums1[l] : Integer.MAX_VALUE, k - l + 1 < m ? nums2[k - l + 1] : Integer.MAX_VALUE);
+        return (a + b) / 2.0;
+    }
+}
 
-    public double getkth(int[] A, int aStart, int[] B, int bStart, int k) {
-    	if (aStart > A.length - 1) return B[bStart + k - 1];
-    	if (bStart > B.length - 1) return A[aStart + k - 1];
-    	if (k == 1) return Math.min(A[aStart], B[bStart]);
 
-    	int aMid = Integer.MAX_VALUE, bMid = Integer.MAX_VALUE;
-    	if (aStart + k/2 - 1 < A.length) aMid = A[aStart + k/2 - 1];
-    	if (bStart + k/2 - 1 < B.length) bMid = B[bStart + k/2 - 1];
-
-    	if (aMid < bMid)
-    	    return getkth(A, aStart + k/2, B, bStart,       k - k/2);// Check: aRight + bLeft
-    	else
-    	    return getkth(A, aStart,       B, bStart + k/2, k - k/2);// Check: bRight + aLeft
+# 75.36% 66ms
+public class Solution {
+    public int data[];
+    public double findMedianSortedArrays(int[] nums1, int[] nums2) {
+        data = new int[nums1.length+nums2.length];
+        // merge sort
+        int i=0,j=0;
+        while(i<nums1.length || j<nums2.length){
+            if(i>=nums1.length){
+                data[i+j] = nums2[j];
+                j++;
+                continue;
+            }else if(j>=nums2.length){
+                data[i+j] = nums1[i];
+                i++;
+                continue;
+            }
+            if(nums1[i]>=nums2[j]){
+                data[i+j] = nums2[j];
+                j++;
+            }else{
+                data[i+j] = nums1[i];
+                i++;
+            }
+        }
+        if(data.length%2==1) return data[data.length/2];
+        else{
+          return (data[data.length/2]+data[data.length/2-1])/2.0;
+        }
     }
 }
 '''

@@ -1,3 +1,8 @@
+__source__ = 'https://leetcode.com/problems/next-greater-element-iii/description/'
+# Time:  O(n)
+# Space: O(n)
+#
+# Description:
 # https://github.com/kamyu104/LeetCode/blob/master/Python/next-greater-element-iii.py
 # Time:  O(logn) = O(1)
 # Space: O(logn) = O(1)
@@ -13,7 +18,8 @@
 # Example 2:
 # Input: 21
 # Output: -1
-#  Bloomberg
+#
+# Bloomberg, Tesla
 # Hide Tags String
 # Hide Similar Problems (E) Next Greater Element I (M) Next Greater Element II
 
@@ -66,7 +72,7 @@ III) Swap the above found two digits, we get 536974 in above example.
 IV) Now sort all digits from position next to 'd' to the end of number.
 The number that we get after sorting is the output.
 For above example, we sort digits in bold 536974. We get 536479 which is the next greater number for input 534976.
-
+# 25.1% 4ms
 public class Solution {
     public int nextGreaterElement(int n) {
         char[] number = (n + "").toCharArray();
@@ -103,4 +109,116 @@ public class Solution {
         return (val <= Integer.MAX_VALUE) ? (int) val : -1;
     }
 }
+
+#68.39% 39%
+public class Solution {
+    public int nextGreaterElement(int n) {
+        return getRealNextBiggerInteger(n);
+    }
+
+    public static int getRealNextBiggerInteger(int number){
+         char[] num = String.valueOf(number).toCharArray();
+         int i = num.length - 1, j = num.length - 1;
+
+         // find the first digit from right that is smaller the its right digit
+         while (i > 0 && num[i] <= num[i-1]) i--; //pivot = num[i-1]
+
+         // descending order //ex: 54321
+         if (i == 0) return -1;
+
+         // find the smallest digit >= pivot within the range (i, num.length)
+         while (j > i - 1 && num[j] <= num[i - 1]) j--;
+         swap(num, i - 1, j);
+         reverse(num, i, num.length - 1);
+         try {
+             return Integer.parseInt(new String(num));
+         } catch(NumberFormatException noe) {
+             System.out.println(noe.toString());
+             return -1;
+         }
+   }
+
+   private static void swap(char[] num, int i, int j) {
+         char tmp = num[i];
+         num[i] = num[j];
+         num[j] = tmp;
+   }
+
+   private static void reverse(char[] num, int start, int end) {
+      while(start < end) {
+        swap(num, start, end);
+        start++;
+        end--;
+      }
+   }
+}
+
+#TLE if user permutation and sort the result
+
+/////////////////////////////////////////////////////////////////////////////////////////////
+  /* Time O(n!)
+   * 1. Below algo use permutation way to get the next_bigger
+   * getAllPermutation(): for any given number, it computes all permutation using given number
+   * getRealNextBiggerIntegerByPermutation(): sort the result return by  getAllPermutation() and
+   *  find the next big integer
+   */
+
+    // return the next big integer of number
+    // the algo first get all the permutaions of that number to a list of integers
+    // then sort the list and traverse the list to find the next big integer of given number
+    // return -1 if not found
+    public static int getRealNextBiggerIntegerByPermutation(int number){
+        List<Integer> permutations;
+        try{
+           permutations = getAllPermutation(number);
+        } catch(NumberFormatException noe) {
+           //System.out.println(noe.toString());
+           return -1;
+        }
+        Collections.sort(permutations);
+        for (int i = 0; i < permutations.size(); i++) {
+            if ( i + 1 < permutations.size() && permutations.get(i + 1) > number) {
+                //System.out.println("ans" + permutations.get(i + 1));
+                return permutations.get(i+1);
+            }
+        }
+        return -1;
+     }
+
+     // given any number, get a list of all permutations in String type of the given number
+     // return a list of interger type of the all permutations of that given number
+     private static List<Integer> getAllPermutation(int number) {
+       List<String> res = new LinkedList<>();
+       String num = String.valueOf(number);
+       getPerm(num.toCharArray(), new boolean[num.length()], new StringBuilder(), res);
+       List<Integer> numbers = new LinkedList<>();
+       for (String n : res) {
+         try{
+           numbers.add(Integer.parseInt(n));
+         } catch(NumberFormatException noe) {
+            throw noe;
+         }
+       }
+       return numbers;
+     }
+
+    // backtrack to get all the permutation of "number" char array
+    // save the result to a list of string
+    private static void getPerm(char[] number, boolean[] used, StringBuilder sb, List<String> res) {
+      if (sb.length() == number.length) {
+        res.add(sb.toString());
+        return;
+      }
+
+      for (int i = 0; i < number.length; i++) {
+        if(!used[i]) {
+          sb.append(number[i]);
+          used[i] = true;
+          getPerm(number, used, sb, res);
+          sb.setLength(sb.length() - 1);
+          used[i] = false;
+        }
+      }
+    }
+
 '''

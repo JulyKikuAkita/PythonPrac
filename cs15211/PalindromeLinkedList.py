@@ -1,13 +1,21 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/palindrome-linked-list/description/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/palindrome-linked-list.py
 # Time:  O(n)
 # Space: O(1)
 #
+# Description: Leetcode # 234. Palindrome Linked List
 # Given a singly linked list, determine if it is a palindrome.
 #
 # Follow up:
 # Could you do it in O(n) time and O(1) space?
+# Companies
+# Amazon Facebook
+# Related Topics
+# Linked List Two Pointers
+# Similar Questions
+# Palindrome Number Valid Palindrome Reverse Linked List
 #
+import unittest
 # Definition for singly-linked list.
 class ListNode:
      def __init__(self, x):
@@ -80,18 +88,33 @@ class Solution2(object):
 
         return prev
 
-#test
-head = ListNode(0)
-sec = ListNode(0)
-third = ListNode(0)
-head.next, sec.next = sec, third
-if __name__ == "__main__":
-    print Solution2().isPalindrome(head)
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
 
+        #test
+        head = ListNode(0)
+        sec = ListNode(0)
+        third = ListNode(0)
+        head.next, sec.next = sec, third
+        print Solution2().isPalindrome(head)
 
-#java
-# http://www.jiuzhang.com/solutions/palindrome-linked-list/
-js = '''
+if __name__ == '__main__':
+    unittest.main()
+
+Java = '''
+#Thought:
+
+#35.24% 2ms
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) { val = x; }
+ * }
+ */
+#34.88% 2ms
 public class Solution {
     public boolean isPalindrome(ListNode head) {
         if(head == null) return true;
@@ -129,7 +152,45 @@ public class Solution {
         }
         return prev;
     }
+}
 
+#34.88% 2ms
+public class Solution {
+    public boolean isPalindrome(ListNode head) {
+        if(head == null){
+            return true;
+        }
 
+        ListNode fast = head, slow = head;
+        while (fast.next != null && fast.next.next != null) {
+            fast = fast.next.next;
+            slow = slow.next;
+        }
+
+        slow = reverseList(slow);
+        fast = head;
+
+        while(fast != null && slow != null){    // need to use slow in this while loop cause right half is smaller
+            if(fast.val != slow.val){
+                return false;
+            }
+            fast = fast.next;
+            slow = slow.next;
+        }
+
+        return true;
+    }
+
+    private ListNode reverseList(ListNode node){
+        ListNode fakeHead = null;
+        while(node != null){
+            ListNode next = node.next;
+            node.next = fakeHead;
+            fakeHead = node;
+            node = next;
+        }
+
+        return fakeHead;
+    }
 }
 '''

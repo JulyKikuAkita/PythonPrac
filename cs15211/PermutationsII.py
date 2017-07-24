@@ -1,4 +1,4 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/permutations-ii/description/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/permutations-ii.py
 # Time:  O(n!)
 # Space: O(n)
@@ -10,10 +10,14 @@ __author__ = 'July'
 # [1,1,2] have the following unique permutations:
 # [1,1,2], [1,2,1], and [2,1,1].
 #
-#  LinkedIn Microsoft
-# Hide Tags Backtracking
-# Hide Similar Problems (M) Next Permutation (M) Permutations (M) Palindrome Permutation II
-
+# Companies
+# LinkedIn Microsoft
+# Related Topics
+# Backtracking
+# Similar Questions
+# Next Permutation Permutations Palindrome Permutation II
+#
+import unittest
 class Solution:
     # @param num, a list of integer
     # @return a list of lists of integers
@@ -31,17 +35,23 @@ class Solution:
 
         return solutions
 
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+         print Solution().permuteUnique([1, 1, 2])
+        #print Solution().permuteUnique([1, -1, 1, 2, -1, 2, 2, -1])
 
-if __name__ == "__main__":
-    print Solution().permuteUnique([1, 1, 2])
-    #print Solution().permuteUnique([1, -1, 1, 2, -1, 2, 2, -1])
+if __name__ == '__main__':
+    unittest.main()
 
-#Java
-java = '''
+Java = '''
+#Thought: https://leetcode.com/problems/contains-duplicate/solution/
+
 //permutation usually use boolean[] to track if element is used
 //permutation forloop index start with 0
 //use start index result in multiple duplication as below example of backtrackErr
 //Use HashSet to remove duplicate
+
+#22.87% 12ms
 public class Solution {
     public List<List<Integer>> permuteUnique(int[] nums) {
         List<List<Integer>> list = new ArrayList<>();
@@ -49,6 +59,7 @@ public class Solution {
         return list;
     }
 
+    //############ wrong example below #########################
     //start index does not work in permutation
     //[[1,1,1],[1,1,2],[1,2,1],[1,2,2],[2,1,1],[2,1,2],[2,2,1],[2,2,2]]
     private void backtrackErr(List<List<Integer>> list, List<Integer> tempList, int [] nums, int start){
@@ -66,6 +77,7 @@ public class Solution {
             }
         }
     }
+    //############ wrong example  above #########################
 
     //[[1,1,2],[1,2,1],[2,1,1]]
     private void backtrack(List<List<Integer>> list, List<Integer> tempList, int [] nums, boolean[] used){
@@ -85,5 +97,130 @@ public class Solution {
             }
         }
     }
+}
+
+# sort array instead of use hash set
+#43.87%
+9ms
+public class Solution {
+    public List<List<Integer>> permuteUnique(int[] nums) {
+        List<List<Integer>> res = new ArrayList<List<Integer>>();
+        if(nums==null || nums.length==0) return res;
+        boolean[] used = new boolean[nums.length];
+        List<Integer> list = new ArrayList<Integer>();
+        Arrays.sort(nums);
+        dfs(nums, used, list, res);
+        return res;
+    }
+
+    public void dfs(int[] nums, boolean[] used, List<Integer> list, List<List<Integer>> res){
+        if(list.size()==nums.length){
+            res.add(new ArrayList<Integer>(list));
+            return;
+        }
+        for(int i=0;i<nums.length;i++){
+            if(used[i]) continue;
+            if(i>0 &&nums[i-1]==nums[i] && !used[i-1]) continue;
+            used[i]=true;
+            list.add(nums[i]);
+            dfs(nums,used,list,res);
+            used[i]=false;
+            list.remove(list.size()-1);
+        }
+    }
+}
+
+#59.48%
+8ms
+public class Solution {
+    public List<List<Integer>> permuteUnique(int[] nums) {
+        if (nums.length == 0) {
+            return new ArrayList<>();
+        }
+        return permuteUnique(nums, 0);
+    }
+
+    private List<List<Integer>> permuteUnique(int[] nums, int index) {
+        List<List<Integer>> result = new ArrayList<>();
+        if (index == nums.length) {
+            result.add(new ArrayList<>());
+            return result;
+        }
+        for (List<Integer> list : permuteUnique(nums, index + 1)) {
+            for (int i = 0; i <= list.size(); i++) {
+                List<Integer> newList = new ArrayList<>(list);
+                newList.add(i, nums[index]);
+                result.add(newList);
+                if (i < list.size() && list.get(i) == nums[index]) {
+                    break;
+                }
+            }
+        }
+        return result;
+    }
+}
+
+#99.83% 5ms
+#???
+public class Solution
+{
+    public List<List<Integer>> permuteUnique(int[] nums)
+    {
+
+        len = nums.length;
+
+        r = new ArrayList<>();
+
+        permuteUnique(nums, 0);
+
+        return r;
+    }
+
+    List<List<Integer>> r;
+    int len;
+
+    void permuteUnique(int[] nums, int p) {
+
+        if (p >= len - 1)
+        {
+            List<Integer> v = new ArrayList<>(len);
+            for (int x: nums)
+                v.add(x);
+            r.add(v);
+            return;
+        }
+
+        int t = nums[p];
+        for (int i = p; i < len; i++)
+        {
+            int x = nums[i];
+            if (i > p)
+            {
+                boolean skip = false;
+                for (int j = p; j < i; j++)
+                {
+                    if (nums[j] == x)
+                    {
+                        skip = true;   // skip duplicates
+                        break;
+                    }
+                }
+                if (skip)
+                    continue;
+            }
+
+            //swap: p <=> i
+            nums[p] = x;
+            nums[i] = t;
+
+            permuteUnique(nums, p + 1);
+
+            //backtrack
+            //swap: p <=> i
+            nums[i] = x;
+            nums[p] = t;
+        }
+    }
+
 }
 '''

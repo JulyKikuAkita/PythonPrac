@@ -1,4 +1,4 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/clone-graph/description/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/clone-graph.py
 # Time:  O(n)
 # Space: O(n)
@@ -28,8 +28,13 @@ __author__ = 'July'
 #          \_/
 #
 #
-# Facebook
-
+# Companies
+# Pocket Gems Google Uber Facebook
+# Related Topics
+# Depth-first Search Breadth-first Search Graph
+# Similar Questions
+# Copy List with Random Pointer
+#
 # Definition for a undirected graph node
 class UndirectedGraphNode:
      def __init__(self, x):
@@ -102,8 +107,8 @@ class SolutionOther:
         return head
 #test
 
-#java
-js = '''
+#Java
+Java = '''
 /**
  * Definition for undirected graph.
  * class UndirectedGraphNode {
@@ -112,6 +117,29 @@ js = '''
  *     UndirectedGraphNode(int x) { label = x; neighbors = new ArrayList<UndirectedGraphNode>(); }
  * };
  */
+# DFS:
+# 74.34% 5ms
+public class Solution {
+    public UndirectedGraphNode cloneGraph(UndirectedGraphNode node) {
+        HashMap<Integer, UndirectedGraphNode> map = new HashMap<>();
+        return clone(node, map);
+    }
+
+    private UndirectedGraphNode clone(UndirectedGraphNode node, Map<Integer, UndirectedGraphNode> map) {
+        if (node == null) return null;
+        if (map.containsKey(node.label)) return map.get(node.label);
+        UndirectedGraphNode clone = new UndirectedGraphNode(node.label);
+        map.put(clone.label, clone);
+
+        for (UndirectedGraphNode neighbor: node.neighbors) {
+            clone.neighbors.add(clone(neighbor, map));
+        }
+        return clone;
+    }
+}
+
+# BFS:
+# 45.32% 8ms
 public class Solution {
     public UndirectedGraphNode cloneGraph(UndirectedGraphNode node) {
         if (node == null) {
@@ -135,6 +163,30 @@ public class Solution {
             }
         }
         return newGraphMap.get(node);
+    }
+}
+
+# 31.88% 9ms
+public class Solution {
+    public UndirectedGraphNode cloneGraph(UndirectedGraphNode node) {
+        if (node == null) return null;
+        UndirectedGraphNode clone = new UndirectedGraphNode(node.label);
+        HashMap<Integer, UndirectedGraphNode> map = new HashMap(); //store visited nodes
+        map.put(clone.label, clone); //add first node to HashMap
+
+        LinkedList<UndirectedGraphNode> queue = new LinkedList(); //to store **original** nodes need to be visited
+        queue.add(node); //add first **original** node to queue
+        while(!queue.isEmpty()) {
+            UndirectedGraphNode n = queue.pop();
+            for(UndirectedGraphNode neighbor : n.neighbors) {
+                if (!map.containsKey(neighbor.label)) {
+                    map.put(neighbor.label, new UndirectedGraphNode(neighbor.label));
+                    queue.add(neighbor);
+                }
+                map.get(n.label).neighbors.add(map.get(neighbor.label));
+            }
+        }
+        return clone;
     }
 }
 

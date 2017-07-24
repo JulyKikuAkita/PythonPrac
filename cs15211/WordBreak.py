@@ -110,8 +110,8 @@ if __name__ == "__main__":
     print javaDP().wordBreak("programcreek", ["programcree","program","creek"])
 
 
-#java
-js = '''
+#Java
+Java = '''
 Thought: https://leetcode.com/articles/word-break/
 
 public class Solution {

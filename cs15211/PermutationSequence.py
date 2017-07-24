@@ -1,4 +1,4 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/permutation-sequence/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/permutation-sequence.py
 # Time:  O(n)
 # Space: O(1)
@@ -19,11 +19,21 @@ __author__ = 'July'
 #
 # Note: Given n will be between 1 and 9 inclusive.
 #
-#  Twitter
-# Hide Tags Backtracking Math
-# Hide Similar Problems (M) Next Permutation (M) Permutations
-
+# Companies
+# Twitter
+# Related Topics
+# Backtracking Math
+# Similar Questions
+# Next Permutation Permutations
+#
 import math
+import unittest
+# Note:
+# '''
+# ord(c): Given a string of length one, return an integer representing the Unicode code point of the character
+#  ex: ord('a') = 97
+# chr(c): eturn a string of one character whose ASCII code is the integer i. For example, chr(97) returns the string 'a'.
+# '''
 
 # Cantor ordering solution
 class Solution1:
@@ -58,12 +68,6 @@ class Solution1:
                 index += 1
             result.append(subset)
         return result
-
-
-
-if __name__ == "__main__":
-    print Solution().getPermutation(3, 2)
-    #print Solution().getCombination(3, 2)
 #
 # The idea is as follow:
 #
@@ -96,18 +100,19 @@ class Solution:
 
         return permutation
 
-#test
-#test = SolutionOther()
-#print test.getPermutation(4,2)
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        #test
+        #test = SolutionOther()
+        #print test.getPermutation(4,2)
+        print Solution().getPermutation(3, 2)
 
-# '''
-# ord(c): Given a string of length one, return an integer representing the Unicode code point of the character
-#  ex: ord('a') = 97
-# chr(c): eturn a string of one character whose ASCII code is the integer i. For example, chr(97) returns the string 'a'.
-# '''
+if __name__ == '__main__':
+    unittest.main()
 
-#java
-java = '''
+Java = '''
+#Thought: https://leetcode.com/problems/contains-duplicate/solution/
+
 "Explain-like-I'm-five" Java Solution in O(n)
 I'm sure somewhere can be simplified so it'd be nice if anyone can let me know. The pattern was that:
 
@@ -182,6 +187,7 @@ Fourth number is 2
 Giving us 3142. If you manually list out the permutations using DFS method, it would be 3142. Done!
 It really was all about pattern finding.
 
+#56.01% 16ms
 public class Solution {
     public String getPermutation(int n, int k) {
         int pos = 0;
@@ -199,7 +205,7 @@ public class Solution {
         // factorial[] = {1, 1, 2, 6, 24, ... n!}
 
         // create a list of numbers to get indices
-        for(int i=1; i<=n; i++){
+        for(int i = 1; i <= n; i++){
             numbers.add(i);
         }
         // numbers = {1, 2, 3, 4}
@@ -207,28 +213,37 @@ public class Solution {
         k--;
 
         for(int i = 1; i <= n; i++){
-            int index = k/factorial[n-i];
+            int index = k / factorial[n-i];
             sb.append(String.valueOf(numbers.get(index)));
             numbers.remove(index);
-            k-=index*factorial[n-i];
+            k -= index * factorial[n-i];
         }
 
         return String.valueOf(sb);
     }
 }
 
+Thought:
+The logic is as follows:
+for n numbers the permutations can be divided to (n-1)! groups,
+for n-1 numbers can be divided to (n-2)! groups, and so on.
+Thus k/(n-1)! indicates the index of current number, and k%(n-1)! denotes remaining index for the remaining n-1 numbers.
+We keep doing this until n reaches 0, then we get n numbers permutations that is kth.
+
+#28.99% 18ms
 public class Solution {
     public String getPermutation(int n, int k) {
         List<Integer> nums = new ArrayList<>(n);
         int factor = 1;
+
         for (int i = 0; i < n; i++) {
             nums.add(i + 1);
             factor *= i + 1;
         }
         k--;
-        StringBuilder sb = new StringBuilder();
         k %= factor;
         factor /= n;
+        StringBuilder sb = new StringBuilder();
         for (int i = n - 1; i >= 0; i--) {
             int curr = k / factor;
             sb.append((char) ('0' + nums.get(curr)));
@@ -240,27 +255,73 @@ public class Solution {
     }
 }
 
-#python way
+#20.66% 19ms
+class Solution {
+    public String getPermutation(int n, int k) {
+        ArrayList<Integer> temp = new ArrayList<>();
+
+        // a factorial table
+        int[] factorial = new int[n];
+        factorial[0] = 1;
+        for(int i = 1; i < n; i++) {
+            factorial[i] = factorial[i-1] * i;
+        }
+        for(int i = 1; i <= n; i++) {
+            temp.add(i);
+        }
+
+        return permutation(temp, k, factorial);
+
+    }
+
+    public String permutation(ArrayList<Integer> temp, int k, int[] factorial) {
+        // do until list is empty and you return nothing
+        if (temp.size() == 0) {
+            return "";
+        }
+        int number = (k-1)/factorial[temp.size()-1];
+        //System.out.println(number);
+        String s = Integer.toString(temp.get(number));
+        k = k - number*factorial[temp.size()-1];
+        temp.remove(number);
+
+        return s + permutation(temp, k, factorial);
+    }
+}
+
+#92.19%
+14ms
 public class Solution {
     public String getPermutation(int n, int k) {
         StringBuilder sb = new StringBuilder();
-        int[] fac = new int[n+1];
-        boolean[] used = new boolean[n+1];
-        List<Integer> eligible = new ArrayList<>(n);
-        fac[0] = 1;
-        for (int i = 1; i < n; i++) {
-            fac[i] = fac[i-1] * i;
-            eligible.add(i);
+        boolean[] used = new boolean[n];
+
+        k = k - 1;  //idx start with 0
+        int factor = 1; //factor is to refer (n-1)! permutations
+        for (int i = 2; i < n; i++) {
+            factor *= i;
         }
-        eligible.add(n);
 
         for (int i = 0; i < n; i++) {
-            int digit = (k - 1) / fac[n-i-1];
-            sb.append((char)('0'+ eligible.get(digit)));
-            eligible.remove(eligible.get(digit));
-            k = (k - 1) % fac[n-i-1] + 1;
-        }
+            int index = k / factor; //find index of the highest digit in the list
+            k = k % factor; //update k for every loop
 
+            for (int j = 0; j < n; j++) { //compute the insert index
+                if (used[j] == false) {
+                    if (index == 0) { //when index == 0 j is the index to add new number
+                        used[j] = true;
+                        sb.append((char) ('0' + j + 1));
+                        break;
+                    } else {
+                        index--;
+                    }
+                }
+            }
+            if (i < n - 1) {
+                //(n - 1)! -> ((n - 1) - 1)! //the first digi has been added, shrink the possibitility of perm
+                factor = factor / (n - 1 - i);
+            }
+        }
         return sb.toString();
     }
 }

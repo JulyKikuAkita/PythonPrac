@@ -3,7 +3,7 @@ __source__ = 'https://github.com/kamyu104/LeetCode/blob/master/Python/is-subsequ
 # Time:  O(n)
 # Space: O(1)
 #
-# Description:
+# Description: Leetcode # 392. Is Subsequence
 # Given a string s and a string t, check if s is subsequence of t.
 #
 # You may assume that there is only lower case English letters in both s and t.
@@ -24,10 +24,11 @@ __source__ = 'https://github.com/kamyu104/LeetCode/blob/master/Python/is-subsequ
 #
 # Return false.
 #
+# Companies
 # Pinterest
-# Hide Tags Binary Search Dynamic Programming Greedy
-
-
+# Related Topics
+# Binary Search Dynamic Programming Greedy
+#
 import unittest
 
 # Greedy solution.
@@ -69,6 +70,7 @@ if __name__ == '__main__':
 
 Java = '''
 #Thought:
+#59.60% 37ms
 public class Solution {
     public boolean isSubsequence(String s, String t) {
         if (s.length() == 0) return true;
@@ -84,6 +86,62 @@ public class Solution {
     }
 }
 
+#94.93% 3ms
+public class Solution {
+    public boolean isSubsequence(String s, String t) {
+        if (s.length() == 0) {
+            return true;
+        }
+        int prev = t.indexOf(s.charAt(0));
+        if (prev == -1) {
+                return false;
+            }
+        for (int i = 1; i < s.length(); i++) {
+            //System.out.println(prev);
+            prev = t.indexOf(s.charAt(i) , prev + 1); //index of chat after prev+1
+            if (prev == -1) {
+                return false;
+            }
+        }
+        return true;
+    }
+}
+
+# quick examples fro java Collections.binarySearch(list, key)
+# http://www.geeksforgeeks.org/collections-binarysearch-java-examples/
+// Returns index of key in sorted list sorted in
+// ascending order
+public static int binarySearch(List slist, T key)
+
+// Returns index of key in sorted list sorted in
+// order defined by Comparator c.
+public static int binarySearch(List slist, T key, Comparator c)
+
+If key is not present, the it returns "(-(insertion point) - 1)".
+The insertion point is defined as the point at which the key
+would be inserted into the list.
+
+public static void main(String[] args)
+    {
+        List al = new ArrayList();
+        al.add(1);
+        al.add(2);
+        al.add(3);
+        al.add(10);
+        al.add(20);
+
+        // 10 is present at index 3.
+        int index = Collections.binarySearch(al, 10);
+        System.out.println(index);
+
+        // 13 is not present. 13 would have been inserted
+        // at position 4. So the function returns (-4-1)
+        // which is -5.
+        index = Collections.binarySearch(al, 15);
+        System.out.println(index);
+    }
+
+# 16.12% 60ms
 Binary search solution for follow-up with detailed comments
 Re: Java binary search using TreeSet got TLE
 

@@ -1,8 +1,10 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/combination-sum-ii/description/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/combination-sum-ii.py
 # Time:  O(n! / m!(n-m)!)
 # Space: O(m)
 # DFS
+#
+# Description: Leetcode # 40. Combination Sum II
 #
 # Given a collection of candidate numbers (C) and a target number (T),
 # find all unique combinations in C where the candidate numbers sums to T.
@@ -20,10 +22,14 @@ __author__ = 'July'
 # [2, 6]
 # [1, 1, 6]
 #
-#  Snapchat
-# Hide Tags Array Backtracking
-# Hide Similar Problems (M) Combination Sum
-
+# Companies
+# Snapchat
+# Related Topics
+# Array Backtracking
+# Similar Questions
+# Combination Sum
+#
+import unittest
 class Solution:
     # @param candidates, a list of integers
     # @param target, integer
@@ -42,10 +48,6 @@ class Solution:
                 self.combinationSum2Rec(candidates, result, start + 1, intermediate + [candidates[start]], target - candidates[start])
                 prev = candidates[start]
             start += 1
-if __name__ == "__main__":
-    candidates, target = [10, 1, 2, 7, 6, 1, 5], 8
-    print Solution().combinationSum2(candidates, target)
-
 
 class SolutionOther:
     # @param candidates, a list of integers
@@ -67,16 +69,24 @@ class SolutionOther:
                 return
             self.DFS(candidates, target - candidates[i], i+1, valuelist+[candidates[i]])
 
-
 #test
-test = SolutionOther()
-#print test.combinationSum2([6,2,3], 7)
-#print test.combinationSum2i([2,1], 2)
-#print test.combinationSum2p([10,1,2,7,6,1,5] , 8)
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        test = SolutionOther()
+        #print test.combinationSum2([6,2,3], 7)
+        #print test.combinationSum2i([2,1], 2)
+        #print test.combinationSum2p([10,1,2,7,6,1,5] , 8)
+        self.assertEqual(1, 1)
+        candidates, target = [10, 1, 2, 7, 6, 1, 5], 8
+        print Solution().combinationSum2(candidates, target)
+if __name__ == '__main__':
+    unittest.main()
 
-#java
-java = '''
+Java = '''
+# Thought: https://leetcode.com/problems/contains-duplicate/solution/
+#
 //hashset + sort to avoid duplicates result
+# 9.16% 48ms
 public class Solution {
      public List<List<Integer>> combinationSum2(int[] candidates, int target) {
         List<List<Integer>> list = new ArrayList<>();
@@ -103,23 +113,80 @@ public class Solution {
     }
 }
 
-public List<List<Integer>> combinationSum2(int[] nums, int target) {
-    List<List<Integer>> list = new ArrayList<>();
-    Arrays.sort(nums);
-    backtrack(list, new ArrayList<>(), nums, target, 0);
-    return list;
+# 47.74% 25ms
+public class Solution {
+    public List<List<Integer>> combinationSum2(int[] nums, int target) {
+        List<List<Integer>> list = new ArrayList<>();
+        Arrays.sort(nums);
+        backtrack(list, new ArrayList<>(), nums, target, 0);
+        return list;
 
+    }
+
+    private void backtrack(List<List<Integer>> list, List<Integer> tempList, int [] nums, int remain, int start){
+        if(remain < 0) return;
+        else if(remain == 0) list.add(new ArrayList<>(tempList));
+        else{
+            for(int i = start; i < nums.length; i++){
+                if(i > start && nums[i] == nums[i-1]) continue; // skip duplicates
+                tempList.add(nums[i]);
+                backtrack(list, tempList, nums, remain - nums[i], i + 1);
+                tempList.remove(tempList.size() - 1);
+            }
+        }
+    }
 }
 
-private void backtrack(List<List<Integer>> list, List<Integer> tempList, int [] nums, int remain, int start){
-    if(remain < 0) return;
-    else if(remain == 0) list.add(new ArrayList<>(tempList));
-    else{
-        for(int i = start; i < nums.length; i++){
-            if(i > start && nums[i] == nums[i-1]) continue; // skip duplicates
-            tempList.add(nums[i]);
-            backtrack(list, tempList, nums, remain - nums[i], i + 1);
-            tempList.remove(tempList.size() - 1);
+
+#91.47% 18ms
+public class Solution {
+    public List<List<Integer>> combinationSum2(int[] candidates, int target) {
+        List<List<Integer>> result = new ArrayList<>();
+        if (target == 0) return result;
+        Arrays.sort(candidates);
+        dfs(result, new ArrayList<>(), candidates, target, 0);
+        return result;
+    }
+
+    private void dfs(List<List<Integer>> res, List<Integer> cur, int[] candidates, int target, int start){
+        if (target > 0) {
+            for(int i = start; i < candidates.length && candidates[i] <= target; i++) {
+                if (i > start && candidates[i] == candidates[i - 1]) continue;
+                cur.add(candidates[i]);
+                dfs(res, cur, candidates, target - candidates[i], i + 1);
+                cur.remove(cur.size() - 1);
+            }
+        }
+        if (target == 0) {
+            res.add(new ArrayList<>(cur));
+        }
+    }
+}
+
+#96.07 16ms # bottom-up
+public class Solution {
+    public List<List<Integer>> combinationSum2(int[] candidates, int target) {
+        List<List<Integer>> result = new ArrayList<>();
+        if (target == 0) {
+            return result;
+        }
+        Arrays.sort(candidates);
+        combinationSum2(candidates, target, 0, result, new ArrayList<>(), false);
+        return result;
+    }
+
+    private void combinationSum2(int[] candidates, int target, int index, List<List<Integer>> result, List<Integer> cur, boolean lastAdded) {
+        if (target == 0) {
+            result.add(new ArrayList<>(cur));
+            return;
+        } else if (index == candidates.length || candidates[index] > target) { //need to after target == 0 //need else if increase runtime
+            return;
+        }
+        combinationSum2(candidates, target, index + 1, result, cur, false);
+        if (index == 0 || lastAdded || candidates[index - 1] != candidates[index]) {
+            cur.add(candidates[index]);
+            combinationSum2(candidates, target - candidates[index], index + 1, result, cur, true);
+            cur.remove(cur.size() - 1);
         }
     }
 }

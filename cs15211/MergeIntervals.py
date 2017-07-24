@@ -4,19 +4,26 @@ __source__ = 'https://leetcode.com/problems/merge-intervals/#/description'
 # Space: O(1)
 # sort
 #
+# Description: Leetcode # 56. Merge Intervals
+#
 # Given a collection of intervals, merge all overlapping intervals.
 #
 # For example,
 # Given [1,3],[2,6],[8,10],[15,18],
 # return [1,6],[8,10],[15,18].
 #
-# Topics:
-# Array Sort
-# You might like:
-# (H) Insert Interval (E) Meeting Rooms (M) Meeting Rooms II (M) Teemo Attacking (M) Add Bold Tag in String
-# Company:
-# LinkedIn Google Facebook Twitter Microsoft Bloomberg Yelp
+# Given [[1,4],[2,3]]
+# return [[1,4]]
 #
+# Companies
+# LinkedIn Google Facebook Twitter Microsoft Bloomberg Yelp
+# Related Topics
+# Array Sort
+# Similar Questions
+# Insert Interval Meeting Rooms Meeting Rooms II Teemo Attacking Add Bold Tag in String
+#
+#
+import unittest
 # Definition for an interval.
 class Interval:
     def __init__(self, s=0, e=0):
@@ -42,16 +49,17 @@ class Solution:
                 result.append(cur)
         return result
 
-if __name__ == "__main__":
-    print Solution().merge([Interval(1, 3), Interval(2, 6), Interval(8, 10), Interval(15,18)])
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+        print Solution().merge([Interval(1, 3), Interval(2, 6), Interval(8, 10), Interval(15,18)])
 
+if __name__ == '__main__':
+    unittest.main()
 
-#Java Solution:
-# http://www.programcreek.com/2012/12/leetcode-merge-intervals/
+Java = '''
+#Thought: https://leetcode.com/problems/contains-duplicate/solution/
 
-
-#java
-js = '''
 /**
  * Definition for an interval.
  * public class Interval {
@@ -61,7 +69,7 @@ js = '''
  *     Interval(int s, int e) { start = s; end = e; }
  * }
  */
-#16%
+#25.86% 96ms
 public List<Interval> merge(List<Interval> intervals) {
     if (intervals.size() <= 1)
         return intervals;
@@ -88,7 +96,7 @@ public List<Interval> merge(List<Interval> intervals) {
     return result;
 }
 
-#99%
+#99% 17ms
 public class Solution {
     public List<Interval> merge(List<Interval> intervals) {
         int n = intervals.size();

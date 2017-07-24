@@ -1,4 +1,4 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/find-peak-element/description/'
 # Time:  O(logn)
 # Space: O(1)
 #
@@ -14,9 +14,11 @@ __author__ = 'July'
 #
 # Note:
 # Your solution should be in logarithmic complexity.
+# Companies
 # Microsoft Google
-
-
+# Related Topics
+# Binary Search Array
+#
 class Solution:
     # @param num, a list of integer
     # @return an integer
@@ -115,8 +117,30 @@ print test.findPeakElementOn(arr)
 #                return start
 
 
-#java
-js = '''
+#Java
+Java = '''
+#33.97%  0ms
+1. O(n) linear scan:
+public class Solution {
+    public int findPeakElement(int[] nums) {
+        for (int i = 0; i < nums.length - 1; i++) {
+            if (nums[i] > nums[i + 1])
+                return i;
+        }
+        return nums.length - 1;
+    }
+}
+
+Thought: https://leetcode.com/problems/find-peak-element/solution/
+This problem is similar to Local Minimum. And according to the given condition,
+num[i] != num[i+1], there must exist a O(logN) solution. So we use binary search for this problem.
+
+If num[i-1] < num[i] > num[i+1], then num[i] is peak
+If num[i-1] < num[i] < num[i+1], then num[i+1...n-1] must contains a peak
+If num[i-1] > num[i] > num[i+1], then num[0...i-1] must contains a peak
+If num[i-1] > num[i] < num[i+1], then both sides have peak
+(n is num.length)
+
 public class Solution {
     public int findPeakElement(int[] nums) {
         int start = 0;
@@ -133,6 +157,7 @@ public class Solution {
     }
 }
 
+#33.97%  0ms
 public class Solution {
     public int findPeakElement(int[] nums) {
         if(nums == null || nums.length == 0) return 0;

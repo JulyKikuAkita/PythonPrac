@@ -1,20 +1,29 @@
-__author__ = 'July'
-'''
+__source__ = 'https://leetcode.com/problems/flip-game/#/description'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/flip-game.py
-You are playing the following Flip Game with your friend: Given a string that contains only these two characters: + and -,
-you and your friend take turns to flip two consecutive "++" into "--".
-The game ends when a person can no longer make a move and therefore the other person will be the winner.
-
-Write a function to compute all possible states of the string after one valid move.
-
-For example, given s = "++++", after one move, it may become one of the following states:
-[
-  "--++",
-  "+--+",
-  "++--"
-]
-If there is no valid move, return an empty list [].
-'''
+# Time:  O(c * n + n) = O(n * (c+1))
+# Space: O(n)
+#
+# You are playing the following Flip Game with your friend: Given a string that contains only these two characters: + and -,
+# you and your friend take turns to flip two consecutive "++" into "--".
+# The game ends when a person can no longer make a move and therefore the other person will be the winner.
+#
+# Write a function to compute all possible states of the string after one valid move.
+#
+# For example, given s = "++++", after one move, it may become one of the following states:
+# [
+#   "--++",
+#   "+--+",
+#   "++--"
+# ]
+# If there is no valid move, return an empty list [].
+#
+# Companies
+# Google
+# Related Topics
+# String
+# Similar Questions
+# Flip Game II
+#
 class Solution(object):
     def generatePossibleNextMoves(self, s):
         """
@@ -57,3 +66,47 @@ class Solution3(object):
             if s[i-1] == "+" and s[i] == "+":
                 res.append(s[:i-1] + "--" + s[i+1:])
         return res
+
+Java = '''
+#Thought: https://leetcode.com/problems/android-unlock-patterns/#/solution
+
+# 21 % 1ms
+public class Solution {
+    public List<String> generatePossibleNextMoves(String s) {
+        List<String> result = new ArrayList<>();
+        int index = s.indexOf("++");
+        while (index >= 0) {
+            result.add(new StringBuilder().append(s.substring(0, index)).append("--").append(s.substring(index + 2)).toString());
+            index = s.indexOf("++", index + 1);
+        }
+        return result;
+    }
+}
+
+# 21 % 1ms
+public class Solution {
+    public List<String> generatePossibleNextMoves(String s) {
+        List list = new ArrayList();
+        for (int i = -1; (i = s.indexOf("++", i + 1)) >= 0; ) {
+            list.add(s.substring(0, i) + "--" + s.substring(i + 2));
+        }
+        return list;
+    }
+}
+
+# 21 % 1ms
+public class Solution {
+    public List<String> generatePossibleNextMoves(String s) {
+        List<String> res = new ArrayList<String>();
+        for (int i = 0; i < s.length() - 1; i++) {
+            char[] temp = s.toCharArray();
+            if (s.charAt(i) == '+' && s.charAt(i + 1) == '+') {
+                temp[i] = '-';
+                temp[i + 1] = '-';
+                res.add(String.valueOf(temp));
+            }
+        }
+        return res;
+    }
+}
+'''

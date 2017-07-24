@@ -1,7 +1,9 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/combination-sum-iii/description/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/combination-sum-iii.py
 # Time:  O(C(n, k))
 # Space: O(k)
+#
+# Description: Leetcode # 216. Combination Sum III
 #
 # Find all possible combinations of k numbers that add up to a number n,
 # given that only numbers from 1 to 9 can be used and each combination should be a unique set of numbers.
@@ -25,10 +27,12 @@ __author__ = 'July'
 #
 # [[1,2,6], [1,3,5], [2,3,4]]
 #
+# Related Topics
 # Array Backtracking
-# Hide Similar Problems (M) Combination Sum
+# Similar Questions
+# Combination Sum
 #
-
+import unittest
 class Solution:
     # @param {integer} k
     # @param {integer} n
@@ -49,11 +53,17 @@ class Solution:
             intermediate.pop()
             start += 1
 
-if __name__ == "__main__":
-    print Solution().combinationSum3(3, 9)
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+        print Solution().combinationSum3(3, 9)
 
-#Java
-java = '''
+if __name__ == '__main__':
+    unittest.main()
+
+Java = '''
+#Thought:
+# 46.90 1ms
 public class Solution {
     public List<List<Integer>> combinationSum3(int k, int n) {
          List<List<Integer>> result = new ArrayList<>();
@@ -72,10 +82,10 @@ public class Solution {
             backtrack(list, tempList, k, remain - i, i + 1);
             tempList.remove(tempList.size() - 1);
         }
-
     }
 }
 
+#10.13% 2ms
 public class Solution {
     public List<List<Integer>> combinationSum3(int k, int n) {
         List<List<Integer>> result = new ArrayList<>();

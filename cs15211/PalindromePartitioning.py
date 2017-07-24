@@ -1,7 +1,9 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/palindrome-partitioning/description/'
+# https://github.com/kamyu104/LeetCode/blob/master/Python/palindrome-partitioning.py
 # Time:  O(n^2 ~ 2^n)
 # Space: O(n^2)
 #
+# Description: Leetcode # 131. Palindrome Partitioning
 # Given a string s, partition s such that every substring of the partition is a palindrome.
 #
 # Return all possible palindrome partitioning of s.
@@ -14,11 +16,16 @@ __author__ = 'July'
 #     ["a","a","b"]
 #   ]
 #
-#
-#  Bloomberg
-# Hide Tags Backtracking
-# Hide Similar Problems (H) Palindrome Partitioning II
+# Companies
+# Bloomberg
+# Related Topics
+# Backtracking
+# Similar Questions
+# Palindrome Partitioning II
 
+import unittest
+# Time:  O(n^2 ~ 2^n)
+# Space: O(n^2)
 # dynamic programming solution
 class Solution:
     # @param s, a string
@@ -73,7 +80,6 @@ class Solution2:
         return True
 
 
-
 class SolutionOther:
     # @param s, a string
     # @return a list of lists of string
@@ -96,16 +102,19 @@ class SolutionOther:
             if self.isPalindrome(s[:i]):
                 self.dfs(s[i:], stringlist+[s[:i]])
 
-#test
-test = SolutionOther()
-#print test.partition("aab")
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+         #print Solution().partition("aab")
+        print Solution2().partition("aab")
+        #print DP().partition("aab")
 
-if __name__ == "__main__":
-    #print Solution().partition("aab")
-    print Solution2().partition("aab")
-    #print DP().partition("aab")
+if __name__ == '__main__':
+    unittest.main()
 
-java = '''
+Java = '''
+#Thought: backtracking
+# 84.45% 7ms
 public class Solution {
     public List<List<String>> partition(String s) {
        List<List<String>> list = new ArrayList<>();
@@ -138,6 +147,7 @@ public class Solution {
 }
 
 #DP
+# 55.63% 9ms
 O(n^2)
 public class Solution {
  	public static List<List<String>> partition(String s) {
@@ -164,4 +174,5 @@ public class Solution {
 		return result[len];
 	}
 }
+
 '''

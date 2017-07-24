@@ -1,8 +1,10 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/subsets-ii/description/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/subsets-ii.py
 # Time:  O(n * 2^n)
 # Space: O(1)
 # Brute Force Search
+#
+# Description: Leetcode # 90. Subsets II
 #
 # Given a collection of integers that might contain duplicates, S, return all possible subsets.
 #
@@ -21,9 +23,12 @@ __author__ = 'July'
 #   []
 # ]
 #
-#  Facebook
-# Hide Tags Array Backtracking
-
+# Companies
+# Facebook
+# Related Topics
+# Array Backtracking
+#
+import unittest
 class SolutionCC150:
     # @param num, a list of integer
     # @return a list of lists of integer
@@ -77,11 +82,6 @@ class Solution2:
             self.subsetsWithDupRecu(result, cur, S[1:])
             self.subsetsWithDupRecu(result, cur + [S[0]], S[1:])
 
-if __name__ == "__main__":
-    print SolutionCC150().subsetsWithDup([1, 2, 2])
-    print Solution().subsetsWithDup([1, 2, 2])
-    print Solution2().subsetsWithDup([1, 2, 2])
-
 class SolutionOther:
     # @param num, a list of integer
     # @return a list of lists of integer
@@ -107,25 +107,36 @@ class SolutionOther:
         dfs(0, 0, [])
         return res
 
-
-#tet
-test = SolutionOther()
-S = [1,2,2]
-#print test.subsetsWithDup(S)
-
-
 #for x in range(2**len(S)):
 #    print "x=", x
 #    for i in range(1, len(S)):
 #      print "i=", i, "bin = ", (x >> (i-1)&0x03)
 
-#java
-java = '''
+
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        #tet
+        test = SolutionOther()
+        S = [1,2,2]
+        #print test.subsetsWithDup(S)
+
+        self.assertEqual(1, 1)
+        print SolutionCC150().subsetsWithDup([1, 2, 2])
+        print Solution().subsetsWithDup([1, 2, 2])
+        print Solution2().subsetsWithDup([1, 2, 2])
+
+if __name__ == '__main__':
+    unittest.main()
+
+Java = '''
+#Thought:
+
 //definitely need to sort array
 //Otherwise still see [4, 4, 1, 4,4]
 // without sort array: [[],[4],[4,4],[4,4,1],[4,4,1,4],[4,4,1,4,4],[4,4,4],[4,4,4,4],[4,1],[4,1,4],[4,1,4,4],[1],[1,4],[1,4,4]]
 // correct answer: [[],[1],[1,4],[1,4,4],[1,4,4,4],[1,4,4,4,4],[4],[4,4],[4,4,4],[4,4,4,4]]
 
+#20.67% 4ms
 public class Solution {
     public List<List<Integer>> subsetsWithDup(int[] nums) {
         List<List<Integer>> list = new ArrayList<>();
@@ -148,6 +159,7 @@ public class Solution {
     }
 }
 
+#63.10% 2ms
 public class Solution {
     public List<List<Integer>> subsetsWithDup(int[] nums) {
         List<List<Integer>> list = new ArrayList<>();
@@ -159,11 +171,39 @@ public class Solution {
     private void backtrack(List<List<Integer>> list, List<Integer> tempList, int [] nums, int start){
         list.add(new ArrayList<>(tempList));
         for(int i = start; i < nums.length; i++){
-            if(i > start && nums[i] == nums[i-1]) continue; // skip duplicates
+            if(i > start && nums[i] == nums[i-1]) continue; // skip duplicates //faster than hashset
             tempList.add(nums[i]);
             backtrack(list, tempList, nums, i + 1);
             tempList.remove(tempList.size() - 1);
         }
+    }
+}
+
+#27.27% 3ms
+public class Solution {
+    public List<List<Integer>> subsetsWithDup(int[] nums) {
+        List<List<Integer>> result = new ArrayList<>();
+        List<Integer> cur = new ArrayList<>();
+        Arrays.sort(nums);
+        for (int i = 0; i <= nums.length; i++) {
+            subsetsWithDup(nums, i, result, cur, i == 0 ? null : nums[i - 1]);
+        }
+        return result;
+    }
+
+    private void subsetsWithDup(int[] nums, int index, List<List<Integer>> result, List<Integer> cur, Integer lastSkipped) {
+        if (index == nums.length) {
+            result.add(new ArrayList<>(cur));
+            return;
+        }
+        if (lastSkipped != null && nums[index] == lastSkipped) {
+            return;
+        }
+        cur.add(nums[index]);
+        for (int i = index + 1; i <= nums.length; i++) {
+            subsetsWithDup(nums, i, result, cur, i == index + 1 ? lastSkipped : Integer.valueOf(nums[i - 1]));
+        }
+        cur.remove(cur.size() - 1);
     }
 }
 '''

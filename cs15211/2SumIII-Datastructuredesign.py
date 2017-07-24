@@ -1,8 +1,9 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/two-sum-iii-data-structure-design/description/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/two-sum-iii-data-structure-design.py
 # Time:  O(n)
 # Space: O(n)
 #
+# Description: Leetcode # 170. Two Sum III - Data structure design
 # Design and implement a TwoSum class. It should support the following operations: add and find.
 #
 # add - Add the number to an internal data structure.
@@ -13,10 +14,14 @@ __author__ = 'July'
 # find(4) -> true
 # find(7) -> false
 #
+# Companies
 # LinkedIn
-# Hide Tags Hash Table Design
-# Hide Similar Problems (E) Two Sum (E) Unique Word Abbreviation
-
+# Related Topics
+# Hash Table Design
+# Similar Questions
+# Two Sum Unique Word Abbreviation Two Sum IV - Input is a BST
+#
+import unittest
 class TwoSum:
 
     # initialize your data structure here
@@ -40,24 +45,50 @@ class TwoSum:
                 return True
         return False
 
-#test
-if __name__ == "__main__":
-    sol = TwoSum()
-    for i in (1,3,5):
-        sol.add(i)
-    for i in (4,7):
-        print sol.find(i)
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+        sol = TwoSum()
+        for i in (1,3,5):
+            sol.add(i)
+        for i in (4,7):
+            print sol.find(i)
 
-# java
-# http://www.programcreek.com/2014/03/two-sum-iii-data-structure-design-java/
-js = '''
+if __name__ == '__main__':
+    unittest.main()
+
+Java = '''
+#Thought:
+# 18.95 % 394ms
+# Map with count
+public class TwoSum {
+    private HashMap<Integer, Integer> map = new HashMap<Integer, Integer>();
+
+    public void add(int number) {
+        map.put(number, map.containsKey(number) ? map.get(number) + 1 : 1);
+    }
+
+    public boolean find(int value) {
+        for (Map.Entry<Integer, Integer> entry : map.entrySet()) {
+            int i = entry.getKey();
+            int j = value - i;
+            if ((i == j && entry.getValue() > 1) || (i != j && map.containsKey(j))) {
+                return true;
+            }
+        }
+        return false;
+    }
+}
+
+#67.24%  287ms
+# Map with Int
 public class TwoSum {
     private Map<Integer, Boolean> map = new HashMap<>();
 
     // Add the number to an internal data structure.
 	public void add(int number) {
 	    if (map.containsKey(number)) {
-	        map.put(number, true);
+	        map.put(number, true); //has dup
 	    } else {
 	        map.put(number, false);
 	    }
@@ -73,9 +104,9 @@ public class TwoSum {
 	    return false;
 	}
 }
-'''
 
-js2 = ''' 85.05%
+# LinkedHashmap with Long
+# 99.27% 143ms
 import java.util.LinkedHashMap;
 
 public class TwoSum {
@@ -111,7 +142,10 @@ public class TwoSum {
 // twoSum.find(value);
 '''
 
-js3 = '''  92.39%
+Java3= '''
+# LinkedHashmap with Int
+
+# 88.88% 222ms
 import java.util.LinkedHashMap;
 
 public class TwoSum {

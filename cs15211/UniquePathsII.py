@@ -1,9 +1,10 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/unique-paths-ii/description/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/unique-paths-ii.py
 # Time:  O(m * n)
 # Space: O(m + n)
 # DP
 #
+# Description: Leetcode # 63. Unique Paths II
 # Follow up for "Unique Paths":
 #
 # Now consider if some obstacles are added to the grids. How many unique paths would there be?
@@ -22,9 +23,14 @@ __author__ = 'July'
 #
 # Note: m and n will be at most 100.
 #
+# Companies
 # Bloomberg
-
-
+# Related Topics
+# Array Dynamic Programming
+# Similar Questions
+# Unique Paths
+#
+import unittest
 class Solution:
     # @param obstacleGrid, a list of lists of integers
     # @return an integer
@@ -69,17 +75,41 @@ class SolutionLeetcode:
                     dp[i][j] = dp[i][j+1] + dp[i+1][j]
         return dp[0][0]
 
-if __name__ == "__main__":
-    obstacleGrid = [
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+        obstacleGrid = [
                       [0,0,0],
                       [0,1,0],
                       [0,0,0]
                    ]
-    print Solution().uniquePathsWithObstacles(obstacleGrid)
-    print SolutionLeetcode().uniquePathsWithObstacles(obstacleGrid)
+        print Solution().uniquePathsWithObstacles(obstacleGrid)
+        print SolutionLeetcode().uniquePathsWithObstacles(obstacleGrid)
 
-#java
-js = '''
+if __name__ == '__main__':
+    unittest.main()
+
+Java = '''
+#Thought:
+# 12.53% 1ms
+public class Solution {
+    public int uniquePathsWithObstacles(int[][] obstacleGrid) {
+        int width = obstacleGrid[0].length;
+        int[] dp = new int[width];
+        dp[0] = 1;
+        for (int[] row : obstacleGrid) {
+            for (int j = 0; j < width; j++) {
+                if (row[j] == 1)
+                    dp[j] = 0;
+                else if (j > 0)
+                    dp[j] += dp[j - 1];
+            }
+        }
+        return dp[width - 1];
+    }
+}
+
+# 12.53% 1ms
 public class Solution {
     public int uniquePathsWithObstacles(int[][] obstacleGrid) {
         int m = obstacleGrid.length;

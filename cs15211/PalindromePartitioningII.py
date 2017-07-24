@@ -1,9 +1,10 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/palindrome-partitioning-ii/description/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/palindrome-partitioning-ii.py
 # Time:  O(n^2)
 # Space: O(n^2)
 # DP
 #
+# Description: Leetcode # 132. Palindrome Partitioning II
 # Given a string s, partition s such that every substring of the partition is a palindrome.
 #
 # Return the minimum cuts needed for a palindrome partitioning of s.
@@ -11,10 +12,12 @@ __author__ = 'July'
 # For example, given s = "aab",
 # Return 1 since the palindrome partitioning ["aa","b"] could be produced using 1 cut.
 #
+# Related Topics
 # Dynamic Programming
-#Hide Similar Problems (M) Palindrome Partitioning
+# Similar Questions
+# Palindrome Partitioning
 #
-
+import unittest
 class Solution:
     # @param s, a string
     # @return an integer
@@ -74,15 +77,19 @@ class SolutionOther:
         #            print i, j, p, dp
         return dp[0]-1
 
-#test
-#test = SolutionOther()
-#print test.minCut("aab")
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+        #print Solution().partition("aab")
+        #print DP().partition("aab")
+        print Solution().minCut("aab")
+        print SolutionJava().minCut("aab")
 
-if __name__ == "__main__":
-    print Solution().minCut("aab")
-    print SolutionJava().minCut("aab")
+if __name__ == '__main__':
+    unittest.main()
 
-java = '''
+Java = '''
+#Thought:
 
 Easiest Java DP Solution (97.36%)
 This can be solved by two points:
@@ -97,28 +104,28 @@ a   b   a   |   c  c
    cut(j-1) +  1
 Hope it helps!
 
+# 82.53%  22ms
 public class Solution {
     public int minCut(String s) {
         char[] c = s.toCharArray();
-        int n = c.length;
-        int[] cut = new int[n];
-        boolean[][] pal = new boolean[n][n];
+        int[] cut = new int[c.length];
+        boolean[][] dp = new boolean[c.length][c.length];
 
-        for (int i = 0; i < n ; i++) {
+        for (int i = 0; i < c.length ;i++) {
             int min = i;
-            for(int j = 0; j <= i; j++) {
-                  if(c[j] == c[i] && (j + 1 > i - 1 || pal[j + 1][i - 1])) {
-                      pal[j][i] = true;
-                      min = j == 0 ? 0: Math.min(min, cut[j-1] + 1);
-                  }
+            for (int j = 0; j <= i; j++) {
+                if (c[j] == c[i] && ((j + 1 > i - 1 || dp[j+1][i-1]))) {
+                    dp[j][i] = true;
+                    min = j == 0? 0 : Math.min(min, cut[j - 1] + 1);
+                }
             }
             cut[i] = min;
         }
-        return cut[n-1];
+        return cut[c.length - 1];
     }
 }
 
-//80.5%
+//54.69% 32ms
 public class Solution {
     public int minCut(String s) {
         int[] dp = new int[s.length() + 1];
@@ -137,6 +144,8 @@ public class Solution {
     }
 }
 
+#expand from center
+# 99.60% 6ms
 public class Solution {
     public int minCut(String s) {
         int cut = 0;

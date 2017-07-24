@@ -3,7 +3,8 @@ __source__ = 'https://leetcode.com/problems/arithmetic-slices/#/description'
 # Time:  O(n)
 # Space: O(1)
 #
-# Description:
+# Description: Leetcode # 413. Arithmetic Slices
+#
 # A sequence of number is called arithmetic if it consists of at least three elements
 # and if the difference between any two consecutive elements is the same.
 #
@@ -30,11 +31,13 @@ __source__ = 'https://leetcode.com/problems/arithmetic-slices/#/description'
 #
 # return: 3, for 3 arithmetic slices in A: [1, 2, 3], [2, 3, 4] and [1, 2, 3, 4] itself.
 #
-#  Aetion Baidu
-# Hide Tags Dynamic Programming Math
-# Hide Similar Problems (H) Arithmetic Slices II - Subsequence
+# Companies
+# Aetion Baidu
+# Related Topics
+# Dynamic Programming Math
+# Similar Questions
+# Arithmetic Slices II - Subsequence
 #
-
 import unittest
 
 class Solution(object):
@@ -61,7 +64,66 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
+#Thought: https://leetcode.com/problems/arithmetic-slices/solution/
+Approach #2 Better Brute Force [Accepted]
+O(n^2)
+#27.41% 2ms
+public class Solution {
+    public int numberOfArithmeticSlices(int[] A) {
+        int count = 0;
+        for (int s = 0; s < A.length - 2; s++) {
+            int d = A[s + 1] - A[s];
+            for (int e = s + 2; e < A.length; e++) {
+                if (A[e] - A[e - 1] == d)
+                    count++;
+                else
+                    break;
+            }
+        }
+        return count;
+    }
+}
+Approach #3 Using Recursion [Accepted]
+#10.47% 3ms
+
+public class Solution {
+    int sum = 0;
+    public int numberOfArithmeticSlices(int[] A) {
+        slices(A, A.length - 1);
+        return sum;
+    }
+    public int slices(int[] A, int i) {
+        if (i < 2)
+            return 0;
+        int ap = 0;
+        if (A[i] - A[i - 1] == A[i - 1] - A[i - 2]) {
+            ap = 1 + slices(A, i - 1);
+            sum += ap;
+        } else
+            slices(A, i - 1);
+        return ap;
+    }
+}
+
+Approach #5 Dynamic Programming [Accepted]:
+#27.41% 2ms
+
+public class Solution {
+    public int numberOfArithmeticSlices(int[] A) {
+        int[] dp = new int[A.length];
+        int sum = 0;
+        for (int i = 2; i < dp.length; i++) {
+            if (A[i] - A[i - 1] == A[i - 1] - A[i - 2]) {
+                dp[i] = 1 + dp[i - 1];
+                sum += dp[i];
+            }
+        }
+        return sum;
+    }
+}
+
+Approach #5 Constant Space Dynamic Programming [Accepted]:
+#27.41% 2ms
 public class Solution {
     public int numberOfArithmeticSlices(int[] A) {
         int curr = 0, sum = 0;

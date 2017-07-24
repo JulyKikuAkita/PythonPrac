@@ -10,14 +10,22 @@ __source__ = 'https://leetcode.com/problems/min-stack/#/solutions'
 # pop() -- Removes the element on top of the stack.
 # top() -- Get the top element.
 # getMin() -- Retrieve the minimum element in the stack.
+# Example:
+# MinStack minStack = new MinStack();
+# minStack.push(-2);
+# minStack.push(0);
+# minStack.push(-3);
+# minStack.getMin();   --> Returns -3.
+# minStack.pop();
+# minStack.top();      --> Returns 0.
+# minStack.getMin();   --> Returns -2.
 #
-# Topics:
-# Stack Design
-# You might like:
-# (H) Sliding Window Maximum
-# Company:
+# Companies
 # Google Uber Zenefits Amazon Snapchat Bloomberg
-#
+# Related Topics
+# Stack Design
+# Similar Questions
+# Sliding Window Maximum
 
 class MinStack:
     def __init__(self):
@@ -91,7 +99,16 @@ class MinStackOther:
         return self.minStack[-1]
 
 #Java
-java = '''
+Java = '''
+Input:
+["MinStack","push","push","push","getMin","pop","getMin"]
+[[],[0],[1],[0],[],[],[]]
+Output:
+[null,null,null,null,0,null,1]
+Expected:
+[null,null,null,null,0,null,0]
+
+#30.67% 123ms
 //use only one stack:
 //pop min twice
 public class MinStack {
@@ -105,7 +122,7 @@ public class MinStack {
     }
 
     public void push(int x) {
-        if ( x <= min) {
+        if ( x <= min) { //note need to have "=", see above example
             s.push(min);
             min = x;
         }
@@ -127,7 +144,7 @@ public class MinStack {
     }
 }
 
-
+#53.07% 114ms
 public class MinStack {
     Stack<Integer> dataStack;
     Stack<Integer> minStack;
@@ -168,4 +185,41 @@ public class MinStack {
  * int param_3 = obj.top();
  * int param_4 = obj.getMin();
  */
+
+#62.84% 111ms
+ public class MinStack {
+    Stack<Integer> stack;
+    Stack<Integer> min;
+
+    /** initialize your data structure here. */
+    public MinStack() {
+        this.stack = new Stack<Integer>();
+        this.min = new Stack<Integer>();
+    }
+
+    public void push(int x) {
+        this.stack.push(x);
+
+        if (this.min.isEmpty() || this.min.peek() >= x) {
+            this.min.push(x);
+        }
+    }
+
+    public void pop() {
+        int val = this.stack.pop();
+
+        if (this.min.peek() == val) {
+            this.min.pop();
+        }
+    }
+
+    public int top() {
+        return this.stack.peek();
+    }
+
+    public int getMin() {
+        return this.min.peek();
+    }
+}
+
 '''

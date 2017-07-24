@@ -4,6 +4,8 @@ __source__ = 'https://leetcode.com/problems/binary-tree-inorder-traversal/#/desc
 # Space: O(1)
 # tree
 #
+# Description: Leetcode # 94. Binary Tree Inorder Traversal
+#
 # Given a binary tree, return the inorder traversal of its nodes' values.
 #
 # For example:
@@ -26,6 +28,7 @@ __source__ = 'https://leetcode.com/problems/binary-tree-inorder-traversal/#/desc
 # (M) Inorder Successor in BST
 #
 
+import unittest
 # Definition for a  binary tree node
 class TreeNode:
      def __init__(self, x):
@@ -64,8 +67,6 @@ class Solution:
                     prev = cur
                     cur = cur.right
         return result
-
-
 
 # Time:  O(n)
 # Space: O(n)
@@ -110,57 +111,23 @@ class Solution3:
                 current = current.right
         return result
 
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+        root = TreeNode(1)
+        root.right = TreeNode(2)
+        root.right.left = TreeNode(3)
+        print Solution().inorderTraversal(root)
+        print Solution3().inorderTraversal(root)
 
-#create tree
-root1=TreeNode(0)
-root2=TreeNode(1)
-root3=TreeNode(2)
-root4=TreeNode(4)
-root5=TreeNode(5)
+if __name__ == '__main__':
+    unittest.main()
 
-tree2=TreeNode(2)
-tree31=TreeNode(3)
-tree32=TreeNode(3)
-tree41=TreeNode(4)
-tree411=TreeNode(4)
-tree4111=TreeNode(4)
-tree51=TreeNode(1)
-tree52=TreeNode(2)
-tree511=TreeNode(3)
-tree522=TreeNode(4)
-tree5221=TreeNode(5)
-tree52212=TreeNode(6)
-
-root2.left=tree2
-
-root3.left=tree31
-root3.right=tree32
-
-root4.right =tree41
-tree41.right=tree411
-tree411.right=tree4111
-
-root5.left=tree51
-root5.right=tree52
-tree51.left=tree511
-tree52.right=tree522
-tree522.left=tree5221
-tree5221.right=tree52212
-
-my_test=Solution()
-#print my_test.inorderTraversal1(root2)
-#print my_test.inorderTraversal3(root2)
-
-if __name__ == "__main__":
-    root = TreeNode(1)
-    root.right = TreeNode(2)
-    root.right.left = TreeNode(3)
-    print Solution().inorderTraversal(root)
-    print Solution3().inorderTraversal(root)
-
-#Java
 Java = '''
-# DFS 37%
+#Thought: https://leetcode.com/problems/contains-duplicate/solution/
+
+# DFS
+# 28.98% 1ms
 public class Solution {
     public List<Integer> inorderTraversal(TreeNode root) {
         List<Integer> res = new ArrayList<>();
@@ -177,7 +144,7 @@ public class Solution {
 }
 
 #BFS
-4.33%
+2.39% 2ms
 public class Solution {
     public List<Integer> inorderTraversal(TreeNode root) {
         List<Integer> result = new ArrayList<>();

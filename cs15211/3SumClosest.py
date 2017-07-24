@@ -1,4 +1,4 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/3sum-closest/description/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/3sum-closest.py
 # Time:  O(n^2)
 # Space: O(1)
@@ -12,12 +12,14 @@ __author__ = 'July'
 #
 # The sum that is closest to the target is 2. (-1 + 2 + 1 = 2).
 #
+# Companies
 # Bloomberg
-# Hide Tags Array Two Pointers
-# Hide Similar Problems (M) 3Sum (M) 3Sum Smaller
-
-
-
+# Related Topics
+# Array Two Pointers
+# Similar Questions
+# 3Sum 3Sum Smaller
+#
+import unittest
 class Solution:
     # @return an integer
     def threeSumClosest(self, nums, target):
@@ -40,13 +42,11 @@ class Solution:
                 i += 1
         return result
 
-
 class Solution2:
     # @return an integer
     def threeSumClosest(self, num, target):
         ans = None
         num.sort()
-
         for i in range(len(num)):
             l, r = i+1, len(num)-1
             while (l < r):
@@ -57,21 +57,33 @@ class Solution2:
                     l = l + 1
                 else:
                     r = r - 1
-
         return ans
 
-# Java:
-# http://www.programcreek.com/2013/02/leetcode-3sum-closest-java/
 #test
 test = Solution2()
 num = [1,2,3,4,5,6]
 print test.threeSumClosest(num, 16)
 
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+        result = Solution().threeSumClosest([-1, 2, 1, -4], 1)
+        print result
+
 if __name__ == '__main__':
-    result = Solution().threeSumClosest([-1, 2, 1, -4], 1)
-    print result
-#java
-js1 = ''' 99.83%
+    unittest.main()
+
+Java = '''
+#Thought:
+Similar to 3 Sum problem, use 3 pointers to point current element,
+next element and the last element. If the sum is less than target,
+it means we have to add a larger element so next element move to the next.
+
+If the sum is greater, it means we have to add a smaller element so last element move to the second last element.
+Keep doing this until the end. Each time compare the difference between sum and target,
+if it is less than minimum difference so far, then replace result with it, otherwise keep iterating.
+
+# 84.53% 20ms
 public class Solution {
     public int threeSumClosest(int[] nums, int target) {
         int len = nums.length;
@@ -103,8 +115,8 @@ public class Solution {
         return (int) result;
     }
 }
-'''
-js = '''
+
+#17.21% 28ms
 public class Solution {
     public int threeSumClosest(int[] nums, int target) {
         if (nums == null || nums.length < 3) {
@@ -135,6 +147,8 @@ public class Solution {
     }
 }
 
+# 22.49%
+# 27ms
 java O(n2)
 public class Solution {
     public int threeSumClosest(int[] num, int target) {

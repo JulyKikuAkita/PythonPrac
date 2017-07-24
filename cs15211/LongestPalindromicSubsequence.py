@@ -1,4 +1,9 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/longest-palindromic-subsequence/description/'
+# https://github.com/kamyu104/LeetCode/blob/master/Python/longest-palindrome.py
+# Time:  O(n^2)
+# Space: O(n^2)
+#
+# Description: Leetcode # 516. Longest Palindromic Subsequence
 # Given a string s, find the longest palindromic subsequence's length in s.
 # You may assume that the maximum length of s is 1000.
 #
@@ -16,9 +21,12 @@ __author__ = 'July'
 # Output:
 # 2
 # One possible longest palindromic subsequence is "bb".
-# Hide Company Tags Amazon Uber
-# Hide Tags Dynamic Programming
-# Hide Similar Problems (M) Longest Palindromic Substring
+# Companies
+# Amazon Uber
+# Related Topics
+# Dynamic Programming
+# Similar Questions
+# Longest Palindromic Substring Palindromic Substrings
 #
 # Python DP O(n) space O(n^2) time
 # Idea:
@@ -28,6 +36,8 @@ __author__ = 'July'
 #
 # Rolling array O(2n) space
 
+import unittest
+# 1559 ms
 class Solution(object):
     def longestPalindromeSubseq(self, s):
         """
@@ -65,14 +75,24 @@ class Solution(object):
                 pre = tmp
         return dp[0]
 
-java = '''
-Straight forward Java DP solution
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+
+
+if __name__ == '__main__':
+    unittest.main()
+
+Java = '''
+#Thought:
 dp[i][j]: the longest palindromic subsequence's length of substring(i, j)
 State transition:
 dp[i][j] = dp[i+1][j-1] + 2 if s.charAt(i) == s.charAt(j)
 otherwise, dp[i][j] = Math.max(dp[i+1][j], dp[i][j-1])
 Initialization: dp[i][i] = 1
 
+# Straight forward Java DP solution O(n^2) dp
+#80.94% 53ms
 public class Solution {
     public int longestPalindromeSubseq(String s) {
         int[][] dp = new int[s.length()][s.length()];
@@ -90,73 +110,9 @@ public class Solution {
         return dp[0][s.length()-1];
     }
 }
-Top bottom recursive method with memoization
-
-public class Solution {
-    public int longestPalindromeSubseq(String s) {
-        return helper(s, 0, s.length() - 1, new Integer[s.length()][s.length()]);
-    }
-
-    private int helper(String s, int i, int j, Integer[][] memo) {
-        if (memo[i][j] != null) {
-            return memo[i][j];
-        }
-        if (i > j)      return 0;
-        if (i == j)     return 1;
-
-        if (s.charAt(i) == s.charAt(j)) {
-            memo[i][j] = helper(s, i + 1, j - 1, memo) + 2;
-        } else {
-            memo[i][j] = Math.max(helper(s, i + 1, j, memo), helper(s, i, j - 1, memo));
-        }
-        return memo[i][j];
-    }
-}
-
-1. O(n^2) brute force - OT
-public class Solution {
-    public int longestPalindromeSubseq(String s) {
-        return helper(0, s.length()-1, s);
-    }
-
-    public int helper(int l, int r, String s) {
-        if (l == r) return 1;
-        if (l > r) return 0;
-        if(s.charAt(l) == s.charAt(r)) {
-            return 2 + helper(l+1, r-1, s);
-        }else {
-            return Math.max(helper(l+1, r, s), helper(l, r-1, s));
-        }
-    }
-}
-
-2. O(n^2) Memorization - OT
-import javafx.util.Pair;
-public class Solution {
-    public int longestPalindromeSubseq(String s) {
-        HashMap<Pair<Integer,Integer>, Integer> map = new HashMap<Pair<Integer,Integer>, Integer>();
-        return helper(0, s.length()-1, s, map);
-    }
-
-    public int helper(int l, int r, String s, HashMap map) {
-        if (l == r) return 1;
-        if (l > r) return 0;
-        Pair<Integer,Integer> p = new Pair<Integer,Integer>(l, r);
-        if (map.containsKey(p)) {
-            return (int)map.get(p);
-        }
-        int val;
-        if(s.charAt(l) == s.charAt(r)) {
-            val = 2 + helper(l+1, r-1, s, map);
-        }else {
-            val = Math.max(helper(l+1, r, s, map), helper(l, r-1, s, map));
-        }
-        map.put(p, val);
-        return val;
-    }
-}
 
 3. O(n^2) dp
+#90.74% 49ms
 public class Solution {
     public int longestPalindromeSubseq(String s) {
         int n = s.length();
@@ -178,4 +134,45 @@ public class Solution {
     }
 }
 
+Thought:
+O(2^n) Brute force. If the two ends of a string are the same,
+then they must be included in the longest palindrome subsequence.
+Otherwise, both ends cannot be included in the longest palindrome subsequence.
+
+1. O(n^2) brute force - OT
+public class Solution {
+    public int longestPalindromeSubseq(String s) {
+        return helper(0, s.length()-1, s);
+    }
+
+    public int helper(int l, int r, String s) {
+        if (l == r) return 1;
+        if (l > r) return 0;
+        if(s.charAt(l) == s.charAt(r)) {
+            return 2 + helper(l+1, r-1, s);
+        }else {
+            return Math.max(helper(l+1, r, s), helper(l, r-1, s));
+        }
+    }
+}
+
+2. O(n^2) Recursion + Memorization
+# 30.82% 73ms
+public class Solution {
+    public int longestPalindromeSubseq(String s) {
+        return dfs(s, 0, s.length() - 1, new Integer[s.length()][s.length()]);
+    }
+
+    private int dfs(String s, int i, int j, Integer[][] map) {
+        if (map[i][j] != null) return map[i][j];
+        if (i > j) return 0;
+        if (i == j) return 1;
+        if (s.charAt(i) == s.charAt(j)) {
+            map[i][j] = 2 + dfs(s, i + 1, j -1, map);
+        }else {
+            map[i][j] = Math.max(dfs(s, i+1, j, map), dfs(s, i, j-1, map));
+        }
+        return map[i][j];
+    }
+}
 '''

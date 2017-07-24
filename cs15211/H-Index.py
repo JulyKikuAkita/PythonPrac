@@ -1,4 +1,4 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/h-index/tabs/description'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/h-index.py
 # Time:  O(n)
 # Space: O(n)
@@ -18,8 +18,13 @@ __author__ = 'July'
 # the remaining two with no more than 3 citations each, his h-index is 3.
 #
 # Note: If there are several possible values for h, the maximum one is taken as the h-index.
+# Companies
+# Bloomberg Google Facebook
+# Related Topics
+# Hash Table Sort
+# Similar Questions
+# H-Index II
 #
-
 # Counting sort.
 class Solution(object):
     def hIndex(self, citations):
@@ -68,3 +73,59 @@ class Solution3(object):
         :rtype: int
         """
         return sum(x >= i + 1 for i, x  in enumerate(sorted(citations, reverse=True)))
+
+#Java
+Java = '''
+citations[index] >= length(citations) - index
+
+Thought: https://leetcode.com/problems/h-index/tabs/solution
+1. Comparison sort based 18%
+# Time:  O(n log n)
+# Space: O(1)
+public class Solution {
+    public int hIndex(int[] citations) {
+        // sorting the citations in ascending order
+        Arrays.sort(citations);
+        // finding h-index by linear search
+        int i = 0;
+        while (i < citations.length && citations[citations.length - 1 - i] > i) {
+            i++;
+        }
+        return i; // after the while loop, i = i' + 1
+    }
+}
+
+2. counting sort 50.7%
+public class Solution {
+    public int hIndex(int[] citations) {
+        int n = citations.length;
+        int[] papers = new int[n + 1];
+        // counting papers for each citation number
+        for (int c: citations)
+            papers[Math.min(n, c)]++;
+        // finding the h-index
+        int k = n;
+        for (int s = papers[n]; k > s; s += papers[k])
+            k--;
+        return k;
+    }
+}
+
+3. bucket sort: 94 % - 50%
+public class Solution {
+    public int hIndex(int[] citations) {
+        int n = citations.length;
+        int[] bucket = new int[n + 1];
+        for(int c : citations) {
+            if(c >= n) bucket[n]++;
+            else bucket[c]++;
+        }
+        int count = 0;
+        for(int i=n; i>= 0; i--) {
+            count += bucket[i];
+            if(count >= i) return i;
+        }
+        return 0;
+    }
+}
+'''

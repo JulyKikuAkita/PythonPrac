@@ -1,8 +1,10 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/subsets/description/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/subsets.py
 # Time:  O(n * 2^n)
 # Space: O(1)
 # Brute Force Search
+#
+# Description: Leetcode # 78. Subsets
 #
 # Given a set of distinct integers, S, return all possible subsets.
 #
@@ -23,11 +25,14 @@ __author__ = 'July'
 #   []
 # ]
 #
-#  Amazon Uber Facebook
-# Hide Tags Array Backtracking Bit Manipulation
-# Hide Similar Problems (M) Generalized Abbreviation
-
-
+# Companies
+# Amazon Uber Facebook
+# Related Topics
+# Array Backtracking Bit Manipulation
+# Similar Questions
+# Generalized Abbreviation
+#
+import unittest
 #combination way
 class SolutionCC150:
     # @param S, a list of integer
@@ -74,8 +79,6 @@ class Solution2:
         if not S:
             return [cur]
         return self.subsetsRecu(cur, S[1:]) + self.subsetsRecu(cur + [S[0]], S[1:])
-
-
 
 class SolutionOther:
     # @param S, a list of integer
@@ -159,13 +162,6 @@ class Solution4(object):
             self.dfs(nums, i+1, res, cur, depth +1)
             cur.pop()
 
-
-
-if __name__ == "__main__":
-    #print SolutionCC150().subsets([1, 2, 3])
-    #print Solution().subsets([1, 2, 3])
-    print Solution3().subsets([1, 2])
-
 #print 3 & 0  #0
 
 #for i in range(2**len(S)):
@@ -176,8 +172,20 @@ if __name__ == "__main__":
 #        else:
 #            print  "x =",x,"binary =" , i >> x & 1 , "no value"
 
-#java
-java = '''
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        #print SolutionCC150().subsets([1, 2, 3])
+        #print Solution().subsets([1, 2, 3])
+        print Solution3().subsets([1, 2])
+
+if __name__ == '__main__':
+    unittest.main()
+
+Java = '''
+#Thought: general approach for perm/comb
+https://discuss.leetcode.com/topic/46159/a-general-approach-to-backtracking-questions-in-java-subsets-permutations-combination-sum-palindrome-partitioning
+
+#23.26% 2ms
 public class Solution {
     public List<List<Integer>> subsets(int[] nums) {
         List<List<Integer>> list = new ArrayList<>();
@@ -198,6 +206,7 @@ public class Solution {
     }
 }
 
+#23.26% 2ms
 public class Solution {
     public List<List<Integer>> subsets(int[] nums) {
         List<List<Integer>> list = new ArrayList<>();
@@ -210,13 +219,15 @@ public class Solution {
             return;
         }
 
-        backtrack(list, tempList, nums, start + 1); //[]
+        backtrack(list, tempList, nums, start + 1);
         tempList.add(nums[start]);
         backtrack(list, tempList, nums, start + 1);
         tempList.remove(tempList.size() - 1);
     }
 }
 
+#BFS
+#23.26% 2ms
 public class Solution {
     public List<List<Integer>> subsets(int[] nums) {
         List<List<Integer>> result = new ArrayList<>();

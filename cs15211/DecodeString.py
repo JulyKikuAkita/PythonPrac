@@ -44,6 +44,8 @@ if __name__ == '__main__':
 
 Java = '''
 #Thought:
+
+#41.72% 4ms
 public class Solution {
     public String decodeString(String s) {
         Stack<Integer> count = new Stack<>();
@@ -75,6 +77,42 @@ public class Solution {
             i++;
         }
         return result.pop();
+    }
+}
+
+# recursion
+# 80.98% 3ms
+public class Solution {
+    private int index = 0;
+    private String decode(String s) {
+        StringBuilder sb = new StringBuilder();
+        while (index < s.length()) {
+            char ch = s.charAt(index);
+            if (ch >= '0' && ch <='9') {
+                int times = 0;
+                for (; ch != '[';) {
+                    times = times * 10 + (ch - '0');
+                    ch = s.charAt(++index);
+                }
+                index++;
+                String subString = decode(s);
+                for (int i = 0; i < times; i++)
+                    sb.append(subString);
+            } else if (ch == ']') {
+                index++;
+                break;
+            } else {
+                sb.append(ch);
+                index++;
+            }
+        }
+        return sb.toString();
+    }
+
+    public String decodeString(String s) {
+        if (s == null || s.length() == 0)
+            return "";
+        return decode(s);
     }
 }
 '''

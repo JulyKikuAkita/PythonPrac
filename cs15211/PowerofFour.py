@@ -1,4 +1,4 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/power-of-four/description/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/power-of-four.py
 # Time:  O(1)
 # Space: O(1)
@@ -9,7 +9,13 @@ __author__ = 'July'
 # Given num = 16, return true. Given num = 5, return false.
 #
 # Follow up: Could you solve it without loops/recursion?
-# Two sigma
+# Companies
+# Two Sigma
+# Related Topics
+# Bit Manipulation
+# Similar Questions
+# Power of Two Power of Three
+#
 import unittest
 class Solution(object):
     def isPowerOfFour(self, num):
@@ -35,6 +41,7 @@ class Solution2(object):
             num >>= 2
         return (num == 1)
 
+    #38ms
     def isPowerOfFourIF(self, num):
         """
         :type num: int
@@ -47,8 +54,8 @@ class Solution2(object):
                 return False
         return num == 1
 
-class Test(unittest.TestCase):
-    def test(self):
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
         s1 = Solution().isPowerOfFour(16)
         s2 = Solution2().isPowerOfFour(16)
         s3 = Solution2().isPowerOfFourIF(16)
@@ -56,20 +63,50 @@ class Test(unittest.TestCase):
         self.assertTrue(s1)
         self.assertTrue(s2)
         self.assertTrue(s3)
-#java
-js = '''
+
+
+if __name__ == '__main__':
+    unittest.main()
+#Java
+Java = '''
+#18.58% 2ms
 public class Solution {
     public boolean isPowerOfFour(int num) {
         return num > 0 && Math.pow(4, Math.round((Math.log(num) / Math.log(4)))) == num;
     }
 }
 
+#18.58% 2ms
 public class Solution {
     public boolean isPowerOfFour(int num) {
         while(num > 0 && ((num & 0b11) == 0) ){
             num >>= 2;
         }
         return num == 1;
+    }
+}
+
+#Iteration:
+#18.58% 2ms
+public class Solution {
+    public boolean isPowerOfFour(int num) {
+        if (num < 1) return false;
+        while (num > 1) {
+            if (num % 4 == 0) num /= 4;
+            else return false;
+        }
+        return num == 1;
+    }
+}
+
+#Recursion:
+#18.58% 2ms
+public class Solution {
+    public boolean isPowerOfFour(int num) {
+        if (num < 1) return false;
+        else if (num == 1) return true;
+        else if (num % 4 == 0 ) return isPowerOfFour(num / 4);
+        else return false;
     }
 }
 '''

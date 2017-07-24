@@ -1,14 +1,23 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/sqrtx/description/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/sqrtx.py
 # Time:  O(logn)
 # Space: O(1)
 # Binary Search
 #
+# Description: Leetcode # 69. Sqrt(x)
+#
 # Implement int sqrt(int x).
 #
 # Compute and return the square root of x.
 #
-
+# Companies
+# Bloomberg Apple Facebook
+# Related Topics
+# Binary Search Math
+# Similar Questions
+# Pow(x, n) Valid Perfect Square
+#
+import unittest
 class Solution:
     # @param x, an integer
     # @return an integer
@@ -24,11 +33,12 @@ class Solution:
             else:
                 low = mid + 1
         return high
-
-
-if __name__ == "__main__":
-    print Solution().sqrt(10)
-    print Solution().sqrt(6)
+    # 34ms
+    def mySqrt(self, x):
+        r = x
+        while r*r > x:
+            r = (r + x/r) / 2
+        return r
 
 # y1= 1/2*(y0+x/y0)
 class SolutionOther:
@@ -46,38 +56,53 @@ class SolutionOther:
             #print y, ans
         return int(ans) if isNeg == False else int(ans * -1)
 
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+        print Solution().sqrt(10)
+        print Solution().sqrt(6)
 
-t1=SolutionOther()
-#print t1.sqrt(9)
-#print t1.sqrt(14)
-#print t1.sqrt(0)
-#print t1.sqrt(1)
-#print t1.sqrt(-1)
-#print t1.sqrt(-100)
+if __name__ == '__main__':
+    unittest.main()
 
-#java
-js = '''
+Java = '''
+#Thought:
+
+# 9.53% 4ms
 public class Solution {
     public int mySqrt(int x) {
-        if ( x < 2) return x;
+        if (x <= 0) {
+            return 0;
+        }
         long start = 1;
-        long end = x / 2;
-
-        while ( start + 1 < end ){
-            long mid = start + (end - start) / 2;
-            if ( mid * mid == x) return (int)mid;
-            else if(mid * mid < x){
+        long end = x;
+        while (start + 1 < end) {
+            long mid = start + ((end - start) >> 1);
+            if (mid * mid < x) {
                 start = mid;
-            }else{
+            } else {
                 end = mid;
             }
         }
-
-        if (end * end <= x) return (int)end;
-        else{
-            return (int)start;
-        }
-
+        return (int) (end * end <= x ? end : start);
     }
 }
+
+# 16.30% 3ms
+public class Solution {
+    public int mySqrt(int x) {
+        long r = x;
+        while (r*r > x)
+            r = (r + x/r) / 2;
+        return (int) r;
+    }
+}
+
+# 64.48% 2ms
+public class Solution {
+    public int mySqrt(int x) {
+        return (int)Math.sqrt(x);
+    }
+}
+
 '''

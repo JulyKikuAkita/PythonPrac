@@ -1,4 +1,7 @@
-# https://leetcode.com/problems/next-greater-element-ii/#/description
+__source__ = '# https://leetcode.com/problems/next-greater-element-ii/#/description'
+# Time:  O(n) stack + 2 pass
+# Space: O(n)
+#
 # Given a circular array (the next element of the last element is the first element of the array),
 # print the Next Greater Number for every element. The Next Greater Number of a number x is
 # the first greater number to its traversing-order next in the array, which means you could search circularly
@@ -13,10 +16,14 @@
 # The second 1's next greater number needs to search circularly, which is also 2.
 # Note: The length of given array won't exceed 10000.
 #
-# Hide Company Tags Google
-# Hide Tags Stack
-# Hide Similar Problems (E) Next Greater Element I (M) Next Greater Element III
+# Companies
+# Google
+# Related Topics
+# Stack
+# Similar Questions
+# Next Greater Element I Next Greater Element III
 #
+# 312 ms
 class Solution(object):
     def nextGreaterElements(self, nums):
         """
@@ -30,7 +37,9 @@ class Solution(object):
             stack.append(i)
         return res
 
-java = '''
+Java = '''
+Thought: https://leetcode.com/problems/next-greater-element-ii/solution/
+# 86.25% 43ms
 public class Solution {
     public int[] nextGreaterElements(int[] nums) {
         int n = nums.length;
@@ -47,4 +56,22 @@ public class Solution {
         return next;
     }
 }
+
+#30.49% 68ms
+public class Solution {
+
+    public int[] nextGreaterElements(int[] nums) {
+        int[] res = new int[nums.length];
+        Stack<Integer> stack = new Stack<>();
+        for (int i = 2 * nums.length - 1; i >= 0; --i) {
+            while (!stack.empty() && nums[stack.peek()] <= nums[i % nums.length]) {
+                stack.pop();
+            }
+            res[i % nums.length] = stack.empty() ? -1 : nums[stack.peek()];
+            stack.push(i % nums.length);
+        }
+        return res;
+    }
+}
+
 '''

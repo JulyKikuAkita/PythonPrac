@@ -4,19 +4,34 @@ __source__ = 'https://leetcode.com/problems/validate-binary-search-tree/#/descri
 # Space: O(1)
 # divide and conquer
 #
+# Description: Leetcode # 98. Validate Binary Search Tree
+#
 # Given a binary tree, determine if it is a valid binary search tree (BST).
-# Ex: {1, ,1}  ->False
-# {1, #, 1} -> False
+#
 # Assume a BST is defined as follows:
 #
 # The left subtree of a node contains only nodes with keys less than the node's key.
 # The right subtree of a node contains only nodes with keys greater than the node's key.
 # Both the left and right subtrees must also be binary search trees.
+# Example 1:
+#     2
+#    / \
+#   1   3
+# Binary tree [2,1,3], return true.
+# Example 2:
+#     1
+#    / \
+#   2   3
+# Binary tree [1,2,3], return false.
 #
-#  Amazon Microsoft Bloomberg Facebook
-# Hide Tags Tree Depth-first Search
-# Hide Similar Problems (M) Binary Tree Inorder Traversal (E) Find Mode in Binary Search Tree
+# Companies
+# Amazon Microsoft Bloomberg Facebook
+# Related Topics
+# Tree Depth-first Search
+# Similar Questions
+# Binary Tree Inorder Traversal Find Mode in Binary Search Tree
 
+import unittest
 # Definition for a  binary tree node
 class TreeNode:
      def __init__(self, x):
@@ -73,20 +88,6 @@ class Solution2:
         #return low < root.val and root.val < high and \
         #       self.isValidBSTRecu(root.left, low, root.val) and self.isValidBSTRecu(root.right, root.val, high)
 
-
-
-if __name__ == "__main__":
-    root = TreeNode(10)
-    root.left = TreeNode(5)
-    root.right = TreeNode(15)
-    root.right.left = TreeNode(6)
-    root.right.right = TreeNode(20)
-    root2 = TreeNode(1)
-    root2.left = TreeNode(1)
-    print Solution().isValidBST(root)
-    print Solution2().isValidBST(root2)
-
-
 class SolutionOther:
     # @param root, a tree node
     # @return a boolean
@@ -106,27 +107,26 @@ class SolutionOther:
         #print self.val, root.val, "ans right= ", ans
         return ans
 #test
-#############test
-#creating BST tree ####
-root0=TreeNode(3)
-tree1=TreeNode(1)
-tree2=TreeNode(5)
-tree3=TreeNode(0)
-tree4=TreeNode(2)
-tree5=TreeNode(4)
-tree6=TreeNode(6)
-root0.left=tree1
-root0.right=tree2
-tree1.left=tree3
-tree1.right=tree4
-tree2.left=tree5
-tree2.right=tree6
-#end of creating BST tree ####
-test = SolutionOther()
-#print test.isValidBST(root0)
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        root = TreeNode(10)
+        root.left = TreeNode(5)
+        root.right = TreeNode(15)
+        root.right.left = TreeNode(6)
+        root.right.right = TreeNode(20)
+        root2 = TreeNode(1)
+        root2.left = TreeNode(1)
+        print Solution().isValidBST(root)
+        print Solution2().isValidBST(root2)
 
-#java
-js = '''
+        self.assertEqual(1, 1)
+        print Solution().containsDuplicate([12344555,12344555])
+
+if __name__ == '__main__':
+    unittest.main()
+
+Java = '''
+#Thought: https://leetcode.com/problems/contains-duplicate/solution/
 /**
  * Definition for a binary tree node.
  * public class TreeNode {
@@ -137,6 +137,8 @@ js = '''
  * }
  */
  Note: buggy to rely on Integer.MAX_VALUE, Integer.MIN_VALUE, prefer for inorder traversal
+
+ # 37.43% 1ms
 public class Solution {
     public boolean isValidBST(TreeNode root) {
         return isValidBST(root, Integer.MIN_VALUE, Integer.MAX_VALUE);
@@ -149,6 +151,7 @@ public class Solution {
     }
 }
 
+# 37.43% 1ms
 public class Solution {
     public boolean isValidBST(TreeNode root) {
         return isValidBST(root, Long.MIN_VALUE, Long.MAX_VALUE);
@@ -161,7 +164,8 @@ public class Solution {
     }
 }
 
-# inOrder traversal BFS :23%
+# inOrder traversal
+# BFS :21.61% 3ms
 # https://discuss.leetcode.com/topic/4659/c-in-order-traversal-and-please-do-not-rely-on-buggy-int_max-int_min-solutions-any-more
 public class Solution {
     public boolean isValidBST(TreeNode root) {

@@ -1,8 +1,10 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/simplify-path/description/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/simplify-path.py
 # Time:  O(n)
 # Space: O(n)
 # Stack
+#
+# Description: Leetcode # 217. Contains Duplicate
 #
 # Given an absolute path for a file (Unix-style), simplify it.
 #
@@ -16,8 +18,14 @@ __author__ = 'July'
 # In this case, you should return "/".
 # Another corner case is the path might contain multiple slashes '/' together, such as "/home//foo/".
 # In this case, you should ignore redundant slashes and return "/home/foo".
-# Microsoft
-
+#
+# Companies
+# Microsoft Facebook
+# Related Topics
+# Stack String
+#
+import unittest
+# 66ms
 class Solution:
     # @param path, a string
     # @return a string
@@ -29,10 +37,6 @@ class Solution:
             elif token != ".." and token != "." and token: # after split, "/c/" -> ["c",""]
                 stack.append(token)
         return "/" + "/".join(stack)
-
-if __name__ == "__main__":
-    print Solution().simplifyPath("/../")
-    print Solution().simplifyPath("/home//foo/")
 
 # http://www.cnblogs.com/zuoyuan/p/3777289.html
 class SolutionOther:
@@ -72,14 +76,47 @@ class SolutionOther:
                 curr += '/' + i if curr != '/' else i
         return curr
 
-#test
-test = SolutionOther()
-print test.simplifyPath("/home/foo/.ssh/../.ssh2/authorized_keys/")
-# answer = "/home/foo/.ssh2/authorized_keys"
-print test.simplifyPathWrongAns("/home/foo/.ssh/../.ssh2/authorized_keys/")
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+        print Solution().simplifyPath("/../")
+        print Solution().simplifyPath("/home//foo/")
+        #test
+        test = SolutionOther()
+        print test.simplifyPath("/home/foo/.ssh/../.ssh2/authorized_keys/")
+        # answer = "/home/foo/.ssh2/authorized_keys"
+        print test.simplifyPathWrongAns("/home/foo/.ssh/../.ssh2/authorized_keys/")
 
-#java
-js = '''
+if __name__ == '__main__':
+    unittest.main()
+
+Java = '''
+#Thought:
+The main idea is to push to the stack every valid file name (not in {"",".",".."}),
+popping only if there's smth to pop and we met "..".
+
+# use stack
+# 37.03% 14ms
+public class Solution {
+    public String simplifyPath(String path) {
+        Stack<String> stack = new Stack<>();
+        Set<String> set = new HashSet<>(Arrays.asList("..",".",""));
+        for (String dir : path.split("/")) {
+            if (dir.equals("..") && !stack.isEmpty()) stack.pop();
+            else if (!set.contains(dir)) stack.push(dir);
+        }
+
+        StringBuilder sb = new StringBuilder();
+        if (stack.isEmpty()) return "/";
+        for (String str : stack) {
+            sb.append("/").append(str);
+        }
+        return sb.toString();
+    }
+}
+
+
+# 91.40% 8ms
 public class Solution {
     public String simplifyPath(String path) {
         String[] paths = path.split("/");
@@ -104,32 +141,35 @@ public class Solution {
     }
 }
 
+#97.69% 6ms
 public class Solution {
     public String simplifyPath(String path) {
-        if(path == null || path.length() == 0){
-            return "";
-        }
-        int idx = path.indexOf("/");
-        String sub = path.substring(idx+1);
-        // to eliminate empty string once split the first "/"
-        String[] items = sub.split("/");
-        Stack<String> stack = new Stack<>();
-
-        for(String item : items){
-            if( item..length()>0 && !item.equals(".") &&!item.equals("..")){
-                stack.push(item);
-            }else if(!stack.isEmpty() && item.equals("..")){
-                stack.pop();
+        LinkedList<String> list = new LinkedList<>();
+        int start = 0;
+        int end = 0;
+        int len = path.length();
+        while (end < len) {
+            while (end < len && path.charAt(end) != '/') {
+                end++;
             }
+            if (start != end) {
+                String cur = path.substring(start, end);
+                if (cur.equals("..")) {
+                    if (!list.isEmpty()) {
+                        list.removeLast();
+                    }
+                } else if (!cur.equals(".")) {
+                    list.add(cur);
+                }
+            }
+            start = ++end;
         }
-
-        if(stack.size() == 0){
+        if (list.isEmpty()) {
             return "/";
         }
-
         StringBuilder sb = new StringBuilder();
-        for(int i = 0; i < stack.size(); i++){
-            sb.append("/").append(stack.get(i));
+        while (!list.isEmpty()) {
+            sb.append('/').append(list.poll());
         }
         return sb.toString();
     }

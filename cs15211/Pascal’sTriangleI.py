@@ -1,8 +1,10 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/pascals-triangle/description/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/pascals-triangle.py
 # Time:  O(n^2)
 # Space: O(n)
 # Array
+#
+# Description: Leetcode # 118. Pascal's Triangle
 #
 # Given numRows, generate the first numRows of Pascal's triangle.
 #
@@ -17,6 +19,14 @@ __author__ = 'July'
 #  [1,4,6,4,1]
 # ]
 #
+# Companies
+# Apple Twitter
+# Related Topics
+# Array
+# Similar Questions
+# Pascal's Triangle II
+#
+import unittest
 class Solution:
     # @return a list of lists of integers
     def generate(self, numRows):
@@ -49,10 +59,55 @@ class SolutionOther:
 
         return ans
 
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+        test = SolutionOther()
+        print test.generate(5)
 
-#test
-test = SolutionOther()
-print test.generate(5)
+if __name__ == '__main__':
+    unittest.main()
 
-# java
-# http://www.programcreek.com/2014/03/leetcode-pascals-triangle-java/
+Java = '''
+#Thought: https://leetcode.com/problems/contains-duplicate/solution/
+# 20.71% 1ms
+public class Solution {
+    public List<List<Integer>> generate(int numRows) {
+        List<List<Integer>> result = new ArrayList<>();
+        if (numRows <= 0) {
+            return result;
+        }
+        List<Integer> prev = new ArrayList<>();
+        prev.add(1);
+        result.add(prev);
+        for (int i = 1; i < numRows; i++) {
+            List<Integer> cur = new ArrayList<>();
+            cur.add(1);
+            for (int j = 0; j < prev.size() - 1; j++) {
+                cur.add(prev.get(j) + prev.get(j + 1));
+            }
+            cur.add(1);
+            result.add(cur);
+            prev = cur;
+        }
+        return result;
+    }
+}
+
+# 20.71% 1ms
+public class Solution {
+    public List<List<Integer>> generate(int numRows) {
+        List<List<Integer>> result = new ArrayList<>();
+        if (numRows <= 0) return result;
+        List<Integer> cur = new ArrayList<>();
+        for( int i = 0; i < numRows; i++) {
+            cur.add(0,1);
+            for (int j = 1; j < cur.size() - 1; j++) {
+                cur.set(j, cur.get(j) + cur.get(j + 1));
+            }
+            result.add(new ArrayList<>(cur));
+        }
+        return result;
+    }
+}
+'''

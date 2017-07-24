@@ -2,7 +2,7 @@ __source__ = 'https://leetcode.com/problems/find-the-closest-palindrome/#/descri
 # Time:  O()
 # Space: O()
 #
-# Description:
+# Description: Leetcode # 234. Palindrome Linked List
 # Given an integer n, find the closest integer (not including itself), which is a palindrome.
 # The 'closest' is defined as absolute difference minimized between two integers.
 #
@@ -12,8 +12,19 @@ __source__ = 'https://leetcode.com/problems/find-the-closest-palindrome/#/descri
 # Note:
 # The input n is a positive integer represented by string, whose length will not exceed 18.
 # If there is a tie, return the smaller one as answer.
-# Hide Company Tags Yelp
-# Hide Tags String
+#   Hide Hint 1
+# Will brute force work for this problem? Think of something else.
+#    Hide Hint 2
+# Take some examples like 1234, 999,1000, etc and check their closest palindromes. How many different cases are possible?
+#    Hide Hint 3
+# Do we have to consider only left half or right half of the string or both?
+#    Hide Hint 4
+# Try to find the closest palindrome of these numbers- 12932, 99800, 12120. Did you observe something?
+#
+# Companies
+# Yelp
+# Related Topics
+# String
 #
 import unittest
 #
@@ -29,6 +40,7 @@ import unittest
 #
 # If the final answer has a different number of digits, it must be of the form 999....999 or 1000...0001,
 # as any palindrome smaller than 99....99 or bigger than 100....001 will be farther away from S.
+# 62ms
 class Solution(object):
     def nearestPalindromic(self, n):
         """
@@ -62,10 +74,40 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
+#Thought: https://leetcode.com/problems/find-the-closest-palindrome/solution/
+Time: O(n^-1/2)
+Space: O(1)
+#Brute force - TLE
 public class Solution {
     public String nearestPalindromic(String n) {
-        if (n.length() >= 2 && allNine(n)) {
+        long num = Long.parseLong(n);
+        for (long i = 1;; i++) {
+            if (isPalindrome(num - i))
+                return "" + (num - i);
+            if (isPalindrome(num + i))
+                return "" + (num + i);
+        }
+    }
+    boolean isPalindrome(long x) {
+        long t = x, rev = 0;
+        while (t > 0) {
+            rev = 10 * rev + t % 10;
+            t /= 10;
+        }
+        return rev == x;
+    }
+}
+
+#Thought:
+#
+# case1: if n >= 99 and all digit 9, the nearest should be 101, 1001, etc
+# case2: generate palindrome with left part of n+1, n, n-1, if
+#  res not valid number or to the next level, return 999(...) based on n's length
+#  or return min distance res
+#86.28%  18ms
+public class Solution {
+    public String nearestPalindromic(String n) {
+        if (n.length() >= 2 && allNine(n)) { //999, 9999, ...
             String s = "1";
             for (int i = 0; i < n.length() - 1; i++) {
                 s += "0";
@@ -73,36 +115,38 @@ public class Solution {
             s += "1";
             return s;
         }
-        boolean isOdd = (n.length() % 2 != 0);
+
+        boolean isOdd = (n.length() & 1) == 1;
         String left = n.substring(0, (n.length() + 1) / 2);
-        long[] increment = {-1, 0, +1};
+        long[] increment = {-1, 0, 1};
         String ret = n;
-        long minDiff = Long.MAX_VALUE;
-        for (long i : increment) {
-            String s = getPalindrom(Long.toString(Long.parseLong(left) + i), isOdd);
-            if (n.length() >= 2 && (s.length() != n.length() || Long.parseLong(s) == 0)) {
-                s = "";
-                for (int j = 0; j < n.length() - 1; j++) {
-                    s += "9";
-                }
+        long minDiff = Long.MAX_VALUE, nL = Long.parseLong(n);
+        for (long l : increment) {
+            String candidate = getPalindrom(Long.toString(Long.parseLong(left) + l), isOdd);
+            //System.out.println(candidate +" " + left);
+            long candL = Long.parseLong(candidate);
+            if (n.length() >= 2 && (candidate.length() != n.length() || candL == 0)) {
+                candidate = "";
+                for (int j = 0; j < n.length() - 1; j++) candidate += "9";
+                candL = Long.parseLong(candidate);
             }
-            long diff = s.equals(n) ? Long.MAX_VALUE : Math.abs(Long.parseLong(s) - Long.parseLong(n));
+            long diff = candidate.equals(n) ? Long.MAX_VALUE : Math.abs(candL - nL);
             if (diff < minDiff) {
                 minDiff = diff;
-                ret = s;
+                ret = candidate;
             }
         }
         return ret;
     }
-    private String getPalindrom(String s, boolean isOdd) {
-        String right = new StringBuilder(s).reverse().toString();
-        return isOdd ? s.substring(0, s.length() - 1) + right : s + right;
+
+    private String getPalindrom(String left, boolean isOdd) {
+        String right = new StringBuilder(left).reverse().toString();
+        return isOdd ? left.substring(0, left.length() - 1) + right : left + right;
     }
+
     private boolean allNine(String s) {
-        for (int i = 0; i < s.length(); i++) {
-            if (s.charAt(i) != '9') {
-                return false;
-            }
+        for (char c : s.toCharArray()) {
+            if ( c != '9') return false;
         }
         return true;
     }

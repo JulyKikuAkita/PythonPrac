@@ -1,20 +1,34 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/permutations/description/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/permutations.py
-# Time:  O(n!)
+# Time:  O(n!) //n factorial
 # Space: O(n)
 # Math/Brute Force Search
 #
+# Description: Leetcode # 46. Permutations
 # Given a collection of numbers, return all possible permutations.
 #
 # For example,
 # [1,2,3] have the following permutations:
 # [1,2,3], [1,3,2], [2,1,3], [2,3,1], [3,1,2], and [3,2,1].
 #
-#  LinkedIn Microsoft
-# Hide Tags Backtracking
-# Hide Similar Problems (M) Next Permutation (M) Permutations II (M) Permutation Sequence (M) Combinations
+# Companies
+# LinkedIn Microsoft
+# Related Topics
+# Backtracking
+# Similar Questions
+# Next Permutation Permutations II Permutation Sequence Combinations
 #
+# Note:
+# 1)
+# - Permutation dfs for loop always starts with 0 as [1,2,3] and [3,2,1] are diff
+# - combination dfs for loop starts with next idx (i + 1) and needs to pass in start idx as parameter, [1,2,3] and [3,2,1] are the same
+# 2) for permutation, ex [1,2,3]
+# there will be a lot of duplicated calculations for dfs:
+# - use visited = boolean[] to avoid result for [1,1,1]
+# - if input has duplicated element, ex [1,1,2,3]
+# use both visited and hashset(declared before enter forloop, no need to pass in as parameter) in dfs helper function
 
+import unittest
 
 class Solution:
     # @param num, a list of integer
@@ -38,15 +52,6 @@ class Solution:
                 cur.pop()
                 used[i] = False
 
-if __name__ == "__main__":
-    #print Solution().permute([1, 2, 3])
-    print Solution().permute([1, 2])
-
-
-'''
-Same as Permutations II
-Can be update to nextPermutation but exceed time constraint
-'''
 class SolutionOther:
     # @param num, a list of integer
     # @return a list of lists of integers
@@ -97,20 +102,34 @@ class SolutionOther:
             #print ans
         return ans
 
-#test
-test = SolutionOther()
-#print test.permute([4,5,6])
-#print test.permuteUnique([2,2,1,1])
-#print test.nextPermutation([1,2])
-#print test.nextPermutation([6,7,5,3,5,6,2,9,1,2,7,0,9])
-#for i in range(3, -1, -1):
-#    print i
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+        #print test.permute([4,5,6])
+        #print test.permuteUnique([2,2,1,1])
+        #print test.nextPermutation([1,2])
+        #print test.nextPermutation([6,7,5,3,5,6,2,9,1,2,7,0,9])
+        #for i in range(3, -1, -1):
+        #    print i
 
-#Java
-java = '''
-template1)
+if __name__ == '__main__':
+    unittest.main()
+
+Java = '''
+general ides:
+1)
+- Permutation dfs for loop always starts with 0 as [1,2,3] and [3,2,1] are diff
+- combination dfs for loop starts with next idx (i + 1) and needs to pass in start idx as parameter, [1,2,3] and [3,2,1] are the same
+2) for permutation, ex [1,2,3]
+there will be a lot of duplicated calculations for dfs:
+- use visited = boolean[] to avoid result for [1,1,1]
+- if input has duplicated element, ex [1,1,2,3]
+use both visited and hashset(declared before enter forloop, no need to pass in as parameter) in dfs helper function
+
+#Thought: https://leetcode.com/problems/find-the-closest-palindrome/solution/
+template1) use visited = boolean[] to avoid [1,1,1]
+# 70.31% 6ms
 public class Solution {
-
     //without boolean[] used, you'll see [1,1,1] showup as resue of the same element
     //also permutation forloop index starts with 0
     public List<List<Integer>> permute(int[] nums) {
@@ -136,8 +155,8 @@ public class Solution {
     }
 }
 
-template2)
-//note, does not work with duplicated elements
+template2) //note, does not work with duplicated elements
+# 48.34% 7ms
 public class Solution {
     public List<List<Integer>> permute(int[] nums) {
         List<List<Integer>> result = new ArrayList<>();
@@ -161,7 +180,7 @@ public class Solution {
     }
 }
 
-99.82%
+# 70.31% 6ms
 public class Solution {
     public List<List<Integer>> permute(int[] nums) {
         int len = nums.length;
@@ -188,6 +207,40 @@ public class Solution {
     }
 }
 
+#90.43% 5ms
+public class Solution {
+    public List<List<Integer>> permute(int[] nums) {
+        List<List<Integer>> result = new ArrayList<List<Integer>>();
+		permute_heap(result, nums, nums.length);
+		return result;
+    }
+    private void permute_heap(List<List<Integer>> result, int[] array, int end) {
+		if (end == 1) {
+			List<Integer> current = new ArrayList<Integer>();
+			for (int a : array) {
+				current.add(a);
+			}
+			result.add(current);
+            return;
+		}
+	    for (int i = 0; i < end; i++) {
+			permute_heap(result, array, end - 1);
+            if (end % 2 == 0) {
+                swap(array, end - 1, 0);
+            }
+            else {
+                swap(array, end - 1, i);
+            }
+		}
+	}
+
+	private void swap(int[] array, int i, int j) {
+		int temp = array[i];
+		array[i] = array[j];
+		array[j] = temp;
+	}
+}
+
 Iteration: 78%
 the basic idea is, to permute n numbers, we can add the nth number into the resulting
 List<List<Integer>> from the n-1 numbers, in every possible position.
@@ -202,28 +255,29 @@ Then we have to add 3. first copy {2,1} and {1,2}, add 3 in position 0;
 then copy {2,1} and {1,2}, and add 3 into position 1,
 then do the same thing for position 3. Finally we have 2*3=6 lists in answer, which is what we want.
 
+#70.31% 6ms
 public class Solution {
-    public List<List<Integer>> permute(int[] num) {
-        List<List<Integer>> ans = new ArrayList<List<Integer>>();
-        if (num.length ==0) return ans;
-        List<Integer> l0 = new ArrayList<Integer>();
-        l0.add(num[0]);
-        ans.add(l0);
-        for (int i = 1; i< num.length; ++i){
-            List<List<Integer>> new_ans = new ArrayList<List<Integer>>();
-            for (int j = 0; j<=i; ++j){
-               for (List<Integer> l : ans){
-            	   List<Integer> new_l = new ArrayList<Integer>(l);
-            	   new_l.add(j,num[i]);
-            	   new_ans.add(new_l);
-               }
+    public List<List<Integer>> permute(int[] nums) {
+        LinkedList<List<Integer>> res = new LinkedList<List<Integer>>();
+        if (nums == null || nums.length == 0) return res;
+        res.add(new ArrayList<>());
+
+        for (int n : nums) {
+            int size = res.size();
+            for (int i = size; i > 0; i--) {
+                List<Integer> tmp = res.pollFirst();
+                for (int j = 0; j <= tmp.size(); j++) {
+                    List<Integer> cur = new ArrayList<Integer>(tmp);
+                    cur.add(j, n);
+                    res.add(cur);
+                }
             }
-            ans = new_ans;
         }
-        return ans;
+        return res;
     }
 }
-
+'''
+templates = '''
 A general approach to backtracking questions in Java (Subsets, Permutations, Combination Sum, Palindrome Partioning)
 This structure might apply to many other backtracking questions,
 but here I am just going to demonstrate Subsets, Permutations, and Combination Sum.

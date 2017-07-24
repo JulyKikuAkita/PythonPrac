@@ -1,9 +1,10 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/reorder-list/description/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/reorder-list.py
 # Time:  O(n)
 # Space: O(1)
 # reorder list
 #
+# Description: Leetcode # 143. Reorder List
 # Given a singly linked list L: L0->L1->...->Ln-1->Ln,
 # reorder it to: L0->Ln->L1->Ln-1->L2->Ln-2->...
 #
@@ -12,7 +13,10 @@ __author__ = 'July'
 # For example,
 # Given {1,2,3,4}, reorder it to {1,4,2,3}.
 #
-
+# Related Topics
+# Linked List
+#
+import unittest
 # Definition for singly-linked list.
 class ListNode:
     def __init__(self, x):
@@ -53,17 +57,6 @@ class Solution:
             cur.next, cur, l2 = l2, l2, l2.next
 
         return dummyNode.next
-
-if __name__ == "__main__":
-    head = ListNode(1)
-    head.next = ListNode(2)
-    head.next.next = ListNode(3)
-    head.next.next.next = ListNode(4)
-    #head.next.next.next.next = ListNode(5)
-    print Solution().reorderList(head)
-
-
-
 
 # http://www.cnblogs.com/zuoyuan/p/3700846.html
 class SolutionOther:
@@ -106,17 +99,31 @@ class SolutionOther:
             p1 = tmp1
             p2 = tmp2
 
-#test
-c1 = ListNode(1) ; c2 = ListNode(2) ; c3 = ListNode(3) ; c4 = ListNode(4) ; c5 = ListNode(5); c6 = ListNode(6);c7 = ListNode(7); c8 = ListNode(8)
-c1.next = c2 ; c2.next = c3 ; c3.next = c4; c4.next = c5; c5.next = c6 ; c6.next = c7 ; c7.next = c8
-test = SolutionOther()
-#test.reorderList(c1)
-#while c1:
-#    print c1.val
-#    c1 = c1.next
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+        head = ListNode(1)
+        head.next = ListNode(2)
+        head.next.next = ListNode(3)
+        head.next.next.next = ListNode(4)
+        #head.next.next.next.next = ListNode(5)
+        print Solution().reorderList(head)
 
-#java
-js = '''
+        #test
+        c1 = ListNode(1) ; c2 = ListNode(2) ; c3 = ListNode(3) ; c4 = ListNode(4) ; c5 = ListNode(5); c6 = ListNode(6);c7 = ListNode(7); c8 = ListNode(8)
+        c1.next = c2 ; c2.next = c3 ; c3.next = c4; c4.next = c5; c5.next = c6 ; c6.next = c7 ; c7.next = c8
+        test = SolutionOther()
+
+
+if __name__ == '__main__':
+    unittest.main()
+
+Java = '''
+#Thought:
+This question is a combination of Reverse a linked list I & II. It should be pretty straight forward to do it in 3 steps :)
+
+
+#17.81% 3ms
 public class Solution {
     public void reorderList(ListNode head) {
         if (head == null || head.next == null) {
@@ -154,6 +161,42 @@ public class Solution {
             head = next;
         }
         return prev;
+    }
+}
+
+#17.81% 3ms
+
+public class Solution {
+    public void reorderList(ListNode head) {
+        if(head==null||head.next==null) return;
+
+        //Find the middle of the list
+        ListNode fast = head, slow = head;
+        while( fast.next != null && fast.next.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+
+        //Reverse the half after middle  1->2->3->4->5->6 to 1->2->3->6->5->4
+        ListNode preMid = slow;
+        ListNode mid = slow.next;
+        while(mid.next != null) {
+            ListNode cur = mid.next;
+            mid.next = cur.next;
+            cur.next = preMid.next;
+            preMid.next = cur;
+        }
+
+        //Start reorder one by one  1->2->3->6->5->4 to 1->6->2->5->3->4
+        slow = head;
+        fast = preMid.next;
+        while(slow != preMid) {
+            preMid.next = fast.next;
+            fast.next = slow.next;
+            slow.next = fast;
+            slow = fast.next;
+            fast = preMid.next;
+        }
     }
 }
 '''

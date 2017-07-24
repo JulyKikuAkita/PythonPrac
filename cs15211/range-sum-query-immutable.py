@@ -1,4 +1,4 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/range-sum-query-immutable/description/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/range-sum-query-immutable.py
 # Time:  ctor:   O(n),
 #        update: O(logn),
@@ -21,8 +21,12 @@ __author__ = 'July'
 # You may assume the number of calls to update
 # and sumRange function is distributed evenly.
 #
+# Companies
 # Palantir
-
+# Related Topics
+# Dynamic Programming
+# Similar Questions
+# Range Sum Query 2D - Immutable Range Sum Query - Mutable Maximum Size Subarray Sum Equals k
 
 # Segment Tree solutoin.
 class NumArray(object):
@@ -113,6 +117,7 @@ class NumArray(object):
 #        query:  O(logn)
 # Space: O(n)
 # Binary Indexed Tree (BIT) solution.
+# 129ms
 class NumArray2(object):
     def __init__(self, nums):
         """
@@ -173,8 +178,10 @@ class NumArray2(object):
 
 
 
-#java
-js = '''
+Java = '''
+#Thought: https://leetcode.com/articles/range-sum-query-immutable/
+
+#46.16% 233ms
 public class NumArray {
     int[] sums;
 
@@ -190,9 +197,113 @@ public class NumArray {
     }
 }
 
+#67.19% 219ms
+public class NumArray {
+    int[] mSum;
+    public NumArray(int[] nums) {
+        for (int i = 1; i < nums.length; i++) {
+            nums[i] += nums[i - 1];
+        }
+        mSum = nums;
+    }
+
+    public int sumRange(int i, int j) {
+        if ( i ==0 ) return mSum[j];
+        return mSum[j] - mSum[i-1];
+    }
+}
 
 // Your NumArray object will be instantiated and called as such:
 // NumArray numArray = new NumArray(nums);
 // numArray.sumRange(0, 1);
 // numArray.sumRange(1, 2);
+
+# BIT
+# 34.42% 243ms
+public class NumArray {
+    int[] mNums;
+    int[] mBit;
+    public NumArray(int[] nums) {
+        mNums = nums;
+        mBit = new int[nums.length + 1];
+        for (int i = 0; i < nums.length; i++) {
+            buildTree(i, nums[i]);
+        }
+    }
+
+    public int sumRange(int i, int j) {
+        return getSum(j) - getSum(i - 1);
+    }
+
+    private void buildTree(int i, int val) {
+        i++;
+        while (i <= mNums.length) {
+            mBit[i] += val;
+            i += (i & -i);
+        }
+    }
+
+    private int getSum(int i) {
+        i++;
+        int sum = 0;
+        while ( i > 0) {
+            sum += mBit[i];
+            i -= (i & -i);
+        }
+        return sum;
+    }
+}
+
+
+# Segment Tree:
+#4.82% 414ms
+public class NumArray {
+    Node mRoot = null;
+    public NumArray(int[] nums) {
+        mRoot = buildStree(nums, 0, nums.length - 1);
+    }
+
+    public int sumRange(int i, int j) {
+        return getSum(mRoot, i, j);
+    }
+
+    private Node buildStree(int[] nums, int start, int end) {
+        if (start > end) return null;
+        Node node = new Node(start, end);
+        if (start == end) node.mSum = nums[start];
+        else {
+            int mid = start + (end - start) / 2;
+            node.mLeft = buildStree(nums, start, mid);
+            node.mRight = buildStree(nums, mid + 1, end);
+            node.mSum = node.mLeft.mSum + node.mRight.mSum;
+        }
+        return node;
+    }
+
+    private int getSum(Node node, int i, int j) {
+        if (i == node.mStart && j == node.mEnd) return node.mSum;
+        else {
+            int mid = node.mStart + (node.mEnd - node.mStart) / 2;
+            if (j <= mid) { //tricky
+                return getSum(node.mLeft, i, j);
+            } else if (mid + 1 <= i) { //tricky
+                return getSum(node.mRight, i, j);
+            } else {
+                return getSum(node.mLeft, i, mid) + getSum(node.mRight, mid+1, j);
+            }
+        }
+    }
+
+    class Node{
+        int mStart, mEnd, mSum;
+        Node mLeft, mRight;
+        public Node(int start, int end){
+            mStart = start;
+            mEnd = end;
+            mSum = 0;
+            mLeft = mRight = null;
+        }
+    }
+}
+
 '''

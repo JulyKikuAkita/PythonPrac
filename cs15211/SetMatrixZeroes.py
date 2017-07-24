@@ -1,8 +1,10 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/set-matrix-zeroes/description/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/set-matrix-zeroes.py
 # Time:  O(m * n)
 # Space: O(1)
 # Array
+#
+# Description: Leetcode # 73. Set Matrix Zeroes
 #
 # Given a m x n matrix, if an element is 0, set its entire row and column to 0. Do it in place.
 #
@@ -11,9 +13,14 @@ __author__ = 'July'
 # A straight forward solution using O(mn) space is probably a bad idea.
 # A simple improvement uses O(m + n) space, but still not the best solution.
 # Could you devise a constant space solution?
-# Microsoft
-
-
+# Companies
+# Microsoft Amazon
+# Related Topics
+# Array
+# Similar Questions
+# Game of Life
+#
+import unittest
 class Solution:
     # @param matrix, a list of lists of integers
     # RETURN NOTHING, MODIFY matrix IN PLACE.
@@ -61,20 +68,30 @@ class SolutionOther:
                 if row[i] or col[j]:
                     matrix[i][j] = 0
 
-#Java Solution
-# http://www.programcreek.com/2012/12/leetcode-set-matrix-zeroes-java/
-
 #test
-if __name__ == "__main__":
-    matrix = [ [1, 0, 1, 1]
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+        matrix = [ [1, 0, 1, 1]
              , [1, 1, 0, 1]
              , [1, 1, 1, 0]
              , [1, 1, 1, 1]]
-    Solution().setZeroes(matrix)
-    print matrix
+        Solution().setZeroes(matrix)
+        print matrix
 
-#java
-js = '''
+if __name__ == '__main__':
+    unittest.main()
+
+Java = '''
+#Thought:
+My idea is simple: store states of each row in the first of that row,
+and store states of each column in the first of that column.
+Because the state of row0 and the state of column0 would occupy the same cell,
+I let it be the state of row0, and use another variable "col0" for column0.
+In the first phase, use matrix elements to set states in a top-down way.
+In the second phase, use states to set matrix elements in a bottom-up way.
+
+#13.57% 3ms
 public class Solution {
     public void setZeroes(int[][] matrix) {
         int m = matrix.length;
@@ -106,60 +123,49 @@ public class Solution {
     }
 }
 
-
+#84.75% 1ms
 public class Solution {
-     // using O(m+n) is easy, to enable O(1), we have to use the space within the matrix
     public void setZeroes(int[][] matrix) {
-        if(matrix == null || matrix.length == 0)
+        if (matrix.length == 0 || matrix[0].length == 0) {
             return;
-
-        int rows = matrix.length;
-        int cols = matrix[0].length;
-
-        boolean empty_row0 = false;
-        boolean empty_col0 = false;
-        for(int i = 0; i < cols; i++){
-            if(matrix[0][i] == 0){
-                empty_row0 = true;
-                break;
-            }
         }
-
-        for(int i = 0; i < rows; i++){
-            if(matrix[i][0] == 0){
-                empty_col0 = true;
-                break;
-            }
-        }
-
-        for(int i = 1; i < rows; i++) {
-            for(int j =1; j<cols; j++){
-                if(matrix[i][j] == 0){
-                    matrix[0][j] = 0;
+        int m = matrix.length;
+        int n = matrix[0].length;
+        boolean isCol0Zero = false;
+        for (int i = 0; i < m; i++) {
+            isCol0Zero |= matrix[i][0] == 0;
+            for (int j = 1; j < n; j++) {
+                if (matrix[i][j] == 0) {
                     matrix[i][0] = 0;
+                    matrix[0][j] = 0;
                 }
             }
         }
-
-        for(int i = 1; i<rows; i++) {
-            for (int j=1; j< cols; j++) {
-                if(matrix[0][j] == 0 || matrix[i][0] == 0)
+        for (int i = 1; i < m; i++) {
+            if (matrix[i][0] == 0) {
+                for (int j = 1; j < n; j++) {
                     matrix[i][j] = 0;
+                }
             }
         }
-
-        if(empty_row0){
-            for(int i = 0; i < cols; i++){
-                matrix[0][i] = 0;
+        for (int j = 1; j < n; j++) {
+            if (matrix[0][j] == 0) {
+                for (int i = 1; i < m; i++) {
+                    matrix[i][j] = 0;
+                }
             }
         }
-
-        if(empty_col0){
-            for(int i = 0; i < rows; i++){
+        if (matrix[0][0] == 0) {
+            for (int j = 1; j < n; j++) {
+                matrix[0][j] = 0;
+            }
+        }
+        if (isCol0Zero) {
+            for (int i = 0; i < m; i++) {
                 matrix[i][0] = 0;
             }
         }
-
     }
 }
+
 '''

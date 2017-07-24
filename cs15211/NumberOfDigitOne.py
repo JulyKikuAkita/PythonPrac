@@ -1,4 +1,4 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/number-of-digit-one/description/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/number-of-digit-one.py
 # Time:  O(logn)
 # Space: O(1)
@@ -11,7 +11,12 @@ __author__ = 'July'
 # Return 6, because digit 1 occurred in the following numbers:
 #  1, 10, 11, 12, 13.
 #
-
+# Related Topics
+# Math
+# Similar Questions
+# Factorial Trailing Zeroes
+#
+import unittest
 class Solution:
     # @param {integer} n
     # @return {integer}
@@ -40,9 +45,18 @@ class Solution:
 
         return cnt
 
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
 
-# java
-js = '''
+if __name__ == '__main__':
+    unittest.main()
+
+Java = '''
+
+#Thought: https://leetcode.com/problems/number-of-digit-one/solution/
+
+#11.11% 0ms
 public class Solution {
     public int countDigitOne(int n) {
         long num = n;
@@ -63,6 +77,18 @@ public class Solution {
         return result;
     }
 }
+#11.11% 0ms
+public class Solution {
+    private int count;
+    public int countDigitOne(int n) {
+        int count = 0;
+        for (long i = 1; i <= n; i *= 10) {
+            long level = i * 10;
+            count += n / level * i;
+            count += Math.min(Math.max(n % level - i + 1, 0), i);
+        }
+        return count;
+    }
 
-
+}
 '''

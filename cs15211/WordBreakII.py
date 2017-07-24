@@ -165,6 +165,8 @@ public class Solution {
                 List<String>sublist = DFS(s.substring(word.length()), wordDict, map);
                 for (String sub : sublist) {
                     res.add(word + (sub.isEmpty() ? "" : " ") + sub);
+                    //res.add(sub + (sub.equals("") ? "" : " ") + word); // guess what's the result?
+                                                                        //Output: ["dog sand cat","dog and cats"]
                 }
             }
         }

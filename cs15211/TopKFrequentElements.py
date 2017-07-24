@@ -2,7 +2,8 @@ __source__ = 'https://leetcode.com/problems/top-k-frequent-elements/#/descriptio
 # https://github.com/kamyu104/LeetCode/blob/master/Python/top-k-frequent-elements.py
 # Time:  O(n) ~ O(n^2), O(n) on average.
 # Space: O(n)
-
+#
+# Description: Leetcode # 347. Top K Frequent Elements
 # Given a non-empty array of integers,
 # return the k most frequent elements.
 #
@@ -14,16 +15,18 @@ __source__ = 'https://leetcode.com/problems/top-k-frequent-elements/#/descriptio
 # 1 <= k <= number of unique elements.
 # Your algorithm's time complexity must be better
 # than O(n log n), where n is the array's size.
-#Topics:
-# Hash Table Heap
-# You might like:
-# (M) Word Frequency (M) Kth Largest Element in an Array (M) Sort Characters By Frequency
-# Company:
+#
+# Companies
 # Pocket Gems Yelp
+# Related Topics
+# Hash Table Heap
+# Similar Questions
+# Word Frequency Kth Largest Element in an Array Sort Characters By Frequency
 #
 
 from random import randint
 import collections
+import unittest
 class Solution(object):
     def topKFrequent(self, nums, k):
         """
@@ -82,9 +85,17 @@ class Solution2(object):
         """
         return [key for key, _ in collections.Counter(nums).most_common(k)]
 
-#Java
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+
+if __name__ == '__main__':
+    unittest.main()
+
 Java = '''
+#Thought:
 // use an array to save numbers into different bucket whose index is the frequency
+#83.84% 25ms
 public class Solution {
     public List<Integer> topKFrequent(int[] nums, int k) {
         Map<Integer, Integer> map = new HashMap<>();
@@ -93,7 +104,7 @@ public class Solution {
         }
 
         // corner case: if there is only one number in nums, we need the bucket has index 1.
-        List<Integer>[] bucket = new List[nums.length+1];
+        List<Integer>[] bucket = new List[nums.length+1]; //compile err if declare as new ArrayList<>[nums.length + 1];
         for(int n:map.keySet()){
             int freq = map.get(n);
             if(bucket[freq]==null)
@@ -104,12 +115,10 @@ public class Solution {
         List<Integer> res = new LinkedList<>();
         for(int i=bucket.length-1; i>0 && k>0; --i){ //bucket.length = nums.length + 1
             if(bucket[i]!=null){
-                List<Integer> list = bucket[i];
-                res.addAll(list);
-                k-= list.size();
+                res.addAll(bucket[i]);
+                k-= bucket[i].size();
             }
         }
-
         return res;
     }
 }
@@ -117,6 +126,7 @@ public class Solution {
 
 
 // use maxHeap. Put entry into maxHeap so we can always poll a number with largest frequency
+#14.82% 101ms
 public class Solution {
     public List<Integer> topKFrequent(int[] nums, int k) {
         Map<Integer, Integer> map = new HashMap<>();
@@ -142,6 +152,7 @@ public class Solution {
 
 
 // use treeMap. Use freqncy as the key so we can get all freqencies in order
+#63.61% 29ms
 public class Solution {
     public List<Integer> topKFrequent(int[] nums, int k) {
         Map<Integer, Integer> map = new HashMap<>();

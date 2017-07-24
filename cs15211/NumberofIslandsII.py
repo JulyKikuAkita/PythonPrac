@@ -1,53 +1,60 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/number-of-islands-ii/description/'
 # https://leetcode.com/problems/number-of-islands-ii/#/description
-'''
-A 2d grid map of m rows and n columns is initially filled with water.
-We may perform an addLand operation which turns the water at position (row, col) into a land.
-Given a list of positions to operate, count the number of islands after each addLand operation.
-An island is surrounded by water and is formed by connecting adjacent lands horizontally or vertically.
-You may assume all four edges of the grid are all surrounded by water.
-
-Example:
-
-Given m = 3, n = 3, positions = [[0,0], [0,1], [1,2], [2,1]].
-Initially, the 2d grid grid is filled with water. (Assume 0 represents water and 1 represents land).
-
-0 0 0
-0 0 0
-0 0 0
-Operation #1: addLand(0, 0) turns the water at grid[0][0] into a land.
-
-1 0 0
-0 0 0   Number of islands = 1
-0 0 0
-Operation #2: addLand(0, 1) turns the water at grid[0][1] into a land.
-
-1 1 0
-0 0 0   Number of islands = 1
-0 0 0
-Operation #3: addLand(1, 2) turns the water at grid[1][2] into a land.
-
-1 1 0
-0 0 1   Number of islands = 2
-0 0 0
-Operation #4: addLand(2, 1) turns the water at grid[2][1] into a land.
-
-1 1 0
-0 0 1   Number of islands = 3
-0 1 0
-We return the result as an array: [1, 1, 2, 3]
-
-Challenge:
-
-Can you do it in time complexity O(k log mn), where k is the length of the positions?
-
-# Google
-# Hide Tags Union Find
-# Hide Similar Problems (M) Number of Islands
-'''
 # Time:  O(klog*k) ~= O(k), k is the length of the positions
 # Space: O(k)
+#
+# Description: Leetcode # 305. Number of Islands II
+#
+# A 2d grid map of m rows and n columns is initially filled with water.
+# We may perform an addLand operation which turns the water at position (row, col) into a land.
+# Given a list of positions to operate, count the number of islands after each addLand operation.
+# An island is surrounded by water and is formed by connecting adjacent lands horizontally or vertically.
+# You may assume all four edges of the grid are all surrounded by water.
+#
+# Example:
+#
+# Given m = 3, n = 3, positions = [[0,0], [0,1], [1,2], [2,1]].
+# Initially, the 2d grid grid is filled with water. (Assume 0 represents water and 1 represents land).
+#
+# 0 0 0
+# 0 0 0
+# 0 0 0
+# Operation #1: addLand(0, 0) turns the water at grid[0][0] into a land.
+#
+# 1 0 0
+# 0 0 0   Number of islands = 1
+# 0 0 0
+# Operation #2: addLand(0, 1) turns the water at grid[0][1] into a land.
+#
+# 1 1 0
+# 0 0 0   Number of islands = 1
+# 0 0 0
+# Operation #3: addLand(1, 2) turns the water at grid[1][2] into a land.
+#
+# 1 1 0
+# 0 0 1   Number of islands = 2
+# 0 0 0
+# Operation #4: addLand(2, 1) turns the water at grid[2][1] into a land.
+#
+# 1 1 0
+# 0 0 1   Number of islands = 3
+# 0 1 0
+# We return the result as an array: [1, 1, 2, 3]
+#
+# Challenge:
+#
+# Can you do it in time complexity O(k log mn), where k is the length of the positions?
+#
+# Companies
+# Google
+# Related Topics
+# Union Find
+# Similar Questions
+# Number of Islands
 
+# Time:  O(klog*k) ~= O(k), k is the length of the positions
+# Space: O(k)
+import unittest
 class Solution(object):
     def numIslands2(self, m, n, positions):
         """
@@ -133,135 +140,119 @@ class Union(object):
         self.sz[j] += self.sz[i]
         self.count -= 1
 
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
 
-# http://algobox.org/number-of-islands-ii/
-#java
-js = '''
+if __name__ == '__main__':
+    unittest.main()
+
+Java = '''
+#Thought: https://discuss.leetcode.com/topic/29613/easiest-java-solution-with-explanations
+# 81.60% 18ms
 public class Solution {
-    private int[][] dir = {{0,1}, {0,-1}, {-1,0},{1,0}};
+    int[][] dirs = {{0, 1}, {1, 0}, {-1, 0}, {0, -1}};
 
     public List<Integer> numIslands2(int m, int n, int[][] positions) {
-        UnionFind2D islands = new UnionFind2D(m,n);
-        List<Integer> res = new ArrayList<>();
+        List<Integer> result = new ArrayList<>();
+        if(m <= 0 || n <= 0) return result;
 
-        for(int[] position : positions){
-            int x = position[0], y = position[1];
-            int p = islands.add(x, y);
-            for(int[] d : dir){
-                int q = islands.getID(x+d[0], y+d[1]);
-                if(q > 0 && !islands.find(p,q)){
-                    islands.unite(p,q);
+        int count = 0;                      // number of islands
+        int[] roots = new int[m * n];       // one island = one tree
+        Arrays.fill(roots, -1);
+
+        for(int[] p : positions) {
+            int root = n * p[0] + p[1];     // assume new point is isolated island
+            roots[root] = root;             // add new island
+            count++;
+
+            for(int[] dir : dirs) {
+                int x = p[0] + dir[0];
+                int y = p[1] + dir[1];
+                int nb = n * x + y;
+                if(x < 0 || x >= m || y < 0 || y >= n || roots[nb] == -1) continue;
+
+                int rootNb = findIsland(roots, nb);
+                if(root != rootNb) {        // if neighbor is in another island
+                    roots[root] = rootNb;   // union two islands
+                    root = rootNb;          // current tree root = joined tree root
+                    count--;
                 }
             }
-            res.add(islands.size());
-        }
-        return res;
-    }
-}
 
-class UnionFind2D{
-    private int[] id;
-    private int[] sz;
-    private int m,n,count;
-
-    public UnionFind2D(int m, int n){
-        this.count = 0;
-        this.n = n;
-        this.m = m;
-        this.id = new int[m*n + 1];
-        this.sz = new int[m*n + 1];
-    }
-
-    public int index(int x, int y){return x*n + y + 1;}
-
-    public int size(){return this.count;}
-
-    public int getID(int x, int y){
-        if(0<= x && x< m && 0<= y && y<n){
-            return id[index(x,y)];
-        }
-        return 0;
-    }
-
-    public int add(int x, int y){
-        int i = index(x, y);
-        id[i] = i;
-        sz[i] = 1;
-        ++count;
-        return i;
-    }
-
-    public boolean find(int p, int q){
-        return root(p) == root(q);
-    }
-
-    public void unite(int p, int q){
-        int i = root(p), j = root(q);
-        if(sz[i] < sz[j]){ //weighted quick union
-            id[i] =j; sz[j] += sz[i];
-        }else{
-            id[j] = i; sz[i] += sz[j];
-        }
-        --count;
-    }
-
-    private int root(int i){
-        for(; i != id[i]; i = id[i]){
-            id[i] = id[id[i]]; //path compression
-        }
-        return i;
-    }
-
-}
-
-public class Solution {
-    public List<Integer> numIslands2(int m, int n, int[][] positions) {
-        int len = positions.length;
-        int[] lands = new int[len];
-        for (int i = 0; i < len; i++) {
-            lands[i] = i;
-        }
-        int[][] grid = new int[m][n];
-        List<Integer> result = new ArrayList<>();
-        int cur = 0;
-        for (int i = 0; i < len; i++) {
-            int x = positions[i][0];
-            int y = positions[i][1];
-            if (grid[x][y] > 0) {
-                result.add(cur);
-                continue;
-            }
-            cur++;
-            grid[x][y] = i + 1;
-            if (x > 0 && grid[x - 1][y] > 0 && union(lands, grid[x - 1][y] - 1, i)) {
-                cur--;
-            }
-            if (x < m - 1 && grid[x + 1][y] > 0 && union(lands, grid[x + 1][y] - 1, i)) {
-                cur--;
-            }
-            if (y > 0 && grid[x][y - 1] > 0 && union(lands, grid[x][y - 1] - 1, i)) {
-                cur--;
-            }
-            if (y < n - 1 && grid[x][y + 1] > 0 && union(lands, grid[x][y + 1] - 1, i)) {
-                cur--;
-            }
-            result.add(cur);
+            result.add(count);
         }
         return result;
     }
 
-    private boolean union(int[] lands, int i, int j) {
-        int iRoot = root(lands, i);
-        int jRoot = root(lands, j);
-        boolean ret = iRoot != jRoot;
-        lands[jRoot] = iRoot;
-        return ret;
+    public int findIsland(int[] roots, int id) {
+        while(id != roots[id]) {
+            roots[id] = roots[roots[id]];   // only one line added
+            id = roots[id];
+        }
+        return id;
+    }
+}
+
+#95.94% 16ms
+public class Solution {
+    private static final int[][] DIRECTIONS = new int[][] {{0, -1}, {0, 1}, {-1, 0}, {1, 0}};
+
+    public List<Integer> numIslands2(int m, int n, int[][] positions) {
+        List<Integer> result = new ArrayList<>();
+        int[][] matrix = new int[m][n];
+        int[] islands = new int[positions.length];
+        int[] count = new int[positions.length];
+        int numIslands = 0;
+
+        for (int i = 0; i < islands.length; i++) {
+            islands[i] = i;
+        }
+        Arrays.fill(count, 1);
+        for (int i = 0; i < positions.length; i++) {
+            int x = positions[i][0];
+            int y = positions[i][1];
+            if (matrix[x][y] > 0) {
+                result.add(numIslands);
+                continue;
+            }
+            matrix[x][y] = i + 1;
+            numIslands++;
+            for (int[] direction : DIRECTIONS) {
+                int newX = x + direction[0];
+                int newY = y + direction[1];
+                if (newX >= 0 && newX < m && newY >= 0 && newY < n && matrix[newX][newY] > 0 && union(islands, count, i, matrix[newX][newY] - 1)) {
+                    numIslands--;
+                }
+            }
+            result.add(numIslands);
+        }
+        return result;
     }
 
-    private int root(int[] lands, int i) {
-        while (i != lands[i]) {
-            lands[i] = lands[lands[i]];
-            i = lands[i];
+    private boolean union(int[] arr, int[] count, int i, int j) {
+        int iRoot = root(arr, i);
+        int jRoot = root(arr, j);
+        if (iRoot != jRoot) {
+            if (count[iRoot] <= count[jRoot]) {
+                arr[iRoot] = jRoot;
+                count[jRoot] += count[iRoot];
+                count[iRoot] = 0;
+            } else {
+                arr[jRoot] = iRoot;
+                count[iRoot] += count[jRoot];
+                count[jRoot] = 0;
+            }
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    private int root(int[] arr, int i) {
+        while (arr[i] != i) {
+            arr[i] = arr[arr[i]];
+            i = arr[i];
         }
         return i;
     }
@@ -303,8 +294,7 @@ But from a design point of view a separate class dedicated to the data sturcture
 
 I implemented the idea with 2D interface to better fit the problem.
 
-Java
-
+#81.60% 18ms
 public class Solution {
 
     private int[][] dir = {{0, 1}, {0, -1}, {-1, 0}, {1, 0}};

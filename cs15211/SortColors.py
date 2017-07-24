@@ -1,7 +1,9 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/sort-colors/description/'
 # Time:  O(n)
 # Space: O(1)
 # Sort
+#
+# Description: Leetcode # 75. Sort Colors
 #
 # Given an array with n objects colored red, white or blue, sort them so that objects of the same color are adjacent,
 # with the colors in the order red, white and blue.
@@ -20,8 +22,14 @@ __author__ = 'July'
 #
 # Could you come up with an one-pass algorithm using only constant space?
 #
-# Favebook
-
+# Companies
+# Pocket Gems Microsoft Facebook
+# Related Topics
+# Array Two Pointers Sort
+# Similar Questions
+# Sort List Wiggle Sort Wiggle Sort II
+#
+import unittest
 class Solution:
     # @param A a list of integers
     # @return nothing, sort in place
@@ -36,12 +44,6 @@ class Solution:
                 A[i], A[first_two] = A[first_two], A[i]
                 i -= 1  # i need to be at the same position as element switch from end of arr is not sorted yet
             i += 1
-
-if __name__ == "__main__":
-    A = [2, 1, 1, 0, 0, 2]
-    Solution().sortColors(A)
-    print A
-
 
 class SolutionOther:
     # @param A a list of integers
@@ -63,17 +65,26 @@ class SolutionOther:
             else:
                 i+= 1
 
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+        #test
+        test = SolutionOther()
+        arr = [2,1,0,0,2,2,2,1,0]
+        arr1 = [1,0]
+        test.sortColors(arr1)
+        print arr1
 
-#test
-test = SolutionOther()
-arr = [2,1,0,0,2,2,2,1,0]
-arr1 = [1,0]
-test.sortColors(arr1)
-print arr1
+        A = [2, 1, 1, 0, 0, 2]
+        Solution().sortColors(A)
+        print A
 
+if __name__ == '__main__':
+    unittest.main()
 
-#java
-js = '''
+Java = '''
+#Thought: https://leetcode.com/problems/contains-duplicate/solution/
+# 50.57% 0ms
 public class Solution {
     public void sortColors(int[] nums) {
         int red = 0;
@@ -94,6 +105,24 @@ public class Solution {
         int tmp = nums[i];
         nums[i] = nums[j];
         nums[j] = tmp;
+    }
+}
+
+# two pass: count each color and then swap
+# 50.57% 0ms
+class Solution {
+    public void sortColors(int[] nums) {
+        int num0 = 0, num1 = 0, num2 = 0;
+
+        for(int i = 0; i < nums.length; i++) {
+            if (nums[i] == 0) ++num0;
+            else if (nums[i] == 1) ++num1;
+            else if (nums[i] == 2) ++num2;
+        }
+
+        for(int i = 0; i < num0; ++i) nums[i] = 0;
+        for(int i = 0; i < num1; ++i) nums[num0+i] = 1;
+        for(int i = 0; i < num2; ++i) nums[num0+num1+i] = 2;
     }
 }
 '''

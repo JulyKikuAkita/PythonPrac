@@ -1,4 +1,4 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/delete-node-in-a-linked-list/description/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/delete-node-in-a-linked-list.py
 # Time:  O(1)
 # Space: O(1)
@@ -9,18 +9,20 @@ __author__ = 'July'
 # Supposed the linked list is 1 -> 2 -> 3 -> 4 and you are given the third node
 # with value 3, the linked list should become 1 -> 2 -> 4 after calling your function.
 #
-#  Adobe Apple Microsoft
-# Hide Tags Linked List
-# Hide Similar Problems (E) Remove Linked List Elements
-
-
-
+# Companies
+# Adobe Apple Microsoft
+# Related Topics
+# Linked List
+# Similar Questions
+# Remove Linked List Elements
+#
 # Definition for singly-linked list.
-# class ListNode:
-#     def __init__(self, x):
-#         self.val = x
-#         self.next = None
+class ListNode:
+    def __init__(self, x):
+        self.val = x
+        self.next = None
 
+import unittest
 class Solution:
     # @param {ListNode} node
     # @return {void} Do not return anything, modify node in-place instead.
@@ -31,11 +33,14 @@ class Solution:
             node.next = node_to_delete.next
             del node_to_delete
 
-#java
-java= '''
+if __name__ == '__main__':
+    unittest.main()
+
+Java = '''
+#Thought: https://leetcode.com/problems/delete-node-in-a-linked-list/solution/
+
 Thought: We can't really delete the node, but we can kinda achieve the same effect
 by instead removing the next node after copying its data into the node that we were asked to delete.
-
 
 /**
  * Definition for singly-linked list.
@@ -45,6 +50,8 @@ by instead removing the next node after copying its data into the node that we w
  *     ListNode(int x) { val = x; }
  * }
  */
+
+#6.57%  1ms
 public class Solution {
     public void deleteNode(ListNode node) {
         node.val = node.next.val;

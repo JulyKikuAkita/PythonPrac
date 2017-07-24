@@ -3,14 +3,17 @@ __source__ = 'https://leetcode.com/problems/one-edit-distance/#/description'
 # Time:  O(m + n)
 # Space: O(1)
 #
+# Description: Leetcode # 161. One Edit Distance
+#
 # Given two strings S and T, determine if they are both one edit distance apart.
-#Companies
+# Companies
 # Snapchat Uber Facebook Twitter
 # Related Topics
 # String
 # Similar Questions
 # Edit Distance
 #
+import unittest
 class Solution:
     # @param s, a string
     # @param t, a string
@@ -29,47 +32,54 @@ class Solution:
             i +=1
         while i < m and s[i] == t[i + shift]:
             i += 1
-
         return i == m
-
 #test
-if __name__ == "__main__":
-    print Solution().isOneEditDistance("teacher", "acher")
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+        print Solution().isOneEditDistance("teacher", "acher")
 
-# Java
+if __name__ == '__main__':
+    unittest.main()
+
 Java = '''
+#Thought: https://leetcode.com/problems/contains-duplicate/solution/
 Thought:
 /*
  * There're 3 possibilities to satisfy one edit distance apart:
  *
  * 1) Replace 1 char:
- 	  s: a B c
- 	  t: a D c
+      s: a B c
+      t: a D c
  * 2) Delete 1 char from s:
-	  s: a D  b c
-	  t: a    b c
+      s: a D  b c
+      t: a    b c
  * 3) Delete 1 char from t
-	  s: a   b c
-	  t: a D b c
+      s: a   b c
+      t: a D b c
  */
-
-public class Solution {
+# 12.73%  3ms
+class Solution {
     public boolean isOneEditDistance(String s, String t) {
         for (int i = 0; i < Math.min(s.length(), t.length()); i++) {
-        	if (s.charAt(i) != t.charAt(i)) {
-        		if (s.length() == t.length()) // s has the same length as t, so the only possibility is replacing one char in s and t
-        			return s.substring(i + 1).equals(t.substring(i + 1));
-    			else if (s.length() < t.length()) // t is longer than s, so the only possibility is deleting one char from t
-    				return s.substring(i).equals(t.substring(i + 1));
-    			else // s is longer than t, so the only possibility is deleting one char from s
-    				return t.substring(i).equals(s.substring(i + 1));
-        	}
+            if (s.charAt(i) != t.charAt(i)) {
+                // s has the same length as t, so the only possibility is replacing one char in s and t
+                if (s.length() == t.length()) {
+                    return s.substring(i + 1).equals(t.substring(i + 1));
+                // t is longer than s, so the only possibility is deleting one char from t
+                } else if(s.length() < t.length()) {
+                    return s.substring(i).equals(t.substring(i + 1));
+                } else {  // s is longer than t, so the only possibility is deleting one char from s
+                    return t.substring(i).equals(s.substring(i + 1));
+                }
+            }
         }
         //All previous chars are the same, the only possibility is deleting the end char in the longer one of s and t
         return Math.abs(s.length() - t.length()) == 1;
     }
 }
 
+#12.73% 3ms
 public class Solution {
     public boolean isOneEditDistance(String s, String t) {
         if(Math.abs(s.length()-t.length()) > 1) return false;
@@ -94,6 +104,7 @@ public class Solution {
     }
 }
 
+# 49.86% 2ms
 public class Solution {
     public boolean isOneEditDistance(String s, String t) {
         int m = s.length(), n = t.length();
@@ -111,8 +122,35 @@ public class Solution {
         while(i < n && s.charAt(i+shift) == t.charAt(i)){
             i++;
         }
-
         return i == n;
+    }
+}
+
+#94.16% 1ms
+class Solution {
+    public boolean isOneEditDistance(String s, String t)
+    {
+        int len1 = s.length();
+        int len2 = t.length();
+        if (Math.abs(len1 - len2) > 1) return false;
+
+        char[] chs = s.toCharArray();
+        char[] cht = t.toCharArray();
+
+        int i = 0, j = 0;
+        while (i < len1 && j < len2)
+        {
+            if (chs[i] != cht[j])
+            {
+                if (len1 < len2) return s.substring(i).equals(t.substring(j+1));
+                else if (len1 == len2) return s.substring(i+1).equals(t.substring(j+1));
+                else return s.substring(i+1).equals(t.substring(j));
+            }
+            i++;
+            j++;
+        }
+
+        return Math.abs(len1 - len2) == 1;
     }
 }
 '''

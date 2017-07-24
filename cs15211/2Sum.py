@@ -1,9 +1,10 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/two-sum/description/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/two-sum.py
 # Time:  O(n)
 # Space: O(n)
 # Hash table
 #
+# Description: Leetcode # 1. Two Sum
 # Given an array of integers, find two numbers such that
 # they add up to a specific target number.
 # The function twoSum should return indices of the two numbers such that
@@ -15,9 +16,16 @@ __author__ = 'July'
 # Input: numbers={2, 7, 11, 15}, target=9
 # Output: index1=1, index2=2
 #
+# Companies
 # LinkedIn Uber Airbnb Facebook Amazon Microsoft Apple Yahoo Dropbox Bloomberg Yelp Adobe
-# Hide Tags Array Hash Table
-# Hide Similar Problems (M) 3Sum (M) 4Sum (E) Two Sum II - Input array is sorted (E) Two Sum III - Data structure design (M) Subarray Sum Equals K
+# Related Topics
+# Array Hash Table
+# Similar Questions
+# 3Sum 4Sum Two Sum II - Input array is sorted Two Sum III - Data structure design
+# Subarray Sum Equals K
+# Two Sum IV - Input is a BST
+#
+import unittest
 #old solution index starts with 1
 class Solution:
     def twoSum(self, nums, target):
@@ -63,8 +71,17 @@ if __name__ == '__main__':
     print "index1=%d, index2=%d" %Solution2().twoSum((2, 7, 11, 15), 9)
     print "index1=%d, index2=%d" %Naive().twoSum((2, 7, 11, 15), 9)
 
-#java
-js = ''' 96.55%
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+
+if __name__ == '__main__':
+    unittest.main()
+
+Java = '''
+#Thought: https://leetcode.com/problems/two-sum/solution/
+
+# 77.17% 8ms
 public class Solution {
     public int[] twoSum(int[] nums, int target) {
         Map<Integer, Integer> map = new HashMap<>();

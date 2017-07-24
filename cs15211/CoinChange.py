@@ -1,4 +1,4 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/coin-change/description/'
 # Time:  O(n * k), n is the number of coins, k is the amount of money
 # Space: O(k)
 #
@@ -18,7 +18,8 @@ __author__ = 'July'
 #
 # Note:
 # You may assume that you have an infinite number of each kind of coin.
-
+# Related Topics
+# Dynamic Programming
 #TLE
 class Solution_TLE(object):
     count = float("inf")
@@ -109,4 +110,75 @@ if __name__ == '__main__':
 
 #Java
 # http://www.cnblogs.com/springfor/p/3886576.html
+Java = '''
+Thought: https://leetcode.com/problems/coin-change/solution/
+#Thought: https://leetcode.com/problems/maximum-product-of-three-numbers/tabs/solution
+
+#98.46% 5ms
+public class Solution {
+    public int coinChange(int[] coins, int amount) {
+        if (coins.length == 0 || amount <= 0) {
+            return 0;
+        }
+        Arrays.sort(coins);
+        int min = coinChange(coins, amount, coins.length - 1, Integer.MAX_VALUE, 0);
+        return min == Integer.MAX_VALUE ? -1 : min;
+    }
+
+    private int coinChange(int[] coins, int amount, int index, int minCount, int curCount) {
+        if (amount == 0) {
+            return Math.min(minCount, curCount);
+        } else if (index < 0 || curCount + amount / coins[index] >= minCount) {
+            return minCount;
+        }
+        for (int i = amount / coins[index]; i >= 0; i--) {
+            minCount = Math.min(minCount, coinChange(coins, amount - i * coins[index], index - 1, minCount, curCount + i));
+        }
+        return minCount;
+    }
+}
+
+Approach #2 (Dynamic programming - Top down) [Accepted]
+#18.27% 45ms
+public class Solution {
+    public int coinChange(int[] coins, int amount) {
+        if (amount < 1) return 0;
+        return coinChange(coins, amount, new int[amount]);
+    }
+
+    private int coinChange(int[] coins, int rem, int[] count) {
+        if (rem < 0) return -1;
+        if (rem == 0) return 0;
+        if (count[rem - 1] != 0) return count[rem - 1];
+        int min = Integer.MAX_VALUE;
+        for (int coin : coins) {
+            int res = coinChange(coins, rem - coin, count);
+            if (res >= 0 && res < min)
+                min = 1 + res;
+        }
+        count[rem - 1] = (min == Integer.MAX_VALUE) ? -1 : min;
+        return count[rem - 1];
+    }
+}
+
+Approach #3 (Dynamic programming - Bottom up) [Accepted]
+#60.67%  24 ms
+public class Solution {
+    public int coinChange(int[] coins, int amount) {
+        int max = amount + 1;
+        int[] dp = new int[amount + 1];
+        Arrays.fill(dp, max);
+        dp[0] = 0;
+        for (int i = 1; i <= amount; i++) {
+            for (int j = 0; j < coins.length; j++) {
+                if (coins[j] <= i) {
+                    dp[i] = Math.min(dp[i], dp[i - coins[j]] + 1);
+                }
+            }
+        }
+        return dp[amount] > amount ? -1 : dp[amount];
+    }
+}
+
+'''
 

@@ -1,8 +1,8 @@
-__source__ = 'https://leetcode.com/problems/merge-two-binary-trees/#/solutions'
+__source__ = 'https://leetcode.com/problems/merge-two-binary-trees/description/'
 # Time:  O(n)
 # Space: O(n)
 #
-# Description:
+# Description: Leetcode # 217. 617. Merge Two Binary Trees
 # Given two binary trees and imagine that when you put one of them to cover the other,
 # some nodes of the two trees are overlapped while the others are not.
 #
@@ -61,7 +61,7 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/articles/merge-two-binary-trees/
+#Thought:https://leetcode.com/problems/merge-two-binary-trees/solution/
 /**
  * Definition for a binary tree node.
  * public class TreeNode {
@@ -87,7 +87,7 @@ public class Solution {
     }
 }
 
-#dfs 96%
+#dfs 18.22% 18ms
 public class Solution {
     public TreeNode mergeTrees(TreeNode t1, TreeNode t2) {
         if (t1 == null)
@@ -102,7 +102,7 @@ public class Solution {
 }
 
 
-#bfs" 13.02%
+#bfs" 0.88% 29ms
 public class Solution {
     public TreeNode mergeTrees(TreeNode t1, TreeNode t2) {
         if (t1 == null)

@@ -4,6 +4,8 @@ __source__ = 'https://leetcode.com/problems/binary-tree-level-order-traversal/#/
 # Space: O(n)
 # BFS
 #
+# Description: Leetcode # 102. Binary Tree Level Order Traversal
+#
 # Given a binary tree, return the level order traversal of its nodes' values.
 # (ie, from left to right, level by level).
 #
@@ -21,16 +23,17 @@ __source__ = 'https://leetcode.com/problems/binary-tree-level-order-traversal/#/
 #   [15,7]
 # ]
 #
-# Topics:
-# Tree Breadth-first Search
-# You might like:
-# (M) Binary Tree Zigzag Level Order Traversal (E) Binary Tree Level Order Traversal II
-# (E) Minimum Depth of Binary Tree (M) Binary Tree Vertical Order Traversal
-# Company:
+# Companies
 # LinkedIn Facebook Amazon Microsoft Apple Bloomberg
-#
+# Related Topics
+# Tree Breadth-first Search
+# Similar Questions
+# Binary Tree Zigzag Level Order Traversal Binary Tree Level Order Traversal II
+# Minimum Depth of Binary Tree Binary Tree Vertical Order Traversal
+# Average of Levels in Binary Tree
 
 # Definition for a  binary tree node
+import unittest
 class TreeNode:
     def __init__(self, x):
         self.val = x
@@ -79,39 +82,41 @@ class Solution2(object):
         self.dfs(root.left, level + 1, res)
         self.dfs(root.right, level + 1, res)
 
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+        #creating BST tree ####
+        root0=TreeNode(3)
+        tree1=TreeNode(1)
+        tree2=TreeNode(5)
+        tree3=TreeNode(0)
+        tree4=TreeNode(2)
+        tree5=TreeNode(4)
+        tree6=TreeNode(6)
+        root0.left=tree1
+        root0.right=tree2
+        tree1.left=tree3
+        tree1.right=tree4
+        tree2.left=tree5
+        tree2.right=tree6
+        #end of creating BST tree ####
+        test = Solution2()
+        print test.levelOrder(root0)
 
+        root = TreeNode(3)
+        root.left = TreeNode(9)
+        root.right = TreeNode(20)
+        root.right.left = TreeNode(15)
+        root.right.right = TreeNode(7)
+        result = Solution().levelOrder(root)
+        print result
 
-#test
-#############test
-#creating BST tree ####
-root0=TreeNode(3)
-tree1=TreeNode(1)
-tree2=TreeNode(5)
-tree3=TreeNode(0)
-tree4=TreeNode(2)
-tree5=TreeNode(4)
-tree6=TreeNode(6)
-root0.left=tree1
-root0.right=tree2
-tree1.left=tree3
-tree1.right=tree4
-tree2.left=tree5
-tree2.right=tree6
-#end of creating BST tree ####
-test = Solution2()
-print test.levelOrder(root0)
+if __name__ == '__main__':
+    unittest.main()
 
-if __name__ == "__main__":
-    root = TreeNode(3)
-    root.left = TreeNode(9)
-    root.right = TreeNode(20)
-    root.right.left = TreeNode(15)
-    root.right.right = TreeNode(7)
-    result = Solution().levelOrder(root)
-    print result
+Java = '''
+#Thought: https://leetcode.com/problems/contains-duplicate/solution/
 
-#java
-java='''
 /**
  * Definition for a binary tree node.
  * public class TreeNode {
@@ -122,7 +127,8 @@ java='''
  * }
  */
 
-# DFS 43%
+# DFS
+# 9.30% 3ms
 public class Solution {
     public List<List<Integer>> levelOrder(TreeNode root) {
         List<List<Integer>> res = new ArrayList<List<Integer>>();
@@ -142,7 +148,8 @@ public class Solution {
     }
 }
 
-#BFS 43%
+#BFS
+#32.79% , 2ms
 public class Solution {
     public List<List<Integer>> levelOrder(TreeNode root) {
         Queue<TreeNode> q = new LinkedList<TreeNode>();

@@ -1,12 +1,21 @@
-__author__ = 'July'
-'''
-A strobogrammatic number is a number that looks the same when rotated 180 degrees (looked at upside down).
-
-Find all strobogrammatic numbers that are of length = n.
-
-For example,
-Given n = 2, return ["11","69","88","96"].
-'''
+__source__ = 'https://leetcode.com/problems/strobogrammatic-number-ii/tabs/description'
+# https://github.com/kamyu104/LeetCode/blob/master/Python/strobogrammatic-number-ii.py
+# Time:  O(n^2 * 5^(n/2))
+# Space: O(n)
+#
+# A strobogrammatic number is a number that looks the same when rotated 180 degrees (looked at upside down).
+#
+# Find all strobogrammatic numbers that are of length = n.
+#
+# For example,
+# Given n = 2, return ["11","69","88","96"].
+# Companies
+# Google
+# Related Topics
+# Math Recursion
+# Similar Questions
+# Strobogrammatic Number Strobogrammatic Number III
+#
 # Time:  O(n^2 * 5^(n/2))
 # Space: O(n)
 # https://github.com/kamyu104/LeetCode/blob/master/Python/strobogrammatic-number-ii.py
@@ -62,7 +71,7 @@ public class Solution {
 }
 '''
 
-# recursion
+# recursion 26%
 tmp2= '''
 public class Solution {
     public List<String> findStrobogrammatic(int n) {
@@ -90,6 +99,38 @@ public class Solution {
             }
         }
         return result;
+    }
+}
+
+# 94%
+public class Solution {
+    public static final char[] SINGLE_STROBO = new char[] {'0', '1', '8'};
+    public static final char[][] DOUBLE_STROBO = new char[][] {{'0', '0'}, {'1', '1'}, {'6', '9'}, {'8', '8'}, {'9', '6'}};
+
+    public List<String> findStrobogrammatic(int n) {
+        List<String> result = new ArrayList<>();
+        findStrobo(new char[n], 0, n - 1, result);
+        return result;
+    }
+
+    private void findStrobo(char[] arr, int start, int end, List<String> result) {
+        if (start > end) {
+            result.add(new String(arr));
+            return;
+        } else if (start == end) {
+            for (char c : SINGLE_STROBO) {
+                arr[start] = c;
+                result.add(new String(arr));
+            }
+            return;
+        }
+        for (char[] pair : DOUBLE_STROBO) {
+            arr[start] = pair[0];
+            arr[end] = pair[1];
+            if (start > 0 || pair[0] != '0') {
+                findStrobo(arr, start + 1, end - 1, result);
+            }
+        }
     }
 }
 '''

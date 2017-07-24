@@ -1,9 +1,11 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/surrounded-regions/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/surrounded-regions.py
 # Time:  O(m * n)
 # Space: O(m + n)
 # BFS (DFS OT)
 # Flood fill
+#
+# Description: Leetcode #  130. Surrounded Regions
 #
 # Given a 2D board containing 'X' and 'O', capture all regions surrounded by 'X'.
 #
@@ -21,7 +23,12 @@ __author__ = 'July'
 # X X X X
 # X O X X
 #
-# Breadth-first Search, Union Find
+# Related Topics
+# Breadth-first Search Union Find
+# Similar Questions
+# Number of Islands Walls and Gates
+
+import unittest
 class Solution:
     # @param board, a 2D array
     # Capture all regions by modifying the input board in-place.
@@ -104,19 +111,25 @@ board = [['X', 'X', 'X', 'X'],
         ['X', 'O', 'O', 'X'],
         ['X', 'X', 'O', 'X'],
         ['X', 'O', 'X', 'X']]
-test = SolutionOther()
 
-if __name__ == "__main__":
-    #Solution().solve(board)
-    #SolutionJavaDFS().solve(board)
-    #SolutionJavaBFS().solve(board)
-    SolutionFloodFillDFS().solve(board)
-    for i in xrange(len(board[0])):
-        print board[i]
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+        test = SolutionFloodFillDFS()
+        #Solution().solve(board)
+        #SolutionJavaDFS().solve(board)
+        #SolutionJavaBFS().solve(board)
+        SolutionFloodFillDFS().solve(board)
+        for i in xrange(len(board[0])):
+            print board[i]
 
+if __name__ == '__main__':
+    unittest.main()
 
-#java
-js = '''
+Java = '''
+#Thought: https://leetcode.com/problems/contains-duplicate/solution/
+
+# 43.77% 9ms
 public class Solution {
     public static final int[][] DIRECTIONS = new int[][] {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
 
@@ -165,6 +178,115 @@ private void fillBoarder(char[][] board, int row, int col){
                     board[p][q] = '#';
                     rowQueue.offer(p);
                     colQueue.offer(q);
+                }
+            }
+        }
+    }
+}
+
+# Java DFS + boundary cell turning solution
+# 58.28% 6MS
+public class Solution {
+    public void solve(char[][] board) {
+        if (board.length == 0 || board[0].length == 0)
+            return;
+        if (board.length < 2 || board[0].length < 2)
+            return;
+        int m = board.length, n = board[0].length;
+        //Any 'O' connected to a boundary can't be turned to 'X', so ...
+        //Start from first and last column, turn 'O' to '*'.
+        for (int i = 0; i < m; i++) {
+            if (board[i][0] == 'O')
+                boundaryDFS(board, i, 0);
+            if (board[i][n-1] == 'O')
+                boundaryDFS(board, i, n-1);
+        }
+        //Start from first and last row, turn '0' to '*'
+        for (int j = 0; j < n; j++) {
+            if (board[0][j] == 'O')
+                boundaryDFS(board, 0, j);
+            if (board[m-1][j] == 'O')
+                boundaryDFS(board, m-1, j);
+        }
+        //post-prcessing, turn 'O' to 'X', '*' back to 'O', keep 'X' intact.
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                if (board[i][j] == 'O')
+                    board[i][j] = 'X';
+                else if (board[i][j] == '*')
+                    board[i][j] = 'O';
+            }
+        }
+    }
+    //Use DFS algo to turn internal however boundary-connected 'O' to '*';
+    private void boundaryDFS(char[][] board, int i, int j) {
+        if (i < 0 || i > board.length - 1 || j <0 || j > board[0].length - 1)
+            return;
+        if (board[i][j] == 'O')
+            board[i][j] = '*';
+        if (i > 1 && board[i-1][j] == 'O')
+            boundaryDFS(board, i-1, j);
+        if (i < board.length - 2 && board[i+1][j] == 'O')
+            boundaryDFS(board, i+1, j);
+        if (j > 1 && board[i][j-1] == 'O')
+            boundaryDFS(board, i, j-1);
+        if (j < board[i].length - 2 && board[i][j+1] == 'O' )
+            boundaryDFS(board, i, j+1);
+    }
+}
+
+#BFS
+# 37.72% 10ms
+public class Solution {
+    private static final int[][] DIRECTIONS = new int[][] {{0, -1}, {0, 1}, {-1, 0}, {1, 0}};
+
+    public void solve(char[][] board) {
+        int m = board.length;
+        int n = m == 0 ? 0 : board[0].length;
+        if (m == 0 || n == 0) {
+            return;
+        }
+        for (int i = 0; i < m; i++) {
+            if (board[i][0] == 'O') {
+                bfs(board, m, n, i, 0);
+            }
+            if (board[i][n - 1] == 'O') {
+                bfs(board, m, n, i, n - 1);
+            }
+        }
+        for (int j = 1; j < n - 1; j++) {
+            if (board[0][j] == 'O') {
+                bfs(board, m, n, 0, j);
+            }
+            if (board[m - 1][j] == 'O') {
+                bfs(board, m, n, m - 1, j);
+            }
+        }
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                if (board[i][j] == '#') {
+                    board[i][j] = 'O';
+                } else if (board[i][j] == 'O') {
+                    board[i][j] = 'X';
+                }
+            }
+        }
+    }
+
+    private void bfs(char[][] board, int m, int n, int i, int j) {
+        Queue<Integer> queue = new LinkedList<>();
+        queue.add(i * n + j);
+        board[i][j] = '#';
+        while (!queue.isEmpty()) {
+            int cur = queue.poll();
+            int row = cur / n;
+            int col = cur % n;
+            for (int[] direction : DIRECTIONS) {
+                int newRow = row + direction[0];
+                int newCol = col + direction[1];
+                if (newRow >= 0 && newRow < m && newCol >= 0 && newCol < n && board[newRow][newCol] == 'O') {
+                    board[newRow][newCol] = '#';
+                    queue.add(newRow * n + newCol);
                 }
             }
         }

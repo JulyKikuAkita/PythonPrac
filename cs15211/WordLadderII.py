@@ -152,7 +152,7 @@ test = SolutionOther()
 #print test.findLadders("a", "b", dict2)
 
 #Java
-js = '''
+Java = '''
 public class Solution {
     public List<List<String>> findLadders(String beginWord, String endWord, Set<String> wordList) {
         Set<String> unvisited = new HashSet<>(wordList);
@@ -326,6 +326,94 @@ class LevelString {
     public LevelString(String string, int level) {
         this.string = string;
         this.level = level;
+    }
+}
+'''
+
+# below is for 2017 version
+Leecode2017 = '''
+# 94.43%
+public class Solution {
+        boolean isConnected = false;
+        public List<List<String>> findLadders(String beginWord, String endWord, List<String> wordList){
+            List<List<String>> result = new ArrayList<List<String>>();
+            Set<String> dict = new HashSet<>(wordList);
+            if(!dict.contains(endWord)){
+                return result;
+            }
+            Set<String> fwd = new HashSet<String>();
+            fwd.add(beginWord);
+            Set<String> bwd = new HashSet<String>();
+            bwd.add(endWord);
+
+            Map<String, List<String>> hs = new HashMap<String, List<String>>();
+            BFS(fwd, bwd, dict, false, hs);
+
+            if (!isConnected) return result;
+
+            List<String> temp = new ArrayList<String>();
+            temp.add(beginWord);
+
+            DFS(result, temp, beginWord, endWord, hs);
+
+            return result;
+        }
+
+    public void BFS (Set<String> forward, Set<String> backward, Set<String> dict, boolean swap, Map<String, List<String>> hs){
+        if (forward.isEmpty() || backward.isEmpty()){
+            return;
+        }
+        if (forward.size() > backward.size()){
+            BFS(backward, forward, dict, !swap, hs);
+            return;
+        }
+        dict.removeAll(forward);
+        dict.removeAll(backward);
+
+        Set<String> set3 = new HashSet<String>();
+
+        for (String str : forward){
+            for (int i = 0; i < str.length(); i++){
+                char[] ary = str.toCharArray();
+                for (char j = 'a'; j <= 'z'; j++){
+                    ary[i] = j;
+                    String temp = new String(ary);
+                    if(!backward.contains(temp) && !dict.contains(temp)){
+                        continue;
+                    }
+
+                    String key = !swap ? str : temp;
+                    String val = !swap ? temp : str;
+
+                    if (!hs.containsKey(key)) hs.put(key, new ArrayList<String>());
+                    if (backward.contains(temp)){
+                        hs.get(key).add(val);
+                        isConnected = true;
+                    }
+                    if (!isConnected && dict.contains(temp)){
+                        hs.get(key).add(val);
+                        set3.add(temp);
+                    }
+                }
+            }
+        }
+        if (!isConnected){
+            BFS(set3, backward, dict, swap, hs);
+        }
+    }
+
+    public void DFS (List<List<String>> result, List<String> temp, String start, String end, Map<String, List<String>> hs){
+        if(start.equals(end)){
+            result.add(new ArrayList<String>(temp));
+            return;
+        }
+        if (!hs.containsKey(start)) return;
+
+        for (String s : hs.get(start)){
+            temp.add(s);
+            DFS(result, temp, s, end, hs);
+            temp.remove(temp.size() - 1);
+        }
     }
 }
 '''

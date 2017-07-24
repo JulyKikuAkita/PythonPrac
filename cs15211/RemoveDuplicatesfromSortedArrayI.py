@@ -1,9 +1,10 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/remove-duplicates-from-sorted-array/description/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/remove-duplicates-from-sorted-array.py
 # Time:  O(n)
 # Space: O(1)
 # Array
 #
+# Description: Leetcode # 26. Remove Duplicates from Sorted Array
 # Given a sorted array, remove the duplicates in place such that each element appear only once and return the new length.
 #
 # Do not allocate extra space for another array, you must do this in place with constant memory.
@@ -12,10 +13,15 @@ __author__ = 'July'
 # Given input array A = [1,1,2],
 #
 # Your function should return length = 2, and A is now [1,2].
+# Companies
 # Microsoft Bloomberg Facebook
-# Hide Tags Array Two Pointers
+# Related Topics
+# Array Two Pointers
+# Similar Questions
+# Remove Element
+#
 
-
+import unittest
 class Solution:
     # @param a list of integers
     # @return an integer
@@ -30,9 +36,6 @@ class Solution:
             i += 1
         return last + 1
 
-if __name__ == "__main__":
-    print Solution().removeDuplicates([1, 1, 2])
-
 class SolutionOther:
     # @param a list of integers
     # @return an integer
@@ -45,44 +48,53 @@ class SolutionOther:
                 A[cur] = A[i]
                 cur += 1
         return cur
-
-# java solution
-# http://www.programcreek.com/2013/01/leetcode-remove-duplicates-from-sorted-array-java/
 #test
-test = SolutionOther()
-print test.removeDuplicates([0,1,1,1,2,3])
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+        print Solution().removeDuplicates([1, 1, 2])
 
-#java
-js = '''
+if __name__ == '__main__':
+    unittest.main()
+
+Java = '''
+#Thought: https://leetcode.com/articles/remove-duplicates-sorted-array/
+
+#89.60% 12ms
 public class Solution {
     public int removeDuplicates(int[] nums) {
-        int end = 0;  //if end = 1 ;
-        for (int i = 1; i < nums.length; i++) {
-            if (nums[i] != nums[end]) {
-                nums[++end] = nums[i];
-                // nums[end++] = nums[i]; // if end == 1
-            }
-        }
-        return end + 1;
-        // return end;
+        int i = 0;
+        for (int n : nums)
+            if (i == 0 || n > nums[i-1])
+                nums[i++] = n;
+        return i;
     }
 }
 
-
+# 66.83% 13ms
 public class Solution {
     public int removeDuplicates(int[] nums) {
-        if( nums == null || nums.length == 0) return 0;
-
-        int last = 1;
-        int cur = 1;
-
-        while ( cur < nums.length) {
-            if (nums[cur] != nums[last - 1]){
-                nums[last++] = nums[cur];
+        int index = 0;
+        for (int i = 1; i < nums.length; i++) {
+            if (nums[i] != nums[index]) {
+                nums[++index] = nums[i];
             }
-            cur++;
         }
-        return last;
+        return index + 1;
     }
+}
+
+Approach #1 (Two Pointers) [Accepted]
+# 66.83% 13ms
+public int removeDuplicates(int[] nums) {
+    if (nums.length == 0) return 0;
+    int i = 0;
+    for (int j = 1; j < nums.length; j++) {
+        if (nums[j] != nums[i]) {
+            i++;
+            nums[i] = nums[j];
+        }
+    }
+    return i + 1;
 }
 '''

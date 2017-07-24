@@ -1,14 +1,26 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/remove-element/description/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/remove-element.py
 # Time:  O(n)
 # Space: O(1)
 # Array
 #
+# Description: Leetcode # 27. Remove Element
 # Given an array and a value, remove all instances of that value in place and return the new length.
+#
+# Do not allocate extra space for another array, you must do this in place with constant memory.
 #
 # The order of elements can be changed. It doesn't matter what you leave beyond the new length.
 #
-
+# Example:
+# Given input array nums = [3,2,2,3], val = 3
+#
+# Your function should return length = 2, with the first two elements of nums being 2.
+# Related Topics
+# Array Two Pointers
+# Similar Questions
+# Remove Duplicates from Sorted Array Remove Linked List Elements Move Zeroes
+#
+import unittest
 class Solution:
     # @param    A       a list of integers
     # @param    elem    an integer, value need to be removed
@@ -39,14 +51,67 @@ class SolutionOther:
                 answer += 1
         return answer
 
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+        t1 = SolutionOther()
+        print t1.removeElement([1,1,1],1)
+        print t1.removeElement([1, 2, 3, 4, 5, 2, 2], 2)
+
+if __name__ == '__main__':
+    unittest.main()
+
+Java = '''
+#Thought: https://leetcode.com/articles/remove-element/
+
+#Two pointers
+#27.72% 10ms
+public class Solution {
+    public int removeElement(int[] nums, int val) {
+        int end = -1;
+        for (int i = 0; i < nums.length; i++) {
+            if (nums[i] != val) {
+                nums[++end] = nums[i];
+            }
+        }
+        return end + 1;
+    }
+}
+
+#Two pointers
+#27.72% 10ms
+public class Solution {
+    public int removeElement(int[] nums, int val) {
+        int j = 0;
+        for (int i = 0; i < nums.length; i++) {
+            if (nums[i] != val) {
+                nums[j++] = nums[i];
+            }
+        }
+        return j;
+    }
+}
+
+#27.72% 10ms
+public class Solution {
+    public int removeElement(int[] nums, int val) {
+        int i = 0;
+        int n = nums.length;
+        while (i < n) {
+            if (nums[i] == val) {
+                nums[i] = nums[n - 1];
+                // reduce array size by one
+                n--;
+            } else {
+                i++;
+            }
+        }
+        return n;
+    }
+}
 
 
-t1 = SolutionOther()
-print t1.removeElement([1,1,1],1)
-print t1.removeElement([1, 2, 3, 4, 5, 2, 2], 2)
-
-#java
-js = '''
+# 92.56% 8ms
 public class Solution {
     public int removeElement(int[] nums, int val) {
         int end = nums.length;
@@ -64,4 +129,6 @@ public class Solution {
         nums[j] = tmp;
     }
 }
+
+
 '''

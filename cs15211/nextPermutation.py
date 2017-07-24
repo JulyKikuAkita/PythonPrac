@@ -1,9 +1,10 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/next-permutation/description/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/next-permutation.py
 # Time:  O(n)
 # Space: O(1)
 # Array
 #
+# Description: Leetcode # 31. Next Permutation
 # Implement next permutation, which rearranges numbers into the lexicographically next greater permutation of numbers.
 #
 # If such arrangement is not possible, it must rearrange it as the lowest possible order (ie, sorted in ascending order).
@@ -15,10 +16,15 @@ __author__ = 'July'
 # 3,2,1 -> 1,2,3
 # 1,1,5 -> 1,5,1
 #
-#  Google
-# Hide Tags Array
-# Hide Similar Problems (M) Permutations (M) Permutations II (M) Permutation Sequence (M) Palindrome Permutation II
-
+# Companies
+# Google
+# Related Topics
+# Array
+# Similar Questions
+# Permutations Permutations II Permutation Sequence Palindrome Permutation II
+# similar with https://leetcode.com/problems/next-greater-element-iii/description/
+#
+import unittest
 class Solution:
     # @param num, a list of integer
     # @return a list of integer
@@ -41,20 +47,6 @@ class Solution:
         num[k], num[l] = num[l], num[k]
         print num, k , l, num[:k+1], num[:k:-1]
         return num[:k+1] + num[:k:-1]
-
-if __name__ == "__main__":
-    num = [1, 4, 3, 2]
-    #num = Solution().nextPermutation(num)
-    #print num
-    #num = Solution().nextPermutation(num)
-    #print num
-    #num = Solution().nextPermutation(num)
-    #print num
-
-    test = [1,2,3]
-    #print test[:0:-1]
-    #print test[:1]
-    print Solution().nextPermutation(test)
 
 class SolutionOther:
     # @param num, a list of integer
@@ -81,11 +73,31 @@ class SolutionOther:
         return num
 
 #test
-test = SolutionOther()
-print test.nextPermutation([6,7,5,3,5,6,2,9,1,2,7,0,9])
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+        test = SolutionOther()
+        print test.nextPermutation([6,7,5,3,5,6,2,9,1,2,7,0,9])
 
-#java
-js = '''
+        num = [1, 4, 3, 2]
+        #num = Solution().nextPermutation(num)
+        #print num
+        #num = Solution().nextPermutation(num)
+        #print num
+        #num = Solution().nextPermutation(num)
+        #print num
+
+        test = [1,2,3]
+        #print test[:0:-1]
+        #print test[:1]
+        print Solution().nextPermutation(test)
+
+if __name__ == '__main__':
+    unittest.main()
+
+Java = '''
+Thought: https://leetcode.com/problems/next-permutation/solution/
+
 My idea is for an array:
 
 Start from its last element, traverse backward to find the first one with index i that satisfy num[i-1] < num[i].
@@ -100,7 +112,7 @@ The last step is to make the remaining higher position part as small as possible
 we just have to reversely sort the num[i,n-1]
 The following is my code:
 
-100%
+#62.19%  19ms
 public class Solution {
     public void nextPermutation(int[] nums) {
         if (nums == null || nums.length < 2) {

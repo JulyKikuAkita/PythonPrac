@@ -1,4 +1,4 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/missing-ranges/description/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/missing-ranges.py
 # Time:  O(n)
 # Space: O(1)
@@ -9,7 +9,12 @@ __author__ = 'July'
 # For example, given [0, 1, 3, 50, 75], lower = 0 and upper = 99,
 # return ["2", "4->49", "51->74", "76->99"].
 #
+# Companies
 # Google
+# Related Topics
+# Array
+# Similar Questions
+# Summary Ranges
 class Solution:
     # @param A, a list of integers
     # @param lower, an integer
@@ -43,8 +48,33 @@ if __name__ == "__main__":
     arr = [0, 1, 3, 50, 75]
     print Solution().findMissingRanges(arr,0, 99)
 
-#java
-js = '''
+#Java
+Java = '''
+13.69# 1ms
+public class Solution {
+    public List<String> findMissingRanges(int[] nums, int lower, int upper) {
+        List<String> res = new ArrayList<>();
+        for(int i : nums) {
+            if(i > lower) res.add(lower+((i-1 > lower)?"->"+(i-1):""));
+            if(i == upper) return res; // Avoid overflow
+            lower = i+1;
+        }
+        if(lower <= upper) res.add(lower + ((upper > lower)?"->"+(upper):""));
+        return res;
+    }
+}
+
+
+Input:
+[2147483647]
+0
+2147483647
+Output:
+["0->2147483646","-2147483648->2147483647"]
+Expected:
+["0->2147483646"]
+
+# Overflow:
 public class Solution {
     public List<String> findMissingRanges(int[] nums, int lower, int upper) {
         List<String> result = new ArrayList<>();

@@ -1,4 +1,4 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/swap-nodes-in-pairs/description/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/swap-nodes-in-pairs.py
 # Time:  O(n)
 # Space: O(1)
@@ -12,7 +12,13 @@ __author__ = 'July'
 # Your algorithm should use only constant space.
 # You may not modify the values in the list, only nodes itself can be changed.
 #
-
+# Companies
+# Microsoft Bloomberg Uber
+# Related Topics
+# Linked List
+# Similar Questions
+# Reverse Nodes in k-Group
+import unittest
 # Definition for singly-linked list.
 class ListNode:
     def __init__(self, x):
@@ -54,17 +60,6 @@ class Solution:
             cur = cur.next.next
         return dummy.next
 
-
-
-
-
-if __name__ == "__main__":
-    head = ListNode(1)
-    head.next, head.next.next, head.next.next.next = ListNode(2), ListNode(3), ListNode(4)
-    print Solution().swapPairs(head)
-
-
-
 class SolutionOther:
     # @param a ListNode
     # @return a ListNode
@@ -89,20 +84,69 @@ class SolutionOther:
         return newHead
 
 
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+        #test
+        c1 = ListNode(1)
+        c2 = ListNode(2)
+        c3 = ListNode(3)
+        #c4 = ListNode(4)
+        c1.next = c2
+        c2.next = c3
+        #c3.next = c4
 
-#test
-c1 = ListNode(1)
-c2 = ListNode(2)
-c3 = ListNode(3)
-#c4 = ListNode(4)
-c1.next = c2
-c2.next = c3
-#c3.next = c4
+        head = ListNode(1)
+        head.next, head.next.next, head.next.next.next = ListNode(2), ListNode(3), ListNode(4)
+        print Solution().swapPairs(head)
 
 
-test = SolutionOther()
-node = test.swapPairs(c1)
-while node :
-    print node.val
-    node =node.next
+if __name__ == '__main__':
+    unittest.main()
 
+Java = '''
+#Thought: https://leetcode.com/problems/contains-duplicate/solution/
+
+#BFS
+# 16.33% 5ms
+
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) { val = x; }
+ * }
+ */
+public class Solution {
+    public ListNode swapPairs(ListNode head) {
+        ListNode fakeHead = new ListNode(0);
+        fakeHead.next = head;
+        ListNode cur = fakeHead;
+        while (cur.next != null && cur.next.next != null) {
+            ListNode next1 = cur.next;
+            ListNode next2 = cur.next.next;
+            ListNode next3 = next2.next;
+            next2.next = cur.next;
+            next1.next = next3;
+            cur.next = next2;
+            cur = next1;
+        }
+        return fakeHead.next;
+    }
+}
+
+
+#DFS
+# 68.67% 4ms
+public class Solution {
+    public ListNode swapPairs(ListNode head) {
+        if ((head == null)||(head.next == null))
+            return head;
+        ListNode n = head.next;
+        head.next = swapPairs(head.next.next);
+        n.next = head;
+        return n;
+    }
+}
+'''

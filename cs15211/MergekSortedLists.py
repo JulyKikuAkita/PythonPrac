@@ -3,11 +3,17 @@ __source__ = 'https://leetcode.com/problems/merge-k-sorted-lists/#/description'
 # Time:  O(nlogk)
 # Space: O(1)
 # heap
-#  LinkedIn Google Uber Airbnb Facebook Twitter Amazon Microsoft
-# Hide Tags Divide and Conquer Linked List Heap
-# Hide Similar Problems
+# Description: Leetcode # 23. Merge k Sorted Lists
 #
 # Merge k sorted linked lists and return it as one sorted list. Analyze and describe its complexity.
+# Companies
+# LinkedIn Google Uber Airbnb Facebook Twitter Amazon Microsoft
+# Related Topics
+# Divide and Conquer Linked List Heap
+# Similar Questions
+# Merge Two Sorted Lists Ugly Number II
+#
+import unittest
 import heapq
 # python heapq tutorial
 
@@ -107,9 +113,8 @@ class Solution_dq:
 
 # O(nk log k) runtime,
 # O(k) space - MinHeap/Priority queue
-import unittest
 # Leetcode - 148ms
-class Solution(unittest.TestCase):
+class Solution2(unittest.TestCase):
     # @param a list of ListNode
     # @return a ListNode
     def mergeKLists(self, lists):
@@ -132,19 +137,22 @@ class Solution(unittest.TestCase):
     def test(self):
         self.assertEqual()
 
-if __name__ == "__main__":
-    list1 = ListNode(1)
-    list1.next = ListNode(3)
-    list2 = ListNode(2)
-    list2.next = ListNode(4)
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+        list1 = ListNode(1)
+        list1.next = ListNode(3)
+        list2 = ListNode(2)
+        list2.next = ListNode(4)
 
-    print Solution().mergeKLists([list1, list2])
-    print Solution_dq().mergeKLists([list1, list2])
+        print Solution().mergeKLists([list1, list2])
+        print Solution_dq().mergeKLists([list1, list2])
 
+if __name__ == '__main__':
+    unittest.main()
 
-
-#java
-java = '''
+Java = '''
+#Thought: https://leetcode.com/problems/contains-duplicate/solution/
 /**
  * Definition for singly-linked list.
  * public class ListNode {
@@ -154,6 +162,7 @@ java = '''
  * }
  */
 
+# 43.16% 21ms
  //1. use minHeap
  public class Solution {
     public ListNode mergeKLists(ListNode[] lists) {
@@ -208,6 +217,7 @@ public class Solution {
 }
 
 //Merge BFS
+# 97.94% 12ms
 public class Solution {
     public ListNode mergeKLists(ListNode[] lists) {
         return mergeKLists(lists, 0, lists.length - 1);
@@ -250,6 +260,35 @@ public class Solution {
             cur = cur.next;
         }
         return fakeHead.next;
+    }
+}
+
+//Merge DFS
+# 71.69% 17ms
+public class Solution {
+    public ListNode mergeKLists(ListNode[] lists) {
+        return partion(lists, 0, lists.length - 1);
+    }
+
+    public ListNode partion(ListNode[] lists, int start, int end) {
+        if (start > end) return null;
+        if (start == end) return lists[start];
+        int mid = start + (end - start) / 2;
+        ListNode list1 = partion(lists, start, mid);
+        ListNode list2 = partion(lists, mid + 1, end);
+        return merge(list1, list2);
+    }
+
+    public ListNode merge(ListNode l1, ListNode l2) {
+        if (l1 == null) return l2;
+        if (l2 == null) return l1;
+        if (l1.val < l2.val) {
+            l1.next = merge(l1.next, l2);
+            return l1;
+        } else {
+            l2.next = merge(l1, l2.next);
+            return l2;
+        }
     }
 }
 '''

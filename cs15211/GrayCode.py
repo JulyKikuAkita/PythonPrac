@@ -1,7 +1,8 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/gray-code/description/'
 # Time:  O(2^n)
 # Space: O(1)
 #
+# Description: Leetcode # 89. Gray Code
 # The gray code is a binary numeral system where two successive values differ in only one bit.
 #
 # Given a non-negative integer n representing the total number of bits in the code,
@@ -19,8 +20,26 @@ __author__ = 'July'
 # For example, [0,2,3,1] is also a valid gray code sequence according to the above definition.
 #
 # For now, the judge is able to judge based on one instance of gray code sequence. Sorry about that.
-# Amazon
 #
+# Companies
+# Amazon
+# Related Topics
+# Backtracking
+# Thought:
+'''
+    from up to down, then left to right
+
+    0   1   11  110
+            10  111
+                101
+                100
+
+    start:      [0]
+    i = 0:      [0, 1]
+    i = 1:      [0, 1, 3, 2]
+    i = 2:      [0, 1, 3, 2, 6, 7, 5, 4]
+    '''
+import unittest
 class Solution:
     # @return a list of integers
     def grayCode(self, n):
@@ -53,13 +72,34 @@ class SolutionOther:
             self.res.extend([i+v for v in self.res[-3:None:-1]])
         return self.res
 
-#test
-#test=SolutionOther()
-#print test.grayCode(3)
-#test = [0,1,2,3,4,5,6]
-#print test[-3:-1], test[-3:None:-1]
-#java
-js = '''
+
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+        #test
+        #test=SolutionOther()
+        #print test.grayCode(3)
+        #test = [0,1,2,3,4,5,6]
+        #print test[-3:-1], test[-3:None:-1]
+
+if __name__ == '__main__':
+    unittest.main()
+
+Java = '''
+#Thought: G(i) = i^ (i/2).
+
+#34.81% 1ms
+public class Solution {
+    public List<Integer> grayCode(int n) {
+        //binary to gray: num ^(num>>1)
+        List<Integer> list = new LinkedList<>();
+        for(int i=0; i<(1<<n); i++)
+            list.add(i^(i>>1));
+        return list;
+    }
+}
+
+#14.39% 2ms
 public class Solution {
     public List<Integer> grayCode(int n) {
         List<Integer> result = new ArrayList<>();

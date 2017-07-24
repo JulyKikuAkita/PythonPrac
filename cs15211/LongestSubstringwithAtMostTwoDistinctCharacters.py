@@ -1,4 +1,4 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/longest-substring-with-at-most-two-distinct-characters/description/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/longest-substring-with-at-most-two-distinct-characters.py
 # Time:  O(n^2)
 # Space: O(1)
@@ -10,10 +10,13 @@ __author__ = 'July'
 # For example, Given s = "eceba",
 #
 # T is "ece" which its length is 3.
-#  Google
-# Hide Tags Hash Table Two Pointers String
-# Hide Similar Problems (M) Longest Substring Without Repeating Characters (H) Sliding Window Maximum
-# (H) Longest Substring with At Most K Distinct Characters
+#
+# Companies
+# Google
+# Related Topics
+# Hash Table Two Pointers String
+# Similar Questions
+# Longest Substring Without Repeating Characters Sliding Window Maximum Longest Substring with At Most K Distinct Characters
 
 class Solution:
     # @param s, a string
@@ -64,7 +67,31 @@ if __name__ =="__main__":
     print Solution().lengthOfLongestSubstringTwoDistinct("eceba")
     print Solution().lengthOfLongestSubstringTwoDistinctleetcode("eceba")
 
-java = '''
+Java = '''
+
+#sliding window
+# 84.79% 7ms
+public class Solution {
+    public int lengthOfLongestSubstringTwoDistinct(String s) {
+        if (s == null || s.length() == 0) return 0;
+        int[] counts = new int[256];
+        int start = 0, end = 0, k = 0, maxLen = 0;
+        while(end < s.length()) {
+            if (counts[s.charAt(end)]++ == 0) k++;
+            end++;
+            while (k > 2) {
+                if(counts[s.charAt(start)]-- == 1) {
+                  k--;
+                }
+                start++;
+            }
+            maxLen = Math.max(maxLen, end - start);
+        }
+        return maxLen;
+    }
+}
+
+# 62.63% 10ms
 public class Solution {
     public int lengthOfLongestSubstringTwoDistinct(String s) {
         int i = 0, j = -1;
@@ -82,6 +109,7 @@ public class Solution {
 }
 
 # https://discuss.leetcode.com/topic/71662/sliding-window-algorithm-template-to-solve-all-the-leetcode-substring-search-problem
+# 28.71% 33ms
 public class Solution {
     public int lengthOfLongestSubstringTwoDistinct(String s) {
         if(s.length() < 1) return 0;
@@ -109,7 +137,8 @@ public class Solution {
         return maxLength;
     }
 }
-97.12%
+
+# 97.12% 4ms
 public class Solution {
     public int lengthOfLongestSubstringTwoDistinct(String s) {
         int len = s.length();

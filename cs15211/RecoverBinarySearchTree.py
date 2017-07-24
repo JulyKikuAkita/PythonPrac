@@ -4,6 +4,8 @@ __source__ = 'https://leetcode.com/problems/recover-binary-search-tree/#/descrip
 # Space: O(1)
 # Tree
 #
+# Description: Leetcode # 99. Recover Binary Search Tree
+#
 # Two elements of a binary search tree (BST) are swapped by mistake.
 #
 # Recover the tree without changing its structure.
@@ -12,7 +14,8 @@ __source__ = 'https://leetcode.com/problems/recover-binary-search-tree/#/descrip
 # A solution using O(n) space is pretty straight forward. Could you devise a constant space solution?
 # Related Topics
 # Tree, Depth-first Search
-
+#
+import unittest
 # http://www.cnblogs.com/zuoyuan/p/3746594.html
 # Definition for a  binary tree node
 class TreeNode:
@@ -92,9 +95,6 @@ class Solution:
                 broken[0] = pre
             broken[1] = cur
 
-
-
-
 class SolutionOther:
     # @param root, a tree node
     # @return a tree node
@@ -132,56 +132,14 @@ class SolutionOther:
         for i in range(len(list)):
             listp[i].val = list[i]
         return root
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+        print Solution().containsDuplicate([12344555,12344555])
 
+if __name__ == '__main__':
+    unittest.main()
 
-#create tree
-root1=TreeNode(0)
-root2=TreeNode(1)
-root3=TreeNode(3)
-root4=TreeNode(4)
-root5=TreeNode(5)
-
-tree2=TreeNode(2)
-tree31=TreeNode(5)
-tree32=TreeNode(2)
-tree41=TreeNode(4)
-tree411=TreeNode(4)
-tree4111=TreeNode(4)
-tree51=TreeNode(1)
-tree52=TreeNode(2)
-tree511=TreeNode(3)
-tree522=TreeNode(4)
-tree5221=TreeNode(5)
-tree52212=TreeNode(6)
-
-root2.left=tree2
-
-root3.left=tree31
-root3.right=tree32
-
-root4.right =tree41
-tree41.right=tree411
-tree411.right=tree4111
-
-root5.left=tree51
-root5.right=tree52
-tree51.left=tree511
-tree52.right=tree522
-tree522.left=tree5221
-tree5221.right=tree52212
-
-my_test=SolutionOther()
-#print root5
-print my_test.recoverTree(root5)
-
-# test
-if __name__ == "__main__":
-    root = TreeNode(0)
-    root.left = TreeNode(1)
-    print root3
-    print Solution().recoverTree(root3)
-
-#java
 Java = '''
 Thought:
 Let's start by writing the in order traversal:
@@ -212,12 +170,13 @@ Really, what we are comparing is the current node and its previous node in the "
 Let us define three variables, firstElement, secondElement, and prevElement. 
 Now we just need to build the "do some business" logic as finding the two elements. See the code below:
 
+# 70.41% 3ms
 public class Solution {
     
     TreeNode firstElement = null;
     TreeNode secondElement = null;
     // The reason for this initialization is to avoid null pointer exception 
-    in the first comparison when prevElement has not been initialized
+    //in the first comparison when prevElement has not been initialized
     TreeNode prevElement = new TreeNode(Integer.MIN_VALUE);
     
     public void recoverTree(TreeNode root) {
@@ -253,9 +212,38 @@ public class Solution {
         // End of "do some business"
 
         traverse(root.right);
+    }
 }
 
+# 70.41% 3ms
 
+class Solution {
+    private TreeNode pre = null;
+    private TreeNode first = null, second = null;
+    public void recoverTree(TreeNode root) {
+        dfs(root);
+        final int temp = first.val;
+        first.val = second.val;
+        second.val = temp;
+    }
+
+    public void dfs(TreeNode root) {
+        if (root == null) return;
+        dfs(root.left);
+        if (pre != null) {
+            if (root.val < pre.val) {
+                if (first == null) {
+                    first = pre;
+                }
+                second = root;
+            }
+        }
+        pre = root;
+        dfs(root.right);
+    }
+}
+
+# 70.41% 3ms
 /**
  * Definition for a binary tree node.
  * public class TreeNode {
@@ -314,6 +302,7 @@ We need to take case this case without destroy the previous analysis.
 So the first node will still be pre, and the second will be just set to root. 
 Once we meet this case again, the first node will not be affected.
 
+# 29.86% 4ms
 public class Solution {
     public void recoverTree(TreeNode root) {
         TreeNode pre = null;

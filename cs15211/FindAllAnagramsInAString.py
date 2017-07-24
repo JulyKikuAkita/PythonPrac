@@ -1,4 +1,4 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/find-all-anagrams-in-a-string/description/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/find-all-anagrams-in-a-string.py
 # Time:  O(n)
 # Space: O(1)
@@ -34,10 +34,13 @@ __author__ = 'July'
 # The substring with start index = 0 is "ab", which is an anagram of "ab".
 # The substring with start index = 1 is "ba", which is an anagram of "ab".
 # The substring with start index = 2 is "ab", which is an anagram of "ab".
-#  Amazon
-# Hide Tags Hash Table
-# Hide Similar Problems (E) Valid Anagram (M) Permutation in String
-
+# Companies
+# Amazon
+# Related Topics
+# Hash Table
+# Similar Questions
+# Valid Anagram Permutation in String
+#
 class Solution(object):
     def findAnagrams(self, s, p):
         """
@@ -63,12 +66,13 @@ class Solution(object):
 
         return result
 
-java = '''
+Java = '''
 Same idea from a fantastic sliding window template, please refer:
 https://discuss.leetcode.com/topic/30941/here-is-a-10-line-template-that-can-solve-most-substring-problems
 
 Time Complexity will be O(n) because the "start" and "end" points will only move from left to right once.
 
+#72.27% 22ms
 public List<Integer> findAnagrams(String s, String p) {
     List<Integer> list = new ArrayList<>();
     if (s == null || s.length() == 0 || p == null || p.length() == 0) return list;
@@ -98,4 +102,34 @@ public List<Integer> findAnagrams(String s, String p) {
 }
 template:
 https://discuss.leetcode.com/topic/68976/sliding-window-algorithm-template-to-solve-all-the-leetcode-substring-search-problem
+
+2. HashTable + sliding window
+#99.92% 10ms
+public class Solution {
+    public List<Integer> findAnagrams(String s, String p) {
+        List<Integer> list = new ArrayList<>();
+        char[] pchar = p.toCharArray();
+        char[] schar = s.toCharArray();
+        int count = pchar.length;
+        int left = 0;
+        int right = 0;
+        int hash[] = new int[256];
+        for (char c : pchar) {
+        	hash[c] ++;
+        }
+        while(right < schar.length) {
+        	char c = schar[right ++];
+        	if(hash[c] -- >= 1) count --;
+        	while(right - left > pchar.length){
+        		char prev = schar[left ++];
+        		if (hash[prev] ++ >= 0) count ++;
+        	}
+        	if (count == 0) {
+        		list.add(left);
+        	}
+        }
+        return list;
+    }
+}
+
 '''

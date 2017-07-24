@@ -1,8 +1,10 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/reverse-linked-list-ii/description/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/reverse-linked-list-ii.py
 # Time:  O(n)
 # Space: O(1)
 # LinkedList
+#
+# Description: Leetcode # 92. Reverse Linked List II
 #
 # Reverse a linked list from position m to n. Do it in-place and in one-pass.
 #
@@ -15,7 +17,13 @@ __author__ = 'July'
 # Given m, n satisfy the following condition:
 # 1 <= m <= n <= length of list.
 #
+# Related Topics
+# Linked List
+# Similar Questions
+# Reverse Linked List
+#
 
+import unittest
 # Definition for singly-linked list.
 class ListNode:
     def __init__(self, x):
@@ -47,7 +55,6 @@ class Solution:
 
         last_unswapped.next, first_swapped.next = prev, cur
         return dummy.next
-
 
     # this one from java code is eaiser to understand
     def reverseBetweenif(self, head, m, n):
@@ -115,23 +122,6 @@ class Solution3(object):
         node.next = head
         return newroot
 
-
-if __name__ == "__main__":
-    head = ListNode(1)
-    head.next = ListNode(2)
-    head.next.next = ListNode(3)
-    head.next.next.next = ListNode(4)
-    head.next.next.next.next = ListNode(5)
-    print Solution().reverseBetweenif(head, 2, 4)
-
-    head1 = ListNode(1)
-    head1.next = ListNode(2)
-    head1.next.next = ListNode(3)
-    #head1.next.next.next = ListNode(4)
-    #head1.next.next.next.next = ListNode(5)
-    print Solution().reverseBetweenif(head1, 1, 2)
-
-
 class SolutionOther:
     # @param head, a ListNode
     # @param m, an integer
@@ -161,9 +151,28 @@ class SolutionOther:
 
         return head
 
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        head = ListNode(1)
+        head.next = ListNode(2)
+        head.next.next = ListNode(3)
+        head.next.next.next = ListNode(4)
+        head.next.next.next.next = ListNode(5)
+        print Solution().reverseBetweenif(head, 2, 4)
 
-#java
-js = '''
+        head1 = ListNode(1)
+        head1.next = ListNode(2)
+        head1.next.next = ListNode(3)
+        #head1.next.next.next = ListNode(4)
+        #head1.next.next.next.next = ListNode(5)
+        print Solution().reverseBetweenif(head1, 1, 2)
+
+if __name__ == '__main__':
+    unittest.main()
+
+Java = '''
+# 26.12% 4ms
+#Thought: https://leetcode.com/problems/contains-duplicate/solution/
 /**
  * Definition for singly-linked list.
  * public class ListNode {
@@ -174,36 +183,51 @@ js = '''
  */
 public class Solution {
     public ListNode reverseBetween(ListNode head, int m, int n) {
+        if(head == null) return null;
+        ListNode dummy = new ListNode(0); // create a dummy node to mark the head of this list
+        dummy.next = head;
+        ListNode pre = dummy; // make a pointer pre as a marker for the node before reversing
+        for(int i = 0; i<m-1; i++) pre = pre.next;
+
+        ListNode start = pre.next; // a pointer to the beginning of a sub-list that will be reversed
+        ListNode then = start.next; // a pointer to a node that will be reversed
+
+        // 1 - 2 -3 - 4 - 5 ; m=2; n =4 ---> pre = 1, start = 2, then = 3
+        // dummy-> 1 -> 2 -> 3 -> 4 -> 5
+
+        for(int i=0; i<n-m; i++)
+        {
+            start.next = then.next;
+            then.next = pre.next;
+            pre.next = then;
+            then = start.next;
+        }
+
+        // first reversing : dummy->1 - 3 - 2 - 4 - 5; pre = 1, start = 2, then = 4
+        // second reversing: dummy->1 - 4 - 3 - 2 - 5; pre = 1, start = 2, then = 5 (finish)
+
+        return dummy.next;
+
+    }
+}
+
+# 26.12% 4ms
+public class Solution {
+    public ListNode reverseBetween(ListNode head, int m, int n) {
         ListNode fakeHead = new ListNode(0);
         fakeHead.next = head;
-        ListNode firstTail = fakeHead;
-        ListNode reverseTail = fakeHead;
-        for (int i = 0; i < m - 1; i++) {
-            firstTail = firstTail.next;
-            reverseTail = reverseTail.next;
+        head = fakeHead;
+        for (int i = 1; i < m; i++) {
+            head = head.next;
         }
-        ListNode reverseHead = firstTail.next;
-        for (int i = 0; i < n - m + 1; i++) {
-            reverseTail = reverseTail.next;
+        ListNode tail = head.next;
+        for (int i = 0; i < n - m; i++) {
+            ListNode next = tail.next;
+            tail.next = next.next;
+            next.next = head.next;
+            head.next = next;
         }
-        ListNode secondHead = reverseTail.next;
-        firstTail.next = null;
-        reverseTail.next = null;
-        reverse(reverseHead);
-        firstTail.next = reverseTail;
-        reverseHead.next = secondHead;
         return fakeHead.next;
-    }
-
-    private ListNode reverse(ListNode head) {
-        ListNode prev = null;
-        while (head != null) {
-            ListNode next = head.next;
-            head.next = prev;
-            prev = head;
-            head = next;
-        }
-        return prev;
     }
 }
 '''

@@ -3,7 +3,9 @@ __source__ = 'https://leetcode.com/problems/spiral-matrix-ii/#/description'
 # Time:  O(n^2)
 # Space: O(1)
 #
-# Given an integer n, generate a square matrix filled with elements from 1 to n2 in spiral order.
+# Description: Leetcode #  59. Spiral Matrix II
+#
+# Given an integer n, generate a square matrix filled with elements from 1 to n^2 in spiral order.
 #
 # For example,
 # Given n = 3,
@@ -15,9 +17,13 @@ __source__ = 'https://leetcode.com/problems/spiral-matrix-ii/#/description'
 #  [ 7, 6, 5 ]
 # ]
 #
-# Microsoft
+# Related Topics
+# Array
+# Similar Questions
+# Spiral Matrix
 #
 
+import unittest
 class Solution:
     # @return a list of lists of integer
     def generateMatrix(self, n):
@@ -48,10 +54,6 @@ class Solution:
                     num +=1
             left += 1
         return matrix
-
-if __name__ == "__main__":
-    print Solution().generateMatrix(3)
-    print Solution().generateMatrix(2)
 
 # http://chaoren.is-programmer.com/posts/43864.html
 class SolutionOther:
@@ -121,20 +123,28 @@ class SolutionOther:
             if count == n*n: return matrix
             direct = (direct+1) % 4
 
-#test
-test = SolutionOther()
-#print test.generateMatrix(2)
-#print test.generateMatrix2(2)
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        print Solution().generateMatrix(3)
+        print Solution().generateMatrix(2)
+        #test
+        test = SolutionOther()
+        #print test.generateMatrix(2)
+        #print test.generateMatrix2(2)
 
-#java
-java = '''
+if __name__ == '__main__':
+    unittest.main()
+
+Java = '''
 Thought:
+
 This is my solution for Spiral Matrix I,
 https://oj.leetcode.com/discuss/12228/super-simple-and-easy-to-understand-solution.
 If you can understand that, this one is a no brainer :)
 Guess what? I just made several lines of change (with comment "//change")
 from that and I have the following AC code:
 
+#54% 2ms
 public class Solution {
     public int[][] generateMatrix(int n) {
         // Declaration
@@ -153,36 +163,38 @@ public class Solution {
         int num = 1; //change
 
         while (rowStart <= rowEnd && colStart <= colEnd) {
-            for (int i = colStart; i <= colEnd; i ++) {
-                matrix[rowStart][i] = num ++; //change
+            for (int i = colStart; i<= colEnd; i++) {
+                matrix[rowStart][i] = num++;
             }
-            rowStart ++;
+            rowStart++;
 
-            for (int i = rowStart; i <= rowEnd; i ++) {
-                matrix[i][colEnd] = num ++; //change
+            for (int i = rowStart; i<= rowEnd; i++) {
+                matrix[i][colEnd] = num++;
             }
-            colEnd --;
+            colEnd--;
 
-            if (rowStart <= rowEnd) {
-                for (int i = colEnd; i >= colStart; i --) {
-                    matrix[rowEnd][i] = num ++; //change
+            if (rowEnd >= rowStart) {
+                for (int i = colEnd; i >= colStart; i--) {
+                    matrix[rowEnd][i] = num++;
                 }
+                rowEnd--; //outside if loop is fine
             }
-            rowEnd --;
 
             if (colStart <= colEnd) {
-                for (int i = rowEnd; i >= rowStart; i --) {
-                    matrix[i][colStart] = num ++; //change
+                for (int i = rowEnd; i >= rowStart; i--) {
+                    matrix[i][colStart] = num++;
                 }
+                colStart++; //outside if loop is fine
             }
-            colStart ++;
         }
         return matrix;
     }
 }
+
 Obviously, you could merge colStart and colEnd into rowStart and rowEnd
 because it is a square matrix. But this is easily extensible to matrices that are m*n.
 
+# 13.31 % 3ms
 public class Solution {
     public int[][] generateMatrix(int n) {
         if (n <= 0) {

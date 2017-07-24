@@ -3,7 +3,7 @@ __source__ = 'https://leetcode.com/problems/counting-bits/#/description'
 # Time:  O(n)
 # Space: O(n)
 #
-# Description:
+# Description: Leetcode # 338. Counting Bits
 # Given a non negative integer number num. For every numbers i in the range 0 <= i <= num
 # calculate the number of 1's in their binary representation and return them as an array.
 #
@@ -24,7 +24,7 @@ __source__ = 'https://leetcode.com/problems/counting-bits/#/description'
 # Number of 1 Bits
 #
 import unittest
-
+#195ms
 class Solution(object):
     def countBits(self, num):
         """
@@ -51,7 +51,6 @@ class TestMethods(unittest.TestCase):
     def test_Local(self):
         self.assertEqual(1, 1)
 
-
 if __name__ == '__main__':
     unittest.main()
     s = Solution()
@@ -60,7 +59,17 @@ if __name__ == '__main__':
 
 Java = '''
 # Thought: https://leetcode.com/articles/counting-bits/
-# 82%
+# 21.52% 4ms
+public class Solution {
+    public int[] countBits(int num) {
+        int[] ones = new int[num+1];
+        for(int i=1; i<=num; i++)
+            ones[i]=Integer.bitCount(i);
+        return ones;
+    }
+}
+
+# 21.52% 4ms
 public class Solution {
     public int[] countBits(int num) {
         int[] res = new int[num + 1];
@@ -72,7 +81,11 @@ public class Solution {
 }
 
 # DP: https://discuss.leetcode.com/topic/40195/how-we-handle-this-question-on-interview-thinking-process-dp-solution
-# 82%
+Thought:
+In general, we have the following transition function for popcount P(x):
+P(x + b) = P(x) + 1, b = 2^m > x
+With this transition function, we can then apply Dynamic Programming to generate all the pop counts starting from 00.
+# 82% 2ms
 public class Solution {
     public int[] countBits(int num) {
         int[] res = new int[num + 1];
@@ -87,6 +100,7 @@ public class Solution {
     }
 }
 
+#33.41% 3ms
 public class Solution {
   public int[] countBits2(int num) {
       int[] ans = new int[num + 1];
@@ -95,4 +109,5 @@ public class Solution {
       return ans;
   }
 }
+
 '''

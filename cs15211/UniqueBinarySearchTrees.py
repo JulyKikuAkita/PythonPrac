@@ -4,6 +4,8 @@ __source__ = 'https://leetcode.com/problems/unique-binary-search-trees/#/descrip
 # Space: O(n)
 # DP
 #
+# Description: Leetcode # 96. Unique Binary Search Trees
+#
 # Given n, how many structurally unique BST's (binary search trees) that store values 1...n?
 #
 # For example,
@@ -20,14 +22,14 @@ __source__ = 'https://leetcode.com/problems/unique-binary-search-trees/#/descrip
 #explanation: http://fisherlei.blogspot.com/2013/03/leetcode-unique-binary-search-trees.html
 # Count[i] = sum( Count[0...k] * [ k+1....i] )    0<=k<i-1
 #
-# Topics:
-# Tree Dynamic Programming
-# You might like:
-# (M) Unique Binary Search Trees II
-# Company:
+# Companies
 # Snapchat
+# Related Topics
+# Tree Dynamic Programming
+# Similar Questions
+# Unique Binary Search Trees II
 #
-
+import unittest
 class Solution:
     # @return an integer
     def numTrees(self, n):
@@ -71,15 +73,18 @@ class SolutionOther2:
             #print j, dparr,  nodenum ,dparr[nodenum]
         return dparr[nodenum]
 
-#test
-test =  Solution()
-print test.numTrees(2)
-#print test.numTrees(-1)
-#print test.numTrees(5)
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+        print Solution().containsDuplicate([12344555,12344555])
 
-#Java
+if __name__ == '__main__':
+    unittest.main()
+
 Java = '''
-Fantastic Clean Java DP Solution with Detail Explaination
+#Thought:
+
+Fantastic Clean Java DP Solution with Detail Explanation
 First note that dp[k] represents the number of BST trees built from 1....k;
 
 Then assume we have the number of the first 4 trees: dp[1] = 1 ,dp[2] =2 ,dp[3] = 5, dp[4] =14 ,
@@ -100,7 +105,9 @@ Now, we may have a better understanding of the dp[k],
 which essentially represents the number of BST trees with k consecutive nodes.
 It is used as database when we need to know how many left sub trees are possible for k nodes when picking (k+1) as root.
 
- public int numTrees(int n) {
+#9.67% 0ms
+
+public int numTrees(int n) {
     int [] dp = new int[n+1];
     dp[0]= 1;
     dp[1] = 1;
@@ -109,6 +116,8 @@ It is used as database when we need to know how many left sub trees are possible
             dp[level] += dp[level-root]*dp[root-1];
     return dp[n];
 }
+
+#9.67% 0ms
 public class Solution {
     public int numTrees(int n) {
         if (n <= 0) {
@@ -178,6 +187,7 @@ In terms of calculation, we need to start with the lower number,
 since the value of G(n) depends on the values of G(0) ... G(n-1).
 With the above explanation and formulas, here is the implementation in Java.
 
+#9.67% 0ms
 public int numTrees(int n) {
     int [] G = new int[n+1];
     G[0] = G[1] = 1;

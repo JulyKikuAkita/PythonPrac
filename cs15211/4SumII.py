@@ -2,7 +2,7 @@ __source__ = 'https://github.com/kamyu104/LeetCode/blob/master/Python/4sum-ii.py
 # Time:  O(n^2)
 # Space: O(n^2)
 #
-# Description:
+# Description: Leetcode # 454. 4Sum II
 # # Given four lists A, B, C, D of integer values,
 # compute how many tuples (i, j, k, l) there are
 # such that A[i] + B[j] + C[k] + D[l] is zero.
@@ -25,11 +25,15 @@ __source__ = 'https://github.com/kamyu104/LeetCode/blob/master/Python/4sum-ii.py
 # The two tuples are:
 # 1. (0, 0, 0, 1) -> A[0] + B[0] + C[0] + D[1] = 1 + (-2) + (-1) + 2 = 0
 # 2. (1, 1, 0, 0) -> A[1] + B[1] + C[0] + D[0] = 2 + (-1) + (-1) + 0 = 0
-#  Binary Search Hash Table
-# Hide Similar Problems (M) 4Sum
+#
+# Related Topics
+# Binary Search Hash Table
+# Similar Questions
+# 4Sum
 #
 import unittest
 import collections
+#902ms
 class Solution(object):
     def fourSumCount(self, A, B, C, D):
         """
@@ -53,6 +57,17 @@ if __name__ == '__main__':
 
 Java = '''
 #Thought:
+
+Take the arrays A and B, and compute all the possible sums of two elements.
+Put the sum in the Hash map, and increase the hash map value if more than 1 pair sums to the same value.
+
+Compute all the possible sums of the arrays C and D.
+If the hash map contains the opposite value of the current sum,
+increase the count of four elements sum to 0 by the counter in the map.
+
+Time complexity:  O(n^2)
+Space complexity: O(n^2)
+#46.95% 195ms
 public class Solution {
     public int fourSumCount(int[] A, int[] B, int[] C, int[] D) {
         Map<Integer, Integer> map = new HashMap<>();

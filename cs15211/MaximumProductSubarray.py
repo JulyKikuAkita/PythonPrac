@@ -1,4 +1,4 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/maximum-product-subarray/description/'
 # Time:  O(n)
 # Space: O(1)
 # DP
@@ -7,14 +7,21 @@ __author__ = 'July'
 #
 # For example, given the array [2,3,-2,4],
 # the contiguous subarray [2,3] has the largest product = 6.
-'''
-# http://www.programcreek.com/2014/03/leetcode-maximum-product-subarray-java/
-When iterating the array, each element has two possibilities: positive number or negative number.
-We need to track a minimum value, so that when a negative number is given, it can also find the maximum value.
-We define two local variables, one tracks the maximum and the other tracks the minimum.
-'''
+#
+# Companies
 # LinkedIn
-
+# Related Topics
+# Array Dynamic Programming
+# Similar Questions
+# Maximum Subarray House Robber Product of Array Except Self Maximum Product of Three Numbers
+#
+# Thought:
+# http://www.programcreek.com/2014/03/leetcode-maximum-product-subarray-java/
+# When iterating the array, each element has two possibilities: positive number or negative number.
+# We need to track a minimum value, so that when a negative number is given, it can also find the maximum value.
+# We define two local variables, one tracks the maximum and the other tracks the minimum.
+#
+import unittest
 class Solution(object):
     def maxProduct(self, nums):
         """
@@ -73,39 +80,40 @@ class Naive:
             result = result * A[k]
         return result
 
-#test
-test = SolutionOther()
-#print test.maxProduct([2,3,-2,4])
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+        print Solution().maxProduct([2, 3, -2, 4])
+        print Naive().maxProduct([2, 3, -2, 4])
+        print Solution2().maxProduct([-4,-3])
 
-if __name__ == "__main__":
-    print Solution().maxProduct([2, 3, -2, 4])
-    print Naive().maxProduct([2, 3, -2, 4])
-    print Solution2().maxProduct([-4,-3])
+if __name__ == '__main__':
+    unittest.main()
 
-#java
-js ='''
+Java = '''
+#Thought:
+#44.62% 3ms
+
+# Loop through the array, each time remember the max and min value for the previous product,
+# the most important thing is to update the max and min value: we have to compare among max * A[i],
+# min * A[i] as well as A[i], since this is product, a negative * negative could be positive.
+
+#44.62% 3ms
 public class Solution {
     public int maxProduct(int[] nums) {
-        if (nums.length == 0) {
-            return 0;
-        }
-        int max = nums[0];
-        int min = nums[0];
-        int result = nums[0];
+        if (nums == null || nums.length == 0) return 0;
+        int max = nums[0], min = nums[0], res = nums[0];
         for (int i = 1; i < nums.length; i++) {
-            if (nums[i] < 0) {
-                int tmp = min;
-                min = max;
-                max = tmp;
-            }
-            max = Math.max(nums[i], max * nums[i]);
-            min = Math.min(nums[i], min * nums[i]);
-            result = Math.max(result, max);
+            int tmp = max;
+            max = Math.max(Math.max(tmp * nums[i], min * nums[i]), nums[i]);
+            min = Math.min(Math.min(tmp * nums[i], min * nums[i]), nums[i]);
+            res = Math.max(max, res);
         }
-        return result;
+        return res;
     }
 }
 
+#44.62% 3ms
 public class Solution {
     public int maxProduct(int[] nums) {
         if (nums.length == 0) {

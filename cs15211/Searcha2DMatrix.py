@@ -4,6 +4,8 @@ __source__ = 'https://leetcode.com/problems/search-a-2d-matrix/#/description'
 # Space: O(1)
 # Binary Search
 #
+# Description: Leetcode # 74. Search a 2D Matrix
+#
 # Write an efficient algorithm that searches for a value in an m x n matrix. This matrix has the following properties:
 #
 # Integers in each row are sorted from left to right.
@@ -18,10 +20,13 @@ __source__ = 'https://leetcode.com/problems/search-a-2d-matrix/#/description'
 #   [23, 30, 34, 50]
 # ]
 # Given target = 3, return true.
+#
+# Related Topics
 # Array Binary Search
-# Hide Similar Problems (M) Search a 2D Matrix II
-
-
+# Similar Questions
+# Search a 2D Matrix II
+#
+import unittest
 class Solution:
     # @param matrix, a list of lists of integers
     # @param target, an integer
@@ -82,7 +87,7 @@ print test.searchMatrix(matrix, 0)
 #java
 java = '''
 Thought: Don't treat it as a 2D matrix, just treat it as a sorted list
-
+#65.79% 0ms
 public class Solution {
     public boolean searchMatrix(int[][] matrix, int target) {
         int n = matrix.length;
@@ -106,6 +111,7 @@ public class Solution {
     }
 }
 
+#65.79% 0ms
 public class Solution {
     public boolean searchMatrix(int[][] matrix, int target) {
         int m = matrix.length;

@@ -1,7 +1,9 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/combination-sum/description/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/combination-sum.py
 # Time:  O(n^m)
 # Space: O(m)
+#
+# Description: Leetcode # 217. Contains Duplicate
 #
 # Given a set of candidate numbers (C) and a target number (T),
 # find all unique combinations in C where the candidate numbers sums to T.
@@ -17,11 +19,16 @@ __author__ = 'July'
 # [7]
 # [2, 2, 3]
 #
-#  Snapchat Uber
-# Hide Tags Array Backtracking
-# Hide Similar Problems (M) Letter Combinations of a Phone Number (M) Combination Sum II (M) Combinations (M) Combination Sum III (M) Factor Combinations (M) Combination Sum IV
-
-
+# Companies
+# Snapchat Uber
+# Related Topics
+# Array Backtracking
+# Similar Questions
+# Letter Combinations of a Phone Number Combination Sum II Combinations Combination Sum III
+# Factor Combinations Combination Sum IV
+# 40. Combination Sum II has duplicate
+#
+import unittest
 class Solution:
     # @param candidates, a list of integers
     # @param target, integer
@@ -61,16 +68,25 @@ class SolutionOther:
                 #tmp.pop()
 
 #test
-test = SolutionOther()
-print test.combinationSum([6,2,3], 7)
-#print test.combinationSum([2,1], 2)
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+        test = SolutionOther()
+        print test.combinationSum([6,2,3], 7)
+        #print test.combinationSum([2,1], 2)
+        candidates, target = [2, 3, 6, 7], 7
+        result = Solution().combinationSum(candidates, target)
+        print result
 
-if __name__ == "__main__":
-    candidates, target = [2, 3, 6, 7], 7
-    result = Solution().combinationSum(candidates, target)
-    print result
-#java
-java = '''
+if __name__ == '__main__':
+    unittest.main()
+
+Java = '''
+#Thought:
+No duplicate in arr, no need to sort arr
+40. Combination Sum II has duplicate
+
+#71.03% 20ms
 public class Solution {
     public List<List<Integer>> combinationSum(int[] candidates, int target) {
         List<List<Integer>> list = new ArrayList<>();
@@ -91,18 +107,20 @@ public class Solution {
         }
     }
 }
-
+# 81.96% //18ms if not sort array
+# 57.35% 22ms //sort array
 public class Solution {
     public List<List<Integer>> combinationSum(int[] candidates, int target) {
         List<List<Integer>> res = new ArrayList<>();
-        Arrays.sort(candidates);
+        Arrays.sort(candidates); //81.96% //18ms if not sort array
         dfs(candidates, target, 0, new ArrayList<>(), res);
         return res;
     }
 
     private void dfs(int[] candidates, int target, int start, List<Integer> tmp, List<List<Integer>> res){
-        if(target == 0){
+        if (target == 0){
             res.add(new ArrayList<>(tmp));
+            return; //no impact on runtime
         }
         for(int i = start; i < candidates.length; i++){
             if( target - candidates[i] >= 0){
@@ -113,4 +131,30 @@ public class Solution {
         }
     }
  }
+
+ # 57.35% 22ms
+ public class Solution {
+    public List<List<Integer>> combinationSum(int[] candidates, int target) {
+        List<List<Integer>> result = new ArrayList<>();
+        if (candidates.length == 0) {
+            return result;
+        }
+        Arrays.sort(candidates); // need to sort array due to (i)
+        combinationSum(candidates, target, 0, result, new ArrayList<>());
+        return result;
+    }
+
+    private void combinationSum(int[] candidates, int target, int index, List<List<Integer>> result, List<Integer> cur) {
+        if (target == 0) {
+            result.add(new ArrayList<>(cur));
+            return;
+        }
+        int size = cur.size();
+        for (int i = index; i < candidates.length && candidates[i] <= target; i++) { //need to sort arr (i)
+            cur.add(candidates[i]);
+            combinationSum(candidates, target - candidates[i], i, result, cur);
+            cur.remove(size);
+        }
+    }
+}
 '''

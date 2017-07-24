@@ -3,6 +3,7 @@ __source__ = 'https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-t
 # Time:  O(h)
 # Space: O(h)
 #
+# Description: Leetcode # 236. Lowest Common Ancestor of a Binary Tree
 # Given a binary tree, find the lowest common ancestor (LCA)
 # of two given nodes in the tree.
 #
@@ -23,14 +24,14 @@ __source__ = 'https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-t
 # Another example is LCA of nodes 5 and 4 is 5, since a node can be a
 # descendant of itself according to the LCA definition.
 #
-# Topics:
-# Tree
-# You might like:
-# (E) Lowest Common Ancestor of a Binary Search Tree
-# Company:
+# Companies
 # Amazon LinkedIn Apple Facebook Microsoft
-
-
+# Related Topics
+# Tree
+# Similar Questions
+# Lowest Common Ancestor of a Binary Search Tree
+#
+import unittest
 # Definition for a binary tree node.
 class TreeNode:
     def __init__(self, x):
@@ -107,11 +108,15 @@ class Solution(object):
         return root if all(subs) else max(subs)
 
 
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
 
+if __name__ == '__main__':
+    unittest.main()
 
-# http://algobox.org/lowest-common-ancestor-of-a-binary-tree/
-#java
-java = '''
+Java = '''
+#Thought:
 /**
  * Definition for a binary tree node.
  * public class TreeNode {
@@ -123,17 +128,19 @@ java = '''
  */
 
 #DFS
+#25.52% 13ms
 public class Solution {
     public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
         if (root == null || root == p || root == q) return root;
         TreeNode left = lowestCommonAncestor(root.left, p, q);
         TreeNode right = lowestCommonAncestor(root.right, p, q);
-        if (left != null && right != null) return root;
+        if (left != null && right != null) return root; //we don't care if left == null && right == null, just return null
         return left == null ? right : left;
     }
 }
 
 #BFS
+# 6.5% 29ms
 public class Solution {
     public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
         Map<TreeNode, TreeNode> parent = new HashMap<>();

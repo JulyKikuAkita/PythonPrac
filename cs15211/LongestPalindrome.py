@@ -1,7 +1,10 @@
+__source__ = 'https://leetcode.com/problems/longest-palindrome/description/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/longest-palindrome.py
 # Time:  O(n)
 # Space: O(1)
-
+#
+#
+# Description: Leetcode # 409. Longest Palindrome
 # Given a string which consists of lowercase or uppercase letters,
 # find the length of the longest palindromes that can be built with those letters.
 #
@@ -25,8 +28,8 @@
 # Hide Similar Problems (E) Palindrome Permutation
 
 import collections
-
-
+import unittest
+# 58ms
 class Solution(object):
     def longestPalindrome(self, s):
         """
@@ -46,7 +49,73 @@ class Solution(object):
         odd = sum(map(lambda x: x & 1, collections.Counter(s).values()))
         return len(s) - odd + int(odd > 0)
 
-java = '''
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+
+
+if __name__ == '__main__':
+    unittest.main()
+
+Java = '''
+#Thought:
+Thought: Count duplicates in the pass, then check if we have an extra character to fix in the middle.
+#93.24% 9ms
+public class Solution {
+    public int longestPalindrome(String s) {
+        if ( s == null || s.length() ==0 ) return 0;
+        char[] map = new char[256];
+        int count = 0;
+        for (char c: s.toCharArray()) {
+            if (map[c] - 1 == 0) {
+                count += 2;
+                map[c]--;
+            } else {
+                map[c]++;
+            }
+        }
+        if (count < s.length()) count++;
+        return count;
+    }
+}
+
+#85.92% 10ms
+public class Solution {
+    public int longestPalindrome(String s) {
+        boolean[] map = new boolean[128];
+        int len = 0;
+        for (char c : s.toCharArray()) {
+            map[c] = !map[c];         // flip on each occurrence, false when seen n*2 times
+            if (!map[c]) len+=2;
+        }
+        if (len < s.length()) len++; // if more than len, atleast one single is present
+        return len;
+    }
+}
+
+#77.05% 11ms
+public class Solution {
+    public int longestPalindrome(String s) {
+        int[] count = new int[256];
+        for(char c : s.toCharArray()){
+            count[c]++;
+        }
+        int res = 0;
+        for(int i = 0; i < count.length; i++){
+            if(count[i] % 2 == 0){
+                res += count[i];
+            }else{
+                res += count[i]-1 ;
+            }
+        }
+        if(res < s.length()){
+            res++;
+        }
+        return res;
+    }
+}
+
+#49.05% 20ms
 public int longestPalindrome(String s) {
         if(s==null || s.length()==0) return 0;
         HashSet<Character> hs = new HashSet<Character>();

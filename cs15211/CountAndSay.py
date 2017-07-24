@@ -1,22 +1,42 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/count-and-say/description/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/count-and-say.py
 # Time:  O(n * 2^n)
 # Space: O(2^n)
 # String
 #
-# The count-and-say sequence is the sequence of integers beginning as follows:
-# 1, 11, 21, 1211, 111221, ...
+# Description: Leetcode # 38. Count and Say
+# The count-and-say sequence is the sequence of integers with the first five terms as following:
 #
+# 1.     1
+# 2.     11
+# 3.     21
+# 4.     1211
+# 5.     111221
 # 1 is read off as "one 1" or 11.
 # 11 is read off as "two 1s" or 21.
 # 21 is read off as "one 2, then one 1" or 1211.
-# Given an integer n, generate the nth sequence.
+# Given an integer n, generate the nth term of the count-and-say sequence.
 #
-# Note: The sequence of integers will be represented as a string.
+# Note: Each term of the sequence of integers will be represented as a string.
+#
+# Example 1:
+#
+# Input: 1
+# Output: "1"
+# Example 2:
+#
+# Input: 4
+# Output: "1211"
+#
+# Companies
 # Facebook
+# Related Topics
+# String
+# Similar Questions
+# Encode and Decode Strings
+#
 
-
-
+import unittest
 class Solution:
     # @return a string
     def countAndSay(self, n):
@@ -35,13 +55,6 @@ class Solution:
             next_seq += "{}{}".format(cnt,seq[i])
             i += 1
         return next_seq
-
-if __name__ == "__main__":
-    for i in xrange(1,4):
-        print Solution().countAndSay(i)
-
-
-
 
 class SolutionOther:
     # @return a string
@@ -68,44 +81,59 @@ class SolutionOther:
 
         return ans[now]
 
-#test
-test = SolutionOther()
-print test.countAndSay(4)
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+        for i in xrange(1,4):
+            print Solution().countAndSay(i)
+        test = SolutionOther()
+        print test.countAndSay(4)
 
-#java
-js = '''
+if __name__ == '__main__':
+    unittest.main()
+
+Java = '''
+#Thought: https://leetcode.com/problems/contains-duplicate/solution/
+ 1.     1
+ 2.     11
+ 3.     21
+ 4.     1211
+ 5.     111221
+ 6.     312211
+ 7.     13112221
+ 8.     1113213211
+ 9.     31131211131221
+ 10.   13211311123113112211
+
+
+# 94.75% 3ms
 public class Solution {
     public String countAndSay(int n) {
         if (n <= 0) {
             return "";
         }
-        String result = "1";
-        while (--n > 0) {
-            result = countNext(result);
+        String cur = "1";
+        for (int i = 1; i < n; i++) {
+            cur = countNext(cur);
         }
-        return result;
+        return cur;
     }
 
     private String countNext(String str) {
-        if (str.length() == 0) {
-            return "";
-        }
         StringBuilder sb = new StringBuilder();
-        char c = str.charAt(0);
+        char prev = str.charAt(0);
         int count = 1;
         for (int i = 1; i < str.length(); i++) {
-            char curr = str.charAt(i);
-            if (curr == c) {
+            char cur = str.charAt(i);
+            if (cur == prev) {
                 count++;
             } else {
-                sb.append(count);
-                sb.append(c);
-                c = curr;
+                sb.append(count).append(prev);
+                prev = cur;
                 count = 1;
             }
         }
-        sb.append(count);
-        sb.append(c);
+        sb.append(count).append(prev);
         return sb.toString();
     }
 }

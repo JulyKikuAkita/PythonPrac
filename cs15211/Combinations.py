@@ -1,8 +1,10 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/combinations/description/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/combinations.py
 # Time:  O(n!)
 # Space: O(n)
 # DFS
+#
+# Description: Leetcode # 77. Combinations
 #
 # Given two integers n and k, return all possible combinations of k numbers out of 1 ... n.
 #
@@ -17,12 +19,14 @@ __author__ = 'July'
 #   [1,3],
 #   [1,4],
 # ]
-# # Snapchat Uber
-# Hide Tags Array Backtracking
-# Hide Similar Problems (M) Letter Combinations of a Phone Number (M) Combination Sum II
-# (M) Combinations (M) Combination Sum III (M) Factor Combinations (M) Combination Sum IV
-
-
+#
+# Snapchat Uber
+# Related Topics
+# Backtracking
+# Similar Questions
+# Combination Sum Permutations
+# #
+import unittest
 class Solution:
     # @return a list of lists of integers
     def combine(self, n, k):
@@ -41,8 +45,6 @@ class Solution:
             intermediate.append(i + 1)
             self.combineRecu(n, result, i + 1, intermediate, k - 1)
             intermediate.pop()
-
-
 
 class cc150:
     def combin(self, n, k):
@@ -63,11 +65,6 @@ class cc150:
             if len(tmp) == k:
                 result.append(tmp)
         return result
-
-if __name__ == "__main__":
-    print Solution().combine(4, 2)
-    print cc150().combin(4,2)
-
 
 class SolutionOther:
     # @return a list of lists of integers
@@ -102,36 +99,39 @@ class SolutionOther:
             recursive_help(n, k, [], 1)
             return answer
 
-
 def flatten(lists):
-
     for s in lists:
-
         if isinstance(s, list):
             flatten(s)
         else:
             print (s)
 
 
-
-
-#test
-
-
-my_test = SolutionOther()
-#my_test.combine(4, 2)
-#print my_test.combine(1, 0)
-#print my_test.combine(1, 2)
-#print my_test.combine(2, 2)
-#print my_test.combine(4, 2)
-#print my_test.combine(6, 4)
-
-
 #flatten(my_test.combine(4, 2))
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+        #test
+        print Solution().combine(4, 2)
+        print cc150().combin(4,2)
 
-#java
-js = '''
-//template, 39.12% without optimize i <= n - k +!
+        my_test = SolutionOther()
+        #my_test.combine(4, 2)
+        #print my_test.combine(1, 0)
+        #print my_test.combine(1, 2)
+        #print my_test.combine(2, 2)
+        #print my_test.combine(4, 2)
+        #print my_test.combine(6, 4)
+
+
+if __name__ == '__main__':
+    unittest.main()
+
+Java = '''
+#Thought: https://leetcode.com/problems/contains-duplicate/solution/
+
+//template,
+# 15.64% 68ms without optimize i <= n - k +!
 public class Solution {
     public List<List<Integer>> combine(int n, int k) {
         List<List<Integer>> result = new ArrayList<>();
@@ -154,7 +154,7 @@ public class Solution {
     }
 }
 
-//100% , optimize by n - k + 1
+//95.45%, 4ms , optimize by n - k + 1
 public class Solution {
     public List<List<Integer>> combine(int n, int k) {
         List<List<Integer>> result = new ArrayList<>();
@@ -179,7 +179,7 @@ public class Solution {
     }
 }
 
-//100%
+//95.45%, 4ms , optimize by n - k + 1
 public class Solution {
     public List<List<Integer>> combine(int n, int k) {
         List<List<Integer>> result = new ArrayList<>();

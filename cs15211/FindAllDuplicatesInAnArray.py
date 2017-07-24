@@ -2,7 +2,7 @@ __source__ = 'https://github.com/kamyu104/LeetCode/blob/master/Python/find-all-d
 # Time:  O(n)
 # Space: O(1)
 #
-# Description:
+# Description: Leetcode # 442. Find All Duplicates in an Array
 # Given an array of integers, 1 <= a[i] <= n (n = size of array),
 # some elements appear twice and others appear once.
 # Find all the elements that appear twice in this array.
@@ -16,12 +16,16 @@ __source__ = 'https://github.com/kamyu104/LeetCode/blob/master/Python/find-all-d
 # Output
 #
 # [2,3]
+#
+# Companies
 # Pocket Gems
-# Hide Tags Array
-# Hide Similar Problems (E) Find All Numbers Disappeared in an Array
-
+# Related Topics
+# Array
+# Similar Questions
+# Find All Numbers Disappeared in an Array
+#
 import unittest
-
+# 362ms
 class Solution(object):
     def findDuplicates(self, nums):
         """
@@ -55,6 +59,8 @@ Java = '''
 #Thought:
 // when find a number i, flip the number at position i-1 to negative.
 // if the number at position i-1 is already negative, i is the number that occurs twice.
+
+#98.27% 1ms
 public class Solution {
     public List<Integer> findDuplicates(int[] nums) {
         List<Integer> res = new ArrayList<>();
@@ -68,6 +74,7 @@ public class Solution {
     }
 }
 
+#95.86% 13ms
 public class Solution {
     public List<Integer> findDuplicates(int[] nums) {
         List<Integer> res = new ArrayList<>();

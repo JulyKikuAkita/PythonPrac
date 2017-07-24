@@ -4,6 +4,7 @@ __source__ = 'https://leetcode.com/problems/longest-palindromic-substring/#/desc
 # Space: O(n)
 # String
 #
+# Description: Leetcode # 5. Longest Palindromic Substring ->mancher
 # Given a string S, find the longest palindromic substring in S.
 # You may assume that the maximum length of S is 1000,
 #  and there exists one unique longest palindromic substring.
@@ -217,7 +218,7 @@ Java = '''
 Thought: https://leetcode.com/problems/longest-palindromic-substring/#/solution
 # Manacher's Algorithm
 # O(n)
-# 96%
+#91% 16ms
 public class Solution {
     public String longestPalindrome(String s) {
         if (s == null || s.length() == 0) {
@@ -271,12 +272,12 @@ public class Solution {
 }
 
 
-#dp
+Approach #3 (Dynamic Programming) [Accepted]
 dp(i, j) represents whether s(i ... j) can form a palindromic substring,
 dp(i, j) is true when s(i) equals to s(j) and s(i+1 ... j-1) is a palindromic substring.
 When we found a palindrome, check if it's the longest one. Time complexity O(n^2).
 
-18.73%
+# 12.14% 124 ms
 O(n^2)
 public class Solution {
     public String longestPalindrome(String s) {
@@ -294,7 +295,8 @@ public class Solution {
     }
 }
 
-11.39%
+#13.03% 122ms
+# ??
 public class Solution {
     public String longestPalindrome(String s) {
         if(s.length() < 2) return s;
@@ -326,7 +328,8 @@ public class Solution {
     }
 }
 
-91%
+Approach #4 (Expand Around Center) [Accepted] O(n^2)
+# 73.36% 19ms
 public class Solution {
     private int lo, maxLen;
     public String longestPalindrome(String s) {
@@ -344,14 +347,14 @@ public class Solution {
             left--;
             right++;
         }
-        if (maxLen < right - left - 1) {
+        if (maxLen < right - left - 1) { //-1 b.c additinoal i--, j++ when leave loop
             lo = left + 1;
             maxLen = right - left - 1;
         }
     }
 }
 
-63%
+62.80% 23ms
 public class Solution {
     public String longestPalindrome(String s) {
         String res = "";
@@ -378,7 +381,7 @@ public class Solution {
     }
 }
 
-79%
+#78.75%  18ms
 public class Solution {
     public String longestPalindrome(String s) {
         int len = s.length();

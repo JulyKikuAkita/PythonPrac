@@ -4,6 +4,8 @@ __source__ = 'https://leetcode.com/problems/spiral-matrix/#/description'
 # Space: O(1)
 # Array
 #
+# Description: Leetcode # 54. Spiral Matrix
+#
 # Given a matrix of m x n elements (m rows, n columns), return all elements of the matrix in spiral order.
 #
 # For example,
@@ -15,11 +17,14 @@ __source__ = 'https://leetcode.com/problems/spiral-matrix/#/description'
 #  [ 7, 8, 9 ]
 # ]
 # You should return [1,2,3,6,9,8,7,4,5].
-#  Microsoft Google Uber
-# Hide Tags Array
-# Hide Similar Problems (M) Spiral Matrix II
+# Companies
+# Microsoft Google Uber
+# Related Topics
+# Array
+# Similar Questions
+# Spiral Matrix II
 #
-
+import unittest
 class Solution:
     # @param matrix, a list of lists of integers
     # @return a list of integers
@@ -108,19 +113,24 @@ class SolutionOther:
 
             direct = (direct + 1) % 4
 
-if __name__ == "__main__":
-    matrix = [
-    [ 1, 2, 3 ],
-    [ 4, 5, 6 ],
-    [ 7, 8, 9 ]
-    ]
-    #print Solution().spiralOrder(matrix)
-    #print SolutionOther().spiralOrder(matrix)
-    print Solution().spiralOrder([[2,3]])
-    print SolutionOther().spiralOrder([[2,3]])
 
-#java
-java = '''
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        matrix = [
+        [ 1, 2, 3 ],
+        [ 4, 5, 6 ],
+        [ 7, 8, 9 ]
+        ]
+        #print Solution().spiralOrder(matrix)
+        #print SolutionOther().spiralOrder(matrix)
+        print Solution().spiralOrder([[2,3]])
+        print SolutionOther().spiralOrder([[2,3]])
+
+if __name__ == '__main__':
+    unittest.main()
+
+Java = '''
+#Thought: https://leetcode.com/problems/contains-duplicate/solution/
 This is a very simple and easy to understand solution. I traverse right and increment rowBegin,
 then traverse down and decrement colEnd, then I traverse left and decrement rowEnd,
 and finally I traverse up and increment colBegin.
@@ -128,6 +138,7 @@ and finally I traverse up and increment colBegin.
 The only tricky part is that when I traverse left or up I have to check whether the row
 or col still exists to prevent duplicates.
 
+# 3ms 16.82%
 public class Solution {
     public List<Integer> spiralOrder(int[][] matrix) {
 
@@ -161,7 +172,7 @@ public class Solution {
                     res.add(matrix[rowEnd][j]);
                 }
             }
-            rowEnd--;
+            rowEnd--; //within if condition is fine
 
             if (colBegin <= colEnd) {
                 // Traver Up
@@ -169,13 +180,14 @@ public class Solution {
                     res.add(matrix[j][colBegin]);
                 }
             }
-            colBegin ++;
+            colBegin ++; //within if condition is fine
         }
 
         return res;
     }
 }
 
+# 3ms 16.82%
 public class Solution {
     public List<Integer> spiralOrder(int[][] matrix) {
         List<Integer> result = new ArrayList<>();

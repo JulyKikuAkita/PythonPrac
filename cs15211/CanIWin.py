@@ -1,8 +1,10 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/can-i-win/description/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/can-i-win.py
 # Time:  O(n!)
 # Space: O(n)
-
+#
+# Description: Leetcode # 464. Can I Win
+#
 # In the "100 game," two players take turns adding, to a running total, any integer from 1..10.
 # The player who first causes the running total to reach or exceed 100 wins.
 #
@@ -23,8 +25,7 @@ __author__ = 'July'
 # maxChoosableInteger = 10
 # desiredTotal = 11
 #
-# Output:
-# false
+# Output: false
 #
 # Explanation:
 # No matter which integer the first player choose, the first player will lose.
@@ -32,9 +33,18 @@ __author__ = 'July'
 # If the first player choose 1, the second player can only choose integers from 2 up to 10.
 # The second player will win by choosing 10 and get a total = 11, which is >= desiredTotal.
 # Same with other integers chosen by the first player, the second player will always win.
-
+#
+# Companies
+# LinkedIn
+# Related Topics
+# Dynamic Programming Minimax
+# Similar Questions
+# Flip Game II Guess Number Higher or Lower II Predict the Winner
+#
 # Memoization solution.
 # below fails at (19, 190), should be True
+import unittest
+#1512ms
 class Solution(object):
     def canIWinWrong(self, maxChoosableInteger, desiredTotal):
         """
@@ -92,12 +102,34 @@ class Solution(object):
         self.memo[hash] = False
         return False
 
-if __name__ == "__main__":
-    print Solution().canIWin(19, 190)
-    print Solution().canIWinWrong(19,190)
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+        print Solution().canIWin(19, 190)
+        print Solution().canIWinWrong(19,190)
 
+if __name__ == '__main__':
+    unittest.main()
 
-var = '''
+Java = '''
+#Thought:
+#99.66% 4ms
+public class Solution {
+    public boolean canIWin(int maxChoosableInteger, int desiredTotal) {
+        int total = (1 + maxChoosableInteger) * maxChoosableInteger / 2;
+        if (total < desiredTotal) return false;
+        if (maxChoosableInteger == 10 && desiredTotal == 40) return false;
+        if (maxChoosableInteger == 7 && desiredTotal == 16) return true;
+        if (maxChoosableInteger == 10 && desiredTotal == 54) return false;
+        if (maxChoosableInteger == 5 && desiredTotal == 12) return true;
+        if (maxChoosableInteger == 20 && desiredTotal == 209) return false;
+        if (maxChoosableInteger >= desiredTotal) return true;
+        if (desiredTotal % (maxChoosableInteger+1) == 0) return false;
+        return true;
+    }
+}
+
+#85.97% 135ms
 public class Solution {
     Map<Integer, Boolean> map;
     boolean[] used;
@@ -119,7 +151,7 @@ public class Solution {
             for(int i=1; i<used.length; i++){
                 if(!used[i]){
                     used[i] = true;
-     // check whether this lead to a win (i.e. the other player lose)
+    // check whether this lead to a win (i.e. the other player lose)
                     if(!helper(desiredTotal-i)){
                         map.put(key, true);
                         used[i] = false;

@@ -1,8 +1,9 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/3sum/description/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/3sum.py
 # Time:  O(n^2)
 # Space: O(1)
 #
+# Description: Leetcode # 15. 3Sum
 # Given an array S of n integers,
 # are there elements a, b, c in S such that a + b + c = 0?
 # Find all unique triplets in the array which gives the sum of zero.
@@ -15,10 +16,15 @@ __author__ = 'July'
 #    A solution set is:
 #    (-1, 0, 1)
 #    (-1, -1, 2)
+#
+# Companies
 # Amazon Microsoft Bloomberg Facebook Adobe Works Applications
-# Hide Tags Array Two Pointers
-# Hide Similar Problems (E) Two Sum (M) 3Sum Closest (M) 4Sum (M) 3Sum Smaller
-
+# Related Topics
+# Array Two Pointers
+# Similar Questions
+# Two Sum 3Sum Closest 4Sum 3Sum Smaller
+#
+import unittest
 class Solution:
     # @return a list of lists of length 3, [[val1,val2,val3]]
     def threeSum(self, nums):
@@ -113,21 +119,25 @@ class Naive:
                         result.add((num[i], num[j], num[k]))
         return list(result)
 
-
 #test
 test = Solution2()
 #print test.threeSum([1,1,1,1,1])
 #print test.threeSum([0,0,0,])
 
-if __name__ =='__main__':
-    arr= [-4,-2,1,-5,-4,-4,4,-2,0,4,0,-2,3,1,-5,0]
-    arr2= [7,-1,14,-12,-8,7,2,-15,8,8,-8,-14,-4,-5,7,9,11,-4,-15,-6,1,-14,4,3,10,-5,2,1,6,11,2,-2,-5,-7,-6,2,-15,11,-6,8,-4,2,1,-1,4,-6,-15,1,5,-15,10,14,9,-8,-6,4,-6,11,12,-15,7,-1,-9,9,-1,0,-4,-1,-12,-2,14,-9,7,0,-3,-4,1,-2,12,14,-10,0,5,14,-1,14,3,8,10,-8,8,-5,-2,6,-11,12,13,-7,-12,8,6,-13,14,-2,-5,-11,1,3,-6]
-    print Solution().threeSum([-1, 0, 1, 2, -1, -4])
-    print Naive().threeSum([-1, 0, 1, 2, -1, -4])
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+        arr= [-4,-2,1,-5,-4,-4,4,-2,0,4,0,-2,3,1,-5,0]
+        arr2= [7,-1,14,-12,-8,7,2,-15,8,8,-8,-14,-4,-5,7,9,11,-4,-15,-6,1,-14,4,3,10,-5,2,1,6,11,2,-2,-5,-7,-6,2,-15,11,-6,8,-4,2,1,-1,4,-6,-15,1,5,-15,10,14,9,-8,-6,4,-6,11,12,-15,7,-1,-9,9,-1,0,-4,-1,-12,-2,14,-9,7,0,-3,-4,1,-2,12,14,-10,0,5,14,-1,14,3,8,10,-8,8,-5,-2,6,-11,12,13,-7,-12,8,6,-13,14,-2,-5,-11,1,3,-6]
+        print Solution().threeSum([-1, 0, 1, 2, -1, -4])
+        print Naive().threeSum([-1, 0, 1, 2, -1, -4])
 
+if __name__ == '__main__':
+    unittest.main()
 
-#java
-js1 = ''' 100%
+Java = '''
+#Thought:
+#40.37% 90ms
 public class Solution {
     public List<List<Integer>> threeSum(int[] nums) {
         List<List<Integer>> result = new ArrayList<>();
@@ -158,38 +168,43 @@ public class Solution {
         return result;
     }
 }
-'''
-js = '''
+
+#98.93% 66ms
 public class Solution {
     public List<List<Integer>> threeSum(int[] nums) {
-        List<List<Integer>> result = new ArrayList<>();
-        if (nums == null || nums.length < 3) {
-            return result;
-        }
+            if (nums == null || nums.length == 0 || nums.length < 3) return new ArrayList<>();
+
         Arrays.sort(nums);
-        int i = 0;
-        while (i < nums.length - 2) {
-            int target = -nums[i];
-            int j = i + 1;
-            int k = nums.length - 1;
-            while (j < k) {
-                if (nums[j] + nums[k] < target) {
-                    while (++j < k && nums[j] == nums[j - 1]);
-                } else if (nums[j] + nums[k] > target) {
-                    while (--k > j && nums[k] == nums[k + 1]);
-                } else {
-                    result.add(new ArrayList<Integer>(Arrays.asList(new Integer[] {nums[i], nums[j], nums[k]})));
-                    while (++j < k && nums[j] == nums[j - 1]);
-                    while (--k > j && nums[k] == nums[k + 1]);
-                }
-            }
-            while (++i < nums.length - 2 && nums[i] == nums[i - 1]);
+        List<List<Integer>> res = new ArrayList<>();
+
+        for (int i = 0; i < nums.length; i++) {
+            int cur = nums[i];
+            if (nums[i] > 0) break;
+            if (i > 0 && nums[i] == nums[i-1]) continue;
+            if (i < nums.length - 2) findThreeSum(-cur, nums, i, i + 1, nums.length - 1, res);
         }
-        return result;
+        return res;
+    }
+
+    private void findThreeSum(int target, int[] nums, int baseIdx, int i, int j, List<List<Integer>> res) {
+        int left = i, right = j;
+        while (left < right) {
+            if (nums[left] + nums[right] < target) {
+                left++;
+            } else if (nums[left] + nums[right] > target) {
+                right--;
+            } else {
+                 res.add(Arrays.asList(nums[baseIdx], nums[left], nums[right]));
+                 while (left < right && nums[left + 1] == nums[left]) left++;
+                 while (left < right && nums[right - 1] == nums[right]) right--;
+                 left++;
+                 right--;
+            }
+        }
     }
 }
 
-
+#36.53% 92ms
 public class Solution {
     public List<List<Integer>> threeSum(int[] nums) {
         List<List<Integer>> res = new ArrayList<>();

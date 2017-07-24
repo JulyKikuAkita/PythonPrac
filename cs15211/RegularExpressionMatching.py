@@ -1,4 +1,4 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/regular-expression-matching/description/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/regular-expression-matching.py
 # Time:  O(m * n)
 # Space: O(n)
@@ -23,6 +23,12 @@ __author__ = 'July'
 # isMatch("aa", ".*") -> true
 # isMatch("ab", ".*") -> true
 # isMatch("aab", "c*a*b") -> true  #wildcard matching return False
+# Companies
+# Google Uber Airbnb Facebook Twitter
+# Related Topics
+# Dynamic Programming Backtracking String
+# Similar Questions
+# Wildcard Matching
 #
 import unittest
 # dp with rolling window
@@ -127,21 +133,20 @@ class Solution4:
 
         return p_ptr == len(p)
 
-'''
-First of all, this is one of the most difficulty problems. It is hard to handle many cases.
 
-The problem should be simplified to handle 2 basic cases:
+# First of all, this is one of the most difficulty problems. It is hard to handle many cases.
+#
+# The problem should be simplified to handle 2 basic cases:
+#
+# the second char of pattern is "*"
+# the second char of pattern is not "*"
+# For the 1st case, if the first char of pattern is not ".",
+# the first char of pattern and string should be the same. Then continue to match the left part.
+#
+# For the 2nd case, if the first char of pattern is "." or first char of pattern == the first i char of string, continue to match the left.
+#
+# Be careful about the offset.
 
-the second char of pattern is "*"
-the second char of pattern is not "*"
-For the 1st case, if the first char of pattern is not ".", the first char of pattern and string should be the same. Then continue to match the left part.
-
-For the 2nd case, if the first char of pattern is "." or first char of pattern == the first i char of string, continue to match the left.
-
-Be careful about the offset.
-
-
-'''
 #http://www.programcreek.com/2012/12/leetcode-regular-expression-matching-in-java/
 class java_readable:
     # @return a boolean
@@ -240,8 +245,25 @@ class SolutionOther:
 #print test.isMatch("aaaaaaaaaaaaab", "a*a*a*a*a*a*a*a*a*a*c")
 #print test.isMatchTLE("aaaaaaaaaaaaab", "a*a*a*a*a*a*a*a*a*a*c")
 
-#java
-js = '''
+#Java
+Java = '''
+Thought: https://discuss.leetcode.com/topic/40371/easy-dp-java-solution-with-detailed-explanation
+This Solution use 2D DP. beat 90% solutions, very simple.
+
+Here are some conditions to figure out, then the logic can be very straightforward.
+
+1, If p.charAt(j) == s.charAt(i) :  dp[i][j] = dp[i-1][j-1];
+2, If p.charAt(j) == '.' : dp[i][j] = dp[i-1][j-1];
+3, If p.charAt(j) == '*':
+   here are two sub conditions:
+               1   if p.charAt(j-1) != s.charAt(i) : dp[i][j] = dp[i][j-2]  //in this case, a* only counts as empty
+               2   if p.charAt(i-1) == s.charAt(i) or p.charAt(i-1) == '.':
+                              dp[i][j] = dp[i-1][j]    //in this case, a* counts as multiple a
+                           or dp[i][j] = dp[i][j-1]   // in this case, a* counts as single a
+                           or dp[i][j] = dp[i][j-2]   // in this case, a* counts as empty
+
+
+# 40.59 %, 35ms
 public class Solution {
     public boolean isMatch(String s, String p) {
         int lenS = s.length();
@@ -260,6 +282,41 @@ public class Solution {
             }
         }
         return dp[lenS][lenP];
+    }
+}
+
+# 45% - 81%
+#80.07% 29ms
+public class Solution {
+    public boolean isMatch(String s, String p) {
+        if (s == null || p == null) {
+            return false;
+        }
+        boolean[][] dp = new boolean[s.length()+1][p.length()+1];
+        dp[0][0] = true;
+        for (int i = 0; i < p.length(); i++) {
+            if (p.charAt(i) == '*' && dp[0][i-1]) {
+                dp[0][i+1] = true;
+            }
+        }
+        for (int i = 0 ; i < s.length(); i++) {
+            for (int j = 0; j < p.length(); j++) {
+                if (p.charAt(j) == '.') {
+                    dp[i+1][j+1] = dp[i][j];
+                }
+                if (p.charAt(j) == s.charAt(i)) {
+                    dp[i+1][j+1] = dp[i][j];
+                }
+                if (p.charAt(j) == '*') {
+                    if (p.charAt(j-1) != s.charAt(i) && p.charAt(j-1) != '.') {
+                        dp[i+1][j+1] = dp[i+1][j-1];
+                    } else {
+                        dp[i+1][j+1] = (dp[i+1][j] || dp[i][j+1] || dp[i+1][j-1]);
+                    }
+                }
+            }
+        }
+        return dp[s.length()][p.length()];
     }
 }
 '''

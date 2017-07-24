@@ -2,6 +2,8 @@ __source__ = 'https://leetcode.com/problems/zigzag-conversion/#/solutions'
 # Time:  O(n)
 # Space: O(1)
 #
+# Description: Leetcode # 6. ZigZag Conversion
+#
 # The string "PAYPALISHIRING" is written in a zigzag pattern on a given number of rows like this:
 # (you may want to display this pattern in a fixed font for better legibility)
 #
@@ -16,7 +18,7 @@ __source__ = 'https://leetcode.com/problems/zigzag-conversion/#/solutions'
 #
 # String
 #
-
+import unittest
 class Solution:
     # @return a string
     def convert(self, s, nRows):
@@ -59,13 +61,6 @@ nRows= 5, then step = 2 * nRows - 2 ( derived by, 0, the next expected to be 10,
 */
 '''
 
-if __name__ == "__main__":
-    #print Solution().convert("PAYPALISHIRING", 3)
-    #print Solution().convertiflee("PAYPALISHIRING", 3)
-    print Solution().convert("0123456789", 3)
-    print Solution().convertiflee("0123456789", 3)
-
-
 class SolutionOther:
     # @return a string
     def convert(self, s, nRows):
@@ -87,22 +82,29 @@ class SolutionOther:
             print tmp
         return ''.join(tmp)
 
-# java solution:
-# http://www.programcreek.com/2014/05/leetcode-zigzag-conversion-java/
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+        test = SolutionOther()
+        #print test.convert("PAYPALISHIRING", 3)
+        #should return "PAHNAPLSIIGYIR".
 
-#test
-test = SolutionOther()
-#print test.convert("PAYPALISHIRING", 3)
-#should return "PAHNAPLSIIGYIR".
+        #print test.convert("PAYPALISHIRING", 4)
+        #should return "PINALSHIGYAHRPI"
 
-#print test.convert("PAYPALISHIRING", 4)
-#should return "PINALSHIGYAHRPI"
+        print test.convert("abcd",3)
 
-print test.convert("abcd",3)
+        #print Solution().convert("PAYPALISHIRING", 3)
+        #print Solution().convertiflee("PAYPALISHIRING", 3)
+        print Solution().convert("0123456789", 3)
+        print Solution().convertiflee("0123456789", 3)
 
-#Java =
-java = '''
-80%
+if __name__ == '__main__':
+    unittest.main()
+
+Java = '''
+#Thought: https://leetcode.com/problems/contains-duplicate/solution/
+71.47% #53ms
 public class Solution {
     public String convert(String s, int numRows) {
         char[] c = s.toCharArray();
@@ -129,7 +131,7 @@ public class Solution {
     }
 }
 
-100%
+86.05% #49ms
 public class Solution {
     public String convert(String s, int numRows) {
         if (numRows <= 1) {

@@ -1,9 +1,10 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/palindrome-number/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/palindrome-number.py
 # Time:  O(1)
 # Space: O(1)
 # Math  ~= reverse integer
 #
+# Description: Leetcode # 9 Palindrome Number
 # Determine whether an integer is a palindrome. Do this without extra space.
 #
 # Some hints:
@@ -15,7 +16,10 @@ __author__ = 'July'
 # you know that the reversed integer might overflow. How would you handle such case?
 #
 # There is a more generic way of solving this problem.
-#
+# Related Topics
+# Math
+# Similar Questions
+# Palindrome Linked List
 
 class Solution:
     # @return a boolean
@@ -72,3 +76,43 @@ class SolutionOther:
 test = SolutionOther()
 #print test.isPalindrome(121)
 #print test.isPalindrome(1121)
+
+#Java
+Java = '''
+# Thought:
+
+#42.39% 222ms
+public class Solution {
+    public boolean isPalindrome(int x) {
+        return new StringBuilder().append(x).reverse().toString().equals(x+"");
+    }
+}
+
+#20.26% 252ms
+public class Solution {
+    public boolean isPalindrome(int x) {
+        char[] arr = String.valueOf(x).toCharArray();
+        int i;
+        for (i = 0; i < arr.length / 2 ; i++) {
+        	if (arr[i] != arr[arr.length - 1 -i]) {
+        		break;
+        	}
+        }
+        return i >= arr.length / 2;
+	}
+}
+
+89.65% 192ms
+public class Solution {
+    public boolean isPalindrome(int x) {
+       if (x<0 || (x!=0 && x%10==0)) return false;
+        int rev = 0;
+        while (x>rev){
+            rev = rev*10 + x%10;
+            x = x/10;
+        }
+        return (x==rev || x==rev/10); //x = 999
+    }
+}
+
+'''

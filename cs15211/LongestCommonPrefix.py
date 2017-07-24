@@ -1,12 +1,16 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/longest-common-prefix/description/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/longest-common-prefix.py
-# Time:  O(n1 + n2 + ...)
+# Time:  O(n * k), k is the length of the common prefix
 # Space: O(1)
+# Description: 14. Longest Common Prefix
+# Write a function to find the longest common prefix string
+# amongst an array of strings.
+#
+# Companies
+# Yelp
+# Related Topics
 # String
 #
-# Write a function to find the longest common prefix string amongst an array of strings.
-#
-
 class Solution:
     # @return a string
     def longestCommonPrefix(self, strs):
@@ -69,8 +73,41 @@ print  test.longestCommonPrefix(str1)
 print  test.longestCommonPrefix(str2)
 
 
-#java
-js = '''
+#Java
+Java = '''
+Thought: https://leetcode.com/problems/longest-common-prefix/solution/
+Approach #1 (Horizontal scanning)
+# 89.41% 9ms
+public class Solution {
+    public String longestCommonPrefix(String[] strs) {
+        if(strs == null || strs.length == 0)    return "";
+        String pre = strs[0];
+        int i = 1;
+        while(i < strs.length){
+            while(strs[i].indexOf(pre) != 0)
+                pre = pre.substring(0,pre.length()-1);
+            i++;
+        }
+        return pre;
+    }
+}
+
+# 43.13% 12ms
+public class Solution {
+    public String longestCommonPrefix(String[] strs) {
+        if(strs == null || strs.length == 0)    return "";
+        String pre = strs[0];
+        int i = 1;
+        while(i < strs.length){
+            while(strs[i].indexOf(pre) != 0)
+                pre = pre.substring(0,pre.length()-1);
+            i++;
+        }
+        return pre;
+    }
+}
+
+#59.86% 11ms
 public class Solution {
     public String longestCommonPrefix(String[] strs) {
         if (strs == null || strs.length == 0 ) return "";
@@ -96,26 +133,34 @@ public class Solution {
     }
 }
 
+Approach #3 (Divide and conquer)
+# 29.70%  13ms
 public class Solution {
     public String longestCommonPrefix(String[] strs) {
-        if (strs.length == 0) {
-            return "";
-        }
-        StringBuilder sb = new StringBuilder();
-        int index = 0;
-        while (true) {
-            if (index == strs[0].length()) {
-                return sb.toString();
-            }
-            char c = strs[0].charAt(index);
-            for (int i = 1; i < strs.length; i++) {
-                if (index == strs[i].length() || strs[i].charAt(index) != c) {
-                    return sb.toString();
-                }
-            }
-            sb.append(c);
-            index++;
-        }
+        if (strs == null || strs.length == 0) return "";
+        return longestCommonPrefix(strs, 0 , strs.length - 1);
     }
+
+    private String longestCommonPrefix(String[] strs, int l, int r) {
+        if (l == r) {
+            return strs[l];
+        }
+        else {
+            int mid = (l + r)/2;
+            String lcpLeft =   longestCommonPrefix(strs, l , mid);
+            String lcpRight =  longestCommonPrefix(strs, mid + 1,r);
+            return commonPrefix(lcpLeft, lcpRight);
+       }
+    }
+
+    String commonPrefix(String left,String right) {
+        int min = Math.min(left.length(), right.length());
+        for (int i = 0; i < min; i++) {
+            if ( left.charAt(i) != right.charAt(i) )
+                return left.substring(0, i);
+        }
+        return left.substring(0, min);
+    }
+
 }
 '''

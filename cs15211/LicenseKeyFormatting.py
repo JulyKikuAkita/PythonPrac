@@ -1,6 +1,6 @@
-__source__ = ''
-# Time:  O()
-# Space: O()
+__source__ = 'https://leetcode.com/problems/license-key-formatting/description/'
+# Time:  O(n)
+# Space: O(n)
 #
 # Description:
 # Now you are given a string S, which represents a software license key which we would like to format.
@@ -63,6 +63,8 @@ if __name__ == '__main__':
 
 Java = '''
 #Thought:
+
+#48.65% 30ms
 public class Solution {
     public String licenseKeyFormatting(String S, int K) {
         // Replacing all - and converting all letters to uppercase
@@ -83,4 +85,24 @@ public class Solution {
     }
 }
 
+# 80.73% 25ms
+public class Solution {
+    public String licenseKeyFormatting(String S, int K) {
+        int cnt = 0;
+        StringBuilder sb = new StringBuilder();
+        char[] arr = S.toCharArray();
+        for(int i = arr.length - 1; i >= 0; i--) {
+            char c = arr[i];
+            if (c == '-') {
+                continue;
+            }
+            if (cnt % K == 0 && cnt != 0) {
+                sb.append('-');
+            }
+            sb.append('a' <= c && c <= 'z' ? (char)(c - 'a' + 'A') : c);
+            cnt++;
+        }
+        return sb.reverse().toString();
+    }
+}
 '''

@@ -22,7 +22,6 @@ class TrieNode:
         self.is_string = False
         self.leaves = {}
 
-
 class Trie:
 
     def __init__(self):

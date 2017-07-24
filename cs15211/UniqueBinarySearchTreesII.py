@@ -4,6 +4,8 @@ __source__ = 'https://leetcode.com/problems/unique-binary-search-trees-ii/#/desc
 # Space: O(n)
 # DP
 #
+# Description: Leetcode # 95. Unique Binary Search Trees II
+#
 # Given n, how many structurally unique BST's (binary search trees) that store values 1...n?
 #
 # For example,
@@ -25,6 +27,7 @@ __source__ = 'https://leetcode.com/problems/unique-binary-search-trees-ii/#/desc
 # Similar Questions
 # Unique Binary Search Trees Different Ways to Add Parentheses
 #
+import unittest
 # Definition for a  binary tree node
 class TreeNode:
     def __init__(self, x):
@@ -70,8 +73,6 @@ class Solution:
                     cur.right = k
                     result.append(cur)
         return result
-if __name__ == "__main__":
-    print Solution().generateTrees(2)
 
 class SolutionOther:
     treelist = None
@@ -112,14 +113,17 @@ class SolutionOther:
         return allnodes
 
 #test
-test = SolutionOther()
-# ans = test.generateTrees(4)
-# for i in range(len(ans)):
-#    print i
-#    print test.preorderTraversal1(ans[i])
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+        print Solution().generateTrees(2)
 
-#Java
+if __name__ == '__main__':
+    unittest.main()
+
 Java = '''
+#Thought:
+# 5.62% 6ms
 1. Divide-and-conquer. F(i) = G(i-1) * G(n-i)
 public class Solution {
     public List<TreeNode> generateTrees(int n) {
@@ -158,6 +162,7 @@ and the right subtree will contain elements (i+1) to n.
 I use recursive calls to get back all possible trees for left and right subtrees 
 and combine them in all possible ways with the root.
 
+# 39.05% 4ms
 public class Solution {
     public List<TreeNode> generateTrees(int n) {
         if ( n < 1) return new ArrayList<TreeNode>();
@@ -189,6 +194,46 @@ public class Solution {
                 }
             }
         }
+        return res;
+    }
+}
+
+# 77.45% 3ms
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+public class Solution {
+    public List<TreeNode> generateTrees(int n) {
+        // List<TreeNode> res = new ArrayList<>();
+        List<TreeNode>[][] memo = new ArrayList[n+1][n+1];
+        if (n == 0) return new ArrayList<>();
+        return divideConquer(1, n, memo);
+    }
+    private List<TreeNode> divideConquer(int start, int end, List[][] memo) {
+        List<TreeNode> res = new ArrayList<>();
+        if (start > end) {
+            res.add(null); return res;
+        }
+        if (memo[start][end] != null) return memo[start][end];
+        for (int mid = start; mid <= end; mid++) {
+            List<TreeNode> left = divideConquer(start, mid-1, memo);
+            List<TreeNode> right = divideConquer(mid+1, end, memo);
+            for (TreeNode l : left) {
+                for (TreeNode r : right) {
+                    TreeNode root = new TreeNode(mid);
+                    root.left = l;
+                    root.right = r;
+                    res.add(root);
+                }
+            }
+        }
+        memo[start][end] = res;
         return res;
     }
 }

@@ -1,8 +1,10 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/remove-nth-node-from-end-of-list/description/'
 # https://github.com/kamyu104/LeetCode#linked-list
 # Time:  O(n)
 # Space: O(1)
 # Two Pointer
+#
+# Description: Leetcode # 19. Remove Nth Node From End of List
 #
 # Given a linked list, remove the nth node from the end of list and return its head.
 #
@@ -11,11 +13,14 @@ __author__ = 'July'
 #    Given linked list: 1->2->3->4->5, and n = 2.
 #
 #    After removing the second node from the end, the linked list becomes 1->2->3->5.
+#
 # Note:
 # Given n will always be valid.
 # Try to do this in one pass.
 #
-
+# Related Topics
+# Linked List Two Pointers
+import unittest
 # Definition for singly-linked list.
 class ListNode:
     def __init__(self, x):
@@ -44,17 +49,6 @@ class Solution:
         slow.next = slow.next.next  # if slow = fast, fails when n =1
         return dummy.next
 
-
-
-
-if __name__ == "__main__":
-    head = ListNode(1)
-    head.next = ListNode(2)
-    head.next.next = ListNode(3)
-    head.next.next.next = ListNode(4)
-    head.next.next.next.next = ListNode(5)
-
-    print Solution().removeNthFromEnd(head, 2)
 
 class SolutionOther:
     # @return a ListNode
@@ -88,26 +82,47 @@ ans = test.removeNthFromEnd(n1,3)
 while ans:
     print ans.val
     ans = ans.next
-#java
-js = '''
+
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+        head = ListNode(1)
+        head.next = ListNode(2)
+        head.next.next = ListNode(3)
+        head.next.next.next = ListNode(4)
+        head.next.next.next.next = ListNode(5)
+        print Solution().removeNthFromEnd(head, 2)
+
+if __name__ == '__main__':
+    unittest.main()
+
+Java = '''
+#Thought: https://leetcode.com/problems/remove-nth-node-from-end-of-list/solution/
+
+# two pass //get to know linked node length at first loop
+# 93.23% 13ms
 public class Solution {
     public ListNode removeNthFromEnd(ListNode head, int n) {
-        ListNode fakeHead = new ListNode(0);
-        fakeHead.next = head;
-        ListNode slow = fakeHead;
-        ListNode fast = fakeHead;
-        for (int i = 0; i <= n; i++) {
-            fast = fast.next;
+        ListNode dummy = new ListNode(0);
+        dummy.next = head;
+        int length = 0;
+        while(head != null){
+            length++;
+            head = head.next;
         }
-        while (fast != null) {
-            slow = slow.next;
-            fast = fast.next;
+        length = length - n;
+        head = dummy;
+        while(length > 0){
+            head = head.next;
+            length--;
         }
-        slow.next = slow.next.next;
-        return fakeHead.next;
+        head.next = head.next.next;
+        return dummy.next;
     }
 }
 
+# one pass, slow and fast separate by n
+# 44.82% 15ms
 public class Solution {
     public ListNode removeNthFromEnd(ListNode head, int n) {
         ListNode fakeHead = new ListNode(0);

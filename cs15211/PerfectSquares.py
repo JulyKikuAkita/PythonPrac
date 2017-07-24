@@ -180,22 +180,81 @@ dp arr for n = 5 will be:
 0, 1, 2, 3, 4, , MAX
 0, 1, 2, 3, 4, 2
 
+# recurstion case:
+dp[n] = Math.min(dp[n], dp[n - i*i] + 1 ),  n - i*i >=0 && i >= 1
+
 public class Solution {
     public int numSquares(int n) {
-        int[] dp = new int[n+1];
+        int[] dp = new int[n + 1];
         Arrays.fill(dp, Integer.MAX_VALUE);
-
-        for(int i = 0; i * i <= n; i++){
-            dp[i*i] = 1;
-        }
-
-        for(int a = 0; a <= n; a++){
-            for(int b = 0 ; a + b * b <= n; b++){
-                dp[a + b*b] = Math.min(dp[a+b*b], dp[a] +1);
+        dp[0] = 0;
+        for (int i = 1; i * i <= n ;i++) {
+            int cur = i * i;
+            for (int j = cur; j <= n; j++) {
+                dp[j] = Math.min(dp[j], dp[j - cur] + 1);
             }
         }
         return dp[n];
     }
 }
 
+3.Mathematical Solution: 4ms 98%
+
+public class Solution {
+
+    public int numSquares(int n) {
+        //base case
+        if(n < 4) return n;
+
+        // If n is a perfect square, return 1.
+        if (isSquare(n)) return 1;
+
+        // The result is 4 if and only if n can be written in the
+        // form of 4^k*(8*m + 7). Please refer to
+        // Legendre's three-square theorem.
+        while ((n & 3) == 0) { // n % 4 == 0
+            n >>= 2;
+        }
+
+        if ((n & 7) == 7) { // n % 8 == 7
+            return 4;
+        }
+
+        // Check whether 2 is the result.
+        int sqrtN = (int)(Math.sqrt(n));
+        for(int i = 1; i <= sqrtN; i++) {
+            if (isSquare(n - i * i)) return 2;
+        }
+        return 3;
+    }
+
+    public boolean isSquare(int n) {
+        int sqrtN = (int)Math.sqrt(n);
+        return sqrtN * sqrtN == n;
+    }
+}
+
+//https://www.cnblogs.com/grandyang/p/4800552.html
+//there are only 4 possible result 1,2,3,4
+//check if a * a + b * b == n
+
+public class Solution {
+    public int numSquares(int n) {
+        //base case
+        if (n < 4) return n;
+
+        // The result is 4 if and only if n can be written in the
+        // form of 4^k*(8*m + 7). // Legendre's three-square theorem.
+        while (n % 4 == 0) n /= 4;  //to make it smaller
+        if (n % 8 == 7) return 4;
+        int a, b;
+        for (int i = 0; i < n; i++) {
+            a = i;
+            b = (int) Math.sqrt(n - a * a);
+            if (a * a + b * b == n) //perfect square -> a or b == 0
+                return a == 0 || b == 0 ? 1 : 2;
+        }
+        return 3;
+    }
+}
 '''

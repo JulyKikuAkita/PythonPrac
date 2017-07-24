@@ -1,10 +1,11 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/word-ladder/tabs/description'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/word-ladder.py
 # Time:  O(n * d), n is length of string, d is size of dictionary
 # Space: O(d)
 # BFS
 #
-# Given two words (start and end), and a dictionary, find the length of shortest transformation sequence from start to end, such that:
+# Given two words (start and end), and a dictionary,
+# find the length of shortest transformation sequence from start to end, such that:
 #
 # Only one letter can be changed at a time
 # Each intermediate word must exist in the dictionary
@@ -161,76 +162,86 @@ if __name__ == "__main__":
     print Solution2().ladderLength("hit", "cog", set(["hot","dot","dog","lot","log"]))
     print Naive().ladderLength("hit", "cog", set(["ait","dot","dog","lot","log"]))
 
-#java
+#Java
 #double ended BFS
-js = '''
+Java = '''
+Thought:
+# Java Solution using Dijkstra's algorithm, with explanation
+# 50.85% 132ms
 public class Solution {
-    public int ladderLength(String beginWord, String endWord, Set<String> wordList) {
-        Set<String> beginSet = new HashSet<>();
-        Set<String> endSet = new HashSet<>();
-        Set<String> visitedSet = new HashSet<>();
-        int count = 2;
-        int len = beginWord.length();
-        beginSet.add(beginWord);
-        endSet.add(endWord);
-        visitedSet.add(beginWord);
-        while (!beginSet.isEmpty() && !endSet.isEmpty()) {
-            if (beginSet.size()  > endSet.size()) {
-                Set<String> tmpSet = beginSet;
-                beginSet = endSet;
-                endSet = tmpSet;
-            }
-            Set<String> curSet = new HashSet<>();
-            for (String word : beginSet) {
-                char[] arr = word.toCharArray();
-                for (int j = 0; j < len; j++) {
-                    char c = arr[j];
-                    for (char k = 'a'; k <= 'z'; k++) {
-                        arr[j] = k;
-                        String cur = new String(arr);
-                        if (endSet.contains(cur)) {
-                            return count;
-                        } else if (wordList.contains(cur) && !visitedSet.contains(cur)) {
-                            visitedSet.add(cur);
-                            curSet.add(cur);
+    public int ladderLength(String beginWord, String endWord, List<String> wordList) {
+        if (!wordList.contains(endWord)) return 0;
+
+        Set<String> reached = new HashSet<String>();
+        Set<String> wordDict = new HashSet<String>(wordList);
+        reached.add(beginWord);
+        wordDict.add(endWord);
+        int distance = 1;
+        while (!reached.contains(endWord)) {
+            Set<String> toAdd = new HashSet<String>();
+            for (String each : reached) {
+                for (int i = 0; i < each.length(); i++) {
+                    char[] chars = each.toCharArray();
+                    for (char ch = 'a'; ch <= 'z'; ch++) {
+                        if (chars[i] == ch) continue;
+                        chars[i] = ch;
+                        String word = new String(chars);
+                        if (wordDict.contains(word)) {
+                            toAdd.add(word);
+                            wordDict.remove(word);
                         }
                     }
-                    arr[j] = c;
                 }
             }
-            beginSet = curSet;
-            count++;
+            distance++;
+            if (toAdd.size() == 0) return 0;
+            reached = toAdd;
         }
-        return 0;
+        return distance;
     }
 }
 
-# https://linchicoding.wordpress.com/2014/10/13/leetcode-word-ladder/
-#DFS: #OT
-public class SolutionDFS {
-    public int ladderLength(String start, String end, Set<String> dict) {
-        if(start.equals(end)) return 1;
-        char[] arr = start.toCharArray();
-        int min = Integer.MAX_VALUE;
-        for(int i = 0; i <start.length(); i++){
-            char temp = arr[i];
-            for(char ch = 'a'; ch <='z'; ch++){
-                if(ch != temp){
-                    arr[i] = ch;
-                    String nxt = new String(arr);
-                    if(end.equals(nxt))
-                        return 2;
-                    else if(dict.contains(nxt)){
-                        dict.remove(nxt);
-                        min = Math.min(min, 1+ ladderLength(nxt, end, dict));
-                        dict.add(nxt);
-                    }
+#below works for Leetcode 2017 change:
+# 97 % 31ms
+public class Solution {
+    public int ladderLength(String beginWord, String endWord, List<String> wordList) {
+        Set<String> dict = new HashSet<>(wordList);
+        if (!dict.contains(endWord)) return 0;
+        Set<String> startSet = new HashSet<String>() {{ add(beginWord); }};
+        Set<String> endSet = new HashSet<String>() {{ add(endWord); }};
+        return helper(dict, startSet, endSet, 1);
+    }
+
+     private int helper(Set<String> dict, Set<String> startSet, Set<String> endSet, int level) {
+        if (startSet.isEmpty()) return 0;
+
+        if (startSet.size() > endSet.size()) return helper(dict, endSet, startSet, level);
+
+        // remove words from both ends
+        for (String word : startSet) { dict.remove(word); };
+        for (String word : endSet) { dict.remove(word); };
+
+        // the set for next level
+        Set<String> set = new HashSet<>();
+
+        // for each string in the current level
+        for (String str: startSet) {
+            for (int i = 0; i < str.length(); i++) {
+                char[] chars = str.toCharArray();
+
+                for (char ch = 'a'; ch <= 'z'; ch++) {
+                    if (chars[i] == ch) continue;
+                    chars[i] = ch;
+                    String word = new String(chars);
+                     // found the word in other end(set)
+                    if (endSet.contains(word)) return level + 1;
+                    // if not, add to the next level
+                    if (dict.contains(word)) set.add(word);
                 }
             }
-            arr[i] = temp;
         }
-        return min==Integer.MAX_VALUE ? 0:min;
-    }
+        return helper(dict, endSet, set, level + 1);
+     }
 
 }
 '''

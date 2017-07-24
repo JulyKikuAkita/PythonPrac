@@ -1,8 +1,10 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/valid-sudoku/description/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/valid-sudoku.py
 # Time:  O(n^2)
 # Space: O(n)
 # Hashtable
+#
+# Description: Leetcode # 36. Valid Sudoku
 #
 # Determine if a Sudoku is valid, according to: Sudoku Puzzles - The Rules.
 #
@@ -14,11 +16,14 @@ __author__ = 'July'
 # Note:
 # A valid Sudoku board (partially filled) is not necessarily solvable. Only the filled cells need to be validated.
 #
-# https://github.com/kamyu104/LeetCode/blob/master/Python/valid-sudoku.py
+# Companies
+# Snapchat Uber Apple
+# Related Topics
+# Hash Table
+# Similar Questions
+# Sudoku Solver
 #
-#  Snapchat Uber Apple
-# Hide Tags Hash Table
-
+import unittest
 class Solution:
     # @param board, a 9x9 2D array
     # @return a boolean
@@ -112,16 +117,15 @@ class Solution2:
                                 return False
         return True
 
-
-
-
 #test
 test = Solution2()
 #print test.isValidSudoku(["..4...63.",".........","5......9.","...56....","4.3.....1","...7.....","...5.....",".........","........."])
 #print test.isValidSudoku([".87654321","2........","3........","4........","5........","6........","7........","8........","9........"])
 
-if __name__ == '__main__':
-    board = [[1, '.', '.', '.', '.', '.', '.', '.', '.'],
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+        board = [[1, '.', '.', '.', '.', '.', '.', '.', '.'],
              ['.', 2, '.', '.', '.', '.', '.', '.', '.'],
              ['.', '.', 3, '.', '.', '.', '.', '.', '.'],
              ['.', '.', '.', 4, '.', '.', '.', '.', '.'],
@@ -131,57 +135,36 @@ if __name__ == '__main__':
              ['.', '.', '.', '.', '.', '.', '.', 8, '.'],
              ['.', '.', '.', '.', '.', '.', '.', '.', 9]]
 
-    print Solution().isValidSudoku(board)
-    print Solution2().isValidSudoku(board)
+        print Solution().isValidSudoku(board)
+        print Solution2().isValidSudoku(board)
 
+if __name__ == '__main__':
+    unittest.main()
 
-#java
-js = '''
+Java = '''
+# Thought:
+#99.67% 25ms
 public class Solution {
     public boolean isValidSudoku(char[][] board) {
 
-        for(int i = 0; i < 9 ; i++){
-            Set<Character> col = new HashSet<>();
-            Set<Character> row = new HashSet<>();
-            for(int j = 0; j < 9 ; j++){
-                if(board[i][j] != '.'){
-                    if(col.contains(board[i][j])){
-                        return false;
-                    }else{
-                        col.add(board[i][j]);
-                    }
-                }
-               // Iterator it = col.iterator();
-               // while (it.hasNext())
-               //   System.out.println(it.next());
-                if(board[j][i] != '.'){
-                    if(row.contains(board[j][i])){
-                        return false;
-                    }else{
-                        row.add(board[j][i]);
-                    }
-                }
-            if(!isValidGrid(i, j, board)) return false;
+        int[] rows = new int[9];
+        int[] cols = new int[9];
+        int[] boxs = new int[9];
 
-            }
-        }
-
-        return true;
-
-    }
-
-    private boolean isValidGrid(int x, int y, char[][] board){
-        Set<Character> grid = new HashSet<>();
-        for(int i = 0; i < 3; i++){
-            for(int j = 0; j < 3; j++){
-                int m = (x/3) * 3 + i;
-                int n = (y/3) * 3 + j;
-                if(board[m][n] != '.'){
-                    if(grid.contains(board[m][n])){
-                        return false;
-                    }else{
-                        grid.add(board[m][n]);
-                    }
+        for(int i=0;i<9;i++){
+            for(int j=0;j<9;j++){
+                if(board[i][j]!='.'){
+                    int num = board[i][j]-'0';
+                    if(num<=0 || num>9) return false;
+                    num = 1<<num;
+                    if((num&rows[i])==num) return false;
+                    if((num&cols[j])==num) return false;
+                    int ind = (i/3)*3;
+                    ind+=(j/3);
+                    if((num&boxs[ind])==num) return false;
+                    rows[i] |= num;
+                    cols[j] |= num;
+                    boxs[ind] |= num;
                 }
             }
         }
@@ -189,8 +172,56 @@ public class Solution {
     }
 }
 
+# Hashset:
+#30.64% 36ms
+class Solution {
+    public boolean isValidSudoku(char[][] board) {
+        for(int i = 0; i<9; i++){
+            HashSet<Character> rows = new HashSet<Character>();
+            HashSet<Character> columns = new HashSet<Character>();
+            HashSet<Character> cube = new HashSet<Character>();
+            for (int j = 0; j < 9;j++){
+                if(board[i][j]!='.' && !rows.add(board[i][j]))
+                    return false;
+                if(board[j][i]!='.' && !columns.add(board[j][i]))
+                    return false;
+                int RowIndex = 3*(i/3);
+                int ColIndex = 3*(i%3);
+                if(board[RowIndex + j/3][ColIndex + j%3]!='.' && !cube.add(board[RowIndex + j/3][ColIndex + j%3]))
+                    return false;
+            }
+        }
+        return true;
+    }
+}
 
-js2 =
+# Thought:
+# Collect the set of things we see, encoded as strings. For example:
+#
+# '4' in row 7 is encoded as "(4)7".
+# '4' in column 7 is encoded as "7(4)".
+# '4' in the top-right block is encoded as "0(4)2".
+# Scream false if we ever fail to add something because it was already added (i.e., seen before).
+
+#30.64% 30ms
+class Solution {
+   public boolean isValidSudoku(char[][] board) {
+        Set seen = new HashSet();
+        for (int i=0; i<9; ++i) {
+            for (int j=0; j<9; ++j) {
+                char number = board[i][j];
+                if (number != '.')
+                    if (!seen.add(number + " in row " + i) ||
+                        !seen.add(number + " in column " + j) ||
+                        !seen.add(number + " in block " + i/3 + "-" + j/3))
+                        return false;
+            }
+        }
+        return true;
+    }
+}
+
+#71.22% 31ms
 public class Solution {
     public boolean isValidSudoku(char[][] board) {
         return isRowValid(board) && isColValid(board) && isBlockValid(board);
@@ -247,59 +278,4 @@ public class Solution {
     }
 }
 
-
-public class Solution {
-    public boolean isValidSudoku(char[][] board) {
-        List<Set<Character>> rowList = new ArrayList<Set<Character>>();
-        List<Set<Character>> colList = new ArrayList<Set<Character>>();
-        List<Set<Character>> boxList = new ArrayList<Set<Character>>();
-
-        for (int i = 0 ; i < 9 ;i++){
-            Set<Character> rowSet = new HashSet<Character>();
-            rowList.add(rowSet);
-
-            Set<Character> colSet = new HashSet<Character>();
-            colList.add(colSet);
-
-            Set<Character> boxSet = new HashSet<Character>();
-            boxList.add(boxSet);
-
-        }
-
-        for ( int row = 0; row < 9; row++){
-            for ( int col = 0; col < 9; col++) {
-                char cur = board[row][col];
-                if (cur == '.')
-                    continue;
-
-                //row
-                Set<Character> rowSet = rowList.get(row);
-                if (rowSet.contains(cur)){
-                    return false;
-                }else{
-                    rowSet.add(cur);
-                }
-
-                //column
-                Set<Character> colSet = colList.get(col);
-                if(colSet.contains(cur)){
-                    return false;
-                }else{
-                    colSet.add(cur);
-                }
-
-                //box
-                int count = row / 3 * 3 + col /3;
-                Set<Character> boxSet = boxList.get(count);
-                if (boxSet.contains(cur)){
-                    return false;
-                }else{
-                    boxSet.add(cur);
-                }
-
-            }
-        }
-        return true;
-    }
-}
 '''

@@ -1,43 +1,44 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/android-unlock-patterns/#/description'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/android-unlock-patterns.py
-q = '''
-Given an Android 3x3 key lock screen and two integers m and n, where 1 <= m<= n <= 9, count the total number of unlock patterns
-of the Android lock screen, which consist of minimum of m keys and maximum n keys.
-
-Rules for a valid pattern:
-Each pattern must connect at least m keys and at most n keys.
-All the keys must be distinct.
-If the line connecting two consecutive keys in the pattern passes through any other keys,
-the other keys must have previously selected in the pattern. No jumps through non selected key is allowed.
-The order of keys used matters.
-
-Explanation:
-| 1 | 2 | 3 |
-| 4 | 5 | 6 |
-| 7 | 8 | 9 |
-Invalid move: 4 - 1 - 3 - 6
-Line 1 - 3 passes through key 2 which had not been selected in the pattern.
-
-Invalid move: 4 - 1 - 9 - 2
-Line 1 - 9 passes through key 5 which had not been selected in the pattern.
-
-Valid move: 2 - 4 - 1 - 3 - 6
-Line 1 - 3 is valid because it passes through key 2, which had been selected in the pattern
-
-Valid move: 6 - 5 - 4 - 1 - 9 - 2
-Line 1 - 9 is valid because it passes through key 5, which had been selected in the pattern.
-
-Example:
-Given m = 1, n = 1, return 9.
-
-Credits:
-
-Hide Company Tags Google
-Show Tags
-
-'''
 # Time:  O(9^2 * 2^9)
 # Space: O(9 * 2^9)
+#
+# Description:
+# Given an Android 3x3 key lock screen and two integers m and n,
+# where 1<= m <= n <= 9, count the total number of unlock patterns of the Android lock screen,
+# which consist of minimum of m keys and maximum n keys.
+#
+# Rules for a valid pattern:
+# Each pattern must connect at least m keys and at most n keys.
+# All the keys must be distinct.
+# If the line connecting two consecutive keys in the pattern passes through any other keys,
+# the other keys must have previously selected in the pattern. No jumps through non selected key is allowed.
+# The order of keys used matters.
+#
+# Explanation:
+# | 1 | 2 | 3 |
+# | 4 | 5 | 6 |
+# | 7 | 8 | 9 |
+# Invalid move: 4 - 1 - 3 - 6
+# Line 1 - 3 passes through key 2 which had not been selected in the pattern.
+#
+# Invalid move: 4 - 1 - 9 - 2
+# Line 1 - 9 passes through key 5 which had not been selected in the pattern.
+#
+# Valid move: 2 - 4 - 1 - 3 - 6
+# Line 1 - 3 is valid because it passes through key 2, which had been selected in the pattern
+#
+# Valid move: 6 - 5 - 4 - 1 - 9 - 2
+# Line 1 - 9 is valid because it passes through key 5, which had been selected in the pattern.
+#
+# Example:
+# Given m = 1, n = 1, return 9.
+# Companies
+# Google
+# Related Topics
+# Dynamic Programming Backtracking
+#
+import unittest
 
 # DP solution.
 class Solution(object):
@@ -217,10 +218,73 @@ class Solution_TLE(object):
         number += numberOfPatternsHelper(m, n, 1, merge(0, 4), 4)
         return number
 
-#java
-js = '''
-Thought: https://leetcode.com/articles/android-unlock-patterns/
-'public class Solution {
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+
+
+if __name__ == '__main__':
+    unittest.main()
+
+Java = '''
+#Thought: https://leetcode.com/problems/android-unlock-patterns/#/solution
+
+# 19.62
+public class Solution {
+
+    private boolean used[] = new boolean[9];
+
+    public int numberOfPatterns(int m, int n) {
+        int res = 0;
+        for (int len = m; len <= n; len++) {
+            res += calcPatterns(-1, len);
+            for (int i = 0; i < 9; i++) {
+                used[i] = false;
+            }
+        }
+        return res;
+    }
+
+    private boolean isValid(int index, int last) {
+        if (used[index])
+            return false;
+        // first digit of the pattern
+        if (last == -1)
+            return true;
+        // knight moves or adjacent cells (in a row or in a column)
+        if ((index + last) % 2 == 1)
+            return true;
+        // indexes are at both end of the diagonals for example 0,0, and 8,8
+        int mid = (index + last)/2;
+        if (mid == 4)
+            return used[mid];
+        // adjacent cells on diagonal  - for example 0,0 and 1,0 or 2,0 and //1,1
+        if ((index%3 != last%3) && (index/3 != last/3)) {
+            return true;
+        }
+        // all other cells which are not adjacent
+        return used[mid];
+    }
+
+    private int calcPatterns(int last, int len) {
+        if (len == 0)
+            return 1;
+        int sum = 0;
+        for (int i = 0; i < 9; i++) {
+            if (isValid(i, last)) {
+                used[i] = true;
+                sum += calcPatterns(i, len - 1);
+                used[i] = false;
+            }
+        }
+        return sum;
+    }
+}
+
+
+
+# 90%
+public class Solution {
     public static final int[][] SKIP_LIST;
     static {
         SKIP_LIST = new int[10][10];

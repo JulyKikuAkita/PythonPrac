@@ -5,6 +5,7 @@ __source__ = 'https://leetcode.com/problems/symmetric-tree/#/description'
 # Given a binary tree, check whether it is a mirror of itself (ie, symmetric around its center).
 # Stack
 #
+# Description: Leetcode #  101. Symmetric Tree
 # For example, this binary tree is symmetric:
 #
 #     1
@@ -21,10 +22,12 @@ __source__ = 'https://leetcode.com/problems/symmetric-tree/#/description'
 # Note:
 # Bonus points if you could solve it both recursively and iteratively.
 #
+# Companies
 # LinkedIn Bloomberg Microsoft
-# Hide Tags Tree Depth-first Search Breadth-first Search
+# Related Topics
+# Tree Depth-first Search Breadth-first Search
 #
-
+import unittest
 # Definition for a  binary tree node
 class TreeNode:
     def __init__(self, x):
@@ -58,15 +61,6 @@ class Solution:
             stack.append(right.left)
 
         return True
-
-if __name__ == "__main__":
-    root = TreeNode(1)
-    root.left, root.right = TreeNode(2), TreeNode(2)
-    root.left.left, root.right.right = TreeNode(3), TreeNode(3)
-    root.left.right, root.right.left = TreeNode(4), TreeNode(4)
-    print Solution().isSymmetric(root)
-
-
 
 class SolutionRecu:
     # @param root, a tree node
@@ -121,8 +115,6 @@ class Wrong(object):
         if root.right:
             self.inOrder(res, root.right)
 
-
-
 #test
 #############test
 #creating BST tree ####
@@ -159,9 +151,23 @@ qtree2.right=qtree6
 #test = Solutioniter()
 #print test.isSymmetric(qroot0)
 
-java = '''
-Thought:  https://leetcode.com/articles/symmetric-tree/
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+        root = TreeNode(1)
+        root.left, root.right = TreeNode(2), TreeNode(2)
+        root.left.left, root.right.right = TreeNode(3), TreeNode(3)
+        root.left.right, root.right.left = TreeNode(4), TreeNode(4)
+        print Solution().isSymmetric(root)
+
+if __name__ == '__main__':
+    unittest.main()
+
+Java = '''
+# Thought:  https://leetcode.com/articles/symmetric-tree/
+
 # DFS
+# 22.55% 1ms
 public boolean isSymmetric(TreeNode root) {
     return isMirror(root, root);
 }
@@ -182,6 +188,7 @@ private boolean isMirror2(TreeNode t1, TreeNode t2){
 }
 
 # BFS
+# 10.79% 2ms
 /**
  * Definition for a binary tree node.
  * public class TreeNode {

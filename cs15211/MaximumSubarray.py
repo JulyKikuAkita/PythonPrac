@@ -3,6 +3,7 @@ __source__ = 'https://leetcode.com/problems/maximum-subarray/#/description'
 # Time:  O(n)
 # Space: O(1)
 #
+# Description: Leetcode # 53. Maximum Subarray
 # Find the contiguous subarray within an array (containing at least one number) which has the largest sum.
 #
 # For example, given the array [-2,1,-3,4,-1,2,1,-5,4],
@@ -11,11 +12,17 @@ __source__ = 'https://leetcode.com/problems/maximum-subarray/#/description'
 # click to show more practice.
 #
 # More practice:
-# If you have figured out the O(n) solution, try coding another solution using the divide and conquer approach, which is more subtle.
-# LinkedIn Bloomberg Microsoft
-# Hide Tags Array Dynamic Programming Divide and Conquer
-# Hide Similar Problems (E) Best Time to Buy and Sell Stock (M) Maximum Product Subarray
+# If you have figured out the O(n) solution,
+# try coding another solution using the divide and conquer approach, which is more subtle.
 #
+# Companies
+# LinkedIn Bloomberg Microsoft
+# Related Topics
+# Array Dynamic Programming Divide and Conquer
+# Similar Questions
+# Best Time to Buy and Sell Stock Maximum Product Subarray
+#
+import unittest
 class Solution:
     # @param A, a list of integers
     # @return an integer
@@ -67,21 +74,25 @@ class SolutionOther:
             ans = max(ans,sum)
         return ans
 
-
 test = SolutionOther()
 arr = [-2,1,-3,4,-1,2,1,-5,4]
 arr1 = [-1] #ans should be -1 not 0
 #print test.maxSubArray(arr)
 
-if __name__ == "__main__":
-    print Solution().maxSubArray(arr)
-    print Solution().maxSubArray(arr1)
-    print
-    print OneD_DP().maxSubArray(arr)
-    print OneD_DP().maxSubArray(arr1)
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+        print Solution().maxSubArray(arr)
+        print Solution().maxSubArray(arr1)
+        print
+        print OneD_DP().maxSubArray(arr)
+        print OneD_DP().maxSubArray(arr1)
+
+if __name__ == '__main__':
+    unittest.main()
 
 Java = '''
-1.
+#Thought: https://leetcode.com/problems/contains-duplicate/solution/
 this problem was discussed by Jon Bentley (Sep. 1984 Vol. 27 No. 9 Communications of the ACM P885)
 
 the paragraph below was copied from his paper (with a little modifications)
@@ -95,7 +106,7 @@ sum in the first I elements is either the maximum sum in the first i - 1 element
 
 MaxEndingHere is either A[i] plus the previous MaxEndingHere, or just A[i], whichever is larger.
 
-29%
+# 24.67% 17ms
 public class Solution {
     public int maxSubArray(int[] A) {
         int maxSoFar=A[0], maxEndingHere=A[0];
@@ -104,6 +115,37 @@ public class Solution {
         	maxSoFar=Math.max(maxSoFar, maxEndingHere);
         }
         return maxSoFar;
+    }
+}
+
+#10.39% 19ms
+public class Solution {
+    public int maxSubArray(int[] nums) {
+        int result = Integer.MIN_VALUE;
+        int cur = 0;
+        for (int i = 0; i < nums.length; i++) {
+            cur += nums[i];
+            result = Math.max(result, cur);
+            cur = Math.max(cur, 0);
+        }
+        return result;
+    }
+}
+
+#40.66% 16ms
+public class Solution {
+    public int maxSubArray(int[] nums) {
+        int max = Integer.MIN_VALUE;
+        int sum = 0;
+        for (int i = 0; i < nums.length; i++) {
+            if (sum < 0)
+                sum = nums[i];
+            else
+                sum += nums[i];
+            if (sum > max)
+                max = sum;
+        }
+        return max;
     }
 }
 
@@ -132,7 +174,7 @@ because there's a limitation that A[i] should be contained in that sequence and 
 maxSubArray(A, i) = maxSubArray(A, i - 1) > 0 ? maxSubArray(A, i - 1) : 0 + A[i];
 And here's the code
 
-46%
+#24.67% 17ms
 public int maxSubArray(int[] A) {
         int n = A.length;
         int[] dp = new int[n];//dp[i] means the maximum subarray ending with A[i];

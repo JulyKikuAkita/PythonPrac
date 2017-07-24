@@ -1,16 +1,26 @@
-__author__ = 'July'
-'''
-Write a function that takes a string as input and reverse only the vowels of a string.
-
-Example 1:
-Given s = "hello", return "holle".
-
-Example 2:
-Given s = "leetcode", return "leotcede".
-'''
+__source__ = 'https://leetcode.com/problems/reverse-vowels-of-a-string/tabs/description'
+# https://github.com/kamyu104/LeetCode/blob/master/Python/reverse-vowels-of-a-string.py
+# Time:  O(n)
+# Space: O(1)
+#
+# Write a function that takes a string as input and reverse only the vowels of a string.
+#
+# Example 1:
+# Given s = "hello", return "holle".
+#
+# Example 2:
+# Given s = "leetcode", return "leotcede".
+#
+# Note:
+# The vowels does not include the letter "y".
+# Companies
 # Google
+# Related Topics
 # Two Pointers String
-
+# Similar Questions
+# Reverse String
+#
+import re
 class Solution(object):
     def reverseVowels(self, s):
         """
@@ -37,8 +47,12 @@ class Solution(object):
         else:
             return False
 
-#java
-js = '''
+    def reverseVowels2(self, s):
+        vowels = re.findall('(?i)[aeiou]', s)
+        return re.sub('(?i)[aeiou]', lambda m: vowels.pop(), s)
+#Java
+Java = '''
+83%
 public class Solution {
     public String reverseVowels(String s) {
         char[] arr = s.toCharArray();
@@ -64,6 +78,13 @@ public class Solution {
 
     private boolean isVowel(char c) {
         return c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u' || c == 'A' || c == 'E' || c == 'I' || c == 'O' || c == 'U';
+    }
+    // alt:
+    private boolean isVowel2(char c) {
+        if (c >= 'A' && c <= 'Z') {
+            c = (char) ('a' + (c - 'A'));
+        }
+        return c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u';
     }
 }
 '''

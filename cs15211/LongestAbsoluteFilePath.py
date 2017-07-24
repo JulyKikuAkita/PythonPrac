@@ -1,3 +1,4 @@
+__source__ = 'https://leetcode.com/problems/longest-absolute-file-path/description/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/longest-absolute-file-path.py
 # Time:  O(n)
 # Space: O(d), d is the max depth of the paths
@@ -91,12 +92,13 @@ The depth of the directory/file is calculated by counting how many "\t"s are the
 The time complexity is O(n) because each substring in the input string only goes into the stack once,
 and pops out from the stack once.
 
+#29.85 % 5ms
 public int lengthLongestPath(String input) {
         Deque<Integer> stack = new ArrayDeque<>();
         stack.push(0); // "dummy" length
         int maxLen = 0;
         for(String s:input.split("\n")){
-            int lev = s.lastIndexOf("\t")+1; // number of "\t"
+            int lev = s.lastIndexOf("\t")+1; // number of "\t", "\t" counts one char
             while(lev+1<stack.size()) stack.pop(); // find parent
             int len = stack.peek()+s.length()-lev+1; // remove "/t", add"/"
             stack.push(len);
@@ -107,6 +109,7 @@ public int lengthLongestPath(String input) {
     }
 An even shorter and faster solution using array instead of stack:
 
+#29.85 % 5ms
 public class Solution {
     public int lengthLongestPath(String input) {
         String[] paths = input.split("\n");
@@ -123,4 +126,12 @@ public class Solution {
         return res;
     }
 }
+
+# "\t" counts one char length
+# note if print "dir\n\tsubdir1\n\tsubdir2\n\t\tfile.ext".split("\n") and string length();
+dir 3
+        subdir1 8
+        subdir2 8
+                file.ext 10
+# note, if print "\tdir".lastIndexOf("\t"), return 0;, if not found, return -1;
 '''

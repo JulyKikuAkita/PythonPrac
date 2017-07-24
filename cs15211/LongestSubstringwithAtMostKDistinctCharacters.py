@@ -1,4 +1,4 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/longest-substring-with-at-most-k-distinct-characters/description/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/longest-substring-with-at-most-k-distinct-characters.py
 # Given a string, find the length of the longest substring T
 # that contains at most k distinct characters.
@@ -7,8 +7,13 @@ __author__ = 'July'
 #
 # T is "ece" which its length is 3.
 
+# Companies
 # Google
-# hashtable, String
+# Related Topics
+# Hash Table String
+# Similar Questions
+# Longest Substring with At Most Two Distinct Characters Longest Repeating Character Replacement
+#
 
 #  Time:  O(n)
 # Space: O(1)
@@ -34,8 +39,26 @@ class Solution(object):
             longest = max(longest, i - start + 1)
         return longest
 
-#java
-js = '''
+#Java
+Java = '''
+#Sliding window 59.03% 13ms
+public class Solution {
+    public int lengthOfLongestSubstringKDistinct(String s, int k) {
+        int[] count = new int[256];
+        int num = 0, i = 0, res = 0;
+        for (int j = 0; j < s.length(); j++) {
+            if (count[s.charAt(j)]++ == 0) num++;
+            if (num > k) {
+                while (--count[s.charAt(i++)] > 0); // move i to unseen char
+                num--;
+            }
+            res = Math.max(res, j - i + 1);
+        }
+        return res;
+    }
+}
+
+#25.11% 49ms
 public class Solution {
     public int lengthOfLongestSubstringKDistinct(String s, int k) {
         int len = s.length();
@@ -67,6 +90,33 @@ public class Solution {
         }
         result = Math.max(result, len - start);
         return result;
+    }
+}
+
+#82.55% 9ms
+public class Solution {
+    public int lengthOfLongestSubstringKDistinct(String s, int k) {
+        if (s == null || s.length() == 0) return 0;
+        int[] counts = new int[256];
+        int distinct = 0;
+        int start = 0, end = 0;
+        int maxLen = 0;
+        while (end < s.length()) {
+            if (counts[s.charAt(end)]++ == 0) {
+                distinct++;
+            }
+            end++;
+
+            while (distinct > k) {
+                if (counts[s.charAt(start)]-- == 1) {
+                    distinct--;
+                }
+                start++;
+            }
+
+            maxLen = Math.max(maxLen, end - start);
+        }
+        return maxLen;
     }
 }
 '''

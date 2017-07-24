@@ -1,4 +1,4 @@
-__author__ = 'July'
+__source_ = 'https://leetcode.com/problems/interleaving-string/description/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/interleaving-string.py
 # Time:  O(m * n)
 # Space: O(m + n)
@@ -12,8 +12,11 @@ __author__ = 'July'
 #
 # When s3 = "aadbbcbcac", return true.
 # When s3 = "aadbbbaccc", return false.
+# Related Topics
+# Dynamic Programming String
 #
-
+#
+import unittest
 # Time:  O(m * n)
 # Space: O(m + n)
 # Dynamic Programming + Sliding Window
@@ -89,19 +92,59 @@ class Solution3:
 
         return result
 
-
 #test
-my_test = SolutionOther()
-#print my_test.isInterleave("aabcc","dbbca","aadbbcbcac")
-#print my_test.isInterleave("aabcc","dbbca","aadbbbaccc")
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+        my_test = Solution3()
+        #print my_test.isInterleave("aabcc","dbbca","aadbbcbcac")
+        #print my_test.isInterleave("aabcc","dbbca","aadbbbaccc")
+        print Solution3().isInterleave("a", "", "a")
+        print Solution2().isInterleave("aabcc", "dbbca", "aadbbcbcac")
+        print Solution().isInterleave("aabcc", "dbbca", "aadbbbaccc")
 
-if __name__ == "__main__":
-    print Solution3().isInterleave("a", "", "a")
-    print Solution2().isInterleave("aabcc", "dbbca", "aadbbcbcac")
-    print Solution().isInterleave("aabcc", "dbbca", "aadbbbaccc")
+if __name__ == '__main__':
+    unittest.main()
 
-#java
-js = '''
+Java = '''
+#Thought: https://leetcode.com/problems/interleaving-string/solution/
+Thought: https://leetcode.com/problems/interleaving-string/tabs/solution#approach-2-recursion-with-memoization-accepted
+#68%  4ms
+public class Solution {
+    public boolean isInterleave(String s1, String s2, String s3) {
+        int l1 = s1.length();
+        int l2 = s2.length();
+        int l3 = s3.length();
+
+        if( l1 + l2 != l3) return false;
+
+        Map<String, Boolean> map = new HashMap<String, Boolean>();
+        return dfs(s1, s2, s3, 0, 0, 0, map);
+    }
+
+    private boolean dfs(String s1, String s2, String s3, int l1, int l2, int l3, Map<String, Boolean> map){
+        String key = Integer.toString(l1) + Integer.toString(l2);
+        if(map.containsKey(key)){
+            return map.get(key);
+        }
+
+        if(l3 == s3.length()) return true;
+
+        boolean res = false;
+        if(l1 < s1.length() && s1.charAt(l1) == s3.charAt(l3)){
+            res = res | dfs( s1, s2, s3, l1 + 1, l2, l3 + 1, map);
+        }
+        if(l2 < s2.length() && s2.charAt(l2) == s3.charAt(l3)){
+            res = res | dfs( s1, s2, s3, l1, l2 + 1, l3 + 1, map);
+        }
+        map.put(key, res);
+        return res;
+    }
+}
+
+
+
+#84.9% 3ms
 public class Solution {
     public boolean isInterleave(String s1, String s2, String s3) {
         int len1 = s1.length();
@@ -129,42 +172,35 @@ public class Solution {
     }
 }
 
+#84.9% 3ms
 public class Solution {
     public boolean isInterleave(String s1, String s2, String s3) {
-        int l1 = s1.length();
-        int l2 = s2.length();
-        int l3 = s3.length();
-
-        if( l1 + l2 != l3) return false;
-
-        Map<String, Boolean> map = new HashMap<String, Boolean>();
-        return dfs(s1, s2, s3, 0, 0, 0, map);
-
-
-
-    }
-
-    private boolean dfs(String s1, String s2, String s3, int l1, int l2, int l3, Map<String, Boolean> map){
-        String key = Integer.toString(l1) + Integer.toString(l2);
-        if(map.containsKey(key)){
-            return map.get(key);
+        int len1 = s1.length();
+        int len2 = s2.length();
+        int len3 = s3.length();
+        if (len1 + len2 != len3) {
+            return false;
         }
-
-        if(l3 == s3.length()) return true;
-
-        boolean res = false;
-        if(l1 < s1.length() && s1.charAt(l1) == s3.charAt(l3)){
-            res = res | dfs( s1, s2, s3, l1 + 1, l2, l3 + 1, map);
+        boolean[] dp = new boolean[len1 + 1];
+        dp[0] = true;
+        for (int i = 0; i < len1; i++) {
+            if (s1.charAt(i) == s3.charAt(i)) {
+                dp[i + 1] = true;
+            } else {
+                break;
+            }
         }
-        if(l2 < s2.length() && s2.charAt(l2) == s3.charAt(l3)){
-            res = res | dfs( s1, s2, s3, l1, l2 + 1, l3 + 1, map);
+        for (int i = 0; i < len2; i++) {
+            dp[0] &= s2.charAt(i) == s3.charAt(i);
+            for (int j = 0; j < len1; j++) {
+                dp[j + 1] = (dp[j] && s1.charAt(j) == s3.charAt(i + j + 1)) || (dp[j + 1] && s2.charAt(i) == s3.charAt(i + j + 1));
+            }
         }
-        map.put(key, res);
-        return res;
+        return dp[len1];
     }
 }
 
-
+#68.5% 4ms
 public class Solution {
     public boolean isInterleave(String s1, String s2, String s3) {
         int l1 = s1.length();
@@ -191,8 +227,6 @@ public class Solution {
             }
         }
         return dp[l1][l2];
-
     }
-
 }
 '''

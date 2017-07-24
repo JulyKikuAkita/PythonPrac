@@ -4,18 +4,20 @@ __source__ = 'https://leetcode.com/problems/balanced-binary-tree/#/description'
 # Space: O(h), h is height of binary tree
 # divide and conquer
 #
+# Description: Leetcode # 110. Balanced Binary Tree
 # Given a binary tree, determine if it is height-balanced.
 #
 # For this problem, a height-balanced binary tree is defined as a binary tree
 # in which the depth of the two subtrees of every node never differ by more than 1.
 #
-# Topics:
-# Tree Depth-first Search
-# You might like:
-# (E) Maximum Depth of Binary Tree
-# Company:
+# Companies
 # Bloomberg
-
+# Related Topics
+# Tree Depth-first Search
+# Similar Questions
+# Maximum Depth of Binary Tree
+#
+import unittest
 # Definition for a  binary tree node
 class TreeNode:
      def __init__(self, x):
@@ -103,16 +105,21 @@ print test.isBalanced(root0)
 #print test.isBalanced3(root0)
 #print test.isBalanced2(root0)
 
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+        root = TreeNode(0)
+        root.left = TreeNode(1)
+        result = Solution().isBalanced(root)
+        print result
 
-if __name__ == "__main__":
-    root = TreeNode(0)
-    root.left = TreeNode(1)
-    result = Solution().isBalanced(root)
-    print result
+        root.left.left = TreeNode(2)
+        result = javaSolution().isBalanced(root)
+        print result
 
-    root.left.left = TreeNode(2)
-    result = javaSolution().isBalanced(root)
-    print result
+if __name__ == '__main__':
+    unittest.main()
+
 
 #Java
 java = '''
@@ -135,22 +142,9 @@ returns a non-negative value as the height.
 Otherwise -1 is returned. According to the leftHeight and rightHeight of the two children,
 the parent node could check if the sub tree is balanced, and decides its return value.
 
+//DFS2
+# 63.06% 1ms
 public class Solution {
-
-    //DFS1
-    public boolean isBalanced2(TreeNode root) {
-        if (root == null) return true;
-        int left = maxDepth(root.left);
-        int right = maxDepth(root.right);
-        return Math.abs(left - right) <= 1 && isBalanced2(root.left) && isBalanced2(root.right);
-    }
-
-    public int getDpeth(TreeNode root) {
-        if (root == null) return 0;
-        return Math.max(getDpeth(root.left), getDpeth(root.right)) + 1;
-    }
-
-     //DFS2
     public boolean isBalanced(TreeNode root) {
          return dfsHeight(root) != -1;
     }
@@ -165,6 +159,41 @@ public class Solution {
             } else {
                 return Math.max(left_count, right_count) + 1;
             }
+    }
+}
+
+# DFS
+# 19.53% 2ms
+public class Solution {
+    public boolean isBalanced(TreeNode root) {
+        if (root == null) return true;
+        int left = getDpeth(root.left);
+        int right = getDpeth(root.right);
+        return Math.abs(left - right) <= 1 && isBalanced(root.left) && isBalanced(root.right);
+    }
+
+    public int getDpeth(TreeNode root) {
+        if (root == null) return 0;
+        return Math.max(getDpeth(root.left), getDpeth(root.right)) + 1;
+    }
+}
+
+#DFS
+# 63.06% 1ms
+class Solution {
+    public boolean isBalanced(TreeNode root) {
+        if (root == null) return true;
+        return getHeight(root) != -1;
+    }
+
+    public int getHeight(TreeNode node) {
+        if (node == null ) return 0;
+        int left = getHeight(node.left);
+        if (left == -1) return -1;
+        int right = getHeight(node.right);
+        if (right == -1) return -1;
+        if (left - right < -1 || left - right > 1) return -1;
+        return Math.max(left, right) + 1;
     }
 }
 '''

@@ -1,9 +1,11 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/number-of-islands/description/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/number-of-islands.py
 # Time:  O(m * n)
 # Space: O(m * n)
 # DFS
 # Floodfill Algorithm
+#
+# Description: Leetcode # 200. Number of Islands
 #
 # Given a 2d grid map of '1's (land) and '0's (water), count the number of islands.
 # An island is surrounded by water and is formed by connecting adjacent lands horizontally
@@ -25,12 +27,15 @@ __author__ = 'July'
 # 00011
 # Answer: 3
 #
+# Companies
 # Amazon Microsoft Google Facebook Zenefits
-# Hide Tags Depth-first Search Breadth-first Search Union Find
-# Hide Similar Problems (M) Surrounded Regions (M) Walls and Gates
-# (H) Number of Islands II (M) Number of Connected Components in an Undirected Graph
+# Related Topics
+# Depth-first Search Breadth-first Search Union Find
+# Similar Questions
+# Surrounded Regions Walls and Gates Number of Islands II Number of Connected Components in an Undirected Graph
 
 #idea is to merge individual islands
+import unittest
 class Solution:
     # @param grid, a list of list of characters
     # @return an integer
@@ -121,10 +126,19 @@ grid = [
     ['0', '0', '1', '0', '0'],
     ['0', '0', '0', '1', '1']
 ]
-if __name__ == "__main__":
-    print Solution().numIslands(grid)
-    print Solution2().numIslands(grid)
-java = '''
+
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+        print Solution().numIslands(grid)
+        print Solution2().numIslands(grid)
+
+if __name__ == '__main__':
+    unittest.main()
+
+Java = '''
+
+//BFS 24.71%  7ms
 public class Solution {
     private static final int[][] DIRECTIONS = new int[][] {{0, -1}, {0, 1}, {-1, 0}, {1, 0}};
 
@@ -168,6 +182,7 @@ public class Solution {
 
 
 2. DFS:
+# 40.31%, 4 ms
 public class Solution {
     private static final int[][] DIRECTIONS = new int[][] {{0, -1}, {0, 1}, {-1, 0}, {1, 0}};
 
@@ -203,6 +218,7 @@ public class Solution {
 }
 
 //Union Find
+#10.60%, 11ms
 public class Solution {
     public int numIslands(char[][] grid) {
         if(grid.length == 0 || grid[0].length == 0) return 0;
@@ -275,4 +291,5 @@ public class Solution {
         }
     }
 }
+
 '''
