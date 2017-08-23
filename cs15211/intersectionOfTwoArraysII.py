@@ -1,7 +1,6 @@
-import collections
-
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/intersection-of-two-arrays-ii/description/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/intersection-of-two-arrays-ii.py
+#
 # If the given array is not sorted and the memory is unlimited:
 #   - Time:  O(m + n)
 #   - Space: O(min(m, n))
@@ -15,7 +14,9 @@ __author__ = 'July'
 # else: (the given array is not sorted and the memory is limited)
 #     - Time:  O(max(m, n) * log(max(m, n)))
 #     - Space: O(1)
-
+#
+# Description: Leetcode # 350. Intersection of Two Arrays II
+#
 # Given two arrays, write a function to compute their intersection.
 #
 # Example:
@@ -30,8 +31,14 @@ __author__ = 'July'
 # - What if nums1's size is small compared to num2's size? Which algorithm is better?
 # - What if elements of nums2 are stored on disk, and the memory is limited such that
 #   you cannot load all elements into the memory at once?
-
-
+#
+# Related Topics
+# Hash Table Two Pointers Binary Search Sort
+# Similar Questions
+# Intersection of Two Arrays
+#
+import collections
+import unittest
 # If the given array is not sorted and the memory is unlimited.
 # Time:  O(m + n)
 # Space: O(min(m, n))
@@ -55,9 +62,7 @@ class Solution(object):
             if lookup[i] > 0:
                 res += i,
                 lookup[i] -= 1
-
         return res
-
 
 # If the given array is already sorted, and the memory is limited, and (m << n or m >> n).
 # Time:  O(min(m, n) * log(max(m, n)))
@@ -94,7 +99,6 @@ class Solution(object):
 
         return res
 
-
 # If the given array is already sorted, and the memory is limited or m ~ n.
 # Time:  O(m + n)
 # Soace: O(1)
@@ -123,7 +127,6 @@ class Solution(object):
 
         return res
 
-
 # If the given array is not sorted, and the memory is limited.
 # Time:  O(max(m, n) * log(max(m, n)))
 # Space: O(1)
@@ -149,32 +152,53 @@ class Solution(object):
                 res += nums1[it1],
                 it1 += 1
                 it2 += 1
-
         return res
 
-#java
-js = '''
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+
+if __name__ == '__main__':
+    unittest.main()
+
+Java = '''
+#96.32% 3ms
 public class Solution {
-    public int[] intersection(int[] nums1, int[] nums2) {
-        Set<Integer> set = new HashSet<>();
-        List<Integer> list = new ArrayList<>();
-        for (int num : nums1) {
-            set.add(num);
+    public int[] intersect(int[] nums1, int[] nums2) {
+        if(nums1 == null || nums2 == null || nums1.length == 0 || nums2.length == 0){
+            return new int[0];
         }
-        for (int num : nums2) {
-            if (set.contains(num)) {
-                list.add(num);
-                set.remove(num);
+
+        Arrays.sort(nums1);
+        Arrays.sort(nums2);
+        List<Integer> result = new ArrayList<Integer>();
+        int j = 0;
+        for(int i = 0; i < nums1.length; i++){
+            if(j >= nums2.length){
+                break;
             }
+            int key = nums1[i];
+            while ( j < nums2.length && key >= nums2[j]){
+                if(key > nums2[j]){
+                    j++;
+                }else if(key == nums2[j]){
+                    result.add(key);
+                    j++;
+                    break;
+                }
+            }
+
         }
-        int[] result = new int[list.size()];
-        for (int i = 0; i < list.size(); i++) {
-            result[i] = list.get(i);
+
+        int[] resultArr = new int[result.size()];
+        for(int i = 0; i < result.size(); i++){
+            resultArr[i] = result.get(i);
         }
-        return result;
+        return resultArr;
     }
 }
 
+#39.24% 7ms
 public class Solution {
     public int[] intersect(int[] nums1, int[] nums2) {
         if ( nums1 == null || nums2 == null) return new int[0];

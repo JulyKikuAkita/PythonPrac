@@ -2,7 +2,9 @@ __source__ = 'https://leetcode.com/problems/h-index/tabs/description'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/h-index.py
 # Time:  O(n)
 # Space: O(n)
-
+#
+# Description: Leetcode # 274. H-Index
+#
 # Given an array of citations (each citation is a non-negative integer)
 # of a researcher, write a function to compute the researcher's h-index.
 #
@@ -18,6 +20,7 @@ __source__ = 'https://leetcode.com/problems/h-index/tabs/description'
 # the remaining two with no more than 3 citations each, his h-index is 3.
 #
 # Note: If there are several possible values for h, the maximum one is taken as the h-index.
+#
 # Companies
 # Bloomberg Google Facebook
 # Related Topics
@@ -25,6 +28,7 @@ __source__ = 'https://leetcode.com/problems/h-index/tabs/description'
 # Similar Questions
 # H-Index II
 #
+import unittest
 # Counting sort.
 class Solution(object):
     def hIndex(self, citations):
@@ -74,14 +78,21 @@ class Solution3(object):
         """
         return sum(x >= i + 1 for i, x  in enumerate(sorted(citations, reverse=True)))
 
-#Java
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+
+if __name__ == '__main__':
+    unittest.main()
+
 Java = '''
+# Thought: https://leetcode.com/problems/h-index/tabs/solution
 citations[index] >= length(citations) - index
 
-Thought: https://leetcode.com/problems/h-index/tabs/solution
-1. Comparison sort based 18%
+1. Comparison sort based
 # Time:  O(n log n)
 # Space: O(1)
+#10.43% 3ms
 public class Solution {
     public int hIndex(int[] citations) {
         // sorting the citations in ascending order
@@ -95,7 +106,8 @@ public class Solution {
     }
 }
 
-2. counting sort 50.7%
+2. counting sort
+# 50.50% 1ms
 public class Solution {
     public int hIndex(int[] citations) {
         int n = citations.length;
@@ -112,6 +124,7 @@ public class Solution {
 }
 
 3. bucket sort: 94 % - 50%
+# 50.50% 1ms
 public class Solution {
     public int hIndex(int[] citations) {
         int n = citations.length;

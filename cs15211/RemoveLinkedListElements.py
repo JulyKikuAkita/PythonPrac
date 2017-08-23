@@ -1,14 +1,21 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/remove-linked-list-elements/description/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/remove-linked-list-elements.py
 # Time:  O(n)
 # Space: O(1)
+#
+# Description: Leetcode # 203. Remove Linked List Elements
 #
 # Remove all elements from a linked list of integers that have value val.
 #
 # Example
 # Given: 1 --> 2 --> 6 --> 3 --> 4 --> 5 --> 6, val = 6
 # Return: 1 --> 2 --> 3 --> 4 --> 5
+# Related Topics
+# Linked List
+# Similar Questions
+# Remove Element Delete Node in a Linked List
 #
+import unittest
 # Definition for singly-linked list.
 class ListNode:
      def __init__(self, x):
@@ -37,15 +44,20 @@ class Solution:
             cur = cur.next
         return dummy.next
 
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+        head = ListNode(3)
+        head.next = ListNode(1)
+        head.next.next = ListNode(1)
+        print Solution().removeElements(head, 1)
 
-if __name__ == "__main__":
-    head = ListNode(3)
-    head.next = ListNode(1)
-    head.next.next = ListNode(1)
-    print Solution().removeElements(head, 1)
+if __name__ == '__main__':
+    unittest.main()
 
-#java
-js = '''
+Java = '''
+#Thought:
+# 8.44% 2ms
 public class Solution {
     public ListNode removeElements(ListNode head, int val) {
         ListNode fakeHead = new ListNode(0);
@@ -63,6 +75,7 @@ public class Solution {
     }
 }
 
+# 8.44% 2ms
 public class Solution {
     public ListNode removeElements(ListNode head, int val) {
         if(head == null) return head;

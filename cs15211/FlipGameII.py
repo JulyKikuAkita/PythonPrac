@@ -2,6 +2,9 @@ __source__ = 'https://leetcode.com/problems/flip-game-ii/tabs/description'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/flip-game-ii.py
 # Time:  O(n + c^2)
 # Space: O(c)
+#
+# Description: Leetcode # 294. Flip Game II
+#
 # You are playing the following Flip Game with your friend: Given a string
 # that contains only these two characters: + and -,
 # you and your friend take turns to flip two consecutive "++" into "--".
@@ -20,11 +23,8 @@ __source__ = 'https://leetcode.com/problems/flip-game-ii/tabs/description'
 # Backtracking
 # Similar Questions
 # Nim Game Flip Game Guess Number Higher or Lower II Can I Win
-# '''
-
-# Time:  O(n + c^2)
-# Space: O(c)
-
+#
+#
 # The best theory solution (DP, O(n + c^2)) could be seen here:
 # https://leetcode.com/discuss/64344/theory-matters-from-backtracking-128ms-to-dp-0m
 
@@ -34,8 +34,10 @@ __source__ = 'https://leetcode.com/problems/flip-game-ii/tabs/description'
 
 # izip() returns an iterator that combines the elements of several iterators into tuples.
 # It works like the built-in function zip(), except that it returns an iterator instead of a list.
+
 import itertools
 import re
+import unittest
 class Solution(object):
     def canWin(self, s):
         g, g_final = [0], 0
@@ -98,11 +100,23 @@ class Solution3(object):
             i += 1
         return is_win
 
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
 
-# Java:
-# http://buttercola.blogspot.com/2015/10/leetcode-flip-game-ii.html
-Java='''
-#60.16%
+if __name__ == '__main__':
+    unittest.main()
+
+Java = '''
+#Thought:
+# backtracking solution O(n!!)
+For the time complexity, let's say the length of the input string s is n,
+there are at most n - 1 ways to replace "++" to "--" (imagine s is all "+++..."),
+once we replace one "++", there are at most (n - 2) - 1 ways to do the replacement,
+it's a little bit like solving the N-Queens problem, the time complexity is (n - 1) x (n - 3) x (n - 5) x ...,
+so it's O(n!!), double factorial.
+
+#65.36% 24ms
 public class Solution {
     public boolean canWin(String s) {
         if(s == null || s.length() == 0 ) return false;
@@ -125,11 +139,11 @@ public class Solution {
             }
         }
         return false;
-
     }
 }
 
 # backtracking + memorization 68%
+# 89.76% 18ms
 public class Solution {
     public boolean canWin(String s) {
         return canWin(s, new HashMap<>());
@@ -152,7 +166,7 @@ public class Solution {
     }
 }
 
-# 76%
+# 87.01% 19ms
 public class Solution {
     HashMap<String, Boolean> map = new HashMap<>();
 
@@ -171,6 +185,53 @@ public class Solution {
         }
         map.put(s, false);
         return false;
+    }
+}
+
+#96.97% 1ms
+class Solution {
+    public boolean canWin(String s) {
+        HashSet<Integer> set = new HashSet<Integer>();
+        String[] segment = s.split("-");
+        for(String str : segment) {
+            int cur = str.length();
+            if(cur != 0 && cur % 4 != 1) {
+                if(cur % 2 == 1) {
+                    cur--;
+                }
+                if(set.contains(cur)) {
+                    set.remove(cur);
+                } else {
+                    set.add(cur);
+                }
+            }
+        }
+        if(set.size() == 0) {
+            return false;
+        }
+        return true;
+    }
+}
+
+#99.87% 0ms
+public class Solution {
+    public boolean canWin(String s) {
+        // two pointers p1 p2 to count consecutive '+'
+        // flips is total flips available
+        // change is total opportunities to alter remaining flips between odd and even
+        int flips = 0, change = 0;
+        for (int p1 = 0, p2 = 0, n = s.length(); p2 < s.length(); p1 = p2) {
+            p1 = s.indexOf('+', p1);
+            if (p1 == -1) break;
+            p2 = s.indexOf('-', p1);
+            if (p2 == -1) p2 = n;
+            if (p2 - p1 == 2)
+                ++flips;
+            else if (p2 - p1 == 4 || p2 - p1 == 6)
+                ++change;
+            flips += (p2 - p1 - 1) / 2;
+        }
+        return change % 2 != 0 || flips % 2 != 0;
     }
 }
 '''

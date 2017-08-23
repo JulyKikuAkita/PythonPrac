@@ -1,6 +1,9 @@
 __source__ = 'https://leetcode.com/problems/coin-change/description/'
+# https://github.com/kamyu104/LeetCode/blob/master/Python/create-maximum-number.py
 # Time:  O(n * k), n is the number of coins, k is the amount of money
 # Space: O(k)
+#
+# Description: Leetcode # 322. Coin Change
 #
 # You are given coins of different denominations and
 # a total amount of money amount. Write a function to
@@ -20,34 +23,53 @@ __source__ = 'https://leetcode.com/problems/coin-change/description/'
 # You may assume that you have an infinite number of each kind of coin.
 # Related Topics
 # Dynamic Programming
-#TLE
-class Solution_TLE(object):
-    count = float("inf")
-    def coinChange(self, coins, amount):
+# TLE
+import unittest
+# Time:  O(k * (m + n + k)) ~ O(k * (m + n + k^2))
+# Space: O(m + n + k^2)
+# DP + Greedy solution. (280ms)
+class Solution(object):
+    def maxNumber(self, nums1, nums2, k):
         """
-        :type coins: List[int]
-        :type amount: int
-        :rtype: int
+        :type nums1: List[int]
+        :type nums2: List[int]
+        :type k: int
+        :rtype: List[int]
         """
-        cur = []
-        coins.sort()
-        self.coinChangeRecu(coins,amount,cur)
-        return self.count if self.count != float("inf") else -1
+        def get_max_digits(nums, start, end, max_digits):
+            max_digits[end] = max_digit(nums, end)
+            for i in reversed(xrange(start, end)):
+                max_digits[i] = delete_digit(max_digits[i + 1])
 
-    def coinChangeRecu(self, coins, amount, cur):
+        def max_digit(nums, k):
+            drop = len(nums) - k
+            res = []
+            for num in nums:
+                while drop and res and res[-1] < num:
+                    res.pop()
+                    drop -= 1
+                res.append(num)
+            return res[:k]
 
-        if sum(cur) > amount:
-            return
+        def delete_digit(nums):
+            res = list(nums)
+            for i in xrange(len(res)):
+                if i == len(res) - 1 or res[i] < res[i + 1]:
+                    res = res[:i] + res[i+1:]
+                    break
+            return res
 
-        if sum(cur) == amount:
-            self.count = min(self.count, len(cur))
-            return
+        def merge(a, b):
+            return [max(a, b).pop(0) for _ in xrange(len(a)+len(b))]
 
-        for coin in coins:
-            cur.append(coin)
-            self.coinChangeRecu(coins, amount, cur)
-            cur.pop()
+        m, n = len(nums1), len(nums2)
 
+        max_digits1, max_digits2 = [[] for _ in xrange(k + 1)], [[] for _ in xrange(k + 1)]
+        get_max_digits(nums1, max(0, k - n), min(k, m), max_digits1)
+        get_max_digits(nums2, max(0, k - m), min(k, n), max_digits2)
+
+        return max(merge(max_digits1[i], max_digits2[k-i]) \
+                   for i in xrange(max(0, k - n), min(k, m) + 1))
 
 # DP solution. (1680ms)
 class Solution2(object):
@@ -68,51 +90,19 @@ class Solution2(object):
                         amounts[i+coin] = min(amounts[i+coin], amounts[i] + 1)
         return amounts[amount] if amounts[amount] != INF else -1
 
-class SolutionLTE1(object):
-    def __init__(self):
-        self.res = []
-    def coinChange(self, coins, amount):
-        """
-        :type coins: List[int]
-        :type amount: int
-        :rtype: int
-        """
-        if not coins or len(coins) == 0 or amount < 0:
-            return -1
-        if amount == 0:
-            return 0
-        tmp = []
-        self.dfs(coins, tmp, 0, amount)
-        return len(self.res) if len(self.res) > 0 else -1
-
-    def dfs(self, coins, tmp, sum, amount):
-        print sum
-        if sum > amount:
-            return
-        if sum == amount:
-            if len(tmp) < len(self.res):
-                self.res = tmp
-                return
-            else:
-                return
-
-        for coin in coins:
-            tmp.append(coin)
-            self.dfs(coins, tmp, sum + coin, amount)
-            tmp.pop()
 # test
-coins = [1, 2, 5]
-amount = 100
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+        coins = [1, 2, 5]
+        amount = 100
+        print Solution2().coinChange(coins,amount)
+
 if __name__ == '__main__':
-    print SolutionLTE1().coinChange(coins,amount)
-    #print Solution_TLE().coinChange(coins,amount)
+    unittest.main()
 
-
-#Java
-# http://www.cnblogs.com/springfor/p/3886576.html
 Java = '''
 Thought: https://leetcode.com/problems/coin-change/solution/
-#Thought: https://leetcode.com/problems/maximum-product-of-three-numbers/tabs/solution
 
 #98.46% 5ms
 public class Solution {

@@ -4,9 +4,7 @@ __source__ = 'https://leetcode.com/problems/reverse-string/description/'
 # Space: O(1)
 #
 # Description: Leetcode # 344. Reverse String
-# Time:  O(n)
-# Space: O(n)
-
+#
 # Write a function that takes a string as input and
 # returns the string reversed.
 #
@@ -31,7 +29,6 @@ class Solution(object):
             i += 1
             j -= 1
         return "".join(string)
-
 
 # Time:  O(n)
 # Space: O(n)

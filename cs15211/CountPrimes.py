@@ -2,17 +2,20 @@ __source__ = 'https://leetcode.com/problems/count-primes/#/solutions'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/count-primes.py
 # Time:  O(n)
 # Space: O(n)
-# Description:
+#
+# Description: Leetcode # 204. Count Primes
 #
 # Count the number of prime numbers less than a non-negative number, n
 #
 # Hint: The number n could be in the order of 100,000 to 5,000,000.
 #
-#  Amazon Microsoft
-# Hide Tags Hash Table Math
-# Hide Similar Problems (E) Ugly Number (M) Ugly Number II (M) Perfect Squares
-#
-
+# Companies
+# Amazon Microsoft
+# Related Topics
+# Hash Table Math
+# Similar Questions
+# Ugly Number Ugly Number II Perfect Squares
+import unittest
 from math import sqrt
 class Solution:
     # @param {integer} n
@@ -29,9 +32,6 @@ class Solution:
                 for j in xrange(i+i, n , i):
                     is_prime[j] = False
         return num
-
-if __name__ == "__main__":
-    print Solution().countPrimes(7)
 
 class Solution(object):
     def countPrimes(self, n):
@@ -54,8 +54,17 @@ class Solution(object):
 
         return isPrime.count(True) - 2 # don't count 0, 1
 
-#java
-js = '''
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+        print Solution().countPrimes(7)
+
+if __name__ == '__main__':
+    unittest.main()
+
+Java = '''
+# Thought:
+# 91.90% 21ms
 public class Solution {
     public int countPrimes(int n) {
         if (n < 3) {
@@ -82,6 +91,7 @@ public class Solution {
 The accurate time complexity is O(n\log{\log{n}}) which is not trivial to show.
 But, it is easy to show a complexity of O(n\log{n}).
 
+#65.02% 28ms
 public class Solution {
     public int countPrimes(int n) {
         boolean[] isPrime = new boolean[n];
@@ -96,7 +106,7 @@ public class Solution {
     }
 }
 
-#98%
+# 96% 13ms
 #Note, prime number % 6 will either be 1 or 5
 public class Solution {
     public int countPrimes(int n) {

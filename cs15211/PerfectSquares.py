@@ -3,21 +3,26 @@ __source__ = 'https://leetcode.com/problems/perfect-squares/#/description'
 # Time:  O(n * sqrt(n))
 # Space: O(n)
 #
+# Description: Leetcode # 279. Perfect Squares
+#
 # Given a positive integer n, find the least number of perfect
 # square numbers (for example, 1, 4, 9, 16, ...) which sum to n.
 #
 # For example, given n = 12, return 3 because 12 = 4 + 4 + 4;
 # given n = 13, return 2 because 13 = 4 + 9.
 #
-#  Google
-# Hide Tags Dynamic Programming Breadth-first Search Math
-# Hide Similar Problems (E) Count Primes (M) Ugly Number II
+# Companies
+# Google
+# Related Topics
+# Math Dynamic Programming Breadth-first Search
+# Similar Questions
+# Count Primes Ugly Number II
 #
-
 #dp
 # http://bookshadow.com/weblog/2015/09/09/leetcode-perfect-squares/
 # O(n * sqrt n)
 # @Not getting dp yet
+import unittest
 class Solution(object):
     _num = [0]
     def numSquares(self, n):
@@ -31,8 +36,6 @@ class Solution(object):
             #print num
         return num[n]
 
-# java solution
-# http://www.cnblogs.com/grandyang/p/4800552.html
 #Recursion
 class Solution2(object):
     def numSquares(self, n):
@@ -124,14 +127,19 @@ class SolutionDP(object):
                 if j * j + i <= n:
                     dp[ j * j + i ] = min(dp[ j * j + i ], dp[i] + 1)
         return dp[n]
-if __name__ == "__main__":
-    #print Solution().numSquares(12)
-    #print Solution2().numSquares(12)
-    print Solution3().numSquares(12)
-    print SolutionDFS().numSquares(10)
 
-#java
-java = '''
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+        #print Solution().numSquares(12)
+        #print Solution2().numSquares(12)
+        print Solution3().numSquares(12)
+        print SolutionDFS().numSquares(10)
+
+if __name__ == '__main__':
+    unittest.main()
+
+Java = '''
 thought: https://leetcode.com/problems/perfect-squares/#/solutions
 dp[n] indicates that the perfect squares count of the given n, and we have:
 
@@ -156,6 +164,7 @@ dp[13] = Min{ dp[13-1*1]+1, dp[13-2*2]+1, dp[13-3*3]+1 }
 						.
 dp[n] = Min{ dp[n - i*i] + 1 },  n - i*i >=0 && i >= 1
 
+#90.91% 40ms
 public class Solution {
     public int numSquares(int n) {
         int[] dp = new int[n + 1];
@@ -182,7 +191,7 @@ dp arr for n = 5 will be:
 
 # recurstion case:
 dp[n] = Math.min(dp[n], dp[n - i*i] + 1 ),  n - i*i >=0 && i >= 1
-
+# 94.16% 33ms
 public class Solution {
     public int numSquares(int n) {
         int[] dp = new int[n + 1];
@@ -199,7 +208,7 @@ public class Solution {
 }
 
 3.Mathematical Solution: 4ms 98%
-
+#97.62% 2ms
 public class Solution {
 
     public int numSquares(int n) {
@@ -238,6 +247,7 @@ public class Solution {
 //there are only 4 possible result 1,2,3,4
 //check if a * a + b * b == n
 
+# 96.90% 4ms
 public class Solution {
     public int numSquares(int n) {
         //base case

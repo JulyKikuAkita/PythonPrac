@@ -3,6 +3,8 @@ __source__ = 'https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-s
 # Time:  O(n)
 # Space: O(1)
 #
+# Description: Leetcode # 235. Lowest Common Ancestor of a Binary Search Tree
+#
 # Given a binary search tree (BST), find the lowest common ancestor (LCA)
 # of two given nodes in the BST.
 #
@@ -21,11 +23,14 @@ __source__ = 'https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-s
 # Another example is LCA of nodes 2 and 4 is 2, since a node can be a
 # descendant of itself according to the LCA definition.
 #
-# Amazon LinkedIn Apple Facebook Microsoft
-# Hide Tags Tree
-# Hide Similar Problems (E) Lowest Common Ancestor of a Binary Search Tree
+# Companies
+# Amazon Microsoft Facebook Twitter
+# Related Topics
+# Tree
+# Similar Questions
+# Lowest Common Ancestor of a Binary Tree
 #
-#
+import unittest
 # Definition for a binary tree node.
 class TreeNode:
     def __init__(self, x):
@@ -46,9 +51,15 @@ class Solution:
         # s <= root.val <= b.
         return root
 
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
 
-#java
-js = '''
+if __name__ == '__main__':
+    unittest.main()
+
+Java = '''
+#Thought:
 /**
  * Definition for a binary tree node.
  * public class TreeNode {
@@ -58,7 +69,7 @@ js = '''
  *     TreeNode(int x) { val = x; }
  * }
  */
-
+#10.07% 10ms
 public class Solution {
     public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
         if (root.val > p.val && root.val > q.val) {
@@ -71,6 +82,7 @@ public class Solution {
     }
 }
 
+#52.64% 8ms
 public class Solution {
     public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
         if (root == null) return null;

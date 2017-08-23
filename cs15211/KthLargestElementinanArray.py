@@ -144,6 +144,7 @@ O(N) best case / O(N^2) worst case running time + O(1) memory
 The smart approach for this problem is to use the selection algorithm
 (based on the partion method - the same one as used in quicksort).
 
+#BFS
 // 42.79% 23ms without shuffle nums
 // 76.59% 5ms with shuffle nums
 import java.util.Random;
@@ -184,12 +185,12 @@ public class Solution {
     private void shuffle(int[] nums) {
         Random random = new Random();
         for (int i = nums.length - 1; i >= 0; i--) {
-            swap(nums, i, random.nextInt(i + 1));
+            swap(nums, i, random.nextInt(i + 1)); //return rand number between 0 to n
         }
     }
 }
 
-
+# DFS
 # 94.53% 2ms # dfs # hve ot use pivot, not nums[high], stackoverflow
 public class Solution {
     public int findKthLargest(int[] nums, int k) {

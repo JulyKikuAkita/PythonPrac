@@ -3,7 +3,8 @@ __source__ = 'https://leetcode.com/problems/binary-search-tree-iterator/#/descri
 # Time:  O(1)
 # Space: O(h), h is height of binary tree
 #
-# Description:
+# Description: Leetcode # 173. Binary Search Tree Iterator
+#
 # Implement an iterator over a binary search tree (BST). Your iterator will be initialized with the root node of a BST.
 #
 # Calling next() will return the next smallest number in the BST.
@@ -13,14 +14,19 @@ __source__ = 'https://leetcode.com/problems/binary-search-tree-iterator/#/descri
 # Credits:
 # Special thanks to @ts for adding this problem and creating all test cases.
 #
-#Topics:
-# Tree Stack Design
-# You might like:
-# (M) Binary Tree Inorder Traversal (M) Flatten 2D Vector (M) Zigzag Iterator (M) Peeking Iterator (M) Inorder Successor in BST
-# Company:
+# Companies
 # LinkedIn Google Facebook Microsoft
+# Related Topics
+# Tree Stack Design
+# Similar Questions
+# Binary Tree Inorder Traversal Flatten 2D Vector Zigzag Iterator
+# Peeking Iterator
+# Inorder Successor in BST
 #
-
+# Your BSTIterator will be called like this:
+# i, v = BSTIterator(root), []
+# while i.hasNext(): v.append(i.next())
+import unittest
 # Definition for a  binary tree node
 class TreeNode:
      def __init__(self, x):
@@ -52,26 +58,26 @@ class BSTIterator:
 
         return node.val
 
-
 #test
-if __name__ == "__main__":
-    root = TreeNode(2)
-    root.left = TreeNode(1)
-    root.right = TreeNode(3)
-    root.left.left = TreeNode(0)
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+        root = TreeNode(2)
+        root.left = TreeNode(1)
+        root.right = TreeNode(3)
+        root.left.left = TreeNode(0)
 
-    # Your BSTIterator will be called like this:
-    i, v = BSTIterator(root), []
-    while i.hasNext(): v.append(i.next())
+        # Your BSTIterator will be called like this:
+        i, v = BSTIterator(root), []
+        while i.hasNext(): v.append(i.next())
 
-    print v
+        print v
 
-# Your BSTIterator will be called like this:
-# i, v = BSTIterator(root), []
-# while i.hasNext(): v.append(i.next())
+if __name__ == '__main__':
+    unittest.main()
 
-#java
-java = '''
+Java = '''
+#Thought:
 /**
  * Definition for binary tree
  * public class TreeNode {
@@ -81,7 +87,8 @@ java = '''
  *     TreeNode(int x) { val = x; }
  * }
  */
-
+# 32.80%
+# 6ms
 public class BSTIterator {
     private Stack<TreeNode> stack;
 
@@ -117,7 +124,7 @@ public class BSTIterator {
  * while (i.hasNext()) v[f()] = i.next();
  */
 
- I use Stack to store directed left children from root.
+I use Stack to store directed left children from root.
 When next() be called, I just pop one element and process its right child as new root.
 The code is pretty straightforward.
 
@@ -126,6 +133,7 @@ But next() is O(h) time.
 
 I can't find a solution that can satisfy both next() in O(1) time, space in O(h).
 
+# 32.80% 6ms
 public class BSTIterator {
     private Stack<TreeNode> stack = new Stack<TreeNode>();
 
@@ -149,4 +157,5 @@ public class BSTIterator {
         for (; node != null; stack.push(node), node = node.left);
     }
 }
- '''
+
+'''

@@ -3,12 +3,15 @@ __source__ = 'https://leetcode.com/problems/strobogrammatic-number-ii/tabs/descr
 # Time:  O(n^2 * 5^(n/2))
 # Space: O(n)
 #
+# Description: Leetcode # 247. Strobogrammatic Number II
+#
 # A strobogrammatic number is a number that looks the same when rotated 180 degrees (looked at upside down).
 #
 # Find all strobogrammatic numbers that are of length = n.
 #
 # For example,
 # Given n = 2, return ["11","69","88","96"].
+#
 # Companies
 # Google
 # Related Topics
@@ -16,9 +19,9 @@ __source__ = 'https://leetcode.com/problems/strobogrammatic-number-ii/tabs/descr
 # Similar Questions
 # Strobogrammatic Number Strobogrammatic Number III
 #
+import unittest
 # Time:  O(n^2 * 5^(n/2))
 # Space: O(n)
-# https://github.com/kamyu104/LeetCode/blob/master/Python/strobogrammatic-number-ii.py
 class Solution:
     lookup = {'0':'0', '1':'1', '6':'9', '8':'8', '9':'6'}
 
@@ -41,10 +44,17 @@ class Solution:
         return result
 
 
-# Java:
-# no recursion
-# https://leetcode.com/discuss/68215/simple-java-solution-without-recursion
-tmp= '''
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+
+if __name__ == '__main__':
+    unittest.main()
+
+Java = '''
+# Thought: https://leetcode.com/discuss/68215/simple-java-solution-without-recursion
+# No recursion
+# 20.09% 30ms
 public class Solution {
     public List<String> findStrobogrammatic(int n) {
 
@@ -65,14 +75,11 @@ public class Solution {
             }
             res = tmp;
         }
-
         return res;
     }
 }
-'''
 
-# recursion 26%
-tmp2= '''
+#47.04% 23ms
 public class Solution {
     public List<String> findStrobogrammatic(int n) {
         return findStrobogrammatic(n, n);
@@ -102,7 +109,8 @@ public class Solution {
     }
 }
 
-# 94%
+#
+# 945.02% 5ms
 public class Solution {
     public static final char[] SINGLE_STROBO = new char[] {'0', '1', '8'};
     public static final char[][] DOUBLE_STROBO = new char[][] {{'0', '0'}, {'1', '1'}, {'6', '9'}, {'8', '8'}, {'9', '6'}};

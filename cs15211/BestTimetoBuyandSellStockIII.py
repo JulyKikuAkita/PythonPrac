@@ -4,6 +4,8 @@ __source__ = 'https://leetcode.com/problems/best-time-to-buy-and-sell-stock-iii/
 # Space: O(1)
 # Dynamic Programming
 #
+# Description: Leetcode # 123. Best Time to Buy and Sell Stock III
+#
 # Say you have an array for which the ith element
 # is the price of a given stock on day i.
 #
@@ -30,6 +32,7 @@ __source__ = 'https://leetcode.com/problems/best-time-to-buy-and-sell-stock-iii/
 # left = [0, 3, 4, 6, 6, 6, 6, 8]
 # right= [8, 7, 7, 7, 7, 7, 7, 0]
 #
+import unittest
 # Time:  O(n)
 # Space: O(1)
 class Solution:
@@ -123,21 +126,21 @@ class Solution2:
         return maxProfit
 
 #test
-test = Solution2()
-prices = [3,3,5,0,0,3,1,4]
-print test.maxProfit(prices)
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+        test = Solution2()
+        prices = [3,3,5,0,0,3,1,4]
+        print test.maxProfit(prices)
 
 if __name__ == '__main__':
-    prices = [3,3,5,0,0,3,1,4] #ans = 6
-    #print Solution().maxProfit(prices)
-    #print Solution_GitHub2().maxProfit(prices)
-    print Solution_GitHub3().maxProfit(prices)
+    unittest.main()
 
-#Java
 Java = '''
+#Thought: https://leetcode.com/problems/contains-duplicate/solution/
 Thought:
 
-21.84%
+#19.81% 6ms
 public class Solution {
     public int maxProfit(int[] prices) {
         if ( prices == null || prices.length == 0) return 0;
@@ -168,7 +171,7 @@ public class Solution {
     }
 }
 
-34%
+# 52.68% 4ms
 public class Solution {
     public int maxProfit(int[] prices) {
         int hold1 = Integer.MIN_VALUE, hold2 = Integer.MIN_VALUE;
@@ -183,7 +186,30 @@ public class Solution {
     }
 }
 
-76%
+# 77.21% 2ms
+class Solution {
+    public int maxProfit(int[] prices) {
+        int buy1 = Integer.MIN_VALUE, sell1 = 0, buy2 = Integer.MIN_VALUE, sell2 = 0;
+        for(int price : prices) {
+            if(-price > buy1) {
+                buy1 = -price;
+            }
+            if(buy1 + price > sell1) {
+                sell1 = buy1 + price;
+            }
+            if(sell1 - price > buy2) {
+                buy2 = sell1 - price;
+            }
+            if(buy2 + price > sell2) {
+                sell2 = buy2 + price;
+            }
+        }
+
+        return sell2;
+    }
+}
+
+# 98.96% 1ms
 public class Solution {
     public int maxProfit(int[] prices) {
         if(prices == null || prices.length <= 1){

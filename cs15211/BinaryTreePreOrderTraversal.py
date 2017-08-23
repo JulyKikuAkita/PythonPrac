@@ -4,6 +4,8 @@ __source__ = 'https://leetcode.com/problems/binary-tree-preorder-traversal/#/des
 # Space: O(1)
 # Tree
 #
+# Description: Leetcode # 144. Binary Tree Preorder Traversal
+#
 # Given a binary tree, return the preorder traversal of its nodes' values.
 #
 # For example:
@@ -16,12 +18,14 @@ __source__ = 'https://leetcode.com/problems/binary-tree-preorder-traversal/#/des
 # return [1,2,3].
 #
 # Note: Recursive solution is trivial, could you do it iteratively?
-#Topics:
+#
+# Related Topics
 # Tree Stack
-# You might like:
-# (M) Binary Tree Inorder Traversal (M) Verify Preorder Sequence in Binary Search Tree
+# Similar Questions
+# Binary Tree Inorder Traversal Verify Preorder Sequence in Binary Search Tree
 #
 
+import unittest
 # Definition for a  binary tree node
 class TreeNode:
      def __init__(self, x):
@@ -97,61 +101,27 @@ class Solution3:
                 current = current.right
         return result
 
+#Test
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+        root = TreeNode(1)
+        root.right = TreeNode(2)
+        root.right.left = TreeNode(3)
+        result1 = Solution().preorderTraversal(root)
+        result2 = Solution2().preorderTraversal(root)
+        result3 = Solution3().preorderTraversal(root)
+        print result1
+        print result2
+        print result3
 
-#create tree
-root1=TreeNode(0)
-root2=TreeNode(1)
-root3=TreeNode(2)
-root4=TreeNode(4)
-root5=TreeNode(5)
+if __name__ == '__main__':
+    unittest.main()
 
-tree2=TreeNode(2)
-tree31=TreeNode(3)
-tree32=TreeNode(3)
-tree41=TreeNode(4)
-tree411=TreeNode(4)
-tree4111=TreeNode(4)
-tree51=TreeNode(1)
-tree52=TreeNode(2)
-tree511=TreeNode(3)
-tree522=TreeNode(4)
-tree5221=TreeNode(5)
-tree52212=TreeNode(6)
-
-root2.left=tree2
-
-root3.left=tree31
-root3.right=tree32
-
-root4.right =tree41
-tree41.right=tree411
-tree411.right=tree4111
-
-root5.left=tree51
-root5.right=tree52
-tree51.left=tree511
-tree52.right=tree522
-tree522.left=tree5221
-tree5221.right=tree52212
-
-my_test=Solution()
-print my_test.preorderTraversal1(root5)
-print my_test.preorderTraversal3(root2)
-
-if __name__ == "__main__":
-    root = TreeNode(1)
-    root.right = TreeNode(2)
-    root.right.left = TreeNode(3)
-    result1 = Solution().preorderTraversal(root)
-    result2 = Solution2().preorderTraversal(root)
-    result3 = Solution3().preorderTraversal(root)
-    print result1
-    print result2
-    print result3
-
-#Java
-java = '''
+Java = '''
+#Thought: https://leetcode.com/problems/contains-duplicate/solution/
 #DFS
+#22.45% 1ms
 public class Solution {
     public List<Integer> preorderTraversal(TreeNode root) {
         List<Integer> result = new ArrayList<>();
@@ -169,7 +139,8 @@ public class Solution {
     }
 }
 
-#BFS
+#BFS with stack
+#22.45% 1ms
 public class Solution {
     public List<Integer> preorderTraversal(TreeNode root) {
         List<Integer> result = new ArrayList<>();
@@ -192,6 +163,37 @@ public class Solution {
     }
 }
 
+#BFS with deque
+#22.45% 1ms
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    public List<Integer> preorderTraversal(TreeNode root) {
+        List<Integer> result = new ArrayList<>();
+        Deque<TreeNode> stack = new ArrayDeque<>();
+        TreeNode p = root;
+        while(!stack.isEmpty() || p != null) {
+            if (p != null) {
+                stack.push(p);
+                result.add(p.val);
+                p = p.left;
+            } else {
+                TreeNode node = stack.pop();
+                p = node.right;
+            }
+        }
+        return result;
+    }
+}
+
+##################################################################
     public List<Integer> inorderTraversal(TreeNode root) {
         List<Integer> result = new ArrayList<>();
         Deque<TreeNode> stack = new ArrayDeque<>();

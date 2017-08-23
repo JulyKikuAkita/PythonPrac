@@ -1,6 +1,5 @@
 __source__ = 'https://leetcode.com/problems/ugly-number-ii/#/description'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/ugly-number-ii.py
-#
 # Time:  O(n)
 # Space: O(1)
 #
@@ -19,11 +18,13 @@ __source__ = 'https://leetcode.com/problems/ugly-number-ii/#/description'
 # until you reach the nth one. Most numbers are not ugly.
 # Try to focus your effort on generating only the ugly ones.
 #
-#  Dynamic Programming Heap Math
-# Hide Similar Problems (H) Merge k Sorted Lists (E) Count Primes (E) Ugly Number (M) Perfect Squares (M) Super Ugly Number
+# Related Topics
+# Dynamic Programming Heap Math
+# Similar Questions
+# Merge k Sorted Lists Count Primes Ugly Number Perfect Squares Super Ugly Number
 #
 import heapq
-
+import unittest
 class Solution:
     # @param {integer} n
     # @return {integer}
@@ -46,11 +47,15 @@ class Solution:
         return ugly_number
 
 #test
-if __name__ == "__main__":
-    print Solution().nthUglyNumber(10)
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+        print Solution().nthUglyNumber(10)
 
-#java
-java = '''
+if __name__ == '__main__':
+    unittest.main()
+
+Java = '''
 The idea of this solution is from this page: http://www.geeksforgeeks.org/ugly-numbers/
 
 The ugly-number sequence is 1, 2, 3, 4, 5, 6, 8, 9, 10, 12, 15,
@@ -65,23 +70,42 @@ We can find that every subsequence is the ugly-sequence itself (1, 2, 3, 4, 5, .
 Then we use similar merge method as merge sort, to get every ugly number from the three subsequence.
 Every step we choose the smallest one, and move one step after,including nums with same value.
 
+#87.11% 8ms
 public class Solution {
     public int nthUglyNumber(int n) {
         int[] ugly = new int[n];
         ugly[0] = 1;
-        int index2 = 0, index3 = 0, index5 = 0;
-        int factor2 = 2, factor3 = 3, factor5 = 5;
-        for(int i=1;i<n;i++){
-            int min = Math.min(Math.min(factor2,factor3),factor5);
+
+        //current index which has been considered for each multiplier
+        int index2 = 0;
+        int index3 = 0;
+        int index5 = 0;
+        //ugly candidates, each time choose the smallest one and add it the sequence
+        int fac2 = 2;
+        int fac3 = 3;
+        int fac5 = 5;
+
+        for (int i = 1; i < n; i++) {
+            int min = Math.min(fac2, Math.min(fac3, fac5));
+            //update, put the smallest candidates
             ugly[i] = min;
-            if(factor2 == min)
-                factor2 = 2*ugly[++index2];
-            if(factor3 == min)
-                factor3 = 3*ugly[++index3];
-            if(factor5 == min)
-                factor5 = 5*ugly[++index5];
+            //since the chosen candidates have been used, update it to be a new candidate
+            //take care of the duplicates
+            if (fac2 == min) {
+                index2++;
+                fac2 = ugly[index2] * 2; //guarantee each existing ugly number will multiply 2;
+            }
+            if (fac3 == min) {
+                index3++;
+                fac3 = ugly[index3] * 3; //guarantee each existing ugly number will multiply 3;
+            }
+            if (fac5 == min) {
+                index5++;
+                fac5 = ugly[index5] * 5;
+            }
         }
-        return ugly[n-1];
+
+        return ugly[n - 1];
     }
 }
 
@@ -109,6 +133,7 @@ public class Solution {
     }
 }
 
+#21.95% 51ms
 public class Solution {
     public int nthUglyNumber(int n) {
         List<Integer> list = new ArrayList<>();
@@ -133,6 +158,7 @@ public class Solution {
     }
 }
 
+#41.86% 12ms
 public class Solution {
     public int nthUglyNumber(int n) {
         if (n <= 0) {
@@ -155,4 +181,37 @@ public class Solution {
     }
 }
 
+#99.58$% 2ms
+public class Solution {
+    private static int[] uglies = new int[1690];
+    private static int valid_index;
+    private static int index2 = 0;
+    private static int index3 = 0;
+    private static int index5 = 0;
+    private static final int factor2 = 2;
+    private static final int factor3 = 3;
+    private static final int factor5 = 5;
+
+    static{
+        uglies[0] = 1;
+        valid_index = 0;
+    }
+
+    public int nthUglyNumber(int n) {
+        n --;
+        if(n <= valid_index) return uglies[n];
+        int next;
+        while(valid_index < n){
+            next = Math.min(uglies[index2] * factor2, Math.min(uglies[index3] * factor3, uglies[index5] * factor5));
+            uglies[++ valid_index] = next;
+            if(next == uglies[index2] * factor2)
+                index2 ++;
+            if(next == uglies[index3] * factor3)
+                index3 ++;
+            if(next == uglies[index5] * factor5)
+                index5 ++;
+        }
+        return uglies[n];
+    }
+}
 '''

@@ -3,6 +3,8 @@ __source__ = 'https://leetcode.com/problems/best-time-to-buy-and-sell-stock/'
 # Time:  O(n)
 # Space: O(1)
 #
+# Description: Leetcode # 121. Best Time to Buy and Sell Stock
+#
 # Say you have an array for which the ith element is the price of a given stock on day i.
 #
 # If you were only permitted to complete at most one transaction
@@ -18,6 +20,7 @@ __source__ = 'https://leetcode.com/problems/best-time-to-buy-and-sell-stock/'
 # Output: 0
 #
 # In this case, no transaction is done, i.e. max profit = 0.
+#
 # Companies
 # Amazon Microsoft Bloomberg Uber Facebook
 # Related Topics
@@ -25,9 +28,10 @@ __source__ = 'https://leetcode.com/problems/best-time-to-buy-and-sell-stock/'
 # Similar Questions
 # Maximum Subarray Best Time to Buy and Sell Stock II
 # Best Time to Buy and Sell Stock III
-# Best Time to Buy and Sell Stock IV Best Time to Buy and Sell Stock with Cooldown
+# Best Time to Buy and Sell Stock IV
+# Best Time to Buy and Sell Stock with Cooldown
 #
-
+import unittest
 class Solution:
     # @param prices, a list of integer
     # @return an integer
@@ -79,27 +83,28 @@ class Naive:
                     profit = prices[j] - prices[i]
         return profit
 
-t1=Solution2()
-#print t1.maxProfit([1,3,5,9])
-#print t1.maxProfit([9,3,5,1])
-#print t1.maxProfit([9,3,5,8])
-#print t1.maxProfit([])
-print
-#print t1.maxProfit2([])
-print t1.maxProfit2([2,1,4]) #3
-#print t1.maxProfit2([1,3,5,9])
-#print t1.maxProfit2([9,3,5,1])
-#print t1.maxProfit2([9,3,5,8])
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+        t1=Solution2()
+        #print t1.maxProfit([1,3,5,9])
+        #print t1.maxProfit([9,3,5,1])
+        #print t1.maxProfit([9,3,5,8])
+        #print t1.maxProfit([])
+        print
+        #print t1.maxProfit2([])
+        print t1.maxProfit2([2,1,4]) #3
+        #print t1.maxProfit2([1,3,5,9])
+        #print t1.maxProfit2([9,3,5,1])
+        #print t1.maxProfit2([9,3,5,8])
 
-if __name__ == "__main__":
-    print Solution().maxProfit([3, 2, 1, 4, 2, 5, 6])
-    print Naive().maxProfit([3, 2, 1, 4, 2, 5, 6])
+if __name__ == '__main__':
+    unittest.main()
 
-#Java
 Java = '''
-Thought: https://leetcode.com/problems/best-time-to-buy-and-sell-stock/#/solution
+# Thought: https://leetcode.com/problems/best-time-to-buy-and-sell-stock/#/solution
 
-11.37%
+# 9.63% 3ms
 public class Solution {
     public int maxProfit(int[] prices) {
         if (prices.length < 2) {
@@ -115,7 +120,7 @@ public class Solution {
     }
 }
 
-86%
+# 82.01% 1ms
 public class Solution {
     public int maxProfit(int prices[]) {
         int minprice = Integer.MAX_VALUE;
@@ -130,7 +135,7 @@ public class Solution {
     }
 }
 
-49%
+# 9.63% 3ms
 public class Solution {
     public int maxProfit(int[] prices) {
         int minPrice = Integer.MAX_VALUE;
@@ -143,6 +148,7 @@ public class Solution {
     }
 }
 
+# 9.63% 3ms
 Kadane's Algorithm - Since no one has mentioned about this so far :) (In case if interviewer twists the input)
 The logic to solve this problem is same as "max subarray problem" using Kadane's Algorithm.
 Since no body has mentioned this so far, I thought it's a good thing for everybody to know.
@@ -163,8 +169,8 @@ and find a contiguous subarray giving maximum profit. If the difference falls be
         }
         return maxSoFar;
     }
-*maxCur = current maximum value
 
+*maxCur = current maximum value
 *maxSoFar = maximum value found so far
 
 

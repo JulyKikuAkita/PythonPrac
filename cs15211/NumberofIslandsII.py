@@ -93,7 +93,6 @@ class Solution(object):
                        union_set(node_id(node, n), node_id(neighbor, n))
                        number -= 1
             numbers.append(number)
-
         return numbers
 
 class Solution2(object):
@@ -367,4 +366,47 @@ class UnionFind2D {
     }
 }
 //Runtime: 20 ms
+
+#88.56% 17ms
+class Solution {
+    int[] dx = {0, 1, -1, 0};
+    int[] dy = {1, 0, 0, -1};
+
+    public List<Integer> numIslands2(int m, int n, int[][] positions) {
+        List<Integer> result = new ArrayList<>();
+        if (m <= 0 || n <= 0 ) return result;
+        int count = 0;
+        int[] roots = new int[m*n];
+        Arrays.fill(roots, -1);
+
+        for (int[] p : positions) {
+            int root = p[0] * n + p[1];
+            roots[root] = root;
+            count ++;
+
+            for (int dir = 0 ; dir < 4 ; dir ++) {
+                int nx = p[0] + dx[dir];
+                int ny = p[1] + dy[dir];
+                int nid = nx * n + ny;
+                if (nx < 0 || ny < 0 || nx >= m || ny >= n || roots[nid] == -1)
+                    continue;
+
+                int rootNP = findRoot (nid, roots);
+                if (rootNP != root) {
+                    roots[root] = rootNP;
+                    root = rootNP;
+                    count --;
+                }
+            }
+            result.add(count);
+        }
+        return result;
+    }
+    public int findRoot (int id, int[] roots) {
+        if (roots[id] == id) {
+            return id;
+        }
+        return roots[id] = findRoot(roots[id], roots);
+    }
+}
 '''

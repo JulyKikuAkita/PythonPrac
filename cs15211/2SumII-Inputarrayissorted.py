@@ -1,8 +1,10 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/description/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/two-sum-ii-input-array-is-sorted.py
 # Time:  O(n)
 # Space: O(1)
 # Two Pointers
+#
+# Description: Leetcode # 167. Two Sum II - Input array is sorted
 #
 # Given an array of integers that is already sorted in ascending order,
 # find two numbers such that they add up to a specific target number.
@@ -15,10 +17,15 @@ __author__ = 'July'
 #
 # Input: numbers={2, 7, 11, 15}, target=9
 # Output: index1=1, index2=2
+#
+# Companies
 # Amazon
-# Hide Tags Array Two Pointers Binary Search
-# Hide Similar Problems (E) Two Sum
-
+# Related Topics
+# Array Two Pointers Binary Search
+# Similar Questions
+# Two Sum Two Sum IV - Input is a BST
+#
+import unittest
 #Hide Tags Array Two Pointers Binary Search
 class Solution:
     # @return a tuple, (index1, index2)
@@ -34,12 +41,18 @@ class Solution:
             else:
                 return [start + 1, end + 1]
 
-#test
-if __name__ == "__main__":
-    print Solution().twoSum([2,7,11,15], 9)
+# test
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+        print Solution().twoSum([2,7,11,15], 9)
 
-# java:
-js = ''' 40.13%
+if __name__ == '__main__':
+    unittest.main()
+
+Java = '''
+#Thought: https://leetcode.com/problems/contains-duplicate/solution/
+#40.55% 1ms
 O(n)
 public class Solution {
     public int[] twoSum(int[] numbers, int target) {
@@ -59,9 +72,7 @@ public class Solution {
     }
 }
 
-'''
-
-js2 = ''' 97.81%
+#40.55% 1ms
 O(logn)
 public class Solution {
     public int[] twoSum(int[] numbers, int target) {

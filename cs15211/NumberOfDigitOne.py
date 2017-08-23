@@ -3,6 +3,8 @@ __source__ = 'https://leetcode.com/problems/number-of-digit-one/description/'
 # Time:  O(logn)
 # Space: O(1)
 #
+# Description: Leetcode # 233. Number of Digit One
+#
 # Given an integer n, count the total number of digit 1 appearing
 # in all non-negative integers less than or equal to n.
 #
@@ -57,6 +59,9 @@ Java = '''
 #Thought: https://leetcode.com/problems/number-of-digit-one/solution/
 
 #11.11% 0ms
+# left > 1
+# left == 1
+# rest scenaio
 public class Solution {
     public int countDigitOne(int n) {
         long num = n;
@@ -77,6 +82,7 @@ public class Solution {
         return result;
     }
 }
+# Math
 #11.11% 0ms
 public class Solution {
     private int count;
@@ -90,5 +96,19 @@ public class Solution {
         return count;
     }
 
+}
+
+#11.11% 0ms
+class Solution {
+    public int countDigitOne(int n) {
+        int ones = 0, m = 1, r = 1;
+        while (n > 0) {
+            ones += (n + 8) / 10 * m + (n % 10 == 1 ? r : 0);
+            r += n % 10 * m;
+            m *= 10;
+            n /= 10;
+        }
+        return ones;
+    }
 }
 '''

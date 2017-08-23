@@ -74,7 +74,6 @@ class Solution(object):
         :type edges: List[List[int]]
         :rtype: List[int]
         """
-
         if n == 1:
             return [0]
 
@@ -93,7 +92,6 @@ class Solution(object):
         # A graph can have 2 MHTs at most.
         # BFS from the leaves until the number
         # of the unvisited nodes is less than 3.
-
 
         while len(unvisited) > 2:
             cur_level = []
@@ -144,6 +142,7 @@ Then remove the new leaves. Doing so level by level until there are 2 or 1 nodes
 The time complexity and space complexity are both O(n).
 
 Note that for a tree we always have V = n, E = n-1.
+
 # 74.12% 49ms  # easy to understand
 public class Solution {
     public List<Integer> findMinHeightTrees(int n, int[][] edges) {

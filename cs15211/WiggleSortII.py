@@ -3,7 +3,8 @@ __source__ = 'https://leetcode.com/problems/wiggle-sort-ii/description/'
 # Time:  O(nlogn)
 # Space: O(n)
 #
-# Description:
+# Description: Leetcode # 324. Wiggle Sort II
+#
 # Given an unsorted array nums, reorder it such that nums[0] < nums[1] > nums[2] < nums[3]....
 #
 # Example:
@@ -23,7 +24,7 @@ __source__ = 'https://leetcode.com/problems/wiggle-sort-ii/description/'
 # Similar Questions
 # Sort Colors Kth Largest Element in an Array Wiggle Sort
 # https://leetcode.com/problems/kth-largest-element-in-an-array/description/
-
+#
 import unittest
 # Sorting and reoder solution. (92ms)
 class Solution(object):
@@ -90,12 +91,9 @@ class Solution2(object):
         findKthLargest(nums, mid + 1)
         reversedTriPartitionWithVI(nums, nums[mid])
 
-
-
 class TestMethods(unittest.TestCase):
     def test_Local(self):
         self.assertEqual(1, 1)
-
 
 if __name__ == '__main__':
     unittest.main()
@@ -122,6 +120,24 @@ public class Solution {
         while(0 <= left || middle <= right){
             if(0 <= left) nums[resultCur++] = result[left--];
             if(middle <= right) nums[resultCur++] = result[right--];
+        }
+    }
+}
+
+
+# Cheat
+# 95.79% 5ms
+class Solution {
+    public void wiggleSort(int[] nums) {
+        int n = nums.length, m = (n + 1) / 2;
+        int[] copy = Arrays.copyOf(nums, n);
+        Arrays.sort(copy);
+
+        for (int i = m - 1, j = 0; i >= 0; i--, j += 2) {
+            nums[j] = copy[i];
+        }
+        for (int i = n - 1, j = 1; i >= m; i--, j += 2) {
+            nums[j] = copy[i];
         }
     }
 }

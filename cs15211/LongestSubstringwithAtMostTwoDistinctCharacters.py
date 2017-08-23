@@ -4,6 +4,8 @@ __source__ = 'https://leetcode.com/problems/longest-substring-with-at-most-two-d
 # Space: O(1)
 # Hashtable
 #
+# Description: Leetcode # 159. Longest Substring with At Most Two Distinct Characters
+#
 # Given a string, find the length of the longest substring T
 # that contains at most 2 distinct characters.
 #
@@ -16,8 +18,11 @@ __source__ = 'https://leetcode.com/problems/longest-substring-with-at-most-two-d
 # Related Topics
 # Hash Table Two Pointers String
 # Similar Questions
-# Longest Substring Without Repeating Characters Sliding Window Maximum Longest Substring with At Most K Distinct Characters
-
+# Longest Substring Without Repeating Characters
+# Sliding Window Maximum
+# Longest Substring with At Most K Distinct Characters
+#
+import unittest
 class Solution:
     # @param s, a string
     # @return an integer
@@ -57,19 +62,21 @@ class Solution:
                 longest = max(longest, i - lastStart)
                 lastStart = j + 1
             j = i - 1
-
         return max(longest, len(s) - lastStart)
 
+# Test
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+        print Solution().lengthOfLongestSubstringTwoDistinct("eceba")
+        print Solution().lengthOfLongestSubstringTwoDistinctleetcode("eceba")
 
-#test
-
-if __name__ =="__main__":
-    print Solution().lengthOfLongestSubstringTwoDistinct("eceba")
-    print Solution().lengthOfLongestSubstringTwoDistinctleetcode("eceba")
+if __name__ == '__main__':
+    unittest.main()
 
 Java = '''
+#Thought:
 
-#sliding window
 # 84.79% 7ms
 public class Solution {
     public int lengthOfLongestSubstringTwoDistinct(String s) {

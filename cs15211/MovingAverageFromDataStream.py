@@ -3,7 +3,8 @@ __source__ = 'https://leetcode.com/problems/moving-average-from-data-stream/#/de
 # Time:  O(1)
 # Space: O(w)
 #
-# Description:
+# Description: Leetcode # 346. Moving Average from Data Stream
+#
 # Given a stream of integers and a window size, calculate the moving average of all integers in the sliding window.
 #
 # For example,
@@ -52,13 +53,12 @@ class TestMethods(unittest.TestCase):
     def test_Local(self):
         self.assertEqual(1, 1)
 
-
 if __name__ == '__main__':
     unittest.main()
 
 Java = '''
 #Thought:
-
+#10.80% 181ms
 public class MovingAverage {
     private int windowSize;
     private Queue<Integer> queue;
@@ -86,4 +86,27 @@ public class MovingAverage {
  * double param_1 = obj.next(val);
  */
 
+#76.77% 143ms
+public class MovingAverage {
+    private int [] window;
+    private int n, insert;
+    private long sum;
+
+    /** Initialize your data structure here. */
+    public MovingAverage(int size) {
+        window = new int[size];
+        insert = 0;
+        sum = 0;
+    }
+
+    public double next(int val) {
+        if (n < window.length)  n++;
+        sum -= window[insert];
+        sum += val;
+        window[insert] = val;
+        insert = (insert + 1) % window.length;
+
+        return (double)sum / n;
+    }
+}
 '''

@@ -1,5 +1,10 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/line-reflection/description/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/line-reflection.py
+# Time:  O(n)
+# Space: O(n)
+#
+# Description: Leetcode # 356. Line Reflection
+#
 # Given n points on a 2D plane, find if there is such a line parallel to y-axis that reflect the given points.
 #
 # Example 1:
@@ -11,12 +16,15 @@ __author__ = 'July'
 # Follow up:
 # Could you do better than O(n2)?
 #
-# Time:  O(n)
-# Space: O(n)
-#  Google
-# Hide Tags Hash Table Math
-# Hide Similar Problems (H) Max Points on a Line
-
+# Companies
+# Google
+# Related Topics
+# Hash Table Math
+# Similar Questions
+# Max Points on a Line Number of Boomerangs
+#
+import collections
+import unittest
 # Hash solution.
 class Solution(object):
     def isReflected(self, points):
@@ -37,7 +45,6 @@ class Solution(object):
                 if mid - x not in group:
                     return False
         return True
-
 
 # Time:  O(nlogn)
 # Space: O(n)
@@ -66,70 +73,85 @@ class Solution2(object):
             right -= 1
         return True
 
-# Java
-js = '''
-1. 7 ms
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+
+if __name__ == '__main__':
+    unittest.main()
+
+Java = '''
+#Thought:
+[[-16,1],[16,1],[16,1]] wrong answer: should be true but return false
+1. 64.65% 19ms
 public class Solution {
     public boolean isReflected(int[][] points) {
-        if (points.length < 2) {
-            return true;
+        int max = Integer.MIN_VALUE;
+        int min = Integer.MAX_VALUE;
+        HashSet<String> set = new HashSet<>();
+        for(int[] p:points){
+            max = Math.max(max,p[0]);
+            min = Math.min(min,p[0]);
+            String str = p[0] + "a" + p[1];
+            set.add(str);
         }
-        int minX = Integer.MAX_VALUE;
-        int maxX = Integer.MIN_VALUE;
-        for (int[] point : points) {
-            minX = Math.min(minX, point[0]);
-            maxX = Math.max(maxX, point[0]);
-        }
-        double midX = ((double) minX + maxX) / 2;
-        Arrays.sort(points, new Comparator<int[]>() {
-            @Override
-            public int compare(int[] point1, int[] point2) {
-                if (point1[0] != point2[0]) {
-                    return Integer.compare(point1[0], point2[0]);
-                } else {
-                    return point1[0] <= midX ? Integer.compare(point1[1], point2[1]) : Integer.compare(point2[1], point1[1]);
-                }
-            }
-        });
-        for (int i = 0, j = points.length - 1; i <= j; i++, j--) {
-            if (points[i][0] - minX != maxX - points[j][0] || (points[i][0] - minX != maxX - points[i][0] && points[i][1] != points[j][1])) {
+        int sum = max+min;
+        for(int[] p:points){
+            //int[] arr = {sum-p[0],p[1]};
+            String str = (sum-p[0]) + "a" + p[1];
+            if( !set.contains(str))
                 return false;
-            }
         }
         return true;
     }
 }
 
-2. long runtime 22ms
-public class Solution {
+2.
+# 98.31% 8ms
+public class Solution { // O(NLgN) sort + check
     public boolean isReflected(int[][] points) {
-        Map<Integer, List<Long>> map = new HashMap<>();
-        long minX = Integer.MAX_VALUE;
-        long maxX = Integer.MIN_VALUE;
-        for (int[] point : points) {
-            minX = Math.min(minX, point[0]);
-            maxX = Math.max(maxX, point[0]);
-            if (!map.containsKey(point[1])) {
-                map.put(point[1], new ArrayList<>());
-            }
-            map.get(point[1]).add((long) point[0]);
+        if (points == null || points.length == 0) {
+            return true;
         }
-        long sum = minX + maxX;
-        for (List<Long> list : map.values()) {
-            Collections.sort(list);
-            int start = 0;
-            int end = list.size() - 1;
-            while (start < end) {
-                long cur = list.get(start++) + list.get(end--);
-                if (cur != sum) {
-                    return false;
+        long min = Integer.MAX_VALUE, max = Integer.MIN_VALUE;
+        for (int[] p : points) {
+            min = Math.min(min, p[0]);
+            max = Math.max(max, p[0]);
+        }
+        long sum = min + max; // sum = x-coord of mirror * 2
+        double mid = sum / 2.0;
+
+        Arrays.sort(points, new Comparator<int[]>(){
+            @Override
+            public int compare(int[] a, int[] b) {
+                if (a[0] != b[0]) {
+                    return a[0] - b[0];
+                } else if (a[0] <= mid) {
+                    return a[1] - b[1];
+                } else {
+                    return b[1] - a[1];
                 }
             }
-            if (start == end && (list.get(start) << 1) != sum) {
+        });
+        int len = points.length;
+        int lft = 0, rgt = len - 1;
+        while (points[lft][0] < points[rgt][0]) {
+            if (points[lft][1] == points[rgt][1] && points[lft][0] == sum - points[rgt][0]) {
+                lft++;
+                rgt--;
+                while (points[lft][0] == points[lft - 1][0] && points[lft][1] == points[lft - 1][1]) {
+                    lft++;
+                }
+                while (points[rgt][0] == points[rgt + 1][0] && points[rgt][1] == points[rgt + 1][1]) {
+                    rgt--;
+                }
+            } else {
                 return false;
             }
         }
-        return true;
+        // there are either no remaining nodes or all remaining nodes are on the mid
+        return lft > rgt || (points[lft][0] * 2L == sum && points[rgt][0] * 2L == sum);
     }
 }
+
 '''

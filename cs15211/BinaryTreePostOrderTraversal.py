@@ -4,6 +4,8 @@ __source__ = 'https://leetcode.com/problems/binary-tree-postorder-traversal/#/so
 # Space: O(1)
 # Tree
 #
+# Description: Leetcode # 145. Binary Tree Postorder Traversal
+#
 # Given a binary tree, return the postorder traversal of its nodes' values.
 #
 # For example:
@@ -16,12 +18,14 @@ __source__ = 'https://leetcode.com/problems/binary-tree-postorder-traversal/#/so
 # return [3,2,1].
 #
 # Note: Recursive solution is trivial, could you do it iteratively?
-#Topics:
+#
+# Related Topics
 # Tree Stack
-# You might like:
-# (M) Binary Tree Inorder Traversal
+# Similar Questions
+# Binary Tree Inorder Traversal
 #
 
+import unittest
 from collections import deque
 # Definition for a  binary tree node
 class TreeNode:
@@ -67,7 +71,6 @@ class Solution:
         result.append(to.val)
         result.reverse()
         return result
-
 
 # Time:  O(n)
 # Space: O(n)
@@ -128,53 +131,21 @@ class Solution3(object):
         self.dfs(root.right, res)
         res.append(root.val)
 
-#create tree
-root1=TreeNode(0)
-root2=TreeNode(1)
-root3=TreeNode(2)
-root4=TreeNode(4)
-root5=TreeNode(5)
+# Test
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+        root = TreeNode(1)
+        root.right = TreeNode(2)
+        root.right.left = TreeNode(3)
+        result = Solution().postorderTraversal(root)
+        print result
 
-tree2=TreeNode(2)
-tree31=TreeNode(3)
-tree32=TreeNode(3)
-tree41=TreeNode(4)
-tree411=TreeNode(4)
-tree4111=TreeNode(4)
-tree51=TreeNode(1)
-tree52=TreeNode(2)
-tree511=TreeNode(3)
-tree522=TreeNode(4)
-tree5221=TreeNode(5)
-tree52212=TreeNode(6)
+if __name__ == '__main__':
+    unittest.main()
 
-root2.left=tree2
-
-root3.left=tree31
-root3.right=tree32
-
-root4.right =tree41
-tree41.right=tree411
-tree411.right=tree4111
-
-root5.left=tree51
-root5.right=tree52
-tree51.left=tree511
-tree52.right=tree522
-tree522.left=tree5221
-tree5221.right=tree52212
-
-#my_test=SolutionOther()
-#print my_test.postorderTraversal1(root2)
-#print my_test.postorderTraversal3(root5)
-
-if __name__ == "__main__":
-    root = TreeNode(1)
-    root.right = TreeNode(2)
-    root.right.left = TreeNode(3)
-    result = Solution().postorderTraversal(root)
-    print result
-#Java
+Java = '''
+#Thought: https://leetcode.com/problems/contains-duplicate/solution/
 # http://www.programcreek.com/2012/12/leetcode-solution-of-iterative-binary-tree-postorder-traversal-in-java/
 # The order of "Postorder" is: left child -> right child -> parent node.
 # Find the relation between the previously visited node and the current node
@@ -183,8 +154,9 @@ if __name__ == "__main__":
 # If it is the parent of the current node, we should add current node to stack.
 # When there is no children for current node, pop it from stack.
 # Then the previous node become to be under the current node for next loop.
-java = '''
-1. DFS: 51%
+
+1. DFS:
+# 44.87% 1ms
 public class Solution {
     public List<Integer> postorderTraversal(TreeNode root) {
         List<Integer> result = new ArrayList<>();
@@ -203,6 +175,7 @@ public class Solution {
 }
 
 2. BFS 51%
+# 44.87% 1ms
 public class Solution {
     public List<Integer> postorderTraversal(TreeNode root) {
         List<Integer> result = new ArrayList<>();
@@ -225,7 +198,8 @@ public class Solution {
         return result;
     }
 
-     # PostOrder 5.82%
+     # PostOrder
+     # 44.87% 1ms
      public List<Integer> postorderBFS(TreeNode root) {
         LinkedList<Integer> result = new LinkedList<>();
         Deque<TreeNode> stack = new ArrayDeque<>();
@@ -242,6 +216,7 @@ public class Solution {
         return result;
      }
 
+##################################################################
     # In Order Traverse
     public List<Integer> inorderTraversal(TreeNode root) {
         List<Integer> result = new ArrayList<>();

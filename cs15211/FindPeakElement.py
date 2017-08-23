@@ -2,6 +2,8 @@ __source__ = 'https://leetcode.com/problems/find-peak-element/description/'
 # Time:  O(logn)
 # Space: O(1)
 #
+# Description: Leetcode # 217. Contains Duplicate
+#
 # A peak element is an element that is greater than its neighbors.
 #
 # Given an input array where num[i] != num[i+1], find a peak element and return its index.
@@ -19,6 +21,7 @@ __source__ = 'https://leetcode.com/problems/find-peak-element/description/'
 # Related Topics
 # Binary Search Array
 #
+import unittest
 class Solution:
     # @param num, a list of integer
     # @return an integer
@@ -34,13 +37,7 @@ class Solution:
                 high = mid - 1
             else:
                 low = mid + 1
-
         return low
-
-if __name__ == "__main__":
-   # print Solution().findPeakElement([1,2,1])
-    print Solution().findPeakElement([1,2,3, 1])
-
 
 # http://bookshadow.com/weblog/2014/12/06/leetcode-find-peak-element/
 class SolutionOther:
@@ -99,14 +96,6 @@ class Solution2(object):
         else:
             return end
 
-
-
-#test
-test = SolutionOther()
-arr = [1, 2, 3, 1]
-print test.findPeakElement(arr)
-print test.findPeakElementOn(arr)
-
 ##### Same expression#############
 #  return [false_val, true_val][true or false]
 #  return [start, end][num[start] < num[end]]
@@ -116,9 +105,23 @@ print test.findPeakElementOn(arr)
 #            else:
 #                return start
 
+# test
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+        # print Solution().findPeakElement([1,2,1])
+        print Solution().findPeakElement([1,2,3, 1])
+        test = SolutionOther()
+        arr = [1, 2, 3, 1]
+        print test.findPeakElement(arr)
+        print test.findPeakElementOn(arr)
 
-#Java
+if __name__ == '__main__':
+    unittest.main()
+
 Java = '''
+#Thought: https://leetcode.com/problems/find-peak-element/solution/
+
 #33.97%  0ms
 1. O(n) linear scan:
 public class Solution {

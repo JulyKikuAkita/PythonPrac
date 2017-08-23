@@ -1,8 +1,10 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/patching-array/description/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/patching-array.py
 # Time:  O(s + logn), s is the number of elements in the array
 # Space: O(1)
-
+#
+# Description: Leetcode # 330. Patching Array
+#
 # Given a sorted positive integer array nums and
 # an integer n, add/patch elements to the array
 # such that any number in range [1, n] inclusive
@@ -29,7 +31,13 @@ __author__ = 'July'
 # Example 3:
 # nums = [1, 2, 2], n = 5
 # Return 0.
-
+#
+# Companies
+# Google
+# Related Topics
+# Greedy
+#
+import unittest
 # http://www.cnblogs.com/grandyang/p/5165821.html
 class Solution(object):
     def minPatches(self, nums, n):
@@ -46,12 +54,18 @@ class Solution(object):
             else:
                 miss += miss
                 patch += 1
-
         return patch
 
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
 
-#java
-js = '''
+if __name__ == '__main__':
+    unittest.main()
+
+Java = '''
+#Thought: https://leetcode.com/problems/patching-array/solution/
+#7.35% 1ms
 public class Solution {
     public int minPatches(int[] nums, int n) {
         if (nums == null){
@@ -73,6 +87,24 @@ public class Solution {
         }
 
         return res;
+    }
+}
+#Greedy
+#7.35% 1ms
+public class Solution {
+    public int minPatches(int[] nums, int n) {
+        int result = 0;
+        long max = 0;
+        int index = 0;
+        while (max < n) {
+            if (index < nums.length && max >= nums[index] - 1) {
+                max += nums[index++];
+            } else {
+                result++;
+                max += max + 1;
+            }
+        }
+        return result;
     }
 }
 '''

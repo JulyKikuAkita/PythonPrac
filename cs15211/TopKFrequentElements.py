@@ -4,6 +4,7 @@ __source__ = 'https://leetcode.com/problems/top-k-frequent-elements/#/descriptio
 # Space: O(n)
 #
 # Description: Leetcode # 347. Top K Frequent Elements
+#
 # Given a non-empty array of integers,
 # return the k most frequent elements.
 #
@@ -48,7 +49,6 @@ class Solution(object):
             result.append(p[i][1])
         return result
 
-
     def kthElement(self, nums, k):
         def PartitionAroundPivot(left, right, pivot_idx, nums):
             pivot_value = nums[pivot_idx][0]
@@ -72,7 +72,6 @@ class Solution(object):
                 right = new_pivot_idx - 1
             else:  # new_pivot_idx < k - 1.
                 left = new_pivot_idx + 1
-
 
 # Time:  O(nlogk)
 # Space: O(n)
@@ -123,8 +122,6 @@ public class Solution {
     }
 }
 
-
-
 // use maxHeap. Put entry into maxHeap so we can always poll a number with largest frequency
 #14.82% 101ms
 public class Solution {
@@ -148,8 +145,6 @@ public class Solution {
         return res;
     }
 }
-
-
 
 // use treeMap. Use freqncy as the key so we can get all freqencies in order
 #63.61% 29ms

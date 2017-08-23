@@ -3,10 +3,12 @@ __source__ = 'https://leetcode.com/problems/word-break-ii/#/description'
 # Time:  O(2^n)
 # Space: O(n)
 # DP
-# still not understand
 #
-# Given a string s and a dictionary of words dict,
+# Description: Leetcode # 217. 140. Word Break II
+#
+# Given a non-empty string s and a dictionary wordDict containing a list of non-empty words,
 # add spaces in s to construct a sentence where each word is a valid dictionary word.
+# You may assume the dictionary does not contain duplicate words.
 #
 # Return all such possible sentences.
 #
@@ -16,14 +18,19 @@ __source__ = 'https://leetcode.com/problems/word-break-ii/#/description'
 #
 # A solution is ["cats and dog", "cat sand dog"].
 #
-# Topics:
-# Dynamic Programming Backtracking
-# You might like:
-# (M) Word Break (H) Concatenated Words
-# Company:
+# UPDATE (2017/1/4):
+# The wordDict parameter had been changed to a list of strings (instead of a set of strings).
+# Please reload the code definition to get the latest changes.
+#
+# Companies
 # Dropbox Google Uber Snapchat Twitter
+# Related Topics
+# Dynamic Programming Backtracking
+# Similar Questions
+# Word Break Concatenated Words
 #
 
+import unittest
 class Solution:
     # @param s, a string
     # @param dict, a set of string
@@ -127,21 +134,22 @@ class Solution3(object):
             imp[idx] = True
         return found
 
+# Test
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+        print Solution().wordBreak("catsanddog", ["cat", "cats", "and", "sand", "dog"])
+        test = Solution2()
+        #print test.wordBreak("catsanddog", ["cat", "cats", "and", "sand", "dog"])
+        #print test.wordBreak("a", ["a"])
 
-#test
-test = Solution2()
-#print test.wordBreak("catsanddog", ["cat", "cats", "and", "sand", "dog"])
-#print test.wordBreak("a", ["a"])
+if __name__ == '__main__':
+    unittest.main()
 
-if __name__ == "__main__":
-    print Solution().wordBreak("catsanddog", ["cat", "cats", "and", "sand", "dog"])
-
-#java
-javas = '''
+Java = '''
 Thought: https://leetcode.com/articles/word-break-ii/
 
-77.81 %
-
+77.82% 14ms
 Time O(n^3), Size of recursion tree can go up to n^2. The creation of list takes n time.
 Space O(n^3) The depth of the recursion tree can go up to n and each activation record can contains a string list of size n.
 
@@ -198,6 +206,42 @@ public class Solution {
     }
 }
 
+# 98.96% 8ms
+public class Solution {
+    public List<String> wordBreak(String s, List<String> wordDict) {
+        List<String> result = new ArrayList<>();
+        if (s == null || s.length() <= 0 || wordDict == null || wordDict.size() <= 0) return result;
+        int maxWordSize = 0;
+        HashSet<String> dict = new HashSet<>();
+        for (String str : wordDict) {
+            maxWordSize = Math.max(maxWordSize, str.length());
+            dict.add(str);
+        }
+        helper(s, 0, new boolean[s.length()], dict, maxWordSize, new StringBuilder(), result);
+        return result;
+    }
+
+    private boolean helper(String s, int start, boolean[] marked, HashSet<String> dict, int maxWordSize, StringBuilder sol, List<String> result) {
+        if (start >= s.length()) {
+            result.add(sol.toString().trim());
+            return true;
+        }
+        if (marked[start]) return false;
+        boolean r = false;
+        for (int i = start; i < Math.min(s.length(), start+maxWordSize); i++) {
+            String tmp = s.substring(start, i+1);
+            if (dict.contains(tmp)) {
+                sol.append(tmp);
+                sol.append(" ");
+                r |= helper(s, i+1, marked, dict, maxWordSize, sol, result);
+                sol.delete(sol.length()-1-tmp.length(), sol.length());
+            }
+        }
+        if (r) return true;
+        marked[start] = true;
+        return false;
+    }
+}
 
 
 '''

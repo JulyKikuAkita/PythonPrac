@@ -5,7 +5,8 @@ __source__ = 'https://leetcode.com/problems/word-pattern-ii/description/'
 #                                and each one costs O(n) to check if it matches the word pattern.
 # Space: O(n + c)
 #
-# Description:
+# Description: 291. Word Pattern II
+#
 # Given a pattern and a string str, find if str follows the same pattern.
 #
 # Here follow means a full match, such that there is a bijection
@@ -17,6 +18,7 @@ __source__ = 'https://leetcode.com/problems/word-pattern-ii/description/'
 # pattern = "aabb", str = "xyzabcxzyabc" should return false.
 # Notes:
 # You may assume both pattern and str contains only lowercase letters.
+#
 # Companies
 # Dropbox Uber
 # Related Topics
@@ -59,7 +61,6 @@ class Solution(object):
                     if is_match:
                         break
         return is_match
-
 
 class TestMethods(unittest.TestCase):
     def test_Local(self):

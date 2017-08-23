@@ -4,6 +4,8 @@ __source__ = 'https://leetcode.com/problems/construct-binary-tree-from-inorder-a
 # Space: O(n)
 # divide and conquer
 #
+# Description: Leetcode # 106. Construct Binary Tree from Inorder and Postorder Traversal
+#
 # Given preorder and inorder traversal of a tree, construct the binary tree.
 # root = preorder[0]
 # root = inorder[mid]
@@ -18,7 +20,7 @@ __source__ = 'https://leetcode.com/problems/construct-binary-tree-from-inorder-a
 # Similar Questions
 # Construct Binary Tree from Inorder and Postorder Traversal
 #
-
+import unittest
 # Definition for a  binary tree node
 class TreeNode:
      def __init__(self, x):
@@ -45,7 +47,6 @@ class Solution:
         node.left = self.buildTreeRecu(lookup, postorder, inorder, post_end - 1 - (in_end - i - 1), in_start, i)
         node.right = self.buildTreeRecu(lookup, postorder, inorder, post_end  - 1, i  + 1, in_end )
         return node
-
 
 #OT
 class SolutionOther:
@@ -77,20 +78,25 @@ class SolutionOther:
         inorder(p,ans)
         return ans
 #test
-test = SolutionOther()
-newRoot = test.buildTree([-1], [-1])
-print test.inorderTraversal1(newRoot)
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+        preorder = [1, 2, 3]
+        inorder = [2, 1, 3]
+        result = Solution().buildTree(preorder, inorder)
+        print result.val
+        print result.left.val
+        print result.right.val
 
-if __name__ ==  "__main__":
-    preorder = [1, 2, 3]
-    inorder = [2, 1, 3]
-    result = Solution().buildTree(preorder, inorder)
-    print result.val
-    print result.left.val
-    print result.right.val
+        test = SolutionOther()
+        newRoot = test.buildTree([-1], [-1])
+        print test.inorderTraversal1(newRoot)
 
-#java
+if __name__ == '__main__':
+    unittest.main()
+
 Java = '''
+#Thought: https://leetcode.com/problems/contains-duplicate/solution/
 /**
  * Definition for a binary tree node.
  * public class TreeNode {
@@ -100,7 +106,7 @@ Java = '''
  *     TreeNode(int x) { val = x; }
  * }
  */
-1. DFS: 79%
+1. DFS: 69.44% 5ms
 public class Solution {
     public TreeNode buildTree(int[] inorder, int[] postorder) {
         if (inorder == null || inorder.length != postorder.length) {
@@ -139,7 +145,13 @@ until the peek() element is not equal to the mark value or the stack is empty.
 Then, the new element that we are gonna scan from postorder array is the left child of the last element 
 we have popped out from the stack.
 
-public TreeNode bfs(int[] inorder, int[] postorder) {
+# 89.30% 4ms
+public class Solution {
+    public TreeNode buildTree(int[] inorder, int[] postorder) {
+        return bfs(inorder, postorder);
+    }
+
+    public TreeNode bfs(int[] inorder, int[] postorder) {
         if (inorder == null || inorder.length ==0 || inorder.length != postorder.length) {
             return null;
         }
@@ -148,7 +160,7 @@ public TreeNode bfs(int[] inorder, int[] postorder) {
         Stack<TreeNode> stack = new Stack<TreeNode>();
         TreeNode root = new TreeNode(postorder[postEndIdx]);
         TreeNode tmp = null;
-        
+
         stack.push(root);
         postEndIdx--;
         while(postEndIdx >= 0) {
@@ -166,6 +178,6 @@ public TreeNode bfs(int[] inorder, int[] postorder) {
             tmp = null;
         }
         return root;
+    }
 }
-
 '''

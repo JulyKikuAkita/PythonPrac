@@ -1,50 +1,35 @@
-__author__ = 'July'
-'''
-Given an array nums and a target value k, find the maximum length of a subarray that sums to k. If there isn't one, return 0 instead.
-
-Example 1:
-Given nums = [1, -1, 5, -2, 3], k = 3,
-return 4. (because the subarray [1, -1, 5, -2] sums to 3 and is the longest)
-
-Example 2:
-Given nums = [-2, -1, 2, 1], k = 1,
-return 2. (because the subarray [-1, 2] sums to 1 and is the longest)
-
-Follow Up:
-Can you do it in O(n) time?
-# Palantir
+__source__ = 'https://leetcode.com/problems/maximum-size-subarray-sum-equals-k/description/'
+# https://github.com/kamyu104/LeetCode/blob/master/Python/maximum-size-subarray-sum-equals-k.py
+# Time:  O(n)
+# Space: O(n)
+#
+# Description: Leetcode # 325. Maximum Size Subarray Sum Equals k
+#
+# Given an array nums and a target value k, find the maximum length of a subarray that sums to k.
+# If there isn't one, return 0 instead.
+#
+# Example 1:
+# Given nums = [1, -1, 5, -2, 3], k = 3,
+# return 4. (because the subarray [1, -1, 5, -2] sums to 3 and is the longest)
+#
+# Example 2:
+# Given nums = [-2, -1, 2, 1], k = 1,
+# return 2. (because the subarray [-1, 2] sums to 1 and is the longest)
+#
+# Follow Up:
+# Can you do it in O(n) time?
+#
+# Companies
+# Palantir Facebook
+# Related Topics
 # Hash Table
-
-'''
-
-# OT
-# O(n^2)
-class Solution(object):
-    def maxSubArrayLen(self, nums, k):
-        """
-        :type nums: List[int]
-        :type k: int
-        :rtype: int
-        """
-        if not nums or len(nums) == 0:
-            return 0
-        ans =0
-        for i in xrange(len(nums)):
-            for j in xrange(i+1, len(nums)):
-                if i != j and sum(nums[i:j])== k:
-                    ans = max(ans, j - i )
-
-        return ans
-
+# Similar Questions
+# Minimum Size Subarray Sum Range Sum Query - Immutable Contiguous Array
+#
+import unittest
 # O(n)
 class Solution(object):
     def maxSubArrayLen(self, nums, k):
-        """
-        :type nums: List[int]
-        :type k: int
-        :rtype: int
-        """
-
         result, acc = 0, 0
         dic = { 0: -1} # so that when i - dict[acc-k] have correct len of subarr
 
@@ -56,11 +41,38 @@ class Solution(object):
                 result = max(result, i - dict[acc-k])
         return result
 
+class Solution2(object):
+    def maxSubArrayLen(self, nums, k):
+        """
+        :type nums: List[int]
+        :type k: int
+        :rtype: int
+        """
+        sums = {}
+        cur_sum, max_len = 0, 0
+        for i in xrange(len(nums)):
+            cur_sum += nums[i]
+            if cur_sum == k:
+                max_len = i + 1
+            elif cur_sum - k in sums:
+                max_len = max(max_len, i - sums[cur_sum - k])
+            if cur_sum not in sums:
+                sums[cur_sum] = i  # Only keep the smallest index.
+        return max_len
 
-#java
-jav= '''
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+
+if __name__ == '__main__':
+    unittest.main()
+
+Java = '''
+#Thought:
+#97.37%% 24ms
 public class Solution {
     public int maxSubArrayLen(int[] nums, int k) {
+        if(nums == null || nums.length == 0) return 0;
         int len = nums.length;
         int[] sums = new int[len + 1];
         for (int i = 0; i < len; i++) {
@@ -80,7 +92,31 @@ public class Solution {
         return result;
     }
 }
+#94.85% 25ms
+public class Solution {
+    public int maxSubArrayLen(int[] nums, int k) {
+        if(nums == null || nums.length == 0) return 0;
+        int len = nums.length;
+        int[] sums = new int[len + 1];
+        sums[0] = nums[0];
+        for (int i = 1; i < len; i++) {
+            sums[i] = sums[i - 1] + nums[i];
+        }
+        Map<Integer, Integer> map = new HashMap<>();
+        map.put(0, -1);
+        int result = 0;
+        for (int i = 0; i < len; i++) {
+            int curr = sums[i] - k;
+            if (map.containsKey(curr)) {
+                result = Math.max(result, i - map.get(curr));
+            }
+            if (!map.containsKey(sums[i])) map.put(sums[i], i);
+        }
+        return result;
+    }
+}
 
+#11.05% 42ms
 public class Solution {
     public int maxSubArrayLen(int[] nums, int k) {
         if(nums.length == 0) return 0;

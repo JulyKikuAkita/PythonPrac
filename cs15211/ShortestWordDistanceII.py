@@ -1,26 +1,39 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/shortest-word-distance-ii/description/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/shortest-word-distance-ii.py
-'''
-This is a follow up of Shortest Word Distance. The only difference is now you are given the list of words and your method will be called repeatedly many times with different parameters. How would you optimize it?
-
-Design a class which receives a list of words in the constructor, and implements a method that takes two words word1 and word2 and return the shortest distance between these two words in the list.
-
-For example,
-Assume that words = ["practice", "makes", "perfect", "coding", "makes"].
-
-Given word1 = "coding", word2 = "practice", return 3.
-Given word1 = "makes", word2 = "coding", return 1.
-
-Note:
-You may assume that word1 does not equal to word2, and word1 and word2 are both in the list.
-
-Hide Company Tags LinkedIn
-
-'''
-
 # Time:  init: O(n), lookup: O(a + b), a, b is occurences of word1, word2
 # Space: O(n)
-
+#
+# Description: Leetcode # 244. Shortest Word Distance II
+#
+# This is a follow up of Shortest Word Distance.
+# The only difference is now you are given the list of words
+# and your method will be called repeatedly many times with different parameters.
+# How would you optimize it?
+#
+# Design a class which receives a list of words in the constructor,
+# and implements a method that takes two words word1 and word2
+# and return the shortest distance between these two words in the list.
+#
+# For example,
+# Assume that words = ["practice", "makes", "perfect", "coding", "makes"].
+#
+# Given word1 = "coding", word2 = "practice", return 3.
+# Given word1 = "makes", word2 = "coding", return 1.
+#
+# Note:
+# You may assume that word1 does not equal to word2, and word1 and word2 are both in the list.
+#
+# Companies
+# LinkedIn
+# Related Topics
+# Hash Table Design
+# Similar Questions
+# Merge Two Sorted Lists Shortest Word Distance Shortest Word Distance III
+#
+import unittest
+import collections
+# Time:  init: O(n), lookup: O(a + b), a, b is occurences of word1, word2
+# Space: O(n)
 class WordDistance:
     # initialize your data structure here.
     # @param {string[]} words
@@ -47,17 +60,28 @@ class WordDistance:
 
         return dist
 
-#java
-js = '''
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+
+if __name__ == '__main__':
+    unittest.main()
+
+Java = '''
+# Thought:
+# 71.77% 154ms
 public class WordDistance {
     private Map<String, List<Integer>> wordMap;
 
     public WordDistance(String[] words) {
         wordMap = new HashMap<>();
         for (int i = 0; i < words.length; i++) {
+        /*
             if (!wordMap.containsKey(words[i])) {
                 wordMap.put(words[i], new ArrayList<>());
             }
+        */
+            wordMap.putIfAbsent(word, new ArrayList<> ());
             wordMap.get(words[i]).add(i);
         }
     }

@@ -4,6 +4,7 @@ __source__ = 'https://leetcode.com/problems/sliding-window-maximum/description/'
 # Space: O(k)
 #
 # Description: Leetcode # 239. Sliding Window Maximum
+#
 # Given an array nums, there is a sliding window of size k
 # which is moving from the very left of the array to the
 # very right. You can only see the k numbers in the window.
@@ -33,7 +34,9 @@ __source__ = 'https://leetcode.com/problems/sliding-window-maximum/description/'
 # Related Topics
 # Heap
 # Similar Questions
-# Minimum Window Substring Min Stack Longest Substring with At Most Two Distinct Characters Paint House II
+# Minimum Window Substring Min Stack
+# Longest Substring with At Most Two Distinct Characters
+# Paint House II
 #
 from collections import deque
 import unittest

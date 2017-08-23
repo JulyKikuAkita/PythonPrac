@@ -2,7 +2,9 @@ __source__ = 'https://leetcode.com/problems/paint-fence/#/description'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/paint-fence.py
 # Time:  O(n)
 # Space: O(1)
-# Description:
+#
+# Description: 276. Paint Fence
+#
 # There is a fence with n posts, each post can be painted with one of the k colors.
 #
 # You have to paint all the posts such that no more than two adjacent fence posts have the same color.
@@ -11,6 +13,7 @@ __source__ = 'https://leetcode.com/problems/paint-fence/#/description'
 #
 # Note:
 # n and k are non-negative integers.
+#
 # Companies
 # Google
 # Related Topics
@@ -19,9 +22,7 @@ __source__ = 'https://leetcode.com/problems/paint-fence/#/description'
 # House Robber House Robber II Paint House Paint House II
 #
 
-# Time:  O(n)
-# Space: O(1)
-
+import unittest
 # DP solution with rolling window.
 class Solution(object):
     def numWays(self, n, k):
@@ -40,8 +41,6 @@ class Solution(object):
         for i in xrange(2, n):
             ways[i % 3] = (k-1) * ( ways[(i-1) % 3 ] + ways[(i-2) % 3 ] )
         return ways[(n-1) % 3]
-
-
 
 # Time:  O(n)
 # Space: O(n)
@@ -63,6 +62,13 @@ class Solution2(object):
         for i in xrange(2, n):
             ways[i] = (k - 1) * (ways[i - 1] + ways[i - 2])
         return ways[n - 1]
+
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+
+if __name__ == '__main__':
+    unittest.main()
 
 Java = '''
 #Thought: https://discuss.leetcode.com/topic/23426/o-n-time-java-solution-o-1-space
@@ -101,7 +107,7 @@ And now as we append a same-color post to them, the former diffColorCounts becom
 Then we can keep going until we reach the n. And finally just sum up these two variables as result.
 
 Hope this would be clearer.
-# 7%
+#5.96% 0ms
 public class Solution {
     public int numWays(int n, int k) {
         if (n == 0) {
@@ -120,4 +126,38 @@ public class Solution {
     }
 }
 
+#5.96% 0ms
+public class Solution {
+    public int numWays(int n, int k) {
+        if(n == 0) return 0;
+        else if(n == 1) return k;
+        int diffColorCounts = k*(k-1);
+        int sameColorCounts = k;
+        for(int i=2; i<n; i++) {
+            int temp = diffColorCounts;
+            diffColorCounts = (diffColorCounts + sameColorCounts) * (k-1);
+            sameColorCounts = temp;
+        }
+        return diffColorCounts + sameColorCounts;
+    }
+}
+
+#5.96% 0ms
+class Solution {
+    public int numWays(int n, int k) {
+        if (n == 0) return 0;
+        else if (n == 1) return k;
+
+        int sameColorCounts = k;
+        int diffColorCounts = k * (k - 1);
+        //the last two posts have the same color, the number of ways to paint in this case is sameColorCounts.
+        //the last two posts have different colors, and the number of ways in this case is diffColorCounts.
+        for (int i = 2; i < n; i++) {
+            int newDiffColorCounts = (k - 1) * (sameColorCounts + diffColorCounts);
+            sameColorCounts = diffColorCounts;
+            diffColorCounts = newDiffColorCounts;
+        }
+        return sameColorCounts + diffColorCounts;
+    }
+}
 '''

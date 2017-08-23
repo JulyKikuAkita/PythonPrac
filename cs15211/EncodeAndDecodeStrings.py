@@ -2,7 +2,9 @@ __source_ = 'https://leetcode.com/problems/encode-and-decode-strings/description
 # https://github.com/kamyu104/LeetCode/blob/master/Python/encode-and-decode-strings.py
 # Time:  O(n)
 # Space: O(1)
-# Description:
+#
+# Description: Leetcode # 271. Encode and Decode Strings
+#
 # Design an algorithm to encode a list of strings to a string.
 # The encoded string is then sent over the network and is decoded back to the original list of strings.
 #
@@ -32,7 +34,14 @@ __source_ = 'https://leetcode.com/problems/encode-and-decode-strings/description
 # Your algorithm should be generalized enough to work on any possible characters.
 # Do not use class member/global/static variables to store states. Your encode and decode algorithms should be stateless.
 # Do not rely on any library method such as eval or serialize methods. You should implement your own encode/decode algorithm.
-# Tags Google
+#
+# Companies
+# Google
+# Related Topics
+# String
+# Similar Questions
+# Count and Say Serialize and Deserialize Binary Tree
+#
 
 # Time:  O(n)
 # Space: O(1)
@@ -102,11 +111,21 @@ class Codec2(unittest.TestCase):
     def test(self):
         hash = self.encode(["",""])
         self.assertEqual(["",""] , self.decode(hash))
-#Java
-# http://algobox.org/encode-and-decode-strings/
+
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+        print Solution().containsDuplicate([12344555,12344555])
+
+if __name__ == '__main__':
+    unittest.main()
+
 Java = '''
+#Thought:
+
 Thought:
 #21.29% 54ms
+
 public class Codec {
     public String encode(List<String> strs) {
         StringBuffer out = new StringBuffer();
@@ -163,7 +182,7 @@ public class Codec {
     public String encode(List<String> strs) {
         StringBuilder sb = new StringBuilder();
         for (String str : strs) {
-            sb.append(str.length()).append('#').append(str);
+            sb.append(str.length()).append(DELIMITER).append(str);
         }
         return sb.toString();
     }
@@ -183,6 +202,42 @@ public class Codec {
             index += len;
         }
         return result;
+    }
+}
+
+#99.72% 8ms
+public class Codec {
+
+    // Encodes a list of strings to a single string.
+    public String encode(List<String> strs) {
+        if (strs == null) {
+    			return null;
+    		}
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < strs.size(); i++) {
+            sb.append(strs.get(i)).append("{];>");
+        }
+        return sb.toString();
+    }
+
+    // Decodes a single string to a list of strings.
+    public List<String> decode(String s) {
+        if (s == null) {
+    			return null;
+    		}
+    		//System.out.println("decode, s = " + s);
+        List<String> output = new ArrayList<String>();
+        if (s.length() == 0) {
+        		return output;
+        }
+        int index = s.indexOf("{];>");
+        int start = 0;
+        while (index >= 0) {
+        		output.add(s.substring(start, index));
+        		start = index + 4;
+        		index = s.indexOf("{];>", start);
+        }
+        return output;
     }
 }
 

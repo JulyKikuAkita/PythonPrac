@@ -1,27 +1,33 @@
-import bisect
-
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/increasing-triplet-subsequence/description/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/increasing-triplet-subsequence.py
 # Time:  O(n)
 # Space: O(1)
-
+#
+# Description: Leetcode # 334. Increasing Triplet Subsequence
+#
 # Given an unsorted array return whether an increasing
 # subsequence of length 3 exists or not in the array.
-
+#
 # Formally the function should:
 # Return true if there exists i, j, k
 # such that arr[i] < arr[j] < arr[k]
 # given 0 <= i < j < k <= n-1 else return false.
 # Your algorithm should run in O(n) time complexity and O(1) space complexity.
-
+#
 # Examples:
 # Given [1, 2, 3, 4, 5],
 # return true.
-
+#
 # Given [5, 4, 3, 2, 1],
 # return false.
+#
+# Companies
 # Facebook
-
+# Similar Questions
+# Longest Increasing Subsequence
+#
+import bisect
+import unittest
 class Solution(object):
     def increasingTriplet(self, nums):
         """
@@ -58,34 +64,62 @@ class Solution_Generalization(object):
 
         return increasingKUplet(nums, 3)
 
-#java
-js = '''
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+
+if __name__ == '__main__':
+    unittest.main()
+
+Java = '''
+#Thought:
+#26.53% 7ms
 public class Solution {
     public boolean increasingTriplet(int[] nums) {
-        int len = nums.length;
-        if (len < 3) {
-            return false;
-        }
-        int first = nums[0];
-        int second = 0;
         int index = 1;
-        while (index < len) {
-            if (nums[index] <= first) {
-                first = nums[index++];
-            } else {
-                second = nums[index++];
+        while (index < nums.length) {
+            if (nums[index] > nums[index - 1]) {
                 break;
             }
+            index++;
         }
-        while (index < len) {
-            if (nums[index] <= first) {
-                first = nums[index];
-            } else if (nums[index] <= second) {
-                second = nums[index];
+        if (index == nums.length) {
+            return false;
+        }
+        int index1 = index - 1;
+        int index2 = index;
+        for (int i = index + 1; i < nums.length; i++) {
+            if (nums[i] > nums[index2]) {
+                return true;
+            } else if (nums[i] > nums[index1]) {
+                index2 = i;
             } else {
+                index1 = i;
+            }
+        }
+        return false;
+    }
+}
+
+#54.63% 6ms
+public class Solution {
+    public boolean increasingTriplet(int[] nums) {
+        if(nums == null){
+            return false;
+        }
+
+        int min = Integer.MAX_VALUE; int secondMin = Integer.MAX_VALUE;
+
+        for(int i : nums){
+            if(i <= min){
+                min = i;
+            }
+            else if(i < secondMin){
+                secondMin = i;
+            }
+            else if(i > secondMin){
                 return true;
             }
-            index++;
         }
         return false;
     }

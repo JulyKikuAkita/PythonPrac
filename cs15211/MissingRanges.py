@@ -3,6 +3,8 @@ __source__ = 'https://leetcode.com/problems/missing-ranges/description/'
 # Time:  O(n)
 # Space: O(1)
 #
+# Description: Leetcode # 163. Missing Ranges
+#
 # Given a sorted integer array where the range of elements are [lower, upper] inclusive,
 # return its missing ranges.
 #
@@ -15,6 +17,8 @@ __source__ = 'https://leetcode.com/problems/missing-ranges/description/'
 # Array
 # Similar Questions
 # Summary Ranges
+#
+import unittest
 class Solution:
     # @param A, a list of integers
     # @param lower, an integer
@@ -29,12 +33,9 @@ class Solution:
                 cur = upper + 1
             else:
                 cur = A[i]
-
             if cur - pre >= 2:
                 ranges.append(self.getRange(pre + 1, cur - 1))
-
             pre = cur
-
         return ranges
 
     def getRange(self, lower, upper):
@@ -43,14 +44,20 @@ class Solution:
         else:
             return "{}->{}".format(lower, upper)
 
-#test
-if __name__ == "__main__":
-    arr = [0, 1, 3, 50, 75]
-    print Solution().findMissingRanges(arr,0, 99)
+# test
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+        arr = [0, 1, 3, 50, 75]
+        print Solution().findMissingRanges(arr,0, 99)
 
-#Java
+if __name__ == '__main__':
+    unittest.main()
+
 Java = '''
-13.69# 1ms
+#Thought: https://leetcode.com/problems/contains-duplicate/solution/
+
+#93.94% 0ms
 public class Solution {
     public List<String> findMissingRanges(int[] nums, int lower, int upper) {
         List<String> res = new ArrayList<>();
@@ -64,6 +71,31 @@ public class Solution {
     }
 }
 
+#93.94% 0ms
+class Solution {
+    public List<String> findMissingRanges(int[] nums, int lower, int upper) {
+        List<String> res = new ArrayList<String>();
+        if (nums.length == 0) {
+            addRange(res, lower, upper);
+            return res;
+        }
+        addRange(res, lower, (long)nums[0] - 1);
+        for (int i = 1; i < nums.length; i++) {
+            addRange(res, (long)nums[i-1] + 1, (long)nums[i] - 1);
+        }
+        addRange(res, (long)nums[nums.length-1] + 1, upper);
+        return res;
+    }
+    void addRange(List<String> res, long start, long end) {
+        if (start > end) {
+            return;
+        } else if (start == end) {
+            res.add(start + "");
+        } else {
+            res.add(start + "->" + end);
+        }
+    }
+}
 
 Input:
 [2147483647]

@@ -1,8 +1,10 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/intersection-of-two-arrays/description/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/intersection-of-two-arrays.py
 # Time:  O(m + n)
 # Space: O(min(m, n))
-
+#
+# Description: Leetcode # 349. Intersection of Two Arrays
+#
 # Given two arrays, write a function to compute their intersection.
 #
 # Example:
@@ -11,7 +13,15 @@ __author__ = 'July'
 # Note:
 # Each element in the result must be unique.
 # The result can be in any order.
-
+#
+# Companies
+# Two Sigma
+# Related Topics
+# Hash Table Two Pointers Binary Search Sort
+# Similar Questions
+# Intersection of Two Arrays II
+#
+import unittest
 # Hash solution.
 class Solution(object):
     def intersection(self, nums1, nums2):
@@ -32,9 +42,7 @@ class Solution(object):
             if i in lookup:
                 res += i,
                 lookup.discard(i)
-
         return res
-
 
 # Time:  O(max(m, n) * log(max(m, n)))
 # Space: O(1)
@@ -67,9 +75,7 @@ class Solution2(object):
             if left != len(nums2) and nums2[left] == i:
                 res += i,
                 left = binary_search(lambda x, y: x > y, nums2, left, len(nums2), i)
-
         return res
-
 
 # Time:  O(max(m, n) * log(max(m, n)))
 # Space: O(1)
@@ -95,11 +101,18 @@ class Solution3(object):
                     res += nums1[it1],
                 it1 += 1
                 it2 += 1
-
         return res
 
-#java
-js = '''
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+
+if __name__ == '__main__':
+    unittest.main()
+
+Java = '''
+#Thought:
+#12.83% 9ms
 public class Solution {
     public int[] intersection(int[] nums1, int[] nums2) {
         Set<Integer> set1 = new HashSet<Integer>();
@@ -118,10 +131,10 @@ public class Solution {
             res[idx++] = num;
         }
         return res;
-
     }
 }
 
+#75.75% 5ms
 public class Solution {
     public int[] intersection(int[] nums1, int[] nums2) {
         Set<Integer> set = new HashSet<>();

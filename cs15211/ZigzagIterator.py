@@ -63,11 +63,8 @@ class TestMethods(unittest.TestCase):
     def test_Local(self):
         self.assertEqual(1, 1)
 
-
 if __name__ == '__main__':
     unittest.main()
-
-
 
 # Your ZigzagIterator object will be instantiated and called as such:
 # i, v = ZigzagIterator(v1, v2), []

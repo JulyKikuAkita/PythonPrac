@@ -120,9 +120,9 @@ class TestMethods(unittest.TestCase):
 if __name__ == '__main__':
     unittest.main()
 
+Java = '''
+#Thought: https://leetcode.com/problems/contains-duplicate/solution/
 
-#Java
-java = '''
 
 Thought:  This problem is generally believed to have two solutions:
 the top down approach and the bottom up way.

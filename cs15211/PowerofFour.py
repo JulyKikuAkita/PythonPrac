@@ -2,13 +2,16 @@ __source__ = 'https://leetcode.com/problems/power-of-four/description/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/power-of-four.py
 # Time:  O(1)
 # Space: O(1)
-
+#
+# Description: Leetcode # 342. Power of Four
+#
 # Given an integer (signed 32 bits), write a function to check whether it is a power of 4.
 #
 # Example:
 # Given num = 16, return true. Given num = 5, return false.
 #
 # Follow up: Could you solve it without loops/recursion?
+#
 # Companies
 # Two Sigma
 # Related Topics
@@ -26,7 +29,6 @@ class Solution(object):
         # print 0b01010101010101010101010101010101  =1431655765 in 31 digits
         return num > 0 and (num & (num - 1)) == 0 and \
                ((num & 0b01010101010101010101010101010101) == num)
-
 
 # Time:  O(1)
 # Space: O(1)
@@ -64,11 +66,12 @@ class TestMethods(unittest.TestCase):
         self.assertTrue(s2)
         self.assertTrue(s3)
 
-
 if __name__ == '__main__':
     unittest.main()
-#Java
+
 Java = '''
+#Thought: 
+
 #18.58% 2ms
 public class Solution {
     public boolean isPowerOfFour(int num) {

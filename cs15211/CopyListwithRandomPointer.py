@@ -1,17 +1,24 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/copy-list-with-random-pointer/description/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/copy-list-with-random-pointer.py
 # Time:  O(n)
 # Space: O(1)
 # LinkedList
 #
+# Description: Leetcode # 138. Copy List with Random Pointer
+#
 # A linked list is given such that each node contains an additional random pointer
 # which could point to any node in the list or null.
 #
 # Return a deep copy of the list.
+#
+# Companies
 # Amazon Microsoft Bloomberg Uber
-# Hide Tags Hash Table Linked List
-# Hide Similar Problems (M) Clone Graph
-
+# Related Topics
+# Hash Table Linked List
+# Similar Questions
+# Clone Graph
+#
+import unittest
 # Definition for singly-linked list with a random pointer.
 class RandomListNode:
     def __init__(self, x):
@@ -47,8 +54,6 @@ class Solution:
             copied, current = copied.next, current.next
         return dummy.next
 
-
-
 # Time:  O(n)
 # Space: O(n) dict
 class Solution2:
@@ -75,17 +80,6 @@ class Solution2:
             cur= cur.next
 
         return dummy.next
-
-
-if __name__ == "__main__":
-    head = RandomListNode(1)
-    head.next = RandomListNode(2)
-    head.random = head.next
-    result = Solution().copyRandomList(head)
-    print result.label
-    print result.next.label
-    print result.random.label
-
 
 # http://www.cnblogs.com/zuoyuan/p/3745126.html
 class SolutionOther:
@@ -120,23 +114,38 @@ class SolutionOther:
         pold.next = None
         pnew.next = None
         return newhead
-#test
-c1 = RandomListNode(3) ; c2 = RandomListNode(7) ; c3 = RandomListNode(4) ; c4 = RandomListNode(9) ; c5 = RandomListNode(5); c6 = RandomListNode(2);c7 = RandomListNode(6); c8 = RandomListNode(1)
-c1.next = c2 ; c2.next = c3 ; c3.next = c4; c4.next = c5; c5.next = c6 ; c6.next = c7 ; c7.next = c8
+# Test
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+        c1 = RandomListNode(3) ; c2 = RandomListNode(7) ; c3 = RandomListNode(4) ; c4 = RandomListNode(9) ; c5 = RandomListNode(5); c6 = RandomListNode(2);c7 = RandomListNode(6); c8 = RandomListNode(1)
+        c1.next = c2 ; c2.next = c3 ; c3.next = c4; c4.next = c5; c5.next = c6 ; c6.next = c7 ; c7.next = c8
 
-test = SolutionOther()
-nh = test.copyRandomList(c1)
+        test = SolutionOther()
+        nh = test.copyRandomList(c1)
 
-while nh:
-    print nh.label, nh.__class__
-    nh = nh.next
+        while nh:
+            print nh.label, nh.__class__
+            nh = nh.next
 
-print "\n original list \n"
-while c1:
-    print c1.label, c1.__class__
-    c1= c1.next
+        print "\n original list \n"
+        while c1:
+            print c1.label, c1.__class__
+            c1= c1.next
 
-java = '''
+        head = RandomListNode(1)
+        head.next = RandomListNode(2)
+        head.random = head.next
+        result = Solution().copyRandomList(head)
+        print result.label
+        print result.next.label
+        print result.random.label
+
+if __name__ == '__main__':
+    unittest.main()
+
+Java = '''
+#Thought:
 A solution with constant space complexity O(1) and linear time complexity O(N)
 An intuitive solution is to keep a hash table for each node in the list,
 via which we just need to iterate the list in 2 rounds respectively to create nodes and assign the values
@@ -163,6 +172,7 @@ The algorithm is implemented as follows:
  *     RandomListNode(int x) { this.label = x; }
  * };
  */
+#67.66% 2ms
 public class Solution {
     public RandomListNode copyRandomList(RandomListNode head) {
         if( head == null) return head;
@@ -201,6 +211,7 @@ public class Solution {
     }
 }
 
+# 32.97% 6ms
 2. O(n) with map Space O(n)
 public RandomListNode copyRandomList(RandomListNode head) {
   if (head == null) return null;
@@ -223,5 +234,23 @@ public RandomListNode copyRandomList(RandomListNode head) {
   }
 
   return map.get(head);
+}
+
+# pass the test but didn't create link for random node
+# 96.65% 1ms
+public class Solution {
+    public RandomListNode copyRandomList(RandomListNode head) {
+        RandomListNode dummy = new RandomListNode(-12345);
+        RandomListNode pre = dummy;
+        RandomListNode cur = head;
+        while(cur != null){
+        	RandomListNode a = new RandomListNode(cur.label);
+        	pre.next = a;
+        	a.random = cur.random == null ? null:new RandomListNode(cur.random.label);
+        	pre = pre.next;
+        	cur = cur.next;
+        }
+         return dummy.next;
+    }
 }
 '''

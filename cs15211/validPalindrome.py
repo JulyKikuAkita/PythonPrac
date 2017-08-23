@@ -5,7 +5,8 @@ __source__ = 'https://leetcode.com/problems/valid-palindrome/#/description'
 # String
 #
 # Description: Leetcode # 125. Valid Palindrome
-# Given a string, determine if it is a palindrome, considering only alphanumeric characters and ignoring cases.
+# Given a string, determine if it is a palindrome,
+# considering only alphanumeric characters and ignoring cases.
 #
 # For example,
 # "A man, a plan, a canal: Panama" is a palindrome.
@@ -21,6 +22,7 @@ __source__ = 'https://leetcode.com/problems/valid-palindrome/#/description'
 # Two Pointers String
 # Similar Questions
 #
+import unittest
 class Solution:
     # @param s, a string
     # @return a boolean
@@ -34,13 +36,7 @@ class Solution:
             if s[i].lower() != s[j].lower():
                 return False
             i, j = i+1, j-1
-
         return True
-
-
-if __name__ == "__main__":
-    print Solution().isPalindrome("A man, a plan, a canal: Panama")
-
 
 class SolutionOther:
     # @param s, a string
@@ -67,46 +63,24 @@ class SolutionOther:
                 else:
                     return True
 
-#java solution
-# http://www.programcreek.com/2013/01/leetcode-valid-palindrome-java/
-class stackSolution:
-    # @param s, a string
-    # @return a boolean
-    def isPalindrome(self, s):
-        stack = []
-        if len(s) < 2:
-            return True
-        index = 0
-        while index < len(s) / 2:
-            stack.append(s[index])
-            index += 1
+# test
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+        t1 = Solution()
+        #print t1.isPalindrome("A man, a plan, a canal: Panama")
+        #print t1.isPalindrome("race a car")
+        #print  t1.isPalindrome("a.")
+        #print  t1.isPalindrome(".,")
+        #print  t1.isPalindrome("......a.....")
+        print  t1.isPalindrome("1a2")
+        print Solution().isPalindrome("A man, a plan, a canal: Panama")
 
-        if len(s) % 2 == 1:
-            index += 1
+if __name__ == '__main__':
+    unittest.main()
 
-        while index < len(s):
-            if len(stack) == 0:
-                return False
-            if stack.pop() != s[index]:
-                return False
-            else:
-                index += 1
-        return True
-
-
-# tc
-t1 = Solution()
-t2 = stackSolution()
-#print t1.isPalindrome("A man, a plan, a canal: Panama")
-#print t1.isPalindrome("race a car")
-#print  t1.isPalindrome("a.")
-#print  t1.isPalindrome(".,")
-#print  t1.isPalindrome("......a.....")
-print  t1.isPalindrome("1a2")
-print t2.isPalindrome("1a2")
-
-#Java
-Java= '''
+Java = '''
+#Thought:
 #11.24% 35ms
 public class Solution {
     public boolean isPalindrome(String s) {

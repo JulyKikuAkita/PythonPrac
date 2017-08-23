@@ -1,40 +1,47 @@
-import collections
-
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/unique-word-abbreviation/description/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/unique-word-abbreviation.py
-'''
-An abbreviation of a word follows the form <first letter><number><last letter>. Below are some examples of word abbreviations:
-
-a) it                      --> it    (no abbreviation)
-
-     1
-b) d|o|g                   --> d1g
-
-              1    1  1
-     1---5----0----5--8
-c) i|nternationalizatio|n  --> i18n
-
-              1
-     1---5----0
-d) l|ocalizatio|n          --> l10n
-Assume you have a dictionary and given a word, find whether its abbreviation is unique in the dictionary.
-A word's abbreviation is unique if no other word from the dictionary has the same abbreviation.
-
-Example:
-Given dictionary = [ "deer", "door", "cake", "card" ]
-
-isUnique("dear") -> false
-isUnique("cart") -> true
-isUnique("cane") -> false
-isUnique("make") -> true
-# google
-'''
-
-
 # Time:  ctor:   O(n), n is number of words in the dictionary.
 #        lookup: O(1)
 # Space: O(k), k is number of unique words.
+#
+# Description: Leetcode # 288. Unique Word Abbreviation
+#
+# An abbreviation of a word follows the form <first letter><number><last letter>.
+# Below are some examples of word abbreviations:
+#
+# a) it                      --> it    (no abbreviation)
+#
+#      1
+# b) d|o|g                   --> d1g
+#
+#               1    1  1
+#      1---5----0----5--8
+# c) i|nternationalizatio|n  --> i18n
+#
+#               1
+#      1---5----0
+# d) l|ocalizatio|n          --> l10n
+# Assume you have a dictionary and given a word, find whether its abbreviation is unique in the dictionary.
+# A word's abbreviation is unique if no other word from the dictionary has the same abbreviation.
+#
+# Example:
+# Given dictionary = [ "deer", "door", "cake", "card" ]
+#
+# isUnique("dear") -> false
+# isUnique("cart") -> true
+# isUnique("cane") -> false
+# isUnique("make") -> true
+#
+# Companies
+# Google
+# Related Topics
+# Hash Table Design
+# Similar Questions
+# Two Sum III - Data structure design Generalized Abbreviation
+#
 
+import collections
+import unittest
 class ValidWordAbbr(object):
     def __init__(self, dictionary):
         """
@@ -66,16 +73,22 @@ class ValidWordAbbr(object):
 
 # Your ValidWordAbbr object will be instantiated and called as such:
 #dictionary = [ "deer", "door", "cake", "card", "word" ]
-dictionary = [ "" ]
-if __name__ == "__main__":
-    vwa = ValidWordAbbr(dictionary)
-    print vwa.isUnique("word")
-    print vwa.isUnique("anotherWord")
-    print vwa.isUnique("")
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        dictionary = [ "" ]
+        self.assertEqual(1, 1)
+        vwa = ValidWordAbbr(dictionary)
+        print vwa.isUnique("word")
+        print vwa.isUnique("anotherWord")
+        print vwa.isUnique("")
 
+if __name__ == '__main__':
+    unittest.main()
 
-#java
-js = '''
+Java = '''
+#Thought: https://leetcode.com/articles/unique-word-abbreviation/
+
+# 79.64% 220ms
 public class ValidWordAbbr {
     private Map<String, Integer> wordsAbbr = new HashMap<>();
     private Set<String> wordsSet = new HashSet<>();
@@ -111,10 +124,36 @@ public class ValidWordAbbr {
         return sb.toString();
     }
 }
-
-
 // Your ValidWordAbbr object will be instantiated and called as such:
 // ValidWordAbbr vwa = new ValidWordAbbr(dictionary);
 // vwa.isUnique("Word");
 // vwa.isUnique("anotherWord");
+
+#83.39% 216ms
+public class ValidWordAbbr {
+	protected Map<String, String> map = new HashMap<>();
+	public ValidWordAbbr(String[] dictionary) {
+		for (String s : dictionary) {
+			String abbr = getAbbr(s);
+			// If there is more than one string belong to the same key
+			// then the key will be invalid, we set the value to ""
+			if (map.containsKey(abbr)) {
+				if (!map.get(abbr).equals(s)) {
+					map.put(abbr, "");
+				}
+			} else {
+				map.put(abbr, s);
+			}
+		}
+	}
+	public boolean isUnique(String word) {
+		String abbr = getAbbr(word);
+		return !map.containsKey(abbr) || map.get(abbr).equals(word);
+	}
+	private String getAbbr(String s) {
+		if (s.length() <= 2)
+			return s;
+		return s.charAt(0) + "" + (s.length() - 2) + s.charAt(s.length() - 1);
+	}
+}
 '''

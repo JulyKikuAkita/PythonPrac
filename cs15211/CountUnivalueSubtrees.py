@@ -1,5 +1,10 @@
 __source__ = 'https://leetcode.com/problems/count-univalue-subtrees/#/description'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/count-univalue-subtrees.py
+# Time:  O(n)
+# Space: O(h)
+#
+# Description: Leetcode # 250. Count Univalue Subtrees
+#
 # Given a binary tree, count the number of uni-value subtrees.
 #
 # A Uni-value subtree means all nodes of the subtree have the same value.
@@ -14,14 +19,13 @@ __source__ = 'https://leetcode.com/problems/count-univalue-subtrees/#/descriptio
 #           5   5   5
 #
 # return 4.
+#
 # Related Topics
 # Tree
 # Similar Questions
 # Subtree of Another Tree
 #
-
-# Time:  O(n)
-# Space: O(h)
+import unittest
 #
 # Definition for a binary tree node.
 # class TreeNode:
@@ -78,9 +82,16 @@ class Solution2:
     def isSame(self, root, child, is_uni):
         return not child or (is_uni and root.val == child.val)
 
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
 
-#Java
+if __name__ == '__main__':
+    unittest.main()
+
 Java = '''
+#Thought: Helper all tells whether all nodes in the given tree have the given value.
+And while doing that, it also counts the uni-value subtrees.
 /**
  * Definition for a binary tree node.
  * public class TreeNode {
@@ -91,7 +102,7 @@ Java = '''
  * }
  */
 
-1) 13%
+1) 17% 1ms
 public class Solution {
     public int countUnivalSubtrees(TreeNode root) {
         if (root == null) return 0;
@@ -109,7 +120,7 @@ public class Solution {
     }
 }
 
-2) Postorder 13.91%
+2) Postorder  17% 1ms
 public class Solution {
     public int countUnivalSubtrees(TreeNode root) {
         if (root == null) return 0;

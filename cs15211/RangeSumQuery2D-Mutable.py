@@ -1,11 +1,12 @@
-__source__ = ''
+__source__ = 'https://leetcode.com/problems/range-sum-query-2d-mutable/description/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/range-sum-query-2d-mutable.py
 # Time:  ctor:   O(m * n)
 #        update: O(logm * logn)
 #        query:  O(logm * logn)
 # Space: O(m * n)
 #
-# Description:
+# Description: Leetcode # 308. Range Sum Query 2D - Mutable
+#
 # Given a 2D matrix matrix, find the sum of the elements inside the rectangle
 # defined by its upper left corner (row1, col1) and lower right corner (row2, col2).
 # (ignore jpg)
@@ -29,13 +30,15 @@ __source__ = ''
 # The matrix is only modifiable by the update function.
 # You may assume the number of calls to update and sumRegion function is distributed evenly.
 # You may assume that row1 <= row2 and col1 <= col2.
-# Hide Company Tags Google
-# Hide Tags Binary Indexed Tree Segment Tree
-# Hide Similar Problems (M) Range Sum Query 2D - Immutable (M) Range Sum Query - Mutable
 #
+# Companies
+# Google
+# Related Topics
+# Binary Indexed Tree Segment Tree
+# Similar Questions
+# Range Sum Query 2D - Immutable Range Sum Query - Mutable
 #
 import unittest
-
 # Binary Indexed Tree (BIT) solution.
 class NumMatrix(object):
     def __init__(self, matrix):
@@ -113,21 +116,20 @@ class NumMatrix(object):
 # numMatrix.update(1, 1, 10)
 # numMatrix.sumRegion(1, 2, 3, 4)
 
-
 class TestMethods(unittest.TestCase):
     def test_Local(self):
         self.assertEqual(1, 1)
-
 
 if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
-1. BIT
+#Thought: https://www.topcoder.com/community/data-science/data-science-tutorials/binary-indexed-trees/
+
+1.
+# BIT
+# 34.82% 336ms
 // time should be O(log(m) * log(n))
-Explanation of Binary Indexed Tree :
-https://www.topcoder.com/community/data-science/data-science-tutorials/binary-indexed-trees/
 // Using 2D Binary Indexed Tree, 2D BIT Def:
 // bit[i][j] saves the rangeSum of [i-(i&-i), i] x [j-(j&-j), j]
 // note bit index == matrix index + 1
@@ -178,7 +180,9 @@ public class NumMatrix {
     }
 }
 
-2. Segment tree:
+2.
+# 22.13% 395ms
+# Segment tree:
 
 TreeNode root;
 public NumMatrix(int[][] matrix) {
@@ -288,45 +292,82 @@ public class TreeNode {
     }
 }
 
-3. different thinking:
+3.
+#93.48% 271ms
+different thinking:
 We use colSums[i][j] = the sum of ( matrix[0][j], matrix[1][j], matrix[2][j],......,matrix[i - 1][j] ).
-private int[][] colSums;
-private int[][] matrix;
 
-public NumMatrix(int[][] matrix) {
-    if(   matrix           == null
-       || matrix.length    == 0
-       || matrix[0].length == 0   ){
-        return;
-     }
+public class NumMatrix {
+    private int[][] colSums;
+    private int[][] matrix;
 
-     this.matrix = matrix;
-
-     int m   = matrix.length;
-     int n   = matrix[0].length;
-     colSums = new int[m + 1][n];
-     for(int i = 1; i <= m; i++){
-         for(int j = 0; j < n; j++){
-             colSums[i][j] = colSums[i - 1][j] + matrix[i - 1][j];
+    public NumMatrix(int[][] matrix) {
+        if(   matrix           == null
+           || matrix.length    == 0
+           || matrix[0].length == 0   ){
+            return;
          }
-     }
+
+         this.matrix = matrix;
+
+         int m   = matrix.length;
+         int n   = matrix[0].length;
+         colSums = new int[m + 1][n];
+         for(int i = 1; i <= m; i++){
+             for(int j = 0; j < n; j++){
+                 colSums[i][j] = colSums[i - 1][j] + matrix[i - 1][j];
+             }
+         }
+    }
+    //time complexity for the worst case scenario: O(m)
+    public void update(int row, int col, int val) {
+        for(int i = row + 1; i < colSums.length; i++){
+            colSums[i][col] = colSums[i][col] - matrix[row][col] + val;
+        }
+
+        matrix[row][col] = val;
+    }
+    //time complexity for the worst case scenario: O(n)
+    public int sumRegion(int row1, int col1, int row2, int col2) {
+        int ret = 0;
+
+        for(int j = col1; j <= col2; j++){
+            ret += colSums[row2 + 1][j] - colSums[row1][j];
+        }
+
+        return ret;
+    }
 }
-//time complexity for the worst case scenario: O(m)
-public void update(int row, int col, int val) {
-    for(int i = row + 1; i < colSums.length; i++){
-        colSums[i][col] = colSums[i][col] - matrix[row][col] + val;
+
+#73.76% 289ms
+public class NumMatrix {
+
+    private int[][] matrix, sum;
+    public NumMatrix(int[][] matrix) {
+        int m = matrix.length, n = m == 0 ? 0 : matrix[0].length;
+        this.matrix = matrix;
+        sum = new int[m][n+1];
+        for(int i=0; i<m; i++) {
+            for(int j=0; j<n; j++) {
+                sum[i][j+1] = matrix[i][j] + sum[i][j];
+            }
+        }
     }
 
-    matrix[row][col] = val;
-}
-//time complexity for the worst case scenario: O(n)
-public int sumRegion(int row1, int col1, int row2, int col2) {
-    int ret = 0;
-
-    for(int j = col1; j <= col2; j++){
-        ret += colSums[row2 + 1][j] - colSums[row1][j];
+    public void update(int row, int col, int val) {
+        int diff = val - matrix[row][col];
+        matrix[row][col] = val;
+        for(int j=col+1; j<sum[row].length; j++) {
+            sum[row][j] += diff;
+        }
     }
 
-    return ret;
+    public int sumRegion(int row1, int col1, int row2, int col2) {
+        int res = 0;
+        for(int i=row1; i<=row2; i++) {
+            res += (sum[i][col2 + 1] - sum[i][col1]);
+        }
+        return res;
+    }
 }
 '''

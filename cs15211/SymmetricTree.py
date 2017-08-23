@@ -105,7 +105,6 @@ class Wrong(object):
                 print ans, i, -i, ans[i], ans[-i]
                 return True
 
-
     def inOrder(self, res, root):
         if not root:
             return
@@ -116,41 +115,6 @@ class Wrong(object):
             self.inOrder(res, root.right)
 
 #test
-#############test
-#creating BST tree ####
-root0=TreeNode(0)
-tree1=TreeNode(1)
-tree2=TreeNode(2)
-tree3=TreeNode(3)
-tree4=TreeNode(4)
-tree5=TreeNode(5)
-tree6=TreeNode(6)
-root0.left=tree1
-root0.right=tree2
-tree1.left=tree3
-tree1.right=tree4
-tree2.left=tree5
-tree2.right=tree6
-#end of creating BST tree ####
-
-#creating BST tree ####
-qroot0=TreeNode(0)
-qtree1=TreeNode(1)
-qtree2=TreeNode(1)
-qtree3=TreeNode(2)
-qtree4=TreeNode(2)
-qtree5=TreeNode(2)
-qtree6=TreeNode(2)
-qroot0.left=qtree1
-qroot0.right=qtree2
-qtree1.left=qtree3
-qtree1.right=qtree4
-qtree2.left=qtree5
-qtree2.right=qtree6
-#end of creating BST tree ####
-#test = Solutioniter()
-#print test.isSymmetric(qroot0)
-
 class TestMethods(unittest.TestCase):
     def test_Local(self):
         self.assertEqual(1, 1)

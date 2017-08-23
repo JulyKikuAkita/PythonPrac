@@ -1,7 +1,9 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/factor-combinations/description/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/factor-combinations.py
 # Time:  O(nlogn)
 # Space: O(logn)
+#
+# Description: Leetcode # 254. Factor Combinations
 #
 # Numbers can be regarded as product of its factors. For example,
 #
@@ -39,11 +41,14 @@ __author__ = 'July'
 # ]
 #
 #
-#  LinkedIn Uber
-# Hide Tags Backtracking
-# Hide Similar Problems (M) Combination Sum
-
-
+#  Companies
+# LinkedIn Uber
+# Related Topics
+# Backtracking
+# Similar Questions
+# Combination Sum
+#
+import unittest
 # best performance
 class Solution(object):
     def getFactors(self, n):
@@ -75,7 +80,6 @@ class Solution(object):
                 self.dfs(res, factors, n / i)
                 factors.pop()
             i += 1
-
 
 class Solution3:
     # @param {integer} n
@@ -123,9 +127,16 @@ class Solution2(object):
                     factors.pop()
 
 
-#java
-java = '''
-//template
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+
+if __name__ == '__main__':
+    unittest.main()
+
+Java = '''
+#Thought:
+# 34.88% 211ms
 public class Solution {
     public List<List<Integer>> getFactors(int n) {
         List<List<Integer>> res = new ArrayList<>();
@@ -134,7 +145,6 @@ public class Solution {
         return res;
     }
 
-    //45.6%
     private void backtrack(List<List<Integer>> list, List<Integer> tempList, int n, int start){
         if (n <= 1 && tempList.size() > 1) { //in case of [n]
             list.add(new ArrayList<>(tempList));
@@ -149,28 +159,9 @@ public class Solution {
             }
         }
     }
-
-    //61.44%
-     private void backtrack2(List<List<Integer>> list, List<Integer> tempList, int n, int start){
-        if (n == 1 && tempList.size() > 1) { //incase of [n]
-            list.add(new ArrayList<>(tempList));
-            return;
-        }
-
-        for (int i = start; i * i <= n; i++) {
-            if ( n % i == 0) {
-                tempList.add(i);
-                backtrack(list, tempList, n / i, i);
-                tempList.remove(tempList.size() - 1);
-            }
-        }
-        tempList.add(n);
-        backtrack(list, tempList, 1, n);
-        tempList.remove(tempList.size() - 1);
-    }
 }
 
-95%
+#96.27% 1ms
 public class Solution {
     public List<List<Integer>> getFactors(int n) {
         List<List<Integer>> res = new ArrayList<>();
@@ -190,6 +181,38 @@ public class Solution {
                 factors.remove(factors.size()-1);
 
             }
+        }
+    }
+}
+
+#96.27% 1ms
+public class Solution {
+    public List<List<Integer>> getFactors(int n) {
+        List<List<Integer>> result = new ArrayList<>();
+        if (n <= 1) {
+            return result;
+        }
+        getFactors(n, 2, result, new ArrayList<>());
+        return result;
+    }
+
+    private void getFactors(int n, int start, List<List<Integer>> result, List<Integer> cur) {
+        if (n == 1) {
+            result.add(new ArrayList<>(cur));
+            return;
+        }
+        int size = cur.size();
+        for (int i = start; i * i <= n; i++) {
+            if (n % i == 0) {
+                cur.add(i);
+                getFactors(n / i, i, result, cur);
+                cur.remove(size);
+            }
+        }
+        if (!cur.isEmpty()) {
+            cur.add(n);
+            result.add(new ArrayList<>(cur));
+            cur.remove(size);
         }
     }
 }

@@ -104,6 +104,8 @@ if __name__ == '__main__':
 
 Java = '''
 #Thought:
+1. find mid node and reverse the 2nd half of the list
+2. compare value for first one and reversed 2nd half
 
 #35.24% 2ms
 /**

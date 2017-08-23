@@ -4,8 +4,9 @@ __source__ = 'https://leetcode.com/problems/clone-graph/description/'
 # Space: O(n)
 # BFS
 #
-# Clone an undirected graph. Each node in the graph contains a label and a list of its neighbors.
+# Description: Leetcode # 133. Clone Graph
 #
+# Clone an undirected graph. Each node in the graph contains a label and a list of its neighbors.
 #
 # OJ's undirected graph serialization:
 # Nodes are labeled uniquely.
@@ -35,6 +36,7 @@ __source__ = 'https://leetcode.com/problems/clone-graph/description/'
 # Similar Questions
 # Copy List with Random Pointer
 #
+import unittest
 # Definition for a undirected graph node
 class UndirectedGraphNode:
      def __init__(self, x):
@@ -60,8 +62,6 @@ class Solution:
                 cloned[current].neighbors.append(cloned[neighbor])
         return cloned[node]
 
-
-
 class SolutionOther:
     # @param node, a undirected graph node
     # @return a undirected graph node
@@ -80,9 +80,7 @@ class SolutionOther:
 
         for neighbor in node.neighbors:
             newNode.neighbors.append(self.dfs(neighbor, nodemap))
-
         return newNode
-
 
     def cloneGraphUsingBFS(self, node):
         if node == None:
@@ -106,9 +104,15 @@ class SolutionOther:
                     map[curr].neighbors.append(map[neighbor])
         return head
 #test
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
 
-#Java
+if __name__ == '__main__':
+    unittest.main()
+
 Java = '''
+#Thought: https://leetcode.com/problems/contains-duplicate/solution/
 /**
  * Definition for undirected graph.
  * class UndirectedGraphNode {

@@ -1,7 +1,9 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/maximal-square/description/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/maximal-square.py
 # Time:  O(n^2)
 # Space: O(n)
+#
+# Description: Leetcode # 221. Maximal Square
 #
 # Given a 2D binary matrix filled with 0's and 1's,
 # find the largest square containing all 1's and return its area.
@@ -14,9 +16,14 @@ __author__ = 'July'
 # 1 0 0 1 0
 # Return 4.
 #
-#  Apple Airbnb Facebook
-# Hide Tags Dynamic Programming
-
+# Companies
+# Apple Airbnb Facebook
+# Related Topics
+# Dynamic Programming
+# Similar Questions
+# Maximal Rectangle
+#
+import unittest
 # DP with sliding window.
 class Solution:
     # @param {character[][]} matrix
@@ -79,8 +86,6 @@ class Solution2:
                     size[i][j] = 0
         return max_size * max_size
 
-
-
 # Time:  O(n^2)
 # Space: O(n^2)
 # DP.
@@ -119,9 +124,17 @@ class Solution3:
                     max_square_area = max(max_square_area, side * side)
         return max_square_area
 
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
 
-# Java
-js = '''
+if __name__ == '__main__':
+    unittest.main()
+
+Java = '''
+# Thought: https://leetcode.com/problems/maximal-square/solution/
+
+# 25.79% 13ms
 public class Solution {
     public int maximalSquare(char[][] matrix) {
         int m = matrix.length;
@@ -147,6 +160,7 @@ public class Solution {
     }
 }
 
+#70.45% 11ms
 public class Solution {
     public int maximalSquare(char[][] matrix) {
         if ( matrix == null || matrix.length == 0 ) return 0;
@@ -184,4 +198,5 @@ public class Solution {
         return max * max;
     }
 }
+
 '''

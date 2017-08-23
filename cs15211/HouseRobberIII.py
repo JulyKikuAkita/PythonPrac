@@ -1,8 +1,10 @@
 __source__ = 'https://leetcode.com/problems/house-robber-iii/#/description'
+# https://github.com/kamyu104/LeetCode/blob/master/Python/house-robber-iii.py
 # Time:  O(n)
 # Space: O(h)
-# https://github.com/kamyu104/LeetCode/blob/master/Python/house-robber-iii.py
-
+#
+# Description: Leetcode # 337. House Robber III
+#
 # The thief has found himself a new place for his thievery again.
 # There is only one entrance to this area, called the "root."
 # Besides the root, each house has one and only one parent house.
@@ -36,6 +38,7 @@ __source__ = 'https://leetcode.com/problems/house-robber-iii/#/description'
 # Similar Questions
 # House Robber House Robber II
 #
+import unittest
 # Definition for a binary tree node.
 class TreeNode(object):
     def __init__(self, x):
@@ -57,7 +60,6 @@ class Solution(object):
 
         return max(robHelper(root))
 
-
 # https://www.hrwhisper.me/leetcode-house-robber-iii/
 # rob_root = max(rob_L + rob_R , no_rob_L + no_nob_R + root.val)
 # no_rob_root = rob_L + rob_R
@@ -76,7 +78,14 @@ class Solution2(object):
         rob_R, no_rob_R = self.dfs(root.right)
         return max(rob_L + rob_R,  no_rob_L + no_rob_R + root.val) , rob_L + rob_R
 
-#Java
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+        print Solution().containsDuplicate([12344555,12344555])
+
+if __name__ == '__main__':
+    unittest.main()
+
 Java = '''
 Thought: https://discuss.leetcode.com/topic/39834/step-by-step-tackling-of-the-problem
 Step I -- Think naively
@@ -112,7 +121,7 @@ However if root is not robbed, the next level of available subtrees would just b
  *     TreeNode(int x) { val = x; }
  * }
  */
-# Naive 4.38%
+# 16.81% 1031ms
 public class Solution {
     public int rob(TreeNode root) {
         if (root == null) return 0;
@@ -149,7 +158,7 @@ public class Solution {
     }
 }
 
-#Naive 13.41%
+# Naive 6.44% 1114ms
 public class Solution {
     public int rob(TreeNode root) {
         return robSub(root);
@@ -185,7 +194,8 @@ which resulted in bad time performance. Now if you recall the two conditions for
 "optimal substructure" + "overlapping of subproblems", we actually have a DP problem. 
 A naive way to implement DP here is to use a hash map to record the results for visited subtrees.
 
-#DFS + memorization 37.2%
+# DFS + memorization
+# 32.76% 9ms
 public class Solution {
     public int rob(TreeNode root) {
         return robSub(root, new HashMap<>());
@@ -236,7 +246,7 @@ For the 2nd element of rob(root), however, we only need to add up the 1st elemen
 As you can see, by keeping track of the information of both scenarios, 
 we decoupled the subproblems and the solution essentially boiled down to a greedy one.
 
-#87%
+#81.61% 1ms
 public class Solution {
     public int rob(TreeNode root) {
         int[] res = robSub(root);
@@ -256,6 +266,7 @@ public class Solution {
     }
 }
 
+#52.19% 2ms
 public class Solution {
     public int rob(TreeNode root) {
         return dfs(root)[0];
@@ -273,4 +284,27 @@ public class Solution {
     }
 }
 
+#11.08% 1084ms
+public class Solution {
+    public int rob(TreeNode root) {
+        return robSub(root);
+    }
+
+    private int robSub(TreeNode root) {
+        if (root == null) return 0;
+
+        int val = 0;
+
+        if (root.left != null) {
+            val += robSub(root.left.left) + robSub(root.left.right);
+        }
+
+        if (root.right != null) {
+            val += robSub(root.right.left) + robSub(root.right.right);
+        }
+
+        val = Math.max(val + root.val, robSub(root.left) + robSub(root.right));
+        return val;
+    }
+}
 '''

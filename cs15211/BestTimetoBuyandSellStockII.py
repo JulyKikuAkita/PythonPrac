@@ -4,6 +4,8 @@ __source__ = 'https://leetcode.com/problems/best-time-to-buy-and-sell-stock-ii/#
 # Time:  O(n)
 # Space: O(1)
 #
+# Description: Leetcode # 122. Best Time to Buy and Sell Stock II
+#
 # Say you have an array for which the ith element is
 # the price of a given stock on day i.
 #
@@ -27,8 +29,8 @@ __source__ = 'https://leetcode.com/problems/best-time-to-buy-and-sell-stock-ii/#
 # the same as buy at 1 &sell at 2 & buy at 2& sell at 3 & buy at 3 & sell at 4.
 #
 # We can scan the array once, and find all pairs of elements that are in ascending order.
-
-
+#
+import unittest
 class Solution:
     # @param prices, a list of integer
     # @return an integer
@@ -59,16 +61,21 @@ class SolutionIf2:
                 profit += prices[i] - prices[i-1]
         return profit
 #test
-if __name__ == '__main__':
-    prices = [3, 2, 1, 4, 2, 5, 6]
-    print Solution().maxProfit(prices)
-    print SolutionIf().maxProfit(prices)
-    print SolutionIf2().maxProfit(prices)
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+        prices = [3, 2, 1, 4, 2, 5, 6]
+        print Solution().maxProfit(prices)
+        print SolutionIf().maxProfit(prices)
+        print SolutionIf2().maxProfit(prices)
 
-#Java
+if __name__ == '__main__':
+    unittest.main()
+
 Java = '''
 Thought: https://leetcode.com/problems/best-time-to-buy-and-sell-stock-ii/#/solution
-61%
+
+# 56.44% 1ms
 public class Solution {
     public int maxProfit(int[] prices) {
         int res = 0;
@@ -79,7 +86,18 @@ public class Solution {
     }
 }
 
-10%
+# 56.44% 1ms
+class Solution {
+    public int maxProfit(int[] prices) {
+        int total = 0;
+        for (int i = 1; i < prices.length; i++) {
+            if (prices[i - 1] < prices[i]) total += prices[i] - prices[i - 1];
+        }
+        return total;
+    }
+}
+
+# 8.54% 2ms
 public class Solution {
     public int maxProfit(int[] prices) {
         int result = 0;

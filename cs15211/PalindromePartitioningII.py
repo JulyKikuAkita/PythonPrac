@@ -34,7 +34,6 @@ class Solution:
 
         return mincut[0]
 
-
 # http://www.programcreek.com/2014/04/leetcode-palindrome-partitioning-ii-java/
 class SolutionJava:
     # @param s, a string
@@ -52,9 +51,7 @@ class SolutionJava:
                         mincut[j] = min(mincut[j], mincut[i - 1] + 1)
                     else:
                         mincut[j] = 0  # if [0...j] is palindrome, no need to cut
-
         return mincut[j]
-
 
 class SolutionOther:
     # @param s, a string
@@ -144,7 +141,7 @@ public class Solution {
     }
 }
 
-#expand from center
+# expand from center
 # 99.60% 6ms
 public class Solution {
     public int minCut(String s) {

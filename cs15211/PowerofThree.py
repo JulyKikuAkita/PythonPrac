@@ -3,10 +3,12 @@ __source__ = 'https://leetcode.com/problems/power-of-three/description/'
 # Time:  O(1)
 # Space: O(1)
 #
-# Description:
+# Description: Leetcode # 326. Power of Three
+#
 # Given an integer, write a function to determine if it is a power of three.
 # Follow up:
 # Could you do it without using any loop / recursion?
+#
 # Companies
 # Google
 # Related Topics
@@ -51,6 +53,9 @@ class Solution3(object):
     def isPowerOfThree(self, n):
         return n in self.powerOfThree
 
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
 
 if __name__ == '__main__':
     unittest.main()

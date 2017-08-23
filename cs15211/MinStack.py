@@ -4,6 +4,8 @@ __source__ = 'https://leetcode.com/problems/min-stack/#/solutions'
 # Space: O(1)
 # Stack
 #
+# Description: Leetcode # 155. Min Stack
+#
 # Design a stack that supports push, pop, top, and retrieving the minimum element in constant time.
 #
 # push(x) -- Push element x onto stack.
@@ -26,7 +28,8 @@ __source__ = 'https://leetcode.com/problems/min-stack/#/solutions'
 # Stack Design
 # Similar Questions
 # Sliding Window Maximum
-
+#
+import unittest
 class MinStack:
     def __init__(self):
         self.min = None
@@ -61,13 +64,6 @@ class MinStack:
     def getMin(self):
         return self.min
 
-if __name__ == "__main__":
-    stack = MinStack()
-    stack.push(1)
-    stack.push(15)
-    stack.push(3)
-    print [stack.top(), stack.getMin()]
-
 class MinStackOther:
     def __init__(self):
         self.stack = []
@@ -98,8 +94,21 @@ class MinStackOther:
     def getMin(self):
         return self.minStack[-1]
 
-#Java
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+        stack = MinStack()
+        stack.push(1)
+        stack.push(15)
+        stack.push(3)
+        print [stack.top(), stack.getMin()]
+
+if __name__ == '__main__':
+    unittest.main()
+
 Java = '''
+#Thought: https://leetcode.com/problems/contains-duplicate/solution/
+
 Input:
 ["MinStack","push","push","push","getMin","pop","getMin"]
 [[],[0],[1],[0],[],[],[]]

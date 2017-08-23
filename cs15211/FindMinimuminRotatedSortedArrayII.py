@@ -1,8 +1,10 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/find-minimum-in-rotated-sorted-array-ii/description/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/find-minimum-in-rotated-sorted-array-ii.py
 # Time:  O(logn) ~ O(n)
 # Space: O(1)
 # Binary Search
+#
+# Description: Leetcode # 154. Find Minimum in Rotated Sorted Array II
 #
 # Follow up for "Find Minimum in Rotated Sorted Array":
 # What if duplicates are allowed?
@@ -16,7 +18,12 @@ __author__ = 'July'
 #
 # The array may contain duplicates.
 #
-
+# Related Topics
+# Array Binary Search
+# Similar Questions
+# Find Minimum in Rotated Sorted Array
+#
+import unittest
 class Solution(object):
     def findMin(self, nums):
         """
@@ -65,16 +72,20 @@ class Solution2(object):
 
         return min(nums[start], nums[end])
 
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+        #print Solution().findMin([3, 1, 1, 2, 2, 3])
+        #print Solution2().findMin([2, 2, 2, 3, 3, 1])
+        #print Solution2().findMin([3, 1, 1])
+        print Solution2().findMin([3, 1, 3])
 
-if __name__ == "__main__":
-    #print Solution().findMin([3, 1, 1, 2, 2, 3])
-    #print Solution2().findMin([2, 2, 2, 3, 3, 1])
-    #print Solution2().findMin([3, 1, 1])
-    print Solution2().findMin([3, 1, 3])
+if __name__ == '__main__':
+    unittest.main()
 
-
-#java
-js = '''
+Java = '''
+#Thought:
+#7.84% 1ms
 public class Solution {
     public int findMin(int[] nums) {
         int min = Integer.MAX_VALUE;
@@ -102,6 +113,8 @@ public class Solution {
     }
 }
 
+# DFS
+#7.84% 1ms
 public class Solution {
     public int findMin(int[] nums) {
         return dfs(nums, 0, nums.length - 1);
@@ -127,9 +140,9 @@ public class Solution {
             return dfs(nums, start+1, end);
         }
     }
-
 }
 
+#7.84% 1ms
 public class Solution {
     public int findMin(int[] nums) {
         if( nums == null || nums.length == 0) return -1;

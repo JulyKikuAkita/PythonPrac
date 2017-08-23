@@ -3,6 +3,8 @@ __source__ = 'https://leetcode.com/problems/binary-tree-paths/#/description'
 # Time:  O(n * h)
 # Space: O(h)
 #
+# Description: Leetcode # 257. Binary Tree Paths
+#
 # Given a binary tree, return all root-to-leaf paths.
 #
 # For example, given the following binary tree:
@@ -16,16 +18,14 @@ __source__ = 'https://leetcode.com/problems/binary-tree-paths/#/description'
 #
 # ["1->2->5", "1->3"]
 #
-#
-#
 # Companies
 # Google Facebook
 # Related Topics
 # Tree Depth-first Search
 # Similar Questions
 # Path Sum II
-
-
+#
+import unittest
 # Definition for a binary tree node.
 class TreeNode:
     def __init__(self, x):
@@ -60,7 +60,13 @@ class Solution:
             self.binaryTreePathRecu(node.right, path, result)
             path.pop()
 
-#Java
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+
+if __name__ == '__main__':
+    unittest.main()
+
 Java = '''
 /**
  * Definition for a binary tree node.
@@ -71,7 +77,8 @@ Java = '''
  *     TreeNode(int x) { val = x; }
  * }
  */
-DFS 86% elegant:
+
+DFS 52.75% 17ms elegant:
 public class Solution {
     public List<String> binaryTreePaths(TreeNode root) {
         List<String> result = new ArrayList<>();
@@ -100,7 +107,7 @@ public class Solution {
     }
 }
 
-DFS: 38% need to setLength at each condition
+DFS: 33.76% 18ms need to setLength at each condition
 public class Solution {
     public List<String> binaryTreePaths(TreeNode root) {
         List<String> res = new ArrayList<>();
@@ -132,8 +139,34 @@ public class Solution {
     }
 }
 
-BFS: 10%
+#22.26% 19ms
+public class Solution {
+    public List<String> binaryTreePaths(TreeNode root) {
+        List<String> res = new ArrayList<>();
+        helper(root, "", res);
+        return res;
+    }
 
+    private void helper(TreeNode root, String path, List<String> res) {
+        if (root == null)   return;
+        path += root.val;
+
+        if (root.left == null && root.right == null) {
+            res.add(path);
+            return;
+        }
+
+        if (root.left != null) {
+            helper(root.left, path + "->", res);
+        }
+
+        if (root.right != null) {
+            helper(root.right, path + "->", res);
+        }
+    }
+}
+
+BFS: 7.62% 22ms
 public class Solution {
     public List<String> binaryTreePaths(TreeNode root) {
         List<String> res = new ArrayList<>();

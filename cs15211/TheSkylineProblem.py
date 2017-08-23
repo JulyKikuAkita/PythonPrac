@@ -124,41 +124,6 @@ class Solution:
                 b_idx += 1
         return a_idx, b_idx
 
-#TLE
-import heapq
-class Solution2(object):
-    def getSkyline(self, buildings):
-        """
-        :type buildings: List[List[int]]
-        :rtype: List[List[int]]
-        """
-
-        if not buildings:
-            return [[]]
-        res = []
-        heights = []
-        for b in buildings:
-            heights.append([b[0], b[2]])
-            heights.append([b[1], -b[2]])
-        heights.sort(key = lambda h1 : (h1[0], -(h1[1])))
-
-        pq = [0]
-        prev = 0
-        for h in heights:
-            y = h[1];
-            if y >= 0:
-                pq.append(y)
-                heapq.heapify(pq)
-            else:
-                pq.remove(-y)
-            cur = pq[-1]
-            if prev != cur:
-                res.append([h[0], cur])
-                prev = cur
-
-        return res
-
-
 #If need to create own heapq:
 # http://stackoverflow.com/questions/8875706/python-heapq-with-custom-compare-predicate
 import heapq
@@ -182,7 +147,6 @@ class MyHeap(object):
 class TestMethods(unittest.TestCase):
     def test_Local(self):
         self.assertEqual(1, 1)
-        print Solution().containsDuplicate([12344555,12344555])
 
 if __name__ == '__main__':
     unittest.main()

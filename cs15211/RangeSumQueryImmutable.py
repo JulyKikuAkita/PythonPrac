@@ -5,6 +5,8 @@ __source__ = 'https://leetcode.com/problems/range-sum-query-immutable/descriptio
 #        query:  O(logn)
 # Space: O(n)
 #
+# Description: Leetcode # 303. Range Sum Query - Immutable
+#
 # Given an integer array nums, find the sum of
 # the elements between indices i and j (i <= j), inclusive.
 #
@@ -27,7 +29,8 @@ __source__ = 'https://leetcode.com/problems/range-sum-query-immutable/descriptio
 # Dynamic Programming
 # Similar Questions
 # Range Sum Query 2D - Immutable Range Sum Query - Mutable Maximum Size Subarray Sum Equals k
-
+#
+import unittest
 # Segment Tree solutoin.
 class NumArray(object):
     def __init__(self, nums):
@@ -111,7 +114,6 @@ class NumArray(object):
         def __init__(self, i, j, s):
             self.start, self.end, self.sum = i, j ,s
 
-
 # Time:  ctor:   O(nlogn),
 #        update: O(logn),
 #        query:  O(logn)
@@ -131,7 +133,6 @@ class NumArray2(object):
         self.__bit = [0] * (len(self.__nums) + 1)
         for i, num in enumerate(self.__nums):
             self.__add(i, num)
-
 
     def update(self, i, val):
         """
@@ -174,26 +175,30 @@ class NumArray2(object):
 # numArray.sumRange(0, 1)
 # numArray.update(1, 10)
 # numArray.sumRange(1, 2)
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
 
-
-
+if __name__ == '__main__':
+    unittest.main()
 
 Java = '''
 #Thought: https://leetcode.com/articles/range-sum-query-immutable/
 
-#46.16% 233ms
+#73.20% 213ms
 public class NumArray {
-    int[] sums;
-
+    int[] sum;
     public NumArray(int[] nums) {
-        sums = new int[nums.length + 1];
-        for (int i = 0; i < nums.length; i++) {
-            sums[i + 1] = sums[i] + nums[i];
+        int n = nums.length;
+        sum = new int[n+1];
+        sum[0] = 0;
+        for(int i=1;i<=n;i++){
+            sum[i] = sum[i-1]+nums[i-1];
         }
     }
 
     public int sumRange(int i, int j) {
-        return sums[j + 1] - sums[i];
+        return sum[j+1]-sum[i];
     }
 }
 
@@ -253,7 +258,6 @@ public class NumArray {
         return sum;
     }
 }
-
 
 # Segment Tree:
 #4.82% 414ms

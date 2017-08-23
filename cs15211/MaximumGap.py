@@ -1,22 +1,20 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/maximum-gap/description/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/maximum-gap.py
 # Time:  O(n)
 # Space: O(n)
 # sort
 #
-# Given an unsorted array, find the maximum difference between
+# Description: Leetcode # 164. Maximum Gap
 #
-# the successive elements in its sorted form.
-#
+# Given an unsorted array, find the maximum difference between the successive elements in its sorted form.
 # Try to solve it in linear time/space.
-#
 # Return 0 if the array contains less than 2 elements.
 #
-# You may assume all elements in the array are non-negative integers
+# You may assume all elements in the array are non-negative integers and fit in the 32-bit signed integer range.
+# Related Topics
+# Sort
 #
-#  and fit in the 32-bit signed integer range.
-#
-
+import unittest
 # idea: https://leetcode.com/discuss/18499/bucket-sort-java-solution-with-explanation-o-time-and-space
 # calculate max gap for each section using bucket sort
 # bucket sort
@@ -52,7 +50,6 @@ class Solution:
         max_gap = max(max_gap, max_val - pre)
 
         return max_gap
-
 
     def removeDuplicate(self, num):
         dict = {}
@@ -92,10 +89,7 @@ class Pracetice:
             answer = max(smallV_bucket[i] - pre, answer)
             pre = largeV_bucket[i]
         answer = max(answer, max_val - pre)
-
         return answer
-
-
 
     def removeDuplicate(self, num):
         dict = {}
@@ -121,17 +115,72 @@ class Solution2:
         for i in num:
             max_gap = max(max_gap, i - pre)
             pre = i
-
         return max_gap
 
-#test
-arr = [-11, 3, 1, 1, 1, 5, 5, 5, 5, 9]
-if __name__ == "__main__":
-    print Solution().maximumGap(arr)
-    print Pracetice().maximumGap(arr)
-    #print Solution2().maximumGap(arr)
-#java
-js = '''
+# test
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+        arr = [-11, 3, 1, 1, 1, 5, 5, 5, 5, 9]
+        print Solution().maximumGap(arr)
+        print Pracetice().maximumGap(arr)
+        #print Solution2().maximumGap(arr)
+
+if __name__ == '__main__':
+    unittest.main()
+
+Java = '''
+#Thought: https://leetcode.com/articles/maximum-gap/
+#81.85% 4ms
+class Solution {
+    public int maximumGap(int[] nums) {
+        if(nums.length<2){
+            return 0;
+        }
+        Arrays.sort(nums);  //O(logn)
+        int maxGap=0;
+        for(int i=1;i<nums.length;i++){
+            int gap=nums[i]-nums[i-1];
+            if(gap>maxGap){
+                maxGap=gap;
+            }
+        }
+        return maxGap;
+    }
+}
+
+# 56.77% 5ms
+class Solution {
+    public int maximumGap(int[] nums) {
+        int len = nums.length;
+        radixsort(nums, len, 256);
+        int result = 0;
+        for(int i=1;i<len;i++){
+            result = Math.max(result, nums[i]-nums[i-1]);
+        }
+        return result;
+    }
+    void radixsort(int[] nums, int len, int R){
+        int[] aux = new int[len];
+        for(int i=0;i<4;i++){
+            int[] count = new int[R];
+            for(int j=0;j<len;j++){
+                count[(nums[j]>>>(i<<3))&(R-1)]++;
+            }
+            for(int j=0;j<R-1;j++){
+                count[j+1] += count[j];
+            }
+            for(int j=len-1;j>=0;j--){
+                aux[--count[(nums[j]>>>(i<<3))&(R-1)]] = nums[j];
+            }
+            for(int j=0;j<len;j++){
+                nums[j] = aux[j];
+            }
+        }
+    }
+}
+
+# 56.77% 5ms
 public class Solution {
     public int maximumGap(int[] nums) {
         int len = nums.length;

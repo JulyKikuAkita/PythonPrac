@@ -3,7 +3,10 @@ __source__ = 'https://leetcode.com/problems/flip-game/#/description'
 # Time:  O(c * n + n) = O(n * (c+1))
 # Space: O(n)
 #
-# You are playing the following Flip Game with your friend: Given a string that contains only these two characters: + and -,
+# Description: Leetcode # 293. Flip Game
+#
+# You are playing the following Flip Game with your friend:
+# Given a string that contains only these two characters: + and -,
 # you and your friend take turns to flip two consecutive "++" into "--".
 # The game ends when a person can no longer make a move and therefore the other person will be the winner.
 #
@@ -24,6 +27,7 @@ __source__ = 'https://leetcode.com/problems/flip-game/#/description'
 # Similar Questions
 # Flip Game II
 #
+import unittest
 class Solution(object):
     def generatePossibleNextMoves(self, s):
         """
@@ -52,8 +56,6 @@ class Solution2(object):
       """
       return [s[:i] + "--" + s[i+2:] for i in xrange(len(s) - 1) if s[i:i+2] == '++']
 
-
-
 class Solution3(object):
     def generatePossibleNextMoves(self, s):
         """
@@ -67,8 +69,15 @@ class Solution3(object):
                 res.append(s[:i-1] + "--" + s[i+1:])
         return res
 
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+
+if __name__ == '__main__':
+    unittest.main()
+
 Java = '''
-#Thought: https://leetcode.com/problems/android-unlock-patterns/#/solution
+#Thought:
 
 # 21 % 1ms
 public class Solution {

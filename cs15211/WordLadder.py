@@ -4,6 +4,8 @@ __source__ = 'https://leetcode.com/problems/word-ladder/tabs/description'
 # Space: O(d)
 # BFS
 #
+# Description: Leetcode # 127. Word Ladder
+#
 # Given two words (start and end), and a dictionary,
 # find the length of shortest transformation sequence from start to end, such that:
 #
@@ -22,8 +24,16 @@ __source__ = 'https://leetcode.com/problems/word-ladder/tabs/description'
 # Return 0 if there is no such transformation sequence.
 # All words have the same length.
 # All words contain only lowercase alphabetic characters.
-# Linkedln
+# You may assume no duplicates in the word list.
+# You may assume beginWord and endWord are non-empty and are not the same.
+# UPDATE (2017/1/20):
+# The wordList parameter had been changed to a list of strings (instead of a set of strings).
+# Please reload the code definition to get the latest changes.
 #
+# Companies
+# Amazon LinkedIn Snapchat Facebook Yelp
+#
+import unittest
 #DFS #OT # not a goodway as it is asking for shortest path
 class SolutionDFS(object):
     def ladderLength(self, beginWord, endWord, wordList):
@@ -49,8 +59,7 @@ class SolutionDFS(object):
         return cnt if cnt != float("INF") else 0
 
 # below BFS
-
-#	185 ms
+# 185 ms
 class SolutionFatest(object):
     def ladderLength(self, beginWord, endWord, wordList):
         """
@@ -106,7 +115,6 @@ class Solution:
             cur = next
         return 0
 
-
 class Solution2(object):
     def ladderLength(self, beginWord, endWord, wordList):
         wordList.add(endWord)
@@ -149,23 +157,24 @@ class Naive: #wrong answer
                         return ans
         return ans
 
-
-
-
 #test
-test = Solution()
-dict1 = {"hot","dot","dog","lot","log"}
-#print test.ladderLength("hit", "cog", dict1)
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+        test = Solution()
+        dict1 = {"hot","dot","dog","lot","log"}
+        #print test.ladderLength("hit", "cog", dict1)
 
-if __name__ == "__main__":
-    print Solution().ladderLength("hit", "cog", set(["hot","dot","dog","lot","log"]))
-    print Solution2().ladderLength("hit", "cog", set(["hot","dot","dog","lot","log"]))
-    print Naive().ladderLength("hit", "cog", set(["ait","dot","dog","lot","log"]))
+        print Solution().ladderLength("hit", "cog", set(["hot","dot","dog","lot","log"]))
+        print Solution2().ladderLength("hit", "cog", set(["hot","dot","dog","lot","log"]))
+        print Naive().ladderLength("hit", "cog", set(["ait","dot","dog","lot","log"]))
 
-#Java
-#double ended BFS
+if __name__ == '__main__':
+    unittest.main()
+
 Java = '''
-Thought:
+#Thought:
+
 # Java Solution using Dijkstra's algorithm, with explanation
 # 50.85% 132ms
 public class Solution {

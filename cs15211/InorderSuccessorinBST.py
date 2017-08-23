@@ -1,25 +1,30 @@
 __source__ = 'https://leetcode.com/problems/inorder-successor-in-bst/#/description'
+# https://github.com/kamyu104/LeetCode/blob/master/Python/inorder-successor-in-bst.py
 # Time:  O(h)
 # Space: O(1)
 #
-# Description:
+# Description: 285. Inorder Successor in BST
 #
 # Given a binary search tree and a node in it, find the in-order successor of that node in the BST.
 #
 # Note: If the given node has no in-order successor in the tree, return null.
 #
-# Hide Company Tags Pocket Gems Microsoft Facebook
-# Hide Tags Tree
-# Hide Similar Problems (M) Binary Tree Inorder Traversal (M) Binary Search Tree Iterator
+# Companies
+# Facebook Microsoft Pocket Gems
+# Related Topics
+# Tree
+# Similar Questions
+# Binary Tree Inorder Traversal Binary Search Tree Iterator
 #
-
+#
 # Definition for a binary tree node.
 # class TreeNode(object):
 #     def __init__(self, x):
 #         self.val = x
 #         self.left = None
 #         self.right = None
-
+#
+import unittest
 class Solution(object):
     def inorderSuccessor(self, root, p):
         succ = None
@@ -52,12 +57,17 @@ class Solution(object):
                 root = root.left
             else:
                 root = root.right
-
         return successor
 
-#java
-java = '''
-Thought:
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+
+if __name__ == '__main__':
+    unittest.main()
+
+Java = '''
+# Thought:
 The idea is to compare root's value with p's value if root is not null, and consider the following two cases:
 
 root.val > p.val. In this case, root can be a possible answer, so we store the root node first and call it res.
@@ -79,6 +89,48 @@ We continuously move root until exhausted. To this point, we only need to return
  *     TreeNode(int x) { val = x; }
  * }
  */
+
+# BFS:
+# 15.21% 5ms
+public class Solution {
+    public TreeNode inorderSuccessor(TreeNode root, TreeNode p) {
+        if (p.right != null) {
+            p = p.right;
+            while (p.left != null) {
+                p = p.left;
+            }
+            return p;
+        } else {
+            TreeNode parent = null;
+            while (root != p) {
+                if (root.val > p.val) {
+                    parent = root;
+                    root = root.left;
+                } else { //root.val < p.val go right to find p
+                        //root.val == p.val go right to find smallest node which is > p.val
+                    root = root.right;
+                }
+            }
+            return parent;
+        }
+    }
+}
+
+# DFS
+# 35.04% 4ms
+class Solution {
+    public TreeNode inorderSuccessor(TreeNode root, TreeNode p) {
+        if (root == null) return null;
+        if (root.val <= p.val) {
+            return inorderSuccessor(root.right, p);
+        } else {
+            TreeNode left = inorderSuccessor(root.left, p);
+            return left != null ? left : root;
+        }
+    }
+}
+
+General idea:
 
 Successor
 public class Solution {

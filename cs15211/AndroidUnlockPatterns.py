@@ -3,7 +3,8 @@ __source__ = 'https://leetcode.com/problems/android-unlock-patterns/#/descriptio
 # Time:  O(9^2 * 2^9)
 # Space: O(9 * 2^9)
 #
-# Description:
+# Description: Leetcode # 351. Android Unlock Patterns
+#
 # Given an Android 3x3 key lock screen and two integers m and n,
 # where 1<= m <= n <= 9, count the total number of unlock patterns of the Android lock screen,
 # which consist of minimum of m keys and maximum n keys.
@@ -33,6 +34,7 @@ __source__ = 'https://leetcode.com/problems/android-unlock-patterns/#/descriptio
 #
 # Example:
 # Given m = 1, n = 1, return 9.
+#
 # Companies
 # Google
 # Related Topics
@@ -96,9 +98,7 @@ class Solution(object):
                              continue
 
                     dp[merge(used, j)][j] += dp[used][i]
-
         return res
-
 
 # Time:  O(9^2 * 2^9)
 # Space: O(9 * 2^9)
@@ -161,9 +161,7 @@ class Solution2(object):
 
                 if m <= number <= n:
                     res += dp[used][i]
-
         return res
-
 
 # Time:  O(9!)
 # Space: O(9)
@@ -205,9 +203,7 @@ class Solution_TLE(object):
                          continue
 
                 number += numberOfPatternsHelper(m, n, level + 1, merge(used, j), j)
-
             return number
-
 
         number = 0
         # 1, 3, 7, 9
@@ -222,14 +218,25 @@ class TestMethods(unittest.TestCase):
     def test_Local(self):
         self.assertEqual(1, 1)
 
-
 if __name__ == '__main__':
     unittest.main()
 
 Java = '''
 #Thought: https://leetcode.com/problems/android-unlock-patterns/#/solution
 
-# 19.62
+#99.83% 0ms
+public class Solution {
+    public int numberOfPatterns(int m, int n) {
+        int[] arr = {9,56,320,1624,7152, 26016,72912,140704,140704};
+        int sum = 0;
+        for (int i = m; i <= n; i++) {
+            sum += arr[i - 1];
+        }
+        return sum;
+    }
+}
+
+# 19.24% 50ms
 public class Solution {
 
     private boolean used[] = new boolean[9];
@@ -281,9 +288,7 @@ public class Solution {
     }
 }
 
-
-
-# 90%
+# 99.48% 10ms
 public class Solution {
     public static final int[][] SKIP_LIST;
     static {

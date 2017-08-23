@@ -3,6 +3,8 @@ __source__ = 'https://leetcode.com/problems/house-robber-ii/#/description'
 # Time:  O(n)
 # Space: O(1)
 #
+# Description: Leetcode # 213. House Robber II
+#
 # Note: This is an extension of House Robber.
 #
 # After robbing those houses on that street, the thief has found himself a new place
@@ -19,8 +21,12 @@ __source__ = 'https://leetcode.com/problems/house-robber-ii/#/description'
 # Related Topics
 # Dynamic Programming
 # Similar Questions
-# House Robber Paint House Paint Fence House Robber III Non-negative Integers without Consecutive Ones
+# House Robber Paint House
+# Paint Fence House Robber III
+# Non-negative Integers without Consecutive Ones C
+# oin Path
 #
+import unittest
 class Solution:
     # @param {integer[]} nums
     # @return {integer}
@@ -39,11 +45,15 @@ class Solution:
             num_i = max(nums[i] + num_i_2, num_i_1)
         return num_i
 
-if __name__ == '__main__':
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
         print Solution().rob([8,4,8,5,9,6,5,4,4,10])
 
-#java
-ans='''
+if __name__ == '__main__':
+    unittest.main()
+
+Java = '''
 Thought: 
 Since this question is a follow-up to House Robber, we can assume we already have a way to solve the simpler question, 
 i.e. given a 1 row of house, we know how to rob them. So we already have such a helper function. 
@@ -79,7 +89,7 @@ I chose i = n and i + 1 = 0 for simpler coding. But, you can choose whichever tw
 public int rob(int[] nums) {
     if (nums.length == 1) return nums[0];
     
-59%
+# 4.89% 1ms
 public class Solution {
     public int rob(int[] nums) {
         if (nums.length == 0) {
@@ -102,7 +112,7 @@ public class Solution {
     }
 }
 
-59%
+#54.19% 0ms
 public class Solution {
     public int rob(int[] nums) {
         if(nums == null || nums.length == 0) return 0;
@@ -120,5 +130,23 @@ public class Solution {
         }
         return dp[end];
     }
+}
+
+#54.19% 0ms
+class Solution {
+    public int rob(int[] nums) {
+        if(nums.length==1) return nums[0];
+        return Math.max(rob(nums,0,nums.length-2), rob(nums,1,nums.length-1));
+    }
+
+    private int rob(int[] num, int lo, int hi) {
+        int include = 0, exclude = 0;
+        for (int j = lo; j <= hi; j++) {
+            int i = include, e = exclude;
+            include = e + num[j];
+            exclude = Math.max(e, i);
+        }
+        return Math.max(include, exclude);
+        }
 }
 '''

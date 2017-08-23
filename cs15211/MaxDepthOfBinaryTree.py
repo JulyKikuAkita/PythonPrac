@@ -3,18 +3,21 @@ __source__ = 'https://leetcode.com/problems/maximum-depth-of-binary-tree/#/descr
 # Time:  O(n)
 # Space: O(h), h is height of binary tree
 #
+# Description: Leetcode # 104. Maximum Depth of Binary Tree
+#
 # Given a binary tree, find its maximum depth.
 #
 # The maximum depth is the number of nodes along the longest path
 # from the root node down to the farthest leaf node.
 #
-#  Depth-first Search
-# You might like:
-# (E) Balanced Binary Tree (E) Minimum Depth of Binary Tree
-# Company:
+# Companies
 # LinkedIn Uber Apple Yahoo
-
-
+# Related Topics
+# Tree Depth-first Search
+# Similar Questions
+# Balanced Binary Tree Minimum Depth of Binary Tree
+#
+import unittest
 # Definition for a  binary tree node
 class TreeNode:
      def __init__(self, x):
@@ -29,8 +32,6 @@ class Solution:
         if root == None:
             return 0
         return max(self.maxDepth(root.left), self.maxDepth(root.right)) + 1
-
-
 
 class SolutionOther:
     # @param root, a tree node
@@ -126,67 +127,22 @@ class SolutionOther:
                     count[0] -= 1
                     print "mid left", count[0]
 
-
-
                 print "last", max, count[0]
                 return max[0]
 
         # need to add root node
         return  deepestNode(root)+1
 
-#create tree
-root1=TreeNode(0)
-root2=TreeNode(1)
-root3=TreeNode(2)
-root4=TreeNode(4)
-root5=TreeNode(5)
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
 
-tree2=TreeNode(2)
-tree31=TreeNode(3)
-tree32=TreeNode(3)
-tree41=TreeNode(4)
-tree411=TreeNode(4)
-tree4111=TreeNode(4)
-tree51=TreeNode(5)
-tree52=TreeNode(5)
-tree511=TreeNode(5)
-tree522=TreeNode(5)
-tree5221=TreeNode(5)
-tree52212=TreeNode(5)
+if __name__ == '__main__':
+    unittest.main()
 
-root2.left=tree2
+Java = '''
+#Thought:
 
-root3.left=tree31
-root3.right=tree32
-
-root4.right =tree41
-tree41.right=tree411
-tree411.right=tree4111
-
-root5.left=tree51
-root5.right=tree52
-tree51.left=tree511
-tree52.right=tree522
-tree522.left=tree5221
-tree5221.right=tree52212
-
-my_test=SolutionOther()
-#print my_test.maxDepth(root1)
-#print my_test.maxDepth(root2)
-#print my_test.maxDepth(root3)
-#print my_test.maxDepth(root4)
-print my_test.maxDepth(root5)
-#print my_test.maxDepthtoFix2(root5)
-
-if __name__ == "__main__":
-    root = TreeNode(1)
-    root.left = TreeNode(2)
-    root.right = TreeNode(3)
-    root.left.left = TreeNode(4)
-    print Solution().maxDepth(root5)
-
-#Java
-java = '''
 
 /**
  * Definition for a binary tree node.
@@ -198,7 +154,7 @@ java = '''
  * }
  */
 
-#DFS: 16%
+#DFS: 15.60% 1ms
 public class Solution {
     public int maxDepth(TreeNode root) {
         if (root == null) return 0;
@@ -206,7 +162,7 @@ public class Solution {
     }
 }
 
-#DFS: 96%
+#DFS: 15.60% 1ms
 public class Solution {
     public int maxDepth(TreeNode root) {
         if (root == null){ return 0; }
@@ -217,7 +173,7 @@ public class Solution {
     }
 }
 
-#BFS: 4.3%
+#BFS: 8.81% 2ms
 public class Solution {
     public int maxDepth(TreeNode root) {
         if (root == null) return 0;
@@ -236,4 +192,5 @@ public class Solution {
         return res;
     }
 }
+
 '''

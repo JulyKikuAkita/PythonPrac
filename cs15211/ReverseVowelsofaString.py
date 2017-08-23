@@ -3,6 +3,8 @@ __source__ = 'https://leetcode.com/problems/reverse-vowels-of-a-string/tabs/desc
 # Time:  O(n)
 # Space: O(1)
 #
+# Description: Leetcode # 345. Reverse Vowels of a String
+#
 # Write a function that takes a string as input and reverse only the vowels of a string.
 #
 # Example 1:
@@ -13,6 +15,7 @@ __source__ = 'https://leetcode.com/problems/reverse-vowels-of-a-string/tabs/desc
 #
 # Note:
 # The vowels does not include the letter "y".
+#
 # Companies
 # Google
 # Related Topics
@@ -20,6 +23,7 @@ __source__ = 'https://leetcode.com/problems/reverse-vowels-of-a-string/tabs/desc
 # Similar Questions
 # Reverse String
 #
+import unittest
 import re
 class Solution(object):
     def reverseVowels(self, s):
@@ -50,9 +54,17 @@ class Solution(object):
     def reverseVowels2(self, s):
         vowels = re.findall('(?i)[aeiou]', s)
         return re.sub('(?i)[aeiou]', lambda m: vowels.pop(), s)
-#Java
+
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+
+if __name__ == '__main__':
+    unittest.main()
+
 Java = '''
-83%
+# Thought:
+# 82.37% 5ms
 public class Solution {
     public String reverseVowels(String s) {
         char[] arr = s.toCharArray();
@@ -85,6 +97,36 @@ public class Solution {
             c = (char) ('a' + (c - 'A'));
         }
         return c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u';
+    }
+}
+
+# 95.76% 4ms
+class Solution {
+    public String reverseVowels(String s) {
+        int start =0;
+        int end = s.length()-1;
+        char [] sChar = s.toCharArray();
+        while(start<end){
+            while(start < end && !checkVowel(sChar[start]))
+                  start++;
+            while(start < end && !checkVowel(sChar[end]))
+                  end--;
+            char temp = sChar[start];
+            sChar[start++]=sChar[end];
+            sChar[end--]= temp;
+        }
+        return new String(sChar);
+    }
+    public boolean checkVowel(char c){
+        if(c == 'A' || c == 'a'||
+           c == 'E' || c == 'e'||
+           c == 'I' || c == 'i'||
+           c == 'O' || c == 'o'||
+           c == 'U' || c == 'u'
+          )
+            return true;
+        else
+            return false;
     }
 }
 '''

@@ -3,6 +3,8 @@ __source__ = 'https://leetcode.com/problems/meeting-rooms/#/description'
 # Time:  O(nlogn)
 # Space: O(n)
 #
+# Description: Leetcode # 252. Meeting Rooms
+#
 # Given an array of meeting time intervals consisting of start and end times [[s1,e1],[s2,e2],...] (si < ei),
 # determine if a person could attend all meetings.
 #
@@ -10,17 +12,19 @@ __source__ = 'https://leetcode.com/problems/meeting-rooms/#/description'
 # Given [[0, 30],[5, 10],[15, 20]],
 # return false.
 #
-#  Facebook
-# Hide Tags Sort
-# Hide Similar Problems (M) Merge Intervals (M) Meeting Rooms II
-#
+# Companies
+# Facebook
+# Related Topics
+# Sort
+# Similar Questions
+# Merge Intervals Meeting Rooms II
 #
 # Definition for an interval.
 # class Interval:
 #     def __init__(self, s=0, e=0):
 #         self.start = s
 #         self.end = e
-
+import unittest
 class Solution:
     # @param {Interval[]} intervals
     # @return {boolean}
@@ -32,9 +36,14 @@ class Solution:
                 return False
         return True
 
-# Java
-# http://buttercola.blogspot.com/2015/08/leetcode-meeting-rooms.html
-var = '''
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+
+if __name__ == '__main__':
+    unittest.main()
+
+Java = '''
 Thought: https://leetcode.com/articles/meeting-rooms/
 /**
  * Definition for an interval.
@@ -45,10 +54,11 @@ Thought: https://leetcode.com/articles/meeting-rooms/
  *     Interval(int s, int e) { start = s; end = e; }
  * }
  */
+# 25.50% 14ms
 public class Solution {
     public boolean canAttendMeetings(Interval[] intervals) {
         if(intervals ==null || intervals.length == 0) return true;
-        
+
         Arrays.sort(intervals, new IntervalComparator());
         for(int i = 1; i < intervals.length; i++){
             if(isOverlappered(intervals[i-1], intervals[i]) ) return false;
@@ -61,13 +71,14 @@ public class Solution {
             return a.start - b.start;
         }
     }
-    
+
     private boolean isOverlappered(Interval a, Interval b){
         return a.end > b.start;
     }
 }
 
-#Java 8:
+# Java 8:
+# 41.65% 12ms
 public class Solution {
     public boolean canAttendMeetings(Interval[] intervals) {
         if(intervals == null || intervals.length == 0) return true;
@@ -79,4 +90,23 @@ public class Solution {
     }
 }
 
+# 93.77% 4ms
+class Solution {
+    public boolean canAttendMeetings(Interval[] intervals) {
+        if (intervals == null) return false;
+        int len = intervals.length;
+        int[] s = new int[len];
+        int[] e = new int[len];
+        for (int i = 0; i < len; i++) {
+            s[i] = intervals[i].start;
+            e[i] = intervals[i].end;
+        }
+        Arrays.sort(s);
+        Arrays.sort(e);
+        for (int i = 0; i < len - 1; i++) {
+            if (s[i + 1] < e[i]) return false;
+        }
+        return true;
+    }
+}
 '''

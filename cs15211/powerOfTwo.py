@@ -1,8 +1,9 @@
 __source__ = 'https://leetcode.com/problems/power-of-two/description/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/power-of-two.py
-
 # Time:  O(1)
 # Space: O(1)
+#
+# Description: Leetcode # 231. Power of Two
 #
 # Given an integer, write a function to determine if it is a power of two.
 #
@@ -12,7 +13,9 @@ __source__ = 'https://leetcode.com/problems/power-of-two/description/'
 # Math Bit Manipulation
 # Similar Questions
 # Number of 1 Bits Power of Three Power of Four
-
+#
+import unittest
+import math
 class Solution:
     # @param {integer} n
     # @return {boolean}
@@ -21,16 +24,22 @@ class Solution:
     def isPowerOfTwo2IF(self, n):
         return n > 0 and pow(2, int(math.log(n) / math.log(2))) == n
 
-# Java
-# http://algobox.org/power-of-two/
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+
+if __name__ == '__main__':
+    unittest.main()
+
 Java = '''
+#Thought:
 
 4 different ways to solve -- Iterative / Recursive / Bit operation / Math
 
 Method 1: Iterative
 
 check if n can be divided by 2. If yes, divide n by 2 and check it repeatedly.
-
+# 16.89% 2ms
 public class Solution {
     public boolean isPowerOfTwo(int n) {
         if(n==0) return false;
@@ -41,7 +50,7 @@ public class Solution {
 
 Method 2: Recursive
 Time complexity = O(log n)
-
+# 16.89% 2ms
 public class Solution {
     public boolean isPowerOfTwo(int n) {
         return n>0 && (n==1 || (n%2==0 && isPowerOfTwo(n/2)));
@@ -71,6 +80,7 @@ public class Solution {
     }
 }
 
+# 16.89% 2ms
 public class Solution {
     public boolean isPowerOfTwo(int n) {
         return n>0 && Integer.bitCount(n) == 1;

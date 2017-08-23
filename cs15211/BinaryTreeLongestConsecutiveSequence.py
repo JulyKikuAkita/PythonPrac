@@ -3,7 +3,7 @@ __source__ = 'https://leetcode.com/problems/binary-tree-longest-consecutive-sequ
 # Time:  O(n)
 # Space: O(h)
 #
-# Description:
+# Description: 298. Binary Tree Longest Consecutive Sequence
 #
 # Given a binary tree, find the length of the longest consecutive sequence path.
 #
@@ -41,11 +41,10 @@ __source__ = 'https://leetcode.com/problems/binary-tree-longest-consecutive-sequ
 #         self.val = x
 #         self.left = None
 #         self.right = None
-# google
-#http://algobox.org/binary-tree-longest-consecutive-sequence/
-
+#
 #Python Iterative Breadth-First Search
 from collections import deque
+import unittest
 class Solution(object):
     def longestConsecutive(self, root):
         """
@@ -115,7 +114,13 @@ class Solution3(object):
         longestConsecutiveHelper(root)
         return self.max_len
 
-#Java
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+
+if __name__ == '__main__':
+    unittest.main()
+
 Java = '''
 Thought : https://leetcode.com/articles/binary-tree-longest-consecutive-sequence/
 #61% 2ms

@@ -1,7 +1,9 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/basic-calculator/description/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/basic-calculator.py
 # Time:  O(n)
 # Space: O(n)
+#
+# Description: Leetcode # 224. Basic Calculator
 #
 # Implement a basic calculator to evaluate a simple expression string.
 #
@@ -15,11 +17,14 @@ __author__ = 'July'
 # " 2-1 + 2 " = 3
 # "(1+(4+5+2)-3)+(6+8)" = 23
 #
-#  Google
-# Hide Tags Stack Math
-# Hide Similar Problems (M) Evaluate Reverse Polish Notation (M) Basic Calculator II (M) Different Ways to Add Parentheses (H) Expression Add Operators
-
-
+# Companies
+# Google
+# Related Topics
+# Stack Math
+# Similar Questions
+# Evaluate Reverse Polish Notation Basic Calculator II Different Ways to Add Parentheses Expression Add Operators
+#
+import unittest
 class Solution:
     # @param {string} s
     # @return {integer}
@@ -41,9 +46,7 @@ class Solution:
                 operators.pop()
         while operators:
             self.compute(operands, operators)
-
         return operands[-1]
-
 
     def compute(self, operands, operators):
         left, right = operands.pop(), operands.pop()
@@ -53,7 +56,6 @@ class Solution:
             operands.append(left + right)
         elif op == '-':
             operands.append( left - right)
-
 
 class Solution2(object):
     def calculate(self, s):
@@ -133,80 +135,82 @@ class Solution3(object):
                 stack.pop()
             i = max(j, i+1)
         return res
-# python
-# http://bookshadow.com/weblog/2015/06/09/leetcode-basic-calculator/
-#Java
-# http://blog.csdn.net/xudli/article/details/46554835
 
-#java
-js = '''
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+
+if __name__ == '__main__':
+    unittest.main()
+
+Java = '''
+#Thought:
+# 84.33% 14ms
 public class Solution {
     public int calculate(String s) {
-        int result = 0;
         Stack<Boolean> stack = new Stack<>();
         stack.push(true);
-        stack.push(true);
-        for (int i = 0; i < s.length(); i++) {
+        int len = s.length();
+        int result = 0;
+        int num = 0;
+        boolean isPositive = true;
+        for (int i = 0; i < len; i++) {
             char c = s.charAt(i);
             if (c >= '0' && c <= '9') {
-                int num = c - '0';
-                int j = i + 1;
-                for (; j < s.length(); j++) {
-                    c = s.charAt(j);
-                    if (c >= '0' && c <= '9') {
-                        num = num * 10 + (c - '0');
-                    } else {
-                        break;
-                    }
-                }
-                result += stack.pop() ? num : -num;
-                i = j - 1;
-            } else if (c == '+' || c == '(') {
-                stack.push(stack.peek());
-            } else if (c == '-') {
-                stack.push(!stack.peek());
+                num = num * 10 + c - '0';
+            } else if (c == '+' || c == '-') {
+                result += isPositive ? num : -num;
+                num = 0;
+                isPositive = c == '+' ? stack.peek() : !stack.peek();
+            } else if (c == '(') {
+                stack.push(isPositive);
             } else if (c == ')') {
                 stack.pop();
             }
         }
+        result += isPositive ? num : -num;
         return result;
     }
 }
 
-public class Solution {
+
+#99.10% 2ms
+class Solution {
     public int calculate(String s) {
-        if ( s == null || s.length() == 0) return 0;
+        if (s == null) return 0;
 
-        Stack<Integer> stack = new Stack<Integer>();
-        int res = 0;
+        int[] pos = new int[1];
+
+        return help(s, pos);
+    }
+
+    int help(String s, int[] pos) {
+        int ret = 0;
         int sign = 1;
-
-        for (int i = 0; i < s.length(); i++){
-            char c = s.charAt(i);
-            if (Character.isDigit(c)){
-                int cur = c - '0';
-                while( i+1 < s.length() && Character.isDigit(s.charAt(i+1))){
-                    cur = 10 * cur + s.charAt(++i) - '0';
-                }
-                res += cur * sign;
-            }
-            else if( c == '+'){
+        int num = 0;
+        while(pos[0] < s.length()) {
+            char c = s.charAt(pos[0]);
+            if (c == '+') {
+                ret += num * sign;
+                num = 0;
                 sign = 1;
-            }else if( c == '-'){
+            } else if (c == '-') {
+                ret += num * sign;
+                num = 0;
                 sign = -1;
-            }else if( c =='('){
-                stack.push(res);
-                res = 0;
-                stack.push(sign);
-                sign = 1;
-            }else if( c ==')'){
-                // first pop is sign
-                res = stack.pop() * res + stack.pop();
-                sign = 1;
+            } else if (c == '(') {
+                pos[0]++;
+                ret += help(s, pos) * sign;
+            } else if (c == ')') {
+                return ret + num * sign;
+            } else if (c >= '0' && c <= '9') {
+                num = num * 10 + c - '0';
             }
+            pos[0]++;
         }
 
-        return res;
+        return ret + num * sign;
     }
 }
+
 '''

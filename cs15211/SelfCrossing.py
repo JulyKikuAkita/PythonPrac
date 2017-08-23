@@ -1,8 +1,10 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/self-crossing/description/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/self-crossing.py
 # Time:  O(n)
 # Space: O(1)
-
+#
+# Description: Leetcode # 335. Self Crossing
+#
 # You are given an array x of n positive numbers.
 # You start at point (0,0) and moves x[0] metres to the north,
 # then x[1] metres to the west, x[2] metres to the south,
@@ -36,7 +38,11 @@ __author__ = 'July'
 # └───┼>
 #
 # Return true (self crossing)
-
+#
+# Related Topics
+# Math
+#
+import unittest
 class Solution(object):
     def isSelfCrossing(self, x):
         """
@@ -71,8 +77,16 @@ class Solution(object):
                 return True
         return False
 
-#java
-js = '''
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+
+if __name__ == '__main__':
+    unittest.main()
+
+Java = '''
+#Thought:
+# 6.95% 1ms
 public class Solution {
     public boolean isSelfCrossing(int[] x) {
         int len = x.length;
@@ -97,6 +111,36 @@ public class Solution {
 
     private boolean check6(int[] x, int i) {
         return x[i - 5] - x[i - 3] + x[i - 1] >= 0 && x[i - 4] <= x[i - 2] && x[i - 3] >= x[i - 1] && x[i - 4] - x[i - 2] + x[i] >= 0;
+    }
+}
+
+# 6.95% 1ms
+public class Solution {
+    public boolean isSelfCrossing(int[] x) {
+        int n = x.length;
+        if(n <= 3) return false;
+        for(int i=3; i<n;i++) {
+            //4th line cross 1st
+            if(x[i] >= x[i-2] && x[i-1] <= x[i-3]) {
+               // System.out.println("test 1");
+                return true;
+            }
+            //5th cross 1st
+            if(i >= 4) {
+                if(x[i] + x[i-4] >= x[i-2] && x[i-1] == x[i-3]) {
+                   // System.out.println("test 2");
+                    return true;
+                }
+            }
+            //6th cross 1st
+            if(i >= 5) {
+                if(x[i] + x[i-4] >= x[i-2] && x[i-1] + x[i-5] >= x[i-3] && x[i-1] <= x[i-3] && x[i-2] >= x[i-4]) {
+                  //  System.out.println("test 3");
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }
 '''

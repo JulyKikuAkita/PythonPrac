@@ -23,14 +23,13 @@ __source__ = 'https://leetcode.com/problems/binary-tree-right-side-view/#/descri
 # Similar Questions
 # Populating Next Right Pointers in Each Node Boundary of Binary Tree
 #
-
+import unittest
 # Definition for a  binary tree node
 class TreeNode:
     def __init__(self, x):
         self.val = x
         self.left = None
         self.right = None
-
 
 class Solution:
     # @param root, a tree node
@@ -72,19 +71,23 @@ class Solution2:
             cur = next_level
         return result
 
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+        root = TreeNode(1)
+        root.left = TreeNode(2)
+        root.right = TreeNode(3)
+        root.left.right = TreeNode(5)
+        root.right.right = TreeNode(4)
+        result = Solution().rightSideView(root)
+        print result
 
-if __name__ == "__main__":
-    root = TreeNode(1)
-    root.left = TreeNode(2)
-    root.right = TreeNode(3)
-    root.left.right = TreeNode(5)
-    root.right.right = TreeNode(4)
-    result = Solution().rightSideView(root)
-    print result
+if __name__ == '__main__':
+    unittest.main()
 
-#Java
-#Java =
-'''
+Java = '''
+#Thought: https://leetcode.com/problems/contains-duplicate/solution/
+
 Thought:
 The core idea of this algorithm:
 1.Each depth of the tree only select one node.
@@ -108,7 +111,7 @@ public class Solution {
     }
     
     #loop left tree first, need to reset every node val
-    #74%
+    #73.64% 1ms
     private void rightSideView(TreeNode root, List<Integer> result, int depth) {
         if (root == null) {
             return;
@@ -123,7 +126,7 @@ public class Solution {
     }
         
     # loop right tree first  
-    # 74%
+    # 26.14% 2ms
     private void dfs2(TreeNode root, List<Integer> res, int currDepth){
         if (root == null) return;
         if (res.size() == currDepth) {
@@ -136,13 +139,15 @@ public class Solution {
 
 
 # BFS
-# 31 % loop to right child first
-public List<Integer> rightSideViewBFS(TreeNode root) {
+# 26.14% 2ms
+#loop to right child first
+public class Solution {
+    public List<Integer> rightSideView(TreeNode root) {
         List<Integer> res = new ArrayList<Integer>();
         if (root == null) return res;
         Queue<TreeNode> q = new LinkedList<>();
         q.add(root);
-        
+
         while(!q.isEmpty()) {
             int len = q.size();
             for (int i = 0; i < len; i++) {
@@ -154,9 +159,9 @@ public List<Integer> rightSideViewBFS(TreeNode root) {
         }
         return res;
     }
+}
 
-
-#31%
+# 26.14% 2ms
 # loopto left child first
 public class Solution {
     public List<Integer> rightSideView(TreeNode root) {

@@ -3,6 +3,8 @@ __source__ = 'https://leetcode.com/problems/course-schedule/description/'
 # Time:  O(|V| + |E|)
 # Space: O(|E|)
 #
+# Description: Leetcode # 207. Course Schedule
+#
 # There are a total of n courses you have to take, labeled from 0 to n - 1.
 #
 # Some courses may have prerequisites, for example to take course 0
@@ -114,7 +116,6 @@ class TestMethods(unittest.TestCase):
     def test_Local(self):
         self.assertEqual(1, 1)
         print Solution().canFinish(1, [])
-
 
 if __name__ == '__main__':
     unittest.main()

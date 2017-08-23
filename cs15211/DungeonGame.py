@@ -1,7 +1,9 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problemset/algorithms/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/dungeon-game.py
 # Time:  O(m * n)
 # Space: O(m + n)
+#
+# Description: Leetcode # 174. Dungeon Game
 #
 # The demons had captured the princess (P) and imprisoned her
 # in the bottom-right corner of a dungeon. T
@@ -32,6 +34,14 @@ __author__ = 'July'
 # Any room can contain threats or power-ups, even the first room the knight enters
 # and the bottom-right room where the princess is imprisoned.
 #
+# Companies
+# Microsoft
+# Related Topics
+# Binary Search Dynamic Programming
+# Similar Questions
+# Unique Paths Minimum Path Sum
+#
+import unittest
 class Solution:
     # @param dungeon, a list of lists of integers
     # @return a integer
@@ -72,7 +82,6 @@ class SolutionJava:
                 right = max(dp[i][j+1] - dungeon[i][j], 1)
                 dp[i][j] = min(down, right)
         return dp[0][0]
-
 
 # Time:  O(m * n logk), where k is the possible maximum sum of loses
 # Space: O(m + n)
@@ -124,20 +133,26 @@ class Solution2:
 
 
 #test
-if __name__ == "__main__":
-    dungeon = [[ -2,  -3,  3], \
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+        dungeon = [[ -2,  -3,  3], \
                [ -5, -10,  1], \
                [ 10,  30, -5]]
-    #print Solution().calculateMinimumHP(dungeon)
-    dungeon1 = [[ -200]]
-    #print Solution2().calculateMinimumHP(dungeon)
+        #print Solution().calculateMinimumHP(dungeon)
+        dungeon1 = [[ -200]]
+        #print Solution2().calculateMinimumHP(dungeon)
 
-    dungeon2 = [[0, -3]]
-    print Solution().calculateMinimumHP(dungeon)
-    print SolutionJava().calculateMinimumHP(dungeon)
+        dungeon2 = [[0, -3]]
+        print Solution().calculateMinimumHP(dungeon)
+        print SolutionJava().calculateMinimumHP(dungeon)
 
-#java
-js = '''
+if __name__ == '__main__':
+    unittest.main()
+
+Java = '''
+#Thought:
+# 58.98% 3ms
 public class Solution {
     public int calculateMinimumHP(int[][] dungeon) {
         int m = dungeon.length;
@@ -157,6 +172,36 @@ public class Solution {
             }
         }
         return dp[0];
+    }
+}
+
+#99.15% 1ms
+public class Solution {
+    int row;
+    int col;
+    public int calculateMinimumHP(int[][] dungeon) {
+        row = dungeon.length;
+        col = dungeon[0].length;
+        int[][] dp = new int[row][col];
+        return memorySearch(dungeon, dp, 0, 0);
+    }
+
+    private int memorySearch(int[][] dungeon, int[][] dp, int i, int j) {
+        if (i >= row || j >= col) {
+            return Integer.MAX_VALUE;
+        }
+        if (dp[i][j] != 0) {
+            return dp[i][j];
+        }
+        int health = Integer.MAX_VALUE;
+        health = Math.min(health, memorySearch(dungeon, dp, i, j + 1));
+        health = Math.min(health, memorySearch(dungeon, dp, i + 1, j));
+        if (health == Integer.MAX_VALUE) {
+            health = 1;
+        }
+
+        dp[i][j] = Math.max(1, health - dungeon[i][j]);
+        return dp[i][j];
     }
 }
 '''

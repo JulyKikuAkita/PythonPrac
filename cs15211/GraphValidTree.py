@@ -130,7 +130,6 @@ class Solution:
                         q.append(node)
         return len(visited) == n
 
-
 # Time:  O(|V| + |E|)
 # Space: O(|V| + |E|)
 # BFS solution.
@@ -165,7 +164,6 @@ class Solution2:
 class TestMethods(unittest.TestCase):
     def test_Local(self):
         self.assertEqual(1, 1)
-
 
 if __name__ == '__main__':
     unittest.main()

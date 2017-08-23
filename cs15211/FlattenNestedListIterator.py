@@ -1,9 +1,10 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/flatten-nested-list-iterator/description/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/flatten-nested-list-iterator.py
 # Time:  O(n), n is the number of the integers.
 # Space: O(h), h is the depth of the nested lists.
-
-# """
+#
+# Description: Leetcode # 341. Flatten Nested List Iterator
+#
 # This is the interface that allows for creating nested lists.
 # You should not implement it, or speculate about its implementation
 # """
@@ -27,9 +28,14 @@ __author__ = 'July'
 #        Return None if this NestedInteger holds a single integer
 #        :rtype List[NestedInteger]
 #        """
-# Google
+# Companies
+# Google Facebook Twitter
+# Related Topics
 # Stack Design
-
+# Similar Questions
+# Flatten 2D Vector Zigzag Iterator Mini Parser Array Nesting
+#
+import unittest
 class NestedIterator(object):
 
     def __init__(self, nestedList):
@@ -69,8 +75,16 @@ class NestedIterator(object):
 # i, v = NestedIterator(nestedList), []
 # while i.hasNext(): v.append(i.next())
 
-#java
-js = '''
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+
+if __name__ == '__main__':
+    unittest.main()
+
+Java = '''
+#Thought:
+# 79.95% 7ms
 /**
  * // This is the interface that allows for creating nested lists.
  * // You should not implement it, or speculate about its implementation
@@ -88,6 +102,7 @@ js = '''
  *     public List<NestedInteger> getList();
  * }
  */
+#89.79% 6ms
 public class NestedIterator implements Iterator<Integer> {
     private Stack<Iterator<NestedInteger>> stack;
     Integer nextInteger;
@@ -128,4 +143,43 @@ public class NestedIterator implements Iterator<Integer> {
  * NestedIterator i = new NestedIterator(nestedList);
  * while (i.hasNext()) v[f()] = i.next();
  */
+
+#89.79% 6ms
+public class NestedIterator implements Iterator<Integer> {
+    List<NestedInteger> nestedList;
+    List<Integer> list = new ArrayList<Integer>();
+    int index;
+    private void help(List<NestedInteger> input){
+       // List<Integer> res = new ArrayList<Integer>();
+        for(NestedInteger item : input){
+            if(item.isInteger()){
+                list.add(item.getInteger());
+            }else{
+                help(item.getList());
+            }
+        }
+     //   System.out.println(res.toString());
+     //   return res;
+    }
+
+    public NestedIterator(List<NestedInteger> nestedList) {
+        this.nestedList = nestedList;
+        index = 0;
+        help(nestedList);
+    }
+
+    @Override
+    public Integer next() {
+        return list.get(index++);
+    }
+
+    @Override
+    public boolean hasNext() {
+        if(index < list.size()){
+            return true;
+        }
+        return false;
+    }
+}
+
 '''

@@ -3,6 +3,8 @@ __source__ = 'https://leetcode.com/problems/delete-node-in-a-linked-list/descrip
 # Time:  O(1)
 # Space: O(1)
 #
+# Description: Leetcode # 237. Delete Node in a Linked List
+#
 # Write a function to delete a node (except the tail) in a singly linked list,
 # given only access to that node.
 #
@@ -33,11 +35,15 @@ class Solution:
             node.next = node_to_delete.next
             del node_to_delete
 
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+
 if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/problems/delete-node-in-a-linked-list/solution/
+#Thought: https://leetcode.com/articles/delete-node-linked-list/
 
 Thought: We can't really delete the node, but we can kinda achieve the same effect
 by instead removing the next node after copying its data into the node that we were asked to delete.

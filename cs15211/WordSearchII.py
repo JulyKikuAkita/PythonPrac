@@ -3,7 +3,7 @@ __source__ = 'https://leetcode.com/problems/word-search-ii/#/description'
 # Time:  O(m * n * l)
 # Space: O(l)
 #
-# Description: Leetcode # 217. Contains Duplicate
+# Description: Leetcode # 212. Word Search II
 #
 # Given a 2D board and a list of words from the dictionary, find all words in the board.
 #
@@ -83,7 +83,6 @@ class Solution(object):
         tmp.pop()
         visited[i][j] = False;
 
-
 class Solution2(object):
     dir = (0,1), (0,-1), (1,0), (-1,0)
     def findWords(self, board, words):
@@ -123,7 +122,13 @@ class Solution2(object):
         tmp.pop()
         visited[i][j] = False;
 
-#java
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+
+if __name__ == '__main__':
+    unittest.main()
+
 Java = '''
 Thought: https://discuss.leetcode.com/topic/14256/my-simple-and-clean-java-code-using-dfs-and-trie
 https://discuss.leetcode.com/topic/33246/java-15ms-easiest-solution-100-00

@@ -1,18 +1,29 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/read-n-characters-given-read4/description/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/read-n-characters-given-read4.py
 # Time:  O(n)
 # Space: O(1)
 # Array
 #
+# Description: Leetcode # 157. Read N Characters Given Read4
+#
 # The API: int read4(char *buf) reads 4 characters at a time from a file.
 #
-# The return value is the actual number of characters read. For example, it returns 3 if there is only 3 characters left in the file.
+# The return value is the actual number of characters read. For example,
+# it returns 3 if there is only 3 characters left in the file.
 #
 # By using the read4 API, implement the function int read(char *buf, int n) that reads n characters from the file.
 #
 # Note:
 # The read function will only be called once for each test case.
 #
+# Companies
+# Facebook
+# Related Topics
+# String
+# Similar Questions
+# Read N Characters Given Read4 II - Call multiple times
+#
+import unittest
 # The read4 API is already defined for you.
 # @param buf, a list of characters
 # @return an integer
@@ -45,28 +56,30 @@ class Solution:
             for i in xrange(bytes):
                 buf[read_bytes + i] = buffer[i]
             read_bytes += bytes
-
         return read_bytes
 
-#test
-test = Solution()
+# Test
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+        global file_content
+        buf = ['' for _ in xrange(100)]
 
-if __name__ == "__main__":
-    global file_content
-    buf = ['' for _ in xrange(100)]
-    file_content = "a"
-    print buf[:test.read(buf,9)]
-    file_content = "abcdefghijklmnop"
-    print buf[:test.read(buf,9)]
+        test = Solution()
+        print test.read(buf,100)
+        file_content = "a"
+        print buf[:test.read(buf,9)]
+        file_content = "abcdefghijklmnop"
+        print buf[:test.read(buf,9)]
 
-print test.read(buf,100)
+if __name__ == '__main__':
+    unittest.main()
 
-
-#java
-js = '''
+Java = '''
+#Thought: https://leetcode.com/problems/contains-duplicate/solution/
 /* The read4 API is defined in the parent class Reader4.
       int read4(char[] buf); */
-
+# 21.94% 1ms
 public class Solution extends Reader4 {
     /**
      * @param buf Destination buffer
@@ -90,9 +103,7 @@ public class Solution extends Reader4 {
     }
 }
 
-/* The read4 API is defined in the parent class Reader4.
-      int read4(char[] buf); */
-
+# 21.94% 1ms
 public class Solution extends Reader4 {
     /**
      * @param buf Destination buffer
@@ -100,22 +111,25 @@ public class Solution extends Reader4 {
      * @return    The number of characters read
      */
     public int read(char[] buf, int n) {
-        char[] tmp;
-        int ttl = 0;
-        int cnt = 0;
-        boolean eof = false;
+        boolean eof = false;      // end of file flag
+        int total = 0;            // total bytes have read
+        char[] tmp = new char[4]; // temp buffer
 
-        while (!eof && ttl < n){
-            tmp = new char[4];
-            cnt = read4(tmp);
-            if ( cnt < 4) eof = true;
+        while (!eof && total < n) {
+            int count = read4(tmp);
 
-            for ( int i = 0; i < Math.min(cnt, n - ttl) ; i++){
-                buf[ i + ttl] = tmp[i];
-            }
-            ttl += Math.min(cnt, n - ttl);
+        // check if it's the end of the file
+            eof = count < 4;
+
+            // get the actual count
+            count = Math.min(count, n - total);
+
+            // copy from temp buffer to buf
+            for (int i = 0; i < count; i++)
+                buf[total++] = tmp[i];
         }
-        return ttl;
+
+        return total;
     }
 }
 '''

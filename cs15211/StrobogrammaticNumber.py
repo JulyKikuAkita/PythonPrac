@@ -2,11 +2,15 @@ __source__ = 'https://leetcode.com/problems/strobogrammatic-number/#/description
 # https://github.com/kamyu104/LeetCode/blob/master/Python/strobogrammatic-number.py
 # Time:  O(n)
 # Space: O(1)
+#
+# Description: Leetcode # 246. Strobogrammatic Number
+#
 # A strobogrammatic number is a number that looks the same when rotated 180 degrees (looked at upside down).
 #
 # Write a function to determine if a number is strobogrammatic. The number is represented as a string.
 #
 # For example, the numbers "69", "88", and "818" are all strobogrammatic.
+#
 # Companies
 # Google
 # Related Topics
@@ -15,10 +19,9 @@ __source__ = 'https://leetcode.com/problems/strobogrammatic-number/#/description
 # Strobogrammatic Number II Strobogrammatic Number III
 #
 
+import unittest
 class Solution:
     lookup = {'0':'0', '1':'1', '6':'9', '8':'8', '9':'6'}
-
-
     # @param {string} num
     # @return {boolean}
     def isStrobogrammatic(self, num):
@@ -29,7 +32,6 @@ class Solution:
                num[i] != self.lookup[num[n - 1 - i]]:
                 return False
         return True
-
 
 class Solution1(object):
     def isStrobogrammatic(self, num):
@@ -53,20 +55,22 @@ class Solution1(object):
                     pass
             else:
                 return False
-
             i+=1
             j-=1
-
         return True
 
-if __name__ == "__main__":
-    print Solution().isStrobogrammatic("878")
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+        print Solution().isStrobogrammatic("878")
 
 
-# JAVA:
+if __name__ == '__main__':
+    unittest.main()
+
 Java = '''
-
-# 1 %
+#Thought:
+#7.72%  1ms
 public class Solution {
     public static final Map<Character, Character> strobogramMap;
     static {
@@ -89,7 +93,7 @@ public class Solution {
     }
 }
 
-# 8%
+# 54.55% 0ms
 public class Solution {
     public boolean isStrobogrammatic(String num) {
         for (int i=0, j=num.length()-1; i <= j; i++, j--)
@@ -99,7 +103,7 @@ public class Solution {
     }
 }
 
-# 8%
+# 7.72% 1ms
 public class Solution {
     public static Map<Character, Character> map;
     {
@@ -131,7 +135,7 @@ public class Solution {
     }
 }
 
-# 52%
+# 54.55% 0ms
 public class Solution {
     public boolean isStrobogrammatic(String num) {
         int head = 0, tail = num.length() - 1;

@@ -14,7 +14,7 @@ __source__ = 'https://leetcode.com/problems/convert-sorted-array-to-binary-searc
 # Company:
 # Airbnb
 #
-
+import unittest
 # Definition for a  binary tree node
 class TreeNode:
     def __init__(self, x):
@@ -37,16 +37,6 @@ class Solution:
         node.left = self.sortedArrayToBSTRecu(num, 0, mid - 1 )
         node.right = self.sortedArrayToBSTRecu(num, mid + 1, end)
         return node
-
-if __name__ == "__main__":
-    num = [1, 2, 3]
-    result = Solution().sortedArrayToBST(num)
-    print result.val
-    print result.left.val
-    print result.right.val
-
-
-
 
 class SolutionOther:
     # @param num, a list of integers
@@ -83,13 +73,21 @@ class SolutionOther:
         return allnodes
 
 #test
-test = SolutionOther()
-node = test.sortedArrayToBST([0,1,2,3])
-#node = test.sortedArrayToBST([0,1,2,3,4,5,6])
-#print test.preorderTraversal1(node)
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+        num = [1, 2, 3]
+        result = Solution().sortedArrayToBST(num)
+        print result.val
+        print result.left.val
+        print result.right.val
 
-#java
-js = '''
+if __name__ == '__main__':
+    unittest.main()
+
+Java = '''
+#Thought: https://leetcode.com/problems/contains-duplicate/solution/
+
 /**
  * Definition for a binary tree node.
  * public class TreeNode {
@@ -99,6 +97,9 @@ js = '''
  *     TreeNode(int x) { val = x; }
  * }
  */
+
+# DFS
+#11.53% 1ms
 public class Solution {
     public TreeNode sortedArrayToBST(int[] nums) {
         return sortedArrayToBST(nums, 0, nums.length - 1);
@@ -119,11 +120,31 @@ public class Solution {
     }
 }
 
+# DFS
+#11.53% 1ms
+public class Solution {
+    public TreeNode sortedArrayToBST(int[] nums) {
+        return binarySearch( nums , 0 , nums.length - 1 );
+    }
+
+    public static TreeNode binarySearch( int[] nums , int start , int end )
+    {
+        if( start > end ) return null;
+        int mid = ( start + end ) / 2;
+        TreeNode node = new TreeNode( nums[mid] );
+        node.left = binarySearch( nums , start , mid - 1 );
+        node.right = binarySearch( nums , mid + 1 , end );
+        return node;
+    }
+}
+
 I came up with the recursion solution first and tried to translate it into an iterative solution.
 It is very similar to doing a tree inorder traversal, I use three stacks - nodeStack stores the node
 I am going to process next, and leftIndexStack and rightIndexStack store the range
 where this node need to read from the nums.
 
+# BFS
+# 1.13% 9ms
 public class Solution {
     public TreeNode sortedArrayToBST(int[] nums) {
         int len = nums.length;

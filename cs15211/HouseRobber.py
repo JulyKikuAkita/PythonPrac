@@ -1,6 +1,9 @@
 __source__ = 'https://leetcode.com/problems/house-robber/#/description'
+# https://github.com/kamyu104/LeetCode/blob/master/Python/house-robber.py
 # Time:  O(n)
 # Space: O(1)
+#
+# Description: Leetcode # 198. House Robber
 #
 # You are a professional robber planning to rob houses along a street.
 # Each house has a certain amount of money stashed, the only constraint stopping you
@@ -15,9 +18,11 @@ __source__ = 'https://leetcode.com/problems/house-robber/#/description'
 # Related Topics
 # Dynamic Programming
 # Similar Questions
-# Maximum Product Subarray House Robber II Paint House Paint Fence House Robber III Non-negative Integers without Consecutive Ones
+# Maximum Product Subarray House Robber II
+# Paint House Paint Fence House Robber III
+# Non-negative Integers without Consecutive Ones Coin Path
 #
-
+import unittest
 class Solution:
     # @param num, a list of integer
     # @return an integer
@@ -50,18 +55,22 @@ class SolutionJava:
                 odd = max(even, odd)
         return max(even, odd)
 
-
-
-if __name__ == '__main__':
+# Test
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
         #print Solution().rob([8,4,8,5,9,6,5,4,4,10])
         print Solution().rob([10,100,1000,10000])
         print SolutionJava().rob([10,100,1000,10000])
 
-#Java
+if __name__ == '__main__':
+    unittest.main()
+
 Java = '''
 Thought: https://leetcode.com/problems/house-robber/#/solution
 f(k) = max(f(k-2) + Ak, f(k-1))
 
+#4.74% 1ms
 public class Solution {
     public int rob(int[] nums) {
         if (nums.length == 0) {
@@ -78,7 +87,7 @@ public class Solution {
     }
 }
 
-37.20%
+#31.14% 0ms
 public class Solution {
     public int rob(int[] nums) {
         int rob = 0; //max monney can get if rob current house
@@ -92,7 +101,7 @@ public class Solution {
     }
 }
 
-40%
+#31.14% 0ms
 public int rob(int[] num) {
     int prevMax = 0;
     int currMax = 0;

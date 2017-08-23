@@ -70,7 +70,7 @@ public class Solution {
 }
 
 #BFS
-# 1.64
+# 1.64 1ms
 class Solution {
     public boolean isSameTree(TreeNode p, TreeNode q) {
         Stack<TreeNode> stack_p = new Stack<>();

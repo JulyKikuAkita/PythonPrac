@@ -1,8 +1,11 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/evaluate-reverse-polish-notation/description/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/evaluate-reverse-polish-notation.py
 # Time:  O(n)
 # Space: O(n)
 # Stack
+#
+# Description: Leetcode # 150. Evaluate Reverse Polish Notation
+# http://en.wikipedia.org/wiki/Reverse_Polish_notation
 #
 # Evaluate the value of an arithmetic expression in Reverse Polish Notation.
 #
@@ -12,8 +15,15 @@ __author__ = 'July'
 #   ["2", "1", "+", "3", "*"] -> ((2 + 1) * 3) -> 9
 #   ["4", "13", "5", "/", "+"] -> (4 + (13 / 5)) -> 6
 #
+# Companies
+# LinkedIn
+# Related Topics
+# Stack
+# Similar Questions
+# Basic Calculator Expression Add Operators
+#
 import operator
-
+import unittest
 class Solution:
     # @param tokens, a list of string
     # @return an integer
@@ -28,13 +38,6 @@ class Solution:
                 first = stack.pop() # be aware of the order
                 stack.append(int(dict[token](first*1.0, sec))) # div scenario
         return stack.pop()
-
-
-if __name__ == "__main__":
-    print Solution().evalRPN(["2", "1", "+", "3", "*"])
-    print Solution().evalRPN(["4", "13", "5", "/", "+"])
-    print Solution().evalRPN(["10","6","9","3","+","-11","*","/","*","17","+","5","+"])
-
 
 class SolutionOther:
     # @param tokens, a list of string
@@ -56,9 +59,21 @@ class SolutionOther:
                 else:
                     stack.append(int(op1 * 1.0 /op2))
         return stack[0]
-#Java Solution
-# http://www.programcreek.com/2012/12/leetcode-evaluate-reverse-polish-notation/
-js = '''
+
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+        print Solution().evalRPN(["2", "1", "+", "3", "*"])
+        print Solution().evalRPN(["4", "13", "5", "/", "+"])
+        print Solution().evalRPN(["10","6","9","3","+","-11","*","/","*","17","+","5","+"])
+
+if __name__ == '__main__':
+    unittest.main()
+
+Java = '''
+#Thought: Stack
+
+#45.40% 14ms
 public class Solution {
     public int evalRPN(String[] tokens) {
         Stack<Integer> stack = new Stack<>();
@@ -86,6 +101,75 @@ public class Solution {
 
     private boolean isOperator(String token) {
         return token.equals("+") || token.equals("-") || token.equals("*") || token.equals("/");
+    }
+}
+
+#98.67% 5ms
+class Solution {
+    int index;
+	public int evalRPN(String[] tokens){
+		index = tokens.length-1;
+		return recursive(tokens);
+	}
+	public int recursive(String[] tokens){
+		String current = tokens[index--];
+		int operand1, operand2;
+		switch(current){
+		case "+" :
+			operand1 = recursive(tokens);
+			operand2 = recursive(tokens);
+			return operand1 + operand2;
+		case "-" :
+			operand1 = recursive(tokens);
+			operand2 = recursive(tokens);
+			return operand2 - operand1;
+		case "*" :
+			operand1 = recursive(tokens);
+			operand2 = recursive(tokens);
+			return operand2 * operand1;
+		case "/" :
+			operand1 = recursive(tokens);
+			operand2 = recursive(tokens);
+			return operand2 / operand1;  //op1 / op2 got java.lang.ArithmeticException: / by zero
+		default:
+			return Integer.valueOf(current);
+		}
+	}
+}
+
+#45.40% 14ms
+public class Solution {
+    public int evalRPN(String[] tokens) {
+        Stack<Integer> stack = new Stack<>();
+        for (String token : tokens) {
+            if (isOperand(token)) {
+                int right = stack.pop();
+                int left = stack.pop();
+                stack.push(calculate(left, right, token));
+            } else {
+                stack.push(Integer.parseInt(token));
+            }
+        }
+        return stack.pop();
+    }
+
+    private boolean isOperand(String token) {
+        return token.equals("+") || token.equals("-") || token.equals("*") || token.equals("/");
+    }
+
+    private int calculate(int left, int right, String token) {
+        switch (token) {
+            case "+":
+                return left + right;
+            case "-":
+                return left - right;
+            case "*":
+                return left * right;
+            case "/":
+                return left / right;
+            default:
+                return 0;
+        }
     }
 }
 '''

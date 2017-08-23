@@ -3,6 +3,8 @@ __source__ = 'https://leetcode.com/problems/remove-invalid-parentheses/descripti
 # Time:  O(C(n, c)), try out all possible substrings with the minimum c deletion.
 # Space: O(c), the depth is at most c, and it costs n at each depth
 #
+# Description: Leetcode # 301. Remove Invalid Parentheses
+#
 # Remove the minimum number of invalid parentheses in order to
 # make the input string valid. Return all possible results.
 #
@@ -21,7 +23,7 @@ __source__ = 'https://leetcode.com/problems/remove-invalid-parentheses/descripti
 # Similar Questions
 # Valid Parentheses
 #
-
+import unittest
 # DFS solution.
 class Solution(object):
     def removeInvalidParentheses(self, s):
@@ -53,7 +55,6 @@ class Solution(object):
             if cnt > 0:
                 self.dfs(res, s, idx + 1, cnt -1, tmp +cur)
             self.dfs(res, s, idx + 1, cnt, tmp)
-
 
 class Solution2(object):
     def removeInvalidParentheses(self, s):
@@ -113,8 +114,16 @@ class Solution2(object):
         removeInvalidParenthesesHelper(0, left_removed, right_removed)
         return res
 
-#Java
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+
+if __name__ == '__main__':
+    unittest.main()
+
 Java = '''
+#Thought: https://leetcode.com/problems/contains-duplicate/solution/
+
 Thought :
 Key Points:
 

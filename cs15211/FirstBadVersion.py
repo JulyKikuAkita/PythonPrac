@@ -26,7 +26,7 @@ __source__ = 'https://leetcode.com/problems/first-bad-version/description/'
 # Binary Search
 # Similar Questions
 # Search for a Range Search Insert Position Guess Number Higher or Lower
-
+#
 import unittest
 # The isBadVersion API is already defined for you.
 # @param version, an integer

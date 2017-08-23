@@ -2,20 +2,25 @@ __source__ = 'https://leetcode.com/problems/word-pattern/description/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/word-pattern.py
 # Time:  O(n)
 # Space: O(c), c is unique count of pattern
-
+#
+# Description: Leetcode # 290. Word Pattern
+#
 # Given a pattern and a string str, find if str follows the same pattern.
 #
+# Here follow means a full match, such that there is a bijection
+# between a letter in pattern and a non-empty word in str.
+#
 # Examples:
-#   1. pattern = "abba", str = "dog cat cat dog" should return true.
-#   2. pattern = "abba", str = "dog cat cat fish" should return false.
-#   3. pattern = "aaaa", str = "dog cat cat dog" should return false.
-#   4. pattern = "abba", str = "dog dog dog dog" should return false.
+# pattern = "abba", str = "dog cat cat dog" should return true.
+# pattern = "abba", str = "dog cat cat fish" should return false.
+# pattern = "aaaa", str = "dog cat cat dog" should return false.
+# pattern = "abba", str = "dog dog dog dog" should return false.
 #
 # Notes:
-#   1. Both pattern and str contains only lowercase alphabetical letters.
-#   2. Both pattern and str do not have leading or trailing spaces.
-#   3. Each word in str is separated by a single space.
-#   4. Each letter in pattern must map to a word with length that is at least 1.
+# You may assume pattern contains only lowercase letters,
+# and str contains lowercase letters separated by a single space.
+#
+#
 # Companies
 # Dropbox Uber Tesla
 # Related Topics
@@ -47,7 +52,6 @@ class Solution(object):
                 return False
         return True
 
-
     def wordCounts(self, str):
         cnt = 1 if str else 0
         for c in str:
@@ -65,7 +69,6 @@ class Solution(object):
             else:
                 w += c
         yield w
-
 
 # Time:  O(n)
 # Space: O(n)
@@ -94,7 +97,6 @@ class Solution2(object):
 class TestMethods(unittest.TestCase):
     def test_Local(self):
         self.assertEqual(1, 1)
-
 
 if __name__ == '__main__':
     unittest.main()

@@ -4,6 +4,7 @@ __source__ = 'https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-t
 # Space: O(h)
 #
 # Description: Leetcode # 236. Lowest Common Ancestor of a Binary Tree
+#
 # Given a binary tree, find the lowest common ancestor (LCA)
 # of two given nodes in the tree.
 #

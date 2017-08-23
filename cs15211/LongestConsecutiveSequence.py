@@ -130,7 +130,7 @@ public class Solution {
                 while( set.contains(y)){
                     y++;
                 }  //additional++ when exist while loop
-                max = Math.max(max, y -x);
+                max = Math.max(max, y - x);
             }
         }
         return max;

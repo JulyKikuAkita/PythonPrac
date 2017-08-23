@@ -3,6 +3,8 @@ __source__ = 'https://leetcode.com/problems/expression-add-operators/#/descripti
 # Time:  O(4^n)
 # Space: O(n)
 #
+# Description: Leetcode # 282. Expression Add Operators
+#
 # Given a string that contains only digits 0-9
 # and a target value, return all possibilities
 # to add operators +, -, or * between the digits
@@ -13,12 +15,16 @@ __source__ = 'https://leetcode.com/problems/expression-add-operators/#/descripti
 # "232", 8 -> ["2*3+2", "2+3*2"]
 # "00", 0 -> ["0+0", "0-0", "0*0"]
 # "3456237490", 9191 -> []
-#  Google Facebook
-# Hide Tags Divide and Conquer
-# Hide Similar Problems (M) Evaluate Reverse Polish Notation
-# (H) Basic Calculator (M) Basic Calculator II (M) Different Ways to Add Parentheses (M) Target Sum
-
-
+#
+# Companies
+# Google Facebook
+# Related Topics
+# Divide and Conquer
+# Similar Questions
+# Evaluate Reverse Polish Notation Basic Calculator Basic Calculator II
+# Different Ways to Add Parentheses Target Sum
+#
+import unittest
 class Solution(object):
     def addOperators(self, num, target):
         """
@@ -71,8 +77,14 @@ class Solution(object):
 
                 i += 1
 
-#java
-java = '''
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+
+if __name__ == '__main__':
+    unittest.main()
+
+Java = '''
 Thought:
 This problem has a lot of edge cases to be considered:
 
@@ -111,7 +123,7 @@ public class Solution {
     }
 }
 
-# 90%
+# 90.12% 94ms
 public class Solution {
     public List<String> addOperators(String num, int target) {
         List<String> result = new ArrayList<>();

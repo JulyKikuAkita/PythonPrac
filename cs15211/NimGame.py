@@ -46,6 +46,7 @@ if __name__ == '__main__':
 
 Java = '''
 #Thought: https://leetcode.com/articles/nim-game/
+
 # 5.05% 0ms
 public class Solution {
     public boolean canWinNim(int n) {

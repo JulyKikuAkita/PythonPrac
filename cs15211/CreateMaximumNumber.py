@@ -4,6 +4,7 @@ __source__ = 'https://leetcode.com/problems/create-maximum-number/#/description'
 # Space: O(m + n + k^2)
 #
 # Description: Leetcode # 321. Create Maximum Number
+#
 # Given two arrays of length m and n with digits 0-9 representing two numbers.
 # Create the maximum number of length k <= m + n from digits of the two.
 # The relative order of the digits from the same array must be preserved.
@@ -34,7 +35,7 @@ __source__ = 'https://leetcode.com/problems/create-maximum-number/#/description'
 # Dynamic Programming Greedy
 # Similar Questions
 # Remove K Digits
-
+#
 import unittest
 # DP + Greedy solution. (280ms)
 class Solution(object):
@@ -80,17 +81,14 @@ class Solution(object):
         return max(merge(max_digits1[i], max_digits2[k-i]) \
                    for i in xrange(max(0, k - n), min(k, m) + 1))
 
-
 class TestMethods(unittest.TestCase):
     def test_Local(self):
         self.assertEqual(1, 1)
-
 
 if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
 Thought: https://www.hrwhisper.me/leetcode-create-maximum-number/
 Many of the posts have the same algorithm. In short we can first solve 2 simpler problem
 Create the maximum number of one array
@@ -98,7 +96,7 @@ Create the maximum number of two array using all of their digits.
 
 The algorithm is O((m+n)^3) in the worst case. It runs in 22 ms.
 
-#27 %
+# 75.48% 18ms
 public class Solution {
     public int[] maxNumber(int[] nums1, int[] nums2, int k) {
         int n = nums1.length;
@@ -136,6 +134,7 @@ public class Solution {
         return ans;
     }
 }
+
 The basic idea:
 
 To create max number of length k from two arrays, you need to create max number of length i from array one

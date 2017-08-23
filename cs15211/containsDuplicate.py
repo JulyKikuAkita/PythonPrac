@@ -4,6 +4,7 @@ __source__ = 'https://leetcode.com/problems/contains-duplicate/description/'
 # Space: O(n)
 #
 # Description: Leetcode # 217. Contains Duplicate
+#
 # Given an array of integers, find if the array contains any duplicates.
 # Your function should return true if any value appears at least twice in the array,
 # and it should return false if every element is distinct.
@@ -33,6 +34,7 @@ if __name__ == '__main__':
 Java = '''
 #Thought: https://leetcode.com/problems/contains-duplicate/solution/
 
+#avoid, overflow
 # 97.66% 5ms
 public class Solution {
     public boolean containsDuplicate(int[] nums) {

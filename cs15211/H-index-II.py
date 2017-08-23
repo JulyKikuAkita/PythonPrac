@@ -3,26 +3,29 @@ __source__ = 'https://leetcode.com/problems/h-index-ii/tabs/description'
 # Time:  O(logn)
 # Space: O(1)
 #
+# Description: Leetcode # 275. H-Index II
+#
 # Follow up for H-Index: What if the citations array is sorted in
 # ascending order? Could you optimize your algorithm?
 #
 # Hint:
 #
 # Expected runtime complexity is in O(log n) and the input is sorted.
+#
 # Companies
 # Facebook
 # Related Topics
 # Binary Search
 # Similar Questions
 # H-Index
-
+#
+import unittest
 class Solution(object):
     def hIndex(self, citations):
         """
         :type citations: List[int]
         :rtype: int
         """
-
         n = len(citations)
         left, right = 0, n-1
         while left <= right:
@@ -33,10 +36,17 @@ class Solution(object):
                 left = mid + 1
         return n - left
 
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+        print Solution().containsDuplicate([12344555,12344555])
 
+if __name__ == '__main__':
+    unittest.main()
 
-#Java
 Java = '''
+#Thought:
+
 citations[index] >= length(citations) - index
 
 Thought: https://leetcode.com/problems/h-index/tabs/solution
@@ -50,7 +60,8 @@ that have moret than citations[mid] citations, so we should continue searching i
 case 3: citations[mid] < len-mid, we should continue searching in the right side
 After iteration, it is guaranteed that right+1 is the one we need to find (i.e. len-(right+1) papars have at least len-(righ+1) citations)
 
-1. 75%
+1.
+#69.84% 11ms
 public class Solution {
     public int hIndex(int[] citations) {
         if (citations.length == 0) {
@@ -79,28 +90,32 @@ public class Solution {
 }
 
 
-#57%
+#69.84% 11ms
 public class Solution {
     public int hIndex(int[] citations) {
-        // sanity check
-        if (citations == null || citations.length == 0) return 0;
-        int n = citations.length;
-
-        int lo = 0, hi = n-1;
-
-        while (lo <= hi) {
-            int mid = lo + (hi - lo) / 2;
-            int h = n - mid;
-            if (citations[mid] == h) return h;
-            else if (citations[mid] < h) lo = mid + 1;
-            else hi = mid -1;
+        if (citations.length == 0) {
+            return 0;
         }
-
-        return n - lo;
+        int start = 0;
+        int end = citations.length - 1;
+        int n = citations.length;
+        while (start <= end) {
+            int mid = start + (end - start) / 2;
+            int h = n - mid;
+            if (citations[mid] == h) {
+                return h;
+            } else if (citations[mid] > h) {
+                end = mid - 1;
+            } else {
+                start = mid + 1;
+            }
+        }
+        return n - start;
     }
 }
 
-3. 46%
+3.
+#39.05% 13ms
 I am very sure that two-branch binary search is more efficient than three branch binary search.
 and (low + high) is not good idea since it may rely on the overflow behavior.
 In fact, using count step first mid is the standard implement way of C++,

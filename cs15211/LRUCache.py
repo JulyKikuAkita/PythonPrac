@@ -3,6 +3,8 @@ __source__ = 'https://leetcode.com/problems/lru-cache/#/description'
 # Time:  O(1)
 # Space: O(n)
 #
+# Description: Leetcode # 146. LRU Cache
+#
 # Design and implement a data structure for Least Recently Used (LRU) cache.
 # It should support the following operations: get and set.
 #
@@ -29,15 +31,15 @@ __source__ = 'https://leetcode.com/problems/lru-cache/#/description'
 # cache.get(4);       // returns 4
 #
 #
-# Topics:
-# Design
-# You might like:
-# (H) LFU Cache (H) Design In-Memory File System (E) Design Compressed String Iterator
-# Company:
+# Companies
 # Google Uber Facebook Twitter Zenefits Amazon Microsoft Snapchat Yahoo Bloomberg Palantir
+# Related Topics
+# Design
+# Similar Questions
+# LFU Cache Design In-Memory File System Design Compressed String Iterator
 #
 
-# (1)
+import unittest
 class LRUCache(object):
 
     def __init__(self, capacity):
@@ -47,7 +49,6 @@ class LRUCache(object):
         self.list = DL()
         self.cache = {}
         self.capacity = capacity
-
 
     def get(self, key):
         """
@@ -65,7 +66,6 @@ class LRUCache(object):
         self.list.insert(node)
         self.cache[key] = node
 
-
     def set(self, key, value):
         """
         :type key: int
@@ -78,7 +78,6 @@ class LRUCache(object):
             del self.cache[self.list.tail.key] #always remove tail
             self.list.delete(self.list.tail)
         self.update(key, value)
-
 
 class DL:
     def __init__(self):
@@ -145,18 +144,6 @@ class LRUCache2:
             self.cache.popitem(last = False)
         self.cache[key] = value
 
-
-if __name__ == "__main__":
-    cache = LRUCache(3)
-    cache.set(1, 1)
-    cache.set(2, 2)
-    cache.set(3, 3)
-    print cache.get(1)
-    cache.set(4, 4)
-    print cache.get(2)
-
-
-
 # (3)
 #http://www.cnblogs.com/zuoyuan/p/3701572.html
 class Node2:
@@ -204,7 +191,6 @@ class DoubleLinkedList2:
 
 
 class LRUCacheOther:
-
     # @param capacity, an integer
     def __init__(self, capacity):
         self.capacity = capacity
@@ -220,7 +206,6 @@ class LRUCacheOther:
             return self.P[key].val
         else:
             return -1
-
 
     # @param key, an integer
     # @param value, an integer
@@ -240,16 +225,31 @@ class LRUCacheOther:
                 del self.P[self.cache.tail.key]
                 self.cache.removeLast()
 
-#test
-test = LRUCacheOther(1)
-print test.get(0)
-test.set(2,1)
-print test.get(2)
+# Test
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        test = LRUCacheOther(1)
+        print test.get(0)
+        test.set(2,1)
+        print test.get(2)
+        self.assertEqual(1, 1)
+        cache = LRUCache(3)
+        cache.set(1, 1)
+        cache.set(2, 2)
+        cache.set(3, 3)
+        print cache.get(1)
+        cache.set(4, 4)
+        print cache.get(2)
 
-# java
+if __name__ == '__main__':
+    unittest.main()
+
+Java = '''
+#Thought: https://discuss.leetcode.com/topic/6613/java-hashtable-double-linked-list-with-a-touch-of-pseudo-nodes
 # HashMap + doubly-linked list implementation:
 # Without dummyhead tail
-Java = '''
+
+# 76.69% 145ms
 public class LRUCache {
     private int capacityLeft;
     private Map<Integer, DoublyLinkedNode<KeyValuePair>> keyElementMap;
@@ -272,7 +272,7 @@ public class LRUCache {
         }
     }
 
-    public void set(int key, int value) {
+    public void put(int key, int value) {
         DoublyLinkedNode<KeyValuePair> node = keyElementMap.get(key);
         if (node == null) {
             DoublyLinkedNode<KeyValuePair> newNode = new DoublyLinkedNode<>(new KeyValuePair(key, value));
@@ -346,8 +346,8 @@ class KeyValuePair {
 }
 '''
 
-Java2= '''
-
+LinkedHashMap= '''
+# 74.62% 146ms
 #https://discuss.leetcode.com/topic/43961/laziest-implementation-java-s-linkedhashmap-takes-care-of-everything
 This is the laziest implementation using Java's LinkedHashMap. In the real interview,
 however, it is definitely not what interviewer expected.
@@ -360,7 +360,7 @@ public class LRUCache {
     public LRUCache(int capacity) {
         CAPACITY = capacity;
         //In the constructor, the third boolean parameter specifies the ordering mode.
-        //If we set it to true, it will be in access order.
+        //If we set it to true, it will be in ascending order.
         //(https://docs.oracle.com/javase/8/docs/api/java/util/LinkedHashMap.html#LinkedHashMap-int-float-boolean-)
         //By overriding removeEldestEntry in this way, we do not need to take care of it ourselves.
         //It will automatically remove the least recent one when the size of map exceeds the specified capacity.
@@ -389,120 +389,74 @@ public class LRUCache {
  */
 '''
 
-Java3 = '''
-The problem can be solved with a hashtable that keeps track of the keys and its values in the double linked list.
-One interesting property about double linked list is that the node can remove itself without other reference.
-In addition, it takes constant time to add and remove nodes from the head or tail.
+slow = '''
+#12.04% 195ms
+public class LRUCache {
+    Node head = null;
+    Node tail = null;
+    Map<Integer, Node> map;
+    int cap = 0;
+    public LRUCache(int capacity) {
+        head = new Node(-1,-1);
+        tail = new Node(-1, -1);
+        head.next = tail;
+        cap = capacity;
+        map = new HashMap<>();
+    }
 
-One particularity about the double linked list that I implemented is that I create a pseudo head
-and tail to mark the boundary, so that we don't need to check the NULL node during the update.
-This makes the code more concise and clean, and also it is good for the performance as well.
+    public int get(int key) {
+        if(!map.containsKey(key)) return -1;
+        Node node = map.get(key);
+        moveToHead(node);
+        return node.val;
+    }
 
-Voila, here is the code.
+    public void put(int key, int value) {
+        if(map.containsKey(key)) {
+            Node n = map.get(key);
+            n.val = value;
+            moveToHead(n);
+        } else {
+            Node newNode = new Node(key, value);
+            if(map.size() == cap) {
+                Node last = tail.prev;
+                int toRemoveKey = last.key;
+                map.remove(toRemoveKey);
+                last.prev.next = tail;
+                tail.prev = last.prev;
+                newNode.prev = head;
+                newNode.next = head.next;
+                head.next = newNode;
+                newNode.next.prev = newNode;
+            } else {
+                newNode.next = head.next;
+                newNode.prev = head;
+                head.next = newNode;
+                newNode.next.prev = newNode;
+            }
+            map.put(key, newNode);
+        }
+    }
 
-class DLinkedNode {
-	int key;
-	int value;
-	DLinkedNode pre;
-	DLinkedNode post;
-}
+    private void moveToHead(Node node) {
+        node.prev.next = node.next;
+        node.next.prev = node.prev;
+        node.prev = head;
+        node.next = head.next;
+        head.next = node;
+        node.next.prev = node;
+    }
 
-/**
- * Always add the new node right after head;
- */
-private void addNode(DLinkedNode node){
-	node.pre = head;
-	node.post = head.post;
-
-	head.post.pre = node;
-	head.post = node;
-}
-
-/**
- * Remove an existing node from the linked list.
- */
-private void removeNode(DLinkedNode node){
-	DLinkedNode pre = node.pre;
-	DLinkedNode post = node.post;
-
-	pre.post = post;
-	post.pre = pre;
-}
-
-/**
- * Move certain node in between to the head.
- */
-private void moveToHead(DLinkedNode node){
-	this.removeNode(node);
-	this.addNode(node);
-}
-
-// pop the current tail.
-private DLinkedNode popTail(){
-	DLinkedNode res = tail.pre;
-	this.removeNode(res);
-	return res;
-}
-
-private Hashtable<Integer, DLinkedNode> cache = new Hashtable<Integer, DLinkedNode>();
-private int count;
-private int capacity;
-private DLinkedNode head, tail;
-
-public LRUCache(int capacity) {
-	this.count = 0;
-	this.capacity = capacity;
-
-	head = new DLinkedNode();
-	head.pre = null;
-
-	tail = new DLinkedNode();
-	tail.post = null;
-
-	head.post = tail;
-	tail.pre = head;
-}
-
-public int get(int key) {
-
-	DLinkedNode node = cache.get(key);
-	if(node == null){
-		return -1; // should raise exception here.
-	}
-
-	// move the accessed node to the head;
-	this.moveToHead(node);
-
-	return node.value;
-}
-
-
-public void set(int key, int value) {
-	DLinkedNode node = cache.get(key);
-
-	if(node == null){
-
-		DLinkedNode newNode = new DLinkedNode();
-		newNode.key = key;
-		newNode.value = value;
-
-		this.cache.put(key, newNode);
-		this.addNode(newNode);
-
-		++count;
-
-		if(count > capacity){
-			// pop the tail
-			DLinkedNode tail = this.popTail();
-			this.cache.remove(tail.key);
-			--count;
-		}
-	}else{
-		// update the value.
-		node.value = value;
-		this.moveToHead(node);
-	}
-
+    public class Node {
+        int val;
+        int key;
+        Node next;
+        Node prev;
+        public Node(int k, int v) {
+            key = k;
+            val = v;
+        }
+    }
 }
 
 '''

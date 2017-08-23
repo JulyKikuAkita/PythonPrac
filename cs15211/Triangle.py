@@ -3,7 +3,10 @@ __source__ = 'https://leetcode.com/problems/triangle/description/'
 # Space: O(n)
 # DP
 #
-# Given a triangle, find the minimum path sum from top to bottom. Each step you may move to adjacent numbers on the row below.
+# Description: Leetcode # 120. Triangle
+#
+# Given a triangle, find the minimum path sum from top to bottom.
+# Each step you may move to adjacent numbers on the row below.
 #
 # For example, given the following triangle
 # [
@@ -15,11 +18,13 @@ __source__ = 'https://leetcode.com/problems/triangle/description/'
 # The minimum path sum from top to bottom is 11 (i.e., 2 + 3 + 5 + 1 = 11).
 #
 # Note:
-# Bonus point if you are able to do this using only O(n) extra space, where n is the total number of rows in the triangle.
+# Bonus point if you are able to do this using only O(n) extra space,
+# where n is the total number of rows in the triangle.
 #
 # Related Topics
 # Array Dynamic Programming
-
+#
+import unittest
 class Solution:
     # @param triangle, a list of lists of integers
     # @return an integer
@@ -52,7 +57,7 @@ class Solution2:
                 ans[i][j] +=  min(triangle[i+1][j], triangle[i+1][j+1])
         return ans[0][0]
 
-# http://www.programcreek.com/2013/01/leetcode-triangle-java/
+    # http://www.programcreek.com/2013/01/leetcode-triangle-java/
     def minimumTotal_B_U(self, triangle):
         size = len(triangle)
 
@@ -63,35 +68,36 @@ class Solution2:
                 ans[j] = triangle[i][j] + min(ans[j], ans[j+1])
         return ans[0]
 
-# java solution
-# http://www.programcreek.com/2013/01/leetcode-triangle-java/
-
 #test
-tri1 = \
-[
-     [2],
-    [3,4],
-   [6,5,7],
-  [4,1,8,3]
-]
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+        tri1 = \
+        [
+             [2],
+            [3,4],
+           [6,5,7],
+          [4,1,8,3]
+        ]
 
-tri2 = [[-10]]
-tri3 = [[1],[2,3]]
-test = Solution2()
-#print test.minimumTotal(tri1)  # modified the original tri value
-#print tri1
-print test.minimumTotal_B_U(tri1)
+        tri2 = [[-10]]
+        tri3 = [[1],[2,3]]
+        test = Solution2()
+        #print test.minimumTotal(tri1)  # modified the original tri value
+        #print tri1
+        print test.minimumTotal_B_U(tri1)
 
-#if __name__ == "__main__":
-    #print Solution().minimumTotal([[-1], [2, 3], [1, -1, -3]])
-    #print Solution().minimumTotal(tri1)
-#Java
+if __name__ == '__main__':
+    unittest.main()
+
 Java = '''
+#Thought:
 Thought: This problem is quite well-formed in my opinion. The triangle has a tree-like structure,
 which would lead people to think about traversal algorithms such as DFS. However, if you look closely,
 you would notice that the adjacent nodes always share a 'branch'. In other word, there are overlapping subproblems.
 Also, suppose x and y are 'children' of k. Once minimum paths from x and y to the bottom are known,
-the minimum path starting from k can be decided in O(1), that is optimal substructure. Therefore, dynamic programming would be the best solution to this problem in terms of time complexity.
+the minimum path starting from k can be decided in O(1), that is optimal substructure.
+Therefore, dynamic programming would be the best solution to this problem in terms of time complexity.
 
 What I like about this problem even more is that the difference
 between 'top-down' and 'bottom-up' DP can be 'literally' pictured in the input triangle.
@@ -118,16 +124,17 @@ minpath[i] = min( minpath[i], minpath[i+1]) + triangle[k][i];
 
 #DP Bottom-up
 #62.86% 8ms
-public class Solution {
+class Solution {
     public int minimumTotal(List<List<Integer>> triangle) {
-        int[] A = new int[triangle.size()+1];
-        for(int i=triangle.size()-1;i>=0;i--){
-            for(int j=0;j<triangle.get(i).size();j++){
-                A[j] = Math.min(A[j],A[j+1])+triangle.get(i).get(j);
+        int[] dp = new int[triangle.size()+1];
+        for (int i = triangle.size() - 1; i >= 0; i--) {
+            for (int j = 0; j < triangle.get(i).size(); j++) {
+                dp[j] = triangle.get(i).get(j) + Math.min(dp[j], dp[j + 1]);
             }
         }
-        return A[0];
+        return dp[0];
     }
+}
 }
 
 # 97.20% 6ms top-down

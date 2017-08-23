@@ -1,8 +1,10 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/maximum-product-of-word-lengths/description/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/maximum-product-of-word-lengths.py
 # Time:  O(n) ~ O(n^2)
 # Space: O(n)
-
+#
+# Description: Leetcode # 318. Maximum Product of Word Lengths
+#
 # Given a string array words, find the maximum value of
 # length(word[i]) * length(word[j]) where the two words
 # do not share common letters. You may assume that each
@@ -26,8 +28,13 @@ __author__ = 'July'
 #
 # Follow up:
 # Could you do better than O(n2), where n is the number of words?
-#Google
 #
+# Companies
+# Google
+# Related Topics
+# Bit Manipulation
+#
+import unittest
 # Counting Sort + Pruning + Bit Manipulation
 class Solution(object):
     def maxProduct(self, words):
@@ -63,8 +70,6 @@ class Solution(object):
                     max_product = len(words[i]) * len(words[j])
         return max_product
 
-
-
 # Time:  O(nlogn) ~ O(n^2)
 # Space: O(n)
 # Sorting + Pruning + Bit Manipulation
@@ -93,12 +98,18 @@ class Solution2(object):
                     max_product = len(words[i]) * len(words[j])
         return max_product
 
-if __name__ == "__main__":
-    words = ["a", "ab", "abc", "d", "cd", "bcd", "abcd"]
-    print Solution2().maxProduct(words)
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        words = ["a", "ab", "abc", "d", "cd", "bcd", "abcd"]
+        print Solution2().maxProduct(words)
 
-#java
-js = '''
+if __name__ == '__main__':
+    unittest.main()
+
+Java = '''
+#Thought:
+
+#85.24% 25ms
 public class Solution {
     public int maxProduct(String[] words) {
         int len = words.length;
@@ -123,6 +134,27 @@ public class Solution {
             result |= (1 << (word.charAt(i) - 'a'));
         }
         return result;
+    }
+}
+
+#59.97% 36ms
+public class Solution {
+    public int maxProduct(String[] words) {
+        int max = 0;
+        int[] bytes = new int[words.length];
+        for(int i=0;i<words.length;i++){
+            int val = 0;
+            for(int j=0;j<words[i].length();j++){
+                val |= 1<<(words[i].charAt(j)-'a');
+            }
+            bytes[i] = val;
+        }
+        for(int i=0; i<bytes.length; i++){
+            for(int j=i+1; j<bytes.length; j++){
+                if((bytes[i] & bytes[j])==0)max = Math.max(max,words[i].length()*words[j].length());
+            }
+        }
+        return max;
     }
 }
 '''

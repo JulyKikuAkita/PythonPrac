@@ -3,6 +3,8 @@ __source__ = 'https://leetcode.com/problems/ugly-number/#/solutions'
 # Time:  O(logn)
 # Space: O(1)
 #
+# Description: Leetcode # 263. Ugly Number
+#
 # Write a program to check whether a given number is an ugly number.
 #
 # Ugly numbers are positive numbers whose prime factors only include
@@ -10,9 +12,13 @@ __source__ = 'https://leetcode.com/problems/ugly-number/#/solutions'
 # includes another prime factor 7.
 #
 # Note that 1 is typically treated as an ugly number.
-#  Math
-# Hide Similar Problems (E) Happy Number (E) Count Primes (M) Ugly Number II
 #
+# Related Topics
+# Math
+# Similar Questions
+# Happy Number Count Primes Ugly Number II
+#
+import unittest
 class Solution:
     # @param {integer} num
     # @return {boolean}
@@ -24,8 +30,15 @@ class Solution:
                 num /= i
         return num == 1
 
-#Java
-java = '''
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+
+if __name__ == '__main__':
+    unittest.main()
+
+Java = '''
+#13.15% 2ms
 public class Solution {
     public boolean isUgly(int num) {
         if(num < 1) return false;
@@ -36,6 +49,7 @@ public class Solution {
     }
 }
 
+#13.15% 2ms
 public class Solution {
     public boolean isUgly(int num) {
         if (num <= 0) {

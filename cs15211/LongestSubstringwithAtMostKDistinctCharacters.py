@@ -1,21 +1,26 @@
 __source__ = 'https://leetcode.com/problems/longest-substring-with-at-most-k-distinct-characters/description/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/longest-substring-with-at-most-k-distinct-characters.py
-# Given a string, find the length of the longest substring T
-# that contains at most k distinct characters.
+# Time:  O(n)
+# Space: O(1)
+#
+# Description: Leetcode # 340. Longest Substring with At Most K Distinct Characters
+#
+# Given a string, find the length of the longest substring T that contains at most k distinct characters.
 #
 # For example, Given s = "eceba", k = 2,
 #
 # T is "ece" which its length is 3.
-
+#
 # Companies
 # Google
 # Related Topics
 # Hash Table String
 # Similar Questions
-# Longest Substring with At Most Two Distinct Characters Longest Repeating Character Replacement
+# Longest Substring with At Most Two Distinct Characters
+# Longest Repeating Character Replacement
 #
-
-#  Time:  O(n)
+import unittest
+# Time:  O(n)
 # Space: O(1)
 class Solution(object):
     def lengthOfLongestSubstringKDistinct(self, s, k):
@@ -39,9 +44,16 @@ class Solution(object):
             longest = max(longest, i - start + 1)
         return longest
 
-#Java
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+
+if __name__ == '__main__':
+    unittest.main()
+
 Java = '''
-#Sliding window 59.03% 13ms
+# Sliding window
+# 59.03% 13ms
 public class Solution {
     public int lengthOfLongestSubstringKDistinct(String s, int k) {
         int[] count = new int[256];

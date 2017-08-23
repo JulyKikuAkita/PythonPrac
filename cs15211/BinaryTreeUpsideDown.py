@@ -3,35 +3,36 @@ __source__ = 'https://leetcode.com/problems/binary-tree-upside-down/#/descriptio
 # Time:  O(n)
 # Space: O(1)
 #
+# Description: Leetcode # 156. Binary Tree Upside Down
+#
 # Given a binary tree where all the right nodes are either leaf nodes with a sibling
-# (a left node that shares the same parent node) or empty, flip it upside down and
-# turn it into a tree where the original right nodes turned into left leaf nodes.
-# Return the new root.
+# (a left node that shares the same parent node) or empty,
+# flip it upside down and turn it into a tree
+# where the original right nodes turned into left leaf nodes. Return the new root.
 #
 # For example:
 # Given a binary tree {1,2,3,4,5},
-#
 #     1
 #    / \
 #   2   3
 #  / \
 # 4   5
-#
 # return the root of the binary tree [4,5,2,#,#,3,1].
-#
 #    4
 #   / \
 #  5   2
 #     / \
 #    3   1
+# confused what "{1,#,2,3}" means? > read more on how binary tree is serialized on OJ.
 #
-# Definition for a  binary tree node
+# Companies
 # LinkedIn
 # Related Topics
 # Tree
 # Similar Questions
 # Reverse Linked List
 #
+import unittest
 class TreeNode:
      def __init__(self, x):
          self.val = x
@@ -88,30 +89,35 @@ class Solution2:
         preorder(p,allnodes)
         return allnodes
 #test
-#############test
-#creating BST tree ####
-root0=TreeNode(0)
-tree1=TreeNode(1)
-tree2=TreeNode(2)
-#tree3=TreeNode(3)
-#tree4=TreeNode(4)
-#tree5=TreeNode(5)
-#tree6=TreeNode(6)
-root0.left=tree1
-root0.right=tree2
-#tree1.left=tree3
-#tree1.right=tree4
-#tree2.left=tree5
-#tree2.right=tree6
-#end of creating BST tree ####
-#test
-if __name__ == "__main__":
-    print  Solution().upsideDownBinaryTree(root0).val
-    #ans = Solution2().upsideDownBinaryTree(root0)
-    #print Solution2().preorderTraversal1(ans)
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+        #############test
+        #creating BST tree ####
+        root0=TreeNode(0)
+        tree1=TreeNode(1)
+        tree2=TreeNode(2)
+        #tree3=TreeNode(3)
+        #tree4=TreeNode(4)
+        #tree5=TreeNode(5)
+        #tree6=TreeNode(6)
+        root0.left=tree1
+        root0.right=tree2
+        #tree1.left=tree3
+        #tree1.right=tree4
+        #tree2.left=tree5
+        #tree2.right=tree6
 
-#Java
-Java= '''
+        #end of creating BST tree ####
+        #test
+        print  Solution().upsideDownBinaryTree(root0).val
+        #ans = Solution2().upsideDownBinaryTree(root0)
+        #print Solution2().preorderTraversal1(ans)
+
+if __name__ == '__main__':
+    unittest.main()
+
+Java = '''
 Thought: https://leetcode.com/problems/binary-tree-upside-down/#/solutions
 /**
  * Definition for a binary tree node.
@@ -122,24 +128,10 @@ Thought: https://leetcode.com/problems/binary-tree-upside-down/#/solutions
  *     TreeNode(int x) { val = x; }
  * }
  */
- #BFS:
+
+#BFS:
+#46.50% 0ms
 public class Solution {
-    public TreeNode upsideDownBinaryTree(TreeNode root) {
-        TreeNode cur = root;
-        TreeNode parent = null;
-        TreeNode right = null;
-
-        while(cur != null){
-            TreeNode left = cur.left;
-            cur.left = right;
-            right = cur.right;
-            cur.right = parent;
-            parent = cur;
-            cur = left;
-        }
-        return parent;
-    }
-
     public TreeNode upsideDownBinaryTree(TreeNode root) {
         TreeNode curr = root;
         TreeNode next = null;
@@ -160,9 +152,30 @@ public class Solution {
        return prev;
     }
 }
-# DFS:
+
+#46.50% 0ms
 public class Solution {
-    public TreeNode upsideDownBinaryTree1(TreeNode root) {
+    public TreeNode upsideDownBinaryTree(TreeNode root) {
+        TreeNode cur = root;
+        TreeNode parent = null;
+        TreeNode right = null;
+
+        while(cur != null){
+            TreeNode left = cur.left;
+            cur.left = right;
+            right = cur.right;
+            cur.right = parent;
+            parent = cur;
+            cur = left;
+        }
+        return parent;
+    }
+}
+
+# DFS:
+#46.50% 0ms
+public class Solution {
+    public TreeNode upsideDownBinaryTree(TreeNode root) {
         if (root == null || root.left == null) {
             return root;
         }
@@ -174,8 +187,11 @@ public class Solution {
         root.right = null;
         return parent;
     }
+}
 
-    public TreeNode upsideDownBinaryTree2(TreeNode root) {
+#46.50% 0ms
+public class Solution {
+    public TreeNode upsideDownBinaryTree(TreeNode root) {
         if(root == null || root.left == null) {
             return root;
         }
@@ -187,5 +203,6 @@ public class Solution {
         return newRoot;
     }
 }
+
 '''
 

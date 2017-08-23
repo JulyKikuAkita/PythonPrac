@@ -3,7 +3,7 @@ __source__ = 'https://leetcode.com/problems/move-zeroes/description/'
 # Time:  O(n)
 # Space: O(1)
 #
-# Description: 283. Move Zeroes
+# Description: Leetcode # 283. Move Zeroes
 #
 # Given an array nums, write a function to move all 0's
 # to the end of it while maintaining the relative order
@@ -23,7 +23,6 @@ __source__ = 'https://leetcode.com/problems/move-zeroes/description/'
 # Remove Element
 #
 import unittest
-
 class Solution(object):
     def moveZeroes(self, nums):
         """
@@ -58,7 +57,6 @@ class Solution3(object):
         :rtype: void Do not return anything, modify nums in-place instead.
         """
         nums.sort(cmp=lambda a, b: 0 if b else -1)
-
 
 class Solution2(object):
     def moveZeroes(self, nums):
@@ -102,6 +100,22 @@ public class Solution {
 
         while (insertPos < nums.length) {
             nums[insertPos++] = 0;
+        }
+    }
+}
+
+#18.56% 3ms
+class Solution {
+    public void moveZeroes(int[] nums) {
+        int left = 0, right = 0;
+        while (right < nums.length) {
+            if (nums[right] != 0) {
+                int tmp = nums[left];
+                nums[left] = nums[right];
+                nums[right] = tmp;
+                left++;
+            }
+            right++;
         }
     }
 }
