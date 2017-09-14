@@ -1,6 +1,7 @@
 __source__ = 'https://leetcode.com/problems/decode-string/#/description'
+# https://github.com/kamyu104/LeetCode/blob/master/Python/decode-string.py
 # Time:  O(n)
-# Space: O(1)
+# Space: O(h), h is the depth of the recursion
 #
 # Description:
 # Given an encoded string, return it's decoded string.
@@ -18,10 +19,14 @@ __source__ = 'https://leetcode.com/problems/decode-string/#/description'
 # s = "3[a]2[bc]", return "aaabcbc".
 # s = "3[a2[c]]", return "accaccacc".
 # s = "2[abc]3[cd]ef", return "abcabccdcdcdef".
-# Hide Company Tags Google
-# Hide Tags Depth-first Search Stack
-# Hide Similar Problems (H) Encode String with Shortest Length
-
+#
+# Companies
+# Google
+# Related Topics
+# Stack Depth-first Search
+# Similar Questions
+# Encode String with Shortest Length
+#
 import unittest
 import re
 class Solution(object):
@@ -37,7 +42,6 @@ class Solution(object):
 class TestMethods(unittest.TestCase):
     def test_Local(self):
         self.assertEqual(1, 1)
-
 
 if __name__ == '__main__':
     unittest.main()

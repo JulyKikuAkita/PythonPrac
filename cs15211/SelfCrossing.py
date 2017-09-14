@@ -86,6 +86,30 @@ if __name__ == '__main__':
 
 Java = '''
 #Thought:
+// Categorize the self-crossing scenarios, there are 3 of them:
+// 1. Fourth line crosses first line and works for fifth line crosses second line and so on...
+// 2. Fifth line meets first line and works for the lines after
+// 3. Sixth line crosses first line and works for the lines after
+Suppose i is the current line, then:
+
+i and i-3 can cross
+i and i-4 can cross
+i and i-5 can cross
+no more or no less just exactly the right combination.
+
+Now it's time for us to restrict the conditions to make them just happen.
+
+i and i-3
+
+i>=i-2 && i-1<=i-3
+i and i-4
+
+i+i-4>=i-2 && i-1==i-3
+i and i-5
+
+i+i-4>=i-2 && i-2>=i-4 && i-1+i-5>=i-3 && i-1<=i-3
+
+
 # 6.95% 1ms
 public class Solution {
     public boolean isSelfCrossing(int[] x) {
@@ -118,26 +142,19 @@ public class Solution {
 public class Solution {
     public boolean isSelfCrossing(int[] x) {
         int n = x.length;
-        if(n <= 3) return false;
-        for(int i=3; i<n;i++) {
+        if (n <= 3) return false;
+
+        for (int i = 3; i < n; i++) {
             //4th line cross 1st
-            if(x[i] >= x[i-2] && x[i-1] <= x[i-3]) {
-               // System.out.println("test 1");
-                return true;
-            }
+            if (x[i] >= x[i-2] && x[i-1] <= x[i-3]) return true;
             //5th cross 1st
-            if(i >= 4) {
-                if(x[i] + x[i-4] >= x[i-2] && x[i-1] == x[i-3]) {
-                   // System.out.println("test 2");
-                    return true;
-                }
+            if (i >= 4) {
+                if (x[i] + x[i-4] >= x[i-2] && x[i-1] == x[i-3]) return true;
             }
             //6th cross 1st
-            if(i >= 5) {
-                if(x[i] + x[i-4] >= x[i-2] && x[i-1] + x[i-5] >= x[i-3] && x[i-1] <= x[i-3] && x[i-2] >= x[i-4]) {
-                  //  System.out.println("test 3");
+            if (i >= 5) { //ex: [3,3,3,2,1,1]
+                if (x[i] + x[i-4] >= x[i-2] && x[i-1] + x[i-5] >= x[i-3] && x[i-1] <= x[i-3] && x[i - 4] < x[i-2])
                     return true;
-                }
             }
         }
         return false;

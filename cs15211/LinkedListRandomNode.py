@@ -3,7 +3,8 @@ __source__ = 'https://leetcode.com/problems/linked-list-random-node/#/descriptio
 # Time:  O(n) Reservoir sampling
 # Space: O(1)
 #
-# Description:
+# Description: 382. Linked List Random Node
+#
 # Given a singly linked list, return a random node's value from the linked list.
 # Each node must have the same probability of being chosen.
 #
@@ -23,14 +24,16 @@ __source__ = 'https://leetcode.com/problems/linked-list-random-node/#/descriptio
 # Each element should have equal probability of returning.
 # solution.getRandom();
 #
-#  Google
-# Hide Tags Reservoir Sampling
-# Hide Similar Problems (M) Random Pick Index
+# Companies
+# Google
+# Related Topics
+# Reservoir Sampling
+# Similar Questions
+# Random Pick Index
 #
+
 import unittest
-
 from random import randint
-
 class Solution(object):
 
     def __init__(self, head):
@@ -64,7 +67,6 @@ class Solution(object):
 class TestMethods(unittest.TestCase):
     def test_Local(self):
         self.assertEqual(1, 1)
-
 
 if __name__ == '__main__':
     unittest.main()
@@ -141,5 +143,34 @@ public class Solution {
  * int param_1 = obj.getRandom();
  */
 
+#100% 108ms
+class Solution {
 
- '''
+    ListNode myHead;
+    int len = 0;
+    Random r = new Random();
+
+    /** @param head The linked list's head.
+        Note that the head is guaranteed to be not null, so it contains at least one node. */
+    public Solution(ListNode head) {
+        myHead = head;
+        while(head != null) {
+            head = head.next;
+            len++;
+        }
+    }
+
+    /** Returns a random node's value. */
+    public int getRandom() {
+        int i = r.nextInt(len);
+        ListNode head = myHead;
+        while(i > 0 && head != null) {
+            i--;
+            head = head.next;
+        }
+        return head.val;
+
+    }
+}
+
+'''

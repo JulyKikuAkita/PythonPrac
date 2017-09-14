@@ -1,9 +1,10 @@
 __source__ = 'https://leetcode.com/problems/longest-substring-with-at-least-k-repeating-characters/#/description'
+# https://github.com/kamyu104/LeetCode/blob/master/Python/longest-substring-with-at-least-k-repeating-characters.py
 # Time:  O(26 * n) = O(n)
 # Space: O(26) = O(1)
-
 #
-# Description:
+# Description: Leetcode # 395. Longest Substring with At Least K Repeating Characters
+#
 # Find the length of the longest substring T of a given string
 # (consists of lowercase letters only) such that every character in T
 # appears no less than k times.
@@ -26,11 +27,12 @@ __source__ = 'https://leetcode.com/problems/longest-substring-with-at-least-k-re
 # 5
 #
 # The longest substring is "ababb", as 'a' is repeated 2 times and 'b' is repeated 3 times.
-#  Baidu
-
+#
+# Companies
+# Baidu
+#
 # Recursive solution.
 import unittest
-
 class Solution(object):
     def longestSubstring(self, s, k):
         """
@@ -64,7 +66,7 @@ class Solution(object):
 # (because it will always be too infrequent and thus can't be part of any ok substring)
 # and make the most out of the splits.
 
-class Solution(object):
+class Solution2(object):
     def longestSubstring(self, s, k):
         """
         :type s: str
@@ -80,17 +82,14 @@ class TestMethods(unittest.TestCase):
     def test_Local(self):
         self.assertEqual(1, 1)
 
-
 if __name__ == '__main__':
     unittest.main()
 
 Java = '''
 #Thought:
 Java divide and conquer(recursion) solution
-100%
+#90.05% 4ms
 public class Solution {
-   //395. Longest Substring with At Least K Repeating Characters
-
    private int findLongestSub(String s, int k, int start, int end) {
        //count frequency of char over [start, end]
 	   if (end < start) {
@@ -174,7 +173,7 @@ public class Solution {
    }
 }
 
-36%
+#37.44% 99ms
 public class Solution {
     public int longestSubstring(String s, int k) {
         char[] str = s.toCharArray();
@@ -202,6 +201,69 @@ public class Solution {
             }
         }
         return end - start;
+    }
+}
+
+#90.05% 4ms
+class Solution {
+    public int longestSubstring(String s, int k) {
+        return dfs(s, 0, s.length() - 1, k);
+    }
+
+    public int dfs(String s, int start, int end, int k) {
+        if (start > end) return 0;
+
+        int[] count = new int[26];
+        for (int i = start; i <= end; i++) {
+            count[s.charAt(i) - 'a']++;
+        }
+
+        for (int i = 0; i < 26; i++) {
+            if (count[i] < k && count[i] > 0) {
+                int pos = s.indexOf((char)i + 'a', start);
+                int pos2 = pos + 1;
+                while (pos2 < s.length() && s.charAt(pos2) == (char)i + 'a') pos2++;
+                return Math.max(dfs(s, start, pos - 1, k), dfs(s, pos2, end, k));
+            }
+        }
+        return end - start + 1;
+    }
+}
+
+#94.35% 3ms
+public class Solution {
+    char[] cs;
+    int k;
+    public int longestSubstring(String s, int k) {
+        cs = s.toCharArray();
+        this.k = k;
+        return lss(0, s.length() - 1);
+    }
+    private int lss(int start, int end) {
+        if (end - start + 1 < k) return 0;
+        int[] count = new int[26];
+        for (int i = start; i <= end; i++) {
+            int index = (int)cs[i] - (int)'a';
+            count[index]++;
+        }
+        int s = start;
+        boolean begin = true;
+        int max = 0;
+        for (int i = start; i <= end; i++) {
+            int index = (int)cs[i] - (int)'a';
+            if (count[index] < k) {
+                if (begin) {
+                    begin = false;
+                    max = Math.max(max, lss(s, i - 1));
+                }
+            } else if (!begin) {
+                begin = true;
+                s = i;
+            }
+        }
+        if (begin && s == start) return end - start + 1;
+        if (begin) max = Math.max(max, lss(s, end));
+        return max;
     }
 }
 '''

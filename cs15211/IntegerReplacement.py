@@ -1,7 +1,10 @@
-__source__ = 'https://github.com/kamyu104/LeetCode/blob/master/Python/integer-replacement.py'
+__source__ = 'https://leetcode.com/problems/integer-replacement/description/'
+# https://github.com/kamyu104/LeetCode/blob/master/Python/integer-replacement.py
 # Time:  O(logn)
 # Space: O(1)
-
+#
+# Description: Leetcode # 397. Integer Replacement
+#
 # Given a positive integer n and you can do operations as follow:
 #
 # If n is even, replace n with n/2.
@@ -31,9 +34,11 @@ __source__ = 'https://github.com/kamyu104/LeetCode/blob/master/Python/integer-re
 # or
 # 7 -> 6 -> 3 -> 2 -> 1
 #
-#  Google Baidu
-# Hide Tags Math Bit Manipulation
-
+# Companies
+# Google Baidu
+# Related Topics
+# Math Bit Manipulation
+#
 import unittest
 # Iterative solution.
 class Solution(object):
@@ -76,11 +81,9 @@ class Solution2(object):
         else:
             return self.integerReplacement((n + 1) / 4) + 3
 
-
 class TestMethods(unittest.TestCase):
     def test_Local(self):
         self.assertEqual(1, 1)
-
 
 if __name__ == '__main__':
     unittest.main()
@@ -114,6 +117,7 @@ Otherwise, increment n.
 
 Use long to avoid overflow (if n is Integer.MAX_VALUE).
 
+#39.02% 4ms
 public class Solution {
     public int integerReplacement(int n) {
         int c = 0;
@@ -154,4 +158,12 @@ public class Solution {
     }
 }
 
+#39.02% 4ms
+class Solution {
+    public int integerReplacement(int n) {
+        if(n> 0 && n<=3) return n-1;
+        if((n&1)==0) return 1+integerReplacement(n>>>1);
+        return ((n&3)==3)? 1+integerReplacement(n+1): 1+integerReplacement(n^1);
+    }
+}
 '''

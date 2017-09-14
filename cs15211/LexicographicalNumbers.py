@@ -1,16 +1,21 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/lexicographical-numbers/description/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/lexicographical-numbers.py
 # Time:  O(n)
 # Space: O(1)
-
+#
+# Description: Leetcode # 386. Lexicographical Numbers
+#
 # Given an integer n, return 1 - n in lexicographical order.
 #
 # For example, given 13, return: [1,10,11,12,13,2,3,4,5,6,7,8,9].
 #
 # Please optimize your algorithm to use less time and space.
 # The input size may be as large as 5,000,000.
+#
+# Companies
 # Bloomberg
-
+#
+import unittest
 class Solution(object):
     def lexicalOrder(self, n):
         result = []
@@ -39,7 +44,15 @@ class Solution(object):
 
         return result
 
-java = '''
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+
+if __name__ == '__main__':
+    unittest.main()
+
+Java = '''
+#Thought: https://leetcode.com/problems/contains-duplicate/solution/
 The basic idea is to find the next number to add.
 Take 45 for example: if the current number is 45, the next one will be 450 (450 == 45 * 10)(if 450 <= n),
 or 46 (46 == 45 + 1) (if 46 <= n) or 5 (5 == 45 / 10 + 1)(5 is less than 45 so it is for sure less than n).
@@ -47,6 +60,8 @@ We should also consider n = 600, and the current number = 499, the next number i
 after "4" in "499" so we should divide 499 by 10 until the last digit is not "9".
 It is like a tree, and we are easy to get a sibling, a left most child and the parent of any node.
 
+#BFS
+#96.94% 123ms
 public List<Integer> lexicalOrder(int n) {
         List<Integer> list = new ArrayList<>(n);
         int curr = 1;
@@ -73,6 +88,7 @@ Then we visit every node in pre-order.
       /\        /\       /\
    10 ...19  20...29  30...39   ....
 
+#71.07% 173ms
 public class Solution {
     public List<Integer> lexicalOrder(int n) {
         List<Integer> res = new ArrayList<>();
@@ -90,5 +106,32 @@ public class Solution {
             dfs(cur * 10 + i, n ,res);
         }
     }
+}
+
+#100% 102ms
+public class Solution {
+    public List<Integer> lexicalOrder(int n) {
+        Integer[] arr = new Integer[n];
+        lexicalOrder(arr, n, 0, 0);
+        return Arrays.asList(arr);
+    }
+
+    public int lexicalOrder(Integer[] arr, int n, int idx, int prev) {
+        int next = prev * 10;
+
+        for(int i = 0; i <= 9; ++i){
+            int realNext = next + i;
+            if(realNext == 0) continue;
+            if(realNext > n) return idx;
+
+            arr[idx] = realNext;
+            idx++;
+
+            idx = lexicalOrder(arr, n, idx, realNext);
+        }
+
+        return idx;
+    }
+
 }
 '''

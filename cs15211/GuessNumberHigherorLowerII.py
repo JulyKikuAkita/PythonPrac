@@ -1,8 +1,10 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/guess-number-higher-or-lower-ii/description/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/guess-number-higher-or-lower-ii.py
 # Time:  O(n^2)
 # Space: O(n^2)
-
+#
+# Description: Leetcode # 375. Guess Number Higher or Lower II
+#
 # We are playing the Guess Game. The game is as follows:
 #
 # I pick a number from 1 to n. You have to guess which number I picked.
@@ -36,12 +38,15 @@ __author__ = 'July'
 # for even a small n. You MUST use dynamic programming.
 # As a follow-up, how would you modify your code to solve the problem of
 # minimizing the expected loss, instead of the worst-case loss?
-
-#  Google
-# Hide Tags Binary Search
-# Hide Similar Problems (E) First Bad Version (M) Guess Number Higher or Lower II
-
-
+#
+# Companies
+# Google
+# Related Topics
+# Dynamic Programming Minimax
+# Similar Questions
+# Flip Game II Guess Number Higher or Lower Can I Win Find K Closest Elements
+#
+import unittest
 class Solution(object):
     def getMoneyAmount(self, n):
         """
@@ -54,3 +59,84 @@ class Solution(object):
                 pay[i][j] = min(k+1 + max(pay[i][k-1], pay[k+1][j]) \
                                 for k in xrange(i, j+1))
         return pay[0][n-1]
+
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+        print Solution().containsDuplicate([12344555,12344555])
+
+if __name__ == '__main__':
+    unittest.main()
+
+Java = '''
+#Thought: https://leetcode.com/problems/guess-number-higher-or-lower-ii/solution/
+# 51.40% 15ms
+public class Solution {
+    public int getMoneyAmount(int n) {
+        int[][] table = new int[n+1][n+1];
+        return DP(table, 1, n);
+    }
+
+    int DP(int[][] t, int s, int e){
+        if(s >= e) return 0;
+        if(t[s][e] != 0) return t[s][e];
+        int res = Integer.MAX_VALUE;
+        for(int x=s; x<=e; x++){
+            int tmp = x + Math.max(DP(t, s, x-1), DP(t, x+1, e));
+            res = Math.min(res, tmp);
+        }
+        t[s][e] = res;
+        return res;
+    }
+}
+
+#83.13% 13ms
+public class Solution {
+    public int getMoneyAmount(int n) {
+        int[][] dp = new int[n + 1][n + 1];
+        for (int len = 2; len <= n; len++) {
+            for (int start = 1; start <= n - len + 1; start++) {
+                int minres = Integer.MAX_VALUE;
+                for (int piv = start; piv < start + len - 1; piv++) {
+                    int res = piv + Math.max(dp[start][piv - 1], dp[piv + 1][start + len - 1]);
+                    minres = Math.min(res, minres);
+                }
+                dp[start][start + len - 1] = minres;
+            }
+        }
+        return dp[1][n];
+    }
+}
+
+#DFS
+#98.21% 3ms
+public class Solution {
+    int[][] dp;
+    public int getMoneyAmount(int n) {
+        dp = new int[n + 1][n + 1];
+        return helper(1, n);
+    }
+
+    private int helper(int start, int end) {
+        if (dp[start][end] != 0) {
+            return dp[start][end];
+        }
+        if (start >= end) {
+            return 0;
+        }
+        if (start >= end - 2) {
+            return dp[start][end] = end - 1;
+        }
+        int mid = (start + end) / 2 - 1, min = Integer.MAX_VALUE;
+        while (mid < end) {
+            int left = helper(start, mid - 1);
+            int right = helper(mid + 1, end);
+            min = Math.min(min, mid + Math.max(left, right));
+            if (right <= left) break;
+            mid++;
+        }
+        return dp[start][end] = min;
+
+    }
+}
+'''

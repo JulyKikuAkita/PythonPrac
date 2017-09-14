@@ -2,7 +2,9 @@ __source__ = 'https://leetcode.com/problems/combination-sum-iv/description/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/combination-sum-iv.py
 # Time:  O(nlon + n * t), t is the value of target.
 # Space: O(t)
-
+#
+# Description: Leetcode # 377. Combination Sum IV
+#
 # Given an integer array with all positive numbers and no duplicates,
 # find the number of possible combinations that add up to a positive integer target.
 #

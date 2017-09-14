@@ -1,8 +1,10 @@
-# https://leetcode.com/problems/nth-digit/#/description
+__source__ = 'https://leetcode.com/problems/nth-digit/description/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/nth-digit.py
 # Time:  O(logn)
 # Space: O(1)
-
+#
+# Description: Leetcode # 400. Nth Digit
+#
 # Find the nth digit of the infinite integer sequence
 # 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, ...
 #
@@ -28,9 +30,12 @@
 # The 11th digit of the sequence 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11,
 # ... is a 0, which is part of the number 10.
 #
-#  Google
-# Hide Tags Math
-
+# Companies
+# Google
+# Related Topics
+# Math
+#
+import unittest
 class Solution(object):
     def findNthDigit(self, n):
         """
@@ -49,26 +54,39 @@ class Solution(object):
 
         return nth_digit
 
-java = '''
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+
+if __name__ == '__main__':
+    unittest.main()
+
+Java = '''
+#Thought:
 Straight forward way to solve the problem in 3 steps:
 
 find the length of the number where the nth digit is from
 find the actual number where the nth digit is from
 find the nth digit and return
-	public int findNthDigit(int n) {
-		int len = 1;
-		long count = 9;
-		int start = 1;
 
-		while (n > len * count) {
-			n -= len * count;
-			len += 1;
-			count *= 10;
-			start *= 10;
-		}
+#25.59% 6ms
+public class Solution {
+    public int findNthDigit(int n) {
+        int len = 1;
+        long count = 9;
+        int start = 1;
 
-		start += (n - 1) / len;
-		String s = Integer.toString(start);
-		return Character.getNumericValue(s.charAt((n - 1) % len));
-	}
+        while ( n > len * count) {
+            n -= len * count;
+            len += 1;
+            count *= 10;
+            start *= 10;
+        }
+
+        start += ( n - 1) / len;
+        String s = Integer.toString(start);
+        return Character.getNumericValue(s.charAt((n - 1) % len));
+    }
+}
+
 '''

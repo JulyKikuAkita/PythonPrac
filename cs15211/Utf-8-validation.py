@@ -1,8 +1,10 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/utf-8-validation/description/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/utf-8-validation.py
 # Time:  O(n)
 # Space: O(1)
-
+#
+# Description: Leetcode # 393. UTF-8 Validation
+#
 # A character in UTF8 can be from 1 to 4 bytes long, subjected to the following rules:
 #
 # For 1-byte character, the first bit is a 0, followed by its unicode code.
@@ -17,6 +19,7 @@ __author__ = 'July'
 #   0000 0080-0000 07FF | 110xxxxx 10xxxxxx (192)
 #   0000 0800-0000 FFFF | 1110xxxx 10xxxxxx 10xxxxxx  (224)
 #   0001 0000-0010 FFFF | 11110xxx 10xxxxxx 10xxxxxx 10xxxxxx  (240 for first byte)
+#
 # Given an array of integers representing the data, return whether it is a valid utf-8 encoding.
 #
 # Note:
@@ -38,9 +41,13 @@ __author__ = 'July'
 # The first 3 bits are all one's and the 4th bit is 0 means it is a 3-bytes character.
 # The next byte is a continuation byte which starts with 10 and that's correct.
 # But the second continuation byte does not start with 10, so it is invalid.
-#  Google
-# Hide Tags Bit Manipulation
-
+#
+# Companies
+# Google
+# Related Topics
+# Bit Manipulation
+#
+import unittest
 class Solution(object):
     def validUtf8(self, data):
         """
@@ -64,7 +71,16 @@ class Solution(object):
                 count -= 1
         return count == 0
 
-'''
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+
+if __name__ == '__main__':
+    unittest.main()
+
+Java = '''
+#Thought:
+#58.41% 7ms
 public class Solution {
     public boolean validUtf8(int[] data) {
         if (data == null || data.length == 0) return false;
@@ -92,29 +108,32 @@ public class Solution {
     }
 }
 
-public boolean validUtf8(int[] data) {
-	if(data==null || data.length==0) return false;
-	boolean isValid = true;
-	for(int i=0;i<data.length;i++) {
-		if(data[i]>255) return false; // 1 after 8th digit, 100000000
-		int numberOfBytes = 0;
-		if((data[i] & 128) == 0) { // 0xxxxxxx, 1 byte, 128(10000000)
-			numberOfBytes = 1;
-		} else if((data[i] & 224) == 192) { // 110xxxxx, 2 bytes, 224(11100000), 192(11000000)
-			numberOfBytes = 2;
-		} else if((data[i] & 240) == 224) { // 1110xxxx, 3 bytes, 240(11110000), 224(11100000)
-			numberOfBytes = 3;
-		} else if((data[i] & 248) == 240) { // 11110xxx, 4 bytes, 248(11111000), 240(11110000)
-			numberOfBytes = 4;
-		} else {
-			return false;
-		}
-		for(int j=1;j<numberOfBytes;j++) { // check that the next n bytes start with 10xxxxxx
-			if(i+j>=data.length) return false;
-			if((data[i+j] & 192) != 128) return false; // 192(11000000), 128(10000000)
-		}
-		i=i+numberOfBytes-1;
-	}
-	return isValid;
+#23.97% 9ms
+public class Solution {
+    public boolean validUtf8(int[] data) {
+        if(data==null || data.length==0) return false;
+        boolean isValid = true;
+        for(int i=0;i<data.length;i++) {
+            if(data[i]>255) return false; // 1 after 8th digit, 100000000
+            int numberOfBytes = 0;
+            if((data[i] & 128) == 0) { // 0xxxxxxx, 1 byte, 128(10000000)
+                numberOfBytes = 1;
+            } else if((data[i] & 224) == 192) { // 110xxxxx, 2 bytes, 224(11100000), 192(11000000)
+                numberOfBytes = 2;
+            } else if((data[i] & 240) == 224) { // 1110xxxx, 3 bytes, 240(11110000), 224(11100000)
+                numberOfBytes = 3;
+            } else if((data[i] & 248) == 240) { // 11110xxx, 4 bytes, 248(11111000), 240(11110000)
+                numberOfBytes = 4;
+            } else {
+                return false;
+            }
+            for(int j=1;j<numberOfBytes;j++) { // check that the next n bytes start with 10xxxxxx
+                if(i+j>=data.length) return false;
+                if((data[i+j] & 192) != 128) return false; // 192(11000000), 128(10000000)
+            }
+            i=i+numberOfBytes-1;
+        }
+        return isValid;
+    }
 }
 '''

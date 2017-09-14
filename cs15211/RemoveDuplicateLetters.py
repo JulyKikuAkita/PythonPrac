@@ -54,6 +54,35 @@ if __name__ == '__main__':
 
 Java = '''
 #Thought:
+#13.02% 36ms
+
+Given the string s, the greedy choice (i.e., the leftmost letter in the answer) is the smallest s[i], s.t.
+the suffix s[i .. ] contains all the unique letters.
+(Note that, when there are more than one smallest s[i]'s, we choose the leftmost one.
+Why? Simply consider the example: "abcacb".)
+
+After determining the greedy choice s[i], we get a new string s' from s by
+
+removing all letters to the left of s[i],
+removing all s[i]'s from s.
+We then recursively solve the problem w.r.t. s'.
+
+The runtime is O(26 * n) = O(n).
+
+public class Solution {
+    public String removeDuplicateLetters(String s) {
+        int[] cnt = new int[26];
+        int pos = 0; // the position for the smallest s[i]
+        for (int i = 0; i < s.length(); i++) cnt[s.charAt(i) - 'a']++;
+        for (int i = 0; i < s.length(); i++) {
+            if (s.charAt(i) < s.charAt(pos)) pos = i;
+            if (--cnt[s.charAt(i) - 'a'] == 0) break;
+        }
+        return s.length() == 0 ? ""
+        : s.charAt(pos) + removeDuplicateLetters(s.substring(pos + 1).replaceAll("" + s.charAt(pos), ""));
+    }
+}
+
 #96.97% 3ms
 public class Solution {
     public String removeDuplicateLetters(String s) {
@@ -92,42 +121,37 @@ public class Solution {
 
 # 93.87% 4ms
 class Solution {
-    public String removeDuplicateLetters(String s){
-        if(s.length() == 0) return s;
-
-        //We use 128 is to avoid substraction
-        //if we use 26, we have to substract 'a' from a char
+    public String removeDuplicateLetters(String s) {
+        if ( s.length() == 0) return s;
         int[] count = new int[128];
-        char[] result = new char[26];
+        char[] res = new char[26];
         boolean[] assigned = new boolean[128];
-        char c;
+
+        char c ;
         int end = -1;
 
-        for(int i=0; i<s.length(); i++){
+        for (int i = 0; i < s.length(); i++) {
             count[s.charAt(i)]++;
         }
 
-        for(int i=0; i<s.length(); i++){
+        for (int i = 0; i < s.length(); i++) {
             c = s.charAt(i);
             count[c]--;
-            if(assigned[c])
-                continue;
-
-            while(end >= 0 && result[end] > c && count[result[end]]>0){
-                assigned[result[end]] = false;
+            if (assigned[c]) continue;
+            while (end >= 0 && res[end] > c && count[res[end]] > 0) {
+                assigned[res[end]] = false;
                 end--;
             }
-
             end++;
-            result[end] = c;
+            res[end] = c;
             assigned[c] = true;
         }
 
-        StringBuilder bd = new StringBuilder();
-        for(int i=0; i<=end; i++){
-            bd.append(result[i]);
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i <= end; i++) {
+            sb.append(res[i]);
         }
-        return bd.toString();
+        return sb.toString();
     }
 }
 '''

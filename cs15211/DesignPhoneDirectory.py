@@ -5,7 +5,8 @@ __source__ = 'https://leetcode.com/problems/design-phone-directory/#/description
 # check:    Time: O(1), Space: O(1)
 # release:  Time: O(1), Space: O(1)
 #
-# Description:
+# Description: Leetcode # 379. Design Phone Directory
+#
 # Design a Phone Directory which supports the following operations:
 #
 # get: Provide a number which is not assigned to anyone.
@@ -37,8 +38,10 @@ __source__ = 'https://leetcode.com/problems/design-phone-directory/#/description
 # // Number 2 is available again, return true.
 # directory.check(2);
 #
-# Hide Company Tags Google
-# Hide Tags Linked List Design
+# Companies
+# Google
+# Related Topics
+# Linked List Design
 #
 import unittest
 class PhoneDirectory2(object):
@@ -135,13 +138,12 @@ class TestMethods(unittest.TestCase):
     def test_Local(self):
         self.assertEqual(1, 1)
 
-
 if __name__ == '__main__':
     unittest.main()
 
 Java = '''
 #Thought:
-
+#65.42% 530ms
 public class PhoneDirectory {
     Set<Integer> mUsed;
     Queue<Integer> mAvailable;
@@ -187,4 +189,42 @@ public class PhoneDirectory {
  * boolean param_2 = obj.check(number);
  * obj.release(number);
  */
+
+ #Binary set
+ #98.43% 350ms
+ class PhoneDirectory {
+    private int mMax;
+    private BitSet mUsed;
+    private int mMinAvailable = -1;
+
+    /** Initialize your data structure here
+     @param maxNumbers - The maximum numbers that can be stored in the phone directory. */
+    public PhoneDirectory(int maxNumbers) {
+        mMax = maxNumbers;
+        mUsed = new BitSet(maxNumbers);
+        mMinAvailable = 0;
+    }
+
+    /** Provide a number which is not assigned to anyone.
+     @return - Return an available number. Return -1 if none is available. */
+    public int get() {
+        if (mMinAvailable == mMax) return -1;
+        int n = mMinAvailable;
+        mUsed.set(mMinAvailable);
+        mMinAvailable = mUsed.nextClearBit(mMinAvailable);
+        return n;
+    }
+
+    /** Check if a number is available or not. */
+    public boolean check(int number) {
+        if (number < 0 || number >= mMax) return false;
+        return !mUsed.get(number);
+    }
+
+    /** Recycle or release a number. */
+    public void release(int number) {
+        if (mUsed.get(number)) mUsed.clear(number);
+        if (number < mMinAvailable) mMinAvailable = number;
+    }
+}
 '''

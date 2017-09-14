@@ -1,8 +1,10 @@
-__source__ = 'https://github.com/kamyu104/LeetCode/blob/master/Python/kth-smallest-element-in-a-sorted-matrix.py'
+__source__ = 'https://leetcode.com/problems/kth-smallest-element-in-a-sorted-matrix/description/'
+# https://github.com/kamyu104/LeetCode/blob/master/Python/kth-smallest-element-in-a-sorted-matrix.py
 # Time:  O(k * log(min(n, m, k))), with n x m matrix
 # Space: O(min(n, m, k))
 #
-# Description:
+# Description: Leetcode # 378. Kth Smallest Element in a Sorted Matrix
+#
 # Given a n x n matrix where each of the rows and
 # columns are sorted in ascending order,
 # find the kth smallest element in the matrix.
@@ -23,9 +25,12 @@ __source__ = 'https://github.com/kamyu104/LeetCode/blob/master/Python/kth-smalle
 # Note:
 # You may assume k is always valid, 1 <= k <= n^2.
 #
+# Companies
 # Google Twitter
-# Hide Tags Binary Search Heap
-# Hide Similar Problems (M) Find K Pairs with Smallest Sums
+# Related Topics
+# Binary Search Heap
+# Similar Questions
+# Find K Pairs with Smallest Sums Kth Smallest Number in Multiplication Table
 #
 
 import unittest
@@ -84,6 +89,7 @@ What is more, this problem is exact the same with Leetcode373 Find K Pairs with 
 I use the same code which beats 96.42%, after you solve this problem, you can check with this link:
 https://discuss.leetcode.com/topic/52953/share-my-solution-which-beat-96-42
 
+#47.22% 28ms
 public class Solution {
     public int kthSmallest(int[][] matrix, int k) {
         int n = matrix.length;
@@ -133,6 +139,7 @@ range -- https://leetcode.com/problems/find-the-duplicate-number/ (Unsorted Arra
 The reason why we did not use index as "search space" for this problem is the matrix is sorted in two directions,
  we can not find a linear way to map the number and its index.
 
+#67.20% 2ms
 public class Solution {
     public int kthSmallest(int[][] matrix, int k) {
         int lo = matrix[0][0], hi = matrix[matrix.length - 1][matrix[0].length - 1] + 1;//[lo, hi)
@@ -150,4 +157,35 @@ public class Solution {
     }
 }
 
+#74.69% 1ms
+public class Solution {
+    public int kthSmallest(int[][] matrix, int k) {
+        int m = matrix.length;
+        int n = matrix[0].length;
+
+        int lower = matrix[0][0];
+        int upper = matrix[m-1][n-1];
+
+        while (lower < upper) {
+            int mid = lower + (upper - lower) / 2;
+            int count = count(matrix, mid);
+            if (count < k) {
+                lower = mid + 1;
+            } else {
+                upper = mid;
+            }
+        }
+        return upper;
+    }
+
+    public int count(int[][] matrix, int target) {
+        int count = 0;
+        int j = matrix[0].length - 1;
+        for (int i = 0; i < matrix.length; i++) {
+            while(j >= 0 && matrix[i][j] > target) j--;
+            count += (j + 1);
+        }
+        return count;
+    }
+}
 '''

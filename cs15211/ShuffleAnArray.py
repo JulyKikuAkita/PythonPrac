@@ -2,10 +2,10 @@ __source__ = 'https://leetcode.com/problems/shuffle-an-array/#/description'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/shuffle-an-array.py
 # Time:  O(n)
 # Space: O(n)
-
 #
-# Description:
-# # Shuffle a set of numbers without duplicates.
+# Description: 384. Shuffle an Array
+#
+# Shuffle a set of numbers without duplicates.
 #
 # Example:
 #
@@ -25,7 +25,7 @@ __source__ = 'https://leetcode.com/problems/shuffle-an-array/#/description'
 
 import unittest
 from random import random
-
+#979ms
 class Solution(object):
 
     def __init__(self, nums):
@@ -66,13 +66,12 @@ class TestMethods(unittest.TestCase):
     def test_Local(self):
         self.assertEqual(1, 1)
 
-
 if __name__ == '__main__':
     unittest.main()
 
 Java = '''
 #Thought:
-
+#28.76% 278ms
 import java.util.Random;
 public class Solution {
     private Random mRandom;

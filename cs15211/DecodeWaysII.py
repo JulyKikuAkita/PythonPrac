@@ -27,6 +27,7 @@ __source__ = 'https://leetcode.com/problems/decode-ways-ii/description/'
 # Note:
 # The length of the input string will fit in range [1, 105].
 # The input string will only contain the character '*' and digits '0' - '9'.
+#
 # Companies
 # Facebook
 # Related Topics
@@ -88,6 +89,43 @@ if __name__ == '__main__':
 
 Java = '''
 #Thought: https://leetcode.com/problems/decode-ways-ii/solution/
+
+#DFS TLE
+public class Solution {
+    int M = 1000000007;
+    public int numDecodings(String s) {
+        Integer[] memo=new Integer[s.length()];
+        return ways(s, s.length() - 1,memo);
+    }
+    public int ways(String s, int i,Integer[] memo) {
+        if (i < 0)
+            return 1;
+        if(memo[i]!=null)
+            return memo[i];
+        if (s.charAt(i) == '*') {
+            long res = 9 * ways(s, i - 1,memo);
+            if (i > 0 && s.charAt(i - 1) == '1')
+                res = (res + 9 * ways(s, i - 2,memo)) % M;
+            else if (i > 0 && s.charAt(i - 1) == '2')
+                res = (res + 6 * ways(s, i - 2,memo)) % M;
+            else if (i > 0 && s.charAt(i - 1) == '*')
+                res = (res + 15 * ways(s, i - 2,memo)) % M;
+            memo[i]=(int)res;
+            return memo[i];
+        }
+        long res = s.charAt(i) != '0' ? ways(s, i - 1,memo) : 0;
+        if (i > 0 && s.charAt(i - 1) == '1')
+            res = (res + ways(s, i - 2,memo)) % M;
+        else if (i > 0 && s.charAt(i - 1) == '2' && s.charAt(i) <= '6')
+            res = (res + ways(s, i - 2,memo)) % M;
+        else if (i > 0 && s.charAt(i - 1) == '*')
+                res = (res + (s.charAt(i)<='6'?2:1) * ways(s, i - 2,memo)) % M;
+        memo[i]= (int)res;
+        return memo[i];
+    }
+}
+
+
 # 98.39% 45ms
 public class Solution {
     static final int[][] map = new int[58][58];
@@ -193,4 +231,172 @@ public class Solution {
         return (int) second;
     }
 }
+
+https://discuss.leetcode.com/topic/95518/java-o-n-by-general-solution-for-all-dp-problems
+#Bottome-up DP
+
+Here, I try to provide not only code but also the steps and thoughts of solving this problem completely
+which can also be applied to many other DP problems.
+
+(1) Try to solve this problem in Backtracking way, because it is the most straight-forward method.
+
+ E.g '12*3'
+                   12*3
+              /             \
+           12*(3)           12(*3)
+         /     \            /      \
+    12(*)(3)  1(2*)(3)  1(2)(*3)   ""
+      /    \      \       /
+1(2)(*)(3) ""     ""     ""
+    /
+   ""
+(2) There are many nodes visited multiple times, like 12 and 1. Most importantly,
+the subtree of those nodes are "exactly" the same.
+The backtracking solution possibly can be improved by DP. Try to merge the same nodes.
+
+        12*3
+        /  \
+      12*  |
+       | \ |
+       |  12
+       | / |
+       1   |
+        \  |
+          ""
+(3) Successfully merge those repeated nodes and find out the optimal substructure, which is:
+
+      current state = COMBINE(next state ,  next next state)
+      e.g
+              12*
+              / \
+            COMBINE (few different conditions)
+            /     \
+           12      1
+Therefore, we can solve this problem by DP in bottom-up way instead of top-down memoization.
+Now, we formulate the optimal substructure:
+
+    dp[i] = COMBINE dp[i-1] and dp[i-2]
+where dp[i] --> number of all possible decode ways of substring s(0 : i-1). Just keep it in mind.
+But we need to notice there are some different conditions for this COMBINE operation.
+
+(4) The pseudo code of solution would be:
+
+Solution{
+    /* initial conditions */
+    dp[0] = ??
+       :
+
+    /* bottom up method */
+    foreach( i ){
+        dp[i] = COMBINE dp[i-1] and dp[i-2] ;
+    }
+
+    /* Return */
+    return dp[last];
+}
+The COMBINE part will be something like:
+
+    // for dp[i-1]
+    if(condition A)
+        dp[i] +=??  dp[i-1];
+    else if(condition B)
+        dp[i] +=??  dp[i-1];
+            :
+            :
+
+     // for dp[i-2]
+    if(condition C)
+        dp[i] +=?? dp[i-2];
+    else if(condition D)
+        dp[i] +=?? dp[i-2];
+             :
+(5) The core step of this solution is to find out all possible conditions
+and their corresponding operation of combination.
+
+        For dp[i-1]:
+
+                  /           \
+                 /             \
+            s[i-1]='*'    s[i-1]>0
+                |               |
+          + 9*dp[i-1]        + dp[i-1]
+
+
+        For dp[i-2]:
+
+                   /                                  \
+                  /                                    \
+              s[n-2]='1'||'2'                         s[n-2]='*'
+              /            \                       /             \
+        s[n-1]='*'         s[n-1]!='*'          s[n-1]='*'       s[n-1]!='*'
+         /       \               |                  |              /         \
+  s[n-2]='1'  s[n-2]='2'   num(i-2,i-1)<=26         |         s[n-1]<=6    s[n-1]>6
+      |            |             |                  |              |            |
+ + 9*dp[i-2]   + 6*dp[i-2]     + dp[i-2]       + 15*dp[i-2]    + 2*dp[i-2]   + dp[i-2]
+
+(6) Fill up the initial conditions before i = 2.
+Because we need to check if num(i-2,i-1)<=26 for each i, we make the bottom-up process to begin from i=2.
+Just fill up the dp[0] and dp[1] by observation and by the definition of dp[i] --> number of
+all possible decode ways of substring s(0 : i-1).
+
+         dp[0]=1;
+         /      \
+    s[0]=='*'  s[0]!='*'
+        |         |
+    dp[1]=9     dp[1]=1
+
+(7) The final Solution:
+#90.82% 53ms
+public class Solution {
+    public int numDecodings(String s) {
+        /* initial conditions */
+        long[] dp = new long[s.length()+1];
+        dp[0] = 1;
+        if(s.charAt(0) == '0'){
+            return 0;
+        }
+        dp[1] = (s.charAt(0) == '*') ? 9 : 1;
+
+        /* bottom up method */
+        for(int i = 2; i <= s.length(); i++){
+            char first = s.charAt(i-2);
+            char second = s.charAt(i-1);
+
+            // For dp[i-1]
+            if(second == '*'){
+                dp[i] += 9*dp[i-1];
+            }else if(second > '0'){
+                dp[i] += dp[i-1];
+            }
+
+            // For dp[i-2]
+            if(first == '*'){
+                if(second == '*'){
+                    dp[i] += 15*dp[i-2];
+                }else if(second <= '6'){
+                    dp[i] += 2*dp[i-2];
+                }else{
+                    dp[i] += dp[i-2];
+                }
+            }else if(first == '1' || first == '2'){
+                if(second == '*'){
+                    if(first == '1'){
+                       dp[i] += 9*dp[i-2];
+                    }else{ // first == '2'
+                       dp[i] += 6*dp[i-2];
+                    }
+                }else if( ((first-'0')*10 + (second-'0')) <= 26 ){
+                    dp[i] += dp[i-2];
+                }
+            }
+
+            dp[i] %= 1000000007;
+        }
+        /* Return */
+        return (int)dp[s.length()];
+    }
+}
+P.S The space complexity can be further improved to O(1)
+because the current state i is only related to i-1 and i-2 during the bottom-up.
+
 '''

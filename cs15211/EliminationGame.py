@@ -1,8 +1,10 @@
-__source__ = 'https://github.com/kamyu104/LeetCode/blob/master/Python/elimination-game.py'
+__source__ = 'https://leetcode.com/problems/elimination-game/description/'
+# https://github.com/kamyu104/LeetCode/blob/master/Python/elimination-game.py
 # Time:  O(logn)
 # Space: O(1)
 #
-# Description:
+# # Description: Leetcode # 390. Elimination Game
+#
 # There is a list of sorted integers from 1 to n. Starting from left to right,
 # remove the first number and every other number afterward until you reach the end of the list.
 #
@@ -25,9 +27,9 @@ __source__ = 'https://github.com/kamyu104/LeetCode/blob/master/Python/eliminatio
 #
 # Output:
 # 6
-
+#
+#122ms
 import unittest
-
 class Solution(object):
     def lastRemaining(self, n):
         """
@@ -46,20 +48,21 @@ class TestMethods(unittest.TestCase):
     def test_Local(self):
         self.assertEqual(1, 1)
 
-
 if __name__ == '__main__':
     unittest.main()
 
 Java = '''
 #Thought:
 JAVA: Easiest solution O(logN) with explanation
+#96.40% 73ms
+public class Solution {
     public int lastRemaining(int n) {
         boolean left = true;
         int remaining = n;
         int step = 1;
         int head = 1;
-        while (remaining > 1) {
-            if (left || remaining % 2 ==1) {
+        while(remaining > 1) {
+            if (left || remaining % 2 == 1) {
                 head = head + step;
             }
             remaining = remaining / 2;
@@ -68,6 +71,7 @@ JAVA: Easiest solution O(logN) with explanation
         }
         return head;
     }
+}
 My idea is to update and record head in each turn.
 when the total number becomes 1, head is the only number left.
 

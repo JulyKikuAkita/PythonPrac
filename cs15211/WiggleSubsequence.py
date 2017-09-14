@@ -3,7 +3,8 @@ __source__ = 'https://leetcode.com/problems/wiggle-subsequence/#/description'
 # Time:  O(n)
 # Space: O(1)
 #
-# Description:
+# Description: Leetcode # 376. Wiggle Subsequence
+#
 # A sequence of numbers is called a wiggle sequence
 # if the differences between successive numbers strictly
 # alternate between positive and negative.
@@ -37,7 +38,9 @@ __source__ = 'https://leetcode.com/problems/wiggle-subsequence/#/description'
 #
 # Follow up:
 # Can you do it in O(n) time?
-#  Dynamic Programming Greedy
+#
+# Related Topics
+# Dynamic Programming Greedy
 
 import unittest
 
@@ -101,7 +104,6 @@ class TestMethods(unittest.TestCase):
     def test_Local(self):
         self.assertEqual(1, 1)
 
-
 if __name__ == '__main__':
     unittest.main()
 
@@ -145,6 +147,7 @@ asks for the Wiggle series also then we can return the series too. The leetcode 
 test case if the series starts with same set of numbers.
 modified the code to consider that test case also.
 
+#36.11% 0ms
 public class Solution {
     public int wiggleMaxLength(int[] nums) {
         if (nums.length == 0 || nums.length == 1) {
@@ -193,6 +196,7 @@ so both down[i] and up[i] keep the same.
 
 In fact, we can reduce the space complexity to O(1), but current way is more easy to understanding.
 
+#36.11% 0ms
 public class Solution {
     public int wiggleMaxLength(int[] nums) {
 
@@ -221,6 +225,7 @@ public class Solution {
     }
 }
 to space(1)
+#36.11% 0ms
 public class Solution {
     public int wiggleMaxLength(int[] nums) {
         if (nums.length < 2)
@@ -236,7 +241,8 @@ public class Solution {
     }
 }
 
-3. Greedy:
+3. Greedy: finding the number of alternating max. and min. peaks in the array.
+#36.11% 0ms
 public class Solution {
     public int wiggleMaxLength(int[] nums) {
         if (nums.length < 2)

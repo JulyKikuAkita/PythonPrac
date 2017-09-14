@@ -1,8 +1,10 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/random-pick-index/description/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/random-pick-index.py
 # Time:  O(n)
 # Space: O(1)
-
+#
+# Description: Leetcode # 398. Random Pick Index
+#
 # Given an array of integers with possible duplicates,
 # randomly output the index of a given target number.
 # You can assume that the given target number must exist in the array.
@@ -22,13 +24,16 @@ __author__ = 'July'
 #
 # // pick(1) should return 0. Since in the array only nums[0] is equal to 1.
 # solution.pick(1);
-#  Facebook
-# Hide Tags Reservoir Sampling
-# Hide Similar Problems (M) Linked List Random Node
-
-
+#
+# Companies
+# Facebook
+# Related Topics
+# Reservoir Sampling
+# Similar Questions
+# Linked List Random Node
+#
 from random import randint
-
+import unittest
 class Solution(object):
 
     def __init__(self, nums):
@@ -53,12 +58,21 @@ class Solution(object):
             n += 1
         return reservoir
 
-
 # Your Solution object will be instantiated and called as such:
 # obj = Solution(nums)
 # param_1 = obj.pick(target)
 
-java = '''
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+
+if __name__ == '__main__':
+    unittest.main()
+
+Java = '''
+#Thought:
+
+#97.26% 272ms
 public class Solution {
     int[] nums;
     Random rand;
@@ -90,6 +104,7 @@ public class Solution {
  * int param_1 = obj.pick(target);
  */
 
+#97.74% 270ms
 public class Solution {
     int[] nums;
     Random rand;

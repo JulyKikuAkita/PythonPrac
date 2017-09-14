@@ -1,4 +1,4 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/decode-ways/description/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/decode-ways.py
 # Time:  O(n)
 # Space: O(1)
@@ -76,6 +76,8 @@ if __name__ == '__main__':
 
 Java = '''
 # Thought:
+dp[i + 1] = dp[i]
+dp[i + 1] = dp[i - 1] + dp[i + 1]
 # 90.08% 1ms
 class Solution {
     public int numDecodings(String s) {
@@ -142,27 +144,31 @@ public class Solution {
 }
 
 # DFS:
-# not working
-# "101022" should return 2 but get 0
-class Solution {
+# 3.45% 11ms
+public class Solution {
+
     public int numDecodings(String s) {
-        if (s == null || s.length() == 0) return 0;
-        return (int)dfs(s, 0, new HashMap<>());
+        if( s == null || s.length() == 0) return 0;
+        Map<String, Integer> map = new HashMap<>();
+        return dfs(s, map);
     }
 
-    public Integer dfs(String s, int idx, Map<String, Integer> map) {
-        if (idx == s.length()) return 1;
-        Integer count = 0;
-        for(int i = idx; i < idx + 2 && i < s.length(); i++) {
-            String cur = s.substring(idx, i + 1);
-            if (cur.startsWith("0")) break;
-            if (map.containsKey(cur)) return map.get(cur);
-            if (i == s.length() - 1 && cur.equals("10")) count++;
-            if (Integer.parseInt(cur) > 0 && Integer.parseInt(cur) <= 26) {
-                count += dfs(s, idx + 1, map);
+    private int dfs(String s, Map<String, Integer> map) {
+        if (s.isEmpty()) return 1;
+        if (s.length() == 1) return s.charAt(0) == '0' ? 0 : 1;
+        if ( map.containsKey(s)) return map.get(s);
+
+        int count = 0;
+        int fir = Integer.parseInt(s.substring(s.length() - 1, s.length()));
+        if (fir >= 1 && fir <= 9) count += dfs(s.substring(0, s.length() - 1), map);
+
+        if (s.length() > 1) {
+            int sec = Integer.parseInt(s.substring(s.length() - 2));
+            if (sec >= 10 && sec <= 26) {
+                count += dfs(s.substring(0, s.length() - 2), map);
             }
-            map.put(cur, count);
         }
+        map.put(s, count);
         return count;
     }
 }

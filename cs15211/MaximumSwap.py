@@ -1,6 +1,6 @@
 __source__ = 'https://leetcode.com/problems/maximum-swap/description/'
-# Time:  O()
-# Space: O()
+# Time:  O(N)
+# Space: O(1)
 #
 # Description: Leetcode # 670. Maximum Swap
 #
@@ -51,7 +51,7 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
+#Thought: https://leetcode.com/problems/maximum-swap/solution/
 
 Use buckets to record the last position of digit 0 ~ 9 in this num.
 
@@ -80,7 +80,6 @@ class Solution {
                 }
             }
         }
-
         return num;
     }
 }

@@ -1,8 +1,10 @@
 __source__ = 'https://github.com/kamyu104/LeetCode/blob/master/Python/mini-parser.py'
+# https://github.com/kamyu104/LeetCode/blob/master/Python/mini-parser.py
 # Time:  O(n)
 # Space: O(h)
 #
-# Description:
+# Description: Leetcode # 385. Mini Parser
+#
 # Given a nested list of integers represented as a string, implement a parser to deserialize it.
 #
 # Each element is either an integer, or a list -- whose elements may also be integers or other lists.
@@ -29,11 +31,13 @@ __source__ = 'https://github.com/kamyu104/LeetCode/blob/master/Python/mini-parse
 #     ii. A nested list with one element:
 #          a. An integer containing value 789.
 #
+# Companies
 # Airbnb
-# Hide Tags Stack String
-# Hide Similar Problems (M) Flatten Nested List Iterator (M) Ternary Expression Parser
-
-
+# Related Topics
+# String Stack
+# Similar Questions
+# Flatten Nested List Iterator Ternary Expression Parser
+#
 # """
 # This is the interface that allows for creating nested lists.
 # You should not implement it, or speculate about its implementation
@@ -110,7 +114,6 @@ class TestMethods(unittest.TestCase):
     def test_Local(self):
         self.assertEqual(1, 1)
 
-
 if __name__ == '__main__':
     unittest.main()
 
@@ -151,6 +154,7 @@ Update index l and r, where l shall point to the start of a integer substring, w
  *     public List<NestedInteger> getList();
  * }
  */
+#17.11% 28ms
 public class Solution {
     public NestedInteger deserialize(String s) {
         if (s == null || s.length() == 0) return null;
@@ -194,4 +198,50 @@ public class Solution {
 }
 #if need full-implementation:
 https://discuss.leetcode.com/topic/54268/straightforward-java-solution-with-explanation-and-a-simple-implementation-of-nestedinteger-for-your-ease-of-testing
+
+#99.47% 10ms
+class Solution {
+    private int parse(char[] chars, int idx, NestedInteger root) {
+        int num = 0;
+        boolean neg = false;
+        boolean hasNum = false;
+        while (idx < chars.length) {
+            char c = chars[idx++];
+            if (c == '[' || c == ']') {
+                if (hasNum) {
+                    root.add(neg ? new NestedInteger(-num) : new NestedInteger(num));
+                    hasNum = false;
+                    neg = false;
+                    num = 0;
+                }
+                if (c == ']') return idx;
+                NestedInteger next = new NestedInteger();
+                root.add(next);
+                idx = parse(chars, idx, next);
+            } else if (c == '-') neg = true;
+            else if (c == ',') {
+                if (hasNum) {
+                    root.add(neg ? new NestedInteger(-num) : new NestedInteger(num));
+                    num = 0;
+                    neg = false;
+                    hasNum = false;
+                }
+            } else {
+                num *= 10;
+                num += c - '0';
+                hasNum = true;
+            }
+        }
+        if (hasNum) root.add(neg ? new NestedInteger(-num) : new NestedInteger(num));
+        return chars.length;
+    }
+    public NestedInteger deserialize(String s) {
+        NestedInteger root = new NestedInteger();
+        if (s.length() == 0) return root;
+        char[] c = s.toCharArray();
+        parse(c, 0, root);
+        return root.getList().get(0);
+    }
+}
+
 '''

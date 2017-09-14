@@ -98,61 +98,54 @@ Finally, we can traverse the distance[][] matrix to get the point having shortes
 
 The total time complexity will be O(m^2*n^2), which is quite high!.
 
-# 79.57% 14ms
+# 93.76% 10ms
 public class Solution {
-    private static final int[][] DIRECTIONS = new int[][] {{0, -1}, {0, 1}, {-1, 0}, {1, 0}};
-
+    int[][] dirs = {{0, -1}, {-1, 0}, {0, 1}, {1, 0}};
+    int min, m, n;
     public int shortestDistance(int[][] grid) {
-        int m = grid.length;
-        int n = m == 0 ? 0 : grid[0].length;
-        if (m == 0 || n == 0) {
+        if(grid == null || grid.length == 0)
             return 0;
-        }
-        int[][] distances = new int[m][n];
-        int[][] reachable = new int[m][n];
-        int numBuildings = 0;
-        for (int i = 0; i < m; i++) {
-            for (int j = 0; j < n; j++) {
-                if (grid[i][j] == 1) {
-                    bfs(grid, distances, reachable, i, j, m, n, numBuildings);
-                    numBuildings++;
+
+        m = grid.length;
+        n = grid[0].length;
+        int[][] dist = new int[m][n];
+        min = Integer.MAX_VALUE;
+        int start = 0;
+        for(int i = 0; i < m; i++){
+            for(int j = 0; j < n; j++){
+                if(grid[i][j] == 1){
+                    bfs(grid, i, j, dist, start--);
                 }
             }
         }
-        int result = Integer.MAX_VALUE;
-        for (int i = 0; i < m; i++) {
-            for (int j = 0; j < n; j++) {
-                if (grid[i][j] == 0 && reachable[i][j] == numBuildings) {
-                    result = Math.min(result, distances[i][j]);
-                }
-            }
-        }
-        return result == Integer.MAX_VALUE ? -1 : result;
+
+        return min == Integer.MAX_VALUE? -1 : min;
     }
 
-    private void bfs(int[][] grid, int[][] distances, int[][] reachable, int i, int j, int m, int n, int numBuildings) {
-        Queue<Integer> queue = new LinkedList<>();
-        boolean[][] visited = new boolean[m][n];
-        int distance = 0;
-        reachable[i][j]++;
-        queue.add(i * n + j);
-        visited[i][j] = true;
-        while (!queue.isEmpty()) {
-            distance++;
+    private void bfs(int[][] grid, int i, int j, int[][] dist, int start){
+        Queue<int[]> queue = new LinkedList<>();
+        queue.add(new int[]{i, j});
+
+        //System.out.println("i: " + i + " j: " + j);
+        min = Integer.MAX_VALUE;
+        int level = 0;
+        while(!queue.isEmpty()){
             int size = queue.size();
-            while (size-- > 0) {
-                int cur = queue.poll();
-                int curI = cur / n;
-                int curJ = cur % n;
-                for (int[] direction : DIRECTIONS) {
-                    int newI = curI + direction[0];
-                    int newJ = curJ + direction[1];
-                    if (newI >= 0 && newI < m && newJ >= 0 && newJ < n && !visited[newI][newJ] && grid[newI][newJ] == 0 && reachable[newI][newJ] == numBuildings) {
-                        distances[newI][newJ] += distance;
-                        reachable[newI][newJ]++;
-                        queue.add(newI * n + newJ);
-                        visited[newI][newJ] = true;
-                    }
+            level++;
+            for(int k = 0; k < size; k++){
+                int[] cur = queue.poll();
+                for(int[] d: dirs){
+                    int nextX = cur[0] + d[0];
+                    int nextY = cur[1] + d[1];
+
+                    if(nextX < 0 || nextY < 0 || nextX >= m || nextY >= n || grid[nextX][nextY] != start)
+                        continue;
+
+                    dist[nextX][nextY] += level;
+                    min = Math.min(min, dist[nextX][nextY]);
+                    //System.out.println(min);
+                    grid[nextX][nextY]--;
+                    queue.add(new int[]{nextX, nextY});
                 }
             }
         }

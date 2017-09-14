@@ -1,9 +1,10 @@
-__source__ = 'https://github.com/kamyu104/LeetCode/blob/master/Python/is-subsequence.py'
-# https://leetcode.com/problems/is-subsequence/#/solutions
+__source__ = 'https://leetcode.com/problems/is-subsequence/description/'
+# https://github.com/kamyu104/LeetCode/blob/master/Python/is-subsequence.py
 # Time:  O(n)
 # Space: O(1)
 #
 # Description: Leetcode # 392. Is Subsequence
+#
 # Given a string s and a string t, check if s is subsequence of t.
 #
 # You may assume that there is only lower case English letters in both s and t.
@@ -23,6 +24,11 @@ __source__ = 'https://github.com/kamyu104/LeetCode/blob/master/Python/is-subsequ
 # s = "axc", t = "ahbgdc"
 #
 # Return false.
+#
+# Follow up:
+# If there are lots of incoming S, say S1, S2, ... , Sk where k >= 1B,
+# and you want to check one by one to see if T has its subsequence.
+# In this scenario, how would you change your code?
 #
 # Companies
 # Pinterest
@@ -89,20 +95,31 @@ public class Solution {
 #94.93% 3ms
 public class Solution {
     public boolean isSubsequence(String s, String t) {
-        if (s.length() == 0) {
-            return true;
-        }
+        if (s.length() == 0) return true;
+
         int prev = t.indexOf(s.charAt(0));
-        if (prev == -1) {
-                return false;
-            }
+        if (prev == -1) return false;
+
         for (int i = 1; i < s.length(); i++) {
-            //System.out.println(prev);
-            prev = t.indexOf(s.charAt(i) , prev + 1); //index of chat after prev+1
-            if (prev == -1) {
-                return false;
-            }
+            prev = t.indexOf(s.charAt(i), prev + 1);
+            if (prev == -1) return false;
         }
+        return true;
+    }
+}
+
+#96.90% 2ms
+class Solution {
+    public boolean isSubsequence(String s, String t) {
+        int[] a = new int[s.length() + 1];
+		a[0] = -1;
+		for (int i = 0; i < s.length(); i++) {
+			int index = t.indexOf(s.charAt(i), a[i] + 1);
+			if (index == -1) {
+				return false;
+			}
+			a[i + 1] = index;
+		}
         return true;
     }
 }
@@ -161,6 +178,7 @@ ability which is a little overkill for this problem. Here is my solution.
     //  i=0 ('a'): prev=1
     //  i=1 ('b'): prev=6
     //  i=2 ('c'): prev=? (return false)
+
     public boolean isSubsequence(String s, String t) {
         List<Integer>[] idx = new List[256]; // Just for clarity
         for (int i = 0; i < t.length(); i++) {
