@@ -75,7 +75,8 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
+# Thought:
+# two pointers:
 #59.60% 37ms
 public class Solution {
     public boolean isSubsequence(String s, String t) {
