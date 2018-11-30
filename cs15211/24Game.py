@@ -2,7 +2,7 @@ __source__ = 'https://leetcode.com/problems/24-game/description/'
 # Time:  O()
 # Space: O()
 #
-# Description: Leetcode #
+# Description: Leetcode # 679. 24 Game
 #
 # You have 4 cards each containing a number from 1 to 9.
 # You need to judge whether they could operated through *, /, +, -, (, ) to get the value of 24.
@@ -27,7 +27,7 @@ __source__ = 'https://leetcode.com/problems/24-game/description/'
 # Related Topics
 # Depth-first Search
 #
-#1413ms
+#868ms 6.09%
 import unittest
 import itertools
 from operator import truediv, mul, add, sub
@@ -64,7 +64,7 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/articles/24-game/
+#Thought: https://leetcode.com/problems/24-game/solution/
 
 Given: (a, b, c, d) - (A tuple of 4)
 Generate:
@@ -93,7 +93,7 @@ Catches:
 Use double instead of int
 Be careful about the classical divide by zero error
 
-#23ms
+#18ms 56.03%
 class Solution {
     public boolean judgePoint24(int[] nums) {
         ArrayList A = new ArrayList<Double>();

@@ -2,7 +2,8 @@ __source__ = 'https://leetcode.com/problems/01-matrix/#/description'
 # Time:  O( m * n)
 # Space: O( m * n)
 #
-# Description:
+# Description: Leetcode # 542. 01 Matrix
+#
 # Given a matrix consists of 0 and 1, find the distance of the nearest 0 for each cell.
 #
 # The distance between two adjacent cells is 1.
@@ -68,7 +69,8 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/articles/01-matrix/
+#Thought: https://leetcode.com/problems/01-matrix/solution/
+https://leetcode.com/articles/01-matrix/
 General idea is BFS. Some small tricks:
 
 At beginning, set cell value to Integer.MAX_VALUE if it is not 0.

@@ -1,3 +1,5 @@
+import collections
+
 __source__ = 'https://leetcode.com/problems/number-of-distinct-islands/description/'
 # Time:  O()
 # Space: O()
@@ -41,10 +43,75 @@ __source__ = 'https://leetcode.com/problems/number-of-distinct-islands/descripti
 # Number of Islands
 #
 import unittest
+#76ms 98.09%
 class Solution(object):
-    pass  # your function here
+    def numDistinctIslands(self, grid):
+        """
+        :type grid: List[List[int]]
+        :rtype: int
+        """
+        if not grid or not grid[0]:
+            return 0
+        row = len(grid)
+        col = len(grid[0])
+        visited = [[0 for _ in range(col)] for _ in range(row)]
+        def dfs(x, y, c_str):
+            visited[x][y] = 1
+            if x - 1 >= 0 and grid[x-1][y] == 1 and visited[x-1][y] == 0:
+                c_str += 'u'
+                c_str = dfs(x-1, y, c_str)
+                c_str += 'o'
+            if y + 1 < col and grid[x][y+1] == 1 and visited[x][y+1] == 0:
+                c_str += 'r'
+                c_str = dfs(x, y+1, c_str)
+                c_str += 'o'
+            if x + 1 < row and grid[x+1][y] == 1 and visited[x+1][y] == 0:
+                c_str += 'd'
+                c_str = dfs(x+1, y, c_str)
+                c_str += 'o'
+            if y - 1 >= 0 and grid[x][y-1] == 1 and visited[x][y-1] == 0:
+                c_str += 'l'
+                c_str = dfs(x, y-1, c_str)
+                c_str += 'o'
+            return c_str
+        ans = 0
+        str_set = set()
+        for i in range(row):
+            for j in range(col):
+                if grid[i][j] == 1 and visited[i][j] == 0:
+                    shape_str = dfs(i, j, '')
+                    if shape_str not in str_set:
+                        ans += 1
+                        str_set.add(shape_str)
+        return ans
 
-
+#68ms 99.28%
+class Solution2(object):
+    def numDistinctIslands(self, grid):
+        """
+        :type grid: List[List[int]]
+        :rtype: int
+        """
+        m, n = len(grid), len(grid[0])
+        def dfs(i, j, posr, posc):
+            coord.append((posr, posc))
+            grid[i][j] = 0
+            if i < m - 1 and grid[i + 1][j]:
+                dfs(i + 1, j, posr + 1, posc)
+            if i > 0 and grid[i - 1][j]:
+                dfs(i - 1, j, posr - 1, posc)
+            if j < n - 1 and grid[i][j + 1]:
+                dfs(i, j + 1, posr, posc + 1)
+            if j > 0 and grid[i][j - 1]:
+                dfs(i, j - 1, posr, posc - 1)
+        d = collections.Counter()
+        for i in xrange(m):
+            for j in xrange(n):
+                if grid[i][j]:
+                    coord = []
+                    dfs(i, j, 0, 0)
+                    d[tuple(coord)]+=1
+        return len(d)
 class TestMethods(unittest.TestCase):
     def test_Local(self):
         self.assertEqual(1, 1)
@@ -54,8 +121,10 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/articles/number-of-distinct-islands/
-# 73ms
+#Thought: https://leetcode.com/problems/number-of-distinct-islands/solution/
+Approach #1: Hash By Local Coordinates [Accepted]
+
+# 32ms 53.77%
 class Solution {
     private static int[][] delta = { {0, 1}, {1, 0}, {0, -1}, {-1, 0} };
 
@@ -80,6 +149,34 @@ class Solution {
             dfs(i0, j0, i + delta[d][0], j + delta[d][1], grid, m, n, island);
         }
         return true;
+    }
+}
+
+#rolling hash
+#19ms 99.84%
+class Solution {
+    public int numDistinctIslands(int[][] grid) {
+        HashSet<Integer> set = new HashSet<>();
+        for (int i = 0; i < grid.length; i++) {
+            for (int j = 0; j < grid[0].length; j++) {
+                if (grid[i][j] == 1) {
+                    int hash = dfs(grid, i, j, i, j, 17);
+                    if (!set.contains(hash)) set.add(hash);
+                }
+            }
+        }
+        return set.size();
+    }
+
+    private int dfs(int[][] grid, int stx, int sty, int x, int y, int hash){
+        if ( x < 0 || x >= grid.length || y < 0 || y >= grid[0].length || grid[x][y]!=1) return hash;
+        grid[x][y] = 2;
+        hash = hash * 31 + (x - stx) * grid.length + (y - sty);
+        for (int i = -1; i < 2; i += 2) {
+            hash = dfs(grid, stx, sty, x + i, y, hash);
+            hash = dfs(grid, stx, sty, x, y + i, hash);
+        }
+        return hash;
     }
 }
 '''

@@ -41,9 +41,19 @@ __source__ = 'https://leetcode.com/problems/4-keys-keyboard/description/'
 
 import unittest
 
-class Solution(object):
-    pass  # your function here
+#20ms 100%
+class Solution:
+    def maxA(self, N):
+        """
+        :type N: int
+        :rtype: int
+        """
+        dp = range(N+1)
 
+        for i in xrange(7, N+1):
+            for j in range(3, 6):
+                dp[i] = max(dp[i], dp[i-j]*(j-1))
+        return dp[N]
 
 class TestMethods(unittest.TestCase):
     def test_Local(self):

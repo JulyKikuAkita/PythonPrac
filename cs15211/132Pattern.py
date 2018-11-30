@@ -1,7 +1,9 @@
 __source__ = 'https://github.com/kamyu104/LeetCode/blob/master/Python/132-pattern.py'
 # Time:  O(n)
 # Space: O(n)
-
+#
+# Description: Leetcode # 456. 132 Pattern
+#
 # Given a sequence of n integers a1, a2, ..., an,
 # a 132 pattern is a subsequence ai, aj, ak such that i < j < k and
 # ai < ak < aj. Design an algorithm that takes a list of n numbers as
@@ -56,7 +58,7 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
+#Thought: https://leetcode.com/problems/132-pattern/solution/
 The idea is that we can use a stack to keep track of previous min-max intervals.
 
 Here is the principle to maintain the stack:
@@ -86,6 +88,7 @@ Form a 1-3-2 pattern, we are done ,return true
 So at any time in the stack, non-overlapping Pairs are formed in descending order by their min value,
 which means the min value of peek element in the stack is always the min value globally.
 
+#28ms 61.52%
 public class Solution {
     public boolean find132pattern(int[] nums) {
         Stack<Pair> stack = new Stack<>();
