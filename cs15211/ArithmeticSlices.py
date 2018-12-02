@@ -68,7 +68,7 @@ Java = '''
 Approach #2 Better Brute Force [Accepted]
 O(n^2)
 #27.41% 2ms
-public class Solution {
+class Solution {
     public int numberOfArithmeticSlices(int[] A) {
         int count = 0;
         for (int s = 0; s < A.length - 2; s++) {
@@ -85,8 +85,7 @@ public class Solution {
 }
 Approach #3 Using Recursion [Accepted]
 #10.47% 3ms
-
-public class Solution {
+class Solution {
     int sum = 0;
     public int numberOfArithmeticSlices(int[] A) {
         slices(A, A.length - 1);
@@ -108,7 +107,7 @@ public class Solution {
 Approach #5 Dynamic Programming [Accepted]:
 #27.41% 2ms
 
-public class Solution {
+class Solution {
     public int numberOfArithmeticSlices(int[] A) {
         int[] dp = new int[A.length];
         int sum = 0;
@@ -124,7 +123,7 @@ public class Solution {
 
 Approach #5 Constant Space Dynamic Programming [Accepted]:
 #27.41% 2ms
-public class Solution {
+class Solution {
     public int numberOfArithmeticSlices(int[] A) {
         int curr = 0, sum = 0;
         for (int i = 2; i < A.length; i++){

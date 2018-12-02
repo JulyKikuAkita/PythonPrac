@@ -101,10 +101,10 @@ if __name__ == '__main__':
 Java = '''
 #Thought:
 1. # sorted and replace
-#72.94% 6ms
-#O(nlogn)
+# O(nlogn)
 
-public class Solution {
+# 90.21% 4ms
+class Solution {
     public void wiggleSort(int[] nums) {
         if(nums == null || nums.length < 2) return;
 
@@ -126,7 +126,7 @@ public class Solution {
 
 
 # Cheat
-# 95.79% 5ms
+# 100% 3ms
 class Solution {
     public void wiggleSort(int[] nums) {
         int n = nums.length, m = (n + 1) / 2;
@@ -143,7 +143,6 @@ class Solution {
 }
 
 2)
-# 59.34% 9ms
 # https://discuss.leetcode.com/topic/41464/step-by-step-explanation-of-index-mapping-in-java
 # https://leetcode.com/problems/kth-largest-element-in-an-array/description/
 Methodology:
@@ -184,8 +183,8 @@ Complexities: (On the condition that finding median is O(n)-time and O(1)-space)
 
 Time: O(n)
 Space: O(1)
-
-public class Solution {
+# 55.97% 8ms
+class Solution {
     public void wiggleSort(int[] nums) {
         int len = nums.length;
         if (len < 2) {
@@ -266,76 +265,56 @@ public class Solution {
 
 
 # quick sort find median, and merge from mid
-# 59.34% 9ms
-public class Solution {
+# 63.95% 6ms
+
+ class Solution {
     public void wiggleSort(int[] nums) {
-        int len = nums.length;
-        if (len < 2) {
-            return;
-        }
-        int min = Integer.MAX_VALUE;
-        int max = Integer.MIN_VALUE;
-        for (int num : nums) {
-            min = Math.min(min, num);
-            max = Math.max(max, num);
-        }
-        int median = findKthNumber(nums, (len + 1) / 2, min, max);
-        int bigIndex = 1;
-        int smallIndex = (len & 1) == 0 ? len - 2 : len - 1;
-        int curIndex = 1;
-        for (int i = 0; i < len; i++) {
-            if (nums[curIndex] < median) {
-                swap(nums, curIndex, smallIndex);
-                smallIndex -= 2;
-            } else if (nums[curIndex] > median) {
-                swap(nums, curIndex, bigIndex);
-                curIndex += 2;
-                bigIndex += 2;
-                if (curIndex >= len) {
-                    curIndex = 0;
-                }
-            } else {
-                curIndex += 2;
-                if (curIndex >= len) {
-                    curIndex = 0;
-                }
+        int median = findKthLargest(nums, (nums.length + 1) / 2);
+        int n = nums.length;
+        int left = 0, i = 0, right = n - 1;
+
+        while (i <= right) {
+            if (nums[newIndex(i,n)] > median) {
+                swap(nums, newIndex(left++,n), newIndex(i++,n));
+            }
+            else if (nums[newIndex(i,n)] < median) {
+                swap(nums, newIndex(right--,n), newIndex(i,n));
+            }
+            else {
+                i++;
             }
         }
     }
 
-    private int findKthNumber(int[] nums, int k, int min, int max) {
-        int kk = nums.length - k;
-        while (min <= max) {
-            int mid = 0;
-            if (min < 0 && max > 0) {
-                mid = (min + max) / 2;
-            } else {
-                mid = min + (max - min) / 2;
-            }
-            int minCount = 0;
-            int maxCount = 0;
-            for (int num : nums) {
-                if (num < mid) {
-                    minCount++;
-                    if (minCount > k) {
-                        break;
-                    }
-                } else if (num > mid) {
-                    maxCount++;
-                    if (maxCount > kk) {
-                        break;
-                    }
-                }
-            }
-            if (minCount <= k && maxCount <= kk) {
-                return mid;
-            } else if (minCount > k) {
-                max = mid - 1;
-            } else {
-                min = mid + 1;
+    private int newIndex(int index, int n) {
+        return (1 + 2*index) % (n | 1);
+    }
+
+    public int findKthLargest(int[] nums, int k) {
+        return qselect(nums, k, 0, nums.length - 1);
+    }
+
+    public int qselect(int[] nums, int k, int low, int high){
+        if (low == high) return nums[low];
+        int i = low, j = high;
+        int mid = low + (high - low) / 2;
+        int pivot = nums[mid];
+        while(i <= j) {
+            while (nums[i] < pivot) i++;
+            while (nums[j] > pivot) j--;
+            if (i <= j) {
+                swap(nums, i, j);
+                i++;
+                j--;
             }
         }
-        return min;
+        int len = high - i + 1;
+        if ( len >= k) {
+            return qselect(nums, k, i, high);
+        } else {
+            return qselect(nums, k - len, low, i -1);
+        }
+
     }
 
     private void swap(int[] nums, int i, int j) {

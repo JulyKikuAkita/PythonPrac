@@ -43,8 +43,8 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/problems/contains-duplicate/solution/
-Thought:
+#Thought:
+
 /*
  * There're 3 possibilities to satisfy one edit distance apart:
  *
@@ -58,7 +58,7 @@ Thought:
       s: a   b c
       t: a D b c
  */
-# 12.73%  3ms
+# 99.16%  1ms
 class Solution {
     public boolean isOneEditDistance(String s, String t) {
         for (int i = 0; i < Math.min(s.length(), t.length()); i++) {
@@ -79,8 +79,8 @@ class Solution {
     }
 }
 
-#12.73% 3ms
-public class Solution {
+#17.84% 2ms
+class Solution {
     public boolean isOneEditDistance(String s, String t) {
         if(Math.abs(s.length()-t.length()) > 1) return false;
         if(s.length() == t.length()) return isOneModify(s,t);
@@ -104,7 +104,7 @@ public class Solution {
     }
 }
 
-# 49.86% 2ms
+# 100% 0ms
 public class Solution {
     public boolean isOneEditDistance(String s, String t) {
         int m = s.length(), n = t.length();
@@ -126,7 +126,7 @@ public class Solution {
     }
 }
 
-#94.16% 1ms
+# 100% 0ms
 class Solution {
     public boolean isOneEditDistance(String s, String t)
     {

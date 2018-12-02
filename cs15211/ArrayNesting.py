@@ -2,7 +2,8 @@ __source__ = 'https://leetcode.com/problems/array-nesting/#/description'
 # Time:  O(N)
 # Space: O(1)
 #
-# Description:
+# Description: 565. Array Nesting
+#
 # A zero-indexed array A consisting of N different integers is given.
 # The array contains all integers in the range [0, N - 1].
 #
@@ -62,11 +63,13 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/articles/array-nesting/
+#Thought: https://leetcode.com/problems/array-nesting/solution/
+#
 The idea is to, start from every number, find circles in those index-pointer-chains,
 every time you find a set (a circle) mark every number as visited (-1)
 so that next time you won't step on it again.
 
+#18ms 89.8%
 public class Solution {
     public int arrayNesting(int[] nums) {
         int maxsize = 0;

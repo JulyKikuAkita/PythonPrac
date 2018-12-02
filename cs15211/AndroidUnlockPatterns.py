@@ -224,7 +224,7 @@ if __name__ == '__main__':
 Java = '''
 #Thought: https://leetcode.com/problems/android-unlock-patterns/#/solution
 
-#99.83% 0ms
+#100% 0ms //cheating
 public class Solution {
     public int numberOfPatterns(int m, int n) {
         int[] arr = {9,56,320,1624,7152, 26016,72912,140704,140704};
@@ -236,8 +236,8 @@ public class Solution {
     }
 }
 
-# 19.24% 50ms
-public class Solution {
+# 35.08% 32ms
+class Solution {
 
     private boolean used[] = new boolean[9];
 
@@ -288,8 +288,8 @@ public class Solution {
     }
 }
 
-# 99.48% 10ms
-public class Solution {
+# 98.92% 50ms
+class Solution {
     public static final int[][] SKIP_LIST;
     static {
         SKIP_LIST = new int[10][10];
@@ -323,6 +323,73 @@ public class Solution {
         }
         isVisited[curPos] = false;
         return result;
+    }
+}
+
+#38ms 25.86%
+class Solution {
+    private static final int[][] DIRECTIONS_JUMP = new int[][] {{-2, -2}, {-2, 0}, {-2, 2}, {0, -2}, {0, 2}, {2, -2}, {2, 0}, {2, 2}};
+    private static final int[][] DIRECTIONS_NON_JUMP = new int[][] {{-1, -1}, {-1, 0}, {-1, 1}, {0, -1}, {0, 1}, {1, -1}, {1, 0}, {1, 1}, {-2, -1}, {-2, 1}, {-1, 2}, {1, 2}, {2, -1}, {2, 1}, {-1, -2}, {1, -2}};
+
+    public int numberOfPatterns(int m, int n) {
+        boolean[][] visited = new boolean[3][3];
+        n = Math.min(n, 9);
+        if (n <= 0 || n < m) {
+            return 0;
+        }
+        return helperCorner(m, n) + helperSide(m, n) + helperMiddle(m, n);
+    }
+
+    private int helperCorner(int m, int n) {
+        boolean[][] visited = new boolean[3][3];
+        visited[0][0] = true;
+        int result = numberOfPatterns(m, n, 1, 0, 0, visited);
+        return result << 2;
+    }
+
+    private int helperSide(int m, int n) {
+        boolean[][] visited = new boolean[3][3];
+        visited[0][1] = true;
+        int result = numberOfPatterns(m, n, 1, 0, 1, visited);
+        return result << 2;
+    }
+
+    private int helperMiddle(int m, int n) {
+        boolean[][] visited = new boolean[3][3];
+        visited[1][1] = true;
+        return numberOfPatterns(m, n, 1, 1, 1, visited);
+    }
+
+    private int numberOfPatterns(int m, int n, int curLength, int i, int j, boolean[][] visited) {
+        int result = 0;
+        if (curLength == n) {
+            return 1;
+        } else if (curLength >= m) {
+            result++;
+        }
+        for (int[] direction : DIRECTIONS_JUMP) {
+            int newI = i + direction[0];
+            int newJ = j + direction[1];
+            if (isValid(newI, newJ, visited) && visited[Math.abs(i + direction[0] / 2)][Math.abs(j + direction[1] / 2)]) {
+                visited[newI][newJ] = true;
+                result += numberOfPatterns(m, n, curLength + 1, newI, newJ, visited);
+                visited[newI][newJ] = false;
+            }
+        }
+        for (int[] direction : DIRECTIONS_NON_JUMP) {
+            int newI = i + direction[0];
+            int newJ = j + direction[1];
+            if (isValid(newI, newJ, visited)) {
+                visited[newI][newJ] = true;
+                result += numberOfPatterns(m, n, curLength + 1, newI, newJ, visited);
+                visited[newI][newJ] = false;
+            }
+        }
+        return result;
+    }
+
+    private boolean isValid(int i, int j, boolean[][] visited) {
+        return i >= 0 && i < 3 && j >= 0 && j < 3 && !visited[i][j];
     }
 }
 '''

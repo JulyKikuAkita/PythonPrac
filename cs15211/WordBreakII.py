@@ -4,7 +4,7 @@ __source__ = 'https://leetcode.com/problems/word-break-ii/#/description'
 # Space: O(n)
 # DP
 #
-# Description: Leetcode # 217. 140. Word Break II
+# Description: Leetcode # 140. Word Break II
 #
 # Given a non-empty string s and a dictionary wordDict containing a list of non-empty words,
 # add spaces in s to construct a sentence where each word is a valid dictionary word.
@@ -147,13 +147,12 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-Thought: https://leetcode.com/articles/word-break-ii/
-
-77.82% 14ms
+Thought: https://leetcode.com/problems/word-break-ii/solution/
 Time O(n^3), Size of recursion tree can go up to n^2. The creation of list takes n time.
 Space O(n^3) The depth of the recursion tree can go up to n and each activation record can contains a string list of size n.
 
-public class Solution {
+78.28% 9ms
+class Solution {
     public List<String> wordBreak(String s, List<String> wordDict) {
             return DFS(s, wordDict, new HashMap<String, LinkedList<String>>());
     }
@@ -206,8 +205,8 @@ public class Solution {
     }
 }
 
-# 98.96% 8ms
-public class Solution {
+# 99.97% 4ms
+class Solution {
     public List<String> wordBreak(String s, List<String> wordDict) {
         List<String> result = new ArrayList<>();
         if (s == null || s.length() <= 0 || wordDict == null || wordDict.size() <= 0) return result;

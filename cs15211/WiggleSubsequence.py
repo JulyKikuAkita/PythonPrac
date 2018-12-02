@@ -91,6 +91,7 @@ class Solution(object):
 
         return length
 
+    #20ms 99.55%
     def wiggleMaxLength2(self, nums):
         """
         :type nums: List[int]
@@ -108,7 +109,7 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/articles/wiggle-subsequence/
+#Thought: https://leetcode.com/problems/wiggle-subsequence/solution/
 
 In Wiggle Subsequence, think that the solution we need should be in a way that we get alternative higher,
 lower,higher number.
@@ -147,8 +148,8 @@ asks for the Wiggle series also then we can return the series too. The leetcode 
 test case if the series starts with same set of numbers.
 modified the code to consider that test case also.
 
-#36.11% 0ms
-public class Solution {
+#100% 0ms
+class Solution {
     public int wiggleMaxLength(int[] nums) {
         if (nums.length == 0 || nums.length == 1) {
 			return nums.length;
@@ -196,7 +197,7 @@ so both down[i] and up[i] keep the same.
 
 In fact, we can reduce the space complexity to O(1), but current way is more easy to understanding.
 
-#36.11% 0ms
+#100% 0ms
 public class Solution {
     public int wiggleMaxLength(int[] nums) {
 
@@ -225,7 +226,7 @@ public class Solution {
     }
 }
 to space(1)
-#36.11% 0ms
+#100% 0ms
 public class Solution {
     public int wiggleMaxLength(int[] nums) {
         if (nums.length < 2)
@@ -242,8 +243,8 @@ public class Solution {
 }
 
 3. Greedy: finding the number of alternating max. and min. peaks in the array.
-#36.11% 0ms
-public class Solution {
+#100% 0ms
+class Solution {
     public int wiggleMaxLength(int[] nums) {
         if (nums.length < 2)
             return nums.length;

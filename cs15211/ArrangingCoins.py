@@ -1,8 +1,12 @@
+import math
+
 __source__ = 'https://github.com/kamyu104/LeetCode/blob/master/Python/arranging-coins.py'
+# https://leetcode.com/problems/arranging-coins/
 # Time:  O(logn)
 # Space: O(1)
 #
-# Description:
+# Description: 441. Arranging Coins
+#
 # You have a total of n coins that you want to form in a staircase shape,
 # where every k-th row must have exactly k coins.
 #
@@ -102,7 +106,8 @@ Auxiliary Space:
 
 Worst Case `O(1)` : Additional variables are of constant size.
 
-public class Solution {
+#18ms 98.18%
+class Solution {
     public int arrangeCoins(int n) {
         int start = 0;
         int end = n;
@@ -123,7 +128,7 @@ public class Solution {
 
 
 2. Approach: Mathematics
-
+# 22ms 91.88%
 public class Solution {
     public int arrangeCoins(int n) {
         return (int) ( Math.sqrt(1 + 8.0 * n) - 1) /2 ;
@@ -136,9 +141,12 @@ Uniform cost model is used as Cost Model and `n` is the input number. `b` in thi
 
 Time Complexity:
 
-Best Case `O(1)` : With respect to the input, the algorithm will always perform basic mathematical operation that run in constant time.
-Average Case `O(1)` : With respect to the input, the algorithm will always perform basic mathematical operation that run in constant time.
-Worst Case `O(1)` : With respect to the input, the algorithm will always perform basic mathematical operation that run in constant time.
+Best Case `O(1)` : With respect to the input,
+the algorithm will always perform basic mathematical operation that run in constant time.
+Average Case `O(1)` : With respect to the input,
+the algorithm will always perform basic mathematical operation that run in constant time.
+Worst Case `O(1)` : With respect to the input,
+the algorithm will always perform basic mathematical operation that run in constant time.
 Auxiliary Space:
 
 Worst Case `O(1)` : No extra space is used.

@@ -1,8 +1,10 @@
 __source__ = 'https://github.com/kamyu104/LeetCode/blob/master/Python/arithmetic-slices-ii-subsequence.py'
+# https://leetcode.com/problems/arithmetic-slices-ii-subsequence/
 # Time:  O(n^2)
 # Space: O(n * d)
 #
-# Description:
+# # Description: Leetcode # 413. Arithmetic Slices
+#
 # A sequence of numbers is called arithmetic if it consists of at least three elements
 # and if the difference between any two consecutive elements is the same.
 #
@@ -75,7 +77,9 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://discuss.leetcode.com/topic/67413/detailed-explanation-for-java-o-n-2-solution
+#Thought: https://leetcode.com/problems/arithmetic-slices-ii-subsequence/solution/
+
+https://discuss.leetcode.com/topic/67413/detailed-explanation-for-java-o-n-2-solution
 At first glance of the problem description,
 I had a strong feeling that the solution to the original problem can be built through its subproblems,
 i.e., the total number of arithmetic subsequence slices of the whole input array can be constructed from
@@ -154,7 +158,9 @@ At last we update the count of all "generalized" slices for T(i, d) by adding th
 the original value of T(i, d), which is c1 here, the counts from T(j, d), which is c2 and lastly the 1 count of the
 "two-element" slice (A[j], A[i]).
 
-public int numberOfArithmeticSlices(int[] A) {
+# 154ms 85.89%
+class Solution {
+    public int numberOfArithmeticSlices(int[] A) {
         int re = 0;
         HashMap<Integer, Integer>[] maps = new HashMap[A.length];
         for(int i=0; i<A.length; i++) {
@@ -171,4 +177,6 @@ public int numberOfArithmeticSlices(int[] A) {
         }
         return re;
     }
+}
+
 '''

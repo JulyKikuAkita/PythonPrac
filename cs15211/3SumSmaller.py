@@ -52,7 +52,7 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/articles/3sum-smaller/
+#Thought: https://leetcode.com/problems/3sum-smaller/solution/
 We sort the array first. Then, for each element,
 we use the two pointer approach to find the number of triplets that meet the requirements.
 
@@ -70,8 +70,8 @@ then we know that since the array is sorted, we can replace hi with any element 
 and the requirements will still be met. Just like in the example above, we know that since -2 + 0 + 3 < 2,
 we can replace hi (3) with 1, and it would still work. Therefore, we can just add hi - lo to the triplet count.
 
-#52.15% 6ms
-public class Solution {
+#99.60% 3ms
+class Solution {
     public int threeSumSmaller(int[] nums, int target) {
         int result = 0;
         if (nums == null || nums.length < 3) {
@@ -96,7 +96,7 @@ public class Solution {
     }
 }
 
-# 79.67% 5ms
+#41.45% 5ms
 class Solution {
     public int threeSumSmaller(int[] nums, int target) {
         Arrays.sort(nums);

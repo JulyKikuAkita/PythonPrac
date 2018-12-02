@@ -2,8 +2,10 @@ __source__ = 'https://leetcode.com/problems/backspace-string-compare/description
 # Time:  O(N)
 # Space: O(N)
 #
-# Description: Leetcode #
-# Given two strings S and T, return if they are equal when both are typed into empty text editors. # means a backspace character.
+# Description: Leetcode # 844. Backspace String Compare
+#
+# Given two strings S and T, return if they are equal when both are typed into empty text editors.
+#  means a backspace character.
 #
 # Example 1:
 #

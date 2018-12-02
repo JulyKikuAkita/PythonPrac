@@ -348,7 +348,7 @@ class LevelString {
 
 # below is for 2017 version
 Leecode2017 = '''
-# 95.72% 42ms
+#29ms 94.81%
 public class Solution {
         boolean isConnected = false;
         public List<List<String>> findLadders(String beginWord, String endWord, List<String> wordList){

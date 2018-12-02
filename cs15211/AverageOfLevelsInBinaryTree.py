@@ -1,6 +1,6 @@
 __source__ = 'https://leetcode.com/problems/average-of-levels-in-binary-tree/description/'
-# Time:  O()
-# Space: O()
+# Time:  O(N)
+# Space: O(M) M refers to the maximum mumber of nodes at any level in the input tree.
 #
 # Description: Leetcode # 637. Average of Levels in Binary Tree
 #
@@ -62,9 +62,6 @@ if __name__ == '__main__':
 
 Java = '''
 #Thought: https://leetcode.com/problems/average-of-levels-in-binary-tree/solution/
-
-#BFS
-# 92.06%  9ms
 /**
  * Definition for a binary tree node.
  * public class TreeNode {
@@ -74,7 +71,10 @@ Java = '''
  *     TreeNode(int x) { val = x; }
  * }
  */
-public class Solution {
+
+#BFS
+# 92.06%  9ms
+class Solution {
     public List<Double> averageOfLevels(TreeNode root) {
         List<Double> res = new ArrayList<>();
         if (root == null) return res;
@@ -98,7 +98,7 @@ public class Solution {
 
 # DFS
 # 15.17% 14ms
-public class Solution {
+class Solution {
     public List<Double> averageOfLevels(TreeNode root) {
         List<Double> res = new ArrayList<>();
         if (root == null) return res;
@@ -133,7 +133,7 @@ public class Solution {
 }
 
 # 69.79% 10ms
-public class Solution {
+class Solution {
     public List < Double > averageOfLevels(TreeNode root) {
         List < Integer > count = new ArrayList < > ();
         List < Double > res = new ArrayList < > ();

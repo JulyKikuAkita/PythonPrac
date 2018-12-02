@@ -71,7 +71,8 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
+# Thought:
+
 We can solve this problem using backtracking, we just have to keep trying to use a character in the pattern to
 match different length of substrings in the input string, keep trying till we go through the input string and the pattern.
 
@@ -99,7 +100,7 @@ so they can match the same string, anyhow, I guess it really depends on how the 
 The following code should pass OJ now, if we don't need to worry about the duplicate matches,
 just remove the code that associates with the hash set.
 
-#44.14% 102 ms
+#50ms 76.87%
 public class Solution {
     public boolean wordPatternMatch(String pattern, String str) {
         Map<Character, String> map = new HashMap<>();
@@ -138,8 +139,8 @@ public class Solution {
 }
 
 # use String[] instead of map
-#83.26% 63ms
-public class Solution {
+# 87.93% 43ms
+class Solution {
     public boolean wordPatternMatch(String pattern, String str) {
         return isMatch(str, 0, pattern, 0, new String[26], new HashSet<>());
     }
@@ -175,8 +176,8 @@ public class Solution {
 }
 
 
-# 94.14% 4ms
-public class Solution {
+# 40ms 88.44%
+class Solution {
     public boolean wordPatternMatch(String pattern, String str) {
         return isMatch(str, 0, pattern, 0, new String[26], new HashSet<>());
     }
@@ -211,8 +212,8 @@ public class Solution {
     }
 }
 
-#95.82% 3ms
-public class Solution {
+#97.33% 2ms
+class Solution {
     public boolean wordPatternMatch(String pattern, String str) {
         return wordPattern(pattern, str, 0, 0, new String[26], new HashSet<>());
     }
@@ -244,6 +245,48 @@ public class Solution {
             }
         }
         return false;
+    }
+}
+
+#1ms 100%
+class Solution {
+    public boolean wordPatternMatch(String pattern, String str) {
+        String[] map = new String[26]; // mapping of characters 'a' - 'z'
+        HashSet<String> set = new HashSet<>(); // mapped result of 'a' - 'z'
+        return wordPatternMatch(pattern, str, map, set, 0, str.length()-1, 0, pattern.length()-1);
+    }
+    private boolean wordPatternMatch(String pattern, String str, String[] map, HashSet<String> set, int start, int end, int startP, int endP) {
+        if(startP==endP+1 && start==end+1) return true; // both pattern and str are exhausted
+        if((startP>endP && start<=end) || (startP<endP && start>end)) return false; // either of pattern or str is exhausted
+
+        char ch = pattern.charAt(startP);
+        String matched = map[ch-'a'];
+        if(matched!=null) { // ch is already mapped, then continue
+            int count = matched.length();
+            return start+count<=end+1 && matched.equals(str.substring(start, start+count)) // substring equals previously mapped string
+                    && wordPatternMatch(pattern, str, map, set, start+matched.length(), end, startP+1, endP); // moving forward
+        }
+        else {
+            int endPoint = end;
+            for(int i=endP; i>startP; i--) {
+                endPoint -= map[pattern.charAt(i)-'a']==null ? 1 : map[pattern.charAt(i)-'a'].length();
+            }
+            for(int i=start; i<=endPoint; i++) { // try every possible mapping, from 1 character to the end
+                matched = str.substring(start, i+1);
+                if(set.contains(matched)) continue; // different pattern cannot map to same substring
+
+                map[ch-'a'] = matched; // move forward, add corresponding mapping and set content
+                set.add(matched);
+
+                if(wordPatternMatch(pattern, str, map, set, i+1, end, startP+1, endP)) return true;
+
+                else { // backtracking, remove corresponding mapping and set content
+                    map[ch-'a'] = null;
+                    set.remove(matched);
+                }
+            }
+        }
+        return false; // exhausted
     }
 }
 '''

@@ -103,9 +103,10 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/problems/contains-duplicate/solution/
-71.47% #53ms
-public class Solution {
+#Thought: https://leetcode.com/problems/zigzag-conversion/solution/
+
+# 23ms 94.20%
+class Solution {
     public String convert(String s, int numRows) {
         char[] c = s.toCharArray();
         int len = c.length;
@@ -131,8 +132,8 @@ public class Solution {
     }
 }
 
-86.05% #49ms
-public class Solution {
+#32ms 69.51%
+class Solution {
     public String convert(String s, int numRows) {
         if (numRows <= 1) {
             return s;

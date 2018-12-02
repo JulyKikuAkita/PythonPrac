@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/edit-distance/#/solutions'
+__source__ = 'https://leetcode.com/problems/edit-distance/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/edit-distance.py
 # Thought: https://web.stanford.edu/class/cs124/lec/med.pdf
 #
@@ -131,7 +131,8 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-Thought: https://web.stanford.edu/class/cs124/lec/med.pdf
+Thought: https://leetcode.com/problems/edit-distance/solution/
+https://web.stanford.edu/class/cs124/lec/med.pdf
 This is a classic problem of Dynamic Programming. We define the state dp[i][j]
 to be the minimum number of operations to convert word1[0..i - 1] to word2[0..j - 1].
 The state equations have two cases: the boundary case and the general case.
@@ -197,8 +198,8 @@ f(0, k) = f(k, 0) = k
 Below is the direct bottom-up translation of this recurrent relation.
 t is only important to take care of 0-based index with actual code :-
 
-#83.70% 11ms
-public class Solution {
+#18.42% 13ms
+class Solution {
     public int minDistance(String word1, String word2) {
         int len1 = word1.length();
         int len2 = word2.length();
@@ -223,8 +224,8 @@ public class Solution {
     }
 }
 
-#29.67% 16ms
-public class Solution {
+#75.64% 7ms
+class Solution {
     public int minDistance(String word1, String word2) {
         int len1 = word1.length();
         int len2 = word2.length();
@@ -264,8 +265,8 @@ For each i = 1 ...M
                              0; if X(i) == Y(j)
 Terminaiton: D(N,M) is distance
 
-#4.57% 21ms
-public class Solution {
+#95.04% 6ms
+class Solution {
     public int minDistance(String word1, String word2) {
         int m = word1.length();
         int n = word2.length();
@@ -295,9 +296,9 @@ public class Solution {
     }
 }
 
-# dfs
-#99.21% 7ms
-public class Solution {
+# dfs with memorization
+# 99.62% 4ms
+class Solution {
     private String word1;
     private String word2;
     private Integer[][] cache;

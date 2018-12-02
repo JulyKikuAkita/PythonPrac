@@ -170,10 +170,11 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
+# Thought:
+#
 # DFS
-#44.16% 15ms
-public class Solution {
+# 41.39% 14ms
+class Solution {
     public static final int[][] DIRECTIONS = new int[][] {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
 
     public boolean exist(char[][] board, String word) {
@@ -209,58 +210,46 @@ public class Solution {
     }
 }
 
-#BFS + DFS:
-# 78.97% 11ms
-public class Solution {
+# BFS + DFS:
+# 99.91% 7ms
+class Solution {
     public boolean exist(char[][] board, String word) {
-        return bt(board,new boolean[board.length][board[0].length], 0,word,0,0);
-
-
+        return bt(board,new boolean[board.length][board[0].length], 0, word, 0, 0);
     }
-    private boolean bt(char[][] board, boolean[][] usd, int index, String word, int row,int col)
-    {
-        if(index==word.length()) return true;
-        else if(index==0)
-        {
-            for(int i=0;i<board.length;i++)
-            {
-                for(int j=0;j<board[0].length;j++)
-                {
-                    if(board[i][j]==word.charAt(0))
-                    {
-                        usd[i][j] = true;
-                        if(bt(board,usd,1,word,i,j)) return true;
-                        usd[i][j] = false;
+
+    private boolean bt(char[][] board, boolean[][] used, int index, String word, int row, int col){
+        if (index == word.length()) return true;
+        else if (index == 0) {
+            for (int i = 0; i < board.length; i++) {
+                for (int j = 0; j < board[0].length; j++) {
+                    if (board[i][j] == word.charAt(0)) {
+                        used[i][j] = true;
+                        if(bt(board, used, 1, word, i , j)) return true;
+                        used[i][j] = false;
                     }
                 }
             }
-        }
-        else
-        {
+        } else {
             char ch = word.charAt(index);
-            if(row-1>=0 && !usd[row-1][col] && board[row-1][col] == ch)
-            {
-                usd[row-1][col] = true;
-                if(bt(board,usd,index+1,word,row-1,col)) return true;
-                usd[row-1][col] = false;
+            if (row - 1 >= 0 && !used[row - 1][col] && board[row-1][col] == ch) {
+                used[row - 1][col] = true;
+                if (bt(board, used, index + 1, word, row - 1, col)) return true;
+                used[row - 1][col] = false;
             }
-            if(col-1>=0 && !usd[row][col-1] && board[row][col-1] ==ch)
-            {
-                usd[row][col-1] = true;
-                if(bt(board,usd,index+1,word,row,col-1)) return true;
-                usd[row][col-1] = false;
+            if (col - 1 >= 0 && !used[row][col-1] && board[row][col-1] == ch) {
+                used[row][col - 1] = true;
+                if (bt(board, used, index + 1, word, row, col - 1)) return true;
+                used[row][col - 1] = false;
             }
-            if(row+1<board.length && !usd[row+1][col] && board[row+1][col] == ch)
-            {
-                usd[row+1][col] = true;
-                if(bt(board,usd,index+1,word,row+1,col)) return true;
-                usd[row+1][col] = false;
+            if (row + 1 < board.length && !used[row + 1][col] && board[row + 1][col] == ch) {
+                used[row + 1][col] = true;
+                if (bt(board, used, index + 1, word, row + 1, col)) return true;
+                used[row + 1][col] = false;
             }
-            if(col+1<board[0].length && !usd[row][col+1] && board[row][col+1] ==ch)
-            {
-                usd[row][col+1] = true;
-                if(bt(board,usd,index+1,word,row,col+1)) return true;
-                usd[row][col+1] = false;
+            if (col + 1 < board[0].length && !used[row][col + 1] && board[row][col + 1] == ch) {
+                used[row][col + 1] = true;
+                if (bt(board, used, index + 1, word, row, col + 1)) return true;
+                used[row][col + 1] = false;
             }
             return false;
         }
@@ -268,7 +257,7 @@ public class Solution {
     }
 }
 
-# 99.06% 7ms
+# 78.86% 9ms
 class Solution {
     public boolean exist(char[][] board, String word) {
         char[] charArray = word.toCharArray();

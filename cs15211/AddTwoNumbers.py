@@ -1,4 +1,4 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/add-two-numbers/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/add-two-numbers.py
 # Time:  O(n)
 # Space: O(1)
@@ -15,6 +15,9 @@ __author__ = 'July'
 #  Amazon Microsoft Bloomberg Airbnb Adobe
 # Hide Tags Linked List Math
 # Hide Similar Problems (M) Multiply Strings (E) Add Binary (E) Sum of Two Integers (E) Add Strings (M) Add Two Numbers II
+#
+
+import unittest
 
 class ListNode:
     def __init__(self, x):
@@ -42,14 +45,7 @@ class Solution:
 
         if carry > 0:
             current.next = ListNode(carry)
-
         return dummy.next
-
-if __name__ == '__main__':
-    a, a.next, a.next.next = ListNode(2), ListNode(4), ListNode(3)
-    b, b.next, b.next.next = ListNode(5), ListNode(6), ListNode(4)
-    result = Solution().addTwoNumbers(a, b)
-    print "{0} -> {1} -> {2}".format(result.val, result.next.val, result.next.next.val)
 
 class SolutionOther:
     # @return a ListNode
@@ -74,24 +70,19 @@ class SolutionOther:
 
         return newHead.next
 
-#test
-l1 = ListNode(2)
-#l1.next = ListNode(4)
-#l1.next.next = ListNode(3)
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        a, a.next, a.next.next = ListNode(2), ListNode(4), ListNode(3)
+        b, b.next, b.next.next = ListNode(5), ListNode(6), ListNode(4)
+        result = Solution().addTwoNumbers(a, b)
+        print "{0} -> {1} -> {2}".format(result.val, result.next.val, result.next.next.val)
 
-l2 = ListNode(9)
-l2.next = ListNode(9)
-l2.next.next = ListNode(9)
+if __name__ == '__main__':
+    unittest.main()
 
-test = Solution()
-ans = test.addTwoNumbers(l1, l2)
+Java = '''
+#Thought: https://leetcode.com/problems/add-two-numbers/solution/
 
-while ans:
-    print (ans.val)
-    ans = ans.next
-
-#java
-js = '''
 /**
  * Definition for singly-linked list.
  * public class ListNode {
@@ -100,7 +91,9 @@ js = '''
  *     ListNode(int x) { val = x; }
  * }
  */
-public class Solution {
+
+#22ms 92.49%
+class Solution {
     public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
         ListNode fakeHead = new ListNode(0);
         ListNode cur = fakeHead;

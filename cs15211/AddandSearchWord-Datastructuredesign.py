@@ -85,8 +85,9 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
-#4.03% 275ms
+#Thought: Trie
+#
+#41.50% 138ms  //implement TrieNode with map
 public class WordDictionary {
     Trie root;
 
@@ -144,11 +145,10 @@ class Trie{
     }
 }
 
+#######################################################################################################################
+#91.87% 102ms
 
-
-
-#88.15% 170ms
-public class WordDictionary {
+class WordDictionary {
     private TrieNode root;
 
     /** Initialize your data structure here. */
@@ -169,7 +169,8 @@ public class WordDictionary {
         cur.isWord = true;
     }
 
-    /** Returns if the word is in the data structure. A word could contain the dot character '.' to represent any one letter. */
+    /** Returns if the word is in the data structure.
+    A word could contain the dot character '.' to represent any one letter. */
     public boolean search(String word) {
         return search(word, 0, root);
     }
@@ -211,4 +212,54 @@ public class WordDictionary {
  * obj.addWord(word);
  * boolean param_2 = obj.search(word);
  */
+
+#######################################################################################################################
+# 124ms 56.48%
+class WordDictionary {
+
+    class Node{
+        Node next[] = new Node[26];
+        String word;
+    }
+    Node root;
+    /** Initialize your data structure here. */
+    public WordDictionary() {
+        root = new Node();
+    }
+
+    /** Adds a word into the data structure. */
+    public void addWord(String word) {
+        Node p = root;
+        for(char ch : word.toCharArray()){
+            int i = ch - 'a';
+            if(null == p.next[i]){
+                p.next[i] = new Node();
+            }
+            p = p.next[i];
+        }
+        p.word = word;
+    }
+
+    /** Returns if the word is in the data structure.
+    A word could contain the dot character '.' to represent any one letter. */
+    public boolean search(String word) {
+        return search(word.toCharArray(),0,root);
+    }
+
+    public static boolean search(char[] w, int n, Node node){
+        if(w.length == n)
+            return null != node.word;
+        if('.' != w[n]){
+            return node.next[w[n]-'a'] != null && search(w,n+1,node.next[w[n]-'a']);
+        }else{
+            for(int i = 0; i < 26; i++){
+                if(null != node.next[i]){
+                    if(search(w,n+1,node.next[i]))
+                        return true;
+                }
+            }
+        }
+    return false;
+    }
+}
 '''

@@ -4,6 +4,7 @@ __source__ = 'https://leetcode.com/problems/3sum/description/'
 # Space: O(1)
 #
 # Description: Leetcode # 15. 3Sum
+#
 # Given an array S of n integers,
 # are there elements a, b, c in S such that a + b + c = 0?
 # Find all unique triplets in the array which gives the sum of zero.
@@ -137,8 +138,8 @@ if __name__ == '__main__':
 
 Java = '''
 #Thought:
-#40.37% 90ms
-public class Solution {
+#33.29%78ms
+class Solution {
     public List<List<Integer>> threeSum(int[] nums) {
         List<List<Integer>> result = new ArrayList<>();
         int len = nums.length;
@@ -169,8 +170,8 @@ public class Solution {
     }
 }
 
-#98.93% 66ms
-public class Solution {
+#73.58% 51ms
+class Solution {
     public List<List<Integer>> threeSum(int[] nums) {
             if (nums == null || nums.length == 0 || nums.length < 3) return new ArrayList<>();
 
@@ -204,8 +205,8 @@ public class Solution {
     }
 }
 
-#36.53% 92ms
-public class Solution {
+#73.58% 51ms
+class Solution {
     public List<List<Integer>> threeSum(int[] nums) {
         List<List<Integer>> res = new ArrayList<>();
         if(nums == null || nums.length < 3) return res;
@@ -216,7 +217,8 @@ public class Solution {
             int k = nums.length - 1;
             while(j < k){
                 if(nums[i] + nums[j] + nums[k] == 0){
-                    res.add(new ArrayList<Integer>(Arrays.asList(new Integer[]{nums[i],nums[j],nums[k]})));
+                    res.add(Arrays.asList(new Integer[]{nums[i],nums[j],nums[k]})); //61ms
+                    // res.add(new ArrayList<Integer>(Arrays.asList(new Integer[]{nums[i],nums[j],nums[k]})));//50ms,76%
                     while(++j < k && nums[j] == nums[j-1]);
                     while(--k > j && nums[k] == nums[k+1]);
                 }else if(nums[i] + nums[j] + nums[k] > 0){
@@ -230,4 +232,111 @@ public class Solution {
         return res;
     }
 }
+
+#99.86% 37ms
+class Solution {
+    public List<List<Integer>> threeSum(int[] nums) {
+        List<List<Integer>> res = new ArrayList<>();
+        Arrays.sort(nums);
+        for (int i = 0; i < nums.length; i++) {
+            if (nums[i] > 0) break;
+            if (i > 0 && nums[i] == nums[i - 1]) continue;
+            int l = i + 1, r = nums.length - 1;
+            while (l < r) {
+                if (nums[i] + nums[l] + nums[r] > 0) r--;
+                else if (nums[i] + nums[l] + nums[r] < 0) l++;
+                else {
+                    res.add(Arrays.asList(new Integer[]{nums[i],nums[l],nums[r]}));
+                    l++;
+                    r--;
+                    while(l < r && nums[l] == nums[l - 1]) l++;
+                    while(l < r && nums[r] == nums[r + 1]) r--;
+                }
+            }
+        }
+        return res;
+    }
+}
+
+#99.86% 37ms
+class Solution {
+    public List<List<Integer>> threeSum(int[] nums) {
+        List<List<Integer>> res = new LinkedList<>();
+        int len = nums.length;
+        if (len < 3) return res;
+
+        Arrays.sort(nums);
+        int lastNeg = Arrays.binarySearch(nums, 0);
+        int firstPos = lastNeg;
+        int numZero;
+        if (lastNeg < 0) {
+            numZero = 0;
+            lastNeg = -lastNeg - 2;
+            firstPos = lastNeg + 1;
+        } else {
+            while (lastNeg > -1 && nums[lastNeg] == 0) lastNeg--;
+            while(firstPos < len && nums[firstPos] == 0) firstPos++;
+            numZero = firstPos - lastNeg - 1;
+        }
+
+        int min = nums[0], max = nums[len - 1];
+        int[] hash = new int[max - min + 1];
+        for(int e : nums) hash[e - min]++;
+        if(numZero >= 3) res.add(Arrays.asList(0,0,0));
+
+        if(numZero > 0){
+            for(int i = firstPos; i < len; i++){
+                if(i > firstPos && nums[i] == nums[i-1])
+                    continue;
+                int need = -nums[i];
+                if(need >= min && hash[need-min] > 0)
+                    res.add(Arrays.asList(0, nums[i], -nums[i]));
+            }
+        }
+
+        for(int i = firstPos; i < len; i++){
+            if (i > firstPos && nums[i] == nums[i-1]) continue;
+
+            int half;
+            if (nums[i] % 2 != 0)
+                half = -(nums[i] + 1) / 2;
+            else {
+                half = -nums[i] / 2;
+                if (half >= min && hash[half - min] > 1)
+                    res.add(Arrays.asList(nums[i], half, half));
+            }
+
+            for(int j = lastNeg; j > -1 && nums[j] > half; j--){
+                if(j < lastNeg && nums[j] == nums[j+1])
+                    continue;
+                int need = -nums[i] - nums[j];
+                if(need >= min && hash[need - min] > 0)
+                    res.add(Arrays.asList(nums[i], nums[j], need));
+            }
+        }
+
+        for(int i = lastNeg; i > -1 ; i--){
+            if(i < lastNeg && nums[i] == nums[i+1])
+                continue;
+            int half;
+            if(nums[i] % 2 != 0)
+                half= -(nums[i] - 1) / 2;
+            else{
+                half = -nums[i] / 2;
+                if (half <= max && hash[half - min] > 1)
+                    res.add(Arrays.asList(nums[i], half, half));
+            }
+
+            for(int j = firstPos; j < len && nums[j] < half; j++){
+                if(j > firstPos && nums[j] == nums[j-1])
+                    continue;
+                int need = -nums[i] - nums[j];
+                if( need <= max && hash[need-min] > 0)
+                    res.add(Arrays.asList(nums[i], nums[j], need));
+            }
+        }
+        return res;
+    }
+}
+
 '''

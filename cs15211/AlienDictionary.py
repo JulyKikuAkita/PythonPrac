@@ -3,6 +3,8 @@ __source__ = 'https://leetcode.com/problems/alien-dictionary/#/description'
 # Time:  O(n)
 # Space: O(|V|+|E|) = O(26 + 26^2) = O(1)
 #
+# Topological Sort
+#
 # Description: Leetcode # 269. Alien Dictionary
 #
 # There is a new alien language which uses the latin alphabet.
@@ -168,7 +170,7 @@ Java = '''
 
 //dfs
 #56.22% 9ms
-public class Solution {
+class Solution {
     public String alienOrder(String[] words) {
         if (words == null || words.length == 0) {
             return "";
@@ -230,7 +232,7 @@ public class Solution {
 }
 //BFS
 # 35.76% 10ms
-public class Solution {
+class Solution {
     public String alienOrder(String[] words) {
         Map<Character, Set<Character>> map=new HashMap<Character, Set<Character>>();
         Map<Character, Integer> degree=new HashMap<Character, Integer>();
@@ -280,7 +282,7 @@ public class Solution {
 }
 
 #81.02% 7ms
-public class Solution {
+class Solution {
     public String alienOrder(String[] words) {
         StringBuilder sb = new StringBuilder();
         int[] degrees = new int[26];
@@ -339,7 +341,7 @@ public class Solution {
     }
 }
 
-#95.95% 2ms
+#1ms 100%
 class Solution {
    private final int N = 26;
     public String alienOrder(String[] words) {
@@ -387,6 +389,62 @@ class Solution {
                 }
             }
         }
+    }
+}
+
+#1ms 100%
+class Solution {
+    int N = 26;
+    public String alienOrder(String[] words) {
+
+        boolean[][] adj = new boolean[N][N];
+        int[] visited = new int[N];   //-1 nonexist, 0 exist, 1 visiting, 2 visited
+
+        for (int i=0; i<N; i++){
+            visited[i] = -1;
+        }
+        for (String w: words){
+            for (char c: w.toCharArray()){
+                visited[c-'a'] = 0;
+            }
+        }
+        for (int i=0; i<words.length-1; i++){
+            String first = words[i];
+            String second = words[i+1];
+            for (int j=0; j<Math.min(first.length(), second.length()); j++){
+                if (first.charAt(j) != second.charAt(j)){
+                    adj[first.charAt(j)-'a'][second.charAt(j)-'a'] = true;
+                    break;
+                }
+            }
+        }
+        StringBuilder sb = new StringBuilder();
+
+        for (int i=0; i<N; i++){
+            if (visited[i]==0){
+                if (!dfs(adj, visited, sb, i))
+                    return "";
+            }
+
+        }
+        return sb.reverse().toString();
+    }
+
+    public boolean dfs(boolean[][] adj, int[] visited, StringBuilder sb, int i){
+        visited[i] = 1;
+        for (int j=0; j<N; j++){
+            if (adj[i][j]){
+                if (visited[j]==0){
+                    if (!dfs(adj, visited, sb, j))
+                        return false;
+                } else if (visited[j]==1){
+                    return false;
+                }
+            }
+        }
+        visited[i] = 2;
+        sb.append((char)(i+'a'));
+        return true;
     }
 }
 '''

@@ -166,7 +166,7 @@ UPDATE: Thanks to @dietpepsi we further improved from 17ms to 15ms.
 The final run time is 15ms. Hope it helps!
 
 
-# 93.23% 20ms
+# 93.62% 15ms
 public List<String> findWords(char[][] board, String[] words) {
     List<String> res = new ArrayList<>();
     TrieNode root = buildTrie(words);
@@ -226,10 +226,10 @@ class TrieNode {
 }
 
 #######################################################################
-#trie
-#63.94% 26ms
+# Trie
+# 82.58% 18ms
 
-public class Solution {
+class Solution {
     private static final int[][] DIRECTIONS = new int[][] {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
 
     public List<String> findWords(char[][] board, String[] words) {
@@ -292,7 +292,7 @@ public class Solution {
     }
 }
 
-#99.63%  17ms
+#99.93%  11ms
 public class Solution {
     class Node{
         Node[] child;

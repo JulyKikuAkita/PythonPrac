@@ -28,6 +28,23 @@ class Solution(object):
                 # Swap unordered elements.
                 nums[i - 1], nums[i] = nums[i], nums[i - 1]
 
+# 64ms 98.09%
+class Solution2(object):
+    def wiggleSort(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: void Do not return anything, modify nums in-place instead.
+        """
+        if not nums or len(nums) <= 1:
+            return
+        elif len(nums) == 2:
+            if(nums[0] > nums[1]):
+                nums[1], nums[0] = nums[0], nums[1]
+
+        for i in xrange(1,len(nums)):
+            if (i % 2 and nums[i] < nums[i-1]) or ( not (i % 2) and nums[i] > nums[i-1]):
+                nums[i-1], nums[i] = nums[i], nums[i-1]
+
 class TestMethods(unittest.TestCase):
     def test_Local(self):
         self.assertEqual(1, 1)
@@ -38,7 +55,7 @@ if __name__ == '__main__':
 #Java
 # http://blog.csdn.net/xudli/article/details/48749155
 Java = '''
-Thought: https://leetcode.com/articles/wiggle-sort/
+Thought: https://leetcode.com/problems/wiggle-sort/solution/
 The final sorted nums needs to satisfy two conditions:
 
 If i is odd, then nums[i] >= nums[i - 1];
@@ -59,8 +76,8 @@ if nums[i - 1] >= nums[i], pass
 if nums[i - 1] < nums[i], after swap, we are sure to have wiggled nums[i - 2] < nums[i - 1] > nums[i].
 The same recursive solution applies to all the elements in the sequence, ensuring the algo success.
 
-# 63.16%, 1 ms
-public class Solution {
+# 97.33%, 1 ms
+class Solution {
     public void wiggleSort(int[] nums) {
         if(nums == null || nums.length <2 ) return;
 
@@ -75,7 +92,7 @@ public class Solution {
     }
 }
 
-# 63.14%, 1 ms
+# 97.33%, 1 ms
 class Solution {
     public void wiggleSort(int[] nums) {
         if(nums.length < 2){
@@ -97,8 +114,8 @@ class Solution {
     }
 }
 
-#25.26%, 2ms
-public class Solution {
+# 97.33%, 1 ms
+class Solution {
     public void wiggleSort(int[] nums) {
         for (int i = 0; i < nums.length - 1; i++) {
             if ((i % 2 == 0) == (nums[i] > nums[i + 1])) {
@@ -115,15 +132,15 @@ public class Solution {
 }
 
 
-#25.26%, 2ms
-public class Solution {
+# 97.33%, 1 ms
+class Solution {
     public void wiggleSort(int[] nums) {
         for (int i = 0; i < nums.length - 1; i++) {
-            if ((i & 1) == 0) {
+            if ((i & 1) == 0) { //even
                 if (nums[i] > nums[i + 1]) {
                     swap(nums, i, i + 1);
                 }
-            } else {
+            } else { //odd
                 if (nums[i] < nums[i + 1]) {
                     swap(nums, i, i + 1);
                 }

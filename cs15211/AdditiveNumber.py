@@ -107,8 +107,8 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#58.11% 2ms
-public class Solution {
+#97.92% 1ms
+class Solution {
     public boolean isAdditiveNumber(String num) {
         for(int i = 0; i < num.length(); i++) {
             for( int j = i + 1; j < num.length() - 1; j++) {
@@ -132,10 +132,10 @@ public class Solution {
 }
 
 #DFS
-#17.83% 7ms
+#31.76% 3ms
 import java.math.BigInteger;
 
-public class Solution {
+class Solution {
     public boolean isAdditiveNumber(String num) {
         int n = num.length();
         for (int i = 1; i <= n / 2; ++i) {
@@ -158,8 +158,8 @@ public class Solution {
     }
 }
 
-#58.11% 2ms
-public class Solution {
+#97.92% 1ms
+class Solution {
     public boolean isAdditiveNumber(String num) {
         int n = num.length();
         for (int i = 1; i <= n / 2; ++i)
@@ -183,8 +183,8 @@ public class Solution {
     }
 }
 
-#58.11% 2ms
-public class Solution {
+#97.92% 1ms
+class Solution {
     public boolean isAdditiveNumber(String num) {
         int len = num.length();
         for (int i = 0; i <= len / 2; i++) {

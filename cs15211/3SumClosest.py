@@ -3,6 +3,8 @@ __source__ = 'https://leetcode.com/problems/3sum-closest/description/'
 # Time:  O(n^2)
 # Space: O(1)
 #
+# Description: Leetcode # 16. 3Sum Closest
+#
 # Given an array S of n integers,
 # find three integers in S such that the sum is closest to a given number, target.
 # Return the sum of the three integers.
@@ -83,8 +85,8 @@ If the sum is greater, it means we have to add a smaller element so last element
 Keep doing this until the end. Each time compare the difference between sum and target,
 if it is less than minimum difference so far, then replace result with it, otherwise keep iterating.
 
-# 84.53% 20ms
-public class Solution {
+#94.73% 10ms
+class Solution {
     public int threeSumClosest(int[] nums, int target) {
         int len = nums.length;
         if (len < 3) {
@@ -116,8 +118,8 @@ public class Solution {
     }
 }
 
-#17.21% 28ms
-public class Solution {
+#94.73% 10ms
+class Solution {
     public int threeSumClosest(int[] nums, int target) {
         if (nums == null || nums.length < 3) {
             return 0;
@@ -147,10 +149,8 @@ public class Solution {
     }
 }
 
-# 22.49%
-# 27ms
-java O(n2)
-public class Solution {
+# 12ms 75.58% java O(n2)
+class Solution {
     public int threeSumClosest(int[] num, int target) {
         int result = num[0] + num[1] + num[num.length - 1];
         Arrays.sort(num);
@@ -169,6 +169,35 @@ public class Solution {
             }
         }
         return result;
+    }
+}
+
+#8ms 99.74%
+class Solution {
+    public int threeSumClosest(int[] nums, int target) {
+        for(int i = 0;;i++){
+            if(hasSumOfTarget(nums, target + i)) return target + i;
+            if(hasSumOfTarget(nums, target - i)) return target - i;
+        }
+    }
+
+    public boolean hasSumOfTarget(int[] nums, int target){
+        if(nums == null || nums.length < 3) return false;
+        Arrays.sort(nums);
+        for(int i = 0; i < nums.length - 2; i++){
+            int j = i + 1;
+            int k = nums.length - 1;
+            while(j < k){
+                if((nums[j] + nums[k]) == (target - nums[i])){
+                    return true;
+                }else if((nums[j] + nums[k]) < (target - nums[i])){
+                    j++;
+                }else{
+                    k--;
+                }
+            }
+        }
+        return false;
     }
 }
 '''

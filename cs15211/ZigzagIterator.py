@@ -72,7 +72,7 @@ if __name__ == '__main__':
 
 Java = '''
 #Thought:
-#18.55% 6ms
+#98.61% 2ms
 public class ZigzagIterator {
     LinkedList<Iterator> list;
 
@@ -94,7 +94,7 @@ public class ZigzagIterator {
     }
 }
 
-#93.94% 3ms
+#63.04% 3ms
 public class ZigzagIterator {
     private Iterator<Integer> i, j, tmp;
 
@@ -113,7 +113,7 @@ public class ZigzagIterator {
     }
 }
 
-#93.94% 3ms
+#98.61% 2ms
 public class ZigzagIterator {
     int c1 = 0;
     int c2 = 0;
@@ -125,14 +125,14 @@ public class ZigzagIterator {
     }
 
     public int next() {
-        if(c1==l1.size()) return l2.get(c2++);
+        if(c1 == l1.size()) return l2.get(c2++);
         else if(c2 == l2.size()) return l1.get(c1++);
-        else if(c1<=c2) return l1.get(c1++);
+        else if(c1 <= c2) return l1.get(c1++);
         else return l2.get(c2++);
     }
 
     public boolean hasNext() {
-        return c1+c2==l1.size()+l2.size()? false : true;
+        return c1+c2 == l1.size() + l2.size() ? false : true;
     }
 }
 /**

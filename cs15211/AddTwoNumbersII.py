@@ -3,7 +3,8 @@ __source__ = 'https://github.com/kamyu104/LeetCode/blob/master/Python/add-two-nu
 # Time:  O(m + n)
 # Space: O(m + n)
 #
-# Description:
+# Description: 445. Add Two Numbers II
+#
 # You are given two linked lists representing two non-negative numbers.
 # The most significant digit comes first and each of their nodes contain a single digit.
 # Add the two numbers and return it as a linked list.
@@ -101,7 +102,10 @@ if __name__ == '__main__':
 
 Java = '''
 #Thought:
-public class Solution {
+#
+
+# 29ms 76.31%
+class Solution {
     public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
         Stack<Integer> s1 = new Stack<Integer>();
         Stack<Integer> s2 = new Stack<Integer>();

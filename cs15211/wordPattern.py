@@ -102,9 +102,10 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
-#95.84% 1ms
-public class Solution {
+# Thought:
+#
+# 1ms 99.02%
+class Solution {
     public boolean wordPattern(String pattern, String str) {
         String[] strs = str.split(" ");
         if (pattern.length() != strs.length) {
@@ -130,8 +131,8 @@ public class Solution {
     }
 }
 
-#30.28%  2ms
-public class Solution {
+# 1ms 99.02%
+class Solution {
     public boolean wordPattern(String pattern, String str) {
         String[] arr= str.split(" ");
         HashMap<Character, String> map = new HashMap<Character, String>();
@@ -152,4 +153,23 @@ public class Solution {
     }
 }
 
+# 1ms 99.02%
+class Solution {
+    //pattern = "abba", str = "dog dog dog dog"
+    public boolean wordPattern(String pattern, String str) {
+        String[] arr = str.split(" ");
+        if (pattern.length() != arr.length) return false;
+        Map<Character, String> map = new HashMap<Character, String>();
+        for (int i = 0; i< arr.length; i++) {
+            char key = pattern.charAt(i);
+            if (map.containsKey(key)) {
+                if (!map.get(key).equals(arr[i])) return false;
+            }else {
+                if (map.containsValue(arr[i])) return false;
+                map.put(key, arr[i]);
+            }
+        }
+        return true;
+    }
+}
 '''

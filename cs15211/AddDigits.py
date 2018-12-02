@@ -63,23 +63,23 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-# 15.47% 2ms
-public class Solution {
+# 100% 1ms
+class Solution {
     public int addDigits(int num) {
         return num == 0 ? 0 : (num - 1) % 9 + 1;
     }
 }
 
-# 15.47% 2ms
-public class Solution {
+# 100% 1ms
+class Solution {
     public int addDigits(int num) {
         if (num == 0) return 0;
         return ( num % 9 == 0) ? 9: num % 9;
     }
 }
 
-# 15.47% 2ms
-public class Solution {
+# 100% 1ms
+class Solution {
     public int addDigits(int num) {
         if (num / 10 == 0) return num;
         int res = 0;

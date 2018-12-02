@@ -176,8 +176,8 @@ Java = '''
 #Thought:
 
 # Java Solution using Dijkstra's algorithm, with explanation
-# 50.85% 132ms
-public class Solution {
+# 82.77% 63ms
+class Solution {
     public int ladderLength(String beginWord, String endWord, List<String> wordList) {
         if (!wordList.contains(endWord)) return 0;
 
@@ -210,9 +210,8 @@ public class Solution {
     }
 }
 
-#below works for Leetcode 2017 change:
-# 97 % 31ms
-public class Solution {
+# 93.86 % 26ms
+class Solution {
     public int ladderLength(String beginWord, String endWord, List<String> wordList) {
         Set<String> dict = new HashSet<>(wordList);
         if (!dict.contains(endWord)) return 0;
@@ -252,5 +251,56 @@ public class Solution {
         return helper(dict, endSet, set, level + 1);
      }
 
+}
+
+#14ms 99.93%
+class Solution {
+    public int ladderLength(String beginWord, String endWord, List<String> wordList) {
+        Set<String> wordset = new HashSet<String>(wordList);
+        Set<String> start = new HashSet<String>();
+        Set<String> end = new HashSet<String>();
+
+        if(!wordset.contains(endWord)) {
+            return 0;
+        }
+        start.add(beginWord);
+        end.add(endWord);
+        return helper(start, end, wordset, 1);
+    }
+
+    public int helper(Set<String> start, Set<String> end, Set<String> wordset, int level) {
+        if(start.size() > end.size()) {
+            return helper(end, start, wordset, level);
+        }
+        wordset.removeAll(start);
+        wordset.removeAll(end);
+        Set<String> next = new HashSet<String>();
+        for(String s : start) {
+            char[] arr = s.toCharArray();
+            for(int i = 0; i< arr.length; i++){
+                char temp = arr[i];
+                for(char c = 'a'; c <= 'z';c++) {
+                    if(c == arr[i]) {
+                        continue;
+                    }
+                    arr[i] = c;
+                    String newWord = new String(arr);
+                    if(end.contains(newWord)) {
+                        return level+1;
+                    }
+                    if(wordset.contains(newWord)) {
+                        next.add(newWord);
+
+                    }
+                    arr[i] = temp;
+                }
+            }
+        }
+        if(next.isEmpty()) {
+            return 0;
+        }
+        return helper(end, next, wordset, level+1);
+
+    }
 }
 '''

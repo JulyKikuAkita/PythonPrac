@@ -3,7 +3,8 @@ __source__ = 'https://github.com/kamyu104/LeetCode/blob/master/Python/word-squar
 # Time:  O(n^2 * n!)
 # Space: O(n^2)
 #
-# Description:
+# Description: 425. Word Squares
+#
 # Given a set of words (without duplicates), find all word squares you can build from them.
 #
 # A sequence of words forms a valid word square if the kth row and column read the exact same string,
@@ -82,6 +83,7 @@ __source__ = 'https://github.com/kamyu104/LeetCode/blob/master/Python/word-squar
 #                                                             with "lad"
 #
 import unittest
+# 659ms 32.52%
 class TrieNode(object):
     def __init__(self):
         self.indices = []
@@ -141,6 +143,7 @@ if __name__ == '__main__':
 
 Java = '''
 #Thought:
+#
 Java DFS+Trie 54 ms, 98% so far
 By considering the word squares as a symmetric matrix, my idea is to go through the top right triangular matrix
 in left-to-right and then down order.
@@ -203,8 +206,9 @@ In order for this to work, we need to fast retrieve all the words with a given p
 
 Using a hashtable, key is prefix, value is a list of words with that prefix.
 Trie, we store a list of words with the prefix on each trie node.
-1. With Trie: #58.42 %
-public class Solution {
+1. With Trie:
+#101ms 45.18%
+class Solution {
     class TrieNode {
         List<String> startWith;
         TrieNode[] children;
@@ -283,7 +287,75 @@ public class Solution {
     }
 }
 
-2. Hashtable to store index 43%
+
+#Improved Trie
+#25ms 92.50%
+class Solution {
+    public List<List<String>> wordSquares(String[] words) {
+        List<List<String>> res = new ArrayList<>();
+        if (words==null || words.length==0) return res;
+        Trie root = new Trie();
+        int len = words[0].length();
+        for (String word: words) {
+            root.add(root, word);
+        }
+        Trie[] rows = new Trie[len];
+        for (int i = 0; i < len; i++) {
+            rows[i] = root;
+        }
+        helper(0, 0, len, rows, res);
+        return res;
+    }
+
+    public void helper(int row, int col, int len, Trie[] rows, List<List<String>> res) {
+            if ( (col == row) && (row == len) ) { //last char
+                List<String> tmp = new ArrayList<>();
+                for (int i = 0; i < len; i++) {
+                    tmp.add(new String(rows[i].word));
+                }
+                res.add(tmp);
+            } else {  // from left to right and then go down to the next row
+                if (col < len) { // left to right first
+                    Trie pre_row = rows[row];
+                    Trie pre_col = rows[col];
+                    for (int i = 0; i<26; i++) { // find all the possible next char
+                        if ((rows[row].tries[i] != null) && (rows[col].tries[i] != null)) {
+                            rows[row] = rows[row].tries[i];
+                            if (col != row) rows[col] = rows[col].tries[i];
+                            helper(row, col + 1, len, rows, res);
+                            rows[row] = pre_row;
+                            if (col != row) rows[col] = pre_col;
+                        }
+                    }
+                } else { // reach the end of column, go to the next row
+                    helper(row + 1, row + 1, len, rows, res);
+                }
+        }
+    }
+
+    class Trie{
+        Trie[] tries;
+        String word;
+        Trie() {
+            this.tries = new Trie[26];
+            this.word = null;
+        }
+
+        public void add(Trie root, String word) {
+            Trie trie = root;
+            for (char c : word.toCharArray()) {
+                int idx = c - 'a';
+                if (trie.tries[idx] == null) {
+                    trie.tries[idx] = new Trie();
+                }
+                trie = trie.tries[idx];
+            }
+            trie.word = word;
+        }
+    }
+}
+
+2. Hashtable to store index
 The idea is borrowed from the discussion
 (https://discuss.leetcode.com/topic/63516/explained-my-java-solution-using-trie-126ms-16-16) ,
 which is to first calculating all possible prefix, then do backtracking.
@@ -291,7 +363,8 @@ which is to first calculating all possible prefix, then do backtracking.
 We can use Trie or hashMap to store the prefix information, while I think Trie might be more hard to implement,
 without saving any space. So I use hashMap to store prefix information.
 
-public class Solution {
+#69ms 76.79%
+class Solution {
     public List<List<String>> wordSquares(String[] words) {
         List<List<String>> ret = new ArrayList<List<String>>();
         if(words.length==0 || words[0].length()==0) return ret;

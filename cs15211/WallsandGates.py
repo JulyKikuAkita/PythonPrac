@@ -126,10 +126,10 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-# Thought: https://leetcode.com/articles/walls-and-gates/
+# Thought: https://leetcode.com/problems/walls-and-gates/solution/
 # DFS
-# 86.01% 7ms
-public class Solution {
+# 99.31% 4ms
+class Solution {
     public static final int[][] DIRECTIONS = new int[][] {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
 
     public void wallsAndGates(int[][] rooms) {
@@ -157,7 +157,7 @@ public class Solution {
 }
 
 # DFS
-# 81.37% 8ms
+# 99.31% 4ms
 public class Solution {
     private static int[] dir = {0, 1, 0, -1, 0};
     public void wallsAndGates(int[][] rooms) {
@@ -180,7 +180,7 @@ public class Solution {
 }
 
 # BFS
-# 42.37% 17ms
+# 59.16% 9ms
 public class Solution {
     //The Multi End BFS solution used is this
     public static final int[] d = {0, 1, 0, -1, 0};
@@ -229,8 +229,8 @@ public class Solution {
 }
 
 # BFS2
-# 57.63% 15ms
-public class Solution {
+# 32.38% 13ms
+class Solution {
     //The Multi End BFS solution used is this
     public static final int[] d = {0, 1, 0, -1, 0};
 

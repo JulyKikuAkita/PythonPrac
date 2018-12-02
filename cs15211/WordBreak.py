@@ -119,7 +119,7 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-Thought: https://leetcode.com/articles/word-break/
+Thought: https://leetcode.com/problems/word-break/solution/
 
 public class Solution {
     public boolean wordBreak(String s, List<String> wordDict) {

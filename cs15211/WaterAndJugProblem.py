@@ -62,8 +62,8 @@ if __name__ == '__main__':
 Java = '''
 #Thought:
 
-#11.24% 0ms
-public class Solution {
+#100% 0ms
+class Solution {
     public boolean canMeasureWater(int x, int y, int z) {
         if (x < y) {
             return canMeasureWater(y, x, z);
@@ -87,8 +87,8 @@ public class Solution {
     }
 }
 
-#11.24% 0ms
-public class Solution {
+#100% 0ms
+class Solution {
     public boolean canMeasureWater(int x, int y, int z) {
         if (x + y < z) return false;
         if (x == z || y == z || x + y == z) return true;
@@ -104,5 +104,11 @@ public class Solution {
         }
         return x;
     }
+
+    //Note: one line gcd funciton
+    # public int gcd(int x, int y) {
+    #     return y == 0 ? x : gcd(y, x % y);
+    # }
 }
+
 '''

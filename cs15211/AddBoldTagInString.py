@@ -1,8 +1,10 @@
+# coding=utf-8
 __source__ = 'https://leetcode.com/problems/add-bold-tag-in-string/#/description'
 # Time:  O()
 # Space: O()
 #
-# Description:
+# Description: 616. Add Bold Tag in String
+#
 # Given a string s and a list of strings dict,
 # you need to add a closed pair of bold tag <b> and </b> to wrap the substrings in s that exist in dict.
 # If two such substrings overlap, you need to wrap them together by only one pair of closed bold tag.
@@ -42,6 +44,7 @@ __source__ = 'https://leetcode.com/problems/add-bold-tag-in-string/#/description
 
 import unittest
 
+#260ms 12.64%
 class Solution(object):
     def addBoldTag(self, s, dict):
         """
@@ -75,11 +78,15 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
+#Thought: https://leetcode.com/problems/add-bold-tag-in-string/solution/
 Use a boolean array to mark if character at each position is bold or not.
 After that, things will become simple.
+Complexity Analysis
+Time Complexity: O(N∑w i), where N is the length of S and w_i is the sum of W.
+Space Complexity: O(N)
 
-public class Solution {
+#36ms 34.48%
+class Solution {
     public String addBoldTag(String s, String[] dict) {
         boolean[] bold = new boolean[s.length()];
         for (String d: dict) {
@@ -101,6 +108,33 @@ public class Solution {
                 res.append(s.charAt(i++));
         }
         return res.toString();
+    }
+}
+
+#6ms 99.87%
+class Solution {
+    public String addBoldTag(String s, String[] dict) {
+        int n = s.length();
+        int[] mark = new int[n+1];
+        for(String d : dict) {
+            int i = -1;
+            while((i = s.indexOf(d, i+1)) >= 0) {
+                mark[i]++;
+                mark[i + d.length()]--;
+            }
+        }
+        StringBuilder sb = new StringBuilder();
+        int sum = 0;
+        for(int i = 0; i <= n; i++) {
+            int cur = sum + mark[i];
+            if (cur > 0 && sum == 0) sb.append("<b>");
+            if (cur == 0 && sum > 0) sb.append("</b>");
+            if (i == n) break;
+            sb.append(s.charAt(i));
+            sum = cur;
+        }
+        return sb.toString();
+
     }
 }
 '''

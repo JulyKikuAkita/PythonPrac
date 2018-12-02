@@ -188,12 +188,12 @@ if __name__ == '__main__':
 Java = '''
 Thought:
 1. DP:
-# 63.46% 71ms
 (i) p == s or p == ? : T
 (ii) p == char != s : F
 (iii) p == * : p = dp[i+1][j] || dp[i][j+1]
 
-public class Solution {
+# 88.84% 31ms
+class Solution {
     public boolean isMatch(String s, String p) {
         boolean[][] dp = new boolean[s.length() + 1][p.length() + 1];
         dp[s.length()][p.length()] = true;
@@ -224,7 +224,7 @@ The basic idea is to have one pointer for the string and one pointer for the pat
 This algorithm iterates at most length(string) + length(pattern) times, for each iteration,
 at least one pointer advance one step.
 
-#82.64% 61ms
+# 94.68% 29ms
 class Solution {
     public boolean isMatch(String s, String p) {
         int lenS = 0;
@@ -260,8 +260,8 @@ class Solution {
     }
 }
 
-# 95.22% 55ms
-public class Solution {
+# 95.69% 27ms
+class Solution {
     public boolean isMatch(String s, String p) {
         int lenS = s.length();
         int lenP = p.length();

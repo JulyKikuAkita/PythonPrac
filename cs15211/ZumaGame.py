@@ -2,7 +2,8 @@ __source__ = 'https://leetcode.com/problems/zuma-game/#/description'
 # Time:  O()
 # Space: O()
 #
-# Description:
+# Description: 488. Zuma Game
+#
 # Think about Zuma Game. You have a row of balls on the table,
 # colored red(R), yellow(Y), blue(B), green(G), and white(W).
 # You also have several balls in your hand.
@@ -47,10 +48,35 @@ __source__ = 'https://leetcode.com/problems/zuma-game/#/description'
 #
 import unittest
 
-
+#88ms 44.44%
 class Solution(object):
-    pass
-
+    def findMinStep(self, board, hand):
+        """
+        :type board: str
+        :type hand: str
+        :rtype: int
+        """
+        seen = set()
+        queue = [(board, hand)]
+        while queue:
+            state, balls = queue.pop(0)
+            if not state:
+                return len(hand) - len(balls)
+            for ball in set(balls):
+                tmp = balls.replace(ball, '', 1)
+                for i in range(1, len(state) + 1):
+                    if ball != state[i - 1]:
+                        continue
+                    new = state[:i] + ball + state[i:]
+                    while len(new):
+                        next = re.sub(r'B{3,}|G{3,}|R{3,}|W{3,}|Y{3,}', '', new)
+                        if len(next) == len(new):
+                            break
+                        new = next
+                    if new not in seen:
+                        seen.add(new)
+                        queue.append((new, tmp))
+        return -1
 class TestMethods(unittest.TestCase):
     def test_Local(self):
         self.assertEqual(1, 1)
@@ -60,6 +86,7 @@ if __name__ == '__main__':
 
 Java = '''
 #Thought:
+# 5ms 96.32%
 public class Solution {
     int MAXCOUNT = 6;   // the max balls you need will not exceed 6 since
                         // "The number of balls in your hand won't exceed 5"

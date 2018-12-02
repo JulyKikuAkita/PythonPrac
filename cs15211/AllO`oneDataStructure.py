@@ -3,7 +3,8 @@ __source__ = 'https://leetcode.com/problems/all-oone-data-structure/#/descriptio
 # Time:  O()
 # Space: O()
 #
-# Description:
+# Description: 432. All O`one Data Structure
+#
 # Implement a data structure supporting the following operations:
 #
 # Inc(Key) - Inserts a new key with value 1. Or increments an existing key by 1.
@@ -16,7 +17,7 @@ __source__ = 'https://leetcode.com/problems/all-oone-data-structure/#/descriptio
 #
 # Hide Company Tags Uber
 # Hide Tags Design
-
+#
 import unittest
 
 class Node(object):
@@ -144,7 +145,7 @@ each Bucket contains all keys with the same count.
 head and tail can ensure both getMaxKey() and getMaxKey() be done in O(1).
 keyCountMap maintains the count of keys, countBucketMap provides O(1) access to a specific Bucket with given count.
 Deleting and adding a Bucket in the Bucket list cost O(1), so both inc() and dec() take strict O(1) time.
-
+#113ms 20.85%
 public class AllOne {
     // maintain a doubly linked list of Buckets
     private Bucket head;
