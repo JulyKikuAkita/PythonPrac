@@ -145,7 +145,8 @@ if __name__ == '__main__':
 
 Java = '''
 #Thought:
-# 84.33% 14ms
+
+# 57.82% 14ms
 public class Solution {
     public int calculate(String s) {
         Stack<Boolean> stack = new Stack<>();
@@ -174,7 +175,7 @@ public class Solution {
 }
 
 
-#99.10% 2ms
+# 99.97% 3ms
 class Solution {
     public int calculate(String s) {
         if (s == null) return 0;

@@ -49,8 +49,9 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
-#33.44% 0ms
+# Thought:
+
+# 0ms 100%
 public class Solution {
     public boolean isPerfectSquare(int num) {
         if (num < 0) {
@@ -75,7 +76,7 @@ public class Solution {
     }
 }
 
-#33.44% 0ms
+# 0ms 100%
 class Solution {
     public boolean isPerfectSquare(int num) {
         if (num < 0) return false;

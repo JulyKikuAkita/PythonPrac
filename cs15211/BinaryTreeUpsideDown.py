@@ -129,9 +129,9 @@ Thought: https://leetcode.com/problems/binary-tree-upside-down/#/solutions
  * }
  */
 
-#BFS:
-#46.50% 0ms
-public class Solution {
+# BFS:
+# 0ms 100%
+class Solution {
     public TreeNode upsideDownBinaryTree(TreeNode root) {
         TreeNode curr = root;
         TreeNode next = null;
@@ -153,8 +153,8 @@ public class Solution {
     }
 }
 
-#46.50% 0ms
-public class Solution {
+# 0ms 100%
+class Solution {
     public TreeNode upsideDownBinaryTree(TreeNode root) {
         TreeNode cur = root;
         TreeNode parent = null;
@@ -173,8 +173,8 @@ public class Solution {
 }
 
 # DFS:
-#46.50% 0ms
-public class Solution {
+# 0ms 100%
+class Solution {
     public TreeNode upsideDownBinaryTree(TreeNode root) {
         if (root == null || root.left == null) {
             return root;
@@ -189,8 +189,8 @@ public class Solution {
     }
 }
 
-#46.50% 0ms
-public class Solution {
+# 0ms 100%
+class Solution {
     public TreeNode upsideDownBinaryTree(TreeNode root) {
         if(root == null || root.left == null) {
             return root;

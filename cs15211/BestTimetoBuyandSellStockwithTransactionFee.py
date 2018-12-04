@@ -97,6 +97,7 @@ class Solution {
     }
 }
 
+# 8ms 90.79%
 class Solution {
     public int maxProfit(int[] prices, int fee) {
         int cash = 0, hold = -prices[0];

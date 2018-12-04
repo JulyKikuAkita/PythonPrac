@@ -4,6 +4,8 @@ __source__ = 'https://leetcode.com/problems/binary-tree-right-side-view/#/descri
 # Space: O(h)
 # DFS
 #
+# Description: Leetcode # 199. Binary Tree Right Side View
+#
 # Given a binary tree, imagine yourself standing on the right side of it,
 # return the values of the nodes you can see ordered from top to bottom.
 #
@@ -86,7 +88,7 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/problems/contains-duplicate/solution/
+# Thought: https://leetcode.com/problems/binary-tree-right-side-view/solution/
 
 Thought:
 The core idea of this algorithm:
@@ -102,8 +104,10 @@ The core idea of this algorithm:
  *     TreeNode(int x) { val = x; }
  * }
  */
+
 # DFS
-public class Solution {
+#
+class Solution {
     public List<Integer> rightSideView(TreeNode root) {
         List<Integer> result = new ArrayList<>();
         rightSideView(root, result, 0);
@@ -111,7 +115,7 @@ public class Solution {
     }
     
     #loop left tree first, need to reset every node val
-    #73.64% 1ms
+    # 0ms 100%
     private void rightSideView(TreeNode root, List<Integer> result, int depth) {
         if (root == null) {
             return;
@@ -126,7 +130,7 @@ public class Solution {
     }
         
     # loop right tree first  
-    # 26.14% 2ms
+    # 1ms 81.06%
     private void dfs2(TreeNode root, List<Integer> res, int currDepth){
         if (root == null) return;
         if (res.size() == currDepth) {
@@ -139,9 +143,9 @@ public class Solution {
 
 
 # BFS
-# 26.14% 2ms
-#loop to right child first
-public class Solution {
+# 1ms 81.06%
+# loop to right child first
+class Solution {
     public List<Integer> rightSideView(TreeNode root) {
         List<Integer> res = new ArrayList<Integer>();
         if (root == null) return res;
@@ -161,9 +165,9 @@ public class Solution {
     }
 }
 
-# 26.14% 2ms
-# loopto left child first
-public class Solution {
+# 1ms 81.06%
+# loop to left child first
+class Solution {
     public List<Integer> rightSideView(TreeNode root) {
         List<Integer> result = new ArrayList<>();
         if (root == null) {

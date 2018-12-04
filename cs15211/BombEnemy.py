@@ -1,4 +1,4 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/bomb-enemy/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/bomb-enemy.py
 # Time:  O(m * n)
 # Space: O(m * n)
@@ -72,12 +72,12 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
+# Thought:
 Walk through the matrix. At the start of each non-wall-streak (row-wise or column-wise),
 count the number of hits in that streak and remember it. O(mn) time, O(n) space.
 
-#50.07% 50ms
-public class Solution {
+# 8ms 98.31%
+class Solution {
     public int maxKilledEnemies(char[][] grid) {
         int result = 0;
         int m = grid.length;
@@ -115,8 +115,8 @@ public class Solution {
     }
 }
 
-#89.12% 38ms
-public class Solution {
+# 8ms 98.31%
+class Solution {
     public int maxKilledEnemies(char[][] grid) {
         if (grid == null || grid.length == 0 ||  grid[0].length == 0) return 0;
         int max = 0;
@@ -161,8 +161,8 @@ public class Solution {
     }
 }
 
-#99.59% 30ms
-public class Solution {
+# 8ms 98.31%
+class Solution {
     public int maxKilledEnemies(char[][] grid) {
         if( grid.length == 0) return 0;
 

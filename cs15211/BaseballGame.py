@@ -2,7 +2,7 @@ __source__ = 'https://leetcode.com/problems/baseball-game/description/'
 # Time:  O()
 # Space: O()
 #
-# Description: Leetcode #682. Baseball Game
+# Description: Leetcode # 682. Baseball Game
 #
 # You're now a baseball game point recorder.
 #
@@ -67,8 +67,8 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
-
+#Thought: https://leetcode.com/problems/baseball-game/solution/
+# 7ms 43.98%
 class Solution {
     public int calPoints(String[] ops) {
         int sum = 0;

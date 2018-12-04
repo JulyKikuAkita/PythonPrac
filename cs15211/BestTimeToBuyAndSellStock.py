@@ -102,10 +102,10 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-# Thought: https://leetcode.com/problems/best-time-to-buy-and-sell-stock/#/solution
+# Thought: https://leetcode.com/problems/best-time-to-buy-and-sell-stock/solution/
 
-# 9.63% 3ms
-public class Solution {
+# 99.84% 1ms
+class Solution {
     public int maxProfit(int[] prices) {
         if (prices.length < 2) {
             return 0;
@@ -120,8 +120,8 @@ public class Solution {
     }
 }
 
-# 82.01% 1ms
-public class Solution {
+# 99.84% 1ms
+class Solution {
     public int maxProfit(int prices[]) {
         int minprice = Integer.MAX_VALUE;
         int maxprofit = 0;
@@ -135,8 +135,8 @@ public class Solution {
     }
 }
 
-# 9.63% 3ms
-public class Solution {
+# 99.84% 1ms
+class Solution {
     public int maxProfit(int[] prices) {
         int minPrice = Integer.MAX_VALUE;
         int maxProfit = 0;
@@ -148,7 +148,6 @@ public class Solution {
     }
 }
 
-# 9.63% 3ms
 Kadane's Algorithm - Since no one has mentioned about this so far :) (In case if interviewer twists the input)
 The logic to solve this problem is same as "max subarray problem" using Kadane's Algorithm.
 Since no body has mentioned this so far, I thought it's a good thing for everybody to know.
@@ -161,6 +160,8 @@ Here, the logic is to calculate the difference
 (maxCur += prices[i] - prices[i-1]) of the original array,
 and find a contiguous subarray giving maximum profit. If the difference falls below 0, reset it to zero.
 
+# 37.56% 2ms
+class Solution {
     public int maxProfit(int[] prices) {
         int maxCur = 0, maxSoFar = 0;
         for(int i = 1; i < prices.length; i++) {
@@ -169,7 +170,7 @@ and find a contiguous subarray giving maximum profit. If the difference falls be
         }
         return maxSoFar;
     }
-
+}
 *maxCur = current maximum value
 *maxSoFar = maximum value found so far
 

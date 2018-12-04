@@ -40,6 +40,7 @@ import unittest
 # cmax will never be negative.
 # cmin is 0 at the end.
 #
+#20ms 100%
 class Solution(object):
     def checkValidString(self, s):
         """
@@ -70,9 +71,9 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/articles/valid-string/
+# Thought: https://leetcode.com/problems/valid-parenthesis-string/solution/
 
-
+# 2ms 100%
 public class Solution {
     public boolean checkValidString(String s) {
         int low = 0;
@@ -101,8 +102,8 @@ public class Solution {
 }
 
 
-#Greedy 5ms
-
+# Greedy
+# 2ms 100%
 class Solution {
     public boolean checkValidString(String s) {
        int lo = 0, hi = 0;

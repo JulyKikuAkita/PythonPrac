@@ -38,7 +38,8 @@ __source__ = 'https://leetcode.com/problems/bulb-switcher-ii/description/'
 #
 import unittest
 import itertools
-#39ms
+
+# 20ms 100%
 class Solution(object):
     def flipLights(self, n, m):
         """
@@ -82,7 +83,8 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
+# Thought: https://leetcode.com/problems/bulb-switcher-ii/solution/
+#
 We only need to consider special cases which n<=2 and m < 3. When n >2 and m >=3, the result is 8.
 The four buttons:
 
@@ -136,7 +138,7 @@ n >= 4
 After one operation, it has only 4 possibilities: 0000, 1010, 0101 and 0110.
 After two or more operations: it has 8 possibilities, 1111,1010,0101,0111,0000,0011, 1100 and 1001.
 
-#66.09% 6ms
+# 3ms 99.36%
 class Solution {
     public int flipLights(int n, int m) {
         if (m == 0) return 1;
@@ -145,6 +147,19 @@ class Solution {
         if (n == 1) return 2;
         else if (n == 2) return (m == 1) ? 3 : 4;
         else return (m == 1) ? 4 : ((m == 2) ? 7 : 8);
+    }
+}
+
+# 3ms 99.36%
+class Solution {
+    public int flipLights(int n, int m) {
+        if(m == 0) return 1;
+        if (n == 1) return 2;
+        if (n == 2 && m == 1) return 3;
+        if (n == 2) return 4;
+        if (m == 1) return 4;
+        if (m == 2) return 7;
+        return 8;
     }
 }
 '''

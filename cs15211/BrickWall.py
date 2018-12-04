@@ -41,6 +41,8 @@ __source__ = 'https://leetcode.com/problems/brick-wall/description/'
 #
 import unittest
 import collections
+
+# 52ms 54.86%
 class Solution(object):
     def leastBricks(self, wall):
         """
@@ -65,8 +67,9 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/problems/brick-wall/solution/
-#46.37% 38ms
+# Thought: https://leetcode.com/problems/brick-wall/solution/
+
+# 28ms 37.38%
 public class Solution {
     public int leastBricks(List<List<Integer>> wall) {
         if(wall.size() == 0) return 0;
@@ -84,7 +87,7 @@ public class Solution {
     }
 }
 
-#99.12% 28ms
+#16ms 97.98%
 public class Solution {
     public int leastBricks(List<List<Integer>> wall) {
         if (wall == null || wall.size() == 0 || wall.get(0).size() == 0) {

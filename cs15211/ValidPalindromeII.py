@@ -26,6 +26,7 @@ __source__ = 'https://leetcode.com/problems/valid-palindrome-ii/description/'
 #
 import unittest
 
+# 132ms 51.44%
 class Solution(object):
     def validPalindrome(self, s):
         """
@@ -56,7 +57,8 @@ if __name__ == '__main__':
 
 Java = '''
 # Thought: https://leetcode.com/problems/valid-palindrome-ii/solution/
-# 35ms
+
+# 21 ms 85.22%
 class Solution {
     public boolean validPalindrome(String s) {
         int l = -1, r = s.length();
@@ -76,7 +78,7 @@ class Solution {
     }
 }
 
-#48ms
+# 23ms 74.47%
 class Solution {
     public boolean validPalindrome(String s) {
         int left = 0, right = s.length() - 1;

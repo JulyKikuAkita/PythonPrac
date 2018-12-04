@@ -67,10 +67,10 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
+# Thought: https://leetcode.com/problems/valid-parentheses/solution/
 
-#77.06% 9ms
-public class Solution {
+# 6ms 62.32%
+class Solution {
     public boolean isValid(String s) {
         Stack<Character> stack = new Stack<Character>();
         for (char c: s.toCharArray()) {
@@ -83,7 +83,7 @@ public class Solution {
     }
 }
 
-# 36.61%  11ms
+# 9ms 20.50%
 public class Solution {
     public boolean isValid(String s) {
         Stack<Integer> p = new Stack<>();
@@ -94,6 +94,32 @@ public class Solution {
             } else p.push(q);
         }
         return p.isEmpty();
+    }
+}
+
+#4ms 99.52%
+class Solution {
+    public boolean isValid(String s) {
+        Stack<Character> stack = new Stack<>();
+        int len = s.length();
+        if ((len & 1) == 1) {
+            return false;
+        }
+        for (int i = 0; i < len; i++) {
+            char c = s.charAt(i);
+            if (c == '(' || c == '{' || c == '[') {
+                stack.push(c);
+            } else {
+                if (stack.isEmpty() || !isMatch(stack.pop(), c)) {
+                    return false;
+                }
+            }
+        }
+        return stack.isEmpty();
+    }
+
+    private boolean isMatch(char c1, char c2) {
+        return (c1 == '(' && c2 == ')') || (c1 == '{' && c2 == '}') || (c1 == '[' && c2 == ']');
     }
 }
 '''

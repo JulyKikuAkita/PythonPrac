@@ -5,6 +5,7 @@ __source__ = 'https://leetcode.com/problems/valid-palindrome/#/description'
 # String
 #
 # Description: Leetcode # 125. Valid Palindrome
+#
 # Given a string, determine if it is a palindrome,
 # considering only alphanumeric characters and ignoring cases.
 #
@@ -80,9 +81,10 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
-#11.24% 35ms
-public class Solution {
+# Thought:
+
+#33ms 10.91%
+class Solution {
     public boolean isPalindrome(String s) {
         String actual = s.replaceAll("[^A-Za-z0-9]", "").toLowerCase();
         String rev = new StringBuilder(actual).reverse().toString();
@@ -90,8 +92,8 @@ public class Solution {
     }
 }
 
-#35.72% 12ms
-public class Solution {
+# 6ms 72.29%
+class Solution {
     public boolean isPalindrome(String s) {
         //if (s == null || s.length() == 0) return true;
         int start = 0, end = s.length() - 1;
@@ -107,7 +109,7 @@ public class Solution {
     }
 }
 
-#87.90% 7ms
+# 4ms 96.25%
 public class Solution {
     public boolean isPalindrome(String s) {
         if (s.isEmpty()) {
@@ -135,8 +137,8 @@ public class Solution {
     }
 }
 
-#87.90% 7ms
-public class Solution {
+#4ms 96.25%
+class Solution {
     public boolean isPalindrome(String s) {
         int i = 0;
         int j = s.length() - 1;

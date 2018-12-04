@@ -106,10 +106,11 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: DP: t(i,j) is the max profit for up to i transactions by time j (0<=i<=K, 0<=j<=T).
+#Thought:
+DP: t(i,j) is the max profit for up to i transactions by time j (0<=i<=K, 0<=j<=T).
 
-#88.88% 4ms
-public class Solution {
+# 3ms 97.26%
+class Solution {
     public int maxProfit(int k, int[] prices) {
         int len = prices.length;
         if (k <= 0 || len < 2) {
@@ -138,8 +139,8 @@ public class Solution {
     }
 }
 
-#15.69% 8ms
-public class Solution {
+66% 4ms
+class Solution {
     public int maxProfit(int k, int[] prices) {
         int n = prices.length;
         if( n < 2 || k < 1) return 0;
@@ -168,8 +169,8 @@ public class Solution {
     }
 }
 
-#45.68% 6ms
-public class Solution {
+# 3ms 97.26%
+class Solution {
     public int maxProfit(int k, int[] prices) {
         int len = prices.length;
         if (k >= len / 2) return quickSolve(prices);
@@ -195,8 +196,8 @@ public class Solution {
     }
 }
 
-# 99.80% 2ms
-public class Solution {
+# 3ms 97.26%
+class Solution {
     public int maxProfit(int k, int[] prices) {
         if(prices == null || prices.length < 2) {
             return 0;

@@ -64,6 +64,7 @@ Java = '''
 #Thought: https://leetcode.com/problems/binary-gap/solution/
 # Approach 1: Store Indexes
 
+# 8ms 88.70%
 class Solution {
     public int binaryGap(int N) {
         int[] A = new int[32];
@@ -81,6 +82,7 @@ class Solution {
 }
 
 # Approach 2: One Pass
+# 11ms 58.34%
 class Solution {
     public int binaryGap(int N) {
         int last = -1, ans = 0;
@@ -94,6 +96,7 @@ class Solution {
     }
 }
 
+# 7ms 99.48%
 class Solution {
     public int binaryGap(int N) {
         int pre = -1, pos = 0, res = 0 ;

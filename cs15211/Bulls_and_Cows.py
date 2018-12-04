@@ -96,9 +96,10 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
-#45.77% 4ms
-public class Solution {
+# Thought:
+
+# 1ms 100%
+class Solution {
     public String getHint(String secret, String guess) {
         // assume not null and equal length
         int bull = 0;
@@ -130,8 +131,8 @@ public class Solution {
     }
 }
 
-#67.08% 3ms
-public class Solution {
+# 1ms 100%
+class Solution {
     public String getHint(String secret, String guess) {
         char[] seChar = secret.toCharArray();
         char[] guChar = guess.toCharArray();
@@ -151,6 +152,31 @@ public class Solution {
 
 
         return bulls + "A" + (secret.length() - sum - bulls) + "B";
+    }
+}
+
+# 1ms 100%
+class Solution {
+    public String getHint(String secret, String guess) {
+        int[] secretArr = new int[10];
+        int[] guessArr = new int[10];
+        int bulls = 0;
+        int cows = 0;
+        for (int i = 0; i < secret.length(); i++) {
+            char sChar = secret.charAt(i);
+            char gChar = guess.charAt(i);
+            if (sChar == gChar) {
+                bulls++;
+            }
+            secretArr[sChar - '0']++;
+            guessArr[gChar - '0']++;
+        }
+        for (int i = 0; i < 10; i++) {
+            cows += Math.min(secretArr[i], guessArr[i]);
+        }
+        cows -= bulls;
+        StringBuilder sb = new StringBuilder();
+        return sb.append(bulls).append('A').append(cows).append('B').toString();
     }
 }
 '''

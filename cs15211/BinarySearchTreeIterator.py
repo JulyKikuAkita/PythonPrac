@@ -87,8 +87,8 @@ Java = '''
  *     TreeNode(int x) { val = x; }
  * }
  */
-# 32.80%
-# 6ms
+
+# 3ms 87.42%
 public class BSTIterator {
     private Stack<TreeNode> stack;
 
@@ -133,7 +133,7 @@ But next() is O(h) time.
 
 I can't find a solution that can satisfy both next() in O(1) time, space in O(h).
 
-# 32.80% 6ms
+# 3ms 87.42%
 public class BSTIterator {
     private Stack<TreeNode> stack = new Stack<TreeNode>();
 

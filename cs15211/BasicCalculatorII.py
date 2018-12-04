@@ -127,8 +127,8 @@ if __name__ == '__main__':
 Java = '''
 #Thought:
 
-#89.99% 21ms
-public class Solution {
+#90.22% 12ms
+class Solution {
     public int calculate(String s) {
         int left = 0;
         int right = 0;
@@ -170,7 +170,7 @@ public class Solution {
     }
 }
 
-# 99.33% 6ms
+# 98.66% 7ms
 class Solution {
 	public int calculate(String s) {
         if(s == null || s.length() == 0) return 0;
@@ -213,9 +213,51 @@ class Solution {
 	}
 }
 
+#8ms 97.50%
+class Solution {
+    public int calculate(String s) {
+        int result = 0;
+        int lastNum = 0;
+        int sign = 1;
+        char lastOp = '#';
+        for (int i = 0; i < s.length(); i++) {
+            char c = s.charAt(i);
+            if (c >= '0' && c <= '9') {
+                int j = i + 1;
+                int curNum = c - '0';
+                while (j < s.length()) {
+                    c = s.charAt(j);
+                    if (c >= '0' && c <= '9') {
+                        curNum = curNum * 10 + (c - '0');
+                        j++;
+                    } else {
+                        break;
+                    }
+                }
+                if (lastOp == '*') {
+                    lastNum *= curNum;
+                } else if (lastOp == '/') {
+                    lastNum /= curNum;
+                } else {
+                    lastNum = curNum;
+                }
+                i = j - 1;
+            } else if (c == '+' || c == '-') {
+                result += sign * lastNum;
+                sign = c == '+' ? 1 : -1;
+                lastOp = c;
+            } else if (c == '*' || c == '/') {
+                lastOp = c;
+            }
+        }
+        result += sign * lastNum;
+        return result;
+    }
+}
+
 # using stack
-# 68.45% 33ms
-public class Solution {
+# 58.21% 23ms
+class Solution {
     public int calculate(String s) {
         int len;
         if(s==null || (len = s.length())==0) return 0;

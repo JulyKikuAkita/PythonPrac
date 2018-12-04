@@ -92,7 +92,8 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-# http://www.programcreek.com/2013/02/leetcode-binary-tree-maximum-path-sum-java/
+# Thought:
+http://www.programcreek.com/2013/02/leetcode-binary-tree-maximum-path-sum-java/
 # Analysis
 # 1) Recursively solve this problem
 # 2) Get largest left sum and right sum
@@ -106,7 +107,6 @@ A recursive method maxPathDown(TreeNode node)
 (1) computes the maximum path sum with highest node is the input node, update maximum if necessary
 (2) returns the maximum sum of the path that can be extended to input node's parent.
 
-#40.44% 2ms
 /**
  * Definition for a binary tree node.
  * public class TreeNode {
@@ -116,7 +116,9 @@ A recursive method maxPathDown(TreeNode node)
  *     TreeNode(int x) { val = x; }
  * }
  */
-public class Solution {
+
+# 1ms 99.42%
+class Solution {
     public int maxPathSum(TreeNode root) {
         int[] res = new int[1];
         res[0] = Integer.MIN_VALUE;
@@ -132,7 +134,7 @@ public class Solution {
     }
 }
 
-# 40.44% 2ms
+# 1ms 99.42%
 # with global var
 public class Solution {
    int maxValue;

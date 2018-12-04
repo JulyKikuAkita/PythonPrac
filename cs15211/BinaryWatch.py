@@ -1,8 +1,10 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/binary-watch/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/binary-watch.py
 # Time:  O(1)
 # Space: O(1)
-
+#
+# Description: Leetcode # 401. Binary Watch
+#
 # A binary watch has 4 LEDs on the top which represent the hours (0-11),
 # and the 6 LEDs on the bottom represent the minutes (0-59).
 #
@@ -24,9 +26,8 @@ __author__ = 'July'
 # Hide Company Tags Google
 # Hide Tags Backtracking Bit Manipulation
 # Hide Similar Problems (M) Letter Combinations of a Phone Number (E) Number of 1 Bits
-
-
-
+#
+#24ms 78.36%
 class Solution(object):
     def readBinaryWatch(self, num):
         """
@@ -49,19 +50,22 @@ class Solution(object):
         :type num: int
         :rtype: List[str]
         """
-        return ['{0}:{1}'.format(str(h), str(m).zfill(2)) for h in range(12) for m in range(60) if (bin(h) + bin(m)).count('1') == num]
+        return ['{0}:{1}'.format(str(h), str(m).zfill(2)) for h in range(12)
+                for m in range(60) if (bin(h) + bin(m)).count('1') == num]
 
-    def readBinaryWatch2(self, num):
+    def readBinaryWatch3(self, num):
         return ['%d:%02d' % (h, m)
             for h in range(12) for m in range(60)
             if (bin(h) + bin(m)).count('1') == num]
 
-'''
-public class Solution {
+Java = '''
+# Thought:
+#14ms 36.14%
+class Solution {
     public List<String> readBinaryWatch(int num) {
          List<String> times = new ArrayList<>();
-        for (int h=0; h<12; h++)
-            for (int m=0; m<60; m++)
+        for (int h = 0; h < 12; h++)
+            for (int m = 0; m < 60; m++)
                 if (Integer.bitCount(h * 64 + m) == num)
                     times.add(String.format("%d:%02d", h, m));
         return times;

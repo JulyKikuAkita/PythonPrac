@@ -129,8 +129,8 @@ we can do even better
 Since states of day i relies only on i-1 and i-2 we can reduce the O(n) space to O(1).
 And here we are at our final solution:
 
-#71.44% 15ms
-public class Solution {
+# 6ms 99.93%
+class Solution {
     public int maxProfit(int[] prices) {
         int sell = 0, prev_sell = 0, buy = Integer.MIN_VALUE, prev_buy;
         for (int price : prices) {
@@ -162,8 +162,8 @@ public class Solution {
     }
 }
 
-346.13% 16ms
-public class Solution {
+# 6ms 99.93%
+class Solution {
     public int maxProfit(int[] prices) {
         int len= prices.length;
         if (len<=1) return 0;
@@ -185,6 +185,24 @@ public class Solution {
 
         return Math.max(sell[len-1], cooldown[len-1]);
 
+    }
+}
+
+# 6ms 99.93%
+class Solution {
+    public int maxProfit(int[] prices) {
+        if (prices.length < 2) {
+            return 0;
+        }
+        int haveStock = Math.max(-prices[0], -prices[1]);
+        int[] notHaveStock = new int[2];
+        notHaveStock[1] = Math.max(0, prices[1] - prices[0]);
+        for (int i = 2; i < prices.length; i++) {
+            haveStock = Math.max(haveStock, notHaveStock[0] - prices[i]);
+            notHaveStock[0] = notHaveStock[1];
+            notHaveStock[1] = Math.max(haveStock + prices[i], notHaveStock[1]);
+        }
+        return notHaveStock[1];
     }
 }
 '''

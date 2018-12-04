@@ -1,8 +1,9 @@
-__source__ = ''
+__source__ = 'https://leetcode.com/problems/binary-tree-tilt/'
 # Time:  O(n)
 # Space: O(n)
 #
-# Description:
+# Description: 563. Binary Tree Tilt
+#
 # Given a binary tree, return the tilt of the whole tree.
 #
 # The tilt of a tree node is defined as the absolute difference between the sum of all left subtree node values
@@ -45,6 +46,7 @@ import unittest
 #         self.left = None
 #         self.right = None
 
+# 48ms 97.16%
 class Solution(object):
     def findTilt(self, root):
         """
@@ -71,9 +73,10 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:  https://leetcode.com/articles/binary-tree-tilt/
-Time complexity : O(n)O(n). where nn is the number of nodes. Each node is visited once.
-Space complexity : O(n)O(n). In worst case when the tree is skewed depth of tree will be nn.
+# Thought:  https://leetcode.com/problems/binary-tree-tilt/solution/
+#
+Time complexity : O(n). where nn is the number of nodes. Each node is visited once.
+Space complexity : O(n). In worst case when the tree is skewed depth of tree will be nn.
 In average case depth will be lognlogn.
 post-order traversal
 
@@ -86,7 +89,9 @@ post-order traversal
  *     TreeNode(int x) { val = x; }
  * }
  */
-public class Solution {
+
+# 3ms 100%
+class Solution {
     int res = 0;
     public int findTilt(TreeNode root) {
         postOrder(root);

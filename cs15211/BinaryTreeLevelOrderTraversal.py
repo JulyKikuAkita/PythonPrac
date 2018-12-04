@@ -116,7 +116,7 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/problems/contains-duplicate/solution/
+# Thought:
 
 /**
  * Definition for a binary tree node.
@@ -129,8 +129,8 @@ Java = '''
  */
 
 # DFS
-# 9.30% 3ms
-public class Solution {
+# 0ms 100%
+class Solution {
     public List<List<Integer>> levelOrder(TreeNode root) {
         List<List<Integer>> res = new ArrayList<List<Integer>>();
         dfs(root, 0, res);
@@ -149,9 +149,9 @@ public class Solution {
     }
 }
 
-#BFS
-#32.79% , 2ms
-public class Solution {
+# BFS
+# 0ms 100%
+class Solution {
     public List<List<Integer>> levelOrder(TreeNode root) {
         Queue<TreeNode> q = new LinkedList<TreeNode>();
         List<List<Integer>> res = new LinkedList<List<Integer>>();

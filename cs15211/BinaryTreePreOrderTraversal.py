@@ -119,9 +119,10 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/problems/contains-duplicate/solution/
-#DFS
-#22.45% 1ms
+# Thought: https://leetcode.com/problems/binary-tree-preorder-traversal/solution/
+
+# DFS
+# 0ms 100%
 public class Solution {
     public List<Integer> preorderTraversal(TreeNode root) {
         List<Integer> result = new ArrayList<>();
@@ -139,9 +140,9 @@ public class Solution {
     }
 }
 
-#BFS with stack
-#22.45% 1ms
-public class Solution {
+# BFS with stack
+# 1ms 58.96%
+class Solution {
     public List<Integer> preorderTraversal(TreeNode root) {
         List<Integer> result = new ArrayList<>();
         if (root == null) {
@@ -162,6 +163,40 @@ public class Solution {
         return result;
     }
 }
+
+Approach 2: Morris traversal
+# 0ms 100%
+class Solution {
+  public List<Integer> preorderTraversal(TreeNode root) {
+    LinkedList<Integer> output = new LinkedList<>();
+
+    TreeNode node = root;
+    while (node != null) {
+      if (node.left == null) {
+        output.add(node.val);
+        node = node.right;
+      }
+      else {
+        TreeNode predecessor = node.left;
+        while ((predecessor.right != null) && (predecessor.right != node)) {
+          predecessor = predecessor.right;
+        }
+
+        if (predecessor.right == null) {
+          output.add(node.val);
+          predecessor.right = node;
+          node = node.left;
+        }
+        else{
+          predecessor.right = null;
+          node = node.right;
+        }
+      }
+    }
+    return output;
+  }
+}
+
 
 #BFS with deque
 #22.45% 1ms
@@ -194,6 +229,7 @@ class Solution {
 }
 
 ##################################################################
+# 1ms 58.96%
     public List<Integer> inorderTraversal(TreeNode root) {
         List<Integer> result = new ArrayList<>();
         Deque<TreeNode> stack = new ArrayDeque<>();
@@ -245,5 +281,35 @@ class Solution {
         }
         return result;
     }
+
+
+# For comparison
+class Solution {
+    public List<Integer> preorderTraversal(TreeNode root) {
+        return preorderDFS(root);
+    }
+
+    public List<Integer> preorderBFS(TreeNode root) {
+        List<Integer> result = new ArrayList<>();
+        preorder(root, result);
+        return result;
+    }
+
+
+    public List<Integer> preorderDFS(TreeNode root) {
+        List<Integer> result = new ArrayList<>();
+        preorder(root, result);
+        return result;
+    }
+
+    private void preorder(TreeNode root, List<Integer> result) {
+        if (root == null) {
+            return;
+        }
+        result.add(root.val);
+        preorder(root.left, result);
+        preorder(root.right, result);
+    }
+}
 
 '''

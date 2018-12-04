@@ -145,7 +145,8 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/problems/contains-duplicate/solution/
+# Thought: https://leetcode.com/problems/binary-tree-postorder-traversal/solution/
+#
 # http://www.programcreek.com/2012/12/leetcode-solution-of-iterative-binary-tree-postorder-traversal-in-java/
 # The order of "Postorder" is: left child -> right child -> parent node.
 # Find the relation between the previously visited node and the current node
@@ -156,8 +157,8 @@ Java = '''
 # Then the previous node become to be under the current node for next loop.
 
 1. DFS:
-# 44.87% 1ms
-public class Solution {
+# 0ms 100%
+class Solution {
     public List<Integer> postorderTraversal(TreeNode root) {
         List<Integer> result = new ArrayList<>();
         postorder(root, result);
@@ -174,7 +175,31 @@ public class Solution {
     }
 }
 
-2. BFS 51%
+2. BFS
+# 1ms 65.62%
+class Solution {
+    public List<Integer> postorderTraversal(TreeNode root) {
+        List<Integer> res = new ArrayList<>();
+        if (root == null) {
+            return res;
+        }
+        Stack<TreeNode> stack = new Stack<>();
+        stack.push(root);
+        while (!stack.isEmpty()) {
+            TreeNode cur = stack.pop();
+            res.add(cur.val);
+            if (cur.left != null) {
+                stack.push(cur.left);
+            }
+            if (cur.right != null) {
+                stack.push(cur.right);
+            }
+        }
+        Collections.reverse(res);
+        return res;
+    }
+}
+3. Comparison
 # 44.87% 1ms
 public class Solution {
     public List<Integer> postorderTraversal(TreeNode root) {

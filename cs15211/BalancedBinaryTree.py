@@ -5,6 +5,7 @@ __source__ = 'https://leetcode.com/problems/balanced-binary-tree/#/description'
 # divide and conquer
 #
 # Description: Leetcode # 110. Balanced Binary Tree
+#
 # Given a binary tree, determine if it is height-balanced.
 #
 # For this problem, a height-balanced binary tree is defined as a binary tree
@@ -143,8 +144,8 @@ Otherwise -1 is returned. According to the leftHeight and rightHeight of the two
 the parent node could check if the sub tree is balanced, and decides its return value.
 
 //DFS2
-# 63.06% 1ms
-public class Solution {
+# 87.89% 1ms
+class Solution {
     public boolean isBalanced(TreeNode root) {
          return dfsHeight(root) != -1;
     }
@@ -163,8 +164,8 @@ public class Solution {
 }
 
 # DFS
-# 19.53% 2ms
-public class Solution {
+# 87.89% 1ms
+class Solution {
     public boolean isBalanced(TreeNode root) {
         if (root == null) return true;
         int left = getDpeth(root.left);
@@ -178,8 +179,8 @@ public class Solution {
     }
 }
 
-#DFS
-# 63.06% 1ms
+# DFS
+# 87.89% 1ms
 class Solution {
     public boolean isBalanced(TreeNode root) {
         if (root == null) return true;

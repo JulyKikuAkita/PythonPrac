@@ -45,15 +45,15 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
+# Thought:
 The idea is very simple:
 last bit of (odd number & even number) is 0.
 when m != n, There is at least an odd number and an even number, so the last bit position result is 0.
 Move m and n rigth a position.
 Keep doing step 1,2,3 until m equal to n, use a factor to record the iteration time.
 
-#12.43% 10ms
-public class Solution {
+# 6ms 80.84%
+class Solution {
     public int rangeBitwiseAnd(int m, int n) {
         if(m == 0){
             return 0;
@@ -68,8 +68,26 @@ public class Solution {
     }
 }
 
-#22.51% 9ms
-public class Solution {
+# 6ms 80.84%
+class Solution {
+    public int rangeBitwiseAnd(int m, int n) {
+        if (m == n) {
+            return m;
+        }
+        int result = 0;
+        int cur = Integer.highestOneBit(n);
+        int last = (m & cur);
+        while (cur != 0 && last == (n & cur)) {
+            result |= last;
+            cur >>>= 1;
+            last = (m & cur);
+        }
+        return result;
+    }
+}
+
+# 7ms 53.28%
+class Solution {
     public int rangeBitwiseAnd(int m, int n) {
         if (m == n) {
             return m;
@@ -91,23 +109,37 @@ Thought:
 The idea is to use a mask to find the leftmost common digits of m and n.
 Example: m=1110001, n=1110111, and you just need to find 1110000 and it will be the answer.
 
-#51.82% 8ms
-public class Solution {
+# 5ms 100%
+class Solution {
     public int rangeBitwiseAnd(int m, int n) {
-        if(m==n) return m;
-        int nHigh=Integer.highestOneBit(n);
-        if(Integer.highestOneBit(m)!=nHigh) return 0;
-        int xor=m^n;
-        return (nHigh-Integer.highestOneBit(xor)*2+nHigh)&n;
+        if(m == n) return m;
+        int nHigh = Integer.highestOneBit(n);
+        if (Integer.highestOneBit(m) != nHigh) return 0;
+        int xor = m ^ n;
+        return (nHigh - Integer.highestOneBit(xor) * 2 + nHigh) & n;
     }
 }
 
-#22.51% 9ms
+# 5ms 100%
 class Solution {
     public int rangeBitwiseAnd(int m, int n) {
         int r=Integer.MAX_VALUE;
         while((m&r)!=(n&r))  r=r<<1;
         return n&r;
+    }
+}
+
+# 5ms 100% same idea
+class Solution {
+    public int rangeBitwiseAnd(int m, int n) {
+        if (m == n) {
+            return m;
+        }
+        int cur = 1 << 31;
+        while (cur != 0 && (m & cur) == (n & cur)) {
+            cur >>>= 1;
+        }
+        return m & ~((cur << 1) - 1);
     }
 }
 
@@ -144,11 +176,24 @@ ii) xxx000 < yyyzzz => xxx <= yyy;
 
 =>result is xxx000, which is also n;
 
-# 51.82% 8ms
+# 7ms 53.28%
 class Solution {
      public int rangeBitwiseAnd(int m, int n) {
         while(m<n) n = n & (n-1);
         return n;
+    }
+}
+
+# 5ms 100% same idea
+class Solution {
+    public int rangeBitwiseAnd(int m, int n) {
+        int count = 0;
+        while (m != n) {
+            m >>>= 1;
+            n >>>= 1;
+            count++;
+        }
+        return m << count;
     }
 }
 '''

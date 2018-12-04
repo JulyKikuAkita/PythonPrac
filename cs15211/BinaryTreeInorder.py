@@ -124,11 +124,11 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/problems/contains-duplicate/solution/
+#Thought: https://leetcode.com/problems/binary-tree-inorder-traversal/solution/
 
 # DFS
-# 28.98% 1ms
-public class Solution {
+# 100% 0ms
+class Solution {
     public List<Integer> inorderTraversal(TreeNode root) {
         List<Integer> res = new ArrayList<>();
         dfs(root, res);
@@ -143,9 +143,9 @@ public class Solution {
     }
 }
 
-#BFS
-2.39% 2ms
-public class Solution {
+# BFS
+# 1ms 59.02%
+class Solution {
     public List<Integer> inorderTraversal(TreeNode root) {
         List<Integer> result = new ArrayList<>();
         Deque<TreeNode> stack = new ArrayDeque<>();
@@ -164,7 +164,35 @@ public class Solution {
     }
 }
 
-#37.89%
+Approach 3: Morris Traversal
+
+# 0ms 100%
+class Solution {
+    public List < Integer > inorderTraversal(TreeNode root) {
+        List < Integer > res = new ArrayList < > ();
+        TreeNode curr = root;
+        TreeNode pre;
+        while (curr != null) {
+            if (curr.left == null) {
+                res.add(curr.val);
+                curr = curr.right; // move to next right node
+            } else { // has a left subtree
+                pre = curr.left;
+                while (pre.right != null) { // find rightmost
+                    pre = pre.right;
+                }
+                pre.right = curr; // put cur after the pre node
+                TreeNode temp = curr; // store cur node
+                curr = curr.left; // move cur to the top of the new tree
+                temp.left = null; // original cur left be null, avoid infinite loops
+            }
+        }
+        return res;
+    }
+}
+
+# Comparison with inorder, preorder, postorder traversal
+# 1ms 59.02%
 public class Solution {
     public List<Integer> inorderTraversal(TreeNode root) {
         List<Integer> res = new ArrayList<>();

@@ -137,11 +137,10 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/problems/contains-duplicate/solution/
-Thought:
+# Thought:
 
-#19.81% 6ms
-public class Solution {
+# 69.96% 3ms
+class Solution {
     public int maxProfit(int[] prices) {
         if ( prices == null || prices.length == 0) return 0;
 
@@ -171,8 +170,8 @@ public class Solution {
     }
 }
 
-# 52.68% 4ms
-public class Solution {
+# 69.96% 3ms
+class Solution {
     public int maxProfit(int[] prices) {
         int hold1 = Integer.MIN_VALUE, hold2 = Integer.MIN_VALUE;
         int release1 = 0, release2 = 0;
@@ -186,7 +185,7 @@ public class Solution {
     }
 }
 
-# 77.21% 2ms
+# 100% 1ms
 class Solution {
     public int maxProfit(int[] prices) {
         int buy1 = Integer.MIN_VALUE, sell1 = 0, buy2 = Integer.MIN_VALUE, sell2 = 0;
@@ -209,8 +208,8 @@ class Solution {
     }
 }
 
-# 98.96% 1ms
-public class Solution {
+# 100% 1ms
+class Solution {
     public int maxProfit(int[] prices) {
         if(prices == null || prices.length <= 1){
             return 0;

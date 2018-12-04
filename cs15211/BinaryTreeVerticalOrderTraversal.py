@@ -3,6 +3,8 @@ __source__ = 'https://leetcode.com/problems/binary-tree-vertical-order-traversal
 # Time:  O(n)
 # Space: O(n)
 #
+# Description: Leetcode # 314. Binary Tree Vertical Order Traversal
+#
 # Given a binary tree, return the vertical order traversal of its nodes' values.
 # (ie, from top to bottom, column by column).
 #
@@ -88,8 +90,9 @@ Java = '''
  *     TreeNode(int x) { val = x; }
  * }
  */
-#94.35% 3ms
-public class Solution {
+
+# 1ms 100%
+class Solution {
     public List<List<Integer>> verticalOrder(TreeNode root) {
         List<List<Integer>> result = new ArrayList<>();
         if (root == null) {
@@ -131,7 +134,7 @@ public class Solution {
     }
 }
 
-#84.47% 4ms
+# 2ms 98.20%
 public class Solution {
     public List<List<Integer>> verticalOrder(TreeNode root) {
         List<List<Integer>> result = new ArrayList<>();
@@ -172,6 +175,45 @@ public class Solution {
         result.addAll(leftList);
         result.addAll(rightList);
         return result;
+    }
+}
+
+# 4ms 33.71%
+class Solution {
+    public List<List<Integer>> verticalOrder(TreeNode root) {
+        List<List<Integer>> result = new ArrayList<>();
+        Map<Integer, List<Integer>> map = new TreeMap<>();
+        verticalOrder(root, map);
+        for (Map.Entry<Integer, List<Integer>> entry : map.entrySet()) {
+            result.add(entry.getValue());
+        }
+        return result;
+    }
+
+    private void verticalOrder(TreeNode root, Map<Integer, List<Integer>> map) {
+        if (root == null) {
+            return;
+        }
+        LinkedList<TreeNode> nodeList = new LinkedList<>();
+        LinkedList<Integer> colList = new LinkedList<>();
+        nodeList.add(root);
+        colList.add(0);
+        while (!nodeList.isEmpty()) {
+            TreeNode curr = nodeList.poll();
+            int col = colList.poll();
+            if (!map.containsKey(col)) {
+                map.put(col, new ArrayList<Integer>());
+            }
+            map.get(col).add(curr.val);
+            if (curr.left != null) {
+                nodeList.add(curr.left);
+                colList.add(col - 1);
+            }
+            if (curr.right != null) {
+                nodeList.add(curr.right);
+                colList.add(col + 1);
+            }
+        }
     }
 }
 '''

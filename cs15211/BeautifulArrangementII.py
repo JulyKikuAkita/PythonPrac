@@ -1,6 +1,6 @@
 __source__ = 'https://leetcode.com/problems/beautiful-arrangement-ii/description/'
-# Time:  O()
-# Space: O()
+# Time:  O(N)
+# Space: O(N)
 #
 # Description: Leetcode # 667. Beautiful Arrangement II
 #
@@ -30,9 +30,22 @@ __source__ = 'https://leetcode.com/problems/beautiful-arrangement-ii/description
 # Beautiful Arrangement
 #
 import unittest
-class Solution(object):
-    pass  # your function here
 
+# 52ms 100%
+class Solution(object):
+    def constructArray(self, n, k):
+        """
+        :type n: int
+        :type k: int
+        :rtype: List[int]
+        """
+        ans = list(range(1, n - k))
+        for i in range(k+1):
+            if i % 2 == 0:
+                ans.append(n-k + i//2)
+            else:
+                ans.append(n - i//2)
+        return ans
 
 class TestMethods(unittest.TestCase):
     def test_Local(self):
@@ -43,7 +56,11 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
+#Thought: https://leetcode.com/problems/beautiful-arrangement-ii/solution/
+Complexity Analysis
+Time Complexity: O(n) We are making a list of size n.
+Space Complexity: O(n) Our answer has a length equal to n.
+
 if you have n number, the maximum k can be n - 1;
 if n is 9, max k is 8.
 This can be done by picking numbers interleavingly from head and tail,
@@ -63,12 +80,33 @@ i++, j--, i++, j--, i++, i++, i++ ...
 1   9   2   8    3 4 5 6 7
   8   7   6   5    1 1 1 1
 
-#24.12% 7ms
+# 3ms 99.70%
 class Solution {
     public int[] constructArray(int n, int k) {
         int[] res = new int[n];
         for (int i = 0, l = 1, r = n; l <= r; i++)
             res[i] = k > 1 ? (k-- % 2 != 0 ? l++ : r--) : (k % 2 != 0? l++ : r--);
+        return res;
+    }
+}
+
+# 3ms 99.70%
+class Solution {
+    public int[] constructArray(int n, int k) {
+        int[] res = new int[n];
+        int start = 1;
+        int end = n;
+        int p = 0;
+        while (p < n) {
+            if (k > 1) {
+                res[p++] = start++;
+                res[p++] = end--;
+                k-=2;
+            } else {
+                if (k == 0) res[p++] = end--;
+                else res[p++] = start++;
+            }
+        }
         return res;
     }
 }

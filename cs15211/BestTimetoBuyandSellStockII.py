@@ -73,10 +73,10 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-Thought: https://leetcode.com/problems/best-time-to-buy-and-sell-stock-ii/#/solution
+Thought: https://leetcode.com/problems/best-time-to-buy-and-sell-stock-ii/solution/
 
-# 56.44% 1ms
-public class Solution {
+# 99.17% 1ms
+class Solution {
     public int maxProfit(int[] prices) {
         int res = 0;
         for (int i = 0; i < prices.length - 1; i++) {
@@ -86,7 +86,7 @@ public class Solution {
     }
 }
 
-# 56.44% 1ms
+# 99.17% 1ms
 class Solution {
     public int maxProfit(int[] prices) {
         int total = 0;
@@ -97,7 +97,7 @@ class Solution {
     }
 }
 
-# 8.54% 2ms
+# 99.17% 1ms
 public class Solution {
     public int maxProfit(int[] prices) {
         int result = 0;

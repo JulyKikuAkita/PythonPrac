@@ -122,9 +122,10 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-Thought : https://leetcode.com/articles/binary-tree-longest-consecutive-sequence/
-#61% 2ms
-public class Solution {
+# Thought : https://leetcode.com/problems/binary-tree-longest-consecutive-sequence/solution/
+
+# 1ms 92.79%
+class Solution {
     private int result;
 
     public int longestConsecutive(TreeNode root) {
@@ -167,8 +168,8 @@ public class Solution {
 
 Approach #1 (Top Down Depth-first Search) [Accepted]
 
-#61% 2ms
-public class Solution {
+# 0ms 100%
+class Solution {
     public int longestConsecutive(TreeNode root) {
         return dfs(root, null, 0);
     }
@@ -180,8 +181,8 @@ public class Solution {
     }
 }
 
-#61% 2ms
-public class Solution {
+# 1ms 92.79%
+class Solution {
     private int max = 0;
 
     public int longestConsecutive(TreeNode root) {
@@ -201,8 +202,8 @@ public class Solution {
 }
 
 Approach #2 (Bottom Up Depth-first Search) [Accepted]
-#21.64% 3ms
-public class Solution {
+# 1ms 92.79%
+class Solution {
     private int maxLength = 0;
     public int longestConsecutive(TreeNode root) {
         dfs(root);
@@ -225,8 +226,8 @@ public class Solution {
     }
 }
 
-#21.64% 3ms
-public class Solution {
+# 1ms 92.79%
+class Solution {
     public int longestConsecutive(TreeNode root) {
         int[] result = new int[1];
         longestConsecutive(root, result);

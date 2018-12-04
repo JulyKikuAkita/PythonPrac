@@ -77,7 +77,8 @@ class Solution2(object):
         if dp[i][j] > 0:
             return dp[i][j]
         for k in xrange(i, j +1):
-            dp[i][j] = max(dp[i][j], nums[i-1] * nums[k] * nums[j+1] + self.dfs(i, k-1, dp, nums) + self.dfs(k+1, j, dp,nums))
+            dp[i][j] = max(dp[i][j], nums[i-1] * nums[k] * nums[j+1]
+                                     + self.dfs(i, k-1, dp, nums) + self.dfs(k+1, j, dp,nums))
         return dp[i][j]
 
 class TestMethods(unittest.TestCase):
@@ -158,8 +159,8 @@ Here comes the final solutions. Note that we put 2 balloons with 1 as boundaries
 and also burst all the zero balloons in the first round since they won't give any coins.
 The algorithm runs in O(n^3) which can be easily seen from the 3 loops in dp solution.
 
-#DP
-# 45.65% 15ms
+# DP
+# 6ms 89.19%
 public class Solution {
     public int maxCoins(int[] nums) {
         int[] newNums = new int[nums.length + 2];
@@ -198,9 +199,9 @@ DP table: if use [3,1,5,8]
 0 0 0  0   0   0
 
 
-# 97.97% 9ms
 # Java D&C with Memoization
-public class Solution {
+# 99.18%
+class Solution {
     public int maxCoins(int[] nums) {
         int[] newNums = new int[nums.length + 2];
 	    int n = 1;

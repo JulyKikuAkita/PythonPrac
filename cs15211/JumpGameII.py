@@ -3,7 +3,7 @@ __source__ = 'https://leetcode.com/problems/jump-game-ii/description/'
 # Time:  O(n^2)
 # Space: O(1)
 #
-# Description: Leetcode # 217. Contains Duplicate
+# Description: Leetcode # 45. Jump Game II
 #
 # Given an array of non-negative integers, you are initially positioned at the first index of the array.
 #
@@ -14,7 +14,8 @@ __source__ = 'https://leetcode.com/problems/jump-game-ii/description/'
 # For example:
 # Given array A = [2,3,1,1,4]
 #
-# The minimum number of jumps to reach the last index is 2. (Jump 1 step from index 0 to 1, then 3 steps to the last index.)
+# The minimum number of jumps to reach the last index is 2.
+# (Jump 1 step from index 0 to 1, then 3 steps to the last index.)
 #
 # Related Topics
 # Array Greedy
@@ -86,8 +87,8 @@ Once the current point reaches curEnd, then trigger another jump,
 and set the new curEnd with curFarthest,
 then keep the above steps, as the following:
 
-# 57.31% 10ms
-public class Solution {
+# 5ms 95.95%
+class Solution {
     public int jump(int[] nums) {
         if ( nums.length < 2 ) return 0;
         int count = 0;
@@ -104,8 +105,45 @@ public class Solution {
     }
 }
 
-#88.27% 9ms
-public class Solution {
+# 4ms 100%
+class Solution {
+    public int jump(int[] nums) {
+        if ( nums.length < 2) return 0;
+        int level = 0, currentMax = 0, moveSteps = 0, nextMax = 0;
+        while (currentMax - moveSteps + 1 > 0) {
+            level++;
+            for (; moveSteps <= currentMax; moveSteps++) {
+                nextMax = Math.max(nextMax, moveSteps + nums[moveSteps]);
+                if (nextMax >= nums.length - 1) return level;
+            }
+            currentMax = nextMax;
+        }
+        return 0;
+    }
+}
+
+# 4ms 100%
+class Solution {
+    public int jump(int[] nums) {
+        int start = 0;
+        int end = 0;
+        int round = 0;
+        int len = nums.length;
+        while (end < len - 1) {
+            int next = end;
+            for (int i = start; i <= end; i++) {
+                next = Math.max(next, i + nums[i]);
+            }
+            start = end + 1;
+            end = next;
+            round++;
+        }
+        return round;
+    }
+}
+
+# 4ms 100%
+class Solution {
     public int jump(int[] nums) {
         if (nums == null || nums.length == 0) { return -1;}
         int start = 0, end = 0, jumps = 0;

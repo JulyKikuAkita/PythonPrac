@@ -67,9 +67,10 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/articles/valid-anagram/
-# 70.19% 6ms
-public class Solution {
+# Thought: https://leetcode.com/problems/valid-anagram/solution/
+#
+# 4ms 71.69%
+class Solution {
     public boolean isAnagram(String s, String t) {
         if (s.length() != t.length()) {
             return false;
@@ -91,9 +92,10 @@ public class Solution {
 }
 
 Approach #1 (Sorting) [Accepted]
-#45.26% 7ms
 # Time:  O(nlogn)
 # Space: O(1)
+
+#7ms 41.66%
 class Solution {
     public boolean isAnagram(String s, String t) {
         if (s.length() != t.length()) {
@@ -104,6 +106,34 @@ class Solution {
         Arrays.sort(str1);
         Arrays.sort(str2);
         return Arrays.equals(str1, str2);
+    }
+}
+
+# 3ms 81.95%
+class Solution {
+    public boolean isAnagram(String s, String t) {
+        int [] alp = new int[26];
+        for(int i = 0;i<s.length();i++) alp[s.charAt(i) - 'a']++;
+        for(int i = 0;i<t.length();i++) alp[t.charAt(i) - 'a']--;
+        for(int i : alp) if(i!=0) return false;
+
+        return true;
+
+    }
+}
+
+# 6ms 49.29%
+class Solution {
+    public boolean isAnagram(String s, String t) {
+        return Arrays.equals(countCharacters(s), countCharacters(t));
+    }
+
+    private int[] countCharacters(String s) {
+        int[] count = new int[26];
+        for (int i = 0; i < s.length(); i++) {
+            count[s.charAt(i) - 'a']++;
+        }
+        return count;
     }
 }
 '''

@@ -4,6 +4,8 @@ __source__ = 'https://leetcode.com/problems/valid-number/description/'
 # Space: O(1)
 # Math
 #
+# Description: Leetcode # 65. Valid Number
+#
 # Validate if a given string is numeric.
 #
 # Some examples:
@@ -109,11 +111,10 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/problems/contains-duplicate/solution/
-import java.util.regex.Pattern;
+# Thought: https://leetcode.com/problems/contains-duplicate/solution/
 
-# 7.21%
-# 41ms
+# 45ms 16.63%
+import java.util.regex.Pattern;
 public class Solution {
     public boolean isNumber(String s) {
         String regex = "\\s*[+-]?(\\d+\\.|\\.\\d+|\\d+){1}\\d*(e[+-]?\\d+)?\\s*";
@@ -121,7 +122,7 @@ public class Solution {
     }
 }
 
-# 41.77%  4ms
+# 21ms 91.04%
 class Solution {
     public boolean isNumber(String s) {
         s = s.trim();

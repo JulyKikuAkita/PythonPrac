@@ -4,6 +4,8 @@ __source__ = 'https://leetcode.com/problems/jump-game/description/'
 # Space: O(1)
 # Greedy
 #
+# Description: Leetcode # 55. Jump Game
+#
 # Given an array of non-negative integers, you are initially positioned at the first index of the array.
 #
 # Each element in the array represents your maximum jump length at that position.
@@ -62,15 +64,16 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/articles/jump-game/ well-written
+#Thought: https://leetcode.com/problems/jump-game/solution/
+https://leetcode.com/articles/jump-game/ well-written
 
 # We can track the maximum length a position can reach.
 # The key to solve this problem is to find 2 conditions:
 # 1) the position can not reach next step (return false) , and
 # 2) the maximum reach the end (return true).
 
-#10.60% 10ms
-public class Solution {
+#97.15% 4ms
+class Solution {
     public boolean canJump(int[] nums) {
         int end = 0;
         int cur = 0;
@@ -82,8 +85,8 @@ public class Solution {
     }
 }
 
-#10.60% 10ms
-public class Solution {
+#97.15% 4ms
+class Solution {
     public boolean canJump(int[] nums) {
         if (nums.length < 2) return true;
 
@@ -95,8 +98,8 @@ public class Solution {
     }
 }
 
-#87.95% 7ms
-public class Solution {
+#100% 3ms
+class Solution {
     public boolean canJump(int[] nums) {
         int lastPos = nums.length - 1;
         for (int i = nums.length - 1; i >= 0; i--) {

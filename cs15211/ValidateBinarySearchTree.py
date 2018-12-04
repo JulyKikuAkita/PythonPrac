@@ -126,7 +126,7 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/problems/contains-duplicate/solution/
+# Thought:
 /**
  * Definition for a binary tree node.
  * public class TreeNode {
@@ -138,8 +138,8 @@ Java = '''
  */
  Note: buggy to rely on Integer.MAX_VALUE, Integer.MIN_VALUE, prefer for inorder traversal
 
- # 37.43% 1ms
-public class Solution {
+# 0ms 100%
+class Solution {
     public boolean isValidBST(TreeNode root) {
         return isValidBST(root, Integer.MIN_VALUE, Integer.MAX_VALUE);
     }
@@ -151,8 +151,8 @@ public class Solution {
     }
 }
 
-# 37.43% 1ms
-public class Solution {
+# 0ms 100%
+class Solution {
     public boolean isValidBST(TreeNode root) {
         return isValidBST(root, Long.MIN_VALUE, Long.MAX_VALUE);
     }
@@ -165,9 +165,10 @@ public class Solution {
 }
 
 # inOrder traversal
-# BFS :21.61% 3ms
+# BFS :
 # https://discuss.leetcode.com/topic/4659/c-in-order-traversal-and-please-do-not-rely-on-buggy-int_max-int_min-solutions-any-more
-public class Solution {
+# 2ms 28.95%
+class Solution {
     public boolean isValidBST(TreeNode root) {
         if (root == null) return true;
         Stack<TreeNode> stack = new Stack<>();
@@ -186,9 +187,10 @@ public class Solution {
     }
 }
 
+# wrong answer
 Note: Not working with min/max
 Fail at [3,1,5,0,2,4,6,null,null,null,3]
-public class Solution {
+class Solution {
     public boolean isValidBST(TreeNode root) {
         return validate(root, null);
     }

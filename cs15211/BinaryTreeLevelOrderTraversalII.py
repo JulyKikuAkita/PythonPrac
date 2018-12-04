@@ -5,6 +5,7 @@ __source__ = 'https://leetcode.com/problems/binary-tree-level-order-traversal-ii
 # BFS
 #
 # Description: Leetcode # 107. Binary Tree Level Order Traversal II
+#
 # Given a binary tree, return the bottom-up level order traversal of its nodes' values.
 #  (ie, from left to right, level by level from leaf to root).
 #
@@ -132,7 +133,7 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/problems/contains-duplicate/solution/
+# Thought:
 #
 /**
  * Definition for a binary tree node.
@@ -161,7 +162,7 @@ public class Solution {
         return res;
     }
 
-    #17.98% 3ms
+    # 1ms 98.73%
     public List<List<Integer>> levelOrderBottomBFS(TreeNode root) {
         Queue<TreeNode> q = new LinkedList<TreeNode>();
         List<List<Integer>> res = new LinkedList<List<Integer>>();
@@ -182,7 +183,7 @@ public class Solution {
         return res;
     }
 
-    #17.98% 3ms
+    # 1ms 98.73%
     public void levelOrderBottomDFS(TreeNode root, List<List<Integer>> res, int level) {
         if(root == null) return;
 

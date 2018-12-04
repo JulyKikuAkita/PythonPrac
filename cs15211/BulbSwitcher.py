@@ -63,7 +63,7 @@ So you have the roots from 1 to R, that's R roots. Which correspond to the R squ
 So int(sqrt(n)) is the answer. (C++ does the conversion to int automatically,
 because of the specified return type).
 
-#11.37% 0ms
+#100% 0ms
 public class Solution {
     public int bulbSwitch(int n) {
         return (int) Math.sqrt(n);

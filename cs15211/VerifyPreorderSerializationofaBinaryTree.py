@@ -104,8 +104,9 @@ if __name__ == '__main__':
 
 Java = '''
 # Thought:
-# 69.48% 10ms
-public class Solution {
+
+# 5ms 91.15%
+class Solution {
     public boolean isValidSerialization(String preorder) {
         String[] tokens = preorder.split(",");
         int count = 0;
@@ -124,8 +125,8 @@ public class Solution {
     }
 }
 
-#56.88% 11ms
-public class Solution {
+# 5ms 91.15%
+class Solution {
     public boolean isValidSerialization(String preorder) {
         String[] nodes = preorder.split(",");
         int count = 0;
@@ -143,8 +144,8 @@ public class Solution {
     }
 }
 
-#99.36% 6ms
-public class Solution {
+# 2ms 98.93%
+class Solution {
     public boolean isValidSerialization(String preorder) {
         Deque<Character> stack = new ArrayDeque();
         char[] preArr = preorder.toCharArray();

@@ -4,7 +4,7 @@ __source__ = 'https://leetcode.com/problems/verify-preorder-sequence-in-binary-s
 # Space: O(1)]
 # Stack
 #
-# Description: Leetcode # 217. Contains Duplicate
+# Description: Leetcode # 255. Verify Preorder Sequence in Binary Search Tree
 #
 # Given an array of numbers, verify whether it is the correct preorder traversal sequence of a binary search tree.
 #
@@ -41,6 +41,7 @@ class Solution:
 
 # Time:  O(n)
 # Space: O(h)
+# 60ms 41.14%
 class Solution2:
     # @param {integer[]} preorder
     # @return {boolean}
@@ -67,8 +68,8 @@ Java = '''
 #Thought:
 [10,7,4,8,6,40,23] should be false
 
-#36.34% 37ms
-public class Solution {
+# 31ms 56.09%
+class Solution {
    public boolean verifyPreorder(int[] preorder) {
         int low = Integer.MIN_VALUE;
         Stack<Integer> path = new Stack();
@@ -83,8 +84,8 @@ public class Solution {
     }
 }
 
-#83.76% 4ms
-public class Solution {
+# 2ms 100%
+class Solution {
     public boolean verifyPreorder(int[] preorder) {
         int index = -1;
         int min = Integer.MIN_VALUE;
@@ -111,7 +112,7 @@ public class Solution {
 //never come across a smaller number)
 // fast = index that traverse through the array
 
-#83.76% 4ms
+# 3ms 83.88%
 class Solution {
     public boolean verifyPreorder(int[] preorder) {
         //min
@@ -129,6 +130,54 @@ class Solution {
             preorder[++slow] = fast;
         }
         return true;
+    }
+}
+
+# 2ms 100%
+class Solution {
+    public boolean verifyPreorder(int[] preorder) {
+        int min = Integer.MIN_VALUE;
+        int n = preorder.length;
+        int index = 0; //stack top
+        for(int i = 1; i < n; i++){
+            int num = preorder[i];
+            if(num < min) return false;
+            if(num < preorder[i-1]) {
+                preorder[++index] = num;
+            }else{
+                //right branch, find it's which node's right branch, set min to that node
+                while(index >= 0 && num > preorder[index]){
+                    min = preorder[index];
+                    index--;
+                }
+                preorder[++index] = num;
+            }
+        }
+        return true;
+    }
+}
+
+# 428ms 14.72%
+class Solution {
+    public boolean verifyPreorder(int[] preorder) {
+        return verifyPreorder(preorder, 0, preorder.length - 1);
+    }
+
+    private boolean verifyPreorder(int[] preorder, int start, int end) {
+        if (start >= end) {
+            return true;
+        }
+        int root = preorder[start];
+        int index = start + 1;
+        while (index <= end && preorder[index] < root) {
+            index++;
+        }
+        for (int i = index + 1; i<= end; i++) {
+            if (preorder[i] < root) {
+                return false;
+            }
+        }
+        return verifyPreorder(preorder, start + 1, index - 1) && verifyPreorder(preorder, index, end);
     }
 }
 '''

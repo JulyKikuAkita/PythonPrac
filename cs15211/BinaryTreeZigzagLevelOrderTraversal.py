@@ -113,7 +113,7 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/problems/contains-duplicate/solution/
+# Thought:
 /**
  * Definition for a binary tree node.
  * public class TreeNode {
@@ -123,7 +123,9 @@ Java = '''
  *     TreeNode(int x) { val = x; }
  * }
  */
- #BFS 31.75% 2ms
+
+# BFS
+# 1ms 94.17%
 public class Solution {
     public List<List<Integer>> zigzagLevelOrder(TreeNode root) {
          List<List<Integer>> res = new ArrayList<>();
@@ -151,9 +153,9 @@ public class Solution {
     }
 }
 
-#31.75% 2ms
-#DFS:
-public class Solution {
+# DFS:
+# 1ms 94.17%
+class Solution {
     public List<List<Integer>> zigzagLevelOrder(TreeNode root) {
         List<List<Integer>> res = new ArrayList<>();
         dfs(root, res, 0);
@@ -181,4 +183,28 @@ public class Solution {
     }
 }
 
+# 1ms 94.17%
+class Solution {
+    public List<List<Integer>> zigzagLevelOrder(TreeNode root) {
+        List<List<Integer>> result = new ArrayList<List<Integer>>();
+        zigzag(result, root, 0);
+        for (int i = 1; i < result.size(); i += 2) {
+            Collections.reverse(result.get(i));
+        }
+        return result;
+    }
+
+    private void zigzag(List<List<Integer>> result, TreeNode root, int depth) {
+        if (root == null) {
+            return;
+        }
+        while (result.size() <= depth) {
+            List<Integer> list = new ArrayList<Integer>();
+            result.add(list);
+        }
+        result.get(depth).add(root.val);
+        zigzag(result, root.left, depth + 1);
+        zigzag(result, root.right, depth + 1);
+    }
+}
 '''

@@ -143,7 +143,8 @@ if __name__ == '__main__':
 
 Java = '''
 # Thought:
-#99.67% 25ms
+
+# 11ms 100%
 public class Solution {
     public boolean isValidSudoku(char[][] board) {
 
@@ -173,7 +174,7 @@ public class Solution {
 }
 
 # Hashset:
-#30.64% 36ms
+# 16ms 90.78%
 class Solution {
     public boolean isValidSudoku(char[][] board) {
         for(int i = 0; i<9; i++){
@@ -195,6 +196,62 @@ class Solution {
     }
 }
 
+# 16ms 90.78%
+class Solution {
+    public boolean isValidSudoku(char[][] board) {
+        List<Set<Character>> rowList = new ArrayList<Set<Character>>();
+        List<Set<Character>> colList = new ArrayList<Set<Character>>();
+        List<Set<Character>> boxList = new ArrayList<Set<Character>>();
+
+        for (int i = 0 ; i < 9 ;i++){
+            Set<Character> rowSet = new HashSet<Character>();
+            rowList.add(rowSet);
+
+            Set<Character> colSet = new HashSet<Character>();
+            colList.add(colSet);
+
+            Set<Character> boxSet = new HashSet<Character>();
+            boxList.add(boxSet);
+
+        }
+
+        for ( int row = 0; row < 9; row++){
+            for ( int col = 0; col < 9; col++) {
+                char cur = board[row][col];
+                if (cur == '.')
+                    continue;
+
+                //row
+                Set<Character> rowSet = rowList.get(row);
+                if (rowSet.contains(cur)){
+                    return false;
+                }else{
+                    rowSet.add(cur);
+                }
+
+                //column
+                Set<Character> colSet = colList.get(col);
+                if(colSet.contains(cur)){
+                    return false;
+                }else{
+                    colSet.add(cur);
+                }
+
+                //box
+                int count = row / 3 * 3 + col /3;
+                Set<Character> boxSet = boxList.get(count);
+                if (boxSet.contains(cur)){
+                    return false;
+                }else{
+                    boxSet.add(cur);
+                }
+
+            }
+        }
+        return true;
+    }
+}
+
 # Thought:
 # Collect the set of things we see, encoded as strings. For example:
 #
@@ -203,7 +260,7 @@ class Solution {
 # '4' in the top-right block is encoded as "0(4)2".
 # Scream false if we ever fail to add something because it was already added (i.e., seen before).
 
-#30.64% 30ms
+# 22ms 49.54%
 class Solution {
    public boolean isValidSudoku(char[][] board) {
         Set seen = new HashSet();
@@ -221,7 +278,7 @@ class Solution {
     }
 }
 
-#71.22% 31ms
+# 17ms 86.17%
 public class Solution {
     public boolean isValidSudoku(char[][] board) {
         return isRowValid(board) && isColValid(board) && isBlockValid(board);

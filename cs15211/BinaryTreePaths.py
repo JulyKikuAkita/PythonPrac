@@ -68,6 +68,7 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
+# Thought: https://leetcode.com/problems/binary-tree-paths/solution/
 /**
  * Definition for a binary tree node.
  * public class TreeNode {
@@ -78,8 +79,9 @@ Java = '''
  * }
  */
 
-DFS 52.75% 17ms elegant:
-public class Solution {
+# DFS
+# 10ms 75.05% elegant:
+class Solution {
     public List<String> binaryTreePaths(TreeNode root) {
         List<String> result = new ArrayList<>();
         if (root == null) {
@@ -107,7 +109,8 @@ public class Solution {
     }
 }
 
-DFS: 33.76% 18ms need to setLength at each condition
+# DFS: need to setLength at each condition
+# 7ms 99.56%
 public class Solution {
     public List<String> binaryTreePaths(TreeNode root) {
         List<String> res = new ArrayList<>();
@@ -139,8 +142,8 @@ public class Solution {
     }
 }
 
-#22.26% 19ms
-public class Solution {
+# 9ms 81.54%
+class Solution {
     public List<String> binaryTreePaths(TreeNode root) {
         List<String> res = new ArrayList<>();
         helper(root, "", res);
@@ -166,8 +169,9 @@ public class Solution {
     }
 }
 
-BFS: 7.62% 22ms
-public class Solution {
+# BFS:
+# 9ms 81.54%
+class Solution {
     public List<String> binaryTreePaths(TreeNode root) {
         List<String> res = new ArrayList<>();
         if (root == null) return res;

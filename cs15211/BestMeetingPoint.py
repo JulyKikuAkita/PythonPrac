@@ -87,7 +87,7 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-Thought: https://leetcode.com/articles/best-meeting-point/
+Thought: https://leetcode.com/problems/best-meeting-point/solution/
 # 11.59% 20ms
 public class Solution {
     public int minTotalDistance(int[][] grid) {
@@ -116,11 +116,103 @@ public class Solution {
     }
 }
 
+# 1ms 100%
+class Solution {
+    public int minTotalDistance(int[][] grid) {
+        int m = grid.length;
+        int n = m == 0 ? 0 : grid[0].length;
+        if (m == 0 || n == 0) {
+            return 0;
+        }
+        int[] xArr = new int[m];
+        int[] yArr = new int[n];
+        int total = 0;
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                if (grid[i][j] == 1) {
+                    xArr[i]++;
+                    yArr[j]++;
+                    total++;
+                }
+            }
+        }
+        int xMid = getMid(xArr, total);
+        int yMid = getMid(yArr, total);
+        return countDistance(xArr, xMid) + countDistance(yArr, yMid);
+    }
+
+    private int getMid(int[] arr, int total) {
+        int left = 0;
+        int right = total;
+        for (int i = 0; i < arr.length; i++) {
+            left += arr[i];
+            right -= arr[i];
+            if (left >= right) {
+                return i;
+            }
+        }
+        return 0;
+    }
+
+    private int countDistance(int[] arr, int mid) {
+        int result = 0;
+        for (int i = 0; i < arr.length; i++) {
+            result += arr[i] * Math.abs(i - mid);
+        }
+        return result;
+    }
+}
+
+#8ms 48.79%
+class Solution {
+    public int minTotalDistance(int[][] grid) {
+        List<Pixel> list = new ArrayList<>();
+        int result = 0;
+        for (int i = 0; i < grid.length; i++) {
+            for (int j = 0; j < grid[0].length; j++) {
+                if (grid[i][j] == 1) {
+                    list.add(new Pixel(i, j));
+                }
+            }
+        }
+        int middleX = list.get(list.size() / 2).x;
+        for (Pixel pixel : list) {
+            result += Math.abs(pixel.x - middleX);
+        }
+        Collections.sort(list, new Comparator<Pixel>() {
+            @Override
+            public int compare(Pixel pixel1, Pixel pixel2) {
+                if (pixel1.y > pixel2.y) {
+                    return 1;
+                } else if (pixel1.y < pixel2.y) {
+                    return -1;
+                } else {
+                    return 0;
+                }
+            }
+        });
+        int middleY = list.get(list.size() / 2).y;
+        for (Pixel pixel : list) {
+            result += Math.abs(pixel.y - middleY);
+        }
+        return result;
+    }
+}
+
+class Pixel {
+    int x;
+    int y;
+    public Pixel(int x, int y) {
+        this.x = x;
+        this.y = y;
+    }
+}
+
 Solution 1
-#89.78% 2ms
+#94.36% 2ms
 No need to sort the coordinates if we collect them in sorted order.
 
-public class Solution {
+class Solution {
     public int minTotalDistance(int[][] grid) {
         int m = grid.length, n = grid[0].length;
         int total = 0, Z[] = new int[m*n];
@@ -145,10 +237,10 @@ public class Solution {
 }
 
 Solution 2
-#89.78% 2ms
 BucketSort-ish. Count how many people live in each row and each column. Only O(m+n) space.
 
-public class Solution {
+# 1ms 100%
+class Solution {
     public int minTotalDistance(int[][] grid) {
         int m = grid.length, n = grid[0].length;
         int[] I = new int[m], J = new int[n];
@@ -172,8 +264,8 @@ public class Solution {
     }
 }
 
-#89.78% 2ms
-public class Solution {
+# 1ms 100%
+class Solution {
     public int minTotalDistance(int[][] grid) {
         if (grid == null || grid.length == 0 || grid[0].length == 0) return 0;
         int m = grid.length, n = grid[0].length;
@@ -208,7 +300,7 @@ public class Solution {
 }
 
 Approach #3 (Sorting) [Accepted]
-#30.42% 14ms
+# 11ms 22.54%
 Time complexity : O(mnlogmn). Since there could be at most mxn points,
 therefore the time complexity is O(mnlogmn) due to sorting
 Space complexity : O(mn)O(mn)

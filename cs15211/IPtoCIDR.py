@@ -4,6 +4,7 @@ __source__ = 'https://leetcode.com/problems/ip-to-cidr/'
 # Space: O(1)
 #
 # Description: Leetcode # 751. IP to CIDR
+#
 # Given a start IP address ip and a number of ips we need to cover n,
 # return a representation of the range as a list (of smallest possible length) of CIDR blocks.
 #
