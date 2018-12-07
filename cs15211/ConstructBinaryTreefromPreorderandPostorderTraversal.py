@@ -109,7 +109,7 @@ Java = '''
  * }
  */
 
-#10ms 94.66%
+# 10ms 94.66%
 class Solution {
     public TreeNode constructFromPrePost(int[] pre, int[] post) {
         return buildTree(pre, post, 0, post.length - 1, new int[]{0});

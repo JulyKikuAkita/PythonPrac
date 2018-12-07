@@ -4,7 +4,7 @@ __source__ = 'https://leetcode.com/problems/container-with-most-water/descriptio
 # Space: O(1)
 # Greedy
 #
-#  Description: Leetcode #  11. Container With Most Water
+# Description: Leetcode #  11. Container With Most Water
 #
 # Given n non-negative integers a1, a2, ..., an,
 # where each represents a point at coordinate (i, ai).
@@ -79,9 +79,10 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/problems/container-with-most-water/solution/
-#88.53% 8ms
-public class Solution {
+# Thought: https://leetcode.com/problems/container-with-most-water/solution/
+
+# 3ms 100%
+class Solution {
     public int maxArea(int[] height) {
         int i = 0;
         int j = height.length - 1;
@@ -100,8 +101,8 @@ public class Solution {
     }
 }
 
-#54.24% 10ms
-public class Solution {
+# 4ms 99.35%
+class Solution {
     public int maxArea(int[] height) {
         int result = 0;
         int start = 0;
@@ -119,8 +120,8 @@ public class Solution {
     }
 }
 
-#8.65% 12ms
-public class Solution {
+# 5ms 90.38%
+class Solution {
     public int maxArea(int[] height) {
         int result = 0;
         int left = 0;

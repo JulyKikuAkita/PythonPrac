@@ -83,8 +83,9 @@ Java = '''
  * }
  */
 
-#DFS #27.17% 108ms
-public class Solution {
+# DFS
+# 74ms 61.04%
+class Solution {
     public int countNodes(TreeNode root) {
         int h = height(root);
         return h < 0 ? 0 :
@@ -97,8 +98,9 @@ public class Solution {
     }
 }
 
-# BFS # 97.86% 47ms
-public class Solution {
+# BFS
+# 29ms 93.46%
+class Solution {
     private int depth(TreeNode root) {
         int ans = 0;
         while (root != null) {
@@ -124,9 +126,8 @@ public class Solution {
     }
 }
 
-# 87.48%
-# 64 ms
-public class Solution {
+# 54ms 77.49%
+class Solution {
     public int countNodes(TreeNode root) {
         if (root == null) {
             return 0;
@@ -156,9 +157,9 @@ public class Solution {
     }
 }
 
-#DFS
-#39.87% 103ms
-public class Solution {
+# DFS
+# 75ms 59.18%
+class Solution {
     public int countNodes(TreeNode root) {
 
         int leftDepth = leftDepth(root);

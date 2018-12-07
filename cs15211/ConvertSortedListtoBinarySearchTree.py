@@ -115,8 +115,7 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/problems/contains-duplicate/solution/
-# 50.16% 1ms
+# Thought: https://leetcode.com/problems/convert-sorted-list-to-binary-search-tree/solution/
 /**
  * Definition for singly-linked list.
  * public class ListNode {
@@ -134,7 +133,9 @@ Java = '''
  *     TreeNode(int x) { val = x; }
  * }
  */
-public class Solution {
+
+# 0ms 100%
+class Solution {
     private ListNode node;
 
     public TreeNode sortedListToBST(ListNode head) {
@@ -170,7 +171,7 @@ public class Solution {
     }
 }
 
-# 50.16% 1ms
+# 1ms 99.61%
 public class Solution {
     public TreeNode sortedListToBST(ListNode head) {
         if (head == null) {

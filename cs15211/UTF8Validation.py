@@ -48,6 +48,8 @@ __source__ = 'https://leetcode.com/problems/utf-8-validation/description/'
 # Bit Manipulation
 #
 import unittest
+
+#28ms 92.50%
 class Solution(object):
     def validUtf8(self, data):
         """
@@ -79,9 +81,10 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
-#58.41% 7ms
-public class Solution {
+# Thought: https://leetcode.com/problems/utf-8-validation/solution/
+
+# 3ms 100%
+class Solution {
     public boolean validUtf8(int[] data) {
         if (data == null || data.length == 0) return false;
         int bitCount = 0;
@@ -108,8 +111,8 @@ public class Solution {
     }
 }
 
-#23.97% 9ms
-public class Solution {
+# 5ms 42.89%
+class Solution {
     public boolean validUtf8(int[] data) {
         if(data==null || data.length==0) return false;
         boolean isValid = true;
@@ -134,6 +137,31 @@ public class Solution {
             i=i+numberOfBytes-1;
         }
         return isValid;
+    }
+}
+
+# 7ms 77.43%
+class Solution {
+    public boolean validUtf8(int[] data) {
+        int n=data.length;
+        if(data==null||data.length==0) return false;
+
+
+        for(int i=0;i<n;i++){
+            int numberOfByte=0;
+            if((data[i]&128) == 0) numberOfByte=1;
+            else if((data[i]& 0xE0) == 0xC0) numberOfByte=2;
+            else if((data[i]& 0xF0) == 0xE0) numberOfByte=3;
+            else if((data[i]& 0xF8) == 0xF0) numberOfByte=4;
+            else return false;
+            for(int j=1;j<numberOfByte;j++){
+                if(i+j>=n) return false;
+                if((data[i+j]& 0xC0)!=0x80) return false;
+            }
+            i=i+numberOfByte-1;
+        }
+        return true;
+
     }
 }
 '''

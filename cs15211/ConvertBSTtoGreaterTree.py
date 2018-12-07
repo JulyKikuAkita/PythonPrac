@@ -1,4 +1,8 @@
-# Created by Kiku on 5/20/17
+__source__ = 'https://leetcode.com/problems/convert-bst-to-greater-tree/'
+# Time:  O()
+# Space: O()
+#
+# Description: Leetcode # 538. Convert BST to Greater Tree
 #
 # Given a Binary Search Tree (BST), convert it to a Greater Tree such that every key of the original BST is
 # changed to the original key plus sum of all keys greater than the original key in BST.
@@ -25,6 +29,7 @@ import unittest
 #         self.left = None
 #         self.right = None
 
+# 92ms 22.08%
 class Solution(object):
     def convertBST(self, root):
         """
@@ -56,15 +61,16 @@ if __name__ == '__main__':
     # run one test
     #unittest.main(defaultTest='FooTest.test_foo', warnings='ignore')
 
-java = '''
+Java = '''
+# Thought: https://leetcode.com/problems/convert-bst-to-greater-tree/solution/
+
 Java Recursive O(n) time
 Since this is a BST, we can do a reverse inorder traversal to traverse the nodes of the tree in descending order.
 In the process, we keep track of the running sum of all nodes which we have traversed thus far.
 
-public class Solution {
-
+# 8ms 83.65%
+class Solution {
     int sum = 0;
-
     public TreeNode convertBST(TreeNode root) {
         convert(root);
         return root;
@@ -77,6 +83,22 @@ public class Solution {
         sum = cur.val;
         convert(cur.left);
     }
+}
 
+# 10ms 59.92%
+class Solution {
+    int sum = 0;
+    public TreeNode convertBST(TreeNode root) {
+        inOrder(root);
+        return root;
+    }
+
+    public void inOrder(TreeNode cur) {
+        if (cur == null) return;
+        inOrder(cur.right);
+        cur.val += sum;
+        sum = cur.val;
+        inOrder(cur.left);
+    }
 }
 '''

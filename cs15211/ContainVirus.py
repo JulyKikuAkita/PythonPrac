@@ -121,7 +121,7 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/problems/contain-virus/solution/
+# Thought: https://leetcode.com/problems/contain-virus/solution/
 
 Approach #1: Simulation [Accepted]
 Complexity Analysis

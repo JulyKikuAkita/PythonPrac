@@ -82,11 +82,11 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
+# Thought:
 No duplicate in arr, no need to sort arr
 40. Combination Sum II has duplicate
 
-#71.03% 20ms
+# 8ms 99.46%
 public class Solution {
     public List<List<Integer>> combinationSum(int[] candidates, int target) {
         List<List<Integer>> list = new ArrayList<>();
@@ -107,12 +107,13 @@ public class Solution {
         }
     }
 }
-# 81.96% //18ms if not sort array
-# 57.35% 22ms //sort array
-public class Solution {
+
+# 9ms 91.46% if not sort array
+# 10ms 83.99% //sort array
+class Solution {
     public List<List<Integer>> combinationSum(int[] candidates, int target) {
         List<List<Integer>> res = new ArrayList<>();
-        Arrays.sort(candidates); //81.96% //18ms if not sort array
+        //Arrays.sort(candidates); //run faster if not sort array
         dfs(candidates, target, 0, new ArrayList<>(), res);
         return res;
     }
@@ -132,8 +133,8 @@ public class Solution {
     }
  }
 
- # 57.35% 22ms
- public class Solution {
+# 8ms 99.46%
+class Solution {
     public List<List<Integer>> combinationSum(int[] candidates, int target) {
         List<List<Integer>> result = new ArrayList<>();
         if (candidates.length == 0) {
@@ -155,6 +156,33 @@ public class Solution {
             combinationSum(candidates, target - candidates[i], i, result, cur);
             cur.remove(size);
         }
+    }
+}
+
+# 14ms 45.41%
+class Solution {
+    public List<List<Integer>> combinationSum(int[] candidates, int target) {
+        List<List<List<Integer>>> dp = new ArrayList<>(target);
+        Arrays.sort(candidates);
+        for (int i = 1; i <= target; i++) {
+            List<List<Integer>> cur = new ArrayList<>();
+            for (int j = 0; j < candidates.length && candidates[j] <= i; j++) {
+                if (candidates[j] == i) {
+                    cur.add(Arrays.asList(candidates[j]));
+                } else {
+                    for (List<Integer> prev : dp.get(i - candidates[j] - 1)) {
+                        if (candidates[j] <= prev.get(0)) {
+                            List<Integer> newList = new ArrayList<>();
+                            newList.add(candidates[j]);
+                            newList.addAll(prev);
+                            cur.add(newList);
+                        }
+                    }
+                }
+            }
+            dp.add(cur);
+        }
+        return dp.get(target - 1);
     }
 }
 '''

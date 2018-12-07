@@ -43,9 +43,9 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
 # Thought: https://leetcode.com/problems/contains-duplicate-ii/solution/
-# 87.74% 14ms
+
+# 7ms 98.16%
 public class Solution {
     public boolean containsNearbyDuplicate(int[] nums, int k) {
         Set<Integer> set = new HashSet<Integer>();
@@ -56,4 +56,20 @@ public class Solution {
         return false;
     }
 }
+
+# 9ms 91.32%
+class Solution {
+    public boolean containsNearbyDuplicate(int[] nums, int k) {
+        Map<Integer, Integer> map = new HashMap<Integer, Integer>();
+        for (int i = 0; i < nums.length; i++) {
+            if (map.containsKey(nums[i])) {
+                if (i - map.get(nums[i]) <= k) return true;
+            }
+            map.put(nums[i], i);
+        }
+        return false;
+    }
+}
+
+
 '''

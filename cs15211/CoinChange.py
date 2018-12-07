@@ -102,10 +102,10 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-Thought: https://leetcode.com/problems/coin-change/solution/
+# Thought: https://leetcode.com/problems/coin-change/solution/
 
-#98.46% 5ms
-public class Solution {
+# 98.46% 5ms
+class Solution {
     public int coinChange(int[] coins, int amount) {
         if (coins.length == 0 || amount <= 0) {
             return 0;
@@ -129,8 +129,8 @@ public class Solution {
 }
 
 Approach #2 (Dynamic programming - Top down) [Accepted]
-#18.27% 45ms
-public class Solution {
+# 38ms 26.58%
+class Solution {
     public int coinChange(int[] coins, int amount) {
         if (amount < 1) return 0;
         return coinChange(coins, amount, new int[amount]);
@@ -152,8 +152,8 @@ public class Solution {
 }
 
 Approach #3 (Dynamic programming - Bottom up) [Accepted]
-#60.67%  24 ms
-public class Solution {
+# 19ms 80.04%
+class Solution {
     public int coinChange(int[] coins, int amount) {
         int max = amount + 1;
         int[] dp = new int[amount + 1];

@@ -62,9 +62,10 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
-# 46.90 1ms
-public class Solution {
+# Thought:
+
+# 1ms 78.19%
+class Solution {
     public List<List<Integer>> combinationSum3(int k, int n) {
          List<List<Integer>> result = new ArrayList<>();
          backtrack(result, new ArrayList<Integer>(), k, n, 1);
@@ -85,8 +86,8 @@ public class Solution {
     }
 }
 
-#10.13% 2ms
-public class Solution {
+# 1ms 78.19%
+class Solution {
     public List<List<Integer>> combinationSum3(int k, int n) {
         List<List<Integer>> result = new ArrayList<>();
         if (k < 0 || k > 9 || n <= 0) {
@@ -113,5 +114,30 @@ public class Solution {
         combinationSum3(k - 1, n - cur, cur + 1, result, list);
         list.remove(list.size() - 1);
     }
+}
+
+# 0ms 100%
+class Solution {
+    public List<List<Integer>> combinationSum3(int k, int n) {
+        List<List<Integer>> results = new ArrayList<>();
+        backtrack(results, new ArrayList<Integer>(), k, n, 1);
+        return results;
+    }
+
+    private void backtrack(List<List<Integer>> results, List<Integer> comb, int cnt, int total, int start) {
+        if (total < 0) return;
+        if (comb.size() == cnt && total == 0) {
+            List<Integer> single = new ArrayList<>(comb);
+            results.add(single);
+            return;
+        }
+        if (comb.size() == cnt || total == 0) return;
+        for (int i = start; i < 10; i++) {
+            comb.add(i);
+            backtrack(results, comb, cnt, total - i, i + 1);
+            comb.remove(comb.size() - 1);
+        }
+    }
+
 }
 '''

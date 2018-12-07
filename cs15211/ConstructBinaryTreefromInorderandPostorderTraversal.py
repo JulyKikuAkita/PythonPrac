@@ -1,5 +1,4 @@
 __source__ = 'https://leetcode.com/problems/construct-binary-tree-from-inorder-and-postorder-traversal/#/solutions'
-# https://github.com/kamyu104/LeetCode/blob/master/Python/construct-binary-tree-from-preorder-and-inorder-traversal.py
 # Time:  O(n)
 # Space: O(n)
 # divide and conquer
@@ -96,7 +95,7 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/problems/contains-duplicate/solution/
+#Thought:
 /**
  * Definition for a binary tree node.
  * public class TreeNode {
@@ -106,7 +105,8 @@ Java = '''
  *     TreeNode(int x) { val = x; }
  * }
  */
-1. DFS: 69.44% 5ms
+1. DFS:
+# 3ms 89.61%
 public class Solution {
     public TreeNode buildTree(int[] inorder, int[] postorder) {
         if (inorder == null || inorder.length != postorder.length) {
@@ -130,7 +130,7 @@ public class Solution {
     }
 }
 
-2. BFS:
+
 This is my iterative solution, think about "Constructing Binary Tree from inorder and preorder array", 
 the idea is quite similar. Instead of scanning the preorder array from beginning to end and using 
 inorder array as a kind of mark, in this question, the key point is to scanning the postorder array 
@@ -145,8 +145,9 @@ until the peek() element is not equal to the mark value or the stack is empty.
 Then, the new element that we are gonna scan from postorder array is the left child of the last element 
 we have popped out from the stack.
 
-# 89.30% 4ms
-public class Solution {
+2. BFS:
+# 3ms 89.16%
+class Solution {
     public TreeNode buildTree(int[] inorder, int[] postorder) {
         return bfs(inorder, postorder);
     }

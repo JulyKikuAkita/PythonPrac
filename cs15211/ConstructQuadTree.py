@@ -42,7 +42,7 @@ class Node(object):
         self.bottomLeft = bottomLeft
         self.bottomRight = bottomRight
 
-#1155ms 99.30%
+# 156ms 97.42%
 class Solution(object):
     def construct(self, grid):
         """
@@ -79,7 +79,7 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
+# Thought:
 
 /*
 // Definition for a QuadTree node.

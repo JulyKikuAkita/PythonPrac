@@ -2,7 +2,7 @@ __source__ = 'https://leetcode.com/problems/construct-the-rectangle/#/descriptio
 # Time:  O()
 # Space: O()
 #
-# Description:
+# Description: 492. Construct the Rectangle
 #
 # 1. The area of the rectangular web page you designed must equal to the given target area.
 # 2. The width W should not be larger than the length L, which means L >= W.
@@ -21,6 +21,7 @@ __source__ = 'https://leetcode.com/problems/construct-the-rectangle/#/descriptio
 
 import math
 import unittest
+# 20ms 100%
 class Solution(object):
     def constructRectangle(self, area):
         """
@@ -42,8 +43,19 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
-public class Solution {
+# Thought:
+
+# 2ms 100%
+class Solution {
+    public int[] constructRectangle(int area) {
+        int w = (int)Math.sqrt(area);
+	    while (area%w!=0) w--;
+	    return new int[]{area/w, w};
+    }
+}
+
+# 2ms 100%
+class Solution {
     public int[] constructRectangle1(int area) {
         int w = (int)Math.sqrt(area);
 	    while (area%w!=0) w--;

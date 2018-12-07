@@ -145,7 +145,8 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
+# Thought: https://leetcode.com/problems/copy-list-with-random-pointer/solution/
+
 A solution with constant space complexity O(1) and linear time complexity O(N)
 An intuitive solution is to keep a hash table for each node in the list,
 via which we just need to iterate the list in 2 rounds respectively to create nodes and assign the values
@@ -164,6 +165,7 @@ Iterate the new list and assign the random pointer for each
 duplicated node.
 Restore the original list and extract the duplicated nodes.
 The algorithm is implemented as follows:
+
 /**
  * Definition for singly-linked list with a random pointer.
  * class RandomListNode {
@@ -172,7 +174,8 @@ The algorithm is implemented as follows:
  *     RandomListNode(int x) { this.label = x; }
  * };
  */
-#67.66% 2ms
+
+# 1ms 99.57$
 public class Solution {
     public RandomListNode copyRandomList(RandomListNode head) {
         if( head == null) return head;
@@ -211,33 +214,36 @@ public class Solution {
     }
 }
 
-# 32.97% 6ms
+
 2. O(n) with map Space O(n)
-public RandomListNode copyRandomList(RandomListNode head) {
-  if (head == null) return null;
+# 3ms 57.67%
+public class Solution {
+    public RandomListNode copyRandomList(RandomListNode head) {
+      if (head == null) return null;
 
-  Map<RandomListNode, RandomListNode> map = new HashMap<RandomListNode, RandomListNode>();
+      Map<RandomListNode, RandomListNode> map = new HashMap<RandomListNode, RandomListNode>();
 
-  // loop 1. copy all the nodes
-  RandomListNode node = head;
-  while (node != null) {
-    map.put(node, new RandomListNode(node.label));
-    node = node.next;
-  }
+      // loop 1. copy all the nodes
+      RandomListNode node = head;
+      while (node != null) {
+        map.put(node, new RandomListNode(node.label));
+        node = node.next;
+      }
 
-  // loop 2. assign next and random pointers
-  node = head;
-  while (node != null) {
-    map.get(node).next = map.get(node.next);
-    map.get(node).random = map.get(node.random);
-    node = node.next;
-  }
+      // loop 2. assign next and random pointers
+      node = head;
+      while (node != null) {
+        map.get(node).next = map.get(node.next);
+        map.get(node).random = map.get(node.random);
+        node = node.next;
+      }
 
-  return map.get(head);
+      return map.get(head);
+    }
 }
 
 # pass the test but didn't create link for random node
-# 96.65% 1ms
+# 1ms 99.57$
 public class Solution {
     public RandomListNode copyRandomList(RandomListNode head) {
         RandomListNode dummy = new RandomListNode(-12345);

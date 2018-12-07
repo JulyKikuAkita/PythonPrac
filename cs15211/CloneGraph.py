@@ -112,7 +112,7 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/problems/contains-duplicate/solution/
+# Thought:
 /**
  * Definition for undirected graph.
  * class UndirectedGraphNode {
@@ -122,8 +122,8 @@ Java = '''
  * };
  */
 # DFS:
-# 74.34% 5ms
-public class Solution {
+# 2ms 100%
+class Solution {
     public UndirectedGraphNode cloneGraph(UndirectedGraphNode node) {
         HashMap<Integer, UndirectedGraphNode> map = new HashMap<>();
         return clone(node, map);
@@ -143,8 +143,8 @@ public class Solution {
 }
 
 # BFS:
-# 45.32% 8ms
-public class Solution {
+# 5ms 42.74%
+class Solution {
     public UndirectedGraphNode cloneGraph(UndirectedGraphNode node) {
         if (node == null) {
             return null;
@@ -170,8 +170,8 @@ public class Solution {
     }
 }
 
-# 31.88% 9ms
-public class Solution {
+# 4ms 62.42%
+class Solution {
     public UndirectedGraphNode cloneGraph(UndirectedGraphNode node) {
         if (node == null) return null;
         UndirectedGraphNode clone = new UndirectedGraphNode(node.label);

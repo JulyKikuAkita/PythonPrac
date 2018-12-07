@@ -125,8 +125,10 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
+# Thought:
+
 Be aware of order of course when building map, that impact the result order
-#Thought:
+
 1) BFS, aka topological sort
 This question asks for an order in which prerequisite courses must be taken first.
 This prerequisite relationship reminds one of directed graphs.
@@ -149,8 +151,6 @@ you should visit them first before you put this node down in the final order arr
 This sounds like the post-order of a DFS. Since we are putting nodes down in the reverse order,
 we should reverse it back to correct ordering or use a stack.
 
-#DFS
-# 97.24% 6ms
 **
  * Solution with DFS.
  * Note that we need to use "post-order" traversal here,
@@ -159,7 +159,10 @@ we should reverse it back to correct ordering or use a stack.
  It takes O(|E|) to arrange graph information and O(n) to do BFS.
  * space complexity O(n)
  */
-public class Solution {
+
+# DFS
+# 4ms 99.97%
+class Solution {
     private int mIdx = 0;
     public int[] findOrder(int numCourses, int[][] prerequisites) {
         int[] result = new int[numCourses];
@@ -188,8 +191,9 @@ public class Solution {
         return false;
     }
 }
+
 # DFS
-# 55.54% 13ms
+# 4ms 99.97%
 class Solution {
     private int mIdx = 0;
     public int[] findOrder(int numCourses, int[][] prerequisites) {
@@ -229,8 +233,8 @@ class Solution {
 
 
 # Topological sort (BFS) with list
-# 75.28% 9ms
-public class Solution {
+# 6ms 96.66%
+class Solution {
     public int[] findOrder(int numCourses, int[][] prerequisites) {
         int[] result = new int[numCourses];
         int index = 0;
@@ -269,7 +273,7 @@ public class Solution {
 }
 
 # Topological sort (BFS) with map
-# 52.29% 14ms
+# 7ms 90.34%
 class Solution {
     public int[] findOrder(int numCourses, int[][] prerequisites) {
         int[] result = new int[numCourses];

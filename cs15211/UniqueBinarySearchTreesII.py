@@ -122,10 +122,23 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
-# 5.62% 6ms
+# Thought: https://leetcode.com/problems/unique-binary-search-trees-ii/solution/
+
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+
+
 1. Divide-and-conquer. F(i) = G(i-1) * G(n-i)
-public class Solution {
+
+# 2ms 91.34%
+class Solution {
     public List<TreeNode> generateTrees(int n) {
         if (n <= 0) {
             return new ArrayList<>();
@@ -162,8 +175,8 @@ and the right subtree will contain elements (i+1) to n.
 I use recursive calls to get back all possible trees for left and right subtrees 
 and combine them in all possible ways with the root.
 
-# 39.05% 4ms
-public class Solution {
+# 2ms 91.34%
+class Solution {
     public List<TreeNode> generateTrees(int n) {
         if ( n < 1) return new ArrayList<TreeNode>();
         return genTrees(1, n);
@@ -198,17 +211,8 @@ public class Solution {
     }
 }
 
-# 77.45% 3ms
-/**
- * Definition for a binary tree node.
- * public class TreeNode {
- *     int val;
- *     TreeNode left;
- *     TreeNode right;
- *     TreeNode(int x) { val = x; }
- * }
- */
-public class Solution {
+# 1ms 100%
+class Solution {
     public List<TreeNode> generateTrees(int n) {
         // List<TreeNode> res = new ArrayList<>();
         List<TreeNode>[][] memo = new ArrayList[n+1][n+1];
@@ -235,6 +239,50 @@ public class Solution {
         }
         memo[start][end] = res;
         return res;
+    }
+}
+
+#2ms 91.34%
+class Solution {
+    public List<TreeNode> generateTrees(int n) {
+        if (n <= 0) {
+            return new ArrayList<>();
+        }
+        return generateTrees(1, n, n + 1, new HashMap<>());
+    }
+
+    private List<TreeNode> generateTrees(int start, int end, int base, Map<Long, List<TreeNode>> cache) {
+        List<TreeNode> result = new ArrayList<>();
+        if (start > end) {
+            result.add(null);
+            return result;
+        }
+        long key = hash(base, start, end);
+        if (cache.containsKey(key)) {
+            return cache.get(key);
+        }
+        for (int i = start; i <= end; i++) {
+            List<TreeNode> lefts = generateTrees(start, i - 1, base, cache);
+            List<TreeNode> rights = generateTrees(i + 1, end, base, cache);
+            for (TreeNode left : lefts) {
+                for (TreeNode right : rights) {
+                    TreeNode root = new TreeNode(i);
+                    root.left = left;
+                    root.right = right;
+                    result.add(root);
+                }
+            }
+        }
+        cache.put(key, result);
+        return result;
+    }
+
+    private long hash(int base, int... nums) {
+        long result = 0;
+        for (int num : nums) {
+            result = result * base + num;
+        }
+        return result;
     }
 }
 '''

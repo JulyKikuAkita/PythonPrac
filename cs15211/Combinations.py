@@ -128,11 +128,11 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/problems/contains-duplicate/solution/
+# Thought:
 
 //template,
-# 15.64% 68ms without optimize i <= n - k +!
-public class Solution {
+# 14ms 68.80% without optimize i <= n - k +!
+class Solution {
     public List<List<Integer>> combine(int n, int k) {
         List<List<Integer>> result = new ArrayList<>();
         backtrack(result, new ArrayList<Integer>(), n, k, 1);
@@ -154,8 +154,8 @@ public class Solution {
     }
 }
 
-//95.45%, 4ms , optimize by n - k + 1
-public class Solution {
+# 2ms 99.89%  , optimize by n - k + 1
+class Solution {
     public List<List<Integer>> combine(int n, int k) {
         List<List<Integer>> result = new ArrayList<>();
         if (k <= 0 || n < k) {
@@ -179,8 +179,8 @@ public class Solution {
     }
 }
 
-//95.45%, 4ms , optimize by n - k + 1
-public class Solution {
+# 2ms 99.89% , optimize by n - k + 1
+class Solution {
     public List<List<Integer>> combine(int n, int k) {
         List<List<Integer>> result = new ArrayList<>();
         if (k <= 0 || n < k) {

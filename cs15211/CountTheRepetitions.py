@@ -2,7 +2,7 @@ __source__ = 'https://github.com/kamyu104/LeetCode/blob/master/Python/count-the-
 # Time:  O(s1 * min(s2, n1))
 # Space: O(s2)
 #
-# Description:
+# Description: 466. Count The Repetitions
 #
 # Define S = [s,n] as the string S which consists of n connected strings s.
 # For example, ["abc", 3] ="abcabcabc".
@@ -26,7 +26,7 @@ __source__ = 'https://github.com/kamyu104/LeetCode/blob/master/Python/count-the-
 #  Dynamic Programming
 
 import unittest
-
+# 24ms 95.45%
 class Solution(object):
     def getMaxRepetitions(self, s1, n1, s2, n2):
         """
@@ -65,7 +65,8 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
+# Thought: https://leetcode.com/problems/count-the-repetitions/
+
 1. Ugly Java brute force solution, but accepted. 1088ms.
 I didn't come up with any good solution so I tried brute force. Key points:
 
@@ -74,7 +75,8 @@ If chars are equal, move both. Otherwise only move pointer1.
 We repeat step 1 and go through s1 for n1 times and count how many times can we go through s2.
 Answer to this problem is times go through s2 divide by n2.
 
-public class Solution {
+# 932ms 26.25%
+class Solution {
     public int getMaxRepetitions(String s1, int n1, String s2, int n2) {
         char[] array1 = s1.toCharArray(), array2 = s2.toCharArray();
         int count1 = 0, count2 = 0, i = 0, j = 0;
@@ -124,8 +126,8 @@ So, we just need to calculate the count of each loop, and the count before enter
 
 Here is the code with detailed comment, 21ms.
 
-
-public class Solution {
+# 13ms 62.50%
+class Solution {
     public int getMaxRepetitions(String s1, int n1, String s2, int n2) {
         if (!ableToObtain(s1, s2)) return 0; // check if [s1. inf] obtains s2
         int cnt=0, k=-1;

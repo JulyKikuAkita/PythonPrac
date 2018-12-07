@@ -56,6 +56,8 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
+Thought:
+
 The idea of this solution is from this page: http://www.geeksforgeeks.org/ugly-numbers/
 
 The ugly-number sequence is 1, 2, 3, 4, 5, 6, 8, 9, 10, 12, 15,
@@ -70,8 +72,8 @@ We can find that every subsequence is the ugly-sequence itself (1, 2, 3, 4, 5, .
 Then we use similar merge method as merge sort, to get every ugly number from the three subsequence.
 Every step we choose the smallest one, and move one step after,including nums with same value.
 
-#87.11% 8ms
-public class Solution {
+# 2ms 99.94%
+class Solution {
     public int nthUglyNumber(int n) {
         int[] ugly = new int[n];
         ugly[0] = 1;
@@ -110,7 +112,8 @@ public class Solution {
 }
 
 -> a general idea: from super ugly number
-public class Solution {
+#2ms 99.94%
+class Solution {
     public int nthSuperUglyNumber(int n, int[] primes) {
         int[] ugly = new int[n];
         ugly[0] = 1;
@@ -133,8 +136,8 @@ public class Solution {
     }
 }
 
-#21.95% 51ms
-public class Solution {
+# 22ms 30.54%
+class Solution {
     public int nthUglyNumber(int n) {
         List<Integer> list = new ArrayList<>();
         list.add(1);
@@ -158,8 +161,8 @@ public class Solution {
     }
 }
 
-#41.86% 12ms
-public class Solution {
+# 5ms 55.92%
+class Solution {
     public int nthUglyNumber(int n) {
         if (n <= 0) {
             return 0;
@@ -181,8 +184,8 @@ public class Solution {
     }
 }
 
-#99.58$% 2ms
-public class Solution {
+# 100% 1ms
+class Solution {
     private static int[] uglies = new int[1690];
     private static int valid_index;
     private static int index2 = 0;
@@ -212,6 +215,33 @@ public class Solution {
                 index5 ++;
         }
         return uglies[n];
+    }
+}
+
+# 2ms 99.94%
+class Solution {
+    public int nthUglyNumber(int n) {
+        int[] dp = new int[n+1];
+        int index2 = 2, index3 = 2, index5 = 2;
+        int mul2 = 2, mul3 = 3, mul5 = 5;
+        dp[1] = 1;
+        for(int i=2; i<=n; i++){
+            int min = Math.min(mul2, Math.min(mul3, mul5));
+            dp[i] = min;
+            if(min==mul2){
+                mul2 = dp[index2] * 2;
+                index2++;
+            }
+            if(min==mul3){
+                mul3 = dp[index3] * 3;
+                index3++;
+            }
+            if(min==mul5){
+                mul5 = dp[index5] * 5;
+                index5++;
+            }
+        }
+        return dp[n];
     }
 }
 '''

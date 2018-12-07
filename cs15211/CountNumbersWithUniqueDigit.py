@@ -52,9 +52,10 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
-#8.68% 0ms
-public class Solution {
+# Thought:
+
+# 0ms 100%
+class Solution {
     public int countNumbersWithUniqueDigits(int n) {
         if (n < 0 || n > 10) {
             return 0;
@@ -73,8 +74,8 @@ public class Solution {
     }
 }
 
-#8.68% 0ms
-public class Solution {
+# 0ms 100%
+class Solution {
     public int countNumbersWithUniqueDigits(int n) {
         if (n <= 0) { return 1; }
         int res = 10;

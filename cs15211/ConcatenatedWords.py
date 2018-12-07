@@ -4,6 +4,7 @@ __source__ = 'https://github.com/kamyu104/LeetCode/blob/master/Python/concatenat
 # Space: O(n * l)
 #
 # Description: Leetcode #472. Concatenated Words
+#
 # Given a list of words, please write a program that returns
 # all concatenated words in the given list of words.
 #
@@ -28,7 +29,7 @@ __source__ = 'https://github.com/kamyu104/LeetCode/blob/master/Python/concatenat
 # Hide Similar Problems (H) Word Break II
 #
 import unittest
-#1765 ms
+# 1280ms 37.40%
 class Solution(object):
     def findAllConcatenatedWordsInADict(self, words):
         """
@@ -63,7 +64,7 @@ if __name__ == '__main__':
 
 Java = '''
 
-#Thought:
+# Thought:
 1.
 # Do you still remember how did you solve this problem? https://leetcode.com/problems/word-break/
 #
@@ -75,8 +76,8 @@ Java = '''
 # So we can first sort the input by length of each word,
 # and only try to form one word by using words in front of it.
 # DP
-# 16.87% 524 ms
-public class Solution {
+# 341ms 25.80%
+class Solution {
     public List<String> findAllConcatenatedWordsInADict(String[] words) {
         List<String> result = new ArrayList<>();
         Set<String> preWords = new HashSet<>();
@@ -117,8 +118,8 @@ public class Solution {
 
 2.
 # Trie
-# 86.98% 109ms
-public class Solution {
+# 65ms 81.02%
+class Solution {
     private final static int R = 26;
     private Node mRoot = new Node();
 
@@ -169,9 +170,8 @@ public class Solution {
 }
 
 # Trie + DFS
-# 86.98% 109ms
-
-public class Solution {
+# 59ms 89.13%
+class Solution {
     private TrieNode root;
     private List<String> result;
 

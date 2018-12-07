@@ -1,5 +1,9 @@
-# Created by Kiku on 5/20/17
-import unittest
+__source__ = 'https://leetcode.com/problems/construct-binary-tree-from-string/'
+# Time:  O()
+# Space: O()
+#
+# Description: Leetcode # 536. Construct Binary Tree from String
+#
 # You need to construct a binary tree from a string consisting of parenthesis and integers.
 #
 # The whole input represents a binary tree. It contains an integer followed by zero, one or two pairs of parenthesis.
@@ -22,6 +26,8 @@ import unittest
 # Hide Company Tags Amazon
 # Hide Tags Tree String
 #
+import unittest
+#
 # Definition for a binary tree node.
 class TreeNode(object):
      def __init__(self, x):
@@ -29,6 +35,7 @@ class TreeNode(object):
          self.left = None
          self.right = None
 
+# 120ms 72%
 class Solution(object):
     def str2tree(self, s):
         """
@@ -65,9 +72,23 @@ if __name__ == '__main__':
 
     # run one test
     #unittest.main(defaultTest='FooTest.test_foo', warnings='ignore')
-java = '''
+
+Java = '''
+# Thought:
+
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+
 Java stack solution
-public class Solution {
+# 17ms 61.77%
+class Solution {
     public TreeNode str2tree(String s) {
         Stack<TreeNode> stack = new Stack<>();
         for(int i = 0, j = i; i < s.length(); i++, j = i){
@@ -88,7 +109,8 @@ public class Solution {
     }
 }
 
-public class Solution {
+# 24ms 41.52%
+class Solution {
     public TreeNode str2tree(String s) {
         // Base case
         if (s.length() == 0) return null;

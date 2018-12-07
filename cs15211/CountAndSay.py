@@ -5,6 +5,7 @@ __source__ = 'https://leetcode.com/problems/count-and-say/description/'
 # String
 #
 # Description: Leetcode # 38. Count and Say
+#
 # The count-and-say sequence is the sequence of integers with the first five terms as following:
 #
 # 1.     1
@@ -93,7 +94,7 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/problems/contains-duplicate/solution/
+# Thought:
  1.     1
  2.     11
  3.     21
@@ -105,9 +106,8 @@ Java = '''
  9.     31131211131221
  10.   13211311123113112211
 
-
-# 94.75% 3ms
-public class Solution {
+# 2ms 97.14%
+class Solution {
     public String countAndSay(int n) {
         if (n <= 0) {
             return "";
@@ -135,6 +135,62 @@ public class Solution {
         }
         sb.append(count).append(prev);
         return sb.toString();
+    }
+}
+
+# 2ms 97.14%
+class Solution {
+    public String countAndSay(int n) {
+       String s = "1";
+        for (int i = 1; i < n ; i ++){
+            s = iterate(s);
+        }
+        return s;
+    }
+    public String iterate(String s){
+        StringBuilder res = new StringBuilder();
+        int count = 1;
+        for( int i = 1; i < s.length(); i++){
+            if (s.charAt(i) == s.charAt(i - 1)){
+                count++;
+            }
+            else{
+               res.append(count);
+                res.append(s.charAt(i-1));
+                count = 1;
+            }
+        }
+        res.append(count);
+        res.append(s.charAt(s.length()-1));
+        return res.toString();
+    }
+}
+
+# 2ms 97.14%
+class Solution {
+    public String countAndSay(int n) {
+        if (n < 1) {
+            return "";
+        }
+        StringBuilder sb = new StringBuilder();
+        String num = "1";
+        for (int i = 1; i < n; i++) {
+            char c = num.charAt(0);
+            int count = 1;
+            for (int j = 1; j < num.length(); j++) {
+                if (num.charAt(j) == c) {
+                    count++;
+                } else {
+                    sb.append(count).append(c);
+                    c = num.charAt(j);
+                    count = 1;
+                }
+            }
+            sb.append(count).append(c);
+            num = sb.toString();
+            sb.setLength(0);
+        }
+        return num;
     }
 }
 '''

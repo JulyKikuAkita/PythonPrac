@@ -58,7 +58,8 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/problems/card-flipping-game/solution/
+# Thought: https://leetcode.com/problems/card-flipping-game/solution/
+
 Approach #1: Hash Set [Accepted]
 Complexity Analysis
 Time Complexity: O(N), where N is the length of fronts (and backs). We scan through the arrays.

@@ -60,7 +60,8 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
+# Thought:
+
 # https://leetcode.com/problems/circular-array-loop/discuss/94148/Java-SlowFast-Pointer-Solution
 # slow/fast pointer :
 # If there is a loop (fast == slow), we return true,

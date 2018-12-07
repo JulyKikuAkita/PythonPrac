@@ -140,7 +140,7 @@ class Solution2(object):
 
 # MergeSort
 # Thought: https://discuss.leetcode.com/topic/31162/mergesort-solution
-#302ms
+# 128ms 64.78%
 class Solution3(object):
     def countSmaller(self, nums):
         """
@@ -171,6 +171,7 @@ if __name__ == '__main__':
 
 Java = '''
 Thought:
+
 1. building BST:
 Every node will maintain a val sum recording the total of number on it's left bottom side,
 dup counts the duplication. For example, [3, 2, 2, 6, 1], from back to beginning,we would have:
@@ -190,8 +191,8 @@ the nodes where we turn right is 1(0,1), 2,(0,2), 3(0,1), so the answer should b
 
 if we insert 7, the right-turning nodes are 1(0,1), 6(3,1), so answer should be (0 + 1) + (3 + 1) = 5
 
-#76.72% 10ms
-public class Solution {
+# 5ms 97.81%
+class Solution {
     class Node {
         Node left, right;
         int val, sum, dup = 1;
@@ -226,8 +227,8 @@ public class Solution {
 }
 
 # building BST
-# 51.32% 14ms
-public class Solution {
+# 10ms 58.31%
+class Solution {
     public List<Integer> countSmaller(int[] nums) {
         List<Integer> result = new ArrayList<>();
         Tree tree = new Tree();
@@ -289,8 +290,8 @@ public class Solution {
     }
 }
 
-#BIT
-#99.56% 7ms
+# BIT
+# 3ms 100%
 public class Solution {
     public List<Integer> countSmaller(int[] nums) {
          if (nums == null || nums.length == 0) {
@@ -354,8 +355,8 @@ Then we insert 2 into the sorted array to form [1,2,3,6].
 Due to the O(n) complexity of ArrayList insertion,
 the total runtime complexity is not very fast, but anyway it got AC for around 53ms.
 
-#24.51% 54ms
-public class Solution {
+# 34ms 28.40%
+class Solution {
     public List<Integer> countSmaller(int[] nums) {
         Integer[] ans = new Integer[nums.length];
         List<Integer> sorted = new ArrayList<Integer>();
@@ -402,8 +403,8 @@ When we move a number from right[] into the new sorted array, we increase rightc
 
 When we move a number from left[] into the new sorted array, we increase count[ index of the number ] by rightcount.
 
-#65.08% 11ms
-public class Solution {
+# 6ms 87.08%
+class Solution {
     int[] count;
     public List<Integer> countSmaller(int[] nums) {
         List<Integer> res = new ArrayList<Integer>();

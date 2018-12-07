@@ -148,9 +148,9 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
+# Thought:
 
-#91.54% 1ms
+
 /**
  * Definition for a binary tree node.
  * public class TreeNode {
@@ -160,6 +160,7 @@ Java = '''
  *     TreeNode(int x) { val = x; }
  * }
  */
+# 0ms 100%
 class Solution {
     public List<Integer> closestKValues(TreeNode root, double target, int k) {
         LinkedList<Integer> res = new LinkedList<>();
@@ -182,6 +183,92 @@ class Solution {
     }
 }
 
+# Preorder
+#2ms 71.22%
+class Solution {
+    public List<Integer> closestKValues(TreeNode root, double target, int k) {
+        List<Integer> result = new ArrayList<>();
+        if (root == null || k <= 0) {
+            return result;
+        }
+        Stack<Integer> pre = new Stack<>();
+        Stack<Integer> post = new Stack<>();
+        preOrder(root, target, pre);
+        preOrderReversed(root, target, post);
+        for (int i = 0; i < k; i++) {
+            if (pre.isEmpty()) {
+                result.add(post.pop());
+            } else if (post.isEmpty()) {
+                result.add(pre.pop());
+            } else if (target - pre.peek() < post.peek() - target) {
+                result.add(pre.pop());
+            } else {
+                result.add(post.pop());
+            }
+        }
+        return result;
+    }
+
+    private void preOrder(TreeNode root, double target, Stack<Integer> stack) {
+        if (root == null) {
+            return;
+        }
+        preOrder(root.left, target, stack);
+        if (root.val >= target) {
+            return;
+        }
+        stack.push(root.val);
+        preOrder(root.right, target, stack);
+    }
+
+    private void preOrderReversed(TreeNode root, double target, Stack<Integer> stack) {
+        if (root == null) {
+            return;
+        }
+        preOrderReversed(root.right, target, stack);
+        if (root.val < target) {
+            return;
+        }
+        stack.push(root.val);
+        preOrderReversed(root.left, target, stack);
+    }
+}
+
+# 0ms 100%
+class Solution {
+    int k = 0;
+    double target;
+    LinkedList<Integer> list = new LinkedList<>();
+    public List<Integer> closestKValues(TreeNode root, double target, int k) {
+        this.target = target;
+        this.k = k;
+        traverse(root);
+        return list;
+    }
+
+    private void traverse(TreeNode root) {
+        if (root == null) return;
+        traverse(root.left);
+        if (list.size() < k) {
+            list.addLast(root.val);
+        } else {
+            double diffFirst = target - (double)list.peekFirst();
+            diffFirst = diffFirst < 0 ? -diffFirst : diffFirst;
+            double diff = target - (double)root.val;
+            diff = diff < 0 ? -diff : diff;
+        //    System.out.println(diffFirst +" "+ diff);
+
+            if (diffFirst > diff) {
+                list.removeFirst();
+                list.addLast(root.val);
+            } else {
+                return;
+            }
+        }
+        traverse(root.right);
+    }
+}
+
 Thought:
 The idea is to compare the predecessors and successors of the closest node to the target,
 we can use two stacks to track the predecessors and successors, then like what we do in merge sort,
@@ -191,8 +278,8 @@ As we know, inorder traversal gives us sorted predecessors, whereas reverse-inor
 
 We can use iterative inorder traversal rather than recursion, but to keep the code clean, here is the recursion version.
 
-#31.38% 5ms
-public class Solution {
+# 3ms 45.77%
+class Solution {
     public List<Integer> closestKValues(TreeNode root, double target, int k) {
         List<Integer> result = new ArrayList<>();
         if (root == null || k == 0) {

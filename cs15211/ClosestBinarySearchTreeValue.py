@@ -26,6 +26,7 @@ class TreeNode(object):
          self.left = None
          self.right = None
 
+# 32ms 99.29%
 class Solution(object):
     def closestValue(self, root, target):
         """
@@ -60,8 +61,10 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#50.18% 0ms
-public class Solution {
+# Thought:
+
+# 0 ms 100%
+class Solution {
     public int closestValue(TreeNode root, double target) {
         TreeNode kid = target < root.val? root.left : root.right;
 
@@ -73,7 +76,7 @@ public class Solution {
     }
 }
 
-#4.16% 1ms
+# 0 ms 100%
 public class Solution {
     public int closestValue(TreeNode root, double target) {
         int closet = root.val;
@@ -86,8 +89,8 @@ public class Solution {
     }
 }
 
-#4.16% 1ms
-public class Solution {
+# 0 ms 100%
+class Solution {
     public int closestValue(TreeNode root, double target) {
         if (root == null) {
             return 0;
@@ -103,6 +106,26 @@ public class Solution {
                 root = root.right;
             } else {
                 return root.val;
+            }
+        }
+        return result;
+    }
+}
+
+# 0 ms 100%
+class Solution {
+    public int closestValue(TreeNode root, double target) {
+        int result = root.val;
+        if (root.left != null) {
+            int left = closestValue(root.left, target);
+            if (Math.abs(left - target) < Math.abs(result - target)) {
+                result = left;
+            }
+        }
+        if (root.right != null) {
+            int right = closestValue(root.right, target);
+            if (Math.abs(right - target) < Math.abs(result - target)) {
+                result = right;
             }
         }
         return result;

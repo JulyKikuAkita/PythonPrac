@@ -82,7 +82,7 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
+#Thought: https://leetcode.com/problems/unique-binary-search-trees/solution/
 
 Fantastic Clean Java DP Solution with Detail Explanation
 First note that dp[k] represents the number of BST trees built from 1....k;
@@ -105,20 +105,21 @@ Now, we may have a better understanding of the dp[k],
 which essentially represents the number of BST trees with k consecutive nodes.
 It is used as database when we need to know how many left sub trees are possible for k nodes when picking (k+1) as root.
 
-#9.67% 0ms
-
-public int numTrees(int n) {
-    int [] dp = new int[n+1];
-    dp[0]= 1;
-    dp[1] = 1;
-    for(int level = 2; level <=n; level++)
-        for(int root = 1; root<=level; root++)
-            dp[level] += dp[level-root]*dp[root-1];
-    return dp[n];
+# 0ms 100%
+class Solution {
+    public int numTrees(int n) {
+        int [] dp = new int[n+1];
+        dp[0]= 1;
+        dp[1] = 1;
+        for(int level = 2; level <=n; level++)
+            for(int root = 1; root<=level; root++)
+                dp[level] += dp[level-root]*dp[root-1];
+        return dp[n];
+    }
 }
 
-#9.67% 0ms
-public class Solution {
+# 0ms 100%
+class Solution {
     public int numTrees(int n) {
         if (n <= 0) {
             return 0;
@@ -187,17 +188,16 @@ In terms of calculation, we need to start with the lower number,
 since the value of G(n) depends on the values of G(0) ... G(n-1).
 With the above explanation and formulas, here is the implementation in Java.
 
-#9.67% 0ms
-public int numTrees(int n) {
-    int [] G = new int[n+1];
-    G[0] = G[1] = 1;
-
-    for(int i=2; i<=n; ++i) {
-    	for(int j=1; j<=i; ++j) {
-    		G[i] += G[j-1] * G[i-j];
-    	}
+# 0ms 100%
+class Solution {
+     public int numTrees(int n) {
+        int [] dp = new int[n+1];
+        dp[0]= 1;
+        dp[1] = 1;
+        for(int level = 2; level <=n; level++)
+            for(int root = 1; root<=level; root++)
+                dp[level] += dp[level-root]*dp[root-1];
+        return dp[n];
     }
-    return G[n];
 }
-
 '''

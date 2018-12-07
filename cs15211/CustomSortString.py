@@ -1,10 +1,9 @@
-import collections
-
 __source__ = ' https://leetcode.com/problems/custom-sort-string/description/'
 # Time:  O()
 # Space: O()
 #
 # Description: Leetcode # 791. Custom Sort String
+#
 # S and T are strings composed of lowercase letters. In S, no letter occurs more than once.
 #
 # S was sorted in some custom order previously.
@@ -33,6 +32,7 @@ __source__ = ' https://leetcode.com/problems/custom-sort-string/description/'
 #
 #
 import unittest
+import collections
 
 class Solution(object):
     def customSortString(self, S, T):

@@ -25,7 +25,7 @@ __source__ = 'https://leetcode.com/problems/counting-bits/#/description'
 # Number of 1 Bits
 #
 import unittest
-#195ms
+# 144ms 39.09%
 class Solution(object):
     def countBits(self, num):
         """
@@ -59,9 +59,10 @@ if __name__ == '__main__':
     print r
 
 Java = '''
-# Thought: https://leetcode.com/articles/counting-bits/
-# 21.52% 4ms
-public class Solution {
+# Thought: https://leetcode.com/problems/counting-bits/solution/
+
+# 1ms 99.16%
+class Solution {
     public int[] countBits(int num) {
         int[] ones = new int[num+1];
         for(int i=1; i<=num; i++)
@@ -70,8 +71,8 @@ public class Solution {
     }
 }
 
-# 21.52% 4ms
-public class Solution {
+# 1ms 99.16%
+class Solution {
     public int[] countBits(int num) {
         int[] res = new int[num + 1];
         for (int i = 1; i <= num; i++) {
@@ -86,8 +87,9 @@ Thought:
 In general, we have the following transition function for popcount P(x):
 P(x + b) = P(x) + 1, b = 2^m > x
 With this transition function, we can then apply Dynamic Programming to generate all the pop counts starting from 00.
-# 82% 2ms
-public class Solution {
+
+# 1ms 99.16%
+class Solution {
     public int[] countBits(int num) {
         int[] res = new int[num + 1];
         int offset = 1;
@@ -101,9 +103,9 @@ public class Solution {
     }
 }
 
-#33.41% 3ms
-public class Solution {
-  public int[] countBits2(int num) {
+# 1ms 99.16%
+class Solution {
+  public int[] countBits(int num) {
       int[] ans = new int[num + 1];
       for (int i = 1; i <= num; ++i)
         ans[i] = ans[i >> 1] + (i & 1); // x / 2 is x >> 1 and x % 2 is x & 1
@@ -111,4 +113,20 @@ public class Solution {
   }
 }
 
+# 1ms 99.16%
+class Solution {
+    public int[] countBits(int num) {
+        int[] result = new int[num + 1];
+        int lastSq = 0;
+        for (int i = 1; i <= num; i++) {
+            if ((i & (i - 1)) == 0) {
+                result[i] = 1;
+                lastSq = i;
+            } else {
+                result[i] = result[lastSq] + result[i - lastSq];
+            }
+        }
+        return result;
+    }
+}
 '''

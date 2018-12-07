@@ -5,6 +5,7 @@ __source__ = 'https://leetcode.com/problems/unique-paths/description/'
 # DP
 #
 # Description: Leetcode # 62. Unique Paths
+#
 # A robot is located at the top-left corner of a m x n grid (marked 'Start' in the diagram below).
 #
 # The robot can only move either down or right at any point in time.
@@ -116,7 +117,8 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
+# Thought:
+
 This is a fundamental DP problem. First of all, let's make some observations.
 
 Since the robot can only move right and down, when it arrives at a point, there are only two possibilities:
@@ -132,8 +134,8 @@ and the uppermost row (P[i - 1][j] does not exist). These conditions can be hand
 (pre-processing) --- initialize P[0][j] = 1, P[i][0] = 1 for all valid i, j. Note the initial value is 1 instead of 0!
 
 # DP
-# 79.18% 0ms
-public class Solution {
+# 0ms 100%
+class Solution {
     public int uniquePaths(int m, int n) {
         int[] dp = new int[n];
         Arrays.fill(dp, 1);
@@ -147,8 +149,8 @@ public class Solution {
 }
 
 # DP
-# 5.28% 1ms
-public class Solution {
+# 0ms 100%
+class Solution {
     public int uniquePaths(int m, int n) {
         int[][] dp = new int[m][n];
         for (int i = 0; i < m; i++) {
@@ -161,8 +163,28 @@ public class Solution {
     }
 }
 
+# 0ms 100%
+class Solution {
+    public int uniquePaths(int m, int n) {
+        int[][] matrix = new int[m][n];
+        for (int i = 0; i < m; i++) {
+            matrix[i][0] = 1;
+        }
+        for (int i = 0; i < n; i++) {
+            matrix[0][i] = 1;
+        }
+        for (int i = 1; i < m; i++) {
+            for (int j = 1; j < n; j++) {
+                matrix[i][j] = matrix[i-1][j] + matrix[i][j-1];
+            }
+        }
+
+        return matrix[m-1][n-1];
+    }
+}
+
 # dfs
-# 5.28% 1ms
+# 0ms 100%
 public class Solution {
     public int uniquePaths(int m, int n) {
         Integer[][]map = map = new Integer[m][n];
@@ -177,11 +199,31 @@ public class Solution {
     }
 }
 
+# 0ms 100%
+class Solution {
+    public int uniquePaths(int m, int n) {
+        int[][] dp = new int[m+1][n+1];
+        for(int[] row: dp)
+            Arrays.fill(row, -1);
+        dp[0][0] = 1;
+        return dfs(0,0,m,n,dp);
+    }
+
+    private int dfs(int r, int c, int m, int n, int[][] dp){
+        if( r == m-1 || c == n - 1) return 1;
+        if( r >= m || c >= n) return 0;
+        if(dp[r+1][c] == -1 ) dp[r+1][c] = dfs(r+1, c, m, n, dp);
+        if(dp[r][c+1] == -1 ) dp[r][c+1] = dfs(r, c + 1, m, n, dp);
+        return dp[r+1][c] + dp[r][c+1];
+
+    }
+}
 
 # Math:
 (m + n) ! / m! n1
 
-public class Solution {
+# 0ms 100%
+class Solution {
     public int uniquePaths(int m, int n) {
         if(m == 1 || n == 1)
             return 1;

@@ -74,13 +74,13 @@ if __name__ == '__main__':
 
 Java = '''
 
-#Thought: https://leetcode.com/problems/climbing-stairs/#/solution
+# Thought: https://leetcode.com/problems/climbing-stairs/solution/
 1.
 # Time:  O(n)
 # Space: O(n)
 dp[i]= dp[i - 1]+dp[i-2]
-
-public class Solution {
+# 2ms 93.38%
+class Solution {
     public int climbStairs(int n) {
         if (n == 1) {
             return 1;
@@ -97,7 +97,8 @@ public class Solution {
 
 # Time:  O(n)
 # Space: O(2)
-public class Solution {
+# 2ms 93.38%
+class Solution {
     public int climbStairs(int n) {
         if (n <= 0) {
             return 0;
@@ -114,11 +115,11 @@ public class Solution {
     }
 }
 
-#10.47% 0ms
+# 2ms 93.38%
 # Time:  O(logn)
 # Space: O(1)
 Approach #6 Fibonacci Formula [Accepted]: see link
-public class Solution {
+class Solution {
     public int climbStairs(int n) {
         double sqrt5 = Math.sqrt(5);
         double fibn = Math.pow((1 + sqrt5) / 2, n + 1) - Math.pow((1 - sqrt5) / 2, n + 1) ;
@@ -126,8 +127,8 @@ public class Solution {
     }
 }
 
-#10.47% 0ms
-public class Solution {
+# 2ms 93.38%
+class Solution {
     //same as fibonacci.
     public int climbStairs(int n) {
        if (n <= 2) return n;
@@ -143,8 +144,8 @@ public class Solution {
     }
 }
 
-#10.47% 0ms
-public class Solution {
+# 2ms 93.38%
+class Solution {
     public int climbStairs(int n) {
         if ( n < 3) return n;
         int cur = 1, prev = 1, sum = 0;
@@ -159,7 +160,7 @@ public class Solution {
 
 Recursion: TLE
 Time: O(2^n) draw the recursion tree or think 2 choices( take 1 or 2 steps) for n time
-public class Solution {
+class Solution {
     public int climbStairs(int n) {
         if (n <= 2) return n;
         return climbStairs(n - 1) + climbStairs(n -2);
@@ -167,19 +168,19 @@ public class Solution {
 }
 
 Recursion + memorization
-# 2.38% 1ms
-public class Solution {
+# 2ms 93.38%
+class Solution {
     public int climbStairs(int n) {
-        if (n <= 2) return n;
-        return dfs(n, new Integer[n+1]);
+        if (n < 3) return n;
+        return fibMemorization(n, new Integer[n+1]);
     }
 
-     public int dfs(int n, Integer[] map){
-        if (n <= 2) return n;
-        if (map[n] != null) return map[n];
-        Integer sum = dfs(n-1, map) + dfs(n-2,map);
-        map[n] = sum;
-        return sum;
+  public int fibMemorization(int n, Integer[] map){
+    if (n < 3) return n;
+    if (map[n] != null) return map[n];
+    Integer sum = fibMemorization(n-1, map) + fibMemorization(n-2,map);
+    map[n] = sum;
+    return sum;
     }
 }
 '''

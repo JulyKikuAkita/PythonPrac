@@ -66,8 +66,9 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
-# 33.67% 497ms
+# Thought: https://leetcode.com/problems/cut-off-trees-for-golf-event/solution/
+
+# 365ms 45.24%
 class Solution {
     static int[][] dir = {{0,1}, {0, -1}, {1, 0}, {-1, 0}};
 
@@ -130,7 +131,7 @@ class Solution {
     }
 }
 
-#99.78% 192ms
+# 117ms 99.81%
 class Solution {
     void qsort(int l,int r, int[] x, int[] y, int[] num)
     {

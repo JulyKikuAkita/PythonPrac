@@ -44,7 +44,7 @@ __source__ = 'https://leetcode.com/problems/can-i-win/description/'
 # Memoization solution.
 # below fails at (19, 190), should be True
 import unittest
-#1512ms
+# 1136ms 22.45%
 class Solution(object):
     def canIWinWrong(self, maxChoosableInteger, desiredTotal):
         """
@@ -112,8 +112,9 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
-#99.66% 4ms
+ #Thought:
+
+# 2ms 100%
 public class Solution {
     public boolean canIWin(int maxChoosableInteger, int desiredTotal) {
         int total = (1 + maxChoosableInteger) * maxChoosableInteger / 2;
@@ -129,8 +130,8 @@ public class Solution {
     }
 }
 
-#85.97% 135ms
-public class Solution {
+# 39.68% 148ms
+class Solution {
     Map<Integer, Boolean> map;
     boolean[] used;
     public boolean canIWin(int maxChoosableInteger, int desiredTotal) {

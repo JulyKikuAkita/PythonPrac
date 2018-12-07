@@ -4,6 +4,7 @@ __source__ = 'https://leetcode.com/problems/coin-path/description/'
 # Space: O(b) dp and nextnext array of size nn are used.
 #
 # Description: Leetcode # 656. Coin Path
+#
 # Given an array A (index starts at 1) consisting of N integers: A1, A2, ..., AN and an integer B.
 # The integer B denotes that from any place (suppose the index is i) in the array A,
 # you can jump to any one of the place in the array A indexed i+1, i+2,..., i+B if this place can be jumped to.
@@ -39,7 +40,7 @@ __source__ = 'https://leetcode.com/problems/coin-path/description/'
 # House Robber House Robber II
 #
 import unittest
-#455ms
+# 260ms 34.53%
 class Solution(object):
     def cheapestJump(self, A, B):
         """
@@ -64,7 +65,7 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/problems/coin-path/solution/
+# Thought: https://leetcode.com/problems/coin-path/solution/
 
 The following solution is based on that:
 
@@ -90,8 +91,8 @@ Here Q is longer but not lexicographically smaller.
 Why? Because j = 3 to n = 5 is not optimal.
 The optimal path should be [1, 3, 5] where the cost is only 2
 
-#61.37% 27ms
-public class Solution {
+# 12ms 90.06%
+class Solution {
     public List<Integer> cheapestJump(int[] A, int B) {
         int n = A.length;
         int[] c = new int[n]; // cost
@@ -119,8 +120,8 @@ public class Solution {
 }
 
 Approach #2 Using Memoization [Accepted]
-# 97.21% 22ms
-public class Solution {
+# 11ms 95.91%
+class Solution {
     public List < Integer > cheapestJump(int[] A, int B) {
         int[] next = new int[A.length];
         Arrays.fill(next, -1);
@@ -169,8 +170,8 @@ We also make use of a dp with the same size as that of the given A array.
 dp[i] is used to store the minimum cost of jumping till the end of the array A, starting from the index i.
 We start with the last index as the current index and proceed backwards for filling the next and dp array.
 
-# 92.49% 23ms
-public class Solution {
+# 12ms 90.06%
+class Solution {
     public List < Integer > cheapestJump(int[] A, int B) {
         int[] next = new int[A.length];
         long[] dp = new long[A.length];

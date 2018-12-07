@@ -113,9 +113,9 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
-#50.93% 2ms
-public class Solution {
+# Thought:
+# 1ms 89.56%
+class Solution {
     public int compareVersion(String version1, String version2) {
         String[] tokens1 = version1.split("\\.");
         String[] tokens2 = version2.split("\\.");
@@ -130,7 +130,7 @@ public class Solution {
     }
 }
 
-#95.74% 0ms
+# 0ms 100%
 class Solution {
     public int compareVersion(String version1, String version2) {
         if(version1 == null && version2 == null) return 0;
@@ -158,4 +158,37 @@ class Solution {
     }
 }
 
+# 0ms 100%
+class Solution {
+    public int compareVersion(String version1, String version2) {
+        int len1 = version1.length();
+        int len2 = version2.length();
+        int index1 = 0;
+        int index2 = 0;
+        while (index1 < len1 || index2 < len2) {
+            int cur1 = 0;
+            int cur2 = 0;
+            while (index1 < len1) {
+                char c = version1.charAt(index1++);
+                if (c == '.') {
+                    break;
+                }
+                cur1 = cur1 * 10 + c - '0';
+            }
+            while (index2 < len2) {
+                char c = version2.charAt(index2++);
+                if (c == '.') {
+                    break;
+                }
+                cur2 = cur2 * 10 + c - '0';
+            }
+            if (cur1 > cur2) {
+                return 1;
+            } else if (cur1 < cur2) {
+                return -1;
+            }
+        }
+        return 0;
+    }
+}
 '''

@@ -1,4 +1,9 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/continuous-subarray-sum/'
+# Time:  O(n^2)
+# Space: O(n)
+#
+# Description: Leetcode # 523. Continuous Subarray Sum
+#
 # Given a list of non-negative numbers and a target integer k, write a function to check if
 # the array has a continuous subarray of size at least 2 that sums up to the multiple of k,
 # that is, sums up to n*k where n is also an integer.
@@ -17,22 +22,24 @@ __author__ = 'July'
 # Hide Company Tags Facebook
 # Hide Tags Dynamic Programming Math
 # Hide Similar Problems (M) Subarray Sum Equals K
-explanation = '''
-if k == 0
-If there are two continuous zeros in nums, return True
-Time O(n).
-
-if n >= 2k and k > 0
-There will be at least three numbers in sum with the same remainder divided by k. So I can return True without any extra calculation.
-Time O(1).
-
-if n < 2k and k > 0
-If I can find two numbers in sum with the same remainder divided by k and the distance of them is greater than or equal to 2， return True.
-Time O(n) <= O(k).
-
-k < 0
-same as k > 0.
-'''
+#
+# explanation =
+# if k == 0
+# If there are two continuous zeros in nums, return True
+# Time O(n).
+#
+# if n >= 2k and k > 0
+# There will be at least three numbers in sum with the same remainder divided by k. So I can return True without any extra calculation.
+# Time O(1).
+#
+# if n < 2k and k > 0
+# If I can find two numbers in sum with the same remainder divided by k
+# and the distance of them is greater than or equal to 2, return True.
+# Time O(n) <= O(k).
+#
+# k < 0
+# same as k > 0.
+#
 class Solution(object):
     def checkSubarraySum(self, nums, k):
 
@@ -66,8 +73,11 @@ class Solution(object):
 
         return False
 
-java = '''
-public class Solution {
+Java = '''
+# Thought: https://leetcode.com/problems/continuous-subarray-sum/solution/
+
+# 9ms 44.20%
+class Solution {
     public boolean checkSubarraySum(int[] nums, int k) {
         if (nums == null || nums.length <= 1) return false;
         Map<Integer, Integer> map = new HashMap<>();

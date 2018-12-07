@@ -53,9 +53,32 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/articles/contains-duplicate-iii/
-#99.08% 0ms
-public class Solution {
+# Thought: https://leetcode.com/articles/contains-duplicate-iii/
+
+# 22ms 69.49%
+class Solution {
+    public boolean containsNearbyAlmostDuplicate(int[] nums, int k, int t) {
+        if (k < 1) {
+            return false;
+        }
+        TreeSet<Integer> treeSet = new TreeSet<>();
+        for (int i = 0; i < nums.length; i++) {
+            Integer ceiling = treeSet.ceiling(nums[i]);
+            Integer floor = treeSet.floor(nums[i]);
+            if ((ceiling != null && (long) ceiling - nums[i] <= t) || (floor != null && (long) nums[i] - floor <= t)) {
+                return true;
+            }
+            if (i >= k) {
+                treeSet.remove(nums[i - k]);
+            }
+            treeSet.add(nums[i]);
+        }
+        return false;
+    }
+}
+
+# 0ms 100%
+class Solution {
     public boolean containsNearbyAlmostDuplicate(int[] nums, int k, int t) {
         if (nums.length > 0 && nums[0] == 2433) return false;
         int j = 0;
@@ -74,8 +97,8 @@ public class Solution {
     }
 }
 
-#94.80% 19ms
-public class Solution {
+# 12ms 90.16%
+class Solution {
     public boolean containsNearbyAlmostDuplicate(int[] nums, int k, int t) {
         if (nums.length < 2) {
             return false;
@@ -116,8 +139,8 @@ public class Solution {
     }
 }
 
-#97.86% 6ms
-public class Solution {
+# 3ms 97.73%
+class Solution {
     public boolean containsNearbyAlmostDuplicate(int[] nums, int k, int t) {
         if(k <= 0 || t < 0) return false;
         final int[] indices = new int[nums.length];
@@ -182,10 +205,10 @@ public class Solution {
     }
 }
 
-#Bucket sort
-#69.24% 27ms
+# Bucket sort
+# 10ms 95.38%
 # O(n)
-public class Solution {
+class Solution {
     // Get the ID of the bucket from element value x and bucket width w
     // In Java, `-3 / 5 = 0` and but we need `-3 / 5 = -1`.
     private long getID(long x, long w) {

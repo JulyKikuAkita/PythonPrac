@@ -58,8 +58,9 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
+# Thought:
 # DP video: https://www.youtube.com/watch?v=jaNZ83Q3QGc
-#Thought:
+#
 # dp[i][j] : the number of combinations to make up amount j by using the first i types of coins
 # State transition:
 #
@@ -69,6 +70,7 @@ Java = '''
 # which is dp[i][j-coins[i-1]]
 # Initialization: dp[i][0] = 1
 #
+# 7ms 46.02%
 class Solution {
     public int change(int amount, int[] coins) {
         int[][] dp = new int[coins.length + 1][amount + 1];

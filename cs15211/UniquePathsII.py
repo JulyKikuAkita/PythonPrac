@@ -5,6 +5,7 @@ __source__ = 'https://leetcode.com/problems/unique-paths-ii/description/'
 # DP
 #
 # Description: Leetcode # 63. Unique Paths II
+#
 # Follow up for "Unique Paths":
 #
 # Now consider if some obstacles are added to the grids. How many unique paths would there be?
@@ -90,9 +91,10 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
-# 12.53% 1ms
-public class Solution {
+# Thought: https://leetcode.com/problems/unique-paths-ii/solution/
+
+# 0ms 100%
+class Solution {
     public int uniquePathsWithObstacles(int[][] obstacleGrid) {
         int width = obstacleGrid[0].length;
         int[] dp = new int[width];
@@ -109,8 +111,8 @@ public class Solution {
     }
 }
 
-# 12.53% 1ms
-public class Solution {
+# 0ms 100%
+class Solution {
     public int uniquePathsWithObstacles(int[][] obstacleGrid) {
         int m = obstacleGrid.length;
         if (m == 0) {
@@ -136,6 +138,39 @@ public class Solution {
             }
         }
         return dp[n - 1];
+    }
+}
+
+# 2D DP
+# 0ms 100%
+class Solution {
+    public int uniquePathsWithObstacles(int[][] obstacleGrid) {
+        if (obstacleGrid == null || obstacleGrid.length == 0 || obstacleGrid[0].length == 0) {
+            return 0;
+        }
+
+        int[][] matrix = new int[obstacleGrid.length][obstacleGrid[0].length];
+        for (int i = 0; i < obstacleGrid.length; i++) {
+            if (obstacleGrid[i][0] == 0) {
+                matrix[i][0] = 1;
+            } else {
+                break;
+            }
+        }
+        for (int j = 0; j < obstacleGrid[0].length; j++) {
+            if (obstacleGrid[0][j] == 0) {
+                matrix[0][j] = 1;
+            } else {
+                break;
+            }
+        }
+        for (int i = 1; i < obstacleGrid.length; i++) {
+            for (int j = 1; j < obstacleGrid[0].length; j++) {
+                matrix[i][j] = obstacleGrid[i][j] == 0 ? matrix[i - 1][j] + matrix[i][j - 1] : 0;
+            }
+        }
+
+        return matrix[matrix.length - 1][matrix[0].length - 1];
     }
 }
 '''

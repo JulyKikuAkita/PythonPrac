@@ -32,11 +32,11 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/problems/contains-duplicate/solution/
+# Thought: https://leetcode.com/problems/contains-duplicate/solution/
 
-#avoid, overflow
-# 97.66% 5ms
-public class Solution {
+# avoid, overflow
+# 2ms 99.57%
+class Solution {
     public boolean containsDuplicate(int[] nums) {
         int min = Integer.MAX_VALUE;
         int max = Integer.MIN_VALUE;
@@ -58,10 +58,11 @@ public class Solution {
 }
 
 Approach #2 (Sorting) [Accepted]
-# 97.66% 5ms
 # Time:  O(n log n )
 # Space: O(1)
-public class Solution {
+
+# 3ms 99.52%
+class Solution {
    public boolean containsDuplicate(int[] nums) {
         Arrays.sort(nums);
         for (int i = 0; i < nums.length - 1; ++i) {
@@ -72,8 +73,8 @@ public class Solution {
 }
 
 Approach #3 (Hash Table) [Accepted]
-# 64.88%  15ms
-public class Solution {
+# 8ms 80.46%
+class Solution {
     public  boolean containsDuplicate(int[] nums) {
 		 Set<Integer> set = new HashSet<Integer>();
 		 for(int i : nums)
@@ -81,5 +82,31 @@ public class Solution {
 				 return true;
 		 return false;
 	 }
+}
+
+# 13ms 48.37%
+class Solution {
+    public boolean containsDuplicate(int[] nums) {
+        Set<Integer> set = new HashSet<>();
+        for (int num : nums) {
+            set.add(num);
+        }
+        return set.size() != nums.length;
+    }
+}
+
+# 16ms 37.85%
+class Solution {
+    public boolean containsDuplicate(int[] nums) {
+        Set<Integer> set = new HashSet<>();
+        for (int num : nums) {
+            if (set.contains(num)) {
+                return true;
+            } else {
+                set.add(num);
+            }
+        }
+        return false;
+    }
 }
 '''

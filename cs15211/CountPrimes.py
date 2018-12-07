@@ -33,7 +33,7 @@ class Solution:
                     is_prime[j] = False
         return num
 
-class Solution(object):
+class Solution2(object):
     def countPrimes(self, n):
         """
         :type n: int
@@ -64,8 +64,9 @@ if __name__ == '__main__':
 
 Java = '''
 # Thought:
-# 91.90% 21ms
-public class Solution {
+
+# 12ms 93.47%
+class Solution {
     public int countPrimes(int n) {
         if (n < 3) {
             return 0;
@@ -88,11 +89,33 @@ public class Solution {
     }
 }
 
+# 12ms 93.47%
+class Solution {
+    public int countPrimes(int n) {
+        if (n < 2) {
+            return 0;
+        }
+        boolean[] isNotPrime = new boolean[n];
+        int count = n - 2;
+        for (int i = 2; i * i < n; i++) {
+            if (!isNotPrime[i]) {
+                for (int j = i * i; j < n; j += i) {
+                    if (!isNotPrime[j]) {
+                        isNotPrime[j] = true;
+                        count--;
+                    }
+                }
+            }
+        }
+        return count;
+    }
+}
+
 The accurate time complexity is O(n\log{\log{n}}) which is not trivial to show.
 But, it is easy to show a complexity of O(n\log{n}).
 
-#65.02% 28ms
-public class Solution {
+# 13ms 90.43%
+class Solution {
     public int countPrimes(int n) {
         boolean[] isPrime = new boolean[n];
         for (int i = 2; i < n; ++i) isPrime[i] = true;
@@ -106,9 +129,10 @@ public class Solution {
     }
 }
 
-# 96% 13ms
-#Note, prime number % 6 will either be 1 or 5
-public class Solution {
+# Note, prime number % 6 will either be 1 or 5
+
+# 7ms 99.50%
+class Solution {
     public int countPrimes(int n) {
         if (n <= 2) {
             return 0;
@@ -124,6 +148,30 @@ public class Solution {
                     is[j] = true;
                     count--;
                 }
+            }
+        }
+        return count;
+    }
+}
+
+# 11ms 95.70%
+class Solution {
+    public int countPrimes(int n) {
+        if (n < 3) {
+            return 0;
+        }
+        boolean[] flags = new boolean[n - 2];
+        for (int i = 0; i < Math.sqrt(n) - 2; i++) {
+            if (!flags[i]) {
+                for (int j = (i + 2) * (i + 2); j < n; j += i + 2) {
+                    flags[j - 2] = true;
+                }
+            }
+        }
+        int count = 0;
+        for (boolean flag : flags) {
+            if (!flag) {
+                count++;
             }
         }
         return count;

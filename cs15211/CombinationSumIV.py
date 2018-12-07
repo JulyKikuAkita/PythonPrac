@@ -40,7 +40,8 @@ __source__ = 'https://leetcode.com/problems/combination-sum-iv/description/'
 #
 # DP:  comb[target] = sum(comb[target - nums[i]]),
 import unittest
-#bottom-up approach
+# bottom-up approach
+# 28ms 95.28%
 class Solution(object):
     def combinationSum4(self, nums, target):
         """
@@ -69,7 +70,8 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: # DP:  comb[target] = sum(comb[target - nums[i]]),
+# Thought:
+# DP:  comb[target] = sum(comb[target - nums[i]]),
 Think about the recurrence relation first.
 How does the # of combinations of the target related to the # of combinations of numbers that are smaller than the target?
 
@@ -136,8 +138,8 @@ The DP solution goes through every possible sum from 1 to target one by one.
 Using recursion can skip those sums that are not the combinations of the numbers in the given array.
 Also, there is no need to sort the array first.
 
-#8.62% 8ms
-public class Solution {
+# 4ms 18.12%
+class Solution {
     Map<Integer, Integer> map = new HashMap<>();
     public int combinationSum4(int[] nums, int target) {
         int count = 0;
@@ -154,7 +156,7 @@ public class Solution {
 
 # https://discuss.leetcode.com/topic/52302/1ms-java-dp-solution-with-detailed-explanation
 3. DP
-# 80.23% 2ms
+# 0ms 100%
 public class Solution {
     private int[] dp;
     public int combinationSum4(int[] nums, int target) {
@@ -179,22 +181,24 @@ public class Solution {
 }
 
 EDIT: The above solution is top-down. How about a bottom-up one?
-#17.57% 6ms
-public int combinationSum4(int[] nums, int target) {
-    int[] comb = new int[target + 1];
-    comb[0] = 1;
-    for (int i = 1; i < comb.length; i++) {
-        for (int j = 0; j < nums.length; j++) {
-            if (i - nums[j] >= 0) {
-                comb[i] += comb[i - nums[j]];
+# 2ms 47.99%
+class Solution {
+    public int combinationSum4(int[] nums, int target) {
+        int[] comb = new int[target + 1];
+        comb[0] = 1;
+        for (int i = 1; i < comb.length; i++) {
+            for (int j = 0; j < nums.length; j++) {
+                if (i - nums[j] >= 0) {
+                    comb[i] += comb[i - nums[j]];
+                }
             }
         }
+        return comb[target];
     }
-    return comb[target];
 }
 
 # DP:
-#65.34% 4ms
+# 2ms 47.99%
 Then think about the base case.
 Since if the target is 0, there is only one way to get zero, which is using 0, we can set comb[0] = 1.
 

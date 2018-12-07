@@ -33,9 +33,10 @@ __source__ = 'https://leetcode.com/problems/course-schedule-iii/description/'
 # Similar Questions
 # Course Schedule Course Schedule II
 
-# 635ms
 import unittest
 import heapq
+
+# 400ms 57.69%
 class Solution(object):
     def scheduleCourse(self, courses):
         """
@@ -60,10 +61,10 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/problems/course-schedule-iii/solution/
+# Thought: https://leetcode.com/problems/course-schedule-iii/solution/
 
 #72.98% 157ms
-public class Solution {
+class Solution {
     public int scheduleCourse(int[][] courses) {
         Arrays.sort(courses, (a, b) -> a[1] - b[1]);
         int max = 0;
@@ -91,7 +92,7 @@ public class Solution {
 }
 
 #98.49%  88ms // without using lambda
-public class Solution {
+class Solution {
     public int scheduleCourse(int[][] courses) {
         Arrays.sort(courses, new Comparator<int[]>(){
            public int compare(int[] a, int[] b){
@@ -127,8 +128,8 @@ public class Solution {
 }
 
 
-#56.81% 175ms
-public class Solution {
+# 110ms 62.62%
+class Solution {
     public int scheduleCourse(int[][] courses) {
         //Sort the courses by their deadlines (Greedy! We have to deal with courses with early deadlines first)
         Arrays.sort(courses, (a, b) -> a[1] - b[1]);

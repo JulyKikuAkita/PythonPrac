@@ -42,6 +42,7 @@ __source__ = 'https://leetcode.com/problems/unique-word-abbreviation/description
 
 import collections
 import unittest
+# 132ms 34.76%
 class ValidWordAbbr(object):
     def __init__(self, dictionary):
         """
@@ -86,10 +87,11 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/articles/unique-word-abbreviation/
+# Thought: https://leetcode.com/problems/unique-word-abbreviation/solution/
+https://leetcode.com/articles/unique-word-abbreviation/
 
-# 79.64% 220ms
-public class ValidWordAbbr {
+# 125ms 71.68%
+class ValidWordAbbr {
     private Map<String, Integer> wordsAbbr = new HashMap<>();
     private Set<String> wordsSet = new HashSet<>();
 
@@ -129,8 +131,8 @@ public class ValidWordAbbr {
 // vwa.isUnique("Word");
 // vwa.isUnique("anotherWord");
 
-#83.39% 216ms
-public class ValidWordAbbr {
+# 129ms 64.48%
+class ValidWordAbbr {
 	protected Map<String, String> map = new HashMap<>();
 	public ValidWordAbbr(String[] dictionary) {
 		for (String s : dictionary) {
@@ -155,5 +157,30 @@ public class ValidWordAbbr {
 			return s;
 		return s.charAt(0) + "" + (s.length() - 2) + s.charAt(s.length() - 1);
 	}
+}
+
+# 411ms 1.76%
+class ValidWordAbbr {
+    private final String[] dict;
+
+    public ValidWordAbbr(String[] dictionary) {
+        dict = dictionary;
+    }
+
+    public boolean isUnique(String word) {
+        int n = word.length();
+        for (String s : dict) {
+            if (word.equals(s)) {
+                continue;
+            }
+            int m = s.length();
+            if (m == n
+                && s.charAt(0) == word.charAt(0)
+                && s.charAt(m - 1) == word.charAt(n - 1)) {
+                return false;
+            }
+        }
+        return true;
+    }
 }
 '''

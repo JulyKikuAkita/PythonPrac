@@ -2,7 +2,8 @@ __source__ = 'https://github.com/kamyu104/LeetCode/blob/master/Python/convex-pol
 # Time:  O(n)
 # Space: O(1)
 #
-# Description:
+# Description: 469. Convex Polygon
+#
 # Given a list of points that form a polygon when joined sequentially,
 # find if this polygon is convex (Convex polygon definition).
 # https://en.wikipedia.org/wiki/Simple_polygon
@@ -39,6 +40,7 @@ import unittest
 #
 # tmp = (p1[0]-p0[0])(p2[1]-p0[1])-(p2[0]-p0[0])(p1[1]-p0[1])
 
+# 76ms 26.67%
 class Solution(object):
     def isConvex(self, points):
         """
@@ -79,7 +81,7 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
+# Thought:
 https://discuss.leetcode.com/topic/70643/i-believe-this-time-it-s-far-beyond-my-ability-to-get-a-good-grade-of-the-contest
 https://discuss.leetcode.com/topic/70664/c-7-line-o-n-solution-to-check-convexity-with-cross-product-of-adajcent-vectors-detailed-explanation
 The algorithm itself is not hard but I have no idea there exists such a way to determine
@@ -88,7 +90,8 @@ can solve this problem if they were given the formula.
 Anyway, following is the Java solution with in-line explanation. Accepted, 32ms.
 Reference: http://csharphelper.com/blog/2014/07/determine-whether-a-polygon-is-convex-in-c/
 
-public class Solution {
+# 22ms 15.71%
+class Solution {
     public boolean isConvex(List<List<Integer>> points) {
         // For each set of three adjacent points A, B, C, find the cross product AB *BC. If the sign of
         // all the cross products is the same, the angles are all positive or negative (depending on the

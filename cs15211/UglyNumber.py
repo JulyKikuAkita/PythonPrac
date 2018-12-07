@@ -38,8 +38,10 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#13.15% 2ms
-public class Solution {
+# Thought:
+
+# 1ms 100%
+class Solution {
     public boolean isUgly(int num) {
         if(num < 1) return false;
         while (num % 2 == 0) num = num >>> 1;
@@ -49,8 +51,8 @@ public class Solution {
     }
 }
 
-#13.15% 2ms
-public class Solution {
+# 1ms 100%
+class Solution {
     public boolean isUgly(int num) {
         if (num <= 0) {
             return false;

@@ -64,7 +64,7 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
+# Thought:
 #
 # step1: inorder tranversal by recursion to connect the original BST
 # step2: connect the head and tail to make it circular
@@ -86,6 +86,7 @@ class Node {
     }
 };
 
+# 3ms 72.18%
 class Solution {
     Node prev = null;
     public Node treeToDoublyList(Node root) {
@@ -143,7 +144,6 @@ class Solution {
 }
 
 # Divide and Conquer without Dummy Node Java Solution
-# 2ms 100%
 # Step 1: Divide:
 # We divide tree into three parts: left subtree, root node, right subtree.
 # Convert left subtree into a circular doubly linked list as well as the right subtree.
@@ -154,6 +154,8 @@ class Solution {
 # Secondly, connect them with the right circular doubly linked list. Here we go!
 #
 # https://leetcode.com/problems/convert-binary-search-tree-to-sorted-doubly-linked-list/discuss/154659/Divide-and-Conquer-without-Dummy-Node-Java-Solution
+
+# 2ms 100%
 class Solution {
     public Node treeToDoublyList(Node root) {
         if (root == null) return null;

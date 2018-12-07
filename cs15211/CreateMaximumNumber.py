@@ -89,14 +89,16 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-Thought: https://www.hrwhisper.me/leetcode-create-maximum-number/
+Thought:
+
+https://www.hrwhisper.me/leetcode-create-maximum-number/
 Many of the posts have the same algorithm. In short we can first solve 2 simpler problem
 Create the maximum number of one array
 Create the maximum number of two array using all of their digits.
 
 The algorithm is O((m+n)^3) in the worst case. It runs in 22 ms.
 
-# 75.48% 18ms
+# 9ms 91.96%
 public class Solution {
     public int[] maxNumber(int[] nums1, int[] nums2, int k) {
         int n = nums1.length;
@@ -183,8 +185,8 @@ Output:
 Expected:
 [7,3,8,2,5,6,4,4,0,6,5,7,6,2,0]
 
-# 99.21% 13ms
-public class Solution {
+# 7ms 99.04%
+class Solution {
     public int[] maxNumber(int[] nums1, int[] nums2, int k) {
         int[] result = new int[k];
         Arrays.fill(result, Integer.MIN_VALUE);

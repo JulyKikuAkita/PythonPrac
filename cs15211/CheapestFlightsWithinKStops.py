@@ -1,5 +1,3 @@
-import collections
-
 __source__ = 'https://leetcode.com/problems/cheapest-flights-within-k-stops/'
 # Time:  O()
 # Space: O()
@@ -44,8 +42,8 @@ __source__ = 'https://leetcode.com/problems/cheapest-flights-within-k-stops/'
 # There will not be any duplicated flights or self cycles.
 #
 import unittest
-
-#73,45% 44ms
+import collections
+# 73,45% 44ms
 from heapq import *
 class SolutionDijkstra(object):
     def findCheapestPrice(self, n, flights, src, dst, K):
@@ -111,7 +109,7 @@ Java = '''
 # Time Complexity: O(E * K), where E is the length of flights.
 # Space Complexity: O(n), the space used to store dis and pre.
 
-#6ms 100%
+# 6ms 100%
 class Solution {
     public int findCheapestPrice(int n, int[][] flights, int src, int dst, int K) {
         int[][] dist = new int[2][n];
@@ -128,10 +126,6 @@ class Solution {
     }
 }
 
-
-
-
-
 #
 # Approach #2: Dijkstra's [Accepted]
 # Complexity Analysis
@@ -139,7 +133,7 @@ class Solution {
 # Space Complexity: O(n), the size of the heap.
 #
 
-#4ms 100%
+# 4ms 100%
 class Solution {
     private class City implements Comparable<City>{
         int id;

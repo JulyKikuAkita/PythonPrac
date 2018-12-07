@@ -95,10 +95,8 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/problems/contains-duplicate/solution/
-Thought:
-1. DFS
-# 83.10% 5ms
+# Thought: https://leetcode.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/solution/
+
 In this questions, most of people just loop through inorder[] to find the root.
 However, by caching positions of inorder[] indices using a HashMap, the run time can drop from 20ms to 5ms.
 /**
@@ -110,7 +108,10 @@ However, by caching positions of inorder[] indices using a HashMap, the run time
  *     TreeNode(int x) { val = x; }
  * }
  */
-public class Solution {
+
+1. DFS
+# 3ms 93.49%
+class Solution {
     public TreeNode buildTree(int[] preorder, int[] inorder) {
         if (preorder.length != inorder.length) return null;
         Map<Integer, Integer> inMap = new HashMap<Integer, Integer>();
@@ -134,7 +135,7 @@ public class Solution {
 
 
 2. BFS
-# 94.69% 4ms
+# 3ms 93.49%
 class Solution {
      public TreeNode buildTree(int[] preorder, int[] inorder) {
         if (preorder.length == 0 || inorder.length == 0) return null;

@@ -83,11 +83,11 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-# Thought: https://leetcode.com/problems/contains-duplicate/solution/
+# Thought:
 #
-//hashset + sort to avoid duplicates result
-# 9.16% 48ms
-public class Solution {
+# hashset + sort to avoid duplicates result
+# 26ms 18.36%
+class Solution {
      public List<List<Integer>> combinationSum2(int[] candidates, int target) {
         List<List<Integer>> list = new ArrayList<>();
         Arrays.sort(candidates);
@@ -113,8 +113,8 @@ public class Solution {
     }
 }
 
-# 47.74% 25ms
-public class Solution {
+# 11ms 83.52%
+class Solution {
     public List<List<Integer>> combinationSum2(int[] nums, int target) {
         List<List<Integer>> list = new ArrayList<>();
         Arrays.sort(nums);
@@ -138,8 +138,8 @@ public class Solution {
 }
 
 
-#91.47% 18ms
-public class Solution {
+# 9ms 95.33%
+class Solution {
     public List<List<Integer>> combinationSum2(int[] candidates, int target) {
         List<List<Integer>> result = new ArrayList<>();
         if (target == 0) return result;
@@ -163,8 +163,9 @@ public class Solution {
     }
 }
 
-#96.07 16ms # bottom-up
-public class Solution {
+# bottom-up
+# 8ms 99.28%
+class Solution {
     public List<List<Integer>> combinationSum2(int[] candidates, int target) {
         List<List<Integer>> result = new ArrayList<>();
         if (target == 0) {

@@ -121,11 +121,11 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/problems/contains-duplicate/solution/
+# Thought:
 
-#BFS //aka traditional topological sort
-#68.76% 12ms
-public class Solution {
+# BFS //aka traditional topological sort
+# 7ms 89.50%
+class Solution {
     public boolean canFinish(int numCourses, int[][] prerequisites) {
         Map<Integer, List<Integer>> graph = new HashMap<>();
         int[] degrees = new int[numCourses];
@@ -158,9 +158,9 @@ public class Solution {
     }
 }
 
-
-#99.72%  2ms use arr
-public class Solution {
+# use array
+# 3ms 100%
+class Solution {
     public boolean canFinish(int numCourses, int[][] prerequisites) {
         if(numCourses == 0 || prerequisites == null || prerequisites.length == 0) return true;
         int[] degree = new int[numCourses];
@@ -212,8 +212,8 @@ for(int[] p : prerequisites){
             ind.get(p[1]).add(p[0]);
         }
 
-#73.68% 10ms
-public class Solution {
+# 8ms 84.50%
+class Solution {
     public boolean canFinish(int numCourses, int[][] prerequisites) {
         //The ind_cnt[i] is the number of prereqs for course i
         //aka indegree count
@@ -255,7 +255,7 @@ public class Solution {
 }
 
 # DFS //note, either p[0], p[1] can be key
-#64.05% 14ms
+# 7ms 89.50%
 public class Solution {
     public boolean canFinish(int numCourses, int[][] prerequisites) {
         if(numCourses == 0 || prerequisites == null || prerequisites.length == 0) return true;
@@ -294,6 +294,46 @@ public class Solution {
         }
         visited[i] = 1;  //unmark visited
         return true;
+    }
+}
+
+# 11ms 70.61%
+class Solution {
+    public boolean canFinish(int numCourses, int[][] prerequisites) {
+        List<List<Integer>> graph = new ArrayList<>();
+        int[] degrees = new int[numCourses];
+        Queue<Integer> queue = new LinkedList<>();
+        buildGraph(numCourses, prerequisites, graph, degrees);
+        for (int i = 0; i < numCourses; i++) {
+            if (degrees[i] == 0) {
+                queue.add(i);
+            }
+        }
+        while (!queue.isEmpty()) {
+            int cur = queue.poll();
+            for (int next : graph.get(cur)) {
+                degrees[next]--;
+                if (degrees[next] == 0) {
+                    queue.add(next);
+                }
+            }
+        }
+        for (int i = 0; i < numCourses; i++) {
+            if (degrees[i] != 0) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private void buildGraph(int numCourses, int[][] prerequisites, List<List<Integer>> graph, int[] degrees) {
+        for (int i = 0; i < numCourses; i++) {
+            graph.add(new ArrayList<>());
+        }
+        for (int[] edge : prerequisites) {
+            graph.get(edge[1]).add(edge[0]);
+            degrees[edge[0]]++;
+        }
     }
 }
 '''
