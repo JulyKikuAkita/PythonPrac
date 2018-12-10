@@ -2,7 +2,8 @@ __source__ = 'https://leetcode.com/problems/design-compressed-string-iterator/#/
 # Time:  O(1)
 # Space: O(1)
 #
-# Description:
+# Description: 604. Design Compressed String Iterator
+#
 # Design and implement a data structure for a compressed string iterator.
 # It should support the following operations: next and hasNext.
 #
@@ -38,6 +39,8 @@ __source__ = 'https://leetcode.com/problems/design-compressed-string-iterator/#/
 
 import unittest
 import re
+
+# 72ms 14.49%
 class StringIterator(object):
 
     def __init__(self, compressedString):
@@ -80,13 +83,15 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/articles/desing-compressed-string-iterator/
+# Thought: https://leetcode.com/problems/design-compressed-string-iterator/solution/
+
 The time required to perform next() operation is O(1).
 The time required for hasNext() operation is O(1).
 Since no precomputations are done, and hasNext() requires only O(1)O(1) time,
 this solution is advantageous if hasNext() operation is performed most of the times.
 
-public class StringIterator {
+# 71ms 72.07%
+class StringIterator {
     String res;
     int ptr = 0, num = 0;
     char ch = ' ';
@@ -112,7 +117,8 @@ public class StringIterator {
 
 
 1. Java8:
-public class StringIterator {
+# 84ms 22.76%
+class StringIterator {
     int i;
     String[] arr;
     int[] counts;
@@ -144,7 +150,8 @@ public class StringIterator {
  */
 
  2.
-public class StringIterator {
+# 72ms 68.28%
+class StringIterator {
 
     Queue<int[]> queue = new LinkedList<>();
 
@@ -168,6 +175,6 @@ public class StringIterator {
     public boolean hasNext() {
         return !queue.isEmpty();
     }
-
 }
+
 '''

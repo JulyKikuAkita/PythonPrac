@@ -3,6 +3,7 @@ __source__ = 'https://leetcode.com/problems/two-sum-iv-input-is-a-bst/descriptio
 # Space: O(n)
 #
 # Description: Leetcode # 653. Two Sum IV - Input is a BST
+#
 # Given a Binary Search Tree and a target number, return true
 # if there exist two elements in the BST such that their sum is equal to the given target.
 #
@@ -64,10 +65,20 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/problems/two-sum-iv-input-is-a-bst/solution/
+# Thought: https://leetcode.com/problems/two-sum-iv-input-is-a-bst/solution/
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+
 # Approach #1 Using HashSet[Accepted]
-#71.43% 31ms
-public class Solution {
+# 14ms 92.62%
+class Solution {
     public boolean findTarget(TreeNode root, int k) {
         Set < Integer > set = new HashSet();
         return find(root, k, set);
@@ -83,17 +94,8 @@ public class Solution {
 }
 
 # Approach #2 Using BFS and HashSet [Accepted]
-#32.01% 37ms
-/**
- * Definition for a binary tree node.
- * public class TreeNode {
- *     int val;
- *     TreeNode left;
- *     TreeNode right;
- *     TreeNode(int x) { val = x; }
- * }
- */
-public class Solution {
+# 15ms 85.29%
+class Solution {
     public boolean findTarget(TreeNode root, int k) {
         Set < Integer > set = new HashSet();
         Queue < TreeNode > queue = new LinkedList();
@@ -112,9 +114,10 @@ public class Solution {
         return false;
     }
 }
+
 # Approach #3 Using BST [Accepted] + inorder
-#71.43% 31ms
-public class Solution {
+# 20ms 47.57%
+class Solution {
     public boolean findTarget(TreeNode root, int k) {
         List < Integer > list = new ArrayList();
         inorder(root, list);
@@ -139,11 +142,22 @@ public class Solution {
     }
 }
 
+# 14ms 92.62%
+class Solution {
+    Set<Integer> num = new HashSet<>();
+    public boolean findTarget(TreeNode root, int k) {
+        if(root == null) return false;
+        if(num.contains(k - root.val)) return true;
+        num.add(root.val);
+        return findTarget(root.left, k) || findTarget(root.right, k);
+    }
+}
+
 # Time Complexity: O(nlogn), Space Complexity: O(h).
 # h is the height of the tree, which is logn at best case, and n at worst case.
-#Binary search
-#89.36% 28ms
-public class Solution {
+# Binary search
+# 20ms 47.57%
+class Solution {
     public boolean findTarget(TreeNode root, int k) {
         return dfs(root, root,  k);
     }

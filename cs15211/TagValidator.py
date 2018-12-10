@@ -1,9 +1,11 @@
-__source__ = 'https://leetcode.com/problems/tag-validator/#/description'
+__source__ = 'https://leetcode.com/problems/tag-validator/'
 # Time:  O()
 # Space: O()
 # Link to check regex:
 # http://regexr.com/
-# Description:
+#
+# Description: 591. Tag Validator
+#
 # Given a string representing a code snippet, you need to implement a tag validator to parse the code and
 # return whether it is valid. A code snippet is valid if all the following rules hold:
 #
@@ -103,6 +105,7 @@ __source__ = 'https://leetcode.com/problems/tag-validator/#/description'
 # Then repeatedly replace any tags not containing < with t. I return whether I end up with 't'.
 import unittest
 import re
+# 24ms 100%
 class Solution(object):
     def isValid(self, code):
         """
@@ -125,7 +128,8 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/articles/tag-validator/
+# Thought: https://leetcode.com/problems/tag-validator/solution/
+
 https://discuss.leetcode.com/topic/91381/short-python-accepted-but-not-sure-if-correct
 Inspired by @StefanPochmann 's idea in this post https://discuss.leetcode.com/topic/91381/short-python-accepted-but-not-sure-if-correct
 
@@ -137,7 +141,8 @@ Use Non Greedy mode (.*?) when matching CDATA. Reference: https://stackoverflow.
 Use Group (([A-Z]{1,9}) then \\1) when matching TAG_NAME. Reference: http://www.regular-expressions.info/refcapture.html
 
 1. Stack
-public class Solution {
+# 13ms 55.22%
+class Solution {
     public boolean isValid(String code) {
         Stack<String> stack = new Stack<>();
         for(int i = 0; i < code.length();){
@@ -175,7 +180,8 @@ public class Solution {
 
 
 2. Regex:
-public class Solution {
+# 25ms 14.93%
+class Solution {
     public boolean isValid(String code) {
         if (code.equals("t")) return false;
         code = code.replaceAll("<!\\[CDATA\\[.*?\\]\\]>", "c");

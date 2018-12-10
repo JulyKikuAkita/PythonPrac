@@ -43,7 +43,7 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/articles/delete-node-linked-list/
+# Thought: https://leetcode.com/problems/delete-node-in-a-linked-list/solution/
 
 Thought: We can't really delete the node, but we can kinda achieve the same effect
 by instead removing the next node after copying its data into the node that we were asked to delete.
@@ -57,11 +57,26 @@ by instead removing the next node after copying its data into the node that we w
  * }
  */
 
-#6.57%  1ms
-public class Solution {
+# 0ms 100%
+class Solution {
     public void deleteNode(ListNode node) {
         node.val = node.next.val;
         node.next = node.next.next;
+    }
+}
+
+# 0ms 100%
+class Solution {
+    public void deleteNode(ListNode node) {
+        if (node == null || node.next == null) {
+            return;
+        }
+        while (node.next.next != null) {
+            node.val = node.next.val;
+            node = node.next;
+        }
+        node.val = node.next.val;
+        node.next = null;
     }
 }
 '''

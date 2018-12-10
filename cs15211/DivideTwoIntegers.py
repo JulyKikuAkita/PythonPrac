@@ -64,7 +64,7 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
+# Thought:
 Let's do an example and see how bit manipulations work.
 
 Suppose we want to divide 15 by 3, so 15 is dividend and 3 is divisor.
@@ -93,8 +93,8 @@ divisor = 0;
 dividend = INT_MIN and divisor = -1 (because abs(INT_MIN) = INT_MAX + 1).
 Of course, we also need to take the sign into considerations, which is relatively easy.
 
-#16.45% 48ms
-public class Solution {
+# 17ms 80.67%
+class Solution {
     public int divide(int dividend, int divisor) {
         if (divisor == 0 || (dividend == Integer.MIN_VALUE && divisor == -1)) {
             return Integer.MAX_VALUE;
@@ -118,8 +118,8 @@ public class Solution {
     }
 }
 
-# 53.48% 40ms
-public class Solution {
+# 19ms 72.49%
+class Solution {
     public int divide(int dividend, int divisor) {
         if(dividend == -2147483648 && divisor == -1) {
             return 2147483647;

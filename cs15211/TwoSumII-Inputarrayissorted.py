@@ -51,10 +51,36 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/problems/contains-duplicate/solution/
-#40.55% 1ms
+# Thought: https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/solution/
+# 0ms 100%
+class Solution {
+    public int[] twoSum(int[] numbers, int target) {
+        int[] ret = {-1, -1};
+        for (int i = 0, j = numbers.length - 1; i < j;) {
+            int sum = numbers[i] + numbers[j];
+            if (sum == target) {
+                ret[0] = i + 1;
+                ret[1] = j + 1;
+                return ret;
+            } else if (sum < target) {
+                int n = numbers[i];
+                while (numbers[i] == n)
+                    i++;
+            } else {
+                int n = numbers[j];
+                while (numbers[j] == n)
+                    j--;
+                //j--;
+            }
+        }
+
+        return ret;
+    }
+}
+
 O(n)
-public class Solution {
+# 1ms 67.44%
+class Solution {
     public int[] twoSum(int[] numbers, int target) {
         int start = 0;
         int end = numbers.length - 1;
@@ -72,9 +98,10 @@ public class Solution {
     }
 }
 
-#40.55% 1ms
+
 O(logn)
-public class Solution {
+# 0ms 100%
+class Solution {
     public int[] twoSum(int[] numbers, int target) {
         int start = 0;
         int end = numbers.length - 1;

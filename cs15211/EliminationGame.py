@@ -28,7 +28,7 @@ __source__ = 'https://leetcode.com/problems/elimination-game/description/'
 # Output:
 # 6
 #
-#122ms
+# 60ms 74.29%
 import unittest
 class Solution(object):
     def lastRemaining(self, n):
@@ -52,10 +52,11 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
+# Thought:
+
 JAVA: Easiest solution O(logN) with explanation
-#96.40% 73ms
-public class Solution {
+# 48ms 42.35%
+class Solution {
     public int lastRemaining(int n) {
         boolean left = true;
         int remaining = n;
@@ -72,6 +73,7 @@ public class Solution {
         return head;
     }
 }
+
 My idea is to update and record head in each turn.
 when the total number becomes 1, head is the only number left.
 

@@ -1,6 +1,4 @@
-import heapq
-
-__source__ = 'https://leetcode.com/problems/top-k-frequent-words/description/'
+__source__ = 'https://leetcode.com/problems/top-k-frequent-words/'
 # Time:  O()
 # Space: O()
 #
@@ -27,8 +25,10 @@ __source__ = 'https://leetcode.com/problems/top-k-frequent-words/description/'
 # Follow up:
 # Try to solve it in O(n log k) time and O(n) extra space.
 #
+import heapq
 import unittest
 import collections
+#
 # Approach #1: Sorting [Accepted]
 # Time Complexity: O(NlogN), where N is the length of words.
 # We count the frequency of each word in O(N) time, then we sort the given words in O(NlogN) time.
@@ -72,8 +72,10 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
-# Approach #1: Sorting [Accepted] 49ms 51.75%
+# Thought: https://leetcode.com/problems/top-k-frequent-words/solution/
+
+# Approach #1: Sorting [Accepted]
+# 68ms 11.37%
 class Solution {
     public List<String> topKFrequent(String[] words, int k) {
         Map<String, Integer> count = new HashMap<>();
@@ -98,6 +100,7 @@ class Solution {
 Lambda expression
 https://www.mkyong.com/java8/java-8-lambda-comparator-example/
 */
+# 13ms 81.92%
 class Solution {
     public List<String> topKFrequent(String[] words, int k) {
         List<String> res = new ArrayList<>();
@@ -127,6 +130,7 @@ class Checker implements Comparator<Map.Entry<String, Integer>> {
     }
 }
 
+# 10ms 99.34%
 class Solution {
     private class Point implements Comparable<Point> {
         private String str;

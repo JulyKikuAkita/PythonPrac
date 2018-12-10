@@ -1,8 +1,9 @@
-__source__ = 'https://leetcode.com/problems/the-maze-ii/#/description'
+__source__ = 'https://leetcode.com/problems/the-maze-ii/'
 # Time:  O(m*n)
 # Space: O(m*n)
 #
-# Description:
+# Description: 505. The Maze II
+#
 # There is a ball in a maze with empty spaces and walls. The ball can go through empty spaces
 # by rolling up, down, left or right, but it won't stop rolling until hitting a wall.
 # When the ball stops, it could choose the next direction.
@@ -67,6 +68,8 @@ import heapq
 # I tried DFS, BFS but got TLE then I found that we need to use heap instead of list to
 # store the current nodes
 # (Dijkstra's algorithm).
+
+# 184ms 17.13%
 class Solution(object):
     def shortestDistance(self, maze, start, destination):
         """
@@ -115,10 +118,10 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/articles/the-maze-ii/
-#BFS 85%
-
-public class Solution {
+# Thought: https://leetcode.com/problems/the-maze-ii/solution/
+# BFS
+# 11ms 99.63%
+class Solution {
     private static final int[][] DIRS ={{0, 1}, {0, -1}, {-1, 0}, {1, 0}};
 
     public int shortestDistance(int[][] maze, int[] start, int[] destination) {
@@ -154,9 +157,9 @@ public class Solution {
     }
 }
 
-#DFS
-11.59%
-public class Solution {
+# DFS
+# 544ms 4.33%
+class Solution {
     private static final int[][] DIRS ={{0, 1}, {0, -1}, {-1, 0}, {1, 0}};
 
     public int shortestDistance(int[][] maze, int[] start, int[] destination) {
@@ -192,9 +195,9 @@ public class Solution {
     }
 }
 
-#3 Using Dijkstra Algorithm [Accepted]
-11.82%
-public class Solution {
+# 3 Using Dijkstra Algorithm [Accepted]
+# 471ms 8.30%
+class Solution {
     public int shortestDistance(int[][] maze, int[] start, int[] dest) {
         int[][] distance = new int[maze.length][maze[0].length];
         boolean[][] visited = new boolean[maze.length][maze[0].length];

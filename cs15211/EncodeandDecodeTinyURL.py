@@ -1,8 +1,9 @@
-import random
-import string
-
 __source__ = 'https://leetcode.com/problems/encode-and-decode-tinyurl/#/description'
 # Note: This is a companion problem to the System Design problem: Design TinyURL.
+# Time:  O(n)
+# Space: O(1)
+#
+# Description: Leetcode # 535. Encode and Decode TinyURL
 #
 # TinyURL is a URL shortening service where you enter a URL such as https://leetcode.com/problems/design-tinyurl
 # and it returns a short URL such as http://tinyurl.com/4e9iAk.
@@ -30,8 +31,10 @@ __source__ = 'https://leetcode.com/problems/encode-and-decode-tinyurl/#/descript
 # https://discuss.leetcode.com/topic/81637/two-solutions-and-thoughts
 # Analysis of pros and cons for each decode/encode method:
 #
-#My first solution produces short URLs like http://tinyurl.com/0, http://tinyurl.com/1, etc, in that order.
-
+# My first solution produces short URLs like http://tinyurl.com/0, http://tinyurl.com/1, etc, in that order.
+import random
+import string
+import unittest
 class Codec:
 
     def __init__(self):
@@ -58,7 +61,7 @@ class Codec:
 # using a random code of six digits or letters. If a long URL is already known,
 # the existing short URL is used and no new entry is generated.
 
-class Codec:
+class Codec2:
 
     alphabet = string.ascii_letters + '0123456789'
 
@@ -86,10 +89,18 @@ class Codec:
 #  And if we ever get to an even larger number of entries and this does become a problem,
 # then we can just use length 7. We'd need to anyway, as we'd be running out of available codes.
 
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        pass # write  your test
 
-java = '''
-Thought: https://leetcode.com/articles/encode-and-decode-tinyurl/
-public class Codec {
+if __name__ == '__main__':
+    unittest.main()
+
+Java = '''
+# Thought: https://leetcode.com/problems/encode-and-decode-tinyurl/solution/
+
+# 8ms 50.93%
+class Codec {
     List<String> urls = new ArrayList<String>();
     // Encodes a URL to a shortened URL.
     public String encode(String longUrl) {
@@ -113,7 +124,8 @@ which is incremented for every new URL encountered.
 We put the URL along with its encoded count(i) in a HashMap.
 This way we can retrieve it later at the time of decoding easily.
 
-public class Codec {
+# 12ms 27.54%
+class Codec {
     Map<Integer, String> map = new HashMap<>();
     int i=0;
     public String encode(String longUrl) {
@@ -124,6 +136,7 @@ public class Codec {
         return map.get(Integer.parseInt(shortUrl.replace("http://tinyurl.com/", "")));
     }
 }
+
 Performance Analysis:
 1. The range of URLs that can be decoded is limited by the range of int
 2. If excessively large number of URLs have to be encoded, after the range of int is exceeded,
@@ -144,7 +157,8 @@ which can be any length between 0 and 61.
 Further, instead of using only numbers as the Base System for encoding the URLSs,
 we make use of a set of integers and alphabets to be used for encoding.
 
-public class Codec {
+# 10ms 45.06%
+class Codec {
     String chars = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
     Map<String, String> map = new HashMap<>();
     int count = 1;
@@ -188,7 +202,8 @@ For example, the codes generated will have the lengths in the following order: 1
 
 Approach #3 Using hashcode[Accepted]
 
-public class Codec {
+# 15ms 15.56%
+class Codec {
     Map<Integer, String> map = new HashMap<>();
 
     public String encode(String longUrl) {
@@ -212,7 +227,8 @@ Thus, as the number of encoded URLs increases, the probability of collisions inc
 
 Approach #4 Using random number[Accepted]
 
-public class Codec {
+# 14ms 17.85%
+class Codec {
     Map<Integer, String> map = new HashMap<>();
     Random r=new Random();
     int key=r.nextInt(10000);
@@ -248,7 +264,8 @@ similar to Approach 2. But in this case, the length of the code is fixed to 6 on
 Further, random characters from the string to form the characters of the code.
 In case, the code generated collides with some previously generated code, we form a new random code.
 
-public class Codec {
+# 12ms 27.54%
+class Codec {
     String alphabet = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
     HashMap<String, String> map = new HashMap<>();
     Random rand = new Random();

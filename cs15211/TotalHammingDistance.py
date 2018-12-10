@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/total-hamming-distance/description/'
+__source__ = 'https://leetcode.com/problems/total-hamming-distance/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/total-hamming-distance.py
 # Time:  O(n)
 # Space: O(1)
@@ -53,6 +53,7 @@ class Solution(object):
 
        This can be done in O(kn) time, where k is the number of bits in the given values.
     '''
+    # 280ms 63.10%
     def totalHammingDistance(self, nums):
         """
         :type nums: List[int]
@@ -81,15 +82,15 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-# Thought: https://leetcode.com/articles/total-hamming-distance/
+# Thought: https://leetcode.com/problems/total-hamming-distance/solution/
 
 For each bit position 1-32 in a 32-bit integer,
 we count the number of integers in the array which have that bit set.
 Then, if there are n integers in the array and k of them have a particular bit set and (n-k) do not,
 then that bit contributes k*(n-k) hamming distance to the total.
 
-# 84.51% 20ms
-public class Solution {
+# 21ms 62.19%
+class Solution {
     public int totalHammingDistance(int[] nums) {
         int res = 0;
         for (int i = 0; i < 32; i++) {

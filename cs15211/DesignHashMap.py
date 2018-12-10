@@ -110,7 +110,8 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
+# Thought:
+
 # 81ms 94.18%
 class MyHashMap {
     private class ListNode {

@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/different-ways-to-add-parentheses/#/description'
+__source__ = 'https://leetcode.com/problems/different-ways-to-add-parentheses/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/different-ways-to-add-parentheses.py
 # Time:  O(n * 4^n / n^(3/2)) ~= n * Catalan numbers = n * (C(2n, n) - C(2n, n - 1)),
 #                                due to the size of the results is Catalan numbers,
@@ -97,9 +97,10 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
-1. 87.64% 3ms
-public class Solution {
+# Thought:
+
+1. 1ms 100%
+class Solution {
     public List<Integer> diffWaysToCompute(String input) {
         return diffWaysToCompute(input, new HashMap<>());
     }
@@ -143,8 +144,9 @@ public class Solution {
 }
 
 # Separate compute part, easier to read:
-# 95.50% 2ms
-public class Solution {
+
+# 1ms 100%
+class Solution {
     Map<String, List<Integer>> map = new HashMap<>();
 
     public List<Integer> diffWaysToCompute(String input) {
@@ -181,32 +183,79 @@ public class Solution {
         return list;
     }
 }
+
+# 1ms 100%
+class Solution {
+    public List<Integer> diffWaysToCompute(String input) {
+        return diffWaysToCompute(input, new HashMap<>());
+    }
+
+    private List<Integer> diffWaysToCompute(String input, Map<String, List<Integer>> cache) {
+        if (input.length() == 0) {
+            return new ArrayList<>();
+        }
+        if (cache.containsKey(input)){
+            return cache.get(input);
+        }
+        List<Integer> result = new ArrayList<>();
+        // "2*3-4*5"
+        for (int i = 0; i < input.length() - 1; i++){
+            char c = input.charAt(i);
+            if (!Character.isDigit(c)){
+                List<Integer> leftList = diffWaysToCompute(input.substring(0, i), cache);
+                List<Integer> rightList = diffWaysToCompute(input.substring(i + 1), cache);
+                for (int left : leftList) {
+                    for (int right: rightList) {
+                        result.add(compute(left, right, c));
+                    }
+                }
+            }
+        }
+        if (result.isEmpty()) {
+            result.add(Integer.valueOf(input));
+        }
+        cache.put(input, result);
+        return result;
+    }
+
+    private int compute(int left, int right, char c) {
+        switch (c) {
+            case '+':
+                return left + right;
+            case '-':
+                return left - right;
+            case '*':
+                return left * right;
+            default:
+                throw new IllegalArgumentException("Invalid operator:" + c);
+        }
+    }
+}
 '''
 #similar question:
 # Give a integer array, return all possible ans of +, -, * operation
 '''
- private Set<Integer> helper (int[] nums, int leftIndex, int rightIndex){
-           Set<Integer> res = new HashSet<Integer>();
 
-           if(leftIndex == rightIndex){
-               res.add(nums[leftIndex]);
-               return res;
-           }
+private Set<Integer> helper (int[] nums, int leftIndex, int rightIndex){
+    Set<Integer> res = new HashSet<Integer>();
 
-           for(int i = leftIndex; i<rightIndex; i++){
-               Set<Integer> leftSet = helper(nums, leftIndex, i);
-               Set<Integer> rightSet = helper(nums, i+1, rightIndex);
+    if(leftIndex == rightIndex){
+        res.add(nums[leftIndex]);
+        return res;
+    }
 
-               for(int left : leftSet){
-                   for(int right : rightSet){
-                       res.add(left + right);
-                       res.add(left * right);
-                       res.add(left - right);
-                   }
-               }
-           }
+    for(int i = leftIndex; i<rightIndex; i++){
+        Set<Integer> leftSet = helper(nums, leftIndex, i);
+        Set<Integer> rightSet = helper(nums, i+1, rightIndex);
 
-          return res;
-
-       }
+        for(int left : leftSet){
+            for(int right : rightSet){
+                res.add(left + right);
+                res.add(left * right);
+                res.add(left - right);
+                }
+            }
+        }
+        return res;
+}
 '''

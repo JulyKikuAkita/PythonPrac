@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/design-phone-directory/#/description'
+__source__ = 'https://leetcode.com/problems/design-phone-directory/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/design-phone-directory.py
 # init:     Time: O(n), Space: O(n)
 # get:      Time: O(1), Space: O(1)
@@ -44,6 +44,7 @@ __source__ = 'https://leetcode.com/problems/design-phone-directory/#/description
 # Linked List Design
 #
 import unittest
+# 68ms 100%
 class PhoneDirectory2(object):
 
     def __init__(self, maxNumbers):
@@ -142,9 +143,10 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
-#65.42% 530ms
-public class PhoneDirectory {
+# Thought:
+
+# 69ms 80.89%
+class PhoneDirectory {
     Set<Integer> mUsed;
     Queue<Integer> mAvailable;
     int mMax;
@@ -190,9 +192,9 @@ public class PhoneDirectory {
  * obj.release(number);
  */
 
- #Binary set
- #98.43% 350ms
- class PhoneDirectory {
+# Binary set
+# 66ms 93.21%
+class PhoneDirectory {
     private int mMax;
     private BitSet mUsed;
     private int mMinAvailable = -1;

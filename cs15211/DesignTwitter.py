@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/design-twitter/#/submissions/1'
+__source__ = 'https://leetcode.com/problems/design-twitter/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/design-twitter.py
 # Time:  O(klogu), k is most recently number of tweets,
 #                  u is the number of the user's following.
@@ -132,9 +132,10 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
-#93.03% 141ms
-public class Twitter {
+# Thought:
+
+# 80ms 96.33%
+class Twitter {
     private static int timeStamp=0;
 
     // easy to find if user exist
@@ -261,8 +262,8 @@ public class Twitter {
  * obj.unfollow(followerId,followeeId);
  */
 
-# 72.23% 154ms
-public class Twitter {
+# 83ms 91.04%
+class Twitter {
     Map<Integer, User> userMap;
     Counter counter;
 

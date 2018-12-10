@@ -60,9 +60,9 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/problems/design-circular-queue/discuss/186592/Java-Simple-Solution
-# 62ms, 98.04%
+# Thought: https://leetcode.com/problems/design-circular-queue/discuss/186592/Java-Simple-Solution
 
+# 61ms 90.60%
 class MyCircularQueue {
     private int[] A;
     private int front;
@@ -129,4 +129,39 @@ class MyCircularQueue {
  * boolean param_5 = obj.isEmpty();
  * boolean param_6 = obj.isFull();
  */
+
+# 60ms 94.02%
+class MyCircularQueue {
+
+    final int[] a;
+        int front, rear = -1, len = 0;
+
+        public MyCircularQueue(int k) { a = new int[k];}
+
+        public boolean enQueue(int val) {
+            if (!isFull()) {
+                rear = (rear + 1) % a.length;
+                a[rear] = val;
+                len++;
+                return true;
+            } else return false;
+        }
+
+        public boolean deQueue() {
+            if (!isEmpty()) {
+                front = (front + 1) % a.length;
+                len--;
+                return true;
+            } else return false;
+        }
+
+        public int Front() { return isEmpty() ? -1 : a[front];}
+
+        public int Rear() {return isEmpty() ? -1 : a[rear];}
+
+        public boolean isEmpty() { return len == 0;}
+
+        public boolean isFull() { return len == a.length;}
+}
+
 '''

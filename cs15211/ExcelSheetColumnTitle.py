@@ -5,6 +5,7 @@ __source__ = 'https://leetcode.com/problems/excel-sheet-column-title/description
 # Math
 #
 # Description: Leetcode # 168. Excel Sheet Column Title
+#
 # Given a positive integer, return its corresponding column title as appear in an Excel sheet.
 #
 # For example:
@@ -25,7 +26,7 @@ __source__ = 'https://leetcode.com/problems/excel-sheet-column-title/description
 # Excel Sheet Column Number
 #
 import unittest
-# 39ms
+# 20ms 89.53%
 class Solution2(object):
     def convertToTitle(self, num):
         """
@@ -78,17 +79,17 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
+# Thought:
 
-# 7.37% 0ms
-public class Solution {
+# 0ms 100%
+class Solution {
     public String convertToTitle(int n) {
         return n == 0 ? "" : convertToTitle(--n / 26) + (char)('A' + (n % 26));
     }
 }
 
-# 7.37% 0ms
-public class Solution {
+# 0ms 100%
+class Solution {
     public String convertToTitle(int n) {
         StringBuilder sb = new StringBuilder();
         while (--n >= 0) {
@@ -99,8 +100,8 @@ public class Solution {
     }
 }
 
-# 7.37% 0ms
-public class Solution {
+# 0ms 100%
+class Solution {
     public String convertToTitle(int n) {
         StringBuilder b = new StringBuilder();
 

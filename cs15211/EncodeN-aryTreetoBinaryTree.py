@@ -50,6 +50,7 @@ class TreeNode(object):
         self.left = None
         self.right = None
 
+# 464ms 100%
 class Codec:
 
     def encode(self, root):
@@ -103,10 +104,9 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
+# Thought:
 https://leetcode.com/problems/encode-n-ary-tree-to-binary-tree/discuss/153061/Java-Solution-(Next-Level-greater-left-Same-Level-greater-right)
 
-#2ms 93.48%
 class Codec {
 /*
 // Definition for a Node.
@@ -131,6 +131,7 @@ class Node {
  *     TreeNode(int x) { val = x; }
  * }
  */
+# 2ms 93.48%
 class Codec {
 
     // Encodes an n-ary tree to a binary tree.

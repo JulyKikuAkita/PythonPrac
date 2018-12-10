@@ -1,8 +1,9 @@
 __source__ = 'https://leetcode.com/problems/trim-a-binary-search-tree/description/'
-# Time:  O()
-# Space: O()
+# Time:  O(N)
+# Space: O(N)
 #
 # Description: Leetcode # 669. Trim a Binary Search Tree
+#
 # Given a binary search tree and the lowest and highest boundaries as L and R,
 # trim the tree so that all its elements lies in [L, R] (R >= L).
 # You might need to change the root of the tree,
@@ -47,6 +48,7 @@ __source__ = 'https://leetcode.com/problems/trim-a-binary-search-tree/descriptio
 # Related Topics
 # Tree
 #
+
 import unittest
 # Definition for a binary tree node.
 # class TreeNode(object):
@@ -54,7 +56,8 @@ import unittest
 #         self.val = x
 #         self.left = None
 #         self.right = None
-#82ms
+
+# 48ms 59.59%
 class Solution(object):
     def trimBST(self, root, L, R):
         """
@@ -82,7 +85,7 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
+# Thought: https://leetcode.com/problems/trim-a-binary-search-tree/solution/
 
 /**
  * Definition for a binary tree node.
@@ -94,7 +97,7 @@ Java = '''
  * }
  */
 
-#5.27% 9ms
+# 3ms 99.45%
 class Solution {
     public TreeNode trimBST(TreeNode root, int L, int R) {
         if(root == null) {

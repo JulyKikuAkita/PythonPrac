@@ -1,5 +1,3 @@
-import collections
-
 __source__ = 'https://leetcode.com/problems/delete-and-earn/'
 # Time:  O(N + W)
 # Space: O(W)
@@ -32,7 +30,7 @@ __source__ = 'https://leetcode.com/problems/delete-and-earn/'
 # Each element nums[i] is an integer in the range [1, 10000].
 #
 import unittest
-
+import collections
 # Complexity Analysis
 # Time Complexity (Python): O(NlogN), where N is the length of nums.
 # We make a single pass through the sorted keys of N, and the complexity is dominated by the sorting step.
@@ -65,14 +63,15 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/problems/delete-and-earn/solution/
+# Thought: https://leetcode.com/problems/delete-and-earn/solution/
+
 Approach #1: Dynamic Programming [Accepted]
 Complexity Analysis
 Time Complexity (Java): We performed a radix sort instead,
 so our complexity is O(N+W) where W is the range of allowable values for nums[i].
 Space Complexity (Java): O(W), the size of our count.
 
-#3ms 100%
+# 3ms 100%
 class Solution {
     public int deleteAndEarn(int[] nums) {
         int[] count = new int[10001];
@@ -97,7 +96,7 @@ class Solution {
     }
 }
 
-#5ms 83.47%
+# 5ms 83.47%
 class Solution {
     public int deleteAndEarn(int[] nums) {
         int n = nums.length;
@@ -116,7 +115,7 @@ class Solution {
     }
 }
 
-#5ms 83.47%
+# 5ms 83.47%
 class Solution {
     public int deleteAndEarn(int[] nums) {
         if (nums == null || nums.length == 0) return 0;

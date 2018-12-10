@@ -3,6 +3,7 @@ __source__ = 'https://leetcode.com/problems/to-lower-case/description/'
 # Space: O()
 #
 # Description: Leetcode # 709. To Lower Case
+#
 # Implement function ToLowerCase() that has a string parameter str,
 # and returns the same string in lowercase.
 #
@@ -59,18 +60,20 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: Simply adding a constant to ASCII characters 'A'-'Z' isn't really a solution to lowercasing text,
+# Thought:
+Simply adding a constant to ASCII characters 'A'-'Z' isn't really a solution to lowercasing text,
 and outside of a very limited context will give the wrong answer.
 
 
 # built-in
+# 0ms 100%
 class Solution {
     public String toLowerCase(String str) {
         return str.toLowerCase();
     }
 }
 
-#
+# 0ms 100%
 class Solution {
     public String toLowerCase(String str) {
         char[] a = str.toCharArray();
@@ -83,7 +86,7 @@ class Solution {
     }
 }
 
-#
+# 0ms 100%
 class Solution {
     public String toLowerCase(String str) {
         StringBuilder res = new StringBuilder();
@@ -97,6 +100,7 @@ class Solution {
     }
 }
 
+# 0ms 100%
 class Solution {
     public String toLowerCase(String str) {
         char[] sArr = str.toCharArray();

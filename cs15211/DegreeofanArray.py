@@ -72,7 +72,7 @@ Java = '''
 # Space Complexity: O(N), the space used by left, right, and count.
 #
 
-#37ms 57.91%
+# 37ms 57.91%
 class Solution {
     public int findShortestSubArray(int[] nums) {
         Map<Integer, Integer> left = new HashMap(),

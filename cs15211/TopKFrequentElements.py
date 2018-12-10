@@ -92,9 +92,10 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
+# Thought: https://leetcode.com/problems/top-k-frequent-elements/solution/
 // use an array to save numbers into different bucket whose index is the frequency
-#83.84% 25ms
+
+# 21ms 56.55%
 public class Solution {
     public List<Integer> topKFrequent(int[] nums, int k) {
         Map<Integer, Integer> map = new HashMap<>();
@@ -123,8 +124,8 @@ public class Solution {
 }
 
 // use maxHeap. Put entry into maxHeap so we can always poll a number with largest frequency
-#14.82% 101ms
-public class Solution {
+# 81ms 7.51%
+class Solution {
     public List<Integer> topKFrequent(int[] nums, int k) {
         Map<Integer, Integer> map = new HashMap<>();
         for(int n: nums){
@@ -147,8 +148,8 @@ public class Solution {
 }
 
 // use treeMap. Use freqncy as the key so we can get all freqencies in order
-#63.61% 29ms
-public class Solution {
+# 15ms 74.38%
+class Solution {
     public List<Integer> topKFrequent(int[] nums, int k) {
         Map<Integer, Integer> map = new HashMap<>();
         for(int n: nums){
@@ -170,6 +171,44 @@ public class Solution {
             res.addAll(entry.getValue());
         }
         return res;
+    }
+}
+
+# 12ms 93.53%
+class Solution {
+    public List<Integer> topKFrequent(int[] nums, int k) {
+        Map<Integer, Integer> map = new HashMap<>();
+        for (int num : nums) {
+            Integer val = map.get(num);
+            map.put(num, val == null ? 1 : val + 1);
+        }
+        int max = 0;
+        for (int val : map.values()) {
+            max = Math.max(max, val);
+        }
+        List<List<Integer>> list = new ArrayList<>();
+        for (int i = 0; i <= max; i++) {
+            list.add(new ArrayList<>());
+        }
+        for (Map.Entry<Integer, Integer> entry : map.entrySet()) {
+            list.get(entry.getValue()).add(entry.getKey());
+        }
+        List<Integer> result = new ArrayList<>();
+        int index = max;
+        while (k > 0) {
+            while (index >= 0 && list.get(index).isEmpty()) {
+                index--;
+            }
+            if (index < 0) {
+                break;
+            }
+            Iterator<Integer> iter = list.get(index--).iterator();
+            while (k > 0 && iter.hasNext()) {
+                result.add(iter.next());
+                k--;
+            }
+        }
+        return result;
     }
 }
 '''

@@ -3,6 +3,7 @@ __source__ = 'https://leetcode.com/problems/delete-columns-to-make-sorted/'
 # Space: O(1)
 #
 # Description: Leetcode # 944. Delete Columns to Make Sorted
+#
 # We are given an array A of N lowercase letter strings, all of the same length.
 #
 # Now, we may choose any set of deletion indices, and for each string, we delete all the characters in those indices.
@@ -65,13 +66,14 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/problems/delete-columns-to-make-sorted/solution/
+# Thought: https://leetcode.com/problems/delete-columns-to-make-sorted/solution/
+
 Approach 1: Greedy
 Complexity Analysis
 Time Complexity: O(A), where A is the total content of A.
 Space Complexity: O(1)
 
-#16ms 87.23%
+# 16ms 87.23%
 class Solution {
     public int minDeletionSize(String[] A) {
         int ans = 0;
@@ -87,7 +89,7 @@ class Solution {
     }
 }
 
-#6ms 99.64%
+# 6ms 99.64%
 class Solution {
     public int minDeletionSize(String[] A) {
         int res = 0;

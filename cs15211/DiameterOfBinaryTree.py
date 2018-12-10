@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/diameter-of-binary-tree/description/'
+__source__ = 'https://leetcode.com/problems/diameter-of-binary-tree/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/contains-duplicate.py
 # Time:  O(n)
 # Space: O(n)
@@ -33,8 +33,8 @@ class TreeNode(object):
         self.val = x
         self.left = None
         self.right = None
-#
-#72ms
+
+# 40ms 46.13%
 class Solution(object):
     def diameterOfBinaryTree(self, root):
         """
@@ -61,10 +61,10 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
-#58.85% 9ms
+# Thought: https://leetcode.com/problems/diameter-of-binary-tree/solution/
 
-public class Solution {
+# 4ms 99.46%
+class Solution {
     int max = 0;
 
     public int diameterOfBinaryTree(TreeNode root) {

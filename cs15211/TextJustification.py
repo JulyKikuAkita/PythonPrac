@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/text-justification/#/description'
+__source__ = 'https://leetcode.com/problems/text-justification/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/text-justification.py
 # Time:  O(n)
 # Space: O(1)
@@ -143,10 +143,10 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
+# Thought:
 
-# 22.68% 1ms
-public class Solution {
+# 0ms 100%
+class Solution {
     public List<String> fullJustify(String[] words, int maxWidth) {
         List<String> res = new ArrayList<>();
         int start = 0, end = 0, wc = words.length;
@@ -193,4 +193,76 @@ public class Solution {
     }
 }
 
+# 1ms 36.40%
+class Solution {
+    public List<String> fullJustify(String[] words, int maxWidth) {
+        List<String> res = new ArrayList<>();
+        int start = 0;
+        int len = 0;
+
+        for(int i = 0; i < words.length ;i++){
+            if( i == start){
+                len = words[i].length();
+            }else{
+                len = len + 1 + words[i].length();
+
+                if(len > maxWidth){
+                    String line = dfs(words, start, i - 1, maxWidth);
+                    res.add(line);
+
+                    start = i;
+                    len = 0;
+                    i--;
+                }
+            }
+        }
+
+        //generate last line
+        StringBuilder sb = new StringBuilder();
+        for(int i =start; i < words.length;i++){
+            if ( i == start){
+                sb.append(words[i]);
+            }else{
+                sb.append(" ");
+                sb.append(words[i]);
+            }
+        }
+
+        int a = sb.length();
+        for(int i = a; i < maxWidth; i++){
+            sb.append(" ");
+        }
+
+        res.add(sb.toString());
+        return res;
+    }
+
+    private String dfs(String[] words, int start, int end, int maxLen){
+        StringBuilder sb = new StringBuilder();
+        int countOfSpace = maxLen;
+        for(int i = start; i <= end; i++){
+            countOfSpace -= words[i].length();
+        }
+        sb.append(words[start]);
+
+        for(int i = start +1; i<= end; i++){
+            int cnt = countOfSpace /(end - i + 1);
+            if( countOfSpace % (end -i + 1) != 0){
+                cnt++;
+            }
+            for(int j = 0; j < cnt; j++){
+                sb.append(" ");
+            }
+            countOfSpace -= cnt;
+            sb.append(words[i]);
+        }
+
+        int a = sb.length();
+        for(int i = a; i < maxLen; i++){
+            sb.append(" ");
+        }
+        return sb.toString();
+
+    }
+}
 '''

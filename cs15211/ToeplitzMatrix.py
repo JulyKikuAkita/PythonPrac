@@ -2,6 +2,8 @@ __source__ = 'https://leetcode.com/problems/toeplitz-matrix/'
 # Time:  O()
 # Space: O()
 #
+# Description: Leetcode # 766. Toeplitz Matrix
+#
 # Note: two coordinates are on the same diagonal if and only if r1 - c1 == r2 - c2.
 #
 # Description: Leetcode # 766. Toeplitz Matrix  //diagonal-constant matrix
@@ -85,7 +87,7 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/problems/toeplitz-matrix/solution/
+# Thought: https://leetcode.com/problems/toeplitz-matrix/solution/
 
 
 # Approach #1: Group by Category [Accepted]

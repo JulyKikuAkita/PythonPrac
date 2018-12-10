@@ -1,8 +1,9 @@
-__source__ = 'https://leetcode.com/problems/the-maze/#/description'
+__source__ = 'https://leetcode.com/problems/the-maze/'
 # Time:  O(m*n)
 # Space: O(m*n)
 #
-# Description:
+# Description: 490. The Maze
+#
 # There is a ball in a maze with empty spaces and walls.
 # The ball can go through empty spaces by rolling up, down, left or right,
 # but it won't stop rolling until hitting a wall. When the ball stops,
@@ -100,11 +101,14 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/articles/the-maze/
+# Thought: https://leetcode.com/problems/the-maze/
+
 Search in the four possible directions when coming to a stopping point (i.e. a new starting point).
 Keep track of places that you already started at in case you roll back to that point.
+
 # BFS: 20.21%
-public class Solution {
+# 12ms 28.02%
+class Solution {
     private static final int[][] DIRS ={{0, 1}, {0, -1}, {-1, 0}, {1, 0}};
 
     public boolean hasPath(int[][] maze, int[] start, int[] destination) {
@@ -139,7 +143,8 @@ public class Solution {
 }
 
 # DFS: 89%
-public class Solution {
+# 6ms 91.94%
+class Solution {
     private static final int[] DIR = { 0, 1, 0, -1, 0 };
 
     public boolean hasPath(int[][] maze, int[] start, int[] destination) {

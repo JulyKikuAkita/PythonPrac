@@ -1,6 +1,6 @@
 __source__ = 'https://leetcode.com/problems/employee-importance/description/'
-# Time:  O()
-# Space: O()
+# Time:  O(N)
+# Space: O(N)
 #
 # Description: Leetcode # 690. Employee Importance
 #
@@ -47,6 +47,7 @@ class Employee(object):
         # the id of direct subordinates
         self.subordinates = subordinates
 '''
+# 204ms 38.13%
 class Solution(object):
     def getImportance(self, employees, id):
         """
@@ -72,9 +73,7 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
-#DFS
-#97.97% 5ms
+# Thought: https://leetcode.com/problems/employee-importance/solution/
 /*
 // Employee info
 class Employee {
@@ -87,19 +86,26 @@ class Employee {
     public List<Integer> subordinates;
 };
 */
+
+# DFS
+# 7ms 85.07%
 class Solution {
-    public int getImportance(List<Employee> employees, int id) {
-        int sum = 0;
-        List<Integer> sub = employees.get(id - 1).subordinates;
-        sum += employees.get(id - 1).importance;
-        for (int i = 0; i < sub.size(); i++) {
-            sum += getImportance(employees, sub.get(i));
-        }
-        return sum;
+    Map<Integer, Employee> emap;
+    public int getImportance(List<Employee> employees, int queryid) {
+        emap = new HashMap();
+        for (Employee e: employees) emap.put(e.id, e);
+        return dfs(queryid);
+    }
+    public int dfs(int eid) {
+        Employee employee = emap.get(eid);
+        int ans = employee.importance;
+        for (Integer subid: employee.subordinates)
+            ans += dfs(subid);
+        return ans;
     }
 }
 
-#78.10% 8ms
+# 6ms 98.69%
 class Solution {
     public int getImportance(List<Employee> employees, int id) {
         Map<Integer, Employee> rc = new HashMap<>();
@@ -121,8 +127,8 @@ class Solution {
 
 }
 
-#BFS
-# 43.12% 11ms
+# BFS
+# 9ms 59.66%
 class Solution {
     public int getImportance(List<Employee> employees, int id) {
         int total = 0;

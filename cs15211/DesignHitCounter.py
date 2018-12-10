@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/design-hit-counter/description/'
+__source__ = 'https://leetcode.com/problems/design-hit-counter/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/design-hit-counter.py
 # Time:  O(1), amortized
 # Space: O(k), k is the count of seconds.
@@ -100,10 +100,10 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
+# Thought:
 
-#89.71% 91ms
-public class HitCounter {
+# 55ms 95.74%
+class HitCounter {
     private int[] buckets;
     private int prev;
     private int count;
@@ -157,7 +157,7 @@ public class HitCounter {
  * int param_2 = obj.getHits(timestamp);
  */
 
- #57.25% 100ms
+ # 70ms 14.68%
  class HitCounter {
     private Queue<Integer> queue;
 
@@ -181,10 +181,39 @@ public class HitCounter {
     }
 }
 
-/**
- * Your HitCounter object will be instantiated and called as such:
- * HitCounter obj = new HitCounter();
- * obj.hit(timestamp);
- * int param_2 = obj.getHits(timestamp);
- */
+# 56ms 91.96%
+class HitCounter {
+    int times[] = new int[300];
+    int hits[] = new int[300];
+
+    /** Initialize your data structure here. */
+    public HitCounter() {
+
+
+    }
+
+    /** Record a hit.
+        @param timestamp - The current timestamp (in seconds granularity). */
+    public void hit(int timestamp) {
+        int i = timestamp % 300;
+        if (times[i] != timestamp) {
+            times[i] = timestamp;
+            hits[i] = 0;
+        }
+        hits[i]++;
+    }
+
+    /** Return the number of hits in the past 5 minutes.
+        @param timestamp - The current timestamp (in seconds granularity). */
+    public int getHits(int timestamp) {
+        int res = 0;
+        for (int i = 0; i < 300; i++) {
+            if (times[i] > timestamp - 300) {
+                res += hits[i];
+            }
+        }
+        return res;
+    }
+}
+
  '''

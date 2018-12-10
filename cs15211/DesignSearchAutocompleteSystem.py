@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/design-search-autocomplete-system/description/'
+__source__ = 'https://leetcode.com/problems/design-search-autocomplete-system/'
 # Time:  O()
 # Space: O()
 #
@@ -13,7 +13,8 @@ __source__ = 'https://leetcode.com/problems/design-search-autocomplete-system/de
 # The returned top 3 hot sentences should be sorted by hot degree (The first is the hottest one).
 # If several sentences have the same degree of hot, you need to use ASCII-code order (smaller one appears first).
 # If less than 3 hot sentences exist, then just return as many as you can.
-# When the input is a special character, it means the sentence ends, and in this case, you need to return an empty list.
+# When the input is a special character, it means the sentence ends, and in this case,
+# you need to return an empty list.
 # Your job is to implement the following functions:
 #
 # The constructor function:
@@ -22,12 +23,14 @@ __source__ = 'https://leetcode.com/problems/design-search-autocomplete-system/de
 # The input is historical data. Sentences is a string array consists of previously typed sentences.
 # Times is the corresponding times a sentence has been typed. Your system should record these historical data.
 #
-# Now, the user wants to input a new sentence. The following function will provide the next character the user types:
+# Now, the user wants to input a new sentence.
+# The following function will provide the next character the user types:
 #
 # List<String> input(char c): The input c is the next character typed by the user.
 # The character will only be lower-case letters ('a' to 'z'), blank space (' ') or a special character ('#').
 # Also, the previously typed sentence should be recorded in your system.
-# The output will be the top 3 historical hot sentences that have prefix the same as the part of sentence already typed.
+# The output will be the top 3 historical hot sentences
+# that have prefix the same as the part of sentence already typed.
 #
 #
 # Example:
@@ -96,6 +99,7 @@ import collections
 _trie = lambda: collections.defaultdict(_trie)
 INFO, END = True, False
 
+# 548ms 96.59%
 class ShortList(list):
     def append(self, val):
         for i, (nt, s) in enumerate(self):
@@ -172,12 +176,13 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/problems/design-search-autocomplete-system/solution/
+# Thought: https://leetcode.com/problems/design-search-autocomplete-system/solution/
+
 Only thing more than a normal Trie is added a map of sentence to count
 in each of the Trie node to facilitate process of getting top 3 results.
 
-#34.85% 491ms
-public class AutocompleteSystem {
+# 288ms 63.83%
+class AutocompleteSystem {
     class TrieNode {
         Map<Character, TrieNode> children;
         Map<String, Integer> counts;
@@ -255,8 +260,8 @@ public class AutocompleteSystem {
 }
 
 
-#100% #325ms
-public class AutocompleteSystem {
+# 288ms 63.83%
+class AutocompleteSystem {
     // trienode, with top 3 string and time
     // hashmap hash sentences and time
     // update triad with sentences, for path from root to leave, check trienode top 3 string

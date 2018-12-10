@@ -1,10 +1,11 @@
-__source__ = 'https://leetcode.com/problems/trapping-rain-water/tabs/description'
+__source__ = 'https://leetcode.com/problems/trapping-rain-water/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/trapping-rain-water.py
 # Time:  O(n)
 # Space: O(1)
 # Greedy
 #
 # Description: Leetcode # 42. Trapping Rain Water
+#
 # Given n non-negative integers representing an elevation map where the width of each bar is 1,
 #  compute how much water it is able to trap after raining.
 #
@@ -102,11 +103,11 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-Thought: https://leetcode.com/problems/trapping-rain-water/tabs/solution
+Thought: https://leetcode.com/problems/trapping-rain-water/solution/
 
-# two pointers
-# 77.09% 20ms
-public class Solution {
+# Two pointers
+# 14ms 39.58%
+class Solution {
     public int trap(int[] height) {
         if (height == null || height.length == 0) return 0;
         int left = 0, right = height.length - 1;
@@ -126,9 +127,9 @@ public class Solution {
     }
 }
 
-#better naive
-#37.81% 23ms
-public class Solution {
+# better naive
+# 14ms 39.58%
+class Solution {
     public int trap(int[] height) {
         int len = height.length;
         int[] leftMax = new int[len];
@@ -147,7 +148,7 @@ public class Solution {
     }
 }
 
-#Stack based, important technique
+# Stack based, important technique
 A stack based solution for reference, inspired by Histogram
 Indeed this question can be solved in one pass and O(1) space,
 but it's probably hard to come up with in a short interview.
@@ -163,8 +164,8 @@ To implement this we use a stack that store the indices with decreasing bar heig
 once we find a bar who's height is larger, then let the top of the stack be bot,
 the cur bar is ir, and the previous bar is il.
 
-# 13.12% 29ms
-public class Solution {
+# 22ms 12.13%
+class Solution {
     public int trap(int[] height) {
         if (height == null) return 0;
         Stack<Integer> s = new Stack<Integer>();

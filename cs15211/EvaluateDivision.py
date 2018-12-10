@@ -70,6 +70,8 @@ class Solution(object):
 # A variation of Floyd-Warshall, computing quotients instead of shortest paths.
 # An equation A/B=k is like a graph edge A->B, and (A/B)*(B/C)*(C/D)
 # is like the path A->B->C->D. Submitted once, accepted in 35 ms.
+
+# 20ms 99.20%
 def calcEquation(self, equations, values, queries):
     quot = collections.defaultdict(dict)
     for (num, den), val in zip(equations, values):
@@ -89,13 +91,13 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
+# Thought:
 graph
 Image a/b = k as a link between node a and b, the weight from a to b is k,
 the reverse link is 1/k. Query is to find a path between two nodes.
 
-#62.73% 3ms
-public class Solution {
+# 2ms 65.97%
+class Solution {
     public double[] calcEquation(String[][] equations, double[] values, String[][] queries) {
         HashMap<String, ArrayList<String>> pairs = new HashMap<String, ArrayList<String>>();
         HashMap<String, ArrayList<Double>> valuesPair = new HashMap<String, ArrayList<Double>>();
@@ -145,7 +147,7 @@ public class Solution {
     }
 }
 
-#62.73% 3ms
+# 2ms 65.97%
 class Solution {
     public double[] calcEquation(String[][] equations, double[] values, String[][] queries) {
         HashMap<String, HashMap<String, Double>> hm = initHashMap(equations, values);
@@ -199,5 +201,57 @@ class Solution {
             hm.put(f, newPairs);
         }
     }
+}
+
+# 1ms 100%
+class Solution {
+    public double[] calcEquation(String[][] equations, double[] values, String[][] queries) {
+        HashMap<String, ArrayList<String>> pairs = new HashMap<String, ArrayList<String>>();
+        HashMap<String, ArrayList<Double>> valuesPair = new HashMap<String, ArrayList<Double>>();
+        for (int i = 0; i < equations.length; i++) { //equations = [ ["a", "b"], ["b", "c"] ],
+            String[] equation = equations[i];
+            if (!pairs.containsKey(equation[0])) {
+                pairs.put(equation[0], new ArrayList<String>());
+                valuesPair.put(equation[0], new ArrayList<Double>());
+            }
+
+            if (!pairs.containsKey(equation[1])) {
+                pairs.put(equation[1], new ArrayList<String>());
+                valuesPair.put(equation[1], new ArrayList<Double>());
+            }
+
+            pairs.get(equation[0]).add(equation[1]);
+            pairs.get(equation[1]).add(equation[0]);
+            valuesPair.get(equation[0]).add(values[i]);
+            valuesPair.get(equation[1]).add(1 / values[i]);
+        }
+
+        //queries = [ ["a", "c"], ["b", "a"], ["a", "e"], ["a", "a"], ["x", "x"] ].
+        double[] res = new double[queries.length];
+        for (int i = 0; i < queries.length; i++) {
+            String[] query = queries[i];
+            res[i] = dfs(query[0], query[1], pairs, valuesPair, new HashSet<String>(), 1.0);
+            if (res[i] == 0.0) res[i] = -1.0;
+        }
+        return res;
+    }
+    private double dfs(String start, String end, HashMap<String, ArrayList<String>> pairs, HashMap<String, ArrayList<Double>> values, HashSet<String> set, double value) {
+        if (set.contains(start)) return 0.0;
+        if (!pairs.containsKey(start)) return 0.0;
+        if (start.equals(end)) return value;
+
+        set.add(start);
+        ArrayList<String> strList = pairs.get(start);
+        ArrayList<Double> valueList = values.get(start);
+        double tmp = 0.0;
+        for (int i = 0; i < strList.size(); i++) {
+            tmp = dfs(strList.get(i), end, pairs, values, set, value * valueList.get(i));
+            if (tmp != 0.0) break;
+        }
+
+        set.remove(start);
+        return tmp;
+    }
+
 }
 '''

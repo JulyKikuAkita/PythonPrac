@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/design-tic-tac-toe/description/'
+__source__ = 'https://leetcode.com/problems/design-tic-tac-toe/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/design-tic-tac-toe.py
 # Time:  O(1), per move.
 # Space: O(n^2)
@@ -121,9 +121,9 @@ if __name__ == '__main__':
 
 Java = '''
 # Thought:
-# 78.42% 105ms
 
-public class TicTacToe {
+# 89ms 11.50%
+class TicTacToe {
     private int[][] board;
     private int winner;
 
@@ -209,8 +209,8 @@ public class TicTacToe {
  * int param_1 = obj.move(row,col,player);
  */
 
-#57.59% 11ms
-public class TicTacToe {
+# 64ms 69.05%
+class TicTacToe {
 
     /** Initialize your data structure here. */
     int[] rows;

@@ -57,7 +57,8 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/problems/transpose-matrix/solution/
+# Thought: https://leetcode.com/problems/transpose-matrix/solution/
+
 # 2ms 100%
 class Solution {
     public int[][] transpose(int[][] A) {
@@ -74,6 +75,7 @@ class Solution {
     }
 }
 
+# 2ms 100%
 class Solution {
     public int[][] transpose(int[][] A) {
         int row = A.length;

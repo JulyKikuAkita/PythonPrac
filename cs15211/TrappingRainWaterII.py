@@ -4,6 +4,7 @@ __source__ = 'https://leetcode.com/problems/trapping-rain-water-ii/#/description
 # Space: O(m * n)
 #
 # Description: Leetcode # 407. Trapping Rain Water II
+#
 # Given an m x n matrix of positive integers representing the height of each unit cell in
 # a 2D elevation map, compute the volume of water it is able to trap after raining.
 #
@@ -28,7 +29,7 @@ __source__ = 'https://leetcode.com/problems/trapping-rain-water-ii/#/description
 
 import unittest
 from heapq import heappush, heappop
-
+# 212ms 12.71%
 class Solution(object):
     def trapRainWater(self, heightMap):
         """
@@ -77,9 +78,10 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: Java solution using PriorityQueue + island + replace Height
-#86.57% #29ms
-public class Solution {
+# Thought: Java solution using PriorityQueue + island + replace Height
+
+# 16ms 97.61%
+class Solution {
 
     public class Cell {
         int row;
@@ -143,9 +145,9 @@ public class Solution {
     }
 }
 
-#96.23% 28s
 //Same idea with tuple
-public class Solution {
+# 27ms 61.46%
+class Solution {
     static int[][] dirs = new int[][]{{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
 
     class Tuple implements Comparable<Tuple> {
@@ -226,8 +228,8 @@ but this problem essentially can be solved using one pass of Dijkstra algorithm 
 The graph is sparse, i.e., there are O(rc) edges, resulting an O(rc log(rc)) = O(rc max(log r, log c)) runtime and using O(rc) space.
 
 Java Code:
-# 3.52% #166ms
-public class Solution {
+# 88 ms 8.6%
+class Solution {
 
     int[] dx = {0, 0, 1, -1};
     int[] dy = {1, -1, 0, 0};
@@ -307,8 +309,8 @@ In the case above, if the "1" is built with water, that water can't stay. It nee
         we keep checking until there is no water to be spilled.
 */
 
-#3.4% 162ms
-public class Solution {
+# 120ms 2.39%
+class Solution {
     public int trapRainWater(int[][] heightMap) {
         /*FIRST STEP*/
         if(heightMap.length == 0) return 0;

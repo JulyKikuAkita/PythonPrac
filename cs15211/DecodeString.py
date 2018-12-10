@@ -1,9 +1,10 @@
-__source__ = 'https://leetcode.com/problems/decode-string/#/description'
+__source__ = 'https://leetcode.com/problems/decode-string/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/decode-string.py
 # Time:  O(n)
 # Space: O(h), h is the depth of the recursion
 #
-# Description:
+# Description: 394. Decode String
+#
 # Given an encoded string, return it's decoded string.
 #
 # The encoding rule is: k[encoded_string], where the encoded_string inside the square brackets is being
@@ -29,6 +30,8 @@ __source__ = 'https://leetcode.com/problems/decode-string/#/description'
 #
 import unittest
 import re
+
+# TLE
 class Solution(object):
     def decodeString(self, s):
         """
@@ -47,10 +50,10 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
+# Thought:
 
-#41.72% 4ms
-public class Solution {
+# 2ms 91.49%
+class Solution {
     public String decodeString(String s) {
         Stack<Integer> count = new Stack<>();
         Stack<String> result = new Stack<>();
@@ -84,9 +87,9 @@ public class Solution {
     }
 }
 
-# recursion
-# 80.98% 3ms
-public class Solution {
+# Recursion
+# 1ms 100%
+class Solution {
     private int index = 0;
     private String decode(String s) {
         StringBuilder sb = new StringBuilder();

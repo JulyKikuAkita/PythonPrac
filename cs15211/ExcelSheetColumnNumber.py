@@ -4,6 +4,7 @@ __source__ = 'https://leetcode.com/problems/excel-sheet-column-number/descriptio
 # Space: O(1)
 #
 # Description: Leetcode # 171. Excel Sheet Column Number
+#
 # Related to question Excel Sheet Column Title
 #
 # Given a column title as appear in an Excel sheet, return its corresponding column number.
@@ -48,7 +49,8 @@ class SolutionOther:
             #print s[i], ans, ord(s[i])
             ans = ans * 26 + ord(s[i]) - ord('A') + 1
         return ans
-# 48ms
+
+# 28ms s78.02%
 class Solution2(object):
     def titleToNumber(self, s):
         """
@@ -69,8 +71,8 @@ if __name__ == '__main__':
 Java = '''
 #Thought:
 
-# 40.34% 2ms
-public class Solution {
+# 1ms 100%
+class Solution {
     public int titleToNumber(String s) {
         int result = 0;
         for (int i = 0; i < s.length(); i++) {
@@ -80,8 +82,8 @@ public class Solution {
     }
 }
 
-# 40.34% 2ms
-public class Solution {
+# 1ms 100%
+class Solution {
     public int titleToNumber(String s) {
         int result = 0;
         for (int i = 0; i < s.length(); result = result * 26 + (s.charAt(i) - 'A' + 1), i++);

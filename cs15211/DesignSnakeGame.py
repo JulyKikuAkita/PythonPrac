@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/design-snake-game/description/'
+__source__ = 'https://leetcode.com/problems/design-snake-game/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/design-snake-game.py
 # Time:  O(s) per move, s is the current length of the snake.
 # Space: O(s)
@@ -125,10 +125,10 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
-#79.03% 247ms
+# Thought:
 
-public class SnakeGame {
+# 136ms 97.27%
+class SnakeGame {
     private int width;
     private int height;
     private int[][] food;
@@ -200,8 +200,9 @@ public class SnakeGame {
  * SnakeGame obj = new SnakeGame(width, height, food);
  * int param_1 = obj.move(direction);
  */
-#88.71% 239ms
- class SnakeGame {
+
+# 208ms 16.79%
+class SnakeGame {
     int[][] food;
     int index;
     int row, col;
@@ -287,4 +288,5 @@ public class SnakeGame {
         return len;
     }
 }
- '''
+
+'''

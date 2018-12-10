@@ -153,7 +153,7 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
+# Thought:
 
 # 63ms 99.92%
 class MyLinkedList {

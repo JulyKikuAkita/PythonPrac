@@ -1,4 +1,4 @@
-__source_ = 'https://leetcode.com/problems/encode-and-decode-strings/description/'
+__source_ = 'https://leetcode.com/problems/encode-and-decode-strings/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/encode-and-decode-strings.py
 # Time:  O(n)
 # Space: O(1)
@@ -32,8 +32,10 @@ __source_ = 'https://leetcode.com/problems/encode-and-decode-strings/description
 # Note:
 # The string may contain any possible characters out of 256 valid ascii characters.
 # Your algorithm should be generalized enough to work on any possible characters.
-# Do not use class member/global/static variables to store states. Your encode and decode algorithms should be stateless.
-# Do not rely on any library method such as eval or serialize methods. You should implement your own encode/decode algorithm.
+# Do not use class member/global/static variables to store states.
+# Your encode and decode algorithms should be stateless.
+# Do not rely on any library method such as eval or serialize methods.
+# You should implement your own encode/decode algorithm.
 #
 # Companies
 # Google
@@ -79,6 +81,7 @@ class Codec(unittest.TestCase):
         hash = self.encode(["nSM","Dsy"])
         self.assertEqual(["nSM","Dsy"] , self.decode(hash))
 
+# 84ms 49.33%
 class Codec2(unittest.TestCase):
     def encode(self, strs):
         """Encodes a list of strings to a single string.
@@ -115,17 +118,15 @@ class Codec2(unittest.TestCase):
 class TestMethods(unittest.TestCase):
     def test_Local(self):
         self.assertEqual(1, 1)
-        print Solution().containsDuplicate([12344555,12344555])
+        print Codec().containsDuplicate([12344555,12344555])
 
 if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
+# Thought:
 
-Thought:
-#21.29% 54ms
-
+# 33ms 18.73%
 public class Codec {
     public String encode(List<String> strs) {
         StringBuffer out = new StringBuffer();
@@ -144,7 +145,7 @@ public class Codec {
 }
 
 
-#46.54% 14ms
+# 5ms 98.14%
 public class Codec {
     private static final char DELIMITER = '#';
 
@@ -174,7 +175,7 @@ public class Codec {
         return result;
     }
 
-#94.03% 11ms
+# 9ms 52.11%
 public class Codec {
     private static final Character DELIMITER = '#';
 
@@ -205,7 +206,7 @@ public class Codec {
     }
 }
 
-#99.72% 8ms
+# 4ms 99.13%
 public class Codec {
 
     // Encodes a list of strings to a single string.

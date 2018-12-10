@@ -152,9 +152,11 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://briangordon.github.io/2014/08/the-skyline-problem.html
-#89.08% 40ms
-public class Solution {
+# Thought:
+# https://briangordon.github.io/2014/08/the-skyline-problem.html
+
+# 19ms 90.85%
+class Solution {
     public List<int[]> getSkyline(int[][] buildings) {
         List<int[]> result = new ArrayList<>();
         int len = buildings.length;
@@ -198,10 +200,10 @@ public class Solution {
 }
 
 
-#90.92% 36ms
+# 18ms 91.37%
 import java.util.SortedMap;
 
-public class Solution {
+class Solution {
     public List<int[]> getSkyline(int[][] buildings) {
         List<int[]> result = new ArrayList<>();
         Wall[] walls = new Wall[buildings.length << 1];
@@ -258,8 +260,8 @@ public class Solution {
 }
 
 # Divide and conquer:
-#96.54% 13ms
-public class Solution {
+# 6ms 98.07%
+class Solution {
 	public List<int[]> getSkyline(int[][] buildings) {
 		if (buildings.length == 0)
 			return new LinkedList<int[]>();
@@ -312,8 +314,8 @@ public class Solution {
 	}
 }
 
-# 99.92% 3ms
-public class Solution {
+# 2ms 100%
+class Solution {
     class KeyPoint {
         public int key;
         public int height;
@@ -379,8 +381,8 @@ public class Solution {
 }
 
 # using PQ
-#61.93% 254ms
-public class Solution {
+# 159ms 60.43%
+class Solution {
     public List<int[]> getSkyline(int[][] buildings) {
         List<int[]> result = new ArrayList<>();
         int len = buildings.length;
@@ -423,8 +425,9 @@ public class Solution {
     }
 }
 
-# 40.23% 319ms
-public List<int[]> getSkyline(int[][] buildings) {
+# 188ms 52.43%
+class Solution {
+    public List<int[]> getSkyline(int[][] buildings) {
     List<int[]> result = new ArrayList<>();
     List<int[]> height = new ArrayList<>();
     for(int[] b:buildings) {

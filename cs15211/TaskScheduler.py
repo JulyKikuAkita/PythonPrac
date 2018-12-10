@@ -30,6 +30,7 @@ __source__ = 'https://leetcode.com/problems/task-scheduler/#/description'
 #
 import collections
 import unittest
+# 132ms 76.89%
 class Solution(object):
     def leastInterval(self, tasks, n):
         """
@@ -50,7 +51,8 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/articles/task-scheduler/
+# Thought: https://leetcode.com/articles/task-scheduler/
+
 First consider the most frequent characters,
 we can determine their positions first and use them as a frame to insert the remaining less frequent characters.
 This is proof by construction:
@@ -77,8 +79,8 @@ ACCCEEE 2
 3 identical chunks "CE", "CE CE CE" <-- this is a frame
 Begin to insert 'A' --> "CEACE CE" <-- result is (c[25] - 1) * (n + 1) + 25 -i = 2 * 3 + 2 = 8
 
-#90.46% 10ms
-public class Solution {
+# 5ms 98.40%
+class Solution {
     public int leastInterval(char[] tasks, int n) {
 
         if(tasks.length == 0) return 0;
@@ -104,8 +106,8 @@ Idea is to add them to a priority Q and sort based on the highest frequency.
 And pick the task in each round of 'n' with highest frequency. As you pick the task, decrease the frequency,
 and put them back after the round.
 
-#15.43% 159ms
-public class Solution {
+# 103ms 15.03%
+class Solution {
     public int leastInterval(char[] tasks, int n) {
         Map<Character, Integer> map = new HashMap<>();
         for (int i = 0; i < tasks.length; i++) {
@@ -137,6 +139,33 @@ public class Solution {
             count = count + k;  // if k > 0, then it means we need to be idle
         }
         return count;
+    }
+}
+
+# 4ms 100%
+class Solution {
+    public int leastInterval(char[] tasks, int n) {
+        if(n == 0) {
+            return tasks.length;
+        }
+        int[] arr = new int[26];
+        for(int i=0; i<tasks.length; i++) {
+            arr[tasks[i] - 'A']++;
+        }
+        int max = Integer.MIN_VALUE;
+        int freq = 0;
+
+        for(int i=0; i<arr.length; i++) {
+            if(arr[i] > max) {
+                freq = 1;
+                max = arr[i];
+            } else if (arr[i] == max) {
+                freq++;
+            }
+        }
+
+        int len = max + freq - 1 + ((max - 1) * n);
+        return Math.max(tasks.length, len);
     }
 }
 '''

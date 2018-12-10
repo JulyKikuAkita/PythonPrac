@@ -5,6 +5,7 @@ __source__ = 'https://leetcode.com/problems/two-sum/description/'
 # Hash table
 #
 # Description: Leetcode # 1. Two Sum
+#
 # Given an array of integers, find two numbers such that
 # they add up to a specific target number.
 # The function twoSum should return indices of the two numbers such that
@@ -79,10 +80,10 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/problems/two-sum/solution/
+# Thought: https://leetcode.com/problems/two-sum/solution/
 
-# 77.17% 8ms
-public class Solution {
+# 3ms 99.81%
+class Solution {
     public int[] twoSum(int[] nums, int target) {
         Map<Integer, Integer> map = new HashMap<>();
         for (int i = 0; i < nums.length; i++) {

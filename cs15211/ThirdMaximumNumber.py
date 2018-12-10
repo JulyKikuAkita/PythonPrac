@@ -1,5 +1,10 @@
-__author__ = 'July'
-#Given a non-empty array of integers, return the third maximum number in this array.
+__source__ = 'https://leetcode.com/problems/third-maximum-number/'
+# Time:  O(N)
+# Space: O(1)
+#
+# Description: Leetcode # 709. To Lower Case
+#
+# Given a non-empty array of integers, return the third maximum number in this array.
 # If it does not exist, return the maximum number. The time complexity must be in O(n).
 #
 # Example 1:
@@ -25,6 +30,8 @@ __author__ = 'July'
 # Hide Tags Array
 # Hide Similar Problems (M) Kth Largest Element in an Array
 #
+import unittest
+# 20ms 100%
 class Solution(object):
     def thirdMax(self, nums):
         """
@@ -38,8 +45,18 @@ class Solution(object):
         nums.remove(max(nums))
         return max(nums)
 
-java = '''
-public class Solution {
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+
+
+if __name__ == '__main__':
+    unittest.main()
+
+Java = '''
+# Thought:
+# 4ms 69.11%
+class Solution {
     public int thirdMax(int[] nums) {
         Integer max1 = null;
         Integer max2 = null;

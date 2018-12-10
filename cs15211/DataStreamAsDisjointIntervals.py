@@ -1,3 +1,4 @@
+# coding=utf-8
 __source__ = 'https://leetcode.com/problems/data-stream-as-disjoint-intervals/description/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/data-stream-as-disjoint-intervals.py
 # Time:  addNum: O(n), getIntervals: O(n), n is the number of disjoint intervals.
@@ -83,8 +84,7 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
-#98.56% 156ms
+# Thought:
 /**
  * Definition for an interval.
  * public class Interval {
@@ -94,7 +94,9 @@ Java = '''
  *     Interval(int s, int e) { start = s; end = e; }
  * }
  */
-public class SummaryRanges {
+
+# 92ms 100%
+class SummaryRanges {
     List<Interval> list;
 
     /** Initialize your data structure here. */
@@ -145,4 +147,69 @@ public class SummaryRanges {
  * obj.addNum(val);
  * List<Interval> param_2 = obj.getIntervals();
  */
+
+# 96ms 96.52%
+class SummaryRanges {
+    List<Interval> list;
+    /** Initialize your data structure here. */
+    public SummaryRanges() {
+        list = new LinkedList<>();
+    }
+
+    public void addNum(int val) {
+        if(list.isEmpty())
+            list.add(new Interval(val,val));
+        else{//二分插入
+            int begin = 0;
+            int end = list.size()-1;
+            boolean getResult = false;//是否妥善安置了新加的元素
+            while(begin<=end && !getResult){
+                int mid = (begin+end)/2;
+                Interval mid_interval = list.get(mid);
+                if(mid_interval.end>=val && mid_interval.start<=val)//要考虑重复元素
+                    break;
+                if(mid_interval.start-1 == val){
+                    //向前可能要再合并一个
+                    if(mid>0 && list.get(mid-1).end+1 == val){
+                        mid_interval.start = list.get(mid-1).start;
+                        list.remove(mid-1);
+                    }
+                    else{
+                        mid_interval.start--;
+                    }
+                    getResult = true;
+                }
+                else if(mid_interval.end+1 == val){//同理可能往后合并
+                    if(mid<end && list.get(mid+1).start-1 == val){
+                        mid_interval.end = list.get(mid+1).end;
+                        list.remove(mid+1);
+                    }
+                    else{
+                        mid_interval.end++;
+                    }
+                    getResult = true;
+                }
+                else if(mid_interval.start-1>val && (mid == 0 || list.get(mid-1).end+1<val)){//独立情况1
+                    list.add(mid,new Interval(val,val));
+                    getResult = true;
+                }
+                else if(mid_interval.end+1<val && (mid == end || list.get(mid+1).start-1>val)){//独立情况2
+                    list.add(mid+1,new Interval(val,val));
+                    getResult = true;
+                }
+                else{//更新begin或end
+                    if(mid_interval.end+1<val)
+                        begin = mid+1;
+                    else if(mid_interval.start-1>val)
+                        end = mid-1;
+                }
+            }
+        }
+    }
+
+    public List<Interval> getIntervals() {
+        return list;
+    }
+}
+
 '''

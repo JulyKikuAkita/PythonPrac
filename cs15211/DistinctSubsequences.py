@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/distinct-subsequences/description/'
+__source__ = 'https://leetcode.com/problems/distinct-subsequences/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/distinct-subsequences.py
 # Time:  O(n^2)
 # Space: O(n)
@@ -78,8 +78,7 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/problems/contains-duplicate/solution/
-Thought:
+# Thought:
 The idea is the following:
 
 we will build an array mem where mem[i+1][j+1] means that S[0..j] contains T[0..i]
@@ -135,8 +134,8 @@ And the result is 4, as the distinct subsequences are:
       S = [   a   b ]
 See the code in Java:
 
-#39.20% 16ms
-public class Solution {
+# 6ms 70.17%
+class Solution {
     public int numDistinct(String S, String T) {
         // array creation
         int[][] mem = new int[T.length()+1][S.length()+1];
@@ -157,13 +156,12 @@ public class Solution {
                 }
             }
         }
-
         return mem[T.length()][S.length()];
     }
 }
 
-# 98.87% 6ms
-public class Solution {
+# 5ms 89.79%
+class Solution {
     public int numDistinct(String s, String t) {
         int lenS = s.length();
         int lenT = t.length();
@@ -180,6 +178,52 @@ public class Solution {
             }
         }
         return dp[lenT];
+    }
+}
+
+# 5ms 89.79%
+class Solution {
+    public int numDistinct(String s, String t) {
+        int lenS = s.length();
+        int lenT = t.length();
+        if (lenS < lenT) {
+            return 0;
+        }
+        int[][] dp = new int[lenS + 1][lenT + 1];
+        for (int i = 0; i < lenS; i++) {
+            dp[i][0] = 1;
+            for (int j = 0; j < Math.min(lenS, lenT); j++) {
+                if (s.charAt(i) == t.charAt(j)) {
+                    dp[i + 1][j + 1] = dp[i][j + 1] + dp[i][j];
+                } else {
+                    dp[i + 1][j + 1] = dp[i][j + 1];
+                }
+            }
+        }
+        return dp[lenS][lenT];
+    }
+}
+
+# 1ms 100%
+class Solution {
+    public int numDistinct(String s, String t) {
+            int[][] arr = new int[256][t.length()+1];
+            int[] cnt = new int[t.length()+1];
+            cnt[0] = 1;
+            char c;
+            for(int i = 0; i < t.length(); i++ ) {
+                c = t.charAt(i);
+                arr[c][arr[c][0]+1] = i+1;
+                arr[c][0]++;
+            }
+            for( char a: s.toCharArray() ) {
+                if( arr[a][0] != 0 ) {
+                    for( int i = arr[a][0]; i > 0; i-- ) {
+                        cnt[arr[a][i]] += cnt[arr[a][i]-1];
+                    }
+                }
+            }
+            return cnt[t.length()];
     }
 }
 '''

@@ -59,8 +59,9 @@ import unittest
 # ((c>'0')*e0), or we could pair c with our open 1, or we could pair c with our open 2
 # if it is 6 or less ((c<='6')*e2).
 # The number of ways to finish with an open 1 (or 2) is e0 iff c == '1' (or c == '2').
+
+# 604ms 87.14%
 class Solution(object):
-    # 952ms
     def numDecodings(self, s):
         """
         :type s: str
@@ -88,10 +89,17 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/problems/decode-ways-ii/solution/
+# Thought: https://leetcode.com/problems/decode-ways-ii/solution/
 
-#DFS TLE
-public class Solution {
+# DFS TLE
+
+# Wrong ans
+#
+# Input: "**********1111111111"
+# Output: 881150112
+# Expected: 133236775
+
+class Solution {
     int M = 1000000007;
     public int numDecodings(String s) {
         Integer[] memo=new Integer[s.length()];
@@ -126,8 +134,8 @@ public class Solution {
 }
 
 
-# 98.39% 45ms
-public class Solution {
+# 25ms 95.22%
+class Solution {
     static final int[][] map = new int[58][58];
     static {
         Arrays.fill(map['*'], 1);
@@ -163,8 +171,8 @@ public class Solution {
     }
 }
 
-# 76.81% 60ms
-public class Solution {
+# 32ms 71.50%
+class Solution {
     int M = 1000000007;
     public int numDecodings(String s) {
         long[] dp = new long[s.length() + 1];
@@ -193,8 +201,8 @@ public class Solution {
     }
 }
 
-#55.62% 70ms
-public class Solution {
+# 24ms 97.88%
+class Solution {
     public int numDecodings(String s) {
         if (s == null || s.length() == 0 || s.charAt(0) == '0') {
             return 0;
@@ -346,8 +354,9 @@ all possible decode ways of substring s(0 : i-1).
     dp[1]=9     dp[1]=1
 
 (7) The final Solution:
-#90.82% 53ms
-public class Solution {
+
+# 24ms 97.88%
+class Solution {
     public int numDecodings(String s) {
         /* initial conditions */
         long[] dp = new long[s.length()+1];
@@ -396,6 +405,7 @@ public class Solution {
         return (int)dp[s.length()];
     }
 }
+
 P.S The space complexity can be further improved to O(1)
 because the current state i is only related to i-1 and i-2 during the bottom-up.
 

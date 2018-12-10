@@ -1,5 +1,3 @@
-import bisect
-
 __source__ = 'https://leetcode.com/problems/exam-room/'
 # Time:  O(N)
 # Space: O(N)
@@ -37,6 +35,7 @@ __source__ = 'https://leetcode.com/problems/exam-room/'
 # Calls to ExamRoom.leave(p) are guaranteed to have a student currently sitting in seat number p.
 #
 import unittest
+import bisect
 
 #43.95% 224ms
 class ExamRoom(object):
@@ -85,7 +84,7 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/problems/exam-room/solution/
+# Thought: https://leetcode.com/problems/exam-room/solution/
 # Approach 1: Maintain Sorted Positions
 # Complexity Analysis
 # Time Complexity: Each seat operation is O(P), (where P is the number of students sitting),

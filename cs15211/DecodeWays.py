@@ -76,9 +76,11 @@ if __name__ == '__main__':
 
 Java = '''
 # Thought:
+
 dp[i + 1] = dp[i]
 dp[i + 1] = dp[i - 1] + dp[i + 1]
-# 90.08% 1ms
+
+# 1ms 96.14%
 class Solution {
     public int numDecodings(String s) {
         if (s == null || s.length() == 0) return 0;
@@ -101,8 +103,8 @@ dp[1] means the way to decode a string of size 1.
 I then check one digit and two digit combination and save the results along the way.
 In the end, dp[n] will be the end result.
 
-# 25.01% 5ms
-public class Solution {
+# 3ms 54.05%
+class Solution {
     public int numDecodings(String s) {
         if(s == null || s.length() == 0) {
             return 0;
@@ -125,8 +127,8 @@ public class Solution {
     }
 }
 
-#54.77% 4ms
-public class Solution {
+# 5ms 23.04%
+class Solution {
     public int numDecodings(String s) {
         int n = s.length();
         if (n == 0) return 0;
@@ -144,8 +146,8 @@ public class Solution {
 }
 
 # DFS:
-# 3.45% 11ms
-public class Solution {
+# 8ms 10.85%
+class Solution {
 
     public int numDecodings(String s) {
         if( s == null || s.length() == 0) return 0;
@@ -170,6 +172,44 @@ public class Solution {
         }
         map.put(s, count);
         return count;
+    }
+}
+
+# 1ms 96.14%
+class Solution {
+    public int numDecodings(String s) {
+        if (s == null || s.length() == 0 || s.startsWith("0")) {
+            return 0;
+        }
+
+        int left = 1;
+        int right = 1;
+
+        for (int i = 1; i < s.length(); i++) {
+            if (isImpossible(s.charAt(i - 1), s.charAt(i))) {
+                return 0;
+            } else if (isDouble(s.charAt(i - 1), s.charAt(i)) && (i == s.length() - 1 || s.charAt(i + 1) != '0')) {
+                int tmp = left + right;
+                left = right;
+                right = tmp;
+            } else {
+                left = right;
+            }
+        }
+
+        return right;
+    }
+
+    private boolean isDouble(char a, char b) {
+        int a1 = a - '0';
+        int b1 = b - '0';
+        return b1 != 0 && (a1 == 1 || (a1 == 2 && b1 <= 6));
+    }
+
+    private boolean isImpossible(char a, char b) {
+        int a1 = a - '0';
+        int b1 = b - '0';
+        return b1 == 0 && (a1 == 0 || a1 > 2);
     }
 }
 '''

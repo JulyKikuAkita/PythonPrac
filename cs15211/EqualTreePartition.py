@@ -3,6 +3,7 @@ __source__ = 'https://leetcode.com/problems/equal-tree-partition/discuss/'
 # Space: O()
 #
 # Description: Leetcode # 663. Equal Tree Partition
+#
 # Given a binary tree with n nodes,
 # your task is to check if it's possible to partition the tree to two trees
 # which have the equal sum of values after removing exactly one edge on the original tree.
@@ -63,7 +64,7 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
+# Thought: https://leetcode.com/problems/equal-tree-partition/solution/
 
 /**
  * Definition for a binary tree node.
@@ -75,7 +76,7 @@ Java = '''
  * }
  */
 
-#86.56% 14ms
+# 7ms 98.08%
 class class Solution {
     int judge=0;
     public boolean checkEqualTree(TreeNode root) {
@@ -105,8 +106,8 @@ class class Solution {
     }
 }
 
-#hash map
-# 59.26% 20ms
+# hash map
+# 14ms 31.49%
 class Solution {
     public boolean checkEqualTree(TreeNode root) {
         Map<Integer, Integer> map = new HashMap<Integer, Integer>();

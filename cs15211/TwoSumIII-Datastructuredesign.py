@@ -1,9 +1,10 @@
-__source__ = 'https://leetcode.com/problems/two-sum-iii-data-structure-design/description/'
+__source__ = 'https://leetcode.com/problems/two-sum-iii-data-structure-design/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/two-sum-iii-data-structure-design.py
 # Time:  O(n)
 # Space: O(n)
 #
 # Description: Leetcode # 170. Two Sum III - Data structure design
+#
 # Design and implement a TwoSum class. It should support the following operations: add and find.
 #
 # add - Add the number to an internal data structure.
@@ -58,10 +59,11 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
-# 18.95 % 394ms
+# Thought:
 # Map with count
-public class TwoSum {
+
+# 163ms 54.80%
+class TwoSum {
     private HashMap<Integer, Integer> map = new HashMap<Integer, Integer>();
 
     public void add(int number) {
@@ -80,9 +82,34 @@ public class TwoSum {
     }
 }
 
-#67.24%  287ms
+# 128ms 91.32%
+class TwoSum {
+    private List<Integer> list = new ArrayList<Integer>();
+    private Map<Integer, Integer> map = new HashMap<Integer, Integer>();
+
+    // Add the number to an internal data structure.
+	public void add(int number) {
+	    if (map.containsKey(number)) map.put(number, map.get(number) + 1);
+	    else {
+	        map.put(number, 1);
+	        list.add(number);
+	    }
+	}
+
+    // Find if there exists any pair of numbers which sum is equal to the value.
+	public boolean find(int value) {
+	    for (int i = 0; i < list.size(); i++){
+	        int num1 = list.get(i), num2 = value - num1;
+	        if ((num1 == num2 && map.get(num1) > 1) || (num1 != num2 && map.containsKey(num2))) return true;
+	    }
+	    return false;
+	}
+}
+
+
 # Map with Int
-public class TwoSum {
+# 151ms 76.94%
+class TwoSum {
     private Map<Integer, Boolean> map = new HashMap<>();
 
     // Add the number to an internal data structure.
@@ -106,10 +133,10 @@ public class TwoSum {
 }
 
 # LinkedHashmap with Long
-# 99.27% 143ms
-import java.util.LinkedHashMap;
+# 200ms 25.31%
 
-public class TwoSum {
+import java.util.LinkedHashMap;
+class TwoSum {
     Map<Long, Boolean> numDuplicateMap;
 
     public TwoSum() {
@@ -128,48 +155,6 @@ public class TwoSum {
 	        long key = entry.getKey();
 	        boolean val = entry.getValue();
 	        if (numDuplicateMap.containsKey((long) value - key) && (value >> 1 != key || val)) {
-	            return true;
-	        }
-	    }
-	    return false;
-	}
-}
-
-
-// Your TwoSum object will be instantiated and called as such:
-// TwoSum twoSum = new TwoSum();
-// twoSum.add(number);
-// twoSum.find(value);
-'''
-
-Java3= '''
-# LinkedHashmap with Int
-
-# 88.88% 222ms
-import java.util.LinkedHashMap;
-
-public class TwoSum {
-    Map<Integer, Boolean> map;
-
-    public TwoSum() {
-        map = new LinkedHashMap<>();
-    }
-
-    // Add the number to an internal data structure.
-	public void add(int number) {
-	    if (map.containsKey(number)) {
-	        map.put(number, true);
-	    } else {
-	        map.put(number, false);
-	    }
-	}
-
-    // Find if there exists any pair of numbers which sum is equal to the value.
-	public boolean find(int value) {
-	    for (Map.Entry<Integer, Boolean> entry : map.entrySet()) {
-	        int key = entry.getKey();
-	        boolean val = entry.getValue();
-	        if (map.containsKey(value - key) && (key << 1 != value || val)) {
 	            return true;
 	        }
 	    }

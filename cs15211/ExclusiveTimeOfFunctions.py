@@ -56,7 +56,7 @@ __source__ = 'https://leetcode.com/problems/exclusive-time-of-functions/descript
 # Otherwise, we ended the function that is most recent in our stack.
 #
 import unittest
-#96ms
+# 60ms 97.10%
 class Solution(object):
     def exclusiveTime(self, n, logs):
         """
@@ -86,10 +86,11 @@ class Solution(object):
 # 2) In the second approach, we try to record the "penalty" a function takes.
 # For example, if function 0 is running at time [1, 10], and function 1 runs at time [3, 5],
 # then we know function 0 ran for 10 units of time, less a 3 unit penalty. The idea is this:
-# Whenever a function completes using T time, any functions that were running in the background take a penalty of T.
+# Whenever a function completes using T time,
+# any functions that were running in the background take a penalty of T.
 # Here is a slow version to illustrate the idea:
 #
-#129ms
+# 72ms 32.71%
 class Solution2(object):
     def exclusiveTime(self, n, logs):
         """
@@ -141,9 +142,10 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
-# 60.98% 45ms
-public class Solution {
+# Thought: https://leetcode.com/problems/exclusive-time-of-functions/solution/
+
+# 25ms 74.71%
+class Solution {
     public int[] exclusiveTime(int n, List < String > logs) {
         Stack < Integer > stack = new Stack < > ();
         int[] res = new int[n];
@@ -168,7 +170,7 @@ public class Solution {
     }
 }
 
-$89.58% 41ms
+# 23ms 92.46%
 class Solution {
     public int[] exclusiveTime(int n, List<String> logs) {
         int[] res = new int[n];
@@ -188,8 +190,8 @@ class Solution {
     }
 }
 
-# 99,.87% 22ms
 # self-defined stack
+# 8ms 100%
 public class Solution {
     private static class Info {
         int id;

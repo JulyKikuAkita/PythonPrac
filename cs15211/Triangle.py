@@ -91,7 +91,8 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
+# Thought:
+
 Thought: This problem is quite well-formed in my opinion. The triangle has a tree-like structure,
 which would lead people to think about traversal algorithms such as DFS. However, if you look closely,
 you would notice that the adjacent nodes always share a 'branch'. In other word, there are overlapping subproblems.
@@ -122,8 +123,8 @@ we can simply set minpath as a 1D array, and iteratively update itself:
 For the kth level:
 minpath[i] = min( minpath[i], minpath[i+1]) + triangle[k][i];
 
-#DP Bottom-up
-#62.86% 8ms
+# DP Bottom-up
+# 6ms 54.14%
 class Solution {
     public int minimumTotal(List<List<Integer>> triangle) {
         int[] dp = new int[triangle.size()+1];
@@ -135,10 +136,10 @@ class Solution {
         return dp[0];
     }
 }
-}
 
-# 97.20% 6ms top-down
-public class Solution {
+# DP top-down
+# 5ms 68.30%
+class Solution {
     public int minimumTotal(List<List<Integer>> triangle) {
         int depth = triangle.size();
         if (depth == 0) {

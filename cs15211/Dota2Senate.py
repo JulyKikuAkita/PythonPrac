@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/dota2-senate/description/'
+__source__ = 'https://leetcode.com/problems/dota2-senate/'
 # Time:  O()
 # Space: O()
 #
@@ -33,7 +33,8 @@ __source__ = 'https://leetcode.com/problems/dota2-senate/description/'
 # Output: "Radiant"
 # Explanation: The first senator comes from Radiant and he can just ban the next senator's right in the round 1.
 # And the second senator can't exercise any rights any more since his right has been banned.
-# And in the round 2, the first senator can just announce the victory since he is the only guy in the senate who can vote.
+# And in the round 2, the first senator can just announce
+# the victory since he is the only guy in the senate who can vote.
 # Example 2:
 # Input: "RDD"
 # Output: "Dire"
@@ -41,7 +42,8 @@ __source__ = 'https://leetcode.com/problems/dota2-senate/description/'
 # The first senator comes from Radiant and he can just ban the next senator's right in the round 1.
 # And the second senator can't exercise any rights anymore since his right has been banned.
 # And the third senator comes from Dire and he can ban the first senator's right in the round 1.
-# And in the round 2, the third senator can just announce the victory since he is the only guy in the senate who can vote.
+# And in the round 2, the third senator can just announce
+# the victory since he is the only guy in the senate who can vote.
 # Note:
 # The length of the given string will in the range [1, 10,000].
 
@@ -54,7 +56,8 @@ __source__ = 'https://leetcode.com/problems/dota2-senate/description/'
 #
 import unittest
 import collections
-# 145ms
+
+# 132ms 16.95%
 class Solution(object):
     def predictPartyVictory(self, senate):
         """
@@ -91,7 +94,8 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
+# Thought: https://leetcode.com/problems/dota2-senate/solution/
+
 This is obliviously a greedy algorithm problem.
 Each senate R must ban its next closest senate D who is from another party,
 or else D will ban its next senate from R's party.
@@ -101,8 +105,8 @@ respectively. During each round, we delete the banned senate's index;
 and plus the remainning senate's index with n(the length of the input string senate),
 then move it to the back of its respective queue.
 
-#65.48% 26ms
-public class Solution {
+# 20ms 51.05%
+class Solution {
     public String predictPartyVictory(String senate) {
         Queue<Integer> q1 = new LinkedList<Integer>(), q2 = new LinkedList<Integer>();
         int n = senate.length();
@@ -119,8 +123,8 @@ public class Solution {
     }
 }
 
-#97.46% 13ms
-public class Solution {
+# 9ms 96.50%
+class Solution {
     final char BAN = 'B';
     int radiant = 0, dire = 0;
     public String predictPartyVictory(String senate) {

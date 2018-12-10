@@ -5,6 +5,7 @@ __source__ = 'https://leetcode.com/problems/evaluate-reverse-polish-notation/des
 # Stack
 #
 # Description: Leetcode # 150. Evaluate Reverse Polish Notation
+#
 # http://en.wikipedia.org/wiki/Reverse_Polish_notation
 #
 # Evaluate the value of an arithmetic expression in Reverse Polish Notation.
@@ -73,7 +74,7 @@ if __name__ == '__main__':
 Java = '''
 #Thought: Stack
 
-#45.40% 14ms
+# 7ms 83.46%
 public class Solution {
     public int evalRPN(String[] tokens) {
         Stack<Integer> stack = new Stack<>();
@@ -104,7 +105,7 @@ public class Solution {
     }
 }
 
-#98.67% 5ms
+# 2ms 100%
 class Solution {
     int index;
 	public int evalRPN(String[] tokens){
@@ -137,8 +138,8 @@ class Solution {
 	}
 }
 
-#45.40% 14ms
-public class Solution {
+# 7ms 83.46%
+class Solution {
     public int evalRPN(String[] tokens) {
         Stack<Integer> stack = new Stack<>();
         for (String token : tokens) {

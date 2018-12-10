@@ -51,7 +51,7 @@ import unittest
 # to be '2017:07:02'. Now for each log, if the truncated timetuple cur is between start and end,
 # then we should add the id of that log into our answer.
 
-#62ms
+# 44ms 61.82%
 class LogSystem(object):
 
     def __init__(self):
@@ -95,10 +95,10 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/problems/design-log-storage-system/solution/
+# Thought: https://leetcode.com/problems/design-log-storage-system/solution/
 
-#80.36% 170ms
-public class LogSystem {
+# 90ms 94.46%
+class LogSystem {
 
     List<String[]> timestamps = new LinkedList<>();
     List<String> units = Arrays.asList("Year", "Month", "Day", "Hour", "Minute", "Second");
@@ -125,8 +125,8 @@ public class LogSystem {
  */
 
 
-#71.62% 175ms
-public class LogSystem {
+# 93ms 90.23%
+class LogSystem {
 
     public LogSystem() {
 
@@ -153,8 +153,8 @@ public class LogSystem {
     private int[] indices = new int[]{4, 7, 10, 13, 16, 19};
 }
 
-#32.02% 205ms
-public class LogSystem {
+# 169ms 6.19%
+class LogSystem {
     TreeMap < Long, Integer > map;
     public LogSystem() {
         map = new TreeMap < Long, Integer > ();

@@ -1,5 +1,3 @@
-import heapq
-
 __source__ = 'https://leetcode.com/problems/employee-free-time/'
 # Time:  O()
 # Space: O()
@@ -36,6 +34,7 @@ __source__ = 'https://leetcode.com/problems/employee-free-time/'
 # 0 <= schedule[i].start < schedule[i].end <= 10^8.
 #
 import unittest
+import heapq
 
 #100ms 82.03%
 # Definition for an interval.
@@ -99,14 +98,13 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/problems/employee-free-time/solution/
+# Thought: https://leetcode.com/problems/employee-free-time/solution/
 
 Approach #1: Events (Line Sweep) [Accepted]
 Complexity Analysis
 Time Complexity: O(ClogC), where C is the number of intervals across all employees.
 Space Complexity: O(C).
 
-#69ms 14.27%
 /**
  * Definition for an interval.
  * public class Interval {
@@ -116,6 +114,8 @@ Space Complexity: O(C).
  *     Interval(int s, int e) { start = s; end = e; }
  * }
  */
+
+# 90ms 4.20%
 class Solution {
     public List<Interval> employeeFreeTime(List<List<Interval>> schedule) {
         final int OPEN = 0, CLOSE = 1;
@@ -143,7 +143,7 @@ class Solution {
     }
 }
 
-#13ms 97.15%
+# 13ms 97.15%
 class Solution {
     public List<Interval> employeeFreeTime(List<List<Interval>> schedule) {
         int size = 0;
