@@ -2,7 +2,8 @@ __source__ = 'https://github.com/kamyu104/LeetCode/blob/master/Python/find-right
 # Time:  O(nlogn)
 # Space: O(n)
 #
-# Description:
+# Description: 436. Find Right Interval
+#
 # Given a set of intervals, for each of the interval i,
 # check if there exists an interval j whose start point is bigger than or
 # equal to the end point of the interval i, which can be called that j is on the "right" of i.
@@ -47,6 +48,8 @@ import bisect
 #     def __init__(self, s=0, e=0):
 #         self.start = s
 #         self.end = e
+
+# 168ms 92.59%
 class Solution(object):
     def findRightInterval(self, intervals):
         """
@@ -69,8 +72,8 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
-1. TreeMap: O(nlogn)
+# Thought: https://leetcode.com/problems/find-right-interval/solution/
+
 /**
  * Definition for an interval.
  * public class Interval {
@@ -80,7 +83,10 @@ Java = '''
  *     Interval(int s, int e) { start = s; end = e; }
  * }
  */
-public class Solution {
+
+1. TreeMap: O(nlogn)
+# 57ms 36.19%
+class Solution {
     public int[] findRightInterval(Interval[] intervals) {
         int[] result = new int[intervals.length];
         java.util.NavigableMap<Integer, Integer> intervalMap = new TreeMap<>();
@@ -102,7 +108,8 @@ Sort starts
 For each end, find leftmost start using binary search
 To get the original index, we need a map
 
-public class Solution {
+# 25ms 78.28%
+class Solution {
     public int[] findRightInterval(Interval[] intervals) {
         Map<Integer, Integer> map = new HashMap<>();
         List<Integer> starts = new ArrayList<>();

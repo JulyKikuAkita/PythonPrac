@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/integer-replacement/description/'
+__source__ = 'https://leetcode.com/problems/integer-replacement/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/integer-replacement.py
 # Time:  O(logn)
 # Space: O(1)
@@ -41,6 +41,7 @@ __source__ = 'https://leetcode.com/problems/integer-replacement/description/'
 #
 import unittest
 # Iterative solution.
+# 20ms 99.53%
 class Solution(object):
     def integerReplacement(self, n):
         """
@@ -66,6 +67,7 @@ class Solution(object):
 # Time:  O(logn)
 # Space: O(logn)
 # Recursive solution.
+# 20ms 99.53%
 class Solution2(object):
     def integerReplacement(self, n):
         """
@@ -89,7 +91,8 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
+# Thought:
+
 1. Bit manipulation
 The first step towards solution is to realize that you're allowed to remove the LSB only if it's zero.
 And to reach the target as fast as possible, removing digits is the best way to go.
@@ -103,11 +106,14 @@ to increase the evenness of the number. Wrong! Look at this example:
 And yet, this is not the best way because
 
 111011 -> 111100 -> 11110 -> 1111 -> 10000 -> 1000 -> 100 -> 10 -> 1
-See? Both 111011 -> 111010 and 111011 -> 111100 remove the same number of 1's, but the second way is better.
+See? Both 111011 -> 111010 and 111011 -> 111100 remove the same number of 1's,
+but the second way is better.
 
 So, we just need to remove as many 1's as possible, doing +1 in case of a tie?
-Not quite. The infamous test with n=3 fails for that strategy because 11 -> 10 -> 1 is better than 11 -> 100 -> 10 -> 1.
-Fortunately, that's the only exception (or at least I can't think of any other, and there are none in the tests).
+Not quite. The infamous test with n=3 fails for that strategy
+because 11 -> 10 -> 1 is better than 11 -> 100 -> 10 -> 1.
+Fortunately, that's the only exception (or at least I can't think of any other,
+and there are none in the tests).
 
 So the logic is:
 
@@ -117,8 +123,8 @@ Otherwise, increment n.
 
 Use long to avoid overflow (if n is Integer.MAX_VALUE).
 
-#39.02% 4ms
-public class Solution {
+# 2ms 98.68%
+class Solution {
     public int integerReplacement(int n) {
         int c = 0;
         while (n != 1) {
@@ -136,12 +142,14 @@ public class Solution {
 }
 
 Of course, doing bitCount on every iteration is not the best way.
-It is enough to examine the last two digits to figure out whether incrementing or decrementing will give more 1's.
+It is enough to examine the last two digits to figure out
+whether incrementing or decrementing will give more 1's.
 Indeed, if a number ends with 01, then certainly decrementing is the way to go. Otherwise,
 if it ends with 11, then certainly incrementing is at least as good as decrementing (*011 -> *010 / *100)
 or even better (if there are three or more 1's). This leads to the following solution:
 
-public class Solution {
+# 3ms 67.42%
+class Solution {
      public int integerReplacement2(int n) {
         int c = 0;
         while (n != 1) {
@@ -158,7 +166,7 @@ public class Solution {
     }
 }
 
-#39.02% 4ms
+# 3ms 67.42%
 class Solution {
     public int integerReplacement(int n) {
         if(n> 0 && n<=3) return n-1;

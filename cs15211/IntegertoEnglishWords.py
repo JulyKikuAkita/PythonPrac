@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/integer-to-english-words/description/'
+__source__ = 'https://leetcode.com/problems/integer-to-english-words/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/integer-to-english-words.py
 # Time:  O(logn), n is the value of the integer
 # Space: O(1)
@@ -86,9 +86,10 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
-#43.12% 4ms
-public class Solution {
+# Thought: https://leetcode.com/problems/integer-to-english-words/solution/
+
+# 2ms 80.62%
+class Solution {
     private static final String[] BASE = new String[] {"Thousand", "Million", "Billion"};
     private static final String[] TENS = new String[] {"Twenty", "Thirty", "Forty", "Fifty", "Sixty", "Seventy", "Eighty", "Ninety"};
     private static final String[] NUMS = new String[] {"One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen", "Seventeen", "Eighteen", "Nineteen"};
@@ -122,8 +123,8 @@ public class Solution {
     }
 }
 
-# 90.12% 3ms
-public class Solution {
+# 1ms 100%
+class Solution {
     private static final String[] TENS = new String[] {"Twenty", "Thirty", "Forty", "Fifty", "Sixty", "Seventy", "Eighty", "Ninety"};
     private static final String[] NUMS = new String[] {"One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen", "Seventeen", "Eighteen", "Nineteen"};
 
@@ -156,7 +157,7 @@ public class Solution {
     }
 }
 
-# 90.12% 3ms
+# 2ms 80.62%
 class Solution {
     private static final String[] lessThan20 = {"", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen", "Seventeen", "Eighteen", "Nineteen"};
     private static final String[] tens = {"", "Ten", "Twenty", "Thirty", "Forty", "Fifty", "Sixty", "Seventy", "Eighty", "Ninety"};

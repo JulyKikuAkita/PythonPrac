@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/house-robber-iii/#/description'
+__source__ = 'https://leetcode.com/problems/house-robber-iii/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/house-robber-iii.py
 # Time:  O(n)
 # Space: O(h)
@@ -87,7 +87,9 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-Thought: https://discuss.leetcode.com/topic/39834/step-by-step-tackling-of-the-problem
+# Thought:
+
+https://discuss.leetcode.com/topic/39834/step-by-step-tackling-of-the-problem
 Step I -- Think naively
 
 At first glance, the problem exhibits the feature of "optimal substructure": 
@@ -121,8 +123,8 @@ However if root is not robbed, the next level of available subtrees would just b
  *     TreeNode(int x) { val = x; }
  * }
  */
-# 16.81% 1031ms
-public class Solution {
+# 826ms 18.17%
+class Solution {
     public int rob(TreeNode root) {
         if (root == null) return 0;
         return Math.max(robInclude(root), robExclude(root));
@@ -139,8 +141,9 @@ public class Solution {
     }
 }
 
-# super naive 8.67%
-public class Solution {
+# super naive
+# TLE
+class Solution {
     public int rob(TreeNode root) {
         if (root == null) return 0;
 
@@ -158,8 +161,9 @@ public class Solution {
     }
 }
 
-# Naive 6.44% 1114ms
-public class Solution {
+# Naive
+# 1063ms 6.27%
+class Solution {
     public int rob(TreeNode root) {
         return robSub(root);
     }
@@ -195,8 +199,8 @@ which resulted in bad time performance. Now if you recall the two conditions for
 A naive way to implement DP here is to use a hash map to record the results for visited subtrees.
 
 # DFS + memorization
-# 32.76% 9ms
-public class Solution {
+# 8ms 39.07%
+class Solution {
     public int rob(TreeNode root) {
         return robSub(root, new HashMap<>());
     }
@@ -246,8 +250,8 @@ For the 2nd element of rob(root), however, we only need to add up the 1st elemen
 As you can see, by keeping track of the information of both scenarios, 
 we decoupled the subproblems and the solution essentially boiled down to a greedy one.
 
-#81.61% 1ms
-public class Solution {
+# 0ms 100%
+class Solution {
     public int rob(TreeNode root) {
         int[] res = robSub(root);
         return Math.max(res[0], res[1]);
@@ -266,8 +270,8 @@ public class Solution {
     }
 }
 
-#52.19% 2ms
-public class Solution {
+# 0ms 100%
+class Solution {
     public int rob(TreeNode root) {
         return dfs(root)[0];
     }
@@ -284,8 +288,8 @@ public class Solution {
     }
 }
 
-#11.08% 1084ms
-public class Solution {
+# 9ms 37.17%
+class Solution {
     public int rob(TreeNode root) {
         return robSub(root);
     }

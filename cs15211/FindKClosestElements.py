@@ -1,11 +1,12 @@
 __source__ = 'https://leetcode.com/problems/find-k-closest-elements/description/'
-# Time:  O()
-# Space: O()
+# Time:  O(nlogn)
+# Space: O(k)
 #
 # Description: Leetcode # 658. Find K Closest Elements
 #
-#Given a sorted array, two integers k and x, find the k closest elements to x in the array.
-# The result should also be sorted in ascending order. If there is a tie, the smaller elements are always preferred.
+# Given a sorted array, two integers k and x, find the k closest elements to x in the array.
+# The result should also be sorted in ascending order.
+# If there is a tie, the smaller elements are always preferred.
 #
 # Example 1:
 # Input: [1,2,3,4,5], k=4, x=3
@@ -24,7 +25,7 @@ __source__ = 'https://leetcode.com/problems/find-k-closest-elements/description/
 # Binary Search
 # Similar Questions
 # Guess Number Higher or Lower Guess Number Higher or Lower II
-
+#
 import unittest
 
 class Solution(object):
@@ -40,9 +41,9 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
-#121 ms
-O(nlog(n)) Time Solution:
+# Thought: https://leetcode.com/problems/find-k-closest-elements/solution/
+# 121 ms
+O(nlog(n)) Time:
 public class Solution {
     public List<Integer> findClosestElements(List<Integer> arr, int k, int x) {
          Collections.sort(arr, (a,b) -> a == b ? a - b : Math.abs(a-x) - Math.abs(b-x));
@@ -53,7 +54,7 @@ public class Solution {
 }
 
 O(n) Time Solution:
-#47ms
+# 47ms
 public class Solution {
     public List<Integer> findClosestElements(List<Integer> arr, int k, int x) {
         List<Integer> less = new ArrayList<>(), greater = new ArrayList<>(),
@@ -122,5 +123,25 @@ public class Solution {
         }
         return arr.subList(lo, lo + k);
 	}
+}
+
+# 7ms 90.18%
+class Solution {
+    public List<Integer> findClosestElements(int[] arr, int k, int x) {
+        int lo = 0;
+		int hi = arr.length - 1;
+		while (hi - lo >= k) {
+			if (Math.abs(arr[lo] - x) > Math.abs(arr[hi] - x)) {
+				lo++;
+			} else {
+				hi--;
+			}
+		}
+		List<Integer> result = new ArrayList<>(k);
+		for (int i = lo; i <= hi; i++) {
+			result.add(arr[i]);
+		}
+		return result;
+    }
 }
 '''

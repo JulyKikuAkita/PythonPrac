@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/isomorphic-strings/description/'
+__source__ = 'https://leetcode.com/problems/isomorphic-strings/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/isomorphic-strings.py
 # Time:  O(n)
 # Space: O(1)
@@ -101,8 +101,9 @@ if __name__ == '__main__':
 
 Java = '''
 # Thought:
-# 72.68% 10ms
-public class Solution {
+
+# 5ms 83.78%
+class Solution {
     public boolean isIsomorphic(String s1, String s2) {
         int[] m = new int[512];
         for (int i = 0; i < s1.length(); i++) {
@@ -113,8 +114,8 @@ public class Solution {
     }
 }
 
-# 72.68% 10ms
-public class Solution {
+# 7ms 75.18%
+class Solution {
     public boolean isIsomorphic(String s, String t) {
         int[]s_bucket=new int[256];
         int[]t_bucket=new int[256];
@@ -127,9 +128,9 @@ public class Solution {
     }
 }
 
-# 72.68% 10ms
 # Same as above
-public class Solution {
+# 4ms 91.72%
+class Solution {
     public boolean isIsomorphic(String s, String t) {
         int[] s_bucket = new int[256];
         int[] t_bucket = new int[256];
@@ -145,8 +146,8 @@ public class Solution {
     }
 }
 
-# 94.67% 6ms
-public class Solution {
+# 4ms 91.72%
+class Solution {
     public boolean isIsomorphic(String s, String t) {
         if (s.length() != t.length()) {
             return false;
@@ -173,8 +174,8 @@ public class Solution {
     }
 }
 
-#27.06% 25ms
-public class Solution {
+# 10ms 59.25%
+class Solution {
     public boolean isIsomorphic(String s, String t) {
         if(s == null || s.length() <= 1) return true;
         HashMap<Character, Character> map = new HashMap<Character, Character>();

@@ -1,9 +1,10 @@
-__source__ = 'https://leetcode.com/problems/hamming-distance/description/'
+__source__ = 'https://leetcode.com/problems/hamming-distance'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/hamming-distance.py
 # Time:  O(1)
 # Space: O(1)
-
+#
 # Description: Leetcode # 461. Hamming Distance
+#
 # The Hamming distance between two integers is the number of positions
 # at which the corresponding bits are different.
 #
@@ -45,6 +46,7 @@ class Solution(object):
             z &= z - 1
         return distance
 
+    # 20ms 100%
     def hammingDistanceIlee(self, x, y):
         """
         :type x: int
@@ -59,6 +61,7 @@ class Solution(object):
             #print z, 1&z
         return ans
 
+    # 20ms 100%
     def hammingDistance2(self, x, y):
         """
         :type x: int
@@ -76,21 +79,34 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-# Thought: https://leetcode.com/problems/number-of-1-bits/solution/
+# Thought:
 
-#4.82% 17ms
-public class Solution {
+# 6ms 71.06%
+class Solution {
     public int hammingDistance(int x, int y) {
         return Integer.bitCount(x ^ y);
     }
 }
 
-#75.86% 10ms
-public class Solution {
+# 6ms 71.06%
+class Solution {
     public int hammingDistance(int x, int y) {
         int xor = x ^ y, count = 0;
         for (int i=0;i<32;i++) count += (xor >> i) & 1;
         return count;
+    }
+}
+
+# 4ms 100%
+class Solution {
+    public int hammingDistance(int x, int y) {
+        int number = x ^ y;
+        int ans = 0;
+        while (number > 0) {
+            ans += number & 1;
+            number = number >> 1;
+        }
+        return ans;
     }
 }
 '''

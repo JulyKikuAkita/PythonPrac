@@ -1,8 +1,10 @@
-__source_ = 'https://leetcode.com/problems/interleaving-string/description/'
+__source_ = 'https://leetcode.com/problems/interleaving-string/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/interleaving-string.py
 # Time:  O(m * n)
 # Space: O(m + n)
 # DP
+# Description: Leetcode # 97. Interleaving String
+#
 # Given s1, s2, s3, find whether s3 is formed by the interleaving of s1 and s2.
 #
 # For example,
@@ -107,10 +109,11 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/problems/interleaving-string/solution/
+# Thought: https://leetcode.com/problems/interleaving-string/solution/
 Thought: https://leetcode.com/problems/interleaving-string/tabs/solution#approach-2-recursion-with-memoization-accepted
-#68%  4ms
-public class Solution {
+
+# 2ms 88.48%
+class Solution {
     public boolean isInterleave(String s1, String s2, String s3) {
         int l1 = s1.length();
         int l2 = s2.length();
@@ -144,8 +147,8 @@ public class Solution {
 
 
 
-#84.9% 3ms
-public class Solution {
+# 2ms 88.48%
+class Solution {
     public boolean isInterleave(String s1, String s2, String s3) {
         int len1 = s1.length();
         int len2 = s2.length();
@@ -172,8 +175,8 @@ public class Solution {
     }
 }
 
-#84.9% 3ms
-public class Solution {
+# 3ms 73.14%
+class Solution {
     public boolean isInterleave(String s1, String s2, String s3) {
         int len1 = s1.length();
         int len2 = s2.length();
@@ -200,8 +203,8 @@ public class Solution {
     }
 }
 
-#68.5% 4ms
-public class Solution {
+# 2ms 88.48%
+class Solution {
     public boolean isInterleave(String s1, String s2, String s3) {
         int l1 = s1.length();
         int l2 = s2.length();

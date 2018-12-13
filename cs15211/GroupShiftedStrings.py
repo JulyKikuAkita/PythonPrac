@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/group-shifted-strings/description/'
+__source__ = 'https://leetcode.com/problems/group-shifted-strings/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/group-shifted-strings.py
 # Time:  O(nlogn)
 # Space: O(n)
@@ -57,6 +57,7 @@ class Solution:
             hashcode += unichr(ord('a') + ((ord(s[i]) - base + 26) % 26))
         return hashcode
 
+# 36ms 19.72%
 class Solution2(object):
     def groupStrings(self, strings):
         """
@@ -83,13 +84,14 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
+# Thought:
+
 The basic idea is to set a key for each group:
 the sum of the difference between the adjacent chars in one string.
 Then we can easily group the strings belonging to the same shifting sequence with the same key.
 
-#1.06% 101ms
-public class Solution {
+# 61ms 1.94%
+class Solution {
     public List<List<String>> groupStrings(String[] strings) {
         return new ArrayList(Stream.of(strings).collect(Collectors.groupingBy(
             s -> s.chars().mapToObj(c -> (c - s.charAt(0) + 26) % 26)
@@ -98,7 +100,7 @@ public class Solution {
     }
 }
 
-#4.49% 72ms
+# 61ms 1.94%
 class Solution {
     public List<List<String>> groupStrings(String[] strs) {
         HashMap<String, ArrayList<String>> map = new HashMap<String, ArrayList<String>>();
@@ -106,7 +108,8 @@ class Solution {
         for (String s : strs) {
             String key = "";
             for (int i = 1; i < s.length(); i++)
-                key += String.format("%2d", (s.charAt(i) - s.charAt(i-1) + 26) % 26);//Difference from the previous char.
+                //Difference from the previous char.
+                key += String.format("%2d", (s.charAt(i) - s.charAt(i-1) + 26) % 26);
             if (!map.containsKey(key)) map.put(key, new ArrayList<String>());
             map.get(key).add(s);
         }
@@ -114,7 +117,7 @@ class Solution {
     }
 }
 
-# 98.42%
+# 1ms 100%
 class Solution {
     public List<List<String>> groupStrings(String[] strings) {
         List<List<String>> result = new ArrayList<>();

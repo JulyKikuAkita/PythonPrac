@@ -4,6 +4,7 @@ __source__ = 'https://leetcode.com/problems/graph-valid-tree/description/'
 # Space: O(|V| + |E|)
 #
 # Description: Leetcode # 261. Graph Valid Tree
+#
 # Given n nodes labeled from 0 to n - 1 and a list of undirected edges
 # (each edge is a pair of nodes),
 # write a function to check whether these edges make up a valid tree.
@@ -169,9 +170,10 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
-#61.51% 1ms
-public class Solution {
+# Thought:
+
+# 0ms 100%
+class Solution {
     public boolean validTree(int n, int[][] edges) {
         if (n != edges.length + 1) {
             return false;
@@ -215,8 +217,8 @@ public class Solution {
     }
 }
 
-#61.51% 1ms
-public class Solution {
+# 0ms 100%
+class Solution {
     public boolean validTree(int n, int[][] edges) {
         int[] array = new int[n];
         Arrays.fill(array, -1);
@@ -236,9 +238,39 @@ public class Solution {
     }
 }
 
-#DFS
-#39.06% 7ms
-public class Solution {
+# 0ms 100%
+class Solution {
+    public boolean validTree(int n, int[][] edges) {
+        if (n < 1 || edges.length != n - 1) {
+            return false;
+        }
+        int[] nodes = new int[n];
+        for (int i = 0; i < n; i++) {
+            nodes[i] = i;
+        }
+        for (int[] edge : edges) {
+            int i = find(nodes, edge[0]);
+            int j = find(nodes, edge[1]);
+            if (i == j) {
+                return false;
+            }
+            nodes[j] = i;
+        }
+        return true;
+    }
+
+    private int find(int[] nodes, int index) {
+        if (nodes[index] != index) {
+            return find(nodes, nodes[index]);
+        } else {
+            return index;
+        }
+    }
+}
+
+# DFS
+# 7ms 25.96%
+class Solution {
     public boolean validTree(int n, int[][] edges) {
         // initialize adjacency list
         List<List<Integer>> adjList = new ArrayList<List<Integer>>(n);

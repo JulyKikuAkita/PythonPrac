@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/find-k-pairs-with-smallest-sums/description/'
+__source__ = 'https://leetcode.com/problems/find-k-pairs-with-smallest-sums/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/find-k-pairs-with-smallest-sums.py
 # Time:  O(k * log(min(n, m, k))), where n is the size of num1, and m is the size of num2.
 # Space: O(min(n, m, k))
@@ -81,7 +81,8 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
+# Thought:
+
 Several solutions from naive to more elaborate.
 I found it helpful to visualize the input as an mxn matrix of sums,
 for example for nums1=[1,7,11], and nums2=[2,4,6]:
@@ -98,8 +99,8 @@ We can keep a "horizon" of possible candidates, implemented as a heap / priority
 and roughly speaking we'll grow from the top left corner towards the right/bottom.
 That's what my solution 5 does. Solution 4 is similar, not quite as efficient but a lot shorter and my favorite.
 
-#40.86% 71ms
-public class Solution {
+# 43ms 55.03%
+class Solution {
     public List<int[]> kSmallestPairs(int[] nums1, int[] nums2, int k) {
         PriorityQueue<int[]> pq = new PriorityQueue<>((a,b) -> a[0] + a[1] - b[0] - b[1]);
         List<int[]> res = new ArrayList<>();
@@ -118,8 +119,8 @@ public class Solution {
     }
 }
 
-#75.01% 7ms, 92.43% 6ms
-public class Solution {
+# 3ms 99.58%
+class Solution {
     public List<int[]> kSmallestPairs(int[] nums1, int[] nums2, int k) {
         List<int[]> result = new ArrayList<>(k);
         PriorityQueue<Pair> queue = new PriorityQueue<>();
@@ -155,14 +156,15 @@ public class Solution {
 
         @Override
         public int compareTo(Pair other) {
-            return Integer.compare(nums1[index1] + nums2[index2], other.nums1[other.index1] + other.nums2[other.index2]);
+            return Integer.compare(nums1[index1] + nums2[index2],
+            other.nums1[other.index1] + other.nums2[other.index2]);
         }
     }
 }
 
-#Don't like it
-#99.90% 4ms
-public class Solution {
+# Don't like it
+# 3ms 99.58%
+class Solution {
     public List<int[]> kSmallestPairs(int[] nums1, int[] nums2, int k) {
         List<int[]> res = new ArrayList<>();
         if (nums1.length == 0 || nums2.length == 0) return res;

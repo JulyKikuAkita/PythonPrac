@@ -35,7 +35,8 @@ __source__ = 'https://leetcode.com/problems/flood-fill/description/'
 #
 #
 import unittest
-# 56ms 82.65%
+
+# 52ms 100%
 class Solution(object):
     def floodFill(self, image, sr, sc, newColor):
         """
@@ -58,7 +59,7 @@ class Solution(object):
         dfs(sr, sc)
         return image
 
-# 68ms 24.66%
+# 92ms 11.15%
 class Solution2(object):
     def floodFill(self, image, sr, sc, newColor):
         """
@@ -95,9 +96,10 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/problems/flood-fill/solution/
+# Thought: https://leetcode.com/problems/flood-fill/solution/
+
 # DFS
-#9ms 100%
+# 10ms 77.49%
 class Solution {
     public int[][] floodFill(int[][] image, int sr, int sc, int newColor) {
         int originColor = image[sr][sc];
@@ -116,7 +118,7 @@ class Solution {
     }
 }
 
-#13ms 64.81%
+# 13ms 42.85%
 class Solution {
     final int[][] dirs ={{0,1}, {0,-1}, {1,0}, {-1,0}};
 
@@ -141,8 +143,7 @@ class Solution {
 }
 
 # BFS
-# 12ms, 93.29%
-
+# 11ms 68.07%
 class Solution {
     public int[][] floodFill(int[][] image, int sr, int sc, int newColor) {
         Queue<int[]> queue = new LinkedList();

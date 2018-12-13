@@ -26,7 +26,7 @@ __source__ = 'https://leetcode.com/problems/flatten-a-multilevel-doubly-linked-l
 #
 import unittest
 
-# DFS 860ms, 90.70%
+# DFS
 # Definition for a Node.
 class Node(object):
     def __init__(self, val, prev, next, child):
@@ -35,6 +35,7 @@ class Node(object):
         self.next = next
         self.child = child
 
+# 856ms 95.29%
 class Solution(object):
     def flatten(self, head):
         newhead, tail = self.flattenrec(head)
@@ -64,7 +65,7 @@ class Solution(object):
                     tail = tail.next
         return finalhead, tail
 
-#928ms 62.47%
+# 1272ms 14.61%
 class Solution2(object):
     def flatten(self, head):
         curr=head
@@ -90,8 +91,8 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: DFS
-# 1ms 100%
+# Thought:
+
 /*
 // Definition for a Node.
 class Node {
@@ -110,6 +111,9 @@ class Node {
     }
 };
 */
+
+# DFS
+# 1ms 100%
 class Solution {
     public Node flatten(Node head) {
         if (head == null) return null;

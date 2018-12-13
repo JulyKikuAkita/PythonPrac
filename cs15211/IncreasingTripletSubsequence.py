@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/increasing-triplet-subsequence/description/'
+__source__ = 'https://leetcode.com/problems/increasing-triplet-subsequence/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/increasing-triplet-subsequence.py
 # Time:  O(n)
 # Space: O(1)
@@ -72,9 +72,10 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
-#26.53% 7ms
-public class Solution {
+# Thought:
+
+# 4ms 50.74%
+class Solution {
     public boolean increasingTriplet(int[] nums) {
         int index = 1;
         while (index < nums.length) {
@@ -101,8 +102,8 @@ public class Solution {
     }
 }
 
-#54.63% 6ms
-public class Solution {
+# 3ms 92.22%
+class Solution {
     public boolean increasingTriplet(int[] nums) {
         if(nums == null){
             return false;

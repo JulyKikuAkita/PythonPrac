@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/invert-binary-tree/#/description'
+__source__ = 'https://leetcode.com/problems/invert-binary-tree/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/invert-binary-tree.py
 # Time:  O(n)
 # Space: O(h)
@@ -114,7 +114,7 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-Thought: https://leetcode.com/articles/invert-binary-tree/
+Thought: https://leetcode.com/problems/invert-binary-tree/solution/
 
 /**
  * Definition for a binary tree node.
@@ -128,7 +128,7 @@ Thought: https://leetcode.com/articles/invert-binary-tree/
 
 public class Solution {
     //DFS3
-    #0.60% 1ms
+    # 0ms 100%
     public TreeNode invertTree(TreeNode root) {
          if (root != null) {
             TreeNode tmp = root.left;
@@ -140,7 +140,7 @@ public class Solution {
         return root;
     }
     //DFS1
-    #19.41% 0ms
+    # 0ms 100%
     public TreeNode invertTree1(TreeNode root) {
         if (root == null) return null;
         //TreeNode tmp = root.left;
@@ -151,7 +151,7 @@ public class Solution {
         return root;
     }
     //DFS2
-    #19.41% 0ms
+    # 0ms 100%
     public TreeNode invertTree2(TreeNode root) {
         if (root == null) { return null;}
         TreeNode right = invertTree(root.right);
@@ -162,7 +162,7 @@ public class Solution {
     }
 
     //BFS1
-    #19.41% 0ms
+    # 0ms 100%
     public TreeNode invertTreeBFS(TreeNode root) {
         if (root == null) return null;
         Queue<TreeNode> queue = new LinkedList<TreeNode>();

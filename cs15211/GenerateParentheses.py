@@ -80,9 +80,10 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/problems/contains-duplicate/solution/
-99.54% 1ms
-public class Solution {
+# Thought: https://leetcode.com/problems/generate-parentheses/solution/
+
+# 1ms 100%
+class Solution {
     public List<String> generateParenthesis(int n) {
         List<String> result = new ArrayList<>();
         generate(result, new char[n << 1], 0, n, n);
@@ -106,8 +107,8 @@ public class Solution {
     }
 }
 
-#55.26 % 3ms
-public class Solution {
+# 1ms 100%
+class Solution {
     public List<String> generateParenthesis(int n) {
         List<String> result = new ArrayList<>();
         if (n <= 0) {
@@ -136,8 +137,8 @@ public class Solution {
     }
 }
 
-#55.26 % 3ms
-public class Solution {
+# 2ms 66.17%
+class Solution {
     public List<String> generateParenthesis(int n) {
         List<String> list = new ArrayList<String>();
         backtrack(list, "", 0, 0, n);
@@ -177,7 +178,8 @@ f(3): "("f(0)")"f(2), "("f(1)")"f(1), "("f(2)")"
 So f(n) = "("f(0)")"f(n-1) , "("f(1)")"f(n-2) "("f(2)")"f(n-3) ... "("f(i)")"f(n-1-i) ... "(f(n-1)")"
 
 
-public class Solution {
+# 2ms 66.17%
+class Solution {
     public List<String> generateParenthesis(int n) {
         List<List<String>> lists = new ArrayList<>();
         lists.add(Collections.singletonList(""));
@@ -197,10 +199,10 @@ public class Solution {
     }
 }
 
-# 88.92% 2ms
 # @Tesla interview
 // the input n is total length of parenthesis
 // need to validate if n is even number
+# 1ms 100%
 class Solution {
     public List<String> generateParenthesis(int n) {
         List<String> res = new ArrayList<>();

@@ -3,6 +3,7 @@ __source__ = 'https://leetcode.com/problems/gray-code/description/'
 # Space: O(1)
 #
 # Description: Leetcode # 89. Gray Code
+#
 # The gray code is a binary numeral system where two successive values differ in only one bit.
 #
 # Given a non-negative integer n representing the total number of bits in the code,
@@ -86,21 +87,20 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: G(i) = i^ (i/2).
+# Thought:
+G(i) = i^ (i/2).
 
-#34.81% 1ms
-public class Solution {
-    public List<Integer> grayCode(int n) {
-        //binary to gray: num ^(num>>1)
-        List<Integer> list = new LinkedList<>();
-        for(int i=0; i<(1<<n); i++)
-            list.add(i^(i>>1));
-        return list;
+# 1ms 67.34%
+class Solution {
+   public List<Integer> grayCode(int n) {
+        List<Integer> result = new LinkedList<>();
+        for (int i = 0; i < (1 << n); i++) result.add(i ^ (i  >> 1));
+        return result;
     }
 }
 
-#14.39% 2ms
-public class Solution {
+# 1ms 67.34%
+class Solution {
     public List<Integer> grayCode(int n) {
         List<Integer> result = new ArrayList<>();
         if (n < 0) {

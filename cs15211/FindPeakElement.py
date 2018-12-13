@@ -2,7 +2,7 @@ __source__ = 'https://leetcode.com/problems/find-peak-element/description/'
 # Time:  O(logn)
 # Space: O(1)
 #
-# Description: Leetcode # 217. Contains Duplicate
+# Description: Leetcode # 162. Find Peak Element
 #
 # A peak element is an element that is greater than its neighbors.
 #
@@ -120,11 +120,11 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/problems/find-peak-element/solution/
+# Thought: https://leetcode.com/problems/find-peak-element/solution/
 
-#33.97%  0ms
 1. O(n) linear scan:
-public class Solution {
+# 3ms 67.71%
+class Solution {
     public int findPeakElement(int[] nums) {
         for (int i = 0; i < nums.length - 1; i++) {
             if (nums[i] > nums[i + 1])
@@ -144,7 +144,8 @@ If num[i-1] > num[i] > num[i+1], then num[0...i-1] must contains a peak
 If num[i-1] > num[i] < num[i+1], then both sides have peak
 (n is num.length)
 
-public class Solution {
+# 2ms 100%
+class Solution {
     public int findPeakElement(int[] nums) {
         int start = 0;
         int end = nums.length - 1;
@@ -160,8 +161,8 @@ public class Solution {
     }
 }
 
-#33.97%  0ms
-public class Solution {
+# 2ms 100%
+class Solution {
     public int findPeakElement(int[] nums) {
         if(nums == null || nums.length == 0) return 0;
 
@@ -169,7 +170,7 @@ public class Solution {
         int end = nums.length - 1;
         while(start + 1 < end){
             int mid = start + (end - start ) / 2;
-            if(nums[mid] > nums[mid+1]){
+            if(nums[mid] > nums[mid + 1]){
                 end = mid;
             }else{
                 start = mid;
@@ -177,6 +178,23 @@ public class Solution {
         }
 
         return nums[start] > nums[end] ? start: end;
+    }
+}
+
+# 2ms 100%
+class Solution {
+    public int findPeakElement(int[] nums) {
+        int start = 0;
+        int end = nums.length - 1;
+        while (start + 1 < end) {
+            int mid = start + (end - start) / 2;
+            if (nums[mid] > nums[mid - 1]) {
+                start = mid;
+            } else {
+                end = mid;
+            }
+        }
+        return nums[start] > nums[end] ? start : end;
     }
 }
 '''

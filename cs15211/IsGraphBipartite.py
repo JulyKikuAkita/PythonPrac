@@ -1,6 +1,4 @@
-import collections
-
-__source__ = 'https://leetcode.com/problems/is-graph-bipartite/description/'
+__source__ = 'https://leetcode.com/problems/is-graph-bipartite/'
 # Time:  O(N + E)
 # Space: O(N)
 #
@@ -46,8 +44,9 @@ __source__ = 'https://leetcode.com/problems/is-graph-bipartite/description/'
 # The graph is undirected: if any element j is in graph[i], then i will be in graph[j].
 #
 import unittest
+import collections
 
-# 32ms 74,16%
+# 44ms 27.94%
 class Solution(object):
     def isBipartite(self, graph):
         """
@@ -70,7 +69,7 @@ class Solution(object):
         return True
 
 # use deque
-# 28ms 100%
+# 32ms 77.45%
 class Solution2(object):
     def isBipartite(self, graph):
         """
@@ -105,7 +104,9 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-# Thought: Hungarian Algorithm
+# Thought: https://leetcode.com/problems/is-graph-bipartite/solution/
+#
+# Hungarian Algorithm
 #
 # Time Complexity: O(N+E), where N is the number of nodes in the graph, and E is the number of edges.
 # We explore each node once when we transform it from uncolored to colored,
@@ -120,7 +121,8 @@ Java = '''
 # If we find a neighbor colored the same color as the current node,
 # then our coloring was impossible.
 #
-# 37.78% 7ms
+
+# 7ms 34.26%
 class Solution {
     public boolean isBipartite(int[][] graph) {
         int n = graph.length;
@@ -152,7 +154,7 @@ class Solution {
     }
 }
 
-# 100% 4ms
+# 5ms 73.41%
 class Solution {
     public boolean isBipartite(int[][] graph) {
         int n = graph.length;

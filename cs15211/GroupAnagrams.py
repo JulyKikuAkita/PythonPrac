@@ -1,8 +1,10 @@
-__source__ = 'https://leetcode.com/problems/group-anagrams/description/'
+__source__ = 'https://leetcode.com/problems/group-anagrams/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/anagrams.py
 # Time:  O(n)
 # Space: O(n)
 # Hash table
+#
+# Description: Leetcode # 249. Group Shifted Strings
 #
 # Given an array of strings, group anagrams together.
 #
@@ -77,14 +79,14 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/problems/contains-duplicate/solution/
+# Thought: https://leetcode.com/problems/group-anagrams/solution/
 # http://www.programcreek.com/2014/04/leetcode-anagrams-java/
 
 # If two strings are anagram to each other, their sorted sequence is the same.
 # Therefore, this problem can be seen as a problem of finding duplicate elements.
 
-# 38.72% 31ms
-public class Solution {
+# 23ms 42.34%
+class Solution {
     public List<List<String>> groupAnagrams(String[] strs) {
         if (strs == null || strs.length == 0) return new ArrayList<List<String>>();
         Map<String, List<String>> map = new HashMap<String, List<String>>();
@@ -99,8 +101,8 @@ public class Solution {
     }
 }
 
-#45.85% 30ms
-public class Solution {
+# 15ms 83.78%
+class Solution {
     public List<List<String>> groupAnagrams(String[] strs) {
         List<List<String>> result = new ArrayList<>();
         Map<String, List<String>> map = new HashMap<>();
@@ -126,10 +128,11 @@ public class Solution {
     }
 }
 
-#94.05% 24ms
+# 18ms 64.66%
 class Solution {
     public List<List<String>> groupAnagrams(String[] strs) {
-        int[] prime = {2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97, 101, 103};
+        int[] prime = {2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 41, 43, 47,
+        53, 59, 61, 67, 71, 73, 79, 83, 89, 97, 101, 103};
 
         List<List<String>> list = new ArrayList<>();
         HashMap<Integer, Integer> map = new HashMap<>();

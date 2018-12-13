@@ -1,9 +1,11 @@
-__source__ = 'https://leetcode.com/problems/factorial-trailing-zeroes/description/'
+__source__ = 'https://leetcode.com/problems/factorial-trailing-zeroes/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/factorial-trailing-zeroes.py
 # http://bookshadow.com/weblog/2014/12/30/leetcode-factorial-trailing-zeroes/
 # Time:  O(logn)
 # Space: O(1)
 # Math
+#
+# Description: Leetcode # 172. Factorial Trailing Zeroes
 #
 # Given an integer n, return the number of trailing zeroes in n!.  (5 * 2) = 10
 #
@@ -35,7 +37,7 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
+# Thought:
 10 is the product of 2 and 5. In n!, we need to know how many 2 and 5,
 and the number of zeros is the minimum of the number of 2 and the number of 5.
 
@@ -57,15 +59,15 @@ Here is the basic solution:
 return n/5 + n/25 + n/125 + n/625 + n/3125+...;
 
 
-#32.08% 1ms
-public class Solution {
+# 18ms 33.06%
+class Solution {
     public int trailingZeroes(int n) {
         return n == 0 ? 0 : n / 5 + trailingZeroes(n / 5);
     }
 }
 
-#32.08% 1ms
-public class Solution {
+# 17ms 45.06%
+class Solution {
     public int trailingZeroes(int n) {
         int result = 0;
         while (n > 0) {

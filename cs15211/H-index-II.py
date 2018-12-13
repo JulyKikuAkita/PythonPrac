@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/h-index-ii/tabs/description'
+__source__ = 'https://leetcode.com/problems/h-index-ii/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/h-index-ii.py
 # Time:  O(logn)
 # Space: O(1)
@@ -45,7 +45,7 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
+# Thought:
 
 citations[index] >= length(citations) - index
 
@@ -58,11 +58,35 @@ that have at least citations[mid] citations.
 case 2: citations[mid] > len-mid, then it means there are citations[mid] papers
 that have moret than citations[mid] citations, so we should continue searching in the left half
 case 3: citations[mid] < len-mid, we should continue searching in the right side
-After iteration, it is guaranteed that right+1 is the one we need to find (i.e. len-(right+1) papars have at least len-(righ+1) citations)
+After iteration, it is guaranteed that right+1 is the one we need to find
+(i.e. len-(right+1) papars have at least len-(righ+1) citations)
 
 1.
-#69.84% 11ms
-public class Solution {
+# 147ms 8.38%
+class Solution {
+    public int hIndex(int[] citations) {
+        int result = 0;
+        for (int i = citations.length - 1; i >= 0; i--) {
+            result = Math.max(result, Math.min(citations[i], citations.length - i));
+        }
+        return result;
+    }
+}
+
+# 8ms 65.84%
+class Solution {
+    public int hIndex(int[] citations) {
+        for (int i = citations.length - 1; i >= 0; i--) {
+            if (citations.length - i - 1 >= citations[i]) {
+                return citations.length - i - 1;
+            }
+        }
+        return citations.length;
+    }
+}
+
+# 6ms 99.08%
+class Solution {
     public int hIndex(int[] citations) {
         if (citations.length == 0) {
             return 0;
@@ -90,8 +114,8 @@ public class Solution {
 }
 
 
-#69.84% 11ms
-public class Solution {
+# 9ms 55.10%
+class Solution {
     public int hIndex(int[] citations) {
         if (citations.length == 0) {
             return 0;
@@ -115,13 +139,13 @@ public class Solution {
 }
 
 3.
-#39.05% 13ms
 I am very sure that two-branch binary search is more efficient than three branch binary search.
 and (low + high) is not good idea since it may rely on the overflow behavior.
 In fact, using count step first mid is the standard implement way of C++,
 so I do not think there are better ways to implement the binary search.
 
-public class Solution {
+# 6ms 99.08%
+class Solution {
     public int hIndex(int[] citations) {
         int len = citations.length;
 

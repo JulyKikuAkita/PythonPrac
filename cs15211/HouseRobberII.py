@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/house-robber-ii/#/description'
+__source__ = 'https://leetcode.com/problems/house-robber-ii/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/house-robber-ii.py
 # Time:  O(n)
 # Space: O(1)
@@ -54,8 +54,10 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-Thought: 
-Since this question is a follow-up to House Robber, we can assume we already have a way to solve the simpler question, 
+# Thought:
+
+Since this question is a follow-up to House Robber, we can assume we already have a way
+to solve the simpler question,
 i.e. given a 1 row of house, we know how to rob them. So we already have such a helper function. 
 We modify it a bit to rob a given range of houses.
 
@@ -69,7 +71,8 @@ private int rob(int[] num, int lo, int hi) {
     return Math.max(include, exclude);
 }
 
-Now the question is how to rob a circular row of houses. It is a bit complicated to solve like the simpler question. 
+Now the question is how to rob a circular row of houses.
+It is a bit complicated to solve like the simpler question.
 It is because in the simpler question whether to rob num[lo] is entirely our choice. 
 But, it is now constrained by whether num[hi] is robbed.
 
@@ -89,8 +92,8 @@ I chose i = n and i + 1 = 0 for simpler coding. But, you can choose whichever tw
 public int rob(int[] nums) {
     if (nums.length == 1) return nums[0];
     
-# 4.89% 1ms
-public class Solution {
+# 3ms 99.14%
+class Solution {
     public int rob(int[] nums) {
         if (nums.length == 0) {
             return 0;
@@ -112,8 +115,8 @@ public class Solution {
     }
 }
 
-#54.19% 0ms
-public class Solution {
+# 4ms 57.59%
+class Solution {
     public int rob(int[] nums) {
         if(nums == null || nums.length == 0) return 0;
         if(nums.length == 1) return nums[0];
@@ -132,7 +135,31 @@ public class Solution {
     }
 }
 
-#54.19% 0ms
+# 4ms 57.59%
+class Solution {
+    public int rob(int[] nums) {
+        if (nums.length == 0) {
+            return 0;
+        } else if (nums.length == 1) {
+            return nums[0];
+        } else {
+            return Math.max(rob(nums, 0, nums.length - 2), rob(nums, 1, nums.length - 1));
+        }
+    }
+
+    private int rob(int[] nums, int start, int end) {
+        int[] dp = new int[2];
+        dp[0] = nums[start];
+        int index = 1;
+        for (int i = start + 1; i <= end; i++) {
+            dp[index] = Math.max(dp[index] + nums[i], dp[1 - index]);
+            index = 1 - index;
+        }
+        return Math.max(dp[0], dp[1]);
+    }
+}
+
+# 3ms 99.14%
 class Solution {
     public int rob(int[] nums) {
         if(nums.length==1) return nums[0];

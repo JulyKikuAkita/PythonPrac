@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/insert-delete-getrandom-o1-duplicates-allowed/description/'
+__source__ = 'https://leetcode.com/problems/insert-delete-getrandom-o1-duplicates-allowed/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/insert-delete-getrandom-o1-duplicates-allowed.py
 # Time:  O(1)
 # Space: O(n)
@@ -50,7 +50,7 @@ import unittest
 
 def __init__(self):
         self.vals, self.idxs = [], defaultdict(set)
-
+# 80ms 100%
 class RandomizedCollection(object):
 
     def insert(self, val):
@@ -74,11 +74,11 @@ class RandomizedCollection(object):
         return choice(self.vals)
 
 
-'''
-FailedTC =
-["RandomizedCollection","insert","insert","insert","insert","insert","remove","remove","remove","insert","remove","getRandom","getRandom","getRandom","getRandom","getRandom","getRandom","getRandom","getRandom","getRandom","getRandom"]
-[[],[1],[1],[2],[2],[2],[1],[1],[2],[1],[2],[],[],[],[],[],[],[],[],[],[]]
-'''
+# #
+# FailedTC =
+# ["RandomizedCollection","insert","insert","insert","insert","insert","remove","remove","remove","insert","remove","getRandom","getRandom","getRandom","getRandom","getRandom","getRandom","getRandom","getRandom","getRandom","getRandom"]
+# [[],[1],[1],[2],[2],[2],[1],[1],[2],[1],[2],[],[],[],[],[],[],[],[],[],[]]
+# #
 
 class RandomizedCollectionNOTAccept(object):
 
@@ -146,8 +146,9 @@ if __name__ == '__main__':
 
 Java = '''
 # Thought:
-# 70.55% 134ms
-public class RandomizedCollection {
+
+# 114ms 12.34%
+class RandomizedCollection {
 
     ArrayList<Integer> result;
     HashMap<Integer, LinkedHashSet<Integer>> map;
@@ -209,8 +210,8 @@ public class RandomizedCollection {
     }
 }
 
-#62.04% 137ms
-public class RandomizedCollection {
+# 84ms 42.51%
+class RandomizedCollection {
     ArrayList<Integer> nums;
 	HashMap<Integer, Set<Integer>> locs;
 	java.util.Random rand = new java.util.Random();
@@ -253,8 +254,8 @@ public class RandomizedCollection {
     }
 }
 
-# 70.55% 134ms
-public class RandomizedCollection {
+# 79ms 61.85%
+class RandomizedCollection {
     ArrayList<Integer> nums;
 	HashMap<Integer, Set<Integer>> locs;
 	java.util.Random rand = new java.util.Random();

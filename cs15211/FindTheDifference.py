@@ -50,9 +50,10 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
-#18.96% 12ms
-public class Solution {
+# Thought:
+
+# 3ms 99.56%
+class Solution {
     public char findTheDifference(String s, String t) {
         int cur = 0;
         for (char c : s.toCharArray()) {
@@ -65,8 +66,8 @@ public class Solution {
     }
 }
 
-#98.54% 5ms
-public class Solution {
+# 4ms 81.36%
+class Solution {
     public char findTheDifference(String s, String t) {
         char xor = 0;
         for (char c : s.toCharArray()) {

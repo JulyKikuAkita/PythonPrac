@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/find-the-duplicate-number/description/'
+__source__ = 'https://leetcode.com/problems/find-the-duplicate-number/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/find-the-duplicate-number.py
 # Time:  O(n)
 # Space: O(1)
@@ -102,10 +102,10 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
+# Thought: https://leetcode.com/problems/find-the-duplicate-number/solution/
 
-#52.11% 1ms
-public class Solution {
+# 0ms 100%
+class Solution {
     public int findDuplicate(int[] nums) {
         int slow = 0;
         int fast = 0;
@@ -121,7 +121,6 @@ public class Solution {
         return result;
     }
 }
-Thought:
 
 suppose the array is
 
@@ -150,8 +149,8 @@ The cycle size is N. Full cycle is also how much more fast pointer has traveled 
 A+B+N = 2A+2B
 N=A+B
 
-#96.50% 0ms
-public class Solution {
+# 0ms 100%
+class Solution {
     public int findDuplicate(int[] nums) {
         int length = nums.length;
         int slow = length;

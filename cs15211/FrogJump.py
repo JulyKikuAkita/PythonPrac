@@ -1,7 +1,10 @@
+__source__ = 'https://leetcode.com/problems/frog-jump/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/frog-jump.py
 # Time:  O(n) ~ O(n^2)
 # Space: O(n)
-
+#
+# Description: Leetcode # 403. Frog Jump
+#
 # A frog is crossing a river. The river is divided into x units and
 # at each unit there may or may not exist a stone. 
 # The frog can jump on a stone, but it must not jump into the water.
@@ -40,8 +43,9 @@
 # Snapchat
 # Hide Tags Dynamic Programming
 
-
+import unittest
 # DP with hash table
+# 176ms 59.97%
 class Solution(object):
     def canCross(self, stones):
         """
@@ -60,7 +64,11 @@ class Solution(object):
                         last_jump_units[s+k].add(k)
         return bool(last_jump_units[stones[-1]])
 
-java = '''
+if __name__ == '__main__':
+    unittest.main()
+
+Java = '''
+# Thought: https://leetcode.com/problems/frog-jump/solution/
 
 JAVA DFS 17ms beat 99.28% so far
 The idea is simple:
@@ -73,7 +81,8 @@ position + x - 1, position + x and position + x + 1. If any of them is the last 
 then you can return true. If not, use DFS from the longest jump first.
 (3) This path finding process can be terminated much earlier if there are two stones that are too far away.
 
-public class Solution {
+# 9ms 88.51%
+class Solution {
     public boolean canCross(int[] stones) {
         if (stones == null || stones.length == 0) {return false;}
         int n = stones.length;
@@ -106,12 +115,9 @@ public class Solution {
     }
 }
 
-# full solution:
-https://leetcode.com/articles/frog-jump/
-
-DP: 35.35%
-
-public class Solution {
+# DP:
+# 80ms 47.58%
+class Solution {
     public boolean canCross(int[] stones) {
         HashMap<Integer, Set<Integer>> map = new HashMap<>();
         for (int i = 0; i < stones.length; i++) {
@@ -131,4 +137,37 @@ public class Solution {
     }
 }
 
+# Binary Search
+# 28ms 80.04%
+class Solution {
+    public boolean canCross(int[] stones) {
+        int[][] memo = new int[stones.length][stones.length];
+        for (int[] row : memo) {
+            Arrays.fill(row, -1);
+        }
+        return can_Cross(stones, 0, 0, memo) == 1;
+    }
+    public int can_Cross(int[] stones, int ind, int jumpsize, int[][] memo) {
+        if (memo[ind][jumpsize] >= 0) {
+            return memo[ind][jumpsize];
+        }
+        int ind1 = Arrays.binarySearch(stones, ind + 1, stones.length, stones[ind] + jumpsize);
+        if (ind1 >= 0 && can_Cross(stones, ind1, jumpsize, memo) == 1) {
+            memo[ind][jumpsize] = 1;
+            return 1;
+        }
+        int ind2 = Arrays.binarySearch(stones, ind + 1, stones.length, stones[ind] + jumpsize - 1);
+        if (ind2 >= 0 && can_Cross(stones, ind2, jumpsize - 1, memo) == 1) {
+            memo[ind][jumpsize - 1] = 1;
+            return 1;
+        }
+        int ind3 = Arrays.binarySearch(stones, ind + 1, stones.length, stones[ind] + jumpsize + 1);
+        if (ind3 >= 0 && can_Cross(stones, ind3, jumpsize + 1, memo) == 1) {
+            memo[ind][jumpsize + 1] = 1;
+            return 1;
+        }
+        memo[ind][jumpsize] = ((ind == stones.length - 1) ? 1 : 0);
+        return memo[ind][jumpsize];
+    }
+}
 '''

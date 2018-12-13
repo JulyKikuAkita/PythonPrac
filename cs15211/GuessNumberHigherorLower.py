@@ -61,14 +61,15 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/articles/guess-number-higher-or-lower/
+# Thought: https://leetcode.com/problems/guess-number-higher-or-lower/solution/
+
 /* The guess API is defined in the parent class GuessGame.
    @param num, your guess
    @return -1 if my number is lower, 1 if my number is higher, otherwise return 0
       int guess(int num); */
-#Binary search
-#11.29% 1ms
-public class Solution extends GuessGame {
+# Binary search
+# 0ms 100%
+class Solution extends GuessGame {
     public int guessNumber(int n) {
         int start = 1;
         int end = n;
@@ -87,11 +88,12 @@ public class Solution extends GuessGame {
     }
 }
 
-#Ternary search
+# Ternary search
 Time complexity : O(log base3 n). Ternary Search is used.
 Space complexity : O(1). No extra space is used.
-#11.29% 1ms
-public class Solution extends GuessGame {
+
+# 0ms 100%
+class Solution extends GuessGame {
     public int guessNumber(int n) {
         int low = 1;
         int high = n;

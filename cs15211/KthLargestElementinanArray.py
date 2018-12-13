@@ -1,9 +1,10 @@
-__source__ = 'https://leetcode.com/problems/kth-largest-element-in-an-array/#/description'
+__source__ = 'https://leetcode.com/problems/kth-largest-element-in-an-array/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/kth-largest-element-in-an-array.py
 # Time:  O(n)
 # Space: O(1)
 #
 # Description: Leetcode # 215. Kth Largest Element in an Array
+#
 # Find the kth largest element in an unsorted array.
 # Note that it is the kth largest element in the sorted order, not the kth distinct element.
 # For example,
@@ -103,16 +104,17 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: quick select or pivot
+# Thought:
+quick select or pivot
 
-#https://discuss.leetcode.com/topic/14597/solution-explained
+# https://discuss.leetcode.com/topic/14597/solution-explained
 1)
 O(N lg N) running time + O(1) memory
 The simplest approach is to sort the entire input array and then access the element
 by it's index (which is O(1)) operation:
 
-#83.86% 3ms
-public class Solution {
+# 3ms 96.03%
+class Solution {
     public int findKthLargest(int[] nums, int k) {
             Arrays.sort(nums);
             return nums[nums.length - k];
@@ -124,8 +126,8 @@ O(N lg K) running time + O(K) memory
 Other possibility is to use a min oriented priority queue that will store the K-th largest values.
 The algorithm iterates over the whole input and maintains the size of priority queue.
 
-#51.37% 15ms
-public class Solution {
+# 8ms 63.39%
+class Solution {
     public int findKthLargest(int[] nums, int k) {
         final PriorityQueue<Integer> pq = new PriorityQueue<>();
         for(int val : nums) {
@@ -144,9 +146,9 @@ O(N) best case / O(N^2) worst case running time + O(1) memory
 The smart approach for this problem is to use the selection algorithm
 (based on the partion method - the same one as used in quicksort).
 
-#BFS
-// 42.79% 23ms without shuffle nums
-// 76.59% 5ms with shuffle nums
+# BFS
+# 14ms 46.49% without shuffle nums
+# 4ms 86.43% with shuffle nums
 import java.util.Random;
 public class Solution {
     public int findKthLargest(int[] nums, int k) {
@@ -191,8 +193,9 @@ public class Solution {
 }
 
 # DFS
-# 94.53% 2ms # dfs # hve ot use pivot, not nums[high], stackoverflow
-public class Solution {
+# have to use pivot, not nums[high], stackoverflow
+# 2ms 99.99%
+class Solution {
     public int findKthLargest(int[] nums, int k) {
         return qselect(nums, k, 0, nums.length - 1);
     }
@@ -228,15 +231,14 @@ public class Solution {
 }
 
 4)
-#79.56% 4ms
 O(N) guaranteed running time + O(1) space
 So how can we improve the above solution and make it O(N) guaranteed?
 The answer is quite simple, we can randomize the input, so that even when the worst case input would
 be provided the algorithm wouldn't be affected. So all what it is needed to be done is to shuffle the input.
 
-
+# 3ms 96.03%
 import java.util.Random;
-public class Solution {
+class Solution {
     public int findKthLargest(int[] nums, int k) {
         if(nums == null || k <= 0 ) return 0;
         Random rand = new Random();

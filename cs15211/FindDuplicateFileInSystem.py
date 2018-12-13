@@ -2,7 +2,8 @@ __source__ = 'https://leetcode.com/problems/find-duplicate-file-in-system/#/desc
 # Time:  O(n)
 # Space: O(n)
 #
-# Description:
+# Description: 609. Find Duplicate File in System
+#
 # Given a list of directory info including directory path, and all the files with contents in this directory,
 # you need to find out all the groups of duplicate files in the file system in terms of their paths.
 #
@@ -48,6 +49,7 @@ __source__ = 'https://leetcode.com/problems/find-duplicate-file-in-system/#/desc
 #
 import unittest
 import collections
+# 132ms 99.70%
 class Solution(object):
     def findDuplicate(self, paths):
         """
@@ -73,8 +75,10 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/articles/find-duplicate/
-public class Solution {
+# Thought: https://leetcode.com/problems/find-duplicate-file-in-system/solution/
+#
+# 93ms 23.21%
+class Solution {
     public List<List<String>> findDuplicate(String[] paths) {
         HashMap<String,List<String>> map = new HashMap<>();
         for (String str: paths) {
@@ -96,9 +100,12 @@ public class Solution {
         }
         return res;
     }
+}
 
-    #Java 8
-    public List<List<String>> findDuplicate2(String[] paths) {
+# Java 8
+# 125ms 9.95%
+class Solution {
+    public List<List<String>> findDuplicate(String[] paths) {
         Map<String, List<String>> map = new HashMap<>();
         for(String path : paths) {
             String[] tokens = path.split(" ");

@@ -1,9 +1,10 @@
-__source__ = 'https://leetcode.com/problems/generalized-abbreviation/description/'
+__source__ = 'https://leetcode.com/problems/generalized-abbreviation/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/generalized-abbreviation.py
 # Time:  O(n * 2^n)
 # Space: O(n)
 #
 # Description: Leetcode # 320. Generalized Abbreviation
+#
 # Write a function to generate the generalized abbreviations of a word.
 #
 # Example:
@@ -48,11 +49,11 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/articles/generalized-abbreviation/
+# Thought: https://leetcode.com/problems/generalized-abbreviation/solution/
 
 # Approach #2 (Bit Manipulation)
-# 17.59% 37ms
-public class Solution {
+# 36ms 12.50%
+class Solution {
     public List<String> generateAbbreviations(String word) {
         List<String> ans = new ArrayList<>();
         for (int x = 0; x < (1 << word.length()); ++x) // loop through all possible x
@@ -80,8 +81,8 @@ public class Solution {
     }
 }
 
-#79.42% 16ms
-public class Solution {
+# 16ms 41.99%
+class Solution {
     public List<String> generateAbbreviations(String word) {
         List<String> result = new ArrayList<>();
         generateAbbr(word, 0, result, new StringBuilder(), false);
@@ -107,7 +108,7 @@ public class Solution {
     }
 }
 
-#85.30% 15ms
+# 11ms 74.41%
 class Solution {
     public List<String> generateAbbreviations(String word) {
         List<String> ans = new ArrayList<String>();
@@ -137,7 +138,7 @@ class Solution {
 
 }
 
-#100% 10ms
+# 5ms 100%
 class Solution {
     private List<String> res = new LinkedList();
     private char[] pool;

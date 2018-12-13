@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/find-leaves-of-binary-tree/#/description'
+__source__ = 'https://leetcode.com/problems/find-leaves-of-binary-tree/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/find-leaves-of-binary-tree.py
 # Time:  O(n)
 # Space: O(h)
@@ -72,7 +72,7 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
+# Thought:
 
 Thought: For this question we need to take bottom-up approach. 
 The key is to find the height of each node. Here the definition of height is:
@@ -87,7 +87,6 @@ The height of a node is also the its index in the result list (res).
 For example, leaves, whose heights are 0, are stored in res[0]. 
 Once we find the height of a node, we can put it directly into the result.
 
-
 /**
  * Definition for a binary tree node.
  * public class TreeNode {
@@ -97,7 +96,9 @@ Once we find the height of a node, we can put it directly into the result.
  *     TreeNode(int x) { val = x; }
  * }
  */
-public class Solution {
+
+# 0ms 100%
+class Solution {
     public List<List<Integer>> findLeaves(TreeNode root) {
         List<List<Integer>> result = new ArrayList<>();
         findLeaves(result, root);
@@ -117,4 +118,20 @@ public class Solution {
     }
 }
 
+# 0ms 100%
+class Solution {
+    public List<List<Integer>> findLeaves(TreeNode root) {
+        List<List<Integer>> res = new ArrayList<>();
+        dfs(root, res);
+        return res;
+    }
+
+    private int dfs(TreeNode node, List<List<Integer>> res){
+        if (node == null) return -1;
+        int level = 1 + Math.max(dfs(node.left, res), dfs(node.right, res));
+        if (res.size() <= level ) res.add(new ArrayList<>());
+        res.get(level).add(node.val);
+        return level;
+    }
+}
 '''

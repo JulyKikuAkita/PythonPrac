@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/implement-stack-using-queues/description/'
+__source__ = 'https://leetcode.com/problems/implement-stack-using-queues/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/implement-stack-using-queues.py
 # Time: push: O(n), pop: O(1), top: O(1)
 # Space: O(n)
@@ -146,9 +146,10 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-# Thought: https://leetcode.com/articles/implement-stack-using-queues/
+# Thought: https://leetcode.com/problems/implement-stack-using-queues/solution/
+
 # only one queue
-# 50.73% 99ms
+# 56ms 82.44%
 class MyStack {
     Queue<Integer> mQ;
 
@@ -183,7 +184,7 @@ class MyStack {
 
 
 # Using 2 queue
-# 95.67% 86ms
+# 80ms 19.43%
 class MyStack {
     Queue<Integer> q1;
     Queue<Integer> q2;
@@ -222,7 +223,7 @@ class MyStack {
 }
 
 # Using 2 queue and swap q
-#85.78% 90ms
+# 58ms 71.91%
 class MyStack {
 
     /** Initialize your data structure here. */
@@ -269,7 +270,7 @@ class MyStack {
 
 # Stack usually implemented using list
 # FYI only, not valid for this q
-# 82.58% 91ms
+# 55ms 88.09%
 class MyStack {
 
     LinkedList<Integer> mList;

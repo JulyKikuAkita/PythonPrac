@@ -1,4 +1,4 @@
-__source_ = 'https://leetcode.com/problems/insert-delete-getrandom-o1/description/'
+__source_ = 'https://leetcode.com/problems/insert-delete-getrandom-o1/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/insert-delete-getrandom-o1.py
 # Time:  O(1)
 # Space: O(n)
@@ -47,6 +47,7 @@ __source_ = 'https://leetcode.com/problems/insert-delete-getrandom-o1/descriptio
 #
 from random import randint
 import unittest
+# 88ms 82.03%
 class RandomizedSet(object):
 
     def __init__(self):
@@ -111,10 +112,10 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
+# Thought:
 
-#59.60% 129ms
-public class RandomizedSet {
+# 67ms 96.36%
+class RandomizedSet {
     //considering use Pair?
    HashMap<Integer, Integer> map;
     ArrayList<Integer> list;
@@ -166,8 +167,8 @@ public class RandomizedSet {
  * int param_3 = obj.getRandom();
  */
 
-#122ms 80.43%
-public class RandomizedSet {
+# 64ms 99.36%
+class RandomizedSet {
     private List<Integer> list = new ArrayList<Integer>();
     private HashMap<Integer, Integer> map = new HashMap<Integer, Integer>();
     private int size = 0;
@@ -219,11 +220,12 @@ public class RandomizedSet {
 '''
 
 notAccept=''' not able to figure out why
-#tc:
+# tc:
 ["RandomizedSet","insert","insert","getRandom","getRandom","insert","remove","getRandom","getRandom","insert","remove"]
 [[],[3],[3],[],[],[1],[3],[],[],[0],[0]]
 
 https://discuss.leetcode.com/topic/53216/java-solution-using-a-hashmap-and-an-arraylist-along-with-a-follow-up-131-ms/5
+
 public class RandomizedSet {
 
         ArrayList<Integer> nums;

@@ -1,12 +1,14 @@
-__source__ = 'https://leetcode.com/problems/fraction-addition-and-subtraction/#/description'
+__source__ = 'https://leetcode.com/problems/fraction-addition-and-subtraction/'
 # Time:  O()
 # Space: O()
 #
-# Description:
+# Description: 592. Fraction Addition and Subtraction
+#
 # Given a string representing an expression of fraction addition and subtraction,
 # you need to return the calculation result in string format.
 # The final result should be irreducible fraction.
-# If your final result is an integer, say 2, you need to change it to the format of fraction that has denominator 1.
+# If your final result is an integer, say 2,
+# you need to change it to the format of fraction that has denominator 1.
 # So in this case, 2 should be converted to 2/1.
 #
 # Example 1:
@@ -25,7 +27,10 @@ __source__ = 'https://leetcode.com/problems/fraction-addition-and-subtraction/#/
 # The input string only contains '0' to '9', '/', '+' and '-'. So does the output.
 # Each fraction (input and output) has format (+/-)numerator/denominator.
 # If the first input fraction or the output is positive, then '+' will be omitted.
-# The input only contains valid irreducible fractions, where the numerator and denominator of each fraction will always be in the range [1,10]. If the denominator is 1, it means this fraction is actually an integer in a fraction format defined above.
+# The input only contains valid irreducible fractions,
+# where the numerator and denominator of each fraction will always be in the range [1,10].
+# If the denominator is 1,
+# it means this fraction is actually an integer in a fraction format defined above.
 # The number of given fractions will be in the range [1,10].
 # The numerator and denominator of the final result are guaranteed to be valid and in the range of 32-bit int.
 # Hide Company Tags IXL
@@ -33,6 +38,8 @@ __source__ = 'https://leetcode.com/problems/fraction-addition-and-subtraction/#/
 
 import unittest
 from fractions import Fraction
+
+# 32ms 33.73%
 class Solution(object):
     def fractionAddition(self, expression):
         """
@@ -51,9 +58,11 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/articles/kill-process-3/
+# Thought: https://leetcode.com/problems/fraction-addition-and-subtraction/solution/
+https://leetcode.com/articles/kill-process-3/
 
-public class Solution {
+# 88ms 1.95%
+class Solution {
     public String fractionAddition(String expression) {
         String[] fracs = expression.split("(?=[-,+])"); // splits input string into individual fractions
         String res = "0/1";

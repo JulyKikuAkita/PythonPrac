@@ -1,6 +1,4 @@
-from bisect import bisect
-
-__source__ = 'https://leetcode.com/problems/friends-of-appropriate-ages/description/'
+__source__ = 'https://leetcode.com/problems/friends-of-appropriate-ages/'
 # Time:  O(A^2+N), where N is the number of people, and A is the number of ages.
 # Space: O(A), the space used to store count
 #
@@ -43,6 +41,7 @@ __source__ = 'https://leetcode.com/problems/friends-of-appropriate-ages/descript
 # 1 <= ages.length <= 20000.
 # 1 <= ages[i] <= 120.
 
+from bisect import bisect
 import unittest
 
 #sorted solution, 212ms, 36.15%
@@ -98,8 +97,8 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/problems/friends-of-appropriate-ages/solution/
-# 7ms, 68.59%
+# Thought: https://leetcode.com/problems/friends-of-appropriate-ages/solution/
+
 Approach #1: Counting [Accepted]
 Intuition
 
@@ -114,6 +113,7 @@ then countA * countB pairs of people made friend requests.
 If ageA == ageB, then we overcounted: we should have countA * (countA - 1)
 pairs of people making friend requests instead, as you cannot friend request yourself.
 
+# 7ms, 68.59%
 class Solution {
     public int numFriendRequests(int[] ages) {
         int[] count = new int[121];
@@ -135,7 +135,7 @@ class Solution {
     }
 }
 
-#improve:
+# improve:
 # 4ms, 100%
 class Solution {
     public int numFriendRequests(int[] ages) {

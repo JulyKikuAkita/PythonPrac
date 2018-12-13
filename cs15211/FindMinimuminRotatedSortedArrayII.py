@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/find-minimum-in-rotated-sorted-array-ii/description/'
+__source__ = 'https://leetcode.com/problems/find-minimum-in-rotated-sorted-array-ii/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/find-minimum-in-rotated-sorted-array-ii.py
 # Time:  O(logn) ~ O(n)
 # Space: O(1)
@@ -84,9 +84,10 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
-#7.84% 1ms
-public class Solution {
+# Thought:
+
+# 0ms 100%
+class Solution {
     public int findMin(int[] nums) {
         int min = Integer.MAX_VALUE;
         int start = 0;
@@ -114,8 +115,8 @@ public class Solution {
 }
 
 # DFS
-#7.84% 1ms
-public class Solution {
+# 0ms 100%
+class Solution {
     public int findMin(int[] nums) {
         return dfs(nums, 0, nums.length - 1);
     }
@@ -142,8 +143,8 @@ public class Solution {
     }
 }
 
-#7.84% 1ms
-public class Solution {
+# 0ms 100%
+class Solution {
     public int findMin(int[] nums) {
         if( nums == null || nums.length == 0) return -1;
         int start = 0;

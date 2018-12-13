@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/flatten-2d-vector/description/'
+__source__ = 'https://leetcode.com/problems/flatten-2d-vector/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/flatten-2d-vector.py
 # Time:  O(1)
 # Space: O(1)
@@ -30,7 +30,7 @@ __source__ = 'https://leetcode.com/problems/flatten-2d-vector/description/'
 # Binary Search Tree Iterator Zigzag Iterator Peeking Iterator Flatten Nested List Iterator
 #
 
-#65ms
+# 44ms 40.47%
 import unittest
 class Vector2D:
     x, y = 0, 0
@@ -70,8 +70,9 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
-#79.64% 3ms
+# Thought:
+
+# 1ms 100%
 public class Vector2D implements Iterator<Integer> {
 
     int row = 0;
@@ -99,7 +100,7 @@ public class Vector2D implements Iterator<Integer> {
     }
 }
 
-#33.58% 4ms
+# 1ms 100%
 public class Vector2D implements Iterator<Integer> {
     private List<Iterator<Integer>> iterators;
     private int index;
@@ -129,7 +130,7 @@ public class Vector2D implements Iterator<Integer> {
     }
 }
 
-#15.35% 5ms
+# 2ms 43.83%
 public class Vector2D {
 
     Queue<Iterator<Integer>> queue;

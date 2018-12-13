@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/first-bad-version/description/'
+__source__ = 'https://leetcode.com/problems/first-bad-version/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/first-bad-version.py
 # Time:  O(logn)
 # Space: O(1)
@@ -61,11 +61,12 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/articles/first-bad-version/
+# https://leetcode.com/problems/first-bad-version/solution/
+
 /* The isBadVersion API is defined in the parent class VersionControl.
       boolean isBadVersion(int version); */
 
-#57.29% 17ms
+# 13ms 51.55%
 public class Solution extends VersionControl {
     public int firstBadVersion(int n) {
         int start = 1;

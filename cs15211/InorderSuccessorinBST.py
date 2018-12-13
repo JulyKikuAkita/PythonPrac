@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/inorder-successor-in-bst/#/description'
+__source__ = 'https://leetcode.com/problems/inorder-successor-in-bst/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/inorder-successor-in-bst.py
 # Time:  O(h)
 # Space: O(1)
@@ -26,6 +26,7 @@ __source__ = 'https://leetcode.com/problems/inorder-successor-in-bst/#/descripti
 #
 import unittest
 class Solution(object):
+    # 76ms 24%
     def inorderSuccessor(self, root, p):
         succ = None
         while root:
@@ -36,6 +37,7 @@ class Solution(object):
                 root = root.right
         return succ
 
+    # 96ms 8.48%
     def inorderSuccessor2(self, root, p):
         """
         :type root: TreeNode
@@ -68,9 +70,12 @@ if __name__ == '__main__':
 
 Java = '''
 # Thought:
-The idea is to compare root's value with p's value if root is not null, and consider the following two cases:
 
-root.val > p.val. In this case, root can be a possible answer, so we store the root node first and call it res.
+The idea is to compare root's value with p's value if root is not null,
+and consider the following two cases:
+
+root.val > p.val. In this case, root can be a possible answer,
+so we store the root node first and call it res.
 However, we don't know if there is anymore node on root's left that is larger than p.val.
 So we move root to its left and check again.
 
@@ -91,8 +96,8 @@ We continuously move root until exhausted. To this point, we only need to return
  */
 
 # BFS:
-# 15.21% 5ms
-public class Solution {
+# 2ms 99.66%
+class Solution {
     public TreeNode inorderSuccessor(TreeNode root, TreeNode p) {
         if (p.right != null) {
             p = p.right;
@@ -117,7 +122,7 @@ public class Solution {
 }
 
 # DFS
-# 35.04% 4ms
+# 3ms 35.33%
 class Solution {
     public TreeNode inorderSuccessor(TreeNode root, TreeNode p) {
         if (root == null) return null;
@@ -133,7 +138,8 @@ class Solution {
 General idea:
 
 Successor
-public class Solution {
+# 2ms 99.66%
+class Solution {
      public TreeNode inorderSuccessorBFS(TreeNode root, TreeNode p) {
         TreeNode res = null;
         while (root != null) {

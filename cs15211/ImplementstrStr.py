@@ -1,8 +1,9 @@
-__source__ = 'https://leetcode.com/problems/implement-strstr/description/'
+__source__ = 'https://leetcode.com/problems/implement-strstr/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/implement-strstr.py
 # Time:  O(n + m)
 # Space: O(m)
 # String - KMP algo
+#
 # Description: Leetcode # 28. Implement strStr()
 #
 # Implement strStr().
@@ -175,18 +176,18 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
+# Thought:
 # http://www.programcreek.com/2012/12/leetcode-implement-strstr-java/
 
-#89.14% 6ms
-public class Solution {
+# 3ms 99.64%
+class Solution {
     public int strStr(String haystack, String needle) {
         return haystack.indexOf(needle);
     }
 }
 
-# 14.71% 15ms
-public class Solution {
+# 7ms 44.59%
+class Solution {
     public int strStr(String haystack, String needle) {
       for (int i = 0; ; i++) {
         for (int j = 0; ; j++) {
@@ -199,8 +200,8 @@ public class Solution {
 }
 
 
-#66.49% 8ms
-public class Solution {
+# 3ms 99.64%
+class Solution {
     public int strStr(String haystack, String needle) {
         if (needle.length() == 0) {
             return 0;
@@ -224,8 +225,8 @@ public class Solution {
 }
 
 3 KMP
-# 10ms 48.26%
-public class Solution {
+# 7ms 44.59%
+class Solution {
      public int strStr(String haystack, String needle) {
         if(haystack == null || needle == null) return -1;
         int hLen = haystack.length();
@@ -264,8 +265,9 @@ public class Solution {
     }
 }
 
-# KMP 2.88% 109ms
-public class Solution {
+# KMP
+# 68ms 12,21%
+class Solution {
     public int strStr(String haystack, String needle) {
         if(haystack == null || needle == null) return -1;
         int hLen = haystack.length();

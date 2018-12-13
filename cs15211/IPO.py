@@ -66,7 +66,7 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
+# Thought:
 The idea is each time we find a project with max profit and within current capital capability.
 Algorithm:
 

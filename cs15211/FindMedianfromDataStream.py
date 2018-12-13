@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/find-median-from-data-stream/description/'
+__source__ = 'https://leetcode.com/problems/find-median-from-data-stream/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/find-median-from-data-stream.py
 # Time:  O(nlogn) for total n addNums, O(logn) per addNum, O(1) per findMedian.
 # Space: O(n), total space
@@ -138,8 +138,8 @@ if __name__ == '__main__':
 
 Java = '''
 # Thought: https://leetcode.com/problems/find-median-from-data-stream/solution/
-# 88.77% 216ms
 
+# 209ms 17.98%
 class MedianFinder {
     PriorityQueue<Integer> minHeap = new PriorityQueue<>();
     PriorityQueue<Integer> maxHeap = new PriorityQueue<>(Collections.reverseOrder());
@@ -180,7 +180,7 @@ class MedianFinder {
 // mf.addNum(1);
 // mf.findMedian();
 
-# 68.24% 230ms
+# 130ms 95.34%
 class MedianFinder {
     private PriorityQueue<Integer> minHeap;
     private PriorityQueue<Integer> maxHeap;
@@ -222,8 +222,8 @@ class MedianFinder {
     }
 };
 
-#78.21% 224ms
-public class MedianFinder {
+# 126ms 98.34%
+class MedianFinder {
     private PriorityQueue<Integer> minHeap = new PriorityQueue<>();
     private PriorityQueue<Integer> maxHeap = new PriorityQueue<>(10, new Comparator<Integer>() {
         @Override

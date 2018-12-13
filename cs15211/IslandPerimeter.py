@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/island-perimeter/description/'
+__source__ = 'https://leetcode.com/problems/island-perimeter/'
 # Time:  O(n)
 # Space: O(1)
 #
@@ -30,7 +30,8 @@ import operator
 class Solution(object):
     # Since there are no lakes, every pair of neighbour cells with different values is part of the perimeter
     # (more precisely, the edge between them is).
-    # So just count the differing pairs, both horizontally and vertically (for the latter I simply transpose the grid).
+    # So just count the differing pairs, both horizontally and vertically
+    # (for the latter I simply transpose the grid).
     def islandPerimeter(self, grid):
         """
         :type grid: List[List[int]]
@@ -48,13 +49,15 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
+Thought:
+
 add 4 for each land and remove 2 for each neighbor
 Thought: loop over the matrix and count the number of islands;
 if the current dot is an island, count if it has any right neighbour or down neighbour;
 the result is islands * 4 - neighbours * 2
 
-#94.88% 131ms
-public class Solution {
+# 78ms 45.56%
+class Solution {
     public int islandPerimeter(int[][] grid) {
         int islands = 0, neighbors = 0;
         for (int i = 0; i < grid.length; i++) {
@@ -70,8 +73,8 @@ public class Solution {
     }
 }
 
-#24.74% 172ms
-public class Solution {
+# 53ms 98.72%
+class Solution {
     public int islandPerimeter(int[][] grid) {
         if (grid == null || grid.length == 0 || grid[0].length == 0) return 0;
         int res = 0;

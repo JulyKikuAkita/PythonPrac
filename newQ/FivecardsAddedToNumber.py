@@ -1,4 +1,4 @@
-__author__ = 'July'
+__source__ = ''
 # five numbers, between 1 to 52, inclusive,
 # is there a formula with add, minus, times that make the ttl number to 42
 # ex: a*b+c*d-e = 42
@@ -71,8 +71,9 @@ nums3 = [3,19,10,1,6]
 #print Solution1().canFiveCardsSumToTtl(nums3, ttl)
 print Solution2().canFiveCardsSumToTtl(nums3, ttl)
 
-#java
-js = '''
+Java = '''
+# Thought:
+
 import java.util.ArrayList;
 import java.util.List;
 

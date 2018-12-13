@@ -1,9 +1,8 @@
-import bisect
-
 __source__ = 'https://leetcode.com/problems/falling-squares/description/'
 # Time:  O(N*N^(1/2))
 # Space: O(N)
 # Segment Tree
+#
 # Description: Leetcode # 699. Falling Squares
 #
 # On an infinite number line (x-axis), we drop given squares in the order they are given.
@@ -69,7 +68,7 @@ __source__ = 'https://leetcode.com/problems/falling-squares/description/'
 # 1 <= positions[i][1] <= 10^6.
 
 import unittest
-
+import bisect
 # Binary Search
 # 89.04% 48ms
 class Solution(object):
@@ -102,6 +101,7 @@ if __name__ == '__main__':
 
 Java = '''
 # Thought: https://leetcode.com/problems/falling-squares/solution/
+#
 # Approach #2: Brute Force with Coordinate Compression [Accepted]
 # O(N^2)
 # 92ms 13.60%
@@ -117,6 +117,7 @@ Java = '''
 #
 # cur.height = cur.height + previousMaxHeight;
 
+# 90ms 12.62%
 class Solution {
     private class Interval {
         int start, end, height;
@@ -158,7 +159,7 @@ Approach #4: Segment Tree with Lazy Propagation [Accepted]
 # Each query and update has complexity O(\sqrt{N})
 # Space Complexity: O(N), the space used by heights.
 
-#41.08% 42ms
+# 41.08% 42ms
 # implementation of Segment Tree
 class Solution {
     public static class SegmentTree {
@@ -261,7 +262,7 @@ class Solution {
     }
 }
 
-#86.12% 25ms
+# 86.12% 25ms
 class Solution {
     public List<Integer> fallingSquares(int[][] positions) {
         Set<Integer> set = new HashSet<>();

@@ -1,9 +1,10 @@
-__source__ = 'https://leetcode.com/problems/happy-number/description/'
+__source__ = 'https://leetcode.com/problems/happy-number/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/happy-number.py
 # Time:  O(k), where k is the steps to be happy number
 # Space: O(k)
 #
 # Description: Leetcode # 202. Happy Number
+#
 # Write an algorithm to determine if a number is "happy".
 #
 # A happy number is a number defined by the following process:
@@ -52,9 +53,11 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: non-happy number will definitely generate a loop
-#12.33% 6ms
-public class Solution {
+# Thought:
+non-happy number will definitely generate a loop
+
+# 2ms 76.39%
+class Solution {
     public boolean isHappy(int n) {
         Set<Integer> cache = new HashSet<>();
         cache.add(n);
@@ -82,8 +85,8 @@ public class Solution {
     }
 }
 
-#52.05% 4ms
-public class Solution {
+# 1ms 97.75%
+class Solution {
     public boolean isHappy(int n) {
         Set<Integer> set = new HashSet<Integer>();
         int squareSum, remain;
@@ -101,8 +104,8 @@ public class Solution {
     }
 }
 
-# 81.31% 2ms
-public class Solution {
+# 1ms 97.75%
+class Solution {
     public boolean isHappy(int n) {
         int slow = n, fast = n;
         do {

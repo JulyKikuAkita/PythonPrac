@@ -1,4 +1,4 @@
-__author__ = 'https://leetcode.com/problems/implement-trie-prefix-tree/#/description'
+__author__ = 'https://leetcode.com/problems/implement-trie-prefix-tree/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/implement-trie-prefix-tree.py
 # Time:  O(n), per operation
 # Space: O(1)
@@ -77,8 +77,9 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-Thought: https://leetcode.com/articles/implement-trie-prefix-tree/
-#98.46% 154ms
+# Thought: https://leetcode.com/problems/implement-trie-prefix-tree/solution/
+
+# 92ms 95.72%
 public class Trie {
     TrieNode root;
     /** Initialize your data structure here. */
@@ -145,7 +146,7 @@ public class Trie {
 
 fullway:
 
-#71.90% 177ms
+# 141ms 25.77%
 class TrieNode {
 
     // R links to node children
@@ -226,7 +227,7 @@ class Trie {
 }
 
 # Use hashmap
-# 17.13%, 223ms
+# 151ms 18.95%
 class Trie {
     private class TrieNode {
         char c;

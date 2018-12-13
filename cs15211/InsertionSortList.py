@@ -1,16 +1,18 @@
-__source__ = 'https://leetcode.com/problems/insertion-sort-list/description/'
+__source__ = 'https://leetcode.com/problems/insertion-sort-list/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/insertion-sort-list.py
 # Time:  O(n ^ 2)
 # Space: O(1)
 # Sort
 #
 # Description: Leetcode # 147. Insertion Sort List
+#
 # Sort a linked list using insertion sort.
 #
 # Related Topics
 # Linked List Sort
 # Similar Questions
 # Sort List
+#
 
 # Definition for singly-linked list.
 class ListNode:
@@ -136,9 +138,20 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
-# 99.73% 2ms # same solution as Leetcode # 148. Sort List
-public class Solution {
+# Thought:
+
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) { val = x; }
+ * }
+ */
+
+# same solution as Leetcode # 148. Sort List
+# 3ms 99.81%
+class Solution {
     public ListNode insertionSortList(ListNode head) {
         if(head == null || head.next == null) return head;
 
@@ -177,16 +190,9 @@ public class Solution {
     }
 }
 
-#90.34% 9ms # 2 pointers
-/**
- * Definition for singly-linked list.
- * public class ListNode {
- *     int val;
- *     ListNode next;
- *     ListNode(int x) { val = x; }
- * }
- */
-public class Solution {
+# 2 pointers
+# 10ms 79.47%
+class Solution {
     public ListNode insertionSortList(ListNode head) {
         if (head == null) {
             return head;
@@ -218,9 +224,9 @@ public class Solution {
     }
 }
 
-#naive
-#64.01% 39ms
-public class Solution {
+# naive
+# 63ms 4.62%
+class Solution {
     public ListNode insertionSortList(ListNode head) {
         if(head == null || head.next == null) {
             return head;
@@ -244,6 +250,27 @@ public class Solution {
         }
         head.next = cur;
         prev.next = head;
+    }
+}
+
+# 32ms 37.59%
+class Solution {
+    public ListNode insertionSortList(ListNode head) {
+        if (head == null || head.next == null) {
+            return head;
+        }
+        ListNode fakeHead = new ListNode(0);
+        while (head != null) {
+            ListNode next = head.next;
+            ListNode target = fakeHead;
+            while (target.next != null && target.next.val < head.val) {
+                target = target.next;
+            }
+            head.next = target.next;
+            target.next = head;
+            head = next;
+        }
+        return fakeHead.next;
     }
 }
 '''

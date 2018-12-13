@@ -49,6 +49,7 @@ __source__ = 'https://leetcode.com/problems/factor-combinations/description/'
 # Combination Sum
 #
 import unittest
+import math
 # best performance
 class Solution(object):
     def getFactors(self, n):
@@ -101,7 +102,8 @@ class Solution3:
                 self.getResult(n / i, result, factors);
                 factors.pop()
             i += 1
-import math
+
+# 24ms 61.02%
 class Solution2(object):
     def getFactors(self, n):
         """
@@ -135,9 +137,10 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
-# 34.88% 211ms
-public class Solution {
+# Thought:
+
+# 146ms 26.92%
+class Solution {
     public List<List<Integer>> getFactors(int n) {
         List<List<Integer>> res = new ArrayList<>();
         if (n <= 1) return res;
@@ -161,8 +164,8 @@ public class Solution {
     }
 }
 
-#96.27% 1ms
-public class Solution {
+# 0ms 100%
+class Solution {
     public List<List<Integer>> getFactors(int n) {
         List<List<Integer>> res = new ArrayList<>();
         if( n <= 1) return res;
@@ -185,7 +188,7 @@ public class Solution {
     }
 }
 
-#96.27% 1ms
+# 1ms 94.17%
 public class Solution {
     public List<List<Integer>> getFactors(int n) {
         List<List<Integer>> result = new ArrayList<>();

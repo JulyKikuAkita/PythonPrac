@@ -96,9 +96,8 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/problems/contains-duplicate/solution/
+# Thought:
 
-#70.81% 15ms
 /**
  * Definition for an interval.
  * public class Interval {
@@ -108,7 +107,8 @@ Java = '''
  *     Interval(int s, int e) { start = s; end = e; }
  * }
  */
-public class Solution {
+# 10ms 45.16%
+class Solution {
     public List<Interval> insert(List<Interval> intervals, Interval newInterval) {
         List<Interval> result = new ArrayList<>();
         int index = 0;
@@ -132,9 +132,9 @@ public class Solution {
     }
 }
 
-#99% 12ms Binary search
-
-public class Solution {
+# Binary search
+# 6ms 99.89%
+class Solution {
     public List<Interval> insert(List<Interval> intervals, Interval newInterval) {
         if(intervals == null || newInterval == null) {
             return intervals;
@@ -200,6 +200,28 @@ public class Solution {
             }
         }
         return l;
+    }
+}
+
+# 6ms 99.89%
+class Solution {
+    public List<Interval> insert(List<Interval> intervals, Interval newInterval) {
+        List<Interval> result = new LinkedList<>();
+        int i = 0;
+        // add all the intervals ending before newInterval starts
+        while (i < intervals.size() && intervals.get(i).end < newInterval.start)
+            result.add(intervals.get(i++));
+        // merge all overlapping intervals to one considering newInterval
+        while (i < intervals.size() && intervals.get(i).start <= newInterval.end) {
+            newInterval = new Interval( // we could mutate newInterval here also
+                    Math.min(newInterval.start, intervals.get(i).start),
+                    Math.max(newInterval.end, intervals.get(i).end));
+            i++;
+        }
+        result.add(newInterval); // add the union of intervals we got
+        // add all the rest
+        while (i < intervals.size()) result.add(intervals.get(i++));
+        return result;
     }
 }
 '''

@@ -1,8 +1,9 @@
-__source__ = 'https://leetcode.com/problems/friend-circles/#/description'
-# Time:  O()
-# Space: O()
+__source__ = 'https://leetcode.com/problems/friend-circles/'
+# Time:  O(n^2)
+# Space: O(n)
 #
-# Description:
+# Description: 547. Friend Circles
+#
 # There are N students in a class. Some of them are friends, while some are not.
 # Their friendship is transitive in nature. For example, if A is a direct friend of B,
 # and B is a direct friend of C, then A is an indirect friend of C.
@@ -41,6 +42,7 @@ import unittest
 import scipy.sparse
 import numpy as np
 class Solution(object):
+    # 108ms 21.53%
     def findCircleNum(self, M):
         """
         :type M: List[List[int]]
@@ -48,6 +50,7 @@ class Solution(object):
         """
         return scipy.sparse.csgraph.connected_components(M)[0]
 
+    # 176ms 11.49%
     def findCircleNum2(self, M):
         return len(set(map(tuple, (np.matrix(M, dtype='bool')**len(M)).A)))
 
@@ -60,10 +63,12 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: unionfind, different from island
-#DFS: 87.02%
+# Thought: https://leetcode.com/problems/friend-circles/solution/
+unionfind, different from island
 
-public class Solution {
+# DFS
+# 5ms 98.23%
+class Solution {
     public int findCircleNum(int[][] M) {
         int[] visited = new int[M.length];
         int count = 0;
@@ -90,7 +95,8 @@ public class Solution {
 I abstracted it as a standalone class.
 Remember the template, you will be able to use it later.
 
-public class Solution {
+# 6ms 84.19%
+class Solution {
     public int findCircleNum(int[][] M) {
         UnionFind uf = new UnionFind(M.length);
         for (int i = 0; i < M.length - 1; i++) {

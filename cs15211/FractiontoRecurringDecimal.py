@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/fraction-to-recurring-decimal/description/'
+__source__ = 'https://leetcode.com/problems/fraction-to-recurring-decimal/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/fraction-to-recurring-decimal.py
 # Time:  O(logn), where log n is the length of result strings
 # Space: O(1)
@@ -6,7 +6,8 @@ __source__ = 'https://leetcode.com/problems/fraction-to-recurring-decimal/descri
 #
 # Description: Leetcode # 166. Fraction to Recurring Decimal
 #
-# Given two integers representing the numerator and denominator of a fraction, return the fraction in string format.
+# Given two integers representing the numerator and denominator of a fraction,
+# return the fraction in string format.
 #
 # If the fractional part is repeating, enclose the repeating part in parentheses.
 #
@@ -66,8 +67,9 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/problems/fraction-to-recurring-decimal/solution/
-#20.45% 5ms
+# Thought: https://leetcode.com/problems/fraction-to-recurring-decimal/solution/
+
+# 5ms 31.73%
 class Solution {
     public String fractionToDecimal(int numerator, int denominator) {
         StringBuilder result = new StringBuilder();
@@ -93,8 +95,8 @@ class Solution {
     }
 }
 
-#28.59% 4ms
-public class Solution {
+# 3ms 99.71%
+class Solution {
     public String fractionToDecimal(int numerator, int denominator) {
         if (denominator == 0) {
             return "n/a";
@@ -138,9 +140,9 @@ public class Solution {
 // import org.junit.*;
 // Assert.assertEquals("0.(142857)",Solution().fractionToDecimal(1, 7));
 
-# 99.19%
-# 2ms
-public class Solution {
+
+# 2ms 100%
+class Solution {
     public String fractionToDecimal(int numerator, int denominator) {
         // negative sign
         boolean negative = (numerator < 0) ^ (denominator < 0);

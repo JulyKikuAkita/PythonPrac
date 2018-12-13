@@ -1,7 +1,9 @@
-source = 'https://leetcode.com/problems/find-mode-in-binary-search-tree/#/description'
+source = 'https://leetcode.com/problems/find-mode-in-binary-search-tree/'
+# https://github.com/kamyu104/LeetCode/blob/master/Python/find-mode-in-binary-search-tree.py
 # Time:  O(n)
 # Space: O(1)
-# https://github.com/kamyu104/LeetCode/blob/master/Python/find-mode-in-binary-search-tree.py
+#
+# Description: Leetcode # 501. Find Mode in Binary Search Tree
 #
 # Given a binary search tree (BST) with duplicates,
 # find all the mode(s) (the most frequently occurred element) in the given BST.
@@ -38,6 +40,7 @@ source = 'https://leetcode.com/problems/find-mode-in-binary-search-tree/#/descri
 #         self.left = None
 #         self.right = None
 
+# 80ms 23.06%
 class Solution(object):
     def findMode(self, root):
         """
@@ -70,13 +73,13 @@ class Solution(object):
 
 Java = '''
 Thought:
+
 1. With map: Just travel the tree and count, find the those with max counts. 
 Nothing much. Spent 10min on figuring out what is mode....
 If using this method (hashmap), inorder/preorder/postorder gives the same result. 
 Because essentially you just travel the entire nodes and count. And BST is not necessary. 
 This method works for any tree.
 
-#32%
 /**
  * Definition for a binary tree node.
  * public class TreeNode {
@@ -86,7 +89,9 @@ This method works for any tree.
  *     TreeNode(int x) { val = x; }
  * }
  */
-public class Solution {
+
+# 7ms 52.60%
+class Solution {
     public int[] findMode(TreeNode root) {
         Map<Integer, Integer> map = new HashMap<>();
         int[] ans = new int[1];
@@ -114,8 +119,8 @@ public class Solution {
 }
 
 2. No map
-44%
-public class Solution {
+# 2ms 99.38%
+class Solution {
     Integer prev = null;
     int count = 1;
     int max = 0;

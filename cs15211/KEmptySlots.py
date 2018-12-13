@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/k-empty-slots/description/'
+__source__ = 'https://leetcode.com/problems/k-empty-slots/'
 # Time:  O()
 # Space: O()
 #
@@ -52,7 +52,8 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
+# Thought: https://leetcode.com/problems/k-empty-slots/solution/
+
 It seems that this question has some mistakes. I think there are two places that might lead to misunderstandings:
 (please feel free to tell me if I'm incorrect)
 
@@ -64,7 +65,7 @@ We just need to find a subarray days[left, left+1,..., left+k-1, right] which sa
 for any i = left+1,..., left+k-1, we can have days[left] < days[i] && days[right] < days[i].
 Then, the result is max(days[left], days[right]).
 
-#42.98% 127ms
+# 112ms 10.06%
 class Solution {
     public int kEmptySlots(int[] flowers, int k) {
         TreeSet<Integer> blooming = new TreeSet<>();
@@ -80,7 +81,7 @@ class Solution {
         return -1;
     }
 }
-#99.48% 13ms
+# 8ms 98%
 class Solution {
     public int kEmptySlots(int[] flowers, int k) {
         if(k < 0 || k > flowers.length - 2) {

@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/guess-number-higher-or-lower-ii/description/'
+__source__ = 'https://leetcode.com/problems/guess-number-higher-or-lower-ii/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/guess-number-higher-or-lower-ii.py
 # Time:  O(n^2)
 # Space: O(n^2)
@@ -47,6 +47,7 @@ __source__ = 'https://leetcode.com/problems/guess-number-higher-or-lower-ii/desc
 # Flip Game II Guess Number Higher or Lower Can I Win Find K Closest Elements
 #
 import unittest
+# 468ms 68.49%
 class Solution(object):
     def getMoneyAmount(self, n):
         """
@@ -63,15 +64,15 @@ class Solution(object):
 class TestMethods(unittest.TestCase):
     def test_Local(self):
         self.assertEqual(1, 1)
-        print Solution().containsDuplicate([12344555,12344555])
 
 if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/problems/guess-number-higher-or-lower-ii/solution/
-# 51.40% 15ms
-public class Solution {
+# Thought: https://leetcode.com/problems/guess-number-higher-or-lower-ii/solution/
+
+# 7ms 76.45%
+class Solution {
     public int getMoneyAmount(int n) {
         int[][] table = new int[n+1][n+1];
         return DP(table, 1, n);
@@ -90,8 +91,8 @@ public class Solution {
     }
 }
 
-#83.13% 13ms
-public class Solution {
+# 5ms 95.53%
+class Solution {
     public int getMoneyAmount(int n) {
         int[][] dp = new int[n + 1][n + 1];
         for (int len = 2; len <= n; len++) {
@@ -108,9 +109,9 @@ public class Solution {
     }
 }
 
-#DFS
-#98.21% 3ms
-public class Solution {
+# DFS
+# 1ms 99.49%
+class Solution {
     int[][] dp;
     public int getMoneyAmount(int n) {
         dp = new int[n + 1][n + 1];

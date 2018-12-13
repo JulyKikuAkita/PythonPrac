@@ -1,7 +1,7 @@
 # coding=utf-8
 __source__ = 'https://leetcode.com/problems/implement-rand10-using-rand7/'
-# Time:  O()
-# Space: O()
+# Time:  O(1) average, but O(∞) worst case.
+# Space: O(1)
 #
 # Description: Leetcode # 470. Implement Rand10() Using Rand7()
 #

@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/kth-largest-element-in-a-stream/description/'
+__source__ = 'https://leetcode.com/problems/kth-largest-element-in-a-stream/'
 # Time:  O()
 # Space: O()
 #
@@ -40,8 +40,10 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: use PQ
-# 73ms, 99.79%
+# Thought:
+
+# use PQ
+# 77ms 83.97%
 class KthLargest {
     private PriorityQueue<Integer> pq;
     private int k;
@@ -65,10 +67,8 @@ class KthLargest {
     }
 }
 
-#Thought: use BST
-#8.57% 334ms
-
-
+# use BST
+# 428ms 5.74%
 class KthLargest {
     TreeNode root;
     private int k;

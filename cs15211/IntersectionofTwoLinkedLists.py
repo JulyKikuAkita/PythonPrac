@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/intersection-of-two-linked-lists/description/'
+__source__ = 'https://leetcode.com/problems/intersection-of-two-linked-lists/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/intersection-of-two-linked-lists.py
 # Time:  O(m + n)
 # Space: O(1)
@@ -126,11 +126,7 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/articles/intersection-two-linked-lists/
-1, Get the length of the two lists.
-2, Align them to the same start point.
-3, Move them together until finding the intersection point, or the end null
-
+# Thought: https://leetcode.com/problems/intersection-of-two-linked-lists/solution/
 /**
  * Definition for singly-linked list.
  * public class ListNode {
@@ -143,8 +139,12 @@ Java = '''
  * }
  */
 
-#32.82% 2ms
-public class Solution {
+1, Get the length of the two lists.
+2, Align them to the same start point.
+3, Move them together until finding the intersection point, or the end null
+
+# 1ms 100%
+class Solution {
     public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
         int lenA = getLength(headA);
         int lenB = getLength(headB);
@@ -184,8 +184,8 @@ When pA reaches the end of a list, then redirect it to the head of B (yes, B, th
 similarly when pB reaches the end of a list, redirect it the head of A.
 If at any point pA meets pB, then pA/pB is the intersection node.
 
-# 13.60% 3ms
-public class Solution {
+# 2ms 38.83%
+class Solution {
     public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
         //boundary check
         if(headA == null || headB == null) return null;

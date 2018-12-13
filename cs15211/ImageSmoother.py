@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/image-smoother/description/'
+__source__ = 'https://leetcode.com/problems/image-smoother/'
 # Time:  O(n^2)
 # Space: O(n^2)
 #
@@ -34,9 +34,27 @@ __source__ = 'https://leetcode.com/problems/image-smoother/description/'
 #
 import unittest
 
+# 860ms 12.65%
 class Solution(object):
-    pass  # your function here
+    def imageSmoother(self, M):
+        """
+        :type M: List[List[int]]
+        :rtype: List[List[int]]
+        """
+        R, C = len(M), len(M[0])
+        ans = [[0] * C for _ in M]
 
+        for r in xrange(R):
+            for c in xrange(C):
+                count = 0
+                for nr in (r-1, r, r+1):
+                    for nc in (c-1, c, c+1):
+                        if 0 <= nr < R and 0 <= nc < C:
+                            ans[r][c] += M[nr][nc]
+                            count += 1
+                ans[r][c] /= count
+
+        return ans
 
 class TestMethods(unittest.TestCase):
     def test_Local(self):
@@ -47,8 +65,9 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
-#83.51% 28ms
+# Thought: https://leetcode.com/problems/image-smoother/solution/
+
+# 22ms 62.84%
 class Solution {
     public int[][] imageSmoother(int[][] M) {
         int[][] smoothMatrix = new int[M.length][M[0].length];
@@ -79,7 +98,7 @@ class Solution {
     }
 }
 
-#97.71% 23ms
+# 19ms 76.79%
 class Solution {
     public int[][] imageSmoother(int[][] M) {
         int m = M.length;

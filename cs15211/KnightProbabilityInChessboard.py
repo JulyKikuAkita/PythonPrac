@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/knight-probability-in-chessboard/description/'
+__source__ = 'https://leetcode.com/problems/knight-probability-in-chessboard/'
 # Time:  O()
 # Space: O()
 #
@@ -36,7 +36,7 @@ __source__ = 'https://leetcode.com/problems/knight-probability-in-chessboard/des
 # Out of Boundary Paths
 #
 import unittest
-#305ms
+# 188ms 54.24%
 class Solution(object):
     def knightProbability(self, N, K, r, c):
         """
@@ -68,8 +68,9 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-# Thought: https://leetcode.com/articles/knight-probability-in-chessboard/
-# 16ms
+# Thought: https://leetcode.com/problems/knight-probability-in-chessboard/solution/
+
+# 9ms 45.59%
 class Solution {
     int[][] moves = {{1, 2}, {1, -2}, {2, 1}, {2, -1}, {-1, 2}, {-1, -2}, {-2, 1}, {-2, -1}};
     public double knightProbability(int N, int K, int r, int c) {
@@ -96,7 +97,7 @@ class Solution {
     }
 }
 
-# 31ms
+# 17ms 13.88%
 class Solution {
     public double knightProbability(int N, int K, int sr, int sc) {
         int[] dr = new int[]{-1, -1, 1, 1, -2, -2, 2, 2};

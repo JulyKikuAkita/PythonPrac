@@ -9,9 +9,11 @@ __source__ = 'https://leetcode.com/problems/find-the-celebrity/description/'
 # The definition of a celebrity is that all the other n - 1 people know him/her but he/she does not know any of them.
 #
 # Now you want to find out who the celebrity is or verify that there is not one.
-# The only thing you are allowed to do is to ask questions like: "Hi, A. Do you know B?" to get information of whether A knows B.
+# The only thing you are allowed to do is to ask questions like: "Hi, A.
+# Do you know B?" to get information of whether A knows B.
 #
-# You need to find out the celebrity (or verify there is not one) by asking as few questions as possible (in the asymptotic sense).
+# You need to find out the celebrity (or verify there is not one) by asking as few questions as possible
+# (in the asymptotic sense).
 #
 # You are given a helper function bool knows(a, b) which tells you whether A knows B.
 #
@@ -34,6 +36,7 @@ def knows(a, b):
     pass
 #
 import unittest
+# 1344ms 14.06%
 class Solution(object):
     def findCelebrity(self, n):
         """
@@ -60,10 +63,13 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
+# Thought:
+
 /* The knows API is defined in the parent class Relation.
       boolean knows(int a, int b); */
-#9.88% 33ms
-public class Solution extends Relation {
+
+# 8ms 96.10%
+class Solution extends Relation {
     public int findCelebrity(int n) {
         int start = 0;
         int end = n - 1;
@@ -74,21 +80,17 @@ public class Solution extends Relation {
                 end--;
             }
         }
-        for (int i = 0; i < start; i++) {
-            if (knows(start, i) || !knows(i, start)) {
-                return -1;
-            }
-        }
-        for (int i = start + 1; i < n; i++) {
-            if (knows(start, i) || !knows(i, start)) {
+        for (int i = 0; i < n; i++) {
+            if (i != start && (!knows(i, start) || knows(start, i))) {
                 return -1;
             }
         }
         return start;
     }
 }
-#80.35% 13ms
-public class Solution extends Relation {
+
+# 10ms 60.88%
+class Solution extends Relation {
     public int findCelebrity(int n) {
         if ( n <= 0 ) return -1;
         if ( n == 1 ) return 0;

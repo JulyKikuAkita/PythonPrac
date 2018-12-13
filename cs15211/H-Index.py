@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/h-index/tabs/description'
+__source__ = 'https://leetcode.com/problems/h-index/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/h-index.py
 # Time:  O(n)
 # Space: O(n)
@@ -86,14 +86,15 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-# Thought: https://leetcode.com/problems/h-index/tabs/solution
+# Thought: https://leetcode.com/problems/h-index/solution/
+
 citations[index] >= length(citations) - index
 
 1. Comparison sort based
 # Time:  O(n log n)
 # Space: O(1)
-#10.43% 3ms
-public class Solution {
+# 5ms 69.09%
+class Solution {
     public int hIndex(int[] citations) {
         // sorting the citations in ascending order
         Arrays.sort(citations);
@@ -107,8 +108,8 @@ public class Solution {
 }
 
 2. counting sort
-# 50.50% 1ms
-public class Solution {
+# 5ms 69.09%
+class Solution {
     public int hIndex(int[] citations) {
         int n = citations.length;
         int[] papers = new int[n + 1];
@@ -124,8 +125,8 @@ public class Solution {
 }
 
 3. bucket sort: 94 % - 50%
-# 50.50% 1ms
-public class Solution {
+# 3ms 100%
+class Solution {
     public int hIndex(int[] citations) {
         int n = citations.length;
         int[] bucket = new int[n + 1];

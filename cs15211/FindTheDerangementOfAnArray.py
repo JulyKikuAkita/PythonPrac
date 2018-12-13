@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/find-the-derangement-of-an-array/description/'
+__source__ = 'https://leetcode.com/problems/find-the-derangement-of-an-array/'
 # Time:  O(n)
 # Space: O(n)
 #
@@ -41,7 +41,7 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
+# Thought: https://leetcode.com/problems/find-the-derangement-of-an-array/solution/
 
 For the k th element, it has k-1 positions and there are two possibilities for its position
 
@@ -61,8 +61,9 @@ The Staggered formula is D(n) = (n-1) [D(n-2) + D(n-1)]:
 
 Approach #2 Using Recursion [Stack Overflow]
 
+# Wrong ans
 # Line 13: java.lang.StackOverflowError
-public class Solution {
+class Solution {
     public int findDerangement(int n) {
         Integer[] memo = new Integer[n + 1];
         return find(n, memo);
@@ -79,9 +80,9 @@ public class Solution {
     }
 }
 
-Approach #4 Constant Space Dynamic Programming [Accepted]:
-# 72.95% 19ms
-public class Solution {
+Approach # 4 Constant Space Dynamic Programming [Accepted]:
+# 12ms 98.90%
+class Solution {
     public int findDerangement(int n) {
         if (n == 0)
             return 1;
@@ -98,6 +99,7 @@ public class Solution {
     }
 }
 
+# 12ms 98.90%
 class Solution {
     public int findDerangement(int n) {
         int one = 1;
@@ -121,7 +123,7 @@ class Solution {
 }
 
 Approach #5 Using Formula [Accepted]:
-
+# 21ms 19.78%
 class Solution {
     private static final int M = 1000000007;
         public int findDerangement(int n) {

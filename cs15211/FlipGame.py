@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/flip-game/#/description'
+__source__ = 'https://leetcode.com/problems/flip-game/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/flip-game.py
 # Time:  O(c * n + n) = O(n * (c+1))
 # Space: O(n)
@@ -28,6 +28,8 @@ __source__ = 'https://leetcode.com/problems/flip-game/#/description'
 # Flip Game II
 #
 import unittest
+
+# 20ms 100%
 class Solution(object):
     def generatePossibleNextMoves(self, s):
         """
@@ -48,6 +50,8 @@ class Solution(object):
 # Time:  O(c * m * n + n) = O(c * n + n), where m = 2 in this question
 # Space: O(n)
 # This solution compares O(m) = O(2) times for two consecutive "+", where m is length of the pattern
+
+# 20ms 100%
 class Solution2(object):
   def generatePossibleNextMoves(self, s):
       """
@@ -56,6 +60,7 @@ class Solution2(object):
       """
       return [s[:i] + "--" + s[i+2:] for i in xrange(len(s) - 1) if s[i:i+2] == '++']
 
+# 32ms 6.43%
 class Solution3(object):
     def generatePossibleNextMoves(self, s):
         """
@@ -77,10 +82,10 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
+# Thought:
 
-# 21 % 1ms
-public class Solution {
+# 0ms 100%
+class Solution {
     public List<String> generatePossibleNextMoves(String s) {
         List<String> result = new ArrayList<>();
         int index = s.indexOf("++");
@@ -92,7 +97,7 @@ public class Solution {
     }
 }
 
-# 21 % 1ms
+# 0ms 100%
 public class Solution {
     public List<String> generatePossibleNextMoves(String s) {
         List list = new ArrayList();
@@ -103,7 +108,7 @@ public class Solution {
     }
 }
 
-# 21 % 1ms
+# 1ms 18.97%
 public class Solution {
     public List<String> generatePossibleNextMoves(String s) {
         List<String> res = new ArrayList<String>();

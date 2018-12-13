@@ -46,6 +46,7 @@ __source__ = 'https://leetcode.com/problems/game-of-life/description/'
 # Set Matrix Zeroes
 #
 import unittest
+# 32ms 13.72%
 class Solution(object):
     def gameOfLife(self, board):
         """
@@ -85,7 +86,8 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
+# Thought:
+
 To solve it in place, we use 2 bits to store 2 states:
 
 [2nd bit, 1st bit] = [next state, current state]
@@ -111,8 +113,8 @@ To get the next state, simply do
 
 board[i][j] >> 1
 
-#83.94% 0ms
-public class Solution {
+# 1ms 100%
+class Solution {
     public void gameOfLife(int[][] board) {
         if (board == null || board.length == 0) return;
         int m = board.length, n = board[0].length;
@@ -151,8 +153,8 @@ public class Solution {
     }
 }
 
-# 9.94% 1ms
-public class Solution {
+# 2ms 55.44%
+class Solution {
     public void gameOfLife(int[][] board) {
         if (board == null || board.length == 0 || board[0].length == 0) {
             return;
@@ -201,8 +203,8 @@ public class Solution {
     }
 }
 
-# 9.94% 1ms
-public class Solution {
+# 2ms 55.44%
+class Solution {
     public void gameOfLife(int[][] board) {
         int m = board.length;
         int n = board[0].length;

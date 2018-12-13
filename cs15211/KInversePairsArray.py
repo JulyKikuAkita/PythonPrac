@@ -1,9 +1,10 @@
-__source__ = 'https://leetcode.com/problems/k-inverse-pairs-array/description/'
+__source__ = 'https://leetcode.com/problems/k-inverse-pairs-array/'
 # Approach #7 1-D dynamic Programmming [Accepted]:
 # Time O(n * k) dp array of size k+1k+1 is filled n+1n+1 times
 # Space O(n) dpdp array of size (k+1)(k+1) is used.
 #
 # Description: Leetcode # 629. K Inverse Pairs Array
+#
 # Given two integers n and k, find how many different arrays consist of numbers from 1 to n
 # such that there are exactly k inverse pairs.
 #
@@ -46,12 +47,13 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/articles/k-inverse-pairs-array/
+# Thought: https://leetcode.com/problems/k-inverse-pairs-array/solution/
+
 This rule of displacements holds true because,
 whenever a number is shifted y times towards the left starting from the array a0,
 after the shift, y numbers smaller than it lie towards its right, giving a total of y inverse pairs.
 
-# 32.96% 58ms
+# 27ms 64.95%
 class Solution {
      public static int kInversePairs(int n, int k) {
             int mod = 1000000007;
@@ -75,8 +77,9 @@ class Solution {
 Approach #7 1-D dynamic Programmming [Accepted]:
 Time O(n * k) dp array of size k+1k+1 is filled n+1n+1 times
 Space O(n) dpdp array of size (k+1)(k+1) is used.
-#97.97% 25ms
-public class Solution {
+
+# 11ms 100%
+class Solution {
     public int kInversePairs(int n, int k) {
         int[] d = new int[k+1];
         d[0] = 1;
@@ -95,7 +98,8 @@ public class Solution {
 Approach #2 Using Recursion with memoization [Time Limit Exceeded]
 Time O(n^2 * k)
 Space O(n)
-public class Solution {
+# TLE
+class Solution {
     Integer[][] memo = new Integer[1001][1001];
     public int kInversePairs(int n, int k) {
         if (n == 0)

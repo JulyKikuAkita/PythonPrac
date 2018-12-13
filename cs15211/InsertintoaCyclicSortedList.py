@@ -111,7 +111,7 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: 4 ms 100%
+# Thought:
 
 /*
 // Definition for a Node.
@@ -127,6 +127,7 @@ class Node {
     }
 };
 */
+# 4 ms 100%
 class Solution {
     public Node insert(Node head, int insertVal) {
         Node node = new Node(insertVal);

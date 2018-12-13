@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/house-robber/#/description'
+__source__ = 'https://leetcode.com/problems/house-robber/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/house-robber.py
 # Time:  O(n)
 # Space: O(1)
@@ -67,11 +67,12 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-Thought: https://leetcode.com/problems/house-robber/#/solution
+Thought: https://leetcode.com/problems/house-robber/solution/
+
 f(k) = max(f(k-2) + Ak, f(k-1))
 
-#4.74% 1ms
-public class Solution {
+# 3ms 89.97%
+class Solution {
     public int rob(int[] nums) {
         if (nums.length == 0) {
             return 0;
@@ -87,30 +88,32 @@ public class Solution {
     }
 }
 
-#31.14% 0ms
-public class Solution {
+# 3ms 89.97%
+class Solution {
     public int rob(int[] nums) {
         int rob = 0; //max monney can get if rob current house
         int notRob = 0; //max money can get if not rob current house
         for(int i = 0; i < nums.length; i++) {
             int curRob = notRob + nums[i];
-            notRob = Math.max(notRob, rob); //if not rob ith house, take the max value of robbed (i-1)th house and not rob (i-1)th house
+            notRob = Math.max(notRob, rob); // if not rob ith house,
+                                            // take the max value of robbed (i-1)th house and not rob (i-1)th house
             rob = curRob;
         }
         return Math.max(rob, notRob);
     }
 }
 
-#31.14% 0ms
-public int rob(int[] num) {
-    int prevMax = 0;
-    int currMax = 0;
-    for (int x : num) {
-        int temp = currMax;
-        currMax = Math.max(prevMax + x, currMax);
-        prevMax = temp;
+# 4ms 42.58%
+class Solution {
+    public int rob(int[] nums) {
+        int prevMax = 0;
+        int currMax = 0;
+        for (int n : nums) {
+            int tmp = currMax;
+            currMax = Math.max(prevMax + n, currMax);
+            prevMax = tmp;
+        }
+        return currMax;
     }
-    return currMax;
 }
-
 '''

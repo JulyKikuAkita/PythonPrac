@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/kth-smallest-element-in-a-bst/#/description'
+__source__ = 'https://leetcode.com/problems/kth-smallest-element-in-a-bst/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/kth-smallest-element-in-a-bst.py
 # Time:  O(max(h, k))
 # Space: O(h)
@@ -70,6 +70,7 @@ class Solution:
             return 0
         return 1 + self.count(root.left) + self.count(root.right)
 
+    # 80ms 12.27%
     def kthSmallest3(self, root, k):
         """
         :type root: TreeNode
@@ -88,8 +89,9 @@ class Solution:
         count.append(node.val)
         self.helper(node.right, count)
 
-#Java
 Java = '''
+# Thought:
+#
 1. InOrder with BFS/DFS, and Binary search (most preferably)
 /**
  * Definition for a binary tree node.
@@ -101,7 +103,7 @@ Java = '''
  * }
  */
 
-# 94.16% 0ms
+# 0ms 100%
 class Solution {
     TreeNode res = null;
     int count = 0;
@@ -120,32 +122,10 @@ class Solution {
     }
 }
 
-public class Solution {
-
+# BFS
+# 2ms 22.23%
+class Solution {
     public int kthSmallest(TreeNode root, int k) {
-        //return bfs(root, k);
-        return bs(root, k);
-    }
-
-    #45.07% 1ms binary search
-    public int bs(TreeNode root, int k) {
-        int count = countNodes(root.left);
-       if (k == cnt + 1) {
-            return root.val;
-        } else if (k <= cnt) {
-            return bs(root.left, k);
-        } else{ // k > cnt + 1
-            return bs(root.right, k - cnt - 1);
-        }
-    }
-
-    public int countNodes(TreeNode node) {
-        if (node == null) return 0;
-        return countNodes(node.left) + countNodes(node.right) + 1;
-    }
-
-    # bfs 17.43% 2ms
-    public int bfs(TreeNode root, int k) {
         Stack<TreeNode> stack = new Stack<TreeNode>();
         TreeNode p = root;
         int count = 0;
@@ -161,6 +141,26 @@ public class Solution {
             }
         }
         return Integer.MIN_VALUE;
+    }
+}
+
+# Binary Search
+# 1ms 63.43%
+class Solution {
+    public int kthSmallest(TreeNode root, int k) {
+        int cnt = countNodes(root.left);
+        if (k == cnt + 1) {
+            return root.val;
+        } else if (k <= cnt) {
+            return kthSmallest(root.left, k);
+        } else{ // k > cnt + 1
+            return kthSmallest(root.right, k - cnt - 1);
+        }
+    }
+
+    public int countNodes(TreeNode node) {
+        if (node == null) return 0;
+        return 1 + countNodes(node.left) + countNodes(node.right);
     }
 }
 

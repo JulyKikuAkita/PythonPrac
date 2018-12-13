@@ -38,6 +38,7 @@ __source__ = 'https://leetcode.com/problems/is-subsequence/description/'
 import unittest
 
 # Greedy solution.
+# 128ms 75.77%
 class Solution(object):
     def isSubsequence(self, s, t):
         """
@@ -76,9 +77,10 @@ if __name__ == '__main__':
 
 Java = '''
 # Thought:
+
 # two pointers:
-#59.60% 37ms
-public class Solution {
+# 17ms 77.84%
+class Solution {
     public boolean isSubsequence(String s, String t) {
         if (s.length() == 0) return true;
         int indexS = 0, indexT = 0;
@@ -93,8 +95,8 @@ public class Solution {
     }
 }
 
-#94.93% 3ms
-public class Solution {
+# 1ms 100%
+class Solution {
     public boolean isSubsequence(String s, String t) {
         if (s.length() == 0) return true;
 
@@ -109,7 +111,7 @@ public class Solution {
     }
 }
 
-#96.90% 2ms
+# 1ms 100%
 class Solution {
     public boolean isSubsequence(String s, String t) {
         int[] a = new int[s.length() + 1];
@@ -159,7 +161,6 @@ public static void main(String[] args)
         System.out.println(index);
     }
 
-# 16.12% 60ms
 Binary search solution for follow-up with detailed comments
 Re: Java binary search using TreeSet got TLE
 
@@ -180,6 +181,8 @@ ability which is a little overkill for this problem. Here is my solution.
     //  i=1 ('b'): prev=6
     //  i=2 ('c'): prev=? (return false)
 
+# 49ms 18.85%
+class Solution {
     public boolean isSubsequence(String s, String t) {
         List<Integer>[] idx = new List[256]; // Just for clarity
         for (int i = 0; i < t.length(); i++) {
@@ -198,4 +201,6 @@ ability which is a little overkill for this problem. Here is my solution.
         }
         return true;
     }
+}
+
 '''

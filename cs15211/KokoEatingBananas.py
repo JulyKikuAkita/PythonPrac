@@ -1,6 +1,6 @@
 __source__ = 'https://leetcode.com/problems/koko-eating-bananas/'
-# Time:  O()
-# Space: O()
+# Time:  O(NlogW)
+# Space: O(1)
 #
 # Binary Search
 # Description: Leetcode # 875. Koko Eating Bananas
@@ -72,6 +72,7 @@ if __name__ == '__main__':
 
 Java = '''
 # Thought: https://leetcode.com/problems/koko-eating-bananas/solution/
+#
 # Complexity Analysis
 # Time Complexity: O(NlogW), where N is the number of piles, and W is the maximum size of a pile.
 # Space Complexity: O(1).
@@ -99,7 +100,7 @@ class Solution {
     }
 }
 
-#6ms 100%
+# 6ms 100%
 class Solution {
     public int minEatingSpeed(int[] piles, int H) {
         long ttl = 0;

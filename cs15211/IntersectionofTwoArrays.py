@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/intersection-of-two-arrays/description/'
+__source__ = 'https://leetcode.com/problems/intersection-of-two-arrays/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/intersection-of-two-arrays.py
 # Time:  O(m + n)
 # Space: O(min(m, n))
@@ -111,9 +111,9 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
-#12.83% 9ms
-public class Solution {
+# Thought:
+# 4ms 46.50%
+class Solution {
     public int[] intersection(int[] nums1, int[] nums2) {
         Set<Integer> set1 = new HashSet<Integer>();
         for(int num : nums1){
@@ -134,8 +134,8 @@ public class Solution {
     }
 }
 
-#75.75% 5ms
-public class Solution {
+# 4ms 46.50%
+class Solution {
     public int[] intersection(int[] nums1, int[] nums2) {
         Set<Integer> set = new HashSet<>();
         List<Integer> list = new ArrayList<>();

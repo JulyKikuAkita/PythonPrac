@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/groups-of-special-equivalent-strings/description/'
+__source__ = 'https://leetcode.com/problems/groups-of-special-equivalent-strings/'
 # Time:  O(sum of str length of all input string)
 # Space: O(N)
 #
@@ -14,8 +14,6 @@ __source__ = 'https://leetcode.com/problems/groups-of-special-equivalent-strings
 # such that any string not in S is not special-equivalent with any string in S.
 #
 # Return the number of groups of special-equivalent strings from A.
-#
-#
 #
 # Example 1:
 #
@@ -92,7 +90,8 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/problems/groups-of-special-equivalent-strings/solution/
+# Thought: https://leetcode.com/problems/groups-of-special-equivalent-strings/solution/
+#
 # Thus, the function \mathcal{C}(S) =C(S)= (the count of the even indexed letters in S,
 # followed by the count of the odd indexed letters in S)
 # successfully characterizes the equivalence relation.
@@ -100,7 +99,7 @@ Java = '''
 # Time Complexity: O(\sum\limits_{i} (A_i){.length})
 # Space Complexity: O(N), where NN is the length of A.
 #
-#67.92% 19ms
+# 13ms 76.62%
 class Solution {
     public int numSpecialEquivGroups(String[] A) {
         Set<String> seen = new HashSet();
@@ -115,7 +114,7 @@ class Solution {
     }
 }
 
-#97.65% 7ms
+# 12ms 78.86%
 class Solution {
     public int numSpecialEquivGroups(String[] A) {
         Set set = new HashSet<>();

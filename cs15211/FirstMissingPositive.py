@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/first-missing-positive/description/'
+__source__ = 'https://leetcode.com/problems/first-missing-positive/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/first-missing-positive.py
 # Time:  O(n)
 # Space: O(1)
@@ -73,14 +73,16 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: match nums[i] with i //nums[index] = index + 1
+# Thought:
+match nums[i] with i //nums[index] = index + 1
 
-#58.53% 12ms
-public class Solution {
+# 7ms 61.24%
+class Solution {
     public int firstMissingPositive(int[] nums) {
         int index = 0;
         while (index < nums.length) {
-            if (nums[index] != index + 1 && nums[index] > 0 && nums[index] <= nums.length && nums[index] != nums[nums[index] - 1]) {
+            if (nums[index] != index + 1 && nums[index] > 0 && nums[index] <= nums.length
+            && nums[index] != nums[nums[index] - 1]) {
                 swap(nums, index, nums[index] - 1);
             } else {
                 index++;
@@ -102,8 +104,8 @@ public class Solution {
 }
 
 
-#58.53% 12ms
-public class Solution {
+# 5ms 99.22%
+class Solution {
     public int firstMissingPositive(int[] nums) {
         int i = 0;
         while (i < nums.length) {
@@ -124,8 +126,6 @@ public class Solution {
 }
 
 
-#58.53% 12ms
-Thought:
 The basic idea is for any k positive numbers (duplicates allowed),
 the first missing positive number must be within [1,k+1].
 The reason is like you put k balls into k+1 bins, there must be a bin empty,
@@ -145,6 +145,7 @@ and I can still use abs(A[i]) to get the original information A[i] holds.
 After step 2, I can again scan all elements between A[0,k-1] to find the first positive element A[i],
 that means (i+1) doesn't exist, which is what I want.
 
+# 7ms 61.24%
 class Solution {
     public int firstMissingPositive(int[] A) {
         int n=A.length;

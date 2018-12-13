@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/flip-game-ii/tabs/description'
+__source__ = 'https://leetcode.com/problems/flip-game-ii/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/flip-game-ii.py
 # Time:  O(n + c^2)
 # Space: O(c)
@@ -108,7 +108,7 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
+# Thought:
 # backtracking solution O(n!!)
 For the time complexity, let's say the length of the input string s is n,
 there are at most n - 1 ways to replace "++" to "--" (imagine s is all "+++..."),
@@ -116,8 +116,8 @@ once we replace one "++", there are at most (n - 2) - 1 ways to do the replaceme
 it's a little bit like solving the N-Queens problem, the time complexity is (n - 1) x (n - 3) x (n - 5) x ...,
 so it's O(n!!), double factorial.
 
-#65.36% 24ms
-public class Solution {
+# 21ms 55.15%
+class Solution {
     public boolean canWin(String s) {
         if(s == null || s.length() == 0 ) return false;
         char[] arr = s.toCharArray();
@@ -125,7 +125,7 @@ public class Solution {
     }
 
     private boolean dfs(char[] arr){
-        for(int i= 1 ; i < arr.length; i++){
+        for(int i = 1 ; i < arr.length; i++){
             if(arr[i-1] == '+' && arr[i] == '+'){
                 arr[i-1] = '-';
                 arr[i] = '-';
@@ -143,8 +143,8 @@ public class Solution {
 }
 
 # backtracking + memorization 68%
-# 89.76% 18ms
-public class Solution {
+# 9ms 87.87%
+class Solution {
     public boolean canWin(String s) {
         return canWin(s, new HashMap<>());
     }
@@ -166,8 +166,8 @@ public class Solution {
     }
 }
 
-# 87.01% 19ms
-public class Solution {
+# 10ms 86.21%
+class Solution {
     HashMap<String, Boolean> map = new HashMap<>();
 
     public boolean canWin(String s) {
@@ -188,7 +188,7 @@ public class Solution {
     }
 }
 
-#96.97% 1ms
+# 1ms 99.50%
 class Solution {
     public boolean canWin(String s) {
         HashSet<Integer> set = new HashSet<Integer>();
@@ -213,8 +213,8 @@ class Solution {
     }
 }
 
-#99.87% 0ms
-public class Solution {
+# 0ms 100%
+class Solution {
     public boolean canWin(String s) {
         // two pointers p1 p2 to count consecutive '+'
         // flips is total flips available

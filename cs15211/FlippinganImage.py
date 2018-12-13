@@ -1,8 +1,9 @@
-__source__ = 'https://leetcode.com/problems/flipping-an-image/description/'
+__source__ = 'https://leetcode.com/problems/flipping-an-image/'
 # Time:  O(N)
 # Space: O(1)
 #
 # Description: Leetcode # 832. Flipping an Image
+#
 # Given a binary matrix A, we want to flip the image horizontally,
 # then invert it, and return the resulting image.
 #
@@ -57,8 +58,9 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/problems/flipping-an-image/solution/
+# Thought: https://leetcode.com/problems/flipping-an-image/solution/
 
+# 5ms 54.91%
 class Solution {
     public int[][] flipAndInvertImage(int[][] A) {
         int C = A[0].length;

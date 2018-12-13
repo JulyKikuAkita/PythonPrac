@@ -1,9 +1,9 @@
-__source__ = 'https://leetcode.com/articles/find-permutation/#approach-3-two-pointers-accepted'
-# https://leetcode.com/problems/find-permutation/#/description
+__source__ = 'https://leetcode.com/problems/find-permutation/'
 # Time:  O(n)
 # Space: O(1)
 #
-# Description:
+# Description: 484. Find Permutation
+#
 # By now, you are given a secret signature consisting of character 'D' and 'I'. 'D' represents a decreasing
 # relationship between two numbers, 'I' represents an increasing relationship between two numbers.
 # And our secret signature was constructed by a special integer array, which contains uniquely
@@ -34,6 +34,7 @@ __source__ = 'https://leetcode.com/articles/find-permutation/#approach-3-two-poi
 
 import unittest
 import re
+# 112ms 100%
 class Solution(object):
     def findPermutation(self, s):
         """
@@ -45,7 +46,9 @@ class Solution(object):
             i, j = m.start(), m.end() + 1
             a[i:j] = a[i:j][::-1]
         return a
-class Solution(object):
+
+# 168ms 36.99%
+class Solution2(object):
     def findPermutation(self, s):
         return sorted(range(1, len(s) + 2), cmp=lambda i, j: -('I' not in s[j-1:i-1]))
 
@@ -59,8 +62,8 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
-https://leetcode.com/articles/find-permutation/
+# Thought:https://leetcode.com/problems/find-permutation/solution/
+
 Greedy O(n) JAVA solution with explanation
 Idea is pretty simple. There are 2 possibilities:
 
@@ -70,24 +73,26 @@ In this case we should use k, k - 1, ..., 1 to get lexicographically smallest pe
 Then we proceed computing the rest of the array.
 Also we should increase min variable that is used to store minimum value in remaining part of the array.
 
-public int[] findPermutation(String s) {
+# 4ms 73.59%
+class Solution {
+    public int[] findPermutation(String s) {
+        s = s + ".";
+        int[] res = new int[s.length()];
+        int min = 1, i = 0;
 
-    s = s + ".";
-    int[] res = new int[s.length()];
-    int min = 1, i = 0;
-
-    while (i < res.length) {
-        if (s.charAt(i) != 'D') {
-            res[i++] = min++;
-        } else {
-            int j = i;
-            while (s.charAt(j) == 'D') j++;
-            for (int k = j; k >= i; k--)
-                res[k] = min++;
-            i = j + 1;
+        while (i < res.length) {
+            if (s.charAt(i) != 'D') {
+                res[i++] = min++;
+            } else {
+                int j = i;
+                while (s.charAt(j) == 'D') j++;
+                for (int k = j; k >= i; k--) {
+                    res[k] =min++;
+                }
+                i = j+1;
+            }
         }
+        return res;
     }
-
-    return res;
 }
 '''

@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/first-unique-character-in-a-string/description/'
+__source__ = 'https://leetcode.com/problems/first-unique-character-in-a-string/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/first-unique-character-in-a-string.py
 # Time:  O(n)
 # Space: O(n)
@@ -46,9 +46,10 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
-#97.93% 14ms
-public class Solution {
+# Thought: https://leetcode.com/problems/first-unique-character-in-a-string/solution/
+
+# 8ms 97.47%
+class Solution {
     public int firstUniqChar(String s) {
         int[] count = new int[26];
         char[] arr = s.toCharArray();
@@ -64,8 +65,8 @@ public class Solution {
     }
 }
 
-#100% 8ms
-public class Solution {
+# 4ms 100%
+class Solution {
     public int firstUniqChar(String s) {
         int res = s.length();
         for(char i = 'a' ;i <= 'z';i++) {

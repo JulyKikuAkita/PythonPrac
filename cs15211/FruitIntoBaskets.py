@@ -53,7 +53,7 @@ __source__ = 'https://leetcode.com/problems/fruit-into-baskets/'
 #
 import unittest
 
-#88ms 100%
+# 88ms 100%
 class Solution(object):
     def totalFruit(self, tree):
         """
@@ -92,9 +92,9 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/problems/fruit-into-baskets/solution/
-#  Sliding Window : This problem is the same as 159 - Longest Substring with At Most Two Distinct Characters
-#10ms 99.65%
+# Thought: https://leetcode.com/problems/fruit-into-baskets/solution/
+# Sliding Window : This problem is the same as 159 - Longest Substring with At Most Two Distinct Characters
+# 10ms 99.65%
 class Solution {
     public int totalFruit(int[] tree) {
         int max = 0, count = 0;

@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/implement-queue-using-stacks/#/description'
+__source__ = 'https://leetcode.com/problems/implement-queue-using-stacks/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/implement-queue-using-stacks.py
 # Time:  O(1), amortized
 # Space: O(n)
@@ -63,10 +63,10 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-Thought: https://leetcode.com/articles/implement-queue-using-stacks/
+# Thought: https://leetcode.com/problems/implement-queue-using-stacks/solution/
 
-#56.32% 98ms
-public class MyQueue {
+# 75ms 26.49%
+class MyQueue {
     Stack<Integer> input;
     Stack<Integer> output;
     /** Initialize your data structure here. */
@@ -102,8 +102,8 @@ public class MyQueue {
     }
 }
 
-#86.63% 90ms
-public class MyQueue {
+# 55ms 90.38%
+class MyQueue {
     Stack<Integer> orig;
     Stack<Integer> bucket;
 

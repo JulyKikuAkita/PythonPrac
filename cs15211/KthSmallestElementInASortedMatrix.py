@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/kth-smallest-element-in-a-sorted-matrix/description/'
+__source__ = 'https://leetcode.com/problems/kth-smallest-element-in-a-sorted-matrix/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/kth-smallest-element-in-a-sorted-matrix.py
 # Time:  O(k * log(min(n, m, k))), with n x m matrix
 # Space: O(min(n, m, k))
@@ -35,6 +35,7 @@ __source__ = 'https://leetcode.com/problems/kth-smallest-element-in-a-sorted-mat
 
 import unittest
 from heapq import heappush, heappop
+# 136ms 27.62%
 class Solution(object):
     def kthSmallest(self, matrix, k):
         """
@@ -72,7 +73,9 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://discuss.leetcode.com/topic/52948/share-my-thoughts-and-clean-java-code
+# Thought:
+#
+# https://discuss.leetcode.com/topic/52948/share-my-thoughts-and-clean-java-code
 Solution 1 : Heap
 Here is the step of my solution:
 
@@ -89,8 +92,8 @@ What is more, this problem is exact the same with Leetcode373 Find K Pairs with 
 I use the same code which beats 96.42%, after you solve this problem, you can check with this link:
 https://discuss.leetcode.com/topic/52953/share-my-solution-which-beat-96-42
 
-#47.22% 28ms
-public class Solution {
+# 24ms 41.99%
+class Solution {
     public int kthSmallest(int[][] matrix, int k) {
         int n = matrix.length;
         PriorityQueue<Tuple> pq = new PriorityQueue<Tuple>();
@@ -134,13 +137,15 @@ when the array is unsorted and we are going to find a specific number, we can us
 
 Let me give you two examples of these two "search space"
 
-index -- A bunch of examples -- https://leetcode.com/problems/find-minimum-in-rotated-sorted-array/ ( the array is sorted)
+index -- A bunch of examples -- https://leetcode.com/problems/find-minimum-in-rotated-sorted-array/
+( the array is sorted)
 range -- https://leetcode.com/problems/find-the-duplicate-number/ (Unsorted Array)
-The reason why we did not use index as "search space" for this problem is the matrix is sorted in two directions,
+The reason why we did not use index as "search space"
+for this problem is the matrix is sorted in two directions,
  we can not find a linear way to map the number and its index.
 
-#67.20% 2ms
-public class Solution {
+# 1ms 85.42%
+class Solution {
     public int kthSmallest(int[][] matrix, int k) {
         int lo = matrix[0][0], hi = matrix[matrix.length - 1][matrix[0].length - 1] + 1;//[lo, hi)
         while(lo < hi) {
@@ -157,8 +162,8 @@ public class Solution {
     }
 }
 
-#74.69% 1ms
-public class Solution {
+# 0ms 100%
+class Solution {
     public int kthSmallest(int[][] matrix, int k) {
         int m = matrix.length;
         int n = matrix[0].length;

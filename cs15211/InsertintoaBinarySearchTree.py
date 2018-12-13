@@ -93,7 +93,7 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
+# Thought:
 
 /**
  * Definition for a binary tree node.
@@ -127,9 +127,8 @@ class Solution {
 Ex: [7,3,9,2,5], insert 4,
 the new BST will be : [7,3,9,2,5,null,null,null,null,4]. no need to balance
 
-#Iteration
+# Iteration
 # 1ms 100%
-
 class Solution {
       public TreeNode insertIntoBST(TreeNode root, int val) {
         if(root == null) return new TreeNode(val);

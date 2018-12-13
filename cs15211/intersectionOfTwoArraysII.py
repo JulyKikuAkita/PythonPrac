@@ -1,5 +1,9 @@
-__source__ = 'https://leetcode.com/problems/intersection-of-two-arrays-ii/description/'
+__source__ = 'https://leetcode.com/problems/intersection-of-two-arrays-ii/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/intersection-of-two-arrays-ii.py
+# Time:  O(m + n)
+# Space: O(1)
+#
+# Description: Leetcode # 160. Intersection of Two Linked Lists
 #
 # If the given array is not sorted and the memory is unlimited:
 #   - Time:  O(m + n)
@@ -162,8 +166,10 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#96.32% 3ms
-public class Solution {
+# Thought:
+
+# 2ms 98.24%
+class Solution {
     public int[] intersect(int[] nums1, int[] nums2) {
         if(nums1 == null || nums2 == null || nums1.length == 0 || nums2.length == 0){
             return new int[0];
@@ -198,8 +204,8 @@ public class Solution {
     }
 }
 
-#39.24% 7ms
-public class Solution {
+# 6ms 31.38%
+class Solution {
     public int[] intersect(int[] nums1, int[] nums2) {
         if ( nums1 == null || nums2 == null) return new int[0];
         List<Integer> res = new ArrayList<Integer>();

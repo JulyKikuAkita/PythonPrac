@@ -71,23 +71,6 @@ class Solution2:
             self.list_head = root
             return root
 
-# http://www.programcreek.com/2013/01/leetcode-flatten-binary-tree-to-linked-list/
-# Go down through the left, when right is not null, push right to stack.
-class javaSolution:
-    # @param root, a tree node
-    # @return nothing, do it in place
-    def flatten(self, root):
-        p, stack = root, []
-        while p or stack:
-            if p.right != None:
-                stack.append(p.right)
-            if p.left != None:
-                p.right = p.left
-                p.left = None
-            elif stack:
-                p.right = stack.pop()
-            p = p.right
-
 # http://www.cnblogs.com/zuoyuan/p/3721157.html
 class SolutionOther:
     # @param root, a tree node
@@ -152,7 +135,7 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/problems/contains-duplicate/solution/
+# Thought:
 
 /**
  * Definition for a binary tree node.
@@ -163,13 +146,13 @@ Java = '''
  *     TreeNode(int x) { val = x; }
  * }
  */
-public class Solution {
+class Solution {
     public void flatten(TreeNode root) {
         dfs_flatten(root, null);
     }
 
-    #DFS
-    #22.87% 1ms
+    # DFS
+    # 10ms 45.14%
     private TreeNode dfs_flatten(TreeNode root, TreeNode prev) {
         if (root == null) {
             return prev;
@@ -181,8 +164,8 @@ public class Solution {
         return root;
     }
     
-    #BFS # morris traverse?
-    #0.94% 4ms
+    # BFS # morris traverse?
+    # 7ms 90.99%
     private void bfs_flatten(TreeNode root) {
         TreeNode cur = root;
         while (cur != null) {
@@ -201,8 +184,8 @@ public class Solution {
     }
 }
 
-#BFS with stack
-# 2.92% 3ms
+# BFS with stack
+# 12ms 22.47%
 class Solution {
    public void flatten(TreeNode root) {
         if (root == null) return;
@@ -215,6 +198,32 @@ class Solution {
             if (!stk.isEmpty()) cur.right = stk.peek();
             cur.left = null; // dont forget this!!  // create loop
         }
+    }
+}
+
+# 9ms 64.07%
+class Solution {
+    public void flatten(TreeNode root) {
+        Stack<TreeNode> stack = new Stack<TreeNode>();
+        pushStack(stack, root);
+
+        TreeNode curr = null;
+        TreeNode last = null;
+        while(!stack.empty()) {
+            curr = stack.pop();
+            curr.left = null;
+            curr.right = last;
+            last = curr;
+        }
+    }
+
+    private void pushStack(Stack<TreeNode> stack, TreeNode root) {
+        if (root == null) {
+            return;
+        }
+        stack.push(root);
+        pushStack(stack, root.left);
+        pushStack(stack, root.right);
     }
 }
 '''

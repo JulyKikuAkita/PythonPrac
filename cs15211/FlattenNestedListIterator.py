@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/flatten-nested-list-iterator/description/'
+__source__ = 'https://leetcode.com/problems/flatten-nested-list-iterator/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/flatten-nested-list-iterator.py
 # Time:  O(n), n is the number of the integers.
 # Space: O(h), h is the depth of the nested lists.
@@ -83,8 +83,7 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
-# 79.95% 7ms
+# Thought:
 /**
  * // This is the interface that allows for creating nested lists.
  * // You should not implement it, or speculate about its implementation
@@ -102,7 +101,8 @@ Java = '''
  *     public List<NestedInteger> getList();
  * }
  */
-#89.79% 6ms
+
+# 3ms 94.48%
 public class NestedIterator implements Iterator<Integer> {
     private Stack<Iterator<NestedInteger>> stack;
     Integer nextInteger;
@@ -144,8 +144,8 @@ public class NestedIterator implements Iterator<Integer> {
  * while (i.hasNext()) v[f()] = i.next();
  */
 
-#89.79% 6ms
-public class NestedIterator implements Iterator<Integer> {
+# 2ms 100%
+class NestedIterator implements Iterator<Integer> {
     List<NestedInteger> nestedList;
     List<Integer> list = new ArrayList<Integer>();
     int index;

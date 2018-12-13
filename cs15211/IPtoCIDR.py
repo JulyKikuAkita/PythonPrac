@@ -89,8 +89,8 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/problems/ip-to-cidr/solution/
-#23ms, 15.42%
+# Thought: https://leetcode.com/problems/ip-to-cidr/solution/
+# 23ms, 15.42%
 class Solution {
     public List<String> ipToCIDR(String ip, int n) {
         long start = ipToLong(ip);
@@ -128,7 +128,7 @@ class Solution {
     }
 }
 
-#6ms 100%
+# 6ms 100%
 class Solution {
 
     public List<String> ipToCIDR(String ip, int n) {

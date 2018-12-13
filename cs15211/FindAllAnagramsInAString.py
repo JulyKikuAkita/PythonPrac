@@ -1,8 +1,10 @@
-__source__ = 'https://leetcode.com/problems/find-all-anagrams-in-a-string/description/'
+__source__ = 'https://leetcode.com/problems/find-all-anagrams-in-a-string/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/find-all-anagrams-in-a-string.py
 # Time:  O(n)
 # Space: O(1)
-
+#
+# Description: Leetcode # 438. Find All Anagrams in a String
+#
 # Given a string s and a non-empty string p, find all the start indices
 # of p's anagrams in s.
 #
@@ -41,6 +43,7 @@ __source__ = 'https://leetcode.com/problems/find-all-anagrams-in-a-string/descri
 # Similar Questions
 # Valid Anagram Permutation in String
 #
+# 116ms 68.85%
 class Solution(object):
     def findAnagrams(self, s, p):
         """
@@ -67,44 +70,50 @@ class Solution(object):
         return result
 
 Java = '''
+Thought:
 Same idea from a fantastic sliding window template, please refer:
 https://discuss.leetcode.com/topic/30941/here-is-a-10-line-template-that-can-solve-most-substring-problems
 
 Time Complexity will be O(n) because the "start" and "end" points will only move from left to right once.
 
-#72.27% 22ms
-public List<Integer> findAnagrams(String s, String p) {
-    List<Integer> list = new ArrayList<>();
-    if (s == null || s.length() == 0 || p == null || p.length() == 0) return list;
-    int[] hash = new int[256]; //character hash
-    //record each character in p to hash
-    for (char c : p.toCharArray()) {
-        hash[c]++;
-    }
-    //two points, initialize count to p's length
-    int left = 0, right = 0, count = p.length();
-    while (right < s.length()) {
-        //move right everytime, if the character exists in p's hash, decrease the count
-        //current hash value >= 1 means the character is existing in p
-        if (hash[s.charAt(right++)]-- >= 1) count--;
+# 10ms 89.31%
+class Solution {
+    public List<Integer> findAnagrams(String s, String p) {
+        List<Integer> list = new ArrayList<>();
+        if (s == null || s.length() == 0 || p == null || p.length() == 0) return list;
+        int[] hash = new int[256]; //character hash
+        //record each character in p to hash
+        for (char c : p.toCharArray()) {
+            hash[c]++;
+        }
+        //two points, initialize count to p's length
+        int left = 0, right = 0, count = p.length();
+        while (right < s.length()) {
+            //move right everytime, if the character exists in p's hash, decrease the count
+            //current hash value >= 1 means the character is existing in p
+            if (hash[s.charAt(right++)]-- >= 1) count--;
 
-        //when the count is down to 0, means we found the right anagram
-        //then add window's left to result list
-        if (count == 0) list.add(left);
+            //when the count is down to 0, means we found the right anagram
+            //then add window's left to result list
+            if (count == 0) list.add(left);
 
-        //if we find the window's size equals to p, then we have to move left (narrow the window) to find the new match window
-        //++ to reset the hash because we kicked out the left
-        //only increase the count if the character is in p
-        //the count >= 0 indicate it was original in the hash, cuz it won't go below 0
-        if (right - left == p.length() && hash[s.charAt(left++)]++ >= 0) count++;
+            //if we find the window's size equals to p, then we have to move left
+            // (narrow the window) to find the new match window
+            //++ to reset the hash because we kicked out the left
+            //only increase the count if the character is in p
+            //the count >= 0 indicate it was original in the hash, cuz it won't go below 0
+            if (right - left == p.length() && hash[s.charAt(left++)]++ >= 0) count++;
+        }
+        return list;
     }
-    return list;
+
 }
+
 template:
 https://discuss.leetcode.com/topic/68976/sliding-window-algorithm-template-to-solve-all-the-leetcode-substring-search-problem
 
 2. HashTable + sliding window
-#99.92% 10ms
+# 5ms 100%
 public class Solution {
     public List<Integer> findAnagrams(String s, String p) {
         List<Integer> list = new ArrayList<>();

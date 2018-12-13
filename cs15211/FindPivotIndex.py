@@ -3,6 +3,7 @@ __source__ = 'https://leetcode.com/problems/find-pivot-index/description/'
 # Space: O(1)
 #
 # Description: Leetcode # 724. Find Pivot Index
+#
 # Given an array of integers nums, write a method that returns the "pivot" index of this array.
 #
 # We define the pivot index as the index
@@ -57,10 +58,10 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/problems/find-pivot-index/solution/
+# Thought: https://leetcode.com/problems/find-pivot-index/solution/
 # Approach #1: Prefix Sum [Accepted]
 #
-#100% 15ms
+# 100% 15ms
 class Solution {
     public int pivotIndex(int[] nums) {
         int sum = 0, leftsum = 0;

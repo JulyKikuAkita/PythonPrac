@@ -69,13 +69,14 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/problems/find-and-replace-in-string/solution/
+# Thought: https://leetcode.com/problems/find-and-replace-in-string/solution/
+
 Complexity Analysis
 Time Complexity: O(NQ), where N is the length of S, and we have QQ replacement operations.
 (Our complexity could be faster with a more accurate implementation, but it isn't necessary.)
 Space Complexity: O(N)), if we consider targets[i].length <= 100 as a constant bound.
 
-#4ms 87.01%
+# 4ms 87.01%
 class Solution {
     public String findReplaceString(String S, int[] indexes, String[] sources, String[] targets) {
         int N = S.length();

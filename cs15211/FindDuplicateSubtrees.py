@@ -1,8 +1,8 @@
 __source__ = 'https://leetcode.com/problems/find-duplicate-subtrees/description/'
-# Time:  O()
-# Space: O()
+# Time:  O(N)
+# Space: O(N)
 #
-# Description: Leetcode #
+# Description: Leetcode # 652. Find Duplicate Subtrees
 #
 # Given a binary tree, return all duplicate subtrees.
 # For each kind of duplicate subtrees,
@@ -48,7 +48,8 @@ import collections
 #         self.val = x
 #         self.left = None
 #         self.right = None
-# 112ms
+
+# 76ms 40.21%
 class Solution(object):
     def findDuplicateSubtrees(self, root):
         """
@@ -78,12 +79,12 @@ class TestMethods(unittest.TestCase):
     def test_Local(self):
         self.assertEqual(1, 1)
 
-
 if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
+# Thought: https://leetcode.com/problems/find-duplicate-subtrees/solution/
+
 /**
  * Definition for a binary tree node.
  * public class TreeNode {
@@ -94,7 +95,7 @@ Java = '''
  * }
  */
 
-# 69.95% 40ms
+# 16ms 97.86%
 class Solution {
     public List<TreeNode> findDuplicateSubtrees(TreeNode root) {
         List<TreeNode> res = new LinkedList<>();
@@ -111,8 +112,8 @@ class Solution {
     }
 }
 
-# 98.43% 28ms
-public class Solution {
+# 25ms 65.71%
+class Solution {
     public List<TreeNode> findDuplicateSubtrees(TreeNode root) {
         List<TreeNode> res = new ArrayList<>();
         if (root == null) return res;
@@ -135,7 +136,7 @@ public class Solution {
 
 # DFS with isSameTree
 # TLE
-public class Solution {
+class Solution {
     public List<TreeNode> findDuplicateSubtrees(TreeNode root) {
         List<TreeNode> res = new ArrayList<>();
         if (root == null) return res;
