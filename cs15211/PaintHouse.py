@@ -1,7 +1,9 @@
-__source__ = 'https://leetcode.com/problems/paint-house/description/'
+__source__ = 'https://leetcode.com/problems/paint-house/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/paint-house.py
 # Time:  O(n)
 # Space: O(1)
+#
+# Description: Leetcode # 265. Paint House II
 #
 # There are a row of n houses, each house can be painted with one of the three colors: red, blue or green.
 # The cost of painting each house with a certain color is different.
@@ -24,6 +26,7 @@ __source__ = 'https://leetcode.com/problems/paint-house/description/'
 #
 
 import unittest
+# 24ms 92.47%
 class Solution(object):
     def minCost(self, costs):
         """
@@ -66,13 +69,14 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: The 1st row is the prices for the 1st house,
+# Thought:
+The 1st row is the prices for the 1st house,
 we can change the matrix to present sum of prices from the 2nd row.
 i.e, the costs[1][0] represent minimum price to paint the second house red plus the 1st house.
 Recursion: paintCurrentRed = min(paintPreviousGreen,paintPreviousBlue) + costs[i+1][0]
 
-#13.34% 2ms
-public class Solution {
+# 1ms 57.99%
+class Solution {
     public int minCost(int[][] costs) {
         int[][] dp = new int[2][3];
         int cur = 0;
@@ -86,8 +90,8 @@ public class Solution {
     }
 }
 
-#48.18% 1ms
-public class Solution {
+# 0ms 100%
+class Solution {
     public int minCost(int[][] costs) {
         int n = costs.length;
         if(n == 0) return 0;
@@ -103,13 +107,12 @@ public class Solution {
             min1 = costs[i][1] + Math.min(pre0, pre2);
             min2 = costs[i][2] + Math.min(pre0, pre1);
         }
-
         return Math.min(min0, Math.min(min1, min2));
     }
 }
 
-#13.34% 2ms
-public class Solution {
+# 1ms 57.99%
+class Solution {
     public int minCost(int[][] costs) {
         if (costs == null || costs.length == 0 || costs[0].length != 3) {
             return 0;

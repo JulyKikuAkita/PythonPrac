@@ -84,7 +84,7 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/problems/contains-duplicate/solution/
+# Thought: https://leetcode.com/problems/path-sum/solution/
 /**
  * Definition for a binary tree node.
  * public class TreeNode {
@@ -94,8 +94,9 @@ Java = '''
  *     TreeNode(int x) { val = x; }
  * }
  */
- # 10.13% 1ms
-public class Solution {
+
+# 0ms 100%
+class Solution {
     public boolean hasPathSum(TreeNode root, int sum) {
         if ( root == null) return false;
         if (root.left == null && root.right == null){
@@ -105,8 +106,8 @@ public class Solution {
     }
 }
 
-# 10.13% 1ms
-public class Solution {
+# 0ms 100%
+class Solution {
     public boolean hasPathSum(TreeNode root, int sum) {
         if (root == null) {
             return false;

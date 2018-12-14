@@ -92,16 +92,15 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/problems/partition-to-k-equal-sum-subsets/solution/
+# Thought: https://leetcode.com/problems/partition-to-k-equal-sum-subsets/solution/
 Approach #1: Search by Constructing Subset Sums [Accepted]
 
-#48ms 29.09%
 Complexity Analysis
 Time Complexity: O(k^{N-k} k!), where N is the length of nums, and k is as given.
 As we skip additional zeroes in groups, naively we will make O(k!) calls to search,
 then an additional O(k^{N-k}) calls after every element of groups is nonzero.
 Space Complexity: O(N), the space used by recursive calls to search in our call stack.
-
+# 48ms 29.09%
 class Solution {
     public boolean canPartitionKSubsets(int[] nums, int k) {
         int sum = Arrays.stream(nums).sum();
@@ -142,9 +141,8 @@ used (or state in our bottom-up variant), and each state performs O(N) work sear
 Space Complexity: O(2^N), the space used by memo (or dp, total in our bottom-up variant).
 
 # Top-down DP
-# 50ms 28%
 enum Result { TRUE, FALSE }
-
+# 50ms 28%
 class Solution {
     public boolean canPartitionKSubsets(int[] nums, int k) {
         int sum = Arrays.stream(nums).sum();

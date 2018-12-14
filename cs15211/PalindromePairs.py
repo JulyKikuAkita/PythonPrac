@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/palindrome-pairs/description/'
+__source__ = 'https://leetcode.com/problems/palindrome-pairs/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/palindrome-pairs.py
 # Time:  O(n * k^2), n is the number of the words, k is the max length of the words.
 # Space: O(n * k)
@@ -101,7 +101,6 @@ class Solution_TLE(object):
                     res.append([j, i])
         return res
 
-
 # Time:  O(n * k^2), n is the number of the words, k is the max length of the words.
 # Space: O(n * k)
 # Trie solution.
@@ -162,13 +161,15 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
-Trie
-#98.04% 54ms
-public class Solution {
+# Thought:
+
+# Trie
+# 48ms 81.98%
+class Solution {
     public static class Trie {
         int pos;
-        Trie[] nodes;   // consider xyxabc. if current trie is 'a'. Then a.nodes has information. It means string after a is palindrome
+        Trie[] nodes;   // consider xyxabc. if current trie is 'a'. Then a.nodes has information.
+                        // It means string after a is palindrome
         List<Integer> palins;
         public Trie() {
             pos = -1;
@@ -232,9 +233,9 @@ public class Solution {
     }
 }
 
-#Trie
-#91.78% 62ms
-public class Solution {
+# Trie
+# 53ms 79.80%
+class Solution {
     public List<List<Integer>> palindromePairs(String[] words) {
         List<List<Integer>> result = new ArrayList<>();
         Trie trie = new Trie();
@@ -318,7 +319,6 @@ class Trie {
     }
 }
 
-#Thought:
 There are several cases to be considered that isPalindrome(s1 + s2):
 
 Case1: If s1 is a blank string, then for any string that is palindrome s2, s1+s2 and s2+s1 are palindrome.
@@ -333,8 +333,8 @@ then s1+s2 is palindrome.
 
 To make the search faster, build a HashMap to store the String-idx pairs.
 
-# 82.09% 102ms
-public class Solution {
+# 77ms 70.52%
+class Solution {
     public List<List<Integer>> palindromePairs(String[] words) {
         List<List<Integer>> res = new ArrayList<List<Integer>>();
         if(words == null || words.length == 0){
@@ -415,10 +415,9 @@ public class Solution {
     }
 }
 
-#bruteforce:
-#11.06%  248ms
-
-public class Solution {
+# bruteforce:
+# 200ms 11.47%
+class Solution {
     public List<List<Integer>> palindromePairs(String[] words) {
         List<List<Integer>> pairs = new LinkedList<>();
         if (words == null) return pairs;

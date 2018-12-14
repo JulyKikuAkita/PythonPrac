@@ -1,7 +1,10 @@
+__source__ = 'https://leetcode.com/problems/pacific-atlantic-water-flow/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/pacific-atlantic-water-flow.py
 # Time:  O(m * n)
 # Space: O(m * n)
-
+#
+# Description: 417. Pacific Atlantic Water Flow
+#
 # Given an m x n matrix of non-negative integers representing the height of
 # each unit cell in a continent, the "Pacific ocean" touches the left and
 # top edges of the matrix and the "Atlantic ocean" touches the right and bottom edges.
@@ -31,8 +34,9 @@
 # [[0, 4], [1, 3], [1, 4], [2, 2], [3, 0], [3, 1], [4, 0]] (positions with parentheses in above matrix).
 #  Google
 # Hide Tags Depth-first Search Breadth-first Search
+#
 
-
+# 132ms 49.45%
 class Solution(object):
     def pacificAtlantic(self, matrix):
         """
@@ -71,6 +75,7 @@ class Solution(object):
 
         return res
 
+# 140ms 41.76%
 class Solution2(object):
     def pacificAtlantic(self, matrix):
         """
@@ -112,16 +117,17 @@ class Solution2(object):
             if x < 0 or x >= m or y < 0 or y >= n or visited[x][y] or matrix[x][y] < matrix[i][j]:
                 continue
             self.dfs(matrix, x, y, visited, m, n)
-# 113 / 113 test cases passed.
-# Runtime: 196 ms
 
-java= '''
+Java = '''
+# Thought:
 Java BFS & DFS from Ocean
 Two Queue and add all the Pacific border to one queue; Atlantic border to another queue.
 Keep a visited matrix for each queue. In the end, add the cell visited by two queue to the result.
 BFS: Water flood from ocean to the cell. Since water can only flow from high/equal cell to low cell,
 add the neighboor cell with height larger or equal to current cell to the queue and mark as visited.
-public class Solution {
+
+# 14ms 55.30%
+class Solution {
     int[][]dir = new int[][]{{1,0},{-1,0},{0,1},{0,-1}};
     public List<int[]> pacificAtlantic(int[][] matrix) {
         List<int[]> res = new LinkedList<>();
@@ -172,9 +178,10 @@ public class Solution {
         }
     }
 }
-DFS version:
 
-public class Solution {
+# DFS version:
+# 15ms 46.86%
+class Solution {
     public List<int[]> pacificAtlantic(int[][] matrix) {
         List<int[]> res = new LinkedList<>();
         if(matrix == null || matrix.length == 0 || matrix[0].length == 0){

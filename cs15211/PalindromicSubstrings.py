@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/palindromic-substrings/description/'
+__source__ = 'https://leetcode.com/problems/palindromic-substrings/'
 # Time:  O(n^2)
 # Space: O(mn)
 #
@@ -6,7 +6,8 @@ __source__ = 'https://leetcode.com/problems/palindromic-substrings/description/'
 #
 # Given a string, your task is to count how many palindromic substrings in this string.
 #
-# The substrings with different start indexes or end indexes are counted as different substrings even they consist of same characters.
+# The substrings with different start indexes or end indexes are counted as
+# different substrings even they consist of same characters.
 #
 # Example 1:
 # Input: "abc"
@@ -26,7 +27,7 @@ __source__ = 'https://leetcode.com/problems/palindromic-substrings/description/'
 # Longest Palindromic Substring Longest Palindromic Subsequence Palindromic Substrings
 #
 import unittest
-# 139ms
+# 76ms 89.30%
 class Solution(object):
     def countSubstrings(self, s):
         """
@@ -45,7 +46,7 @@ class Solution(object):
         return ans
 
 # Mancher O(n) for longest palindrome
-# 46ms
+# 40ms 96.28%
 class Solution2(object):
     def countSubstrings(self, s):
         """
@@ -76,10 +77,10 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
+# Thought: https://leetcode.com/problems/palindromic-substrings/solution/
 
-# 67.50% 15ms
-public class Solution {
+# 8ms 73.29%
+class Solution {
     int cnt = 0;
     public int countSubstrings(String s) {
         if (s == null || s.length() == 0) return cnt;
@@ -100,10 +101,12 @@ public class Solution {
 }
 
 # Java DP solution based on  5. Longest Palindromic Substring
-This solution is almost same as the DP solution for longest palindromic substring, instead of storing the longest,
+This solution is almost same as the DP solution for longest palindromic substring,
+instead of storing the longest,
 just get the count of palindromic sub strings.
-# 37.87% 28ms
-public class Solution {
+
+# 11ms 59.46%
+class Solution {
     public int countSubstrings(String s) {
         int n = s.length();
         int res = 0;

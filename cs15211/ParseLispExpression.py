@@ -1,5 +1,3 @@
-import collections
-
 __source__ = 'https://leetcode.com/problems/parse-lisp-expression/'
 # Time:  O()
 # Space: O()
@@ -81,7 +79,7 @@ __source__ = 'https://leetcode.com/problems/parse-lisp-expression/'
 # The answer and all intermediate calculations of that answer are guaranteed to fit in a 32-bit integer.
 #
 import unittest
-
+import collections
 #24ms 100%
 class Solution(object):
     def evaluate(self, expression):
@@ -127,7 +125,7 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/problems/parse-lisp-expression/solution/
+# Thought: https://leetcode.com/problems/parse-lisp-expression/solution/
 
 Complexity Analysis
 Approach #1: Recursive Parsing [Accepted]

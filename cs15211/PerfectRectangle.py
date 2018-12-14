@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/perfect-rectangle/description/'
+__source__ = 'https://leetcode.com/problems/perfect-rectangle/'
 # https://leetcode.com/problems/perfect-rectangle/#/description
 # Time:  O(n) or o(nlogn) for sweep line
 # Space: O(n) set
@@ -62,7 +62,7 @@ __source__ = 'https://leetcode.com/problems/perfect-rectangle/description/'
 # Google
 #
 import unittest
-#322ms
+# 140ms 45.65%
 class Solution(object):
     def isRectangleCover(self, rectangles):
         """
@@ -107,7 +107,7 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
+# Thought:
 1.
 https://discuss.leetcode.com/topic/55923/o-n-solution-by-counting-corners-with-detailed-explaination with graph
 The right answer must satisfy two conditions:
@@ -116,8 +116,8 @@ the large rectangle area should be equal to the sum of small rectangles
 count of all the points should be even(green + red in graph),
 and that of all the four corner points(blue) should be one
 
-#75.08% 108ms
-public class Solution {
+# 87ms 29.73%
+class Solution {
     public boolean isRectangleCover(int[][] rectangles) {
         if (rectangles == null || rectangles.length == 0 || rectangles[0].length == 0) return false;
 
@@ -168,8 +168,8 @@ Sort by x-coordinate.
 Insert y-interval into TreeSet, and check if there are intersections.
 Delete y-interval.
 
-#95.62% 81ms
-public class Solution {
+# 62ms 59.01%
+class Solution {
     public boolean isRectangleCover(int[][] rectangles) {
         PriorityQueue<Event> pq = new PriorityQueue<Event>();
         // border of y-intervals
@@ -232,8 +232,8 @@ public class Solution {
     }
 }
 
-#98.65% 62ms
-public class Solution {
+# 23ms 100%
+class Solution {
      class Segment {
         int start;
         int end;

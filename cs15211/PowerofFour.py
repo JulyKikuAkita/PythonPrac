@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/power-of-four/description/'
+__source__ = 'https://leetcode.com/problems/power-of-four/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/power-of-four.py
 # Time:  O(1)
 # Space: O(1)
@@ -70,17 +70,17 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: 
+# Thought:
 
-#18.58% 2ms
-public class Solution {
+# 1ms 100%
+class Solution {
     public boolean isPowerOfFour(int num) {
         return num > 0 && Math.pow(4, Math.round((Math.log(num) / Math.log(4)))) == num;
     }
 }
 
-#18.58% 2ms
-public class Solution {
+# 1ms 100%
+class Solution {
     public boolean isPowerOfFour(int num) {
         while(num > 0 && ((num & 0b11) == 0) ){
             num >>= 2;
@@ -89,9 +89,9 @@ public class Solution {
     }
 }
 
-#Iteration:
-#18.58% 2ms
-public class Solution {
+# Iteration:
+# 1ms 100%
+class Solution {
     public boolean isPowerOfFour(int num) {
         if (num < 1) return false;
         while (num > 1) {
@@ -102,14 +102,21 @@ public class Solution {
     }
 }
 
-#Recursion:
-#18.58% 2ms
-public class Solution {
+# Recursion:
+# 1ms 100%
+class Solution {
     public boolean isPowerOfFour(int num) {
         if (num < 1) return false;
         else if (num == 1) return true;
         else if (num % 4 == 0 ) return isPowerOfFour(num / 4);
         else return false;
+    }
+}
+
+# 1ms 100%
+class Solution {
+    public boolean isPowerOfFour(int num) {
+        return (num & (num - 1)) == 0 && (num & 0x55555555) != 0;
     }
 }
 '''

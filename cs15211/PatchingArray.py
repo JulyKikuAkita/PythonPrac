@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/patching-array/description/'
+__source__ = 'https://leetcode.com/problems/patching-array/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/patching-array.py
 # Time:  O(s + logn), s is the number of elements in the array
 # Space: O(1)
@@ -64,9 +64,10 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/problems/patching-array/solution/
-#7.35% 1ms
-public class Solution {
+# Thought: https://leetcode.com/problems/patching-array/solution/
+
+# 1ms 61.90%
+class Solution {
     public int minPatches(int[] nums, int n) {
         if (nums == null){
             return 0;
@@ -89,9 +90,10 @@ public class Solution {
         return res;
     }
 }
-#Greedy
-#7.35% 1ms
-public class Solution {
+
+# Greedy
+# 1ms 61.90%
+class Solution {
     public int minPatches(int[] nums, int n) {
         int result = 0;
         long max = 0;
@@ -107,4 +109,6 @@ public class Solution {
         return result;
     }
 }
+
+
 '''

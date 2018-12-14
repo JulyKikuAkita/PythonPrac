@@ -4,7 +4,8 @@ __source__ = 'https://leetcode.com/problems/path-sum-iv/description/'
 #
 # Description: Leetcode # 666. Path Sum IV
 #
-# If the depth of a tree is smaller than 5, then this tree can be represented by a list of three-digits integers.
+# If the depth of a tree is smaller than 5,
+# then this tree can be represented by a list of three-digits integers.
 #
 # For each integer in this list:
 # The hundreds digit represents the depth D of this node, 1 <= D <= 4.
@@ -43,7 +44,7 @@ __source__ = 'https://leetcode.com/problems/path-sum-iv/description/'
 # Path Sum Path Sum II Binary Tree Maximum Path Sum Path Sum III
 #
 import unittest
-#39ms
+# 20ms 100%
 class Solution(object):
     def pathSum(self, nums):
         """
@@ -66,8 +67,9 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
-#33.56% 17ms
+# Thought: https://leetcode.com/problems/path-sum-iv/solution/
+#
+# 6ms 98.03%
 class Solution {
     private int sum = 0;
 
@@ -96,7 +98,7 @@ class Solution {
     }
 }
 
-#84.12% 14ms
+# 10ms 26.60%
 class Solution {
     public int pathSum(int[] nums) {
         Integer[][] A = new Integer[4][8];

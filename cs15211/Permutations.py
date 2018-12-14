@@ -5,6 +5,7 @@ __source__ = 'https://leetcode.com/problems/permutations/description/'
 # Math/Brute Force Search
 #
 # Description: Leetcode # 46. Permutations
+#
 # Given a collection of numbers, return all possible permutations.
 #
 # For example,
@@ -116,7 +117,9 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-general ides:
+# Thought:
+
+general ideas:
 1)
 - Permutation dfs for loop always starts with 0 as [1,2,3] and [3,2,1] are diff
 - combination dfs for loop starts with next idx (i + 1) and needs to pass in start idx as parameter, [1,2,3] and [3,2,1] are the same
@@ -126,10 +129,11 @@ there will be a lot of duplicated calculations for dfs:
 - if input has duplicated element, ex [1,1,2,3]
 use both visited and hashset(declared before enter forloop, no need to pass in as parameter) in dfs helper function
 
-#Thought: https://leetcode.com/problems/find-the-closest-palindrome/solution/
+# Thought: https://leetcode.com/problems/find-the-closest-palindrome/solution/
 template1) use visited = boolean[] to avoid [1,1,1]
-# 70.31% 6ms
-public class Solution {
+
+# 2ms 99.93%
+class Solution {
     //without boolean[] used, you'll see [1,1,1] showup as resue of the same element
     //also permutation forloop index starts with 0
     public List<List<Integer>> permute(int[] nums) {
@@ -155,9 +159,9 @@ public class Solution {
     }
 }
 
-template2) //note, does not work with duplicated elements
-# 48.34% 7ms
-public class Solution {
+# Template2) //note, does not work with duplicated elements
+# 3ms 76.09%
+class Solution {
     public List<List<Integer>> permute(int[] nums) {
         List<List<Integer>> result = new ArrayList<>();
         if (nums == null || nums.length == 0) {
@@ -180,8 +184,8 @@ public class Solution {
     }
 }
 
-# 70.31% 6ms
-public class Solution {
+# 2ms 99.93%
+class Solution {
     public List<List<Integer>> permute(int[] nums) {
         int len = nums.length;
         if (len == 0) {
@@ -207,8 +211,8 @@ public class Solution {
     }
 }
 
-#90.43% 5ms
-public class Solution {
+# 3ms 76.09%
+class Solution {
     public List<List<Integer>> permute(int[] nums) {
         List<List<Integer>> result = new ArrayList<List<Integer>>();
 		permute_heap(result, nums, nums.length);
@@ -241,7 +245,7 @@ public class Solution {
 	}
 }
 
-Iteration: 78%
+Iteration:
 the basic idea is, to permute n numbers, we can add the nth number into the resulting
 List<List<Integer>> from the n-1 numbers, in every possible position.
 
@@ -255,8 +259,8 @@ Then we have to add 3. first copy {2,1} and {1,2}, add 3 in position 0;
 then copy {2,1} and {1,2}, and add 3 into position 1,
 then do the same thing for position 3. Finally we have 2*3=6 lists in answer, which is what we want.
 
-#70.31% 6ms
-public class Solution {
+# 2ms 99.93%
+class Solution {
     public List<List<Integer>> permute(int[] nums) {
         LinkedList<List<Integer>> res = new LinkedList<List<Integer>>();
         if (nums == null || nums.length == 0) return res;

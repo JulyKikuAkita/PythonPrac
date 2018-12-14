@@ -1,9 +1,10 @@
-__source__ = 'https://leetcode.com/problems/palindrome-permutation/description/'
+__source__ = 'https://leetcode.com/problems/palindrome-permutation/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/palindrome-permutation.py
 # Time:  O(n)
 # Space: O(1)
 #
 # Description: Leetcode # 266. Palindrome Permutation
+#
 # Given a string, determine if a permutation of the string could form a palindrome.
 #
 # For example,
@@ -26,6 +27,7 @@ __source__ = 'https://leetcode.com/problems/palindrome-permutation/description/'
 #
 import unittest
 import collections
+# 20ms 99.07%
 class Solution(object):
     def canPermutePalindrome(self, s):
         """
@@ -35,7 +37,7 @@ class Solution(object):
         #         print collections.Counter(s).values()
         return sum(v % 2 for v in collections.Counter(s).values()) < 2
 
-
+# 20ms 99.07%
 from collections import defaultdict
 class Solution2(object):
     def canPermutePalindrome(self, s):
@@ -65,7 +67,8 @@ if __name__ == '__main__':
 
 # Java solution
 Java = '''
-Thought: https://leetcode.com/problems/palindrome-permutation/solution/
+# Thought: https://leetcode.com/problems/palindrome-permutation/solution/
+#
 Time complexity : O(n). We traverse over the string ss of length nn once only.
 Space complexity : O(n). The setset can grow upto a maximum size of nn in case of all distinct elements.
 
@@ -76,8 +79,8 @@ When the iteration is finished, just return set.size()==0 || set.size()==1.
 set.size()==0 corresponds to the situation when there are even number of any character in the string, and
 set.size()==1 corresponsds to the fact that there are even number of any character except one.
 
-#34.28% 2ms
-public class Solution {
+# 1ms 65.75%
+class Solution {
     public boolean canPermutePalindrome(String s) {
         Set<Character> set=new HashSet<Character>();
         for(int i=0; i<s.length(); ++i){
@@ -90,8 +93,8 @@ public class Solution {
     }
 }
 
-#34.28% 2ms
-public class Solution {
+# 1ms 65.75%
+class Solution {
     public boolean canPermutePalindrome(String s) {
         BitSet bs = new BitSet();
         for (byte b : s.getBytes())
@@ -100,9 +103,9 @@ public class Solution {
         }
 }
 
-#count char with boolean[128]
-#79.50 % 0ms
-public class Solution {
+# count char with boolean[128]
+# 0ms 100%
+class Solution {
     public boolean canPermutePalindrome(String s) {
         boolean[] arr = new boolean[128];
         for (int i = 0; i < s.length(); i++) {
@@ -123,8 +126,8 @@ public class Solution {
     }
 }
 
-#79.50 % 0ms
-public class Solution {
+# 0ms 100%
+class Solution {
     public boolean canPermutePalindrome(String s) {
         if (s == null || s.length() == 0) return true;
         int[] map = new int[128]; //or use 256 depending on encoding

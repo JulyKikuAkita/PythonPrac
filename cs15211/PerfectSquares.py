@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/perfect-squares/#/description'
+__source__ = 'https://leetcode.com/problems/perfect-squares/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/perfect-squares.py
 # Time:  O(n * sqrt(n))
 # Space: O(n)
@@ -140,7 +140,8 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-thought: https://leetcode.com/problems/perfect-squares/#/solutions
+# Thought:
+#
 dp[n] indicates that the perfect squares count of the given n, and we have:
 
 dp[0] = 0
@@ -164,8 +165,8 @@ dp[13] = Min{ dp[13-1*1]+1, dp[13-2*2]+1, dp[13-3*3]+1 }
 						.
 dp[n] = Min{ dp[n - i*i] + 1 },  n - i*i >=0 && i >= 1
 
-#90.91% 40ms
-public class Solution {
+# 15ms 97.04%
+class Solution {
     public int numSquares(int n) {
         int[] dp = new int[n + 1];
         Arrays.fill(dp, Integer.MAX_VALUE);
@@ -189,10 +190,10 @@ dp arr for n = 5 will be:
 0, 1, 2, 3, 4, , MAX
 0, 1, 2, 3, 4, 2
 
-# recurstion case:
-dp[n] = Math.min(dp[n], dp[n - i*i] + 1 ),  n - i*i >=0 && i >= 1
-# 94.16% 33ms
-public class Solution {
+# Recurstion case:
+# dp[n] = Math.min(dp[n], dp[n - i*i] + 1 ),  n - i*i >=0 && i >= 1
+# 21ms 94.70%
+class Solution {
     public int numSquares(int n) {
         int[] dp = new int[n + 1];
         Arrays.fill(dp, Integer.MAX_VALUE);
@@ -207,10 +208,9 @@ public class Solution {
     }
 }
 
-3.Mathematical Solution: 4ms 98%
-#97.62% 2ms
-public class Solution {
-
+3.Mathematical Solution
+# 1ms 100%
+class Solution {
     public int numSquares(int n) {
         //base case
         if(n < 4) return n;
@@ -247,8 +247,8 @@ public class Solution {
 //there are only 4 possible result 1,2,3,4
 //check if a * a + b * b == n
 
-# 96.90% 4ms
-public class Solution {
+# 98.70% 2ms
+class Solution {
     public int numSquares(int n) {
         //base case
         if (n < 4) return n;

@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/populating-next-right-pointers-in-each-node-ii/#/description'
+__source__ = 'https://leetcode.com/problems/populating-next-right-pointers-in-each-node-ii/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/populating-next-right-pointers-in-each-node-ii.py
 # Time:  O(n)
 # Space: O(1)
@@ -48,7 +48,7 @@ class TreeNode:
              return "Nil"
          else:
              return "{} -> {}".format(self.val, repr(self.next))
-
+# 84ms 18.10%
 class Solution:
     # @param root, a tree node
     # @return nothing
@@ -118,8 +118,9 @@ if __name__ == '__main__':
 
 Java = '''
 # Thought:
-# 45.05% 1ms
-public class Solution {
+
+# 1ms 86.28%
+class Solution {
     //hint to have pre point at root.left
     public void connect(TreeLinkNode root) {
         TreeLinkNode dummyHead = new TreeLinkNode(0);
@@ -151,10 +152,9 @@ public class Solution {
  *     TreeLinkNode(int x) { val = x; }
  * }
  */
-# 45.05% 1ms
-public class Solution {
+# 0ms 100%
+class Solution {
     public void connect(TreeLinkNode root) {
-
         while(root != null){
             TreeLinkNode tempChild = new TreeLinkNode(0);
             TreeLinkNode currentChild = tempChild;

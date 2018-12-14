@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/paint-house-ii/description/'
+__source__ = 'https://leetcode.com/problems/paint-house-ii/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/paint-house-ii.py
 # Time:  O(n * k)
 # Space: O(k)
@@ -28,6 +28,7 @@ __source__ = 'https://leetcode.com/problems/paint-house-ii/description/'
 # Product of Array Except Self Sliding Window Maximum Paint House Paint Fence
 #
 import unittest
+# 32ms 90.57%
 class Solution(object):
     def minCostII(self, costs):
         """
@@ -42,6 +43,7 @@ class Solution(object):
         tmp, tmp[i] = [smallest] * k, min(tmp[:i] + tmp[i+1:])
         return map(sum, zip(tmp, secrow))
 
+# 68ms 24.53%
 class Solution2(object):
     def minCostII(self, costs):
         """
@@ -108,7 +110,8 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
+# Thought:
+
 dp[i][j] represents the min paint cost from house 0 to house i when house i use color j;
 The formula will be dp[i][j] = Math.min(any k!= j| dp[i-1][k]) + costs[i][j].
 
@@ -121,8 +124,8 @@ and the above formula will be translated into:
 dp[currentHouse][currentColor] = (currentColor ==
 prevMinColor? prevSecondMin: prevMin) + costs[currentHouse][currentColor].
 
-#36.79% 6ms
-public class Solution {
+# 5ms 27.61%
+class Solution {
     public int minCostII(int[][] costs) {
         if (costs == null || costs.length == 0 || costs[0].length == 0) {
             return 0;
@@ -160,8 +163,8 @@ public class Solution {
     }
 }
 
-#45.25% 5ms
-public class Solution {
+# 4ms 36.74%
+class Solution {
     public int minCostII(int[][] costs) {
         if (costs == null || costs.length == 0) return 0;
 
@@ -195,8 +198,8 @@ public class Solution {
     }
 }
 
-# 84.48% 3ms
-public class Solution {
+# 3ms 66.12%
+class Solution {
     public int minCostII(int[][] costs) {
         if (costs.length == 0) {
             return 0;

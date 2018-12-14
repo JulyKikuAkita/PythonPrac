@@ -1,4 +1,9 @@
-# Created by Kiku on 5/23/17
+__source__ = 'https://leetcode.com/problems/optimal-division/'
+# Time:  O(n)
+# Space: O(n)
+#
+# Description: 553. Optimal Division
+#
 # Given a list of positive integers, the adjacent integers will perform the float division.
 # For example, [2,3,4] -> 2 / 3 / 4.
 #
@@ -28,11 +33,12 @@
 # Hide Tags Math String
 #
 import unittest
-#Python, Straightforward with Explanation (Insightful Approach)
+# Python, Straightforward with Explanation (Insightful Approach)
 # Regardless of parentheses, every element is either in the numerator or denominator of the final fraction.
 # The expression A[0] / ( A[1] / A[2] / ... / A[N-1] ) has every element in the numerator except A[1],
 # and it is impossible for A[1] to be in the numerator, so it is the largest.
 #  We must also be careful with corner cases.
+# 28ms 28%
 class Solution(object):
     def optimalDivision(self, nums):
         """
@@ -63,37 +69,43 @@ class FooTest(unittest.TestCase):
         self.assertEqual(1, 1)
 
 
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+
+
 if __name__ == '__main__':
-    # run all tests
     unittest.main()
 
-    # run one test
-    #unittest.main(defaultTest='FooTest.test_foo', warnings='ignore')
+Java = '''
+# Thought: https://leetcode.com/problems/optimal-division/solution/
 
-java = '''
 Easy to understand simple O(n) solution with explanation
 X1/X2/X3/../Xn will always be equal to (X1/X2) * Y, no matter how you place parentheses.
 i.e no matter how you place parentheses, X1 always goes to the numerator and X2 always goes to the denominator.
 Hence you just need to maximize Y. And Y is maximized when it is equal to X3 *..*Xn.
 So the answer is always X1/(X2/X3/../Xn) = (X1 *X3 *..*Xn)/X2
 
+# 5ms 59.76%
 class Solution {
-public:
-    string optimalDivision(vector<int>& nums) {
-        string ans;
-        if(!nums.size()) return ans;
-        ans = to_string(nums[0]);
-        if(nums.size()==1) return ans;
-        if(nums.size()==2) return ans + "/" + to_string(nums[1]);
-        ans += "/(" + to_string(nums[1]);
-        for(int i = 2; i < nums.size();++i)
-            ans += "/" + to_string(nums[i]);
-        ans += ")";
-        return ans;
-};
+    public String optimalDivision(int[] nums) {
+        if (nums == null || nums.length == 0) return null;
+        StringBuilder sb = new StringBuilder();
+        sb.append(nums[0]);
+        for (int i = 1; i < nums.length; i++) {
+            if (i == 1 && nums.length > 2) {
+                sb.append("/(").append(nums[i]);
+            } else {
+                sb.append("/").append(nums[i]);
+            }
+        }
+        return nums.length > 2 ? sb.append(")").toString() : sb.toString();
+    }
+}
 
-//backtracking
-public class Solution {
+# backtracking
+# TLE
+class Solution {
     class Result {
         String str;
         double val;

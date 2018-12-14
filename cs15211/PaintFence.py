@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/paint-fence/#/description'
+__source__ = 'https://leetcode.com/problems/paint-fence/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/paint-fence.py
 # Time:  O(n)
 # Space: O(1)
@@ -45,6 +45,7 @@ class Solution(object):
 # Time:  O(n)
 # Space: O(n)
 # DP solution.
+# 20ms 97.71%
 class Solution2(object):
     def numWays(self, n, k):
         """
@@ -71,7 +72,8 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://discuss.leetcode.com/topic/23426/o-n-time-java-solution-o-1-space
+# Thought:
+https://discuss.leetcode.com/topic/23426/o-n-time-java-solution-o-1-space
 
 We divided it into two cases.
 
@@ -107,8 +109,8 @@ And now as we append a same-color post to them, the former diffColorCounts becom
 Then we can keep going until we reach the n. And finally just sum up these two variables as result.
 
 Hope this would be clearer.
-#5.96% 0ms
-public class Solution {
+# 0ms 100%
+class Solution {
     public int numWays(int n, int k) {
         if (n == 0) {
             return 0;
@@ -126,8 +128,8 @@ public class Solution {
     }
 }
 
-#5.96% 0ms
-public class Solution {
+# 0ms 100%
+class Solution {
     public int numWays(int n, int k) {
         if(n == 0) return 0;
         else if(n == 1) return k;
@@ -142,7 +144,7 @@ public class Solution {
     }
 }
 
-#5.96% 0ms
+# 0ms 100%
 class Solution {
     public int numWays(int n, int k) {
         if (n == 0) return 0;

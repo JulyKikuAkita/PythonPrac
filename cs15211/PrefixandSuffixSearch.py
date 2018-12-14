@@ -1,6 +1,4 @@
-import collections
-
-__source__ = 'https://leetcode.com/problems/prefix-and-suffix-search/description/'
+__source__ = 'https://leetcode.com/problems/prefix-and-suffix-search/'
 # Time: O(NK^2 + QK) where N is the number of words,
 # K is the maximum length of a word, and Q is the number of queries.
 # Space:  O(NK^2), the size of the trie.
@@ -27,7 +25,7 @@ __source__ = 'https://leetcode.com/problems/prefix-and-suffix-search/description
 # words[i] and prefix, suffix queries consist of lowercase letters only.
 #
 import unittest
-
+import collections
 # Approach #1: Trie + Set Intersection [Time Limit Exceeded]
 Trie = lambda: collections.defaultdict(Trie)
 WEIGHT= False
@@ -159,7 +157,7 @@ For example, we will insert
 '#apple', 'e#apple', 'le#apple', 'ple#apple', 'pple#apple', 'apple#apple' into the trie.
 Then for a query like prefix = "ap", suffix = "le", we can find it by querying our trie for le#ap.
 
-#295ms 84.50%
+# 295ms 84.50%
 class WordFilter {
     TrieNode trie;
 
@@ -199,8 +197,8 @@ class WordFilter {
     }
 }
 
-
-# 99.87% 224ms # cheating -> use String.endWith(suffix)
+# cheating -> use String.endWith(suffix)
+# 99.87% 224ms
 class WordFilter {
 
     class TrieNode {

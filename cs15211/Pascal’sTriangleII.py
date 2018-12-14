@@ -21,6 +21,7 @@ __source__ = 'https://leetcode.com/problems/pascals-triangle-ii/description/'
 # Pascal's Triangle
 #
 import unittest
+# 32ms 16.78%
 class Solution:
     # @return a list of integers
     def getRow(self, rowIndex):
@@ -66,11 +67,10 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/problems/contains-duplicate/solution/
+# Thought:
 
-# 53.24% 2ms
-
-public class Solution {
+# 1ms 91.55%
+class Solution {
     public List<Integer> getRow(int rowIndex) {
         if (rowIndex < 0) {
             return new ArrayList<>();
@@ -87,8 +87,8 @@ public class Solution {
     }
 }
 
-#12.45% 3ms
-public class Solution {
+# 1ms 91.55%
+class Solution {
     public List<Integer> getRow(int rowIndex) {
         if (rowIndex < 0) return new ArrayList<>();
         List<Integer> res = new ArrayList<Integer>();
@@ -102,8 +102,9 @@ public class Solution {
     }
 }
 
-#99.56% 0ms # generate half
-public class Solution {
+# generate half
+# 0ms 100%
+class Solution {
     public List<Integer> getRow(int rowIndex) {
         List<Integer> result = new ArrayList<>(rowIndex + 1);
         result.add(1);

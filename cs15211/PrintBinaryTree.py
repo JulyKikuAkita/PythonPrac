@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/print-binary-tree/description/'
+__source__ = 'https://leetcode.com/problems/print-binary-tree/'
 # Time:  O()
 # Space: O()
 #
@@ -64,14 +64,13 @@ __source__ = 'https://leetcode.com/problems/print-binary-tree/description/'
 
 import unittest
 
-#42ms
 # Definition for a binary tree node.
 # class TreeNode(object):
 #     def __init__(self, x):
 #         self.val = x
 #         self.left = None
 #         self.right = None
-
+# 28ms 99.57%
 class Solution(object):
     def printTree(self, root):
         """
@@ -104,8 +103,7 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/problems/print-binary-tree/solution/
-# 57.48% 8ms
+# Thought: https://leetcode.com/problems/print-binary-tree/solution/
 /**
  * Definition for a binary tree node.
  * public class TreeNode {
@@ -115,7 +113,9 @@ Java = '''
  *     TreeNode(int x) { val = x; }
  * }
  */
-public class Solution {
+
+# 4ms 92.65%
+class Solution {
     public List<List<String>> printTree(TreeNode root) {
         List<List<String>> res = new LinkedList<>();
         int height = root == null ? 1 : getHeight(root);
@@ -143,8 +143,8 @@ public class Solution {
 }
 
 Approach #2 Using queue(BFS)[Accepted]
-#3.44% 14ms
-public class Solution {
+# 4ms 92.65%
+class Solution {
     class Params {
         Params(TreeNode n, int ii, int ll, int rr) {
             root = n;

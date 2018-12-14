@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/power-of-two/description/'
+__source__ = 'https://leetcode.com/problems/power-of-two/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/power-of-two.py
 # Time:  O(1)
 # Space: O(1)
@@ -32,15 +32,13 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
+# Thought:
 
 4 different ways to solve -- Iterative / Recursive / Bit operation / Math
-
 Method 1: Iterative
-
 check if n can be divided by 2. If yes, divide n by 2 and check it repeatedly.
-# 16.89% 2ms
-public class Solution {
+# 1ms 100%
+class Solution {
     public boolean isPowerOfTwo(int n) {
         if(n==0) return false;
         while(n%2==0) n/=2;
@@ -50,8 +48,8 @@ public class Solution {
 
 Method 2: Recursive
 Time complexity = O(log n)
-# 16.89% 2ms
-public class Solution {
+# 1ms 100%
+class Solution {
     public boolean isPowerOfTwo(int n) {
         return n>0 && (n==1 || (n%2==0 && isPowerOfTwo(n/2)));
     }
@@ -73,15 +71,15 @@ Time complexity = O(1)
 
     For example, n =14 = 0b0000...1110, and (n - 1) = 13 = 0b0000...1101.
 
-# 16.89% 2ms
-public class Solution {
+# 1ms 100%
+class Solution {
     public boolean isPowerOfTwo(int n) {
         return n > 0 && (n & (n - 1)) == 0;
     }
 }
 
-# 16.89% 2ms
-public class Solution {
+# 1ms 100%
+class Solution {
     public boolean isPowerOfTwo(int n) {
         return n>0 && Integer.bitCount(n) == 1;
     }
@@ -98,8 +96,9 @@ Method 4: Math derivation
     We have (2^30 % j*(2^k)) == (2^(30-k) % j) != 0.
 
 Time complexity = O(1)
-# 16.89% 2ms
-public class Solution {
+
+# 1ms 100%
+class Solution {
     public boolean isPowerOfTwo(int n) {
         return n>0 && (1073741824 % n == 0);
     }

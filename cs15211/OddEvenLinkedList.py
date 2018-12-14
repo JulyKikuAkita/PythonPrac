@@ -58,8 +58,7 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#61.82% 0ms
-#Thought: https://leetcode.com/problems/odd-even-linked-list/solution/
+# Thought: https://leetcode.com/problems/odd-even-linked-list/solution/
 /**
  * Definition for singly-linked list.
  * public class ListNode {
@@ -68,7 +67,8 @@ Java = '''
  *     ListNode(int x) { val = x; }
  * }
  */
-public class Solution {
+# 4ms 58.96%
+class Solution {
     public ListNode oddEvenList(ListNode head) {
         ListNode oddHead = new ListNode(0);
         ListNode evenHead = new ListNode(0);
@@ -91,8 +91,8 @@ public class Solution {
     }
 }
 
-#3.67% 1ms
-public class Solution {
+# 2ms 100%
+class Solution {
     public ListNode oddEvenList(ListNode head) {
         if(head==null||head.next==null) return head;
         ListNode odd=head,ehead=head.next,even=ehead;

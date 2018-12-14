@@ -1,10 +1,11 @@
-__source__ = 'https://leetcode.com/problems/palindrome-partitioning-ii/description/'
+__source__ = 'https://leetcode.com/problems/palindrome-partitioning-ii/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/palindrome-partitioning-ii.py
 # Time:  O(n^2)
 # Space: O(n^2)
 # DP
 #
 # Description: Leetcode # 132. Palindrome Partitioning II
+#
 # Given a string s, partition s such that every substring of the partition is a palindrome.
 #
 # Return the minimum cuts needed for a palindrome partitioning of s.
@@ -86,7 +87,7 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
+# Thought:
 
 Easiest Java DP Solution (97.36%)
 This can be solved by two points:
@@ -101,8 +102,8 @@ a   b   a   |   c  c
    cut(j-1) +  1
 Hope it helps!
 
-# 82.53%  22ms
-public class Solution {
+# 9ms 79.58%
+class Solution {
     public int minCut(String s) {
         char[] c = s.toCharArray();
         int[] cut = new int[c.length];
@@ -122,8 +123,8 @@ public class Solution {
     }
 }
 
-//54.69% 32ms
-public class Solution {
+# 9ms 79.58%
+class Solution {
     public int minCut(String s) {
         int[] dp = new int[s.length() + 1];
         for (int i = 0; i <= s.length(); i++) {
@@ -141,9 +142,9 @@ public class Solution {
     }
 }
 
-# expand from center
-# 99.60% 6ms
-public class Solution {
+# Expand from center
+# 2ms 98.41%
+class Solution {
     public int minCut(String s) {
         int cut = 0;
         int[] cuts = new int[s.length() + 1];

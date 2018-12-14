@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/populating-next-right-pointers-in-each-node/#/description'
+__source__ = 'https://leetcode.com/problems/populating-next-right-pointers-in-each-node/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/populating-next-right-pointers-in-each-node.py
 # Time:  O(n)
 # Space: O(1)
@@ -160,10 +160,11 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
-#DFS:
-# 69.78% 0ms
-public class Solution {
+# Thought:
+
+# DFS:
+# 0ms 100%
+class Solution {
     public void connect(TreeLinkNode root) {
         if (root == null) return;
         if (root.left != null) {
@@ -178,23 +179,23 @@ public class Solution {
 }
 
 # BFS
-#29.79% 1ms
-public class Solution {
+# 0ms 100%
+class Solution {
     public void connect(TreeLinkNode root) {
-        if( root == null || root.left == null) return ;
-
+        if (root == null || root.left == null) {
+            return;
+        }
         TreeLinkNode leftMost = root.left;
-        while(leftMost != null){
+        while (leftMost != null) {
             root.left.next = root.right;
-            if(root.next != null){
+            if (root.next != null) {
                 root.right.next = root.next.left;
                 root = root.next;
-            }else{
+            } else {
                 root = leftMost;
                 leftMost = leftMost.left;
             }
         }
-
     }
 }
 '''

@@ -1,9 +1,11 @@
 # coding=utf-8
-__source__ = 'https://github.com/kamyu104/LeetCode/blob/master/Python/poor-pigs.py'
+__source__ = 'https://leetcode.com/problems/poor-pigs/'
+# https://github.com/kamyu104/LeetCode/blob/master/Python/poor-pigs.py
 # Time:  O(1)
 # Space: O(1)
 #
-# Description:
+# Description: 458. Poor Pigs
+#
 # There are 1000 buckets, one and only one of them contains poison,
 # the rest are filled with water. They all look the same.
 # If a pig drinks that poison it will die within 15 minutes.
@@ -20,6 +22,7 @@ __source__ = 'https://github.com/kamyu104/LeetCode/blob/master/Python/poor-pigs.
 #
 import math
 import unittest
+# 20ms 88.57%
 class Solution(object):
     def poorPigs(self, buckets, minutesToDie, minutesToTest):
         """
@@ -52,8 +55,10 @@ class TestMethods(unittest.TestCase):
 if __name__ == '__main__':
     unittest.main()
 
-java = '''
-Thought: https://leetcode.com/problems/poor-pigs/discuss/94266/Another-explanation-and-solution
+Java = '''
+# Thought:
+
+https://leetcode.com/problems/poor-pigs/discuss/94266/Another-explanation-and-solution
 
 With 2 pigs, poison killing in 15 minutes, and having 60 minutes,
 we can find the poison in up to 25 buckets in the following way.
@@ -82,6 +87,7 @@ and again use one pig to determine the coordinate of one dimension
 In general, we can solve up to (⌊minutesToTest / minutesToDie⌋ + 1)pigs buckets this way,
 so just find the smallest sufficient number of pigs for example like this:
 
+# 0ms 100%
 class Solution {
     public int poorPigs(int buckets, int minutesToDie, int minutesToTest) {
         int pigs = 0;

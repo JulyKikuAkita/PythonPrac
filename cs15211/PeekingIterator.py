@@ -1,8 +1,10 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/peak-index-in-a-mountain-array/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/peeking-iterator.py
 # Time:  O(1) per peek(), next(), hasNext()
 # Space: O(1)
-
+#
+# Description: Leetcode # 284. Peeking Iterator
+#
 # Given an Iterator class interface with methods: next() and hasNext(),
 # design and implement a PeekingIterator that support the peek() operation --
 # it essentially peek() at the element that will be returned by the next call to next().
@@ -18,7 +20,15 @@ __author__ = 'July'
 # You call next() the final time and it returns 3, the last element. Calling hasNext()
 # after that should return false.
 #
-
+# Follow up: How would you extend your design to be generic and work with all types, not just integer?
+#
+# Companies
+# Google Apple Yahoo
+# Related Topics
+# Design
+# Similar Questions
+# Binary Search Tree Iterator Flatten 2D Vector Zigzag Iterator
+#
 # Below is the interface for Iterator, which is already defined for you.
 #
 # class Iterator(object):
@@ -39,38 +49,38 @@ __author__ = 'July'
 #         Returns the next element in the iteration.
 #         :rtype: int
 #         """
-
+import unittest
 class PeekingIterator(object):
     def __init__(self, iterator):
         """
         Initialize your data structure here.
         :type iterator: Iterator
         """
+
         self.iterator = iterator
-        self.val_ = None
+        self.val = None
         self.has_next_ = iterator.hasNext()
         self.has_peeked_ = False
-
 
     def peek(self):
         """
         Returns the next element in the iteration without advancing the iterator.
         :rtype: int
         """
-        if not self.has_peeked_:
+
+        if not self.has_peeked_():
             self.has_peeked_ = True
-            self.val_ = self.iterator.next()
-        return self.val_
+            self.val = self.iterator.hasNext()
+        return self.val;
 
     def next(self):
         """
         :rtype: int
         """
-        self.val_ = self.peek()
+        self.val = self.peek()
         self.has_peeked_ = False
         self.has_next_ = self.iterator.hasNext()
-        return self.val_
-
+        return self.val_;
 
     def hasNext(self):
         """
@@ -83,3 +93,90 @@ class PeekingIterator(object):
 # while iter.hasNext():
 #     val = iter.peek()   # Get the next element but not advance the iterator.
 #     iter.next()         # Should return the same value as [val].
+
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+
+if __name__ == '__main__':
+    unittest.main()
+
+Java = '''
+# Thought:
+
+# Java Iterator interface reference:
+# https://docs.oracle.com/javase/8/docs/api/java/util/Iterator.html
+# 55ms 99.21%
+class PeekingIterator implements Iterator<Integer> {
+    private Integer head;
+    private Iterator<Integer> iter;
+
+	public PeekingIterator(Iterator<Integer> iterator) {
+	    // initialize any member here.
+	    iter = iterator;
+	    head = null;
+	}
+
+    // Returns the next element in the iteration without advancing the iterator.
+	public Integer peek() {
+	    if (head != null) {
+	        return head;
+	    } else {
+	        if (iter.hasNext()) {
+	            head = iter.next();
+	        }
+	        return head;
+	    }
+	}
+
+	// hasNext() and next() should behave the same as in the Iterator interface.
+	// Override them if needed.
+	@Override
+	public Integer next() {
+	    if (head != null) {
+	        Integer result = head;
+	        head = null;
+	        return result;
+	    } else if (iter.hasNext()) {
+	        return iter.next();
+	    } else {
+	        return null;
+	    }
+	}
+
+	@Override
+	public boolean hasNext() {
+	    return head != null || iter.hasNext();
+	}
+}
+# 58ms 92.86%
+class PeekingIterator implements Iterator<Integer> {
+    Iterator<Integer> iter;
+    Integer value = null;
+	public PeekingIterator(Iterator<Integer> iterator) {
+	    // initialize any member here.
+	    iter = iterator;
+        if (iter != null) value = iter.next();
+	}
+
+    // Returns the next element in the iteration without advancing the iterator.
+	public Integer peek() {
+        return value;
+	}
+
+	// hasNext() and next() should behave the same as in the Iterator interface.
+	// Override them if needed.
+	@Override
+	public Integer next() {
+	    Integer result = value;
+        if (iter.hasNext()) value = iter.next();
+        else value = null;
+        return result;
+	}
+
+	@Override
+	public boolean hasNext() {
+	    return (value != null);
+	}
+}
+'''

@@ -1,9 +1,10 @@
-__source__ = 'https://leetcode.com/problems/palindrome-permutation-ii/description/'
+__source__ = 'https://leetcode.com/problems/palindrome-permutation-ii/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/palindromePermutationii.py
 # Time:  O(n * n!)
 # Space: O(n)
 #
 # Description: Leetcode # 267. Palindrome Permutation II
+#
 # Given a string s, return all the palindromic permutations (without duplicates) of it.
 # Return an empty list if no palindromic permutation could be form.
 #
@@ -65,7 +66,7 @@ class Solution2(object):
                 for half_palindrome in set(itertools.permutations(chars))] if len(mid) < 2 else []
 
 
-class Solution(object):
+class Solution3(object):
     def __init__(self):
         self.res = []
     def generatePalindromes(self, s):
@@ -122,11 +123,12 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/problems/palindrome-permutation-ii/solution/
-Basically, the idea is to perform permutation on half of the palindromic string and then form the full palindromic result.
+# Thought: https://leetcode.com/problems/palindrome-permutation-ii/solution/
+Basically, the idea is to perform permutation on half of the palindromic string
+and then form the full palindromic result.
 
-#26.81% 8ms
-public class Solution {
+# 4ms 46.07%
+class Solution {
     public List<String> generatePalindromes(String s) {
         int odd = 0;
         String mid = "";
@@ -185,8 +187,8 @@ public class Solution {
     }
 }
 
-#86.81% 3ms
-public class Solution {
+# 2ms 90.48%
+class Solution {
     public List<String> generatePalindromes(String s) {
         List<String> result = new ArrayList<>();
         if (s.length() == 0) {
@@ -252,8 +254,8 @@ public class Solution {
     }
 }
 
-#86.81% 3ms
-public class Solution {
+# 2ms 90.48%
+class Solution {
     Set < String > set = new HashSet < > ();
     public List < String > generatePalindromes(String s) {
         int[] map = new int[128];
@@ -304,10 +306,11 @@ public class Solution {
 }
 
 
-#TLE bruteforce
+
 "aabbhijkkjih" TLE
 factorial runtime O(n!)
-public class Solution {
+# TLE bruteforce
+class Solution {
     public List<String> generatePalindromes(String s) {
         List<String> res = new ArrayList<>();
         if (!canFormPer(s)) return res;

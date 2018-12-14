@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/partition-list/description/'
+__source__ = 'https://leetcode.com/problems/partition-list/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/partition-list.py
 # Time:  O(n)
 # Space: O(1)
@@ -99,7 +99,9 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: the basic idea is to maintain two queues,
+# Thought:
+
+the basic idea is to maintain two queues,
 the first one stores all nodes with val less than x ,
 and the second queue stores all the rest nodes.
 Then concat these two queues. Remember to set the tail of second queue a null next, or u will get TLE.
@@ -113,8 +115,8 @@ Then concat these two queues. Remember to set the tail of second queue a null ne
  * }
  */
 
-#4.82% 1ms
-public class Solution {
+# 0ms 100%
+class Solution {
     public ListNode partition(ListNode head, int x) {
         ListNode firstHead = new ListNode(0);
         ListNode firstCur = firstHead;
@@ -136,7 +138,7 @@ public class Solution {
     }
 }
 
-#4.82% 1ms
+# 0ms 100%
 class Solution {
     public ListNode partition(ListNode head, int x) {
         ListNode dummy1 = new ListNode(0), dummy2 = new ListNode(0);  //dummy heads of the 1st and 2nd queues

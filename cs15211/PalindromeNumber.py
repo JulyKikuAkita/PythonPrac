@@ -5,6 +5,7 @@ __source__ = 'https://leetcode.com/problems/palindrome-number/'
 # Math  ~= reverse integer
 #
 # Description: Leetcode # 9 Palindrome Number
+#
 # Determine whether an integer is a palindrome. Do this without extra space.
 #
 # Some hints:
@@ -20,7 +21,8 @@ __source__ = 'https://leetcode.com/problems/palindrome-number/'
 # Math
 # Similar Questions
 # Palindrome Linked List
-
+#
+import unittest
 class Solution:
     # @return a boolean
     def isPalindrome(self, x):
@@ -54,13 +56,6 @@ class Solution2:
 
         return True
 
-if __name__ == "__main__":
-    print Solution().isPalindrome(12321)
-    print Solution().isPalindrome(12320)
-    print Solution().isPalindrome(-12321)
-
-
-
 class SolutionOther:
     # @return a boolean
     def isPalindrome(self, x):
@@ -77,19 +72,28 @@ test = SolutionOther()
 #print test.isPalindrome(121)
 #print test.isPalindrome(1121)
 
-#Java
-Java = '''
-# Thought:
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        print Solution().isPalindrome(12321)
+        print Solution().isPalindrome(12320)
+        print Solution().isPalindrome(-12321)
 
-#42.39% 222ms
-public class Solution {
+if __name__ == '__main__':
+    unittest.main()
+
+Java = '''
+# Thought: https://leetcode.com/problems/palindrome-number/solution/
+
+
+# 137ms 32.27%
+class Solution {
     public boolean isPalindrome(int x) {
         return new StringBuilder().append(x).reverse().toString().equals(x+"");
     }
 }
 
-#20.26% 252ms
-public class Solution {
+# 80ms 92.49%
+class Solution {
     public boolean isPalindrome(int x) {
         char[] arr = String.valueOf(x).toCharArray();
         int i;
@@ -102,16 +106,16 @@ public class Solution {
 	}
 }
 
-89.65% 192ms
-public class Solution {
+# 82ms 89.16%
+class Solution {
     public boolean isPalindrome(int x) {
-       if (x<0 || (x!=0 && x%10==0)) return false;
-        int rev = 0;
-        while (x>rev){
-            rev = rev*10 + x%10;
-            x = x/10;
+        if ( x < 0 || x != 0 && x % 10 == 0) return false;
+        int res = 0;
+        while (x > res) {
+            res = res * 10 +  x % 10;
+            x /= 10;
         }
-        return (x==rev || x==rev/10); //x = 999
+        return x == res || (x == res /10);
     }
 }
 

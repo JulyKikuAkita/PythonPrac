@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/pascals-triangle/description/'
+__source__ = 'https://leetcode.com/problems/pascals-triangle/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/pascals-triangle.py
 # Time:  O(n^2)
 # Space: O(n)
@@ -44,7 +44,6 @@ class Solution:
 if __name__ == "__main__":
     print Solution().generate(5)
 
-
 class SolutionOther:
     # @return a list of lists of integers
     def generate(self, numRows):
@@ -69,9 +68,10 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/problems/contains-duplicate/solution/
-# 20.71% 1ms
-public class Solution {
+# Thought: https://leetcode.com/problems/pascals-triangle/solution/
+#
+# 0ms 100%
+class Solution {
     public List<List<Integer>> generate(int numRows) {
         List<List<Integer>> result = new ArrayList<>();
         if (numRows <= 0) {
@@ -94,8 +94,8 @@ public class Solution {
     }
 }
 
-# 20.71% 1ms
-public class Solution {
+# 1ms 59.94%
+class Solution {
     public List<List<Integer>> generate(int numRows) {
         List<List<Integer>> result = new ArrayList<>();
         if (numRows <= 0) return result;

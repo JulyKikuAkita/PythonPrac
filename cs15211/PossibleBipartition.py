@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/possible-bipartition/description/'
+__source__ = 'https://leetcode.com/problems/possible-bipartition/'
 # Time:  O()
 # Space: O()
 #
@@ -41,11 +41,28 @@ __source__ = 'https://leetcode.com/problems/possible-bipartition/description/'
 #
 import unittest
 
-
+# 168ms 50.76%
 class Solution(object):
-    pass  # your function here
+    def possibleBipartition(self, N, dislikes):
+        """
+        :type N: int
+        :type dislikes: List[List[int]]
+        :rtype: bool
+        """
+        graph = collections.defaultdict(list)
+        for u, v in dislikes:
+            graph[u].append(v)
+            graph[v].append(u)
 
+        color = {}
 
+        def dfs(node, c = 0):
+            if node in color:
+                return color[node] == c
+            color[node] = c
+            return all(dfs(nei, c ^ 1) for nei in graph[node])
+
+        return all(dfs(node) for node in xrange(1, N+1) if node not in color)
 class TestMethods(unittest.TestCase):
     def test_Local(self):
         self.assertEqual(1, 1)
@@ -55,7 +72,7 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/problems/possible-bipartition/solution/
+# Thought: https://leetcode.com/problems/possible-bipartition/solution/
 # Algorithm
 #
 # Consider the graph on N people formed by the given "dislike" edges.
@@ -69,6 +86,7 @@ Java = '''
 # Space Complexity: O(N+E).
 #
 
+# 50ms 60.66%
 class Solution {
     ArrayList<Integer>[] graph;
     Map<Integer, Integer> color;

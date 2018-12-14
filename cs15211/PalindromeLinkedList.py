@@ -1,9 +1,10 @@
-__source__ = 'https://leetcode.com/problems/palindrome-linked-list/description/'
+__source__ = 'https://leetcode.com/problems/palindrome-linked-list/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/palindrome-linked-list.py
 # Time:  O(n)
 # Space: O(1)
 #
 # Description: Leetcode # 234. Palindrome Linked List
+#
 # Given a singly linked list, determine if it is a palindrome.
 #
 # Follow up:
@@ -21,7 +22,6 @@ class ListNode:
      def __init__(self, x):
          self.val = x
          self.next = None
-
 
 class Solution:
     # @param {ListNode} head
@@ -103,11 +103,10 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
+# Thought:
 1. find mid node and reverse the 2nd half of the list
 2. compare value for first one and reversed 2nd half
 
-#35.24% 2ms
 /**
  * Definition for singly-linked list.
  * public class ListNode {
@@ -116,8 +115,8 @@ Java = '''
  *     ListNode(int x) { val = x; }
  * }
  */
-#34.88% 2ms
-public class Solution {
+# 1ms 97.70%
+class Solution {
     public boolean isPalindrome(ListNode head) {
         if(head == null) return true;
         ListNode mid = getMidNode(head);
@@ -156,8 +155,9 @@ public class Solution {
     }
 }
 
-#34.88% 2ms
-public class Solution {
+
+# 1ms 97.70%
+class Solution {
     public boolean isPalindrome(ListNode head) {
         if(head == null){
             return true;
@@ -172,7 +172,7 @@ public class Solution {
         slow = reverseList(slow);
         fast = head;
 
-        while(fast != null && slow != null){    // need to use slow in this while loop cause right half is smaller
+        while(fast != null && slow != null){ // need to use slow in this while loop cause right half is smaller
             if(fast.val != slow.val){
                 return false;
             }

@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/plus-one-linked-list/description/'
+__source__ = 'https://leetcode.com/problems/plus-one-linked-list/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/plus-one-linked-list.py
 # Time:  O(n)
 # Space: O(1)
@@ -94,7 +94,8 @@ if __name__ == '__main__':
 
 Java = '''
 # Thought:
-# 43.85% 0ms
+#
+
 /**
  * Definition for singly-linked list.
  * public class ListNode {
@@ -103,7 +104,9 @@ Java = '''
  *     ListNode(int x) { val = x; }
  * }
  */
-public class Solution {
+
+# 0ms 100%
+class Solution {
     public ListNode plusOne(ListNode head) {
         ListNode result = new ListNode(0);
         result.next = head;

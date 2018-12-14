@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/peak-index-in-a-mountain-array/description/'
+__source__ = 'https://leetcode.com/problems/peak-index-in-a-mountain-array/'
 # Time:  O()
 # Space: O()
 #
@@ -64,8 +64,9 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/problems/peak-index-in-a-mountain-array/solution/
-# 100% 1ms Binary Search
+# Thought: https://leetcode.com/problems/peak-index-in-a-mountain-array/solution/
+# Binary Search
+# 1ms 100%
 class Solution {
     public int peakIndexInMountainArray(int[] A) {
         int lo = 0, hi = A.length - 1;
@@ -81,6 +82,7 @@ class Solution {
     }
 }
 
+# 1ms 100%
 class Solution {
     public int peakIndexInMountainArray(int[] A) {
         return searchPeak(A,0,A.length - 1);
@@ -98,4 +100,12 @@ class Solution {
     }
 }
 
+# 3ms 25.39%
+class Solution {
+    public int peakIndexInMountainArray(int[] A) {
+        int i = 0;
+        while (A[i] < A[i + 1]) i++;
+        return i;
+    }
+}
 '''

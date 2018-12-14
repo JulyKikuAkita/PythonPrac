@@ -4,6 +4,8 @@ __source__ = 'https://leetcode.com/problems/permutation-sequence/'
 # Space: O(1)
 # Math
 #
+# Description: Leetcode # 60. Permutation Sequence
+#
 # The set [1,2,3,...,n] contains a total of n! unique permutations.
 #
 # By listing and labeling all of the permutations in order,
@@ -81,7 +83,8 @@ class Solution1:
 # which is the smallest remaining number (2 and 3).
 # So we can use a loop to check the region that the sequence number falls in and get the starting digit.
 # Then we adjust the sequence number and continue.
-
+#
+# 24ms 74.01%
 class Solution:
     # @param {integer} n
     # @param {integer} k
@@ -111,7 +114,7 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/problems/contains-duplicate/solution/
+# Thought:
 
 "Explain-like-I'm-five" Java Solution in O(n)
 I'm sure somewhere can be simplified so it'd be nice if anyone can let me know. The pattern was that:
@@ -187,8 +190,8 @@ Fourth number is 2
 Giving us 3142. If you manually list out the permutations using DFS method, it would be 3142. Done!
 It really was all about pattern finding.
 
-#56.01% 16ms
-public class Solution {
+# 7ms 96.43%
+class Solution {
     public String getPermutation(int n, int k) {
         int pos = 0;
         List<Integer> numbers = new ArrayList<>();
@@ -230,8 +233,8 @@ for n-1 numbers can be divided to (n-2)! groups, and so on.
 Thus k/(n-1)! indicates the index of current number, and k%(n-1)! denotes remaining index for the remaining n-1 numbers.
 We keep doing this until n reaches 0, then we get n numbers permutations that is kth.
 
-#28.99% 18ms
-public class Solution {
+# 7ms 96.43%
+class Solution {
     public String getPermutation(int n, int k) {
         List<Integer> nums = new ArrayList<>(n);
         int factor = 1;
@@ -255,7 +258,7 @@ public class Solution {
     }
 }
 
-#20.66% 19ms
+# 7ms 96.43%
 class Solution {
     public String getPermutation(int n, int k) {
         ArrayList<Integer> temp = new ArrayList<>();
@@ -289,9 +292,8 @@ class Solution {
     }
 }
 
-#92.19%
-14ms
-public class Solution {
+# 9ms 70.43%
+class Solution {
     public String getPermutation(int n, int k) {
         StringBuilder sb = new StringBuilder();
         boolean[] used = new boolean[n];

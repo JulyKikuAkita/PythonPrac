@@ -1,8 +1,10 @@
-__source__ = 'https://leetcode.com/problems/permutations-ii/description/'
+__source__ = 'https://leetcode.com/problems/permutations-ii/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/permutations-ii.py
 # Time:  O(n!)
 # Space: O(n)
 # Brute Force Search
+#
+# Description: Leetcode # 47. Permutations II
 #
 # Given a collection of numbers that might contain duplicates, return all possible unique permutations.
 #
@@ -18,6 +20,7 @@ __source__ = 'https://leetcode.com/problems/permutations-ii/description/'
 # Next Permutation Permutations Palindrome Permutation II
 #
 import unittest
+# 56ms 99.84%
 class Solution:
     # @param num, a list of integer
     # @return a list of lists of integers
@@ -44,15 +47,15 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/problems/contains-duplicate/solution/
+# Thought:
 
 //permutation usually use boolean[] to track if element is used
 //permutation forloop index start with 0
 //use start index result in multiple duplication as below example of backtrackErr
 //Use HashSet to remove duplicate
 
-#22.87% 12ms
-public class Solution {
+# 5ms 54.65%
+class Solution {
     public List<List<Integer>> permuteUnique(int[] nums) {
         List<List<Integer>> list = new ArrayList<>();
         backtrack(list, new ArrayList<>(), nums, new boolean[nums.length]);
@@ -99,10 +102,9 @@ public class Solution {
     }
 }
 
-# sort array instead of use hash set
-#43.87%
-9ms
-public class Solution {
+# Sort array instead of use hash set
+# 5ms 54.65%
+class Solution {
     public List<List<Integer>> permuteUnique(int[] nums) {
         List<List<Integer>> res = new ArrayList<List<Integer>>();
         if(nums==null || nums.length==0) return res;
@@ -130,9 +132,8 @@ public class Solution {
     }
 }
 
-#59.48%
-8ms
-public class Solution {
+# 3ms 98.56%
+class Solution {
     public List<List<Integer>> permuteUnique(int[] nums) {
         if (nums.length == 0) {
             return new ArrayList<>();
@@ -160,9 +161,8 @@ public class Solution {
     }
 }
 
-#99.83% 5ms
-#???
-public class Solution
+# 3ms 98.56%
+class Solution
 {
     public List<List<Integer>> permuteUnique(int[] nums)
     {

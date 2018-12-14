@@ -1,8 +1,9 @@
-__source__ = 'https://leetcode.com/problems/predict-the-winner/#/description'
-# Time:  O()
-# Space: O()
+__source__ = 'https://leetcode.com/problems/predict-the-winner/'
+# Time:  O(N^2)
+# Space: O(N)
 #
-# Description:
+# Description: 486. Predict the Winner
+#
 # Given an array of scores that are non-negative integers.
 # Player 1 picks one of the numbers from either end of the array followed by the player 2
 # and then player 1 and so on. Each time a player picks a number,
@@ -34,7 +35,7 @@ __source__ = 'https://leetcode.com/problems/predict-the-winner/#/description'
 # Hide Company Tags Google
 # Hide Tags Dynamic Programming Minimax
 # Hide Similar Problems (M) Can I Win
-
+#
 import unittest
 
 
@@ -51,7 +52,7 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
+# Thought: https://leetcode.com/problems/predict-the-winner/solution/
 
 1.  a brutal force recursive method  nums[s]-helper(nums,s+1,e) and  nums[e]-helper(nums,s,e-1)
 So assuming the sum of the array it SUM, so eventually player1 and player2 will split the SUM between themselves.
@@ -66,7 +67,8 @@ otherwise, this current player has 2 options:
 --> nums[e]-helper(nums,s,e-1): this player select the tail item, leaving the other player a choice from s to e-1
 Then take the max of these two options as this player's selection, return it.
 
-public class Solution {
+# 39ms 19.30%
+class Solution {
     public boolean PredictTheWinner(int[] nums) {
         return helper(nums, 0, nums.length-1)>=0;
     }
@@ -154,37 +156,45 @@ Further, in my way of code dp[i][j] roughly varies around zero or at least
 it doesn't always increases with approaching the upper right corner.
 So it will be less likely to overflow.
 
-public boolean PredictTheWinner(int[] nums) {
-    int n = nums.length;
-    int[][] dp = new int[n][n];
-    for (int i = 0; i < n; i++) { dp[i][i] = nums[i]; }
-    for (int len = 1; len < n; len++) {
-        for (int i = 0; i < n - len; i++) {
-            int j = i + len;
-            dp[i][j] = Math.max(nums[i] - dp[i + 1][j], nums[j] - dp[i][j - 1]);
+# 4ms 53.51%
+class Solution {
+    public boolean PredictTheWinner(int[] nums) {
+        int n = nums.length;
+        int[][] dp = new int[n][n];
+        for (int i = 0; i < n; i++) {
+            dp[i][i] = nums[i];
         }
-    }
-    return dp[0][n - 1] >= 0;
-}
 
- O(N) space complexity:
-
-
-public boolean PredictTheWinner(int[] nums) {
-    if (nums == null) { return true; }
-    int n = nums.length;
-    if ((n & 1) == 0) { return true; } // Improved with hot13399's comment.
-    int[] dp = new int[n];
-    for (int i = n - 1; i >= 0; i--) {
-        for (int j = i; j < n; j++) {
-            if (i == j) {
-                dp[i] = nums[i];
-            } else {
-                dp[j] = Math.max(nums[i] - dp[j], nums[j] - dp[j - 1]);
+        for (int k = 1; k < n; k++) {
+            for (int i = 0; i < n - k; i++) {
+                int j = i + k;
+                dp[i][j] = Math.max(nums[i] - dp[i + 1][j], nums[j] - dp[i][j-1]);
             }
         }
+        return dp[0][n-1] >= 0;
     }
-    return dp[n - 1] >= 0;
 }
 
+# O(N) space complexity:
+
+# 3ms 93.46%
+class Solution {
+    public boolean PredictTheWinner(int[] nums) {
+        if (nums == null) { return true; }
+        int n = nums.length;
+        if ((n & 1) == 0) { return true; } // Improved with hot13399's comment.
+        int[] dp = new int[n];
+
+        for (int i = n - 1; i >= 0; i--) {
+            for (int j = i; j < n; j++) {
+                if (i == j) {
+                    dp[i] = nums[i];
+                } else {
+                    dp[j] = Math.max(nums[i] - dp[j], nums[j] - dp[j - 1]);
+                }
+            }
+        }
+        return dp[n-1] >= 0;
+    }
+}
 '''

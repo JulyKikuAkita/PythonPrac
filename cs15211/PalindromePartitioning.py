@@ -1,9 +1,10 @@
-__source__ = 'https://leetcode.com/problems/palindrome-partitioning/description/'
+__source__ = 'https://leetcode.com/problems/palindrome-partitioning/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/palindrome-partitioning.py
 # Time:  O(n^2 ~ 2^n)
 # Space: O(n^2)
 #
 # Description: Leetcode # 131. Palindrome Partitioning
+#
 # Given a string s, partition s such that every substring of the partition is a palindrome.
 #
 # Return all possible palindrome partitioning of s.
@@ -22,6 +23,7 @@ __source__ = 'https://leetcode.com/problems/palindrome-partitioning/description/
 # Backtracking
 # Similar Questions
 # Palindrome Partitioning II
+#
 
 import unittest
 # Time:  O(n^2 ~ 2^n)
@@ -79,7 +81,6 @@ class Solution2:
                 return False
         return True
 
-
 class SolutionOther:
     # @param s, a string
     # @return a list of lists of string
@@ -113,9 +114,11 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: backtracking
+# Thought:
+#
+# backtracking
 # 84.45% 7ms
-public class Solution {
+class Solution {
     public List<List<String>> partition(String s) {
        List<List<String>> list = new ArrayList<>();
        backtrack(list, new ArrayList<>(), s, 0);
@@ -137,7 +140,7 @@ public class Solution {
     }
 
     private boolean isPalindrome(String s, int left, int right) {
-        while ( left < right) {
+        while (left < right) {
             if (s.charAt(left) != s.charAt(right)) return false;
             left ++;
             right--;
@@ -146,10 +149,9 @@ public class Solution {
     }
 }
 
-#DP
-# 55.63% 9ms
-O(n^2)
-public class Solution {
+# DP O(n^2)
+# 8ms 41.73%
+class Solution {
  	public static List<List<String>> partition(String s) {
 		int len = s.length();
 		List<List<String>>[] result = new List[len + 1];
@@ -175,4 +177,49 @@ public class Solution {
 	}
 }
 
+# 3ms 99.86%
+class Solution {
+    public List<List<String>> partition(String s) {
+        List<List<String>> result = new ArrayList<List<String>>();
+        if (s == null || s.length() == 0) {
+            return result;
+        }
+
+        findPartition(s, result, new ArrayList<String>(), 0, 1);
+        return result;
+    }
+
+    private boolean isPalindrome(String s, int i, int j) {
+        if (s == null || i < 0 || j > s.length() || i > j) {
+            return false;
+        }
+
+        j--;
+        while (i < j) {
+            if (s.charAt(i) != s.charAt(j)) {
+                return false;
+            }
+            i++;
+            j--;
+        }
+
+        return true;
+    }
+
+    private void findPartition(String s, List<List<String>> result, List<String> list, int start, int end) {
+        if (start == s.length()) {
+            result.add(new ArrayList<String>(list));
+            return;
+        }
+
+        while (end <= s.length()) {
+            if (isPalindrome(s, start, end)) {
+                list.add(s.substring(start, end));
+                findPartition(s, result, list, end, end + 1);
+                list.remove(list.size() - 1);
+            }
+            end++;
+        }
+    }
+}
 '''

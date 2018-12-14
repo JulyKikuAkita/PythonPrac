@@ -1,10 +1,11 @@
-__source__ = 'https://leetcode.com/problems/plus-one/description/'
+__source__ = 'https://leetcode.com/problems/plus-one/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/plus-one.py
 # Time:  O(n)
 # Space: O(1)
 # Array
 #
 # Description: Leetcode # 66. Plus One
+#
 # Given a non-negative integer represented as a non-empty array of digits, plus one to the integer.
 #
 # You may assume the integer do not contain any leading zero, except the number 0 itself.
@@ -63,10 +64,10 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
+# Thought:
 
-# 6% 1ms
-public class Solution {
+# 0ms 100%
+class Solution {
     public int[] plusOne(int[] digits) {
         int n = digits.length;
         for (int i = n - 1; i >= 0; i--) {
@@ -83,8 +84,8 @@ public class Solution {
     }
 }
 
-#32.91% 0ms
-public class Solution {
+# 0ms 100%
+class Solution {
     public int[] plusOne(int[] digits) {
         int carry = 1;
         int index = digits.length - 1;

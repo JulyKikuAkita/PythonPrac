@@ -1,8 +1,10 @@
-__source__ = 'https://leetcode.com/problems/powx-n/description/'
+__source__ = 'https://leetcode.com/problems/powx-n/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/powx-n.py
 # Time:  O(logn)
 # Space: O(logn)
 # Binary Search
+#
+# Description: Leetcode # 50. Pow(x, n)
 #
 # Implement pow(x, n).
 #
@@ -51,37 +53,35 @@ class Solution(unittest.TestCase):
         self.assertEqual(8, self.pow(2, 3))
         self.assertEqual(1.00000, self.myPowInteration(1.00000, -2147483648 ))
 
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        print Solution().pow(2, 3)
+        print Solution().pow(3, 5)
+        print Solution().pow(3, -5)
 
 
+if __name__ == '__main__':
+    unittest.main()
 
-if __name__ == "__main__":
-    print Solution().pow(2, 3)
-    print Solution().pow(3, 5)
-    print Solution().pow(3, -5)
-
-
-
-#Java
-# http://algobox.org/powx-n/
 Java = '''
+# Thought: https://leetcode.com/problems/powx-n/solution/
 
+# http://algobox.org/powx-n/
+# what if n == -2147483648
 
-#what if n == -2147483648
-
-#62.64% 20ms # divide and conquer
-public class Solution {
+# divide and conquer
+# 12ms 53.60%
+class Solution {
     public double myPow(double x, int n) {
-        if (n >=0) return positiveMyPow(x, n);
-        else return 1/positiveMyPow(x, n);
+        if (n >= 0) return positiveMyPow(x, n);
+        else return 1 / positiveMyPow(x, n);
     }
 
     public double positiveMyPow(double x, int n) {
-        if (n==0) return 1;
-        double tmp = positiveMyPow(x, n/2);
-        if (n%2 == 0) return tmp * tmp;
-        else {
-            return tmp * tmp * x;
-        }
+        if (n == 0) return 1;
+        double tmp = positiveMyPow(x, n / 2);
+        if (n % 2 == 0) return tmp * tmp;
+        else return x * tmp * tmp;
     }
 }
 
@@ -96,8 +96,8 @@ Thus, we can keep a running total of repeatedly squaring x - (x, x^2, x^4, x^8, 
 and multiply it by the answer when we see a 1.
 
 To handle the case where N=INTEGER_MIN we use a long (64-bit) variable. Below is solution:
-#33% 22ms
-public class Solution {
+# 13ms 33.33%
+class Solution {
     public double myPow(double x, int n) {
         double ans = 1;
         long absN = (long) n;
@@ -112,4 +112,10 @@ public class Solution {
     }
 }
 
+# 9ms 79.23%
+class Solution {
+    public double myPow(double x, int n) {
+        return Math.pow(x, n);
+    }
+}
 '''

@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/path-sum-ii/#/description'
+__source__ = 'https://leetcode.com/problems/path-sum-ii/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/path-sum-ii.py
 # Time:  O(n)
 # Space: O(h), h is height of binary tree
@@ -97,7 +97,7 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/problems/contains-duplicate/solution/
+# Thought:
 /**
  * Definition for a binary tree node.
  * public class TreeNode {
@@ -108,8 +108,8 @@ Java = '''
  * }
  */
 # DFS
-# 83.04% 2ms
-public class Solution {
+# 2ms 61.15%
+class Solution {
     public List<List<Integer>> pathSum(TreeNode root, int sum) {
         List<List<Integer>> result = new ArrayList<>();
         if (root == null) {
@@ -138,8 +138,8 @@ public class Solution {
     }
 }
 
-# 46.34% 3ms
-public class Solution {
+# 2ms 61.15%
+class Solution {
     public List<List<Integer>> pathSum(TreeNode root, int sum) {
         List<List<Integer>> res = new ArrayList<>();
         List<Integer> path = new ArrayList<>();
@@ -169,8 +169,8 @@ public class Solution {
 }
 
 # BFS
-# 12.42% 7ms
-public class Solution {
+# 6ms 9.98%
+class Solution {
     public List<List<Integer>> pathSum(TreeNode root, int sum) {
         List<List<Integer>> res = new ArrayList<>();
         List<Integer> path = new ArrayList<>();

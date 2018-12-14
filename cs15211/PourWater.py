@@ -145,8 +145,8 @@ class Solution(object):
                 heights[K] += 1
         return heights
 
-# 99.25% 28ms
 # Stack O(V+N)
+# 99.25% 28ms
 class Solution2(object):
     def pourWater(self, heights, V, K):
         """
@@ -199,6 +199,7 @@ if __name__ == '__main__':
 
 Java = '''
 # Thought: https://leetcode.com/problems/pour-water/solution/
+#
 # Approach #1: Simulation [Accepted]
 #
 # Complexity Analysis
@@ -206,7 +207,7 @@ Java = '''
 # For each of V droplets, our while loop might iterate N times.
 # Space Complexity: O(1) in additional space complexity.
 #
-#3ms 99.73%
+# 3ms 99.73%
 class Solution {
     public int[] pourWater(int[] heights, int V, int K) {
         if (V == 0 || K < 0 || K >= heights.length) {

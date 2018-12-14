@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/product-of-array-except-self/description/'
+__source__ = 'https://leetcode.com/problems/product-of-array-except-self/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/product-of-array-except-self.py
 # https://leetcode.com/problems/product-of-array-except-self/#/description
 # Time:  O(n)
@@ -53,7 +53,8 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/problems/contains-duplicate/solution/
+# Thought:
+
 The idea is simply.
 The product basically is calculated using the numbers before the current number
 and the numbers after the current number. Thus, we can scan the array twice.
@@ -61,8 +62,8 @@ First, we calculate the running product of the part before the current number.
 Second, we calculate the running product of the part after the current number
 through scanning from the end of the array.
 
-#29.73% 2ms
-public class Solution {
+# 2ms 39.37%
+class Solution {
     public int[] productExceptSelf(int[] nums) {
         int n = nums.length;
         int[] res = new int[n];
@@ -79,21 +80,4 @@ public class Solution {
     }
 }
 
-#29.73% 2ms
-public class Solution {
-    public int[] productExceptSelf(int[] nums) {
-        int n = nums.length;
-        int[] res = new int[n];
-        res[0] = 1;
-        for (int i = 1; i < n; i++) {
-            res[i] = res[i - 1] * nums[i - 1];
-        }
-        int right = 1;
-        for (int i = n - 1; i >= 0; i--) {
-            res[i] *= right;
-            right *= nums[i];
-        }
-        return res;
-    }
-}
 '''
