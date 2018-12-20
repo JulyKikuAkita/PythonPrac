@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/string-compression/description/'
+__source__ = 'https://leetcode.com/problems/string-compression/'
 # Time:  O(N)
 # Space: O(1)
 #
@@ -53,14 +53,13 @@ __source__ = 'https://leetcode.com/problems/string-compression/description/'
 # Since the character "a" does not repeat, it is not compressed. "bbbbbbbbbbbb" is replaced by "b12".
 # Notice each digit has it's own entry in the array.
 #
-#
 # Note:
 #
 # All characters have an ASCII value in [35, 126].
 # 1 <= len(chars) <= 1000.
 #
 import unittest
-
+# 76ms 13.43%
 class Solution(object):
     def compress(self, chars):
         """
@@ -83,13 +82,13 @@ class TestMethods(unittest.TestCase):
     def test_Local(self):
         self.assertEqual(1, 1)
 
-
 if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/problems/string-compression/solution/
-# 4ms 100%
+# Thought: https://leetcode.com/problems/string-compression/solution/
+
+# 4ms 89.44%
 class Solution {
     public int compress(char[] chars) {
         int anchor = 0, write = 0;

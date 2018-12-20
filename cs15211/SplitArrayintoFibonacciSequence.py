@@ -47,7 +47,7 @@ __source__ = 'https://leetcode.com/problems/split-array-into-fibonacci-sequence/
 #
 import unittest
 
-#24ms 100%
+# 24ms 100%
 class Solution(object):
     def splitIntoFibonacci(self, S):
         """
@@ -86,7 +86,8 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/problems/split-array-into-fibonacci-sequence/solution/
+# Thought: https://leetcode.com/problems/split-array-into-fibonacci-sequence/solution/
+
 The first two elements of the array uniquely determine the rest of the sequence.
 
 Approach #1: Brute Force [Accepted]
@@ -95,7 +96,7 @@ Time Complexity: O(N^2), where N is the length of S,
 and with the requirement that the values of the answer are O(1) in length.
 Space Complexity: O(N).
 
-#95.88% 6ms
+# 4ms 100%
 class Solution {
     public List<Integer> splitIntoFibonacci(String S) {
         int N = S.length();
@@ -133,7 +134,7 @@ class Solution {
 }
 
 
-#5ms 99.76%
+# 4ms 100%
 class Solution {
     public List<Integer> splitIntoFibonacci(String S) {
         List<Integer>result = new ArrayList<>();

@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/split-array-largest-sum/description/'
+__source__ = 'https://leetcode.com/problems/split-array-largest-sum/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/split-array-largest-sum.py
 # Time:  O(nlogs), s is the sum of nums
 # Space: O(1)
@@ -31,8 +31,8 @@ __source__ = 'https://leetcode.com/problems/split-array-largest-sum/description/
 # Related Topics
 # Binary Search Dynamic Programming
 #
-#38ms
 import unittest
+# 20ms 100%
 class Solution(object):
     def splitArray(self, nums, m):
         """
@@ -70,9 +70,10 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-# Thought:
-#46.84% 4ms
-public class Solution {
+# Thought: https://leetcode.com/problems/split-array-largest-sum/solution/
+
+# 1ms 100%
+class Solution {
     public int splitArray(int[] nums, int m) {
         int max = 0; long sum = 0;
         for (int num : nums) {
@@ -109,8 +110,8 @@ public class Solution {
     }
 }
 
-#46.84% 4ms
-public class Solution {
+# 1ms 100%
+class Solution {
     public int splitArray(int[] nums, int m) {
         int lo = 0, hi = 0;
         for(int n: nums) {
@@ -147,17 +148,15 @@ public class Solution {
 }
 
 
-DP solution. This is obviously not as good as the binary search solutions; but it did pass OJ.
+# DP solution. This is obviously not as good as the binary search solutions; but it did pass OJ.
+# dp[s,j] is the solution for splitting subarray n[j]...n[L-1] into s parts.
+# dp[s+1,i] = min{ max(dp[s,j], n[i]+...+n[j-1]) }, i+1 <= j <= L-s
+# This solution does not take advantage of the fact that the numbers are non-negative
+# (except to break the inner loop early). That is a loss.
+# (On the other hand, it can be used for the problem containing arbitrary numbers)
 
-dp[s,j] is the solution for splitting subarray n[j]...n[L-1] into s parts.
-
-dp[s+1,i] = min{ max(dp[s,j], n[i]+...+n[j-1]) }, i+1 <= j <= L-s
-
-This solution does not take advantage of the fact that the numbers are non-negative
-(except to break the inner loop early). That is a loss.
-(On the other hand, it can be used for the problem containing arbitrary numbers)
-
-# 24.49% 11ms
+# DP
+# 8ms 45.15%
 class Solution {
     public int splitArray(int[] nums, int m) {
         int L = nums.length;

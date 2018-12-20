@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/range-sum-of-bst/description/'
+__source__ = 'https://leetcode.com/problems/range-sum-of-bst/'
 # Time:  O(N)
 # Space: O(H) height of the tree
 #
@@ -18,7 +18,6 @@ __source__ = 'https://leetcode.com/problems/range-sum-of-bst/description/'
 # Input: root = [10,5,15,3,7,13,18,1,null,6], L = 6, R = 10
 # Output: 23
 #
-#
 # Note:
 #
 # The number of nodes in the tree is at most 10000.
@@ -32,7 +31,8 @@ import unittest
 #         self.val = x
 #         self.left = None
 #         self.right = None
-
+#
+# 252ms 89.32%
 class SolutionRecursion(object):
     def rangeSumBST(self, root, L, R):
         """
@@ -53,6 +53,7 @@ class SolutionRecursion(object):
         dfs(root)
         return self.ans
 
+# 260ms 84.38%
 class SolutionIteration(object):
     def rangeSumBST(self, root, L, R):
         """
@@ -74,19 +75,18 @@ class SolutionIteration(object):
                     stack.append(node.right)
         return ans
 
-
 class TestMethods(unittest.TestCase):
     def test_Local(self):
         self.assertEqual(1, 1)
-
 
 if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/problems/range-sum-of-bst/solution/
+# Thought: https://leetcode.com/problems/range-sum-of-bst/solution/
 
-# recursion:
+# Recursion:
+# 2ms 100%
 class Solution {
     public int rangeSumBST(TreeNode root, int L, int R) {
         if (root == null) return 0; // base case.
@@ -96,13 +96,16 @@ class Solution {
     }
 }
 
+# 3ms 83.72%
 class Solution {
     public int rangeSumBST(TreeNode root, int L, int R) {
        if (root == null) return 0; // base case.
-       return (L <= root.val && root.val <= R ? root.val : 0) + rangeSumBST(root.right, L, R) + rangeSumBST(root.left, L, R);
+       return (L <= root.val && root.val <= R ? root.val : 0) 
+       + rangeSumBST(root.right, L, R) + rangeSumBST(root.left, L, R);
     }
 }
 
+# 2ms 100%
 class Solution {
     public int rangeSumBST(TreeNode root, int L, int R) {
         if (root == null) return 0;
@@ -114,8 +117,6 @@ class Solution {
     }
 }
 
-#iteration:
-
 /**
  * Definition for a binary tree node.
  * public class TreeNode {
@@ -125,6 +126,8 @@ class Solution {
  *     TreeNode(int x) { val = x; }
  * }
  */
+# Iteration:
+# 12ms 9.11%
 class Solution {
     public int rangeSumBST(TreeNode root, int L, int R) {
         int ans = 0;

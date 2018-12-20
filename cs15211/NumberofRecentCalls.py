@@ -56,13 +56,14 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/problems/number-of-recent-calls/solution/
+# Thought: https://leetcode.com/problems/number-of-recent-calls/solution/
 
 Complexity Analysis
 Time Complexity: O(Q), where Q is the number of queries made.
 Space Complexity: O(W), where W = 3000 is the size of the window we should scan for recent calls.
 In this problem, the complexity can be considered O(1).
 
+# 102ms 86.67%
 class RecentCounter {
     Queue<Integer> q;
     public RecentCounter() {

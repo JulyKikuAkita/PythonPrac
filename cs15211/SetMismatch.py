@@ -1,8 +1,9 @@
-__source__ = 'https://leetcode.com/problems/set-mismatch/description/'
+__source__ = 'https://leetcode.com/problems/set-mismatch/'
 # Time:  O(n)
 # Space: O(1)
 #
 # Description: Leetcode # 645. Set Mismatch
+#
 # The set S originally contains numbers from 1 to n. But unfortunately, due to the data error,
 # one of the numbers in the set got duplicated to another number in the set,
 # which results in repetition of one number and loss of another number.
@@ -26,7 +27,7 @@ __source__ = 'https://leetcode.com/problems/set-mismatch/description/'
 #
 #
 import unittest
-# 82ms
+# 40ms 90.57%
 class Solution(object):
     def findErrorNums(self, nums):
         """
@@ -48,15 +49,15 @@ class TestMethods(unittest.TestCase):
     def test_Local(self):
         self.assertEqual(1, 1)
 
-
 if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/problems/set-mismatch/solution/
+# Thought: https://leetcode.com/problems/set-mismatch/solution/
 
-#91.20%  8ms # iterate twice to get count for each num
-public class Solution {
+# Iterate twice to get count for each num
+# 3ms 100%
+class Solution {
     public int[] findErrorNums(int[] nums) {
         int duplicate = 0;
         int[] hash = new int[nums.length + 1];
@@ -75,9 +76,9 @@ public class Solution {
     }
 }
 
-XOR: https://leetcode.com/problems/set-mismatch/solution/
-# 65.67% 11ms
-public class Solution {
+# XOR
+# 9ms 53.20%
+class Solution {
     public int[] findErrorNums(int[] nums) {
         int xor = 0, xor0 = 0, xor1 = 0;
         for (int n: nums)
@@ -106,8 +107,8 @@ public class Solution {
 }
 
 # Hashset
-# 16.03% 45ms
-public class Solution {
+# 18ms 40.26%
+class Solution {
     public int[] findErrorNums(int[] nums) {
         Set<Integer> set = new HashSet<>();
         int duplicate = 0, n = nums.length;

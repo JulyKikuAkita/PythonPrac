@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/n-ary-tree-level-order-traversal/description/'
+__source__ = 'https://leetcode.com/problems/n-ary-tree-level-order-traversal/'
 # Time:  O(N)
 # Space: O(N)
 #
@@ -25,13 +25,13 @@ __source__ = 'https://leetcode.com/problems/n-ary-tree-level-order-traversal/des
 
 import unittest
 
-#72.31% 124ms
 # Definition for a Node.
 class Node(object):
     def __init__(self, val, children):
         self.val = val
         self.children = children
 
+# 124ms 73.61%
 class Solution(object):
     def levelOrder(self, root):
         """
@@ -44,7 +44,7 @@ class Solution(object):
             q = [child for node in q for child in node.children if child]
         return ret
 
-#120ms 91.75%
+# 204ms 13.27%
 class Solution2(object):
     def levelOrder(self, root):
         """
@@ -75,8 +75,6 @@ if __name__ == '__main__':
 Java = '''
 #Thought:
 
-#iteration
-#99.86% 3ms
 /*
 // Definition for a Node.
 class Node {
@@ -91,6 +89,8 @@ class Node {
     }
 };
 */
+# Iteration
+# 2ms 100%
 class Solution {
     public List<List<Integer>> levelOrder(Node root) {
         List<List<Integer>> res = new ArrayList();
@@ -110,8 +110,8 @@ class Solution {
     }
 }
 
-#recursion
-#100% 2ms
+# Recursion
+# 2ms 100%
 class Solution {
     public List<List<Integer>> levelOrder(Node root) {
         List<List<Integer>> ans = new ArrayList<>();

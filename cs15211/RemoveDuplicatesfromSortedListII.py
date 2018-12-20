@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/remove-duplicates-from-sorted-list-ii/description/'
+__source__ = 'https://leetcode.com/problems/remove-duplicates-from-sorted-list-ii/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/remove-duplicates-from-sorted-list-ii.py
 # Time:  O(n)
 # Space: O(1)
@@ -108,8 +108,8 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
+# Thought:
 
-#Thought:
 # if current node is not unique, return deleteDuplicates with head.next.
 # If current node is unique, link it to the result of next list made by recursive call. Any improvement?
 # 14.08% 1ms
@@ -122,6 +122,7 @@ Java = '''
  *     ListNode(int x) { val = x; }
  * }
  */
+# 1ms 70.96%
 class Solution {
     public ListNode deleteDuplicates(ListNode head) {
         if (head == null) return null;
@@ -138,8 +139,8 @@ class Solution {
     }
 }
 
-#14.08% 1ms
-public class Solution {
+# 1ms 70.96%
+class Solution {
     public ListNode deleteDuplicates(ListNode head) {
         ListNode fakeHead = new ListNode(0);
         fakeHead.next = head;
@@ -162,9 +163,9 @@ public class Solution {
     }
 }
 
-# //use fasr, slow pointer
-#14.08% 1ms
-public class Solution {
+# Use fasr, slow pointer
+# 1ms 70.96%
+class Solution {
     public ListNode deleteDuplicates(ListNode head) {
         //use two pointers, slow - track the node before the dup nodes,
         // fast - to find the last node of dups.

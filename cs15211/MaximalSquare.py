@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/maximal-square/description/'
+__source__ = 'https://leetcode.com/problems/maximal-square/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/maximal-square.py
 # Time:  O(n^2)
 # Space: O(n)
@@ -134,8 +134,8 @@ if __name__ == '__main__':
 Java = '''
 # Thought: https://leetcode.com/problems/maximal-square/solution/
 
-# 25.79% 13ms
-public class Solution {
+# 8ms 76.23%
+class Solution {
     public int maximalSquare(char[][] matrix) {
         int m = matrix.length;
         int n = m == 0 ? 0 : matrix[0].length;
@@ -160,8 +160,8 @@ public class Solution {
     }
 }
 
-#70.45% 11ms
-public class Solution {
+# 7ms 98.50%
+class Solution {
     public int maximalSquare(char[][] matrix) {
         if ( matrix == null || matrix.length == 0 ) return 0;
 

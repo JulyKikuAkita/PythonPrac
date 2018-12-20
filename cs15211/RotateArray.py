@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/rotate-array/description/'
+__source__ = 'https://leetcode.com/problems/rotate-array/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/rotate-array.py
 # Time:  O(n)
 # Space: O(1)
@@ -22,13 +22,13 @@ __source__ = 'https://leetcode.com/problems/rotate-array/description/'
 # Similar Questions
 # Rotate List Reverse Words in a String II
 #
-'''
-Assuming we are given {1,2,3,4,5,6} and order 2. The basic idea is:
-1. Divide the array two parts: 1,2,3,4 and 5, 6
-2. Rotate first part: 4,3,2,1,5,6
-3. Rotate second part: 4,3,2,1,6,5
-4. Rotate the whole array: 5,6,1,2,3,4
-'''
+# Note:
+# Assuming we are given {1,2,3,4,5,6} and order 2. The basic idea is:
+# 1. Divide the array two parts: 1,2,3,4 and 5, 6
+# 2. Rotate first part: 4,3,2,1,5,6
+# 3. Rotate second part: 4,3,2,1,6,5
+# 4. Rotate the whole array: 5,6,1,2,3,4
+#
 import unittest
 class Solution:
     # @param nums, a list of integer
@@ -66,23 +66,6 @@ class Solution2:
             nums[(offset + i * k) % len(nums)], tmp = tmp , nums[(offset + i * k) % len(nums)]
         nums[offset] = tmp
 
-# http://www.programcreek.com/2015/03/rotate-array-in-java/
-# Solution 2 - Bubble Rotate
-# Time:  O(n * k)
-# Space: O(1)
-class javaSolution:
-    # @param nums, a list of integer
-    # @param k, num of steps
-    # @return nothing, please modify the nums list in-place.
-    def rotate(self, nums, k):
-        if not nums or k < 0:
-            raise ValueError("Illegal argument!")
-        k = k % len(nums)
-        for i in xrange(k):
-            for j in reversed(xrange(len(nums))):
-                nums[j], nums[j-1] = nums[j-1], nums[j]
-
-
 class TestMethods(unittest.TestCase):
     def test_Local(self):
         self.assertEqual(1, 1)
@@ -96,11 +79,11 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/problems/rotate-array/solution/
+# Thought: https://leetcode.com/problems/rotate-array/solution/
 
 Approach #2 Using Extra Array [Accepted]
-# 97.80% 0ms
-public class Solution {
+# 0ms 100%
+class Solution {
     public void rotate(int[] nums, int k) {
         k = k % nums.length;
         int res[] = new int[nums.length];
@@ -111,8 +94,8 @@ public class Solution {
 }
 
 Approach #3 Using Cyclic Replacements [Accepted]
-# 12.26% 1ms
-public class Solution {
+# 0ms 100%
+class Solution {
     public void rotate(int[] nums, int k) {
         k = k % nums.length;
         int count = 0;
@@ -140,8 +123,8 @@ Reverse is done by using two pointers, one point at the head and the other point
 after switch these two, these two pointers move one position towards the middle.
 
 
-# 12.26% 1ms
-public class Solution {
+# 0ms 100%
+class Solution {
     public void rotate(int[] nums, int k) {
         k %= nums.length;
         reverse(nums, 0, nums.length - k - 1);

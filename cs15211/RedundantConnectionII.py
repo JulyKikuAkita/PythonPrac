@@ -46,11 +46,51 @@ __source__ = 'https://leetcode.com/problems/redundant-connection-ii/description/
 # Graph
 # Similar Questions
 # Redundant Connection
-
+#
+import collections
 import unittest
+# 40ms 24.16%
 class Solution(object):
-    pass  # your function here
+    def findRedundantDirectedConnection(self, edges):
+        N = len(edges)
+        parent = {}
+        candidates = []
+        for u, v in edges:
+            if v in parent:
+                candidates.append((parent[v], v))
+                candidates.append((u, v))
+            else:
+                parent[v] = u
 
+        def orbit(node):
+            seen = set()
+            while node in parent and node not in seen:
+                seen.add(node)
+                node = parent[node]
+            return node, seen
+
+        root = orbit(1)[0]
+
+        if not candidates:
+            cycle = orbit(root)[1]
+            for u, v in edges:
+                if u in cycle and v in cycle:
+                    ans = u, v
+            return ans
+
+        children = collections.defaultdict(list)
+        for v in parent:
+            children[parent[v]].append(v)
+
+        seen = [True] + [False] * N
+        stack = [root]
+        while stack:
+            node = stack.pop()
+            if not seen[node]:
+                seen[node] = True
+                stack.extend(children[node])
+
+        return candidates[all(seen)]
 
 class TestMethods(unittest.TestCase):
     def test_Local(self):
@@ -61,7 +101,8 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
+# Thought: https://leetcode.com/problems/redundant-connection-ii/solution/
+#
 This problem is limited to a graph with N nodes and N edges.
 No node is singled out if a edge is removed.
 For example, [[1,2],[2,4],[3,4]], 4 nodes 3 edges, is not applicable to this problem.
@@ -72,12 +113,14 @@ There are 3 cases:
 No loop, but there is one node who has 2 parents.
 A loop, and there is one node who has 2 parents, that node must be inside the loop.
 A loop, and every node has only 1 parent.
-Case 1: e.g. [[1,2],[1,3],[2,3]] ,node 3 has 2 parents ([1,3] and [2,3]). Return the edge that occurs last that is, return [2,3].
+Case 1: e.g. [[1,2],[1,3],[2,3]] ,node 3 has 2 parents ([1,3] and [2,3]). 
+Return the edge that occurs last that is, return [2,3].
 Case 2: e.g. [[1,2],[2,3],[3,1],[4,1]] , {1->2->3->1} is a loop, node 1 has 2 parents ([4,1] and [3,1]).
 Return the edge that is inside the loop, that is, return [3,1].
 Case 3: e.g. [[1,2],[2,3],[3,1],[1,4]] , {1->2->3->1} is a loop, you can remove any edge in a loop,
 the graph is still valid. Thus, return the one that occurs last, that is, return [3,1].
 
+# 4ms 55.39%
 class Solution {
     public int[] findRedundantDirectedConnection(int[][] edges) {
         int[] ancestor = new int[edges.length + 1];

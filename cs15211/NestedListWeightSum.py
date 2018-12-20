@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/nested-list-weight-sum/#/description'
+__source__ = 'https://leetcode.com/problems/nested-list-weight-sum/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/nested-list-weight-sum.py
 # Time:  O(n)
 # Space: O(h)
@@ -27,6 +27,7 @@ __source__ = 'https://leetcode.com/problems/nested-list-weight-sum/#/description
 # You should not implement it, or speculate about its implementation
 # """
 import unittest
+# 20ms 100%
 class NestedInteger(object):
    def isInteger(self):
        """
@@ -72,7 +73,7 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-Thought: https://leetcode.com/articles/nested-list-weight-sum/
+Thought: https://leetcode.com/problems/nested-list-weight-sum/solution/
 
 /**
  * // This is the interface that allows for creating nested lists.
@@ -93,8 +94,8 @@ Thought: https://leetcode.com/articles/nested-list-weight-sum/
  */
 
  1. DFS
-# 13.19% 2ms
-public class Solution {
+# 2ms 97%
+class Solution {
     public int depthSum(List<NestedInteger> nestedList) {
         return dfs(nestedList, 1);
     }
@@ -108,9 +109,32 @@ public class Solution {
     }
 }
 
+# 2ms 97%
+class Solution {
+    public int depthSum(List<NestedInteger> nestedList) {
+        int sum = 0;
+        for (NestedInteger ni : nestedList) {
+            sum += depthSum(ni, 1);
+        }
+        return sum;
+    }
+
+    private int depthSum(NestedInteger ni, int depth) {
+        if (ni.isInteger()) {
+            return ni.getInteger() * depth;
+        } else {
+            int sum = 0;
+            for (NestedInteger n : ni.getList()) {
+                sum += depthSum(n, depth + 1);
+            }
+            return sum;
+        }
+    }
+}
+
 2. BFS
-# 13.19% 2ms
-public class Solution {
+# 2ms 97%
+class Solution {
     public int depthSum(List<NestedInteger> nestedList) {
         int sum = 0;
         Queue<NestedInteger> queue = new LinkedList<>();

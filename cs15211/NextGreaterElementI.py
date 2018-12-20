@@ -1,8 +1,9 @@
-__source__ = 'https://leetcode.com/problems/next-greater-element-i/#/description'
+__source__ = 'https://leetcode.com/problems/next-greater-element-i/'
 # Time:  O(m + n)
 # Space: O(m + n)
 #
-# Description:
+# Description: 496. Next Greater Element I
+#
 # You are given two arrays (without duplicates) nums1 and nums2 where nums1's elements are subset of nums2.
 # Find all the next greater numbers for nums1's elements in the corresponding places of nums2.
 #
@@ -13,9 +14,11 @@ __source__ = 'https://leetcode.com/problems/next-greater-element-i/#/description
 # Input: nums1 = [4,1,2], nums2 = [1,3,4,2].
 # Output: [-1,3,-1]
 # Explanation:
-#     For number 4 in the first array, you cannot find the next greater number for it in the second array, so output -1.
+#     For number 4 in the first array, you cannot find the next greater number for it in the second array,
+#       so output -1.
 #     For number 1 in the first array, the next greater number for it in the second array is 3.
-#     For number 2 in the first array, there is no next greater number for it in the second array, so output -1.
+#     For number 2 in the first array, there is no next greater number for it in the second array,
+#       so output -1.
 #
 # Example 2:
 # Input: nums1 = [2,4], nums2 = [1,2,3,4].
@@ -32,7 +35,7 @@ __source__ = 'https://leetcode.com/problems/next-greater-element-i/#/description
 # Similar Questions
 # Next Greater Element II Next Greater Element III
 #
-# 79ms
+# 48ms 42.75%
 class Solution(object):
     def nextGreaterElement(self, findNums, nums):
         """
@@ -48,18 +51,17 @@ class Solution(object):
             while len(st) and st[-1] < n:
                 dict[st.pop()] = n
             st.append(n)
-
         for x in findNums:
             res.append(dict.get(x, -1))
-
         return res
 
+# 52ms 34.84%
 class Solution(object):
     def nextGreaterElement2(self, findNums, nums):
         return [next((y for y in nums[nums.index(x):] if y > x), -1) for x in findNums]
 
 Java = '''
-Thought: https://leetcode.com/articles/greater-element-i/
+Thought: https://leetcode.com/problems/next-greater-element-i/solution/
 
 Key observation:
 Suppose we have a decreasing sequence followed by a greater number
@@ -72,8 +74,8 @@ For example [9, 8, 7, 3, 2, 1, 6]
 The stack will first contain [9, 8, 7, 3, 2, 1] and then we see 6 which is greater than 1
 so we pop 1 2 3 whose next greater element should be 6
 
-#36.16% 12ms
-public class Solution {
+# 5ms 84.38%
+class Solution {
     public int[] nextGreaterElement(int[] findNums, int[] nums) {
         Map<Integer, Integer> map = new HashMap<>();
         Stack<Integer> stack = new Stack<>();
@@ -91,8 +93,8 @@ public class Solution {
     }
 }
 
-# 47.69% 11ms
-public class Solution {
+# 5ms 84.38%
+class Solution {
     public int[] nextGreaterElement(int[] findNums, int[] nums) {
         Stack < Integer > stack = new Stack < > ();
         HashMap < Integer, Integer > map = new HashMap < > ();
@@ -111,8 +113,8 @@ public class Solution {
     }
 }
 
-# 92.92% 7ms
-public class Solution {
+# 4ms 91.96%
+class Solution {
     public int[] nextGreaterElement(int[] findNums, int[] nums) {
         if(findNums == null || nums == null || findNums.length > nums.length)
             return new int[0];

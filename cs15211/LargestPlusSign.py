@@ -1,7 +1,6 @@
-__source__ = 'https://leetcode.com/problems/largest-plus-sign/description/'
+__source__ = 'https://leetcode.com/problems/largest-plus-sign/'
 # Time:  O(N^2) as the work we do under two nested for loops is O(1)O(1).
 # Space: O(N^2) the size of dp[][]
-#
 # DP
 #
 # Description: Leetcode # 764. Largest Plus Sign
@@ -121,7 +120,7 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/problems/largest-plus-sign/solution/
+# Thought: https://leetcode.com/problems/largest-plus-sign/solution/
 #
 # Brute force TLE
 class Solution {

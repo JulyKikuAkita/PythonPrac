@@ -1,12 +1,13 @@
-__source__ = 'https://leetcode.com/problems/minimum-window-substring/description/'
-#https://github.com/kamyu104/LeetCode/blob/master/Python/minimum-window-substring.py
+__source__ = 'https://leetcode.com/problems/minimum-window-substring/'
+# https://github.com/kamyu104/LeetCode/blob/master/Python/minimum-window-substring.py
 # Time:  O(n)
 # Space: O(k), k is the number of different characters
 # Hashtable
 #
 # Description: Leetcode # 76. Minimum Window Substring
 #
-# Given a string S and a string T, find the minimum window in S which will contain all the characters in T in complexity O(n).
+# Given a string S and a string T, find the minimum window in S
+# which will contain all the characters in T in complexity O(n).
 #
 # For example,
 # S = "ADOBECODEBANC"
@@ -22,7 +23,8 @@ __source__ = 'https://leetcode.com/problems/minimum-window-substring/description
 # Related Topics
 # Hash Table Two Pointers String
 # Similar Questions
-# Substring with Concatenation of All Words Minimum Size Subarray Sum Sliding Window Maximum Permutation in String Smallest Range
+# Substring with Concatenation of All Words Minimum Size Subarray Sum
+# Sliding Window Maximum Permutation in String Smallest Range
 #
 import unittest
 import collections
@@ -104,9 +106,9 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/problems/contains-duplicate/solution/
-#29.9% 42ms
-public class Solution {
+# Thought: https://leetcode.com/problems/minimum-window-substring/solution/
+# 25ms 52.80%
+class Solution {
     public String minWindow(String s, String t) {
         String res = "";
         if(s == null || t == null || s.length() == 0 || t.length() == 0) return res;
@@ -144,15 +146,13 @@ public class Solution {
                     prev ++;
                 }
             }
-
         }
         return res;
-
     }
 }
 
 #76.01% 7ms
-public class Solution {
+class Solution {
     public String minWindow(String s, String t) {
         int lenS = s.length();
         int lenT = t.length();
@@ -194,8 +194,8 @@ public class Solution {
     }
 }
 
-#79.01% gms
-public class Solution {
+# 4ms 96.63%
+class Solution {
     public String minWindow(String s, String t) {
         if (s == null || t == null || s.length() == 0 || t.length() == 0) {
             return null;

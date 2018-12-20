@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/line-reflection/description/'
+__source__ = 'https://leetcode.com/problems/line-reflection/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/line-reflection.py
 # Time:  O(n)
 # Space: O(n)
@@ -81,10 +81,12 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
+# Thought:
+#
 [[-16,1],[16,1],[16,1]] wrong answer: should be true but return false
-1. 64.65% 19ms
-public class Solution {
+
+1. 10ms 81.56%
+class Solution {
     public boolean isReflected(int[][] points) {
         int max = Integer.MIN_VALUE;
         int min = Integer.MAX_VALUE;
@@ -107,8 +109,8 @@ public class Solution {
 }
 
 2.
-# 98.31% 8ms
-public class Solution { // O(NLgN) sort + check
+# 3ms 100%
+class Solution { // O(NLgN) sort + check
     public boolean isReflected(int[][] points) {
         if (points == null || points.length == 0) {
             return true;

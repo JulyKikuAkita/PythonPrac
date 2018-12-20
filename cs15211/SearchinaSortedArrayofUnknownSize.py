@@ -26,7 +26,6 @@ __source__ = 'https://leetcode.com/problems/search-in-a-sorted-array-of-unknown-
 # Output: -1
 # Explanation: 2 does not exist in nums so return -1
 #
-#
 # Note:
 #
 # You may assume that all elements in the array are unique.
@@ -35,7 +34,7 @@ __source__ = 'https://leetcode.com/problems/search-in-a-sorted-array-of-unknown-
 
 import unittest
 
-#100% 32ms
+# 100% 32ms
 class Solution(object):
     def search(self, reader, target):
         """
@@ -70,7 +69,8 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
+# Thought:
+
 # 3ms 82.95%
 class Solution {
     public int search(ArrayReader reader, int target) {

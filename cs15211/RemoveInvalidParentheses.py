@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/remove-invalid-parentheses/description/'
+__source__ = 'https://leetcode.com/problems/remove-invalid-parentheses/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/remove-invalid-parentheses.py
 # Time:  O(C(n, c)), try out all possible substrings with the minimum c deletion.
 # Space: O(c), the depth is at most c, and it costs n at each depth
@@ -122,20 +122,21 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/problems/contains-duplicate/solution/
+# Thought: https://leetcode.com/problems/remove-invalid-parentheses/solution/
 
-Thought :
 Key Points:
 
 Generate unique answer once and only once, do not rely on Set.
 Do not need preprocess.
 Runtime 3 ms.
 Explanation:
-We all know how to check a string of parentheses is valid using a stack. Or even simpler use a counter.
+We all know how to check a string of parentheses is valid using a stack. 
+Or even simpler use a counter.
 The counter will increase when it is '(' and decrease when it is ')'.
 Whenever the counter is negative, we have more ')' than '(' in the prefix.
 
-To make the prefix valid, we need to remove a ')'. The problem is: which one? The answer is any one in the prefix.
+To make the prefix valid, we need to remove a ')'. The problem is: which one? 
+The answer is any one in the prefix.
 However, if we remove any one, we will generate duplicate results, for example: s = ()),
 we can remove s[1] or s[2] but the result is the same ().
 Thus, we restrict ourself to remove the first ) in a series of concecutive )s.
@@ -151,8 +152,8 @@ The answer is: do the same from right to left.
 However a cleverer idea is: reverse the string and reuse the code!
 Here is the final implement in Java.
 
-#70.83% 3ms
-public class Solution {
+# 2ms 83.93%
+class Solution {
     public List<String> removeInvalidParentheses(String s) {
     List<String> ans = new ArrayList<>();
     remove(s, ans, 0, 0, new char[]{'(', ')'});
@@ -177,8 +178,6 @@ public class Solution {
     }
 }
 
-#BFS
-# 31.93% 100ms
 The idea is straightforward, with the input string s, we generate all possible states by removing one ( or ), c
 heck if they are valid, if found valid ones on the current level, put them to the final result list and we are done,
 otherwise, add them to a queue and carry on to the next level.
@@ -201,7 +200,9 @@ Finally we have this formula:
 
 T(n) = n x C(n, n) + (n-1) x C(n, n-1) + ... + 1 x C(n, 1) = n x 2^(n-1).
 
-public class Solution {
+# BFS
+# 95ms 16.54%
+class Solution {
     public List<String> removeInvalidParentheses(String s) {
       List<String> res = new ArrayList<>();
 
@@ -260,8 +261,8 @@ public class Solution {
     }
 }
 
-# 94.69% 2ms
-public class Solution {
+# 1ms 100%
+class Solution {
     public List<String> removeInvalidParentheses(String s) {
         List<String> result = new ArrayList<>();
         int leftRemove = 0;

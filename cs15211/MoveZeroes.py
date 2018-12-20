@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/move-zeroes/description/'
+__source__ = 'https://leetcode.com/problems/move-zeroes/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/move-zeroes.py
 # Time:  O(n)
 # Space: O(1)
@@ -25,6 +25,7 @@ __source__ = 'https://leetcode.com/problems/move-zeroes/description/'
 #
 import unittest
 class Solution(object):
+    # 44ms 44.01%
     def moveZeroes(self, nums):
         """
         :type nums: List[int]
@@ -85,10 +86,10 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/problems/move-zeroes/solution/ in c++
+# Thought: https://leetcode.com/problems/move-zeroes/solution/
 
-#64.07% 0ms
-public class Solution {
+# 1ms 100%
+class Solution {
     // Shift non-zero values as far forward as possible
     // Fill remaining space with zeros
     public void moveZeroes(int[] nums) {
@@ -105,7 +106,7 @@ public class Solution {
     }
 }
 
-#18.56% 3ms
+# 1ms 100%
 class Solution {
     public void moveZeroes(int[] nums) {
         int left = 0, right = 0;
@@ -121,8 +122,8 @@ class Solution {
     }
 }
 
-# 16.67% 1ms
-public class Solution {
+# 1ms 100%
+class Solution {
     public void moveZeroes(int[] nums) {
         int start = 0;
         for (int i = 0; i < nums.length; i++) {

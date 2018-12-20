@@ -1,8 +1,9 @@
-__source__ = 'https://leetcode.com/problems/smallest-subtree-with-all-the-deepest-nodes/solution/'
+__source__ = 'https://leetcode.com/problems/smallest-subtree-with-all-the-deepest-nodes/'
 # Time:  O(N)
 # Space: O(N)
 #
 # Description: Leetcode # 865. Smallest Subtree with all the Deepest Nodes
+#
 # Given a binary tree rooted at root, the depth of each node is the shortest distance to the root.
 #
 # A node is deepest if it has the largest depth possible among any node in the entire tree.
@@ -11,15 +12,11 @@ __source__ = 'https://leetcode.com/problems/smallest-subtree-with-all-the-deepes
 #
 # Return the node with the largest depth such that it contains all the deepest nodes in its subtree.
 #
-#
-#
 # Example 1:
 #
 # Input: [3,5,1,6,2,0,8,null,null,7,4]
 # Output: [2,7,4]
 # Explanation:
-#
-#
 #
 # We return the node with value 2, colored in yellow in the diagram.
 # The nodes colored in blue are the deepest nodes of the tree.
@@ -27,12 +24,10 @@ __source__ = 'https://leetcode.com/problems/smallest-subtree-with-all-the-deepes
 # The output "[2, 7, 4]" is a serialization of the subtree rooted at the node with value 2.
 # Both the input and output have TreeNode type.
 #
-#
 # Note:
 #
 # The number of nodes in the tree will be between 1 and 500.
 # The values of each node are unique.
-#
 #
 import unittest
 
@@ -43,14 +38,13 @@ import unittest
 #         self.left = None
 #         self.right = None
 
-# 24ms, 100%
+# 24ms 99.69%
 class Solution(object):
     def subtreeWithAllDeepest(self, root):
         """
         :type root: TreeNode
         :rtype: TreeNode
         """
-
         def r(root):
             if not root.left and not root.right:
                 return 0, root
@@ -78,10 +72,8 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/problems/smallest-subtree-with-all-the-deepest-nodes/solution/
-# Two pass DFS: 1. get max_depth, 2. get subtree
-# 5ms 39.5%
-
+# Thought: https://leetcode.com/problems/smallest-subtree-with-all-the-deepest-nodes/solution/
+#
 # Time Complexity: O(N), where N is the number of nodes in the tree.
 # Space Complexity: O(N).
 
@@ -94,6 +86,8 @@ Java = '''
  *     TreeNode(int x) { val = x; }
  * }
  */
+# Two pass DFS: 1. get max_depth, 2. get subtree
+# 4ms 48.78%
 class Solution {
     Map<TreeNode, Integer> depth;
     int max_depth;
@@ -128,8 +122,6 @@ class Solution {
     }
 }
 
-# One pass DFS
-# 3ms 100%
 /**
  * The TreeDepth of a subtree is:
  *       Result.node: the largest depth node that is equal to or
@@ -137,6 +129,8 @@ class Solution {
  *       Result.dist: the number of nodes in the path from the root
  *                    of this subtree, to the deepest node in this subtree.
  */
+# One pass DFS
+# 3ms 87.24%
 class TreeDepth {
     TreeNode node;
     int depth;

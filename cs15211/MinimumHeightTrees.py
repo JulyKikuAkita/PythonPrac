@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/minimum-height-trees/description/'
+__source__ = 'https://leetcode.com/problems/minimum-height-trees/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/minimum-height-trees.py
 # Time:  O(n)
 # Space: O(n)
@@ -114,7 +114,8 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: Our problem want us to find the minimum height trees and return their root labels.
+# Thought: 
+Our problem want us to find the minimum height trees and return their root labels.
 First we can think about a simple case -- a path graph.
 
 For a path graph of n nodes, find the minimum height trees is trivial.
@@ -131,20 +132,23 @@ This gives us a lot of useful ideas to crack our real problem.
 
 For a tree we can do some thing similar. We start from every end,
 by end we mean vertex of degree 1 (aka leaves). We let the pointers move the same speed.
-When two pointers meet, we keep only one of them, until the last two pointers meet or one step away we then find the roots.
+When two pointers meet, we keep only one of them, 
+until the last two pointers meet or one step away we then find the roots.
 
 It is easy to see that the last two pointers are from the two ends of the longest path in the graph.
 
 The actual implementation is similar to the BFS topological sort.
 Remove the leaves, update the degrees of inner vertexes.
-Then remove the new leaves. Doing so level by level until there are 2 or 1 nodes left. What's left is our answer!
+Then remove the new leaves. Doing so level by level until there are 2 or 1 nodes left. 
+What's left is our answer!
 
 The time complexity and space complexity are both O(n).
 
 Note that for a tree we always have V = n, E = n-1.
 
-# 74.12% 49ms  # easy to understand
-public class Solution {
+# Easy to understand
+# 31ms 57.29%  
+class Solution {
     public List<Integer> findMinHeightTrees(int n, int[][] edges) {
         if (n == 1) return Collections.singletonList(0);
 
@@ -173,8 +177,8 @@ public class Solution {
     }
 }
 
-#88.71% 30ms
-public class Solution {
+# 16ms 91.48%
+class Solution {
     public List<Integer> findMinHeightTrees(int n, int[][] edges) {
         List<Integer> result = new ArrayList<>();
         List<List<Integer>> graph = new ArrayList<>();

@@ -1,5 +1,5 @@
-__source__ = 'https://leetcode.com/problems/max-area-of-island/description/'
-# Time:  O(R* C)
+__source__ = 'https://leetcode.com/problems/max-area-of-island/'
+# Time:  O(R * C)
 # Space: O(R * C)
 #
 # Description: Leetcode # 695. Max Area of Island
@@ -34,7 +34,7 @@ __source__ = 'https://leetcode.com/problems/max-area-of-island/description/'
 # Number of Islands Island Perimeter
 #
 import unittest
-#212 ms
+# 184ms 5.13%
 class Solution(object):
     def maxAreaOfIsland(self, grid):
         """
@@ -55,9 +55,10 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/articles/max-area-of-island/
-#DFS
-#66.19% 39ms
+# Thought: https://leetcode.com/problems/max-area-of-island/solution/
+#
+# DFS
+# 66.19% 39ms
 class Solution {
     public int maxAreaOfIsland(int[][] grid) {
         int max_area = 0;
@@ -77,8 +78,8 @@ class Solution {
     }
 }
 
-#BFS #52ms
-#18.27% 48ms
+# BFS 
+# 22ms 52.16%
 class Solution {
     public int maxAreaOfIsland(int[][] grid) {
         boolean[][] seen = new boolean[grid.length][grid[0].length];
@@ -116,7 +117,7 @@ class Solution {
     }
 }
 
-#97.85% 34ms
+# 15ms 97.50%
 class Solution {
     int res=0;
     private int dfs(int[][] grid, int x, int y){

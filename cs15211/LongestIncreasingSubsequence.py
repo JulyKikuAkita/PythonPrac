@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/longest-increasing-subsequence/description/'
+__source__ = 'https://leetcode.com/problems/longest-increasing-subsequence/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/longest-increasing-subsequence.py
 # Time:  O(nlogn)
 # Space: O(n)
@@ -77,7 +77,7 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/articles/longest-increasing-subsequence/
+# Thought: https://leetcode.com/problems/longest-increasing-subsequence/solution/
 
 tails is an array storing the smallest tail of all increasing subsequences with length i+1 in tails[i].
 For example, say we have nums = [4,5,6,3], then all the available increasing subsequences are:
@@ -94,7 +94,7 @@ Each time we only do one of the two:
 (2) if tails[i-1] < x <= tails[i], update tails[i]
 Doing so will maintain the tails invariant. The the final answer is just the size.
 
-#86.98% 1ms
+# 1ms 94.31%
 class Solution {
     public int lengthOfLIS(int[] nums) {
         int[] tails = new int[nums.length];
@@ -115,8 +115,8 @@ class Solution {
     }
 }
 
-#86.98% 1ms
-public class Solution {
+# 0ms 100%
+class Solution {
     public int lengthOfLIS(int[] nums) {
         if (nums.length < 2) {
             return nums.length;
@@ -148,8 +148,8 @@ public class Solution {
 }
 
 Approach #4 Dynamic Programming with Binary Search[Accepted]:
-#86.98% 1ms
-public class Solution {
+# 1ms 94.31%
+class Solution {
     public int lengthOfLIS(int[] nums) {
         int[] dp = new int[nums.length];
         int len = 0;

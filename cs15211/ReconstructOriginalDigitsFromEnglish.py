@@ -1,9 +1,10 @@
-__source__ = 'https://github.com/kamyu104/LeetCode/blob/master/Python/reconstruct-original-digits-from-english.py'
-# https://leetcode.com/problems/reconstruct-original-digits-from-english/#/description
+__source__ = 'https://leetcode.com/problems/reconstruct-original-digits-from-english/'
+# https://github.com/kamyu104/LeetCode/blob/master/Python/reconstruct-original-digits-from-english.py
 # Time:  O(n)
 # Space: O(1)
 #
-# Description:
+# Description: 423. Reconstruct Original Digits from English
+#
 # Given a non-empty string containing an out-of-order English representation
 # of digits 0-9, output the digits in ascending order.
 #
@@ -33,6 +34,7 @@ __source__ = 'https://github.com/kamyu104/LeetCode/blob/master/Python/reconstruc
 #
 import unittest
 from collections import Counter
+# 1052ms 1.94%
 class Solution(object):
     def originalDigits(self, s):
         """
@@ -69,14 +71,15 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
+# Thought:
 The idea is:
-
 for zero, it's the only word has letter 'z',
 for two, it's the only word has letter 'w',
 ......
 so we only need to count the unique letter of each word, Coz the input is always valid.
-public class Solution {
+#
+# 24ms 32.02%
+class Solution {
     public String originalDigits(String s) {
         int[] count = new int[10];
         for (int i = 0; i < s.length(); i++){

@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/merge-two-sorted-lists/description/'
+__source__ = 'https://leetcode.com/problems/merge-two-sorted-lists/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/merge-two-sorted-lists.py
 # Time:  O(n)
 # Space: O(1)
@@ -97,9 +97,7 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
-
-# 80.24% 14ms
+# Thought: https://leetcode.com/problems/merge-two-sorted-lists/solution/
 /**
  * Definition for singly-linked list.
  * public class ListNode {
@@ -108,7 +106,9 @@ Java = '''
  *     ListNode(int x) { val = x; }
  * }
  */
-public class Solution {
+
+# 6ms 99.64%
+class Solution {
     public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
         ListNode fakeHead = new ListNode(0);
         ListNode cur = fakeHead;
@@ -136,9 +136,9 @@ public class Solution {
     }
 }
 
-#Recursion:
-# 80.24% 14ms
-public class Solution {
+# Recursion:
+# 8ms 67.33%
+class Solution {
     public ListNode mergeTwoLists(ListNode l1, ListNode l2){
 		if(l1 == null) return l2;
 		if(l2 == null) return l1;

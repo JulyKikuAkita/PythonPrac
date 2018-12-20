@@ -1,5 +1,3 @@
-import itertools
-
 __source__ = 'https://leetcode.com/problems/long-pressed-name/'
 # Time:  O(N + T)
 # Space: O(1)
@@ -34,7 +32,6 @@ __source__ = 'https://leetcode.com/problems/long-pressed-name/'
 # Output: true
 # Explanation: It's not necessary to long press any character.
 #
-#
 # Note:
 #
 # name.length <= 1000
@@ -42,6 +39,7 @@ __source__ = 'https://leetcode.com/problems/long-pressed-name/'
 # The characters of name and typed are lowercase letters.
 #
 import unittest
+import itertools
 
 # identify by group counts
 class Solution(object):
@@ -58,12 +56,11 @@ class TestMethods(unittest.TestCase):
     def test_Local(self):
         self.assertEqual(1, 1)
 
-
 if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/problems/long-pressed-name/solution/
+# Thought: https://leetcode.com/problems/long-pressed-name/solution/
 Complexity Analysis
 
 Time Complexity: O(N+T), where N, T are the lengths of name and typed.
@@ -71,7 +68,7 @@ Space Complexity: O(1) in additional space complexity.
 (In Java, .toCharArray makes this O(N), but this can be easily remedied.)
 
 
-# 4ms 92.13%
+# 7ms 15.22%
 class Solution {
     public boolean isLongPressedName(String name, String typed) {
         Group g1 = groupify(name);

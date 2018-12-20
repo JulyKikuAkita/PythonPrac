@@ -1,8 +1,9 @@
-__source__ = 'https://leetcode.com/problems/reverse-pairs/#/description'
+__source__ = 'https://leetcode.com/problems/reverse-pairs/'
 # Time:  O(nlogn) with mersort, o(n^2) with building bit
 # Space: O(n)
 #
-# Description:
+# Description: 493. Reverse Pairs
+#
 # Given an array nums, we call (i, j) an important reverse pair if i < j and nums[i] > 2*nums[j].
 #
 # You need to return the number of important reverse pairs in the given array.
@@ -21,9 +22,8 @@ __source__ = 'https://leetcode.com/problems/reverse-pairs/#/description'
 # Hide Company Tags Google
 # Hide Tags Binary Indexed Tree Segment Tree Binary Search Tree Divide and Conquer
 # Hide Similar Problems (H) Count of Smaller Numbers After Self (H) Count of Range Sum
-
+#
 import unittest
-
 
 class Solution(object):
     pass  # your function here
@@ -38,7 +38,12 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://discuss.leetcode.com/topic/78933/very-short-and-clear-mergesort-bst-java-solutions
+# Thought: https://leetcode.com/problems/reverse-pairs/solution/
+
+# General principles behind problems similar to "Reverse Pairs" -thinkging process
+# https://discuss.leetcode.com/topic/79227/general-principles-behind-problems-similar-to-reverse-pairs
+
+https://discuss.leetcode.com/topic/78933/very-short-and-clear-mergesort-bst-java-solutions
 Very Short and Clear MergeSort & BST Java Solutions
 
 1.
@@ -50,12 +55,16 @@ the left part and the right part are sorted and now our only job is to count how
 of number (leftPart[i], rightPart[j]) satisfies leftPart[i] <= 2*rightPart[j].
 For example,
 left: 4 6 8 right: 1 2 3
-so we use two pointers to travel left and right parts. For each leftPart[i], if j<=e && nums[i]/2.0 > nums[j],
-we just continue to move j to the end, to increase rightPart[j], until it is valid. Like in our example,
-left's 4 can match 1 and 2; left's 6 can match 1, 2, 3, and left's 8 can match 1, 2, 3. So in this particular round,
+so we use two pointers to travel left and right parts. 
+For each leftPart[i], if j<=e && nums[i]/2.0 > nums[j],
+we just continue to move j to the end, to increase rightPart[j], 
+until it is valid. Like in our example,
+left's 4 can match 1 and 2; left's 6 can match 1, 2, 3, and left's 8 can match 1, 2, 3. 
+So in this particular round,
 there are 8 pairs found, so we increases our total by 8.
 
-public class Solution {
+# 112ms 20.88%
+class Solution {
     public int reversePairs(int[] nums) {
         return mergeSort(nums, 0, nums.length - 1);
     }
@@ -74,38 +83,43 @@ public class Solution {
 }
 
 Or:
-Because left part and right part are sorted, you can replace the Arrays.sort() part with a actual merge sort process.
+Because left part and right part are sorted, 
+you can replace the Arrays.sort() part with a actual merge sort process.
 The previous version is easy to write, while this one is faster.
 
-public class Solution {
-    int[] helper;
+# 81ms 56.87%
+class Solution {
+    int[] mHelper;
     public int reversePairs(int[] nums) {
-        this.helper = new int[nums.length];
-        return mergeSort(nums, 0, nums.length-1);
+        mHelper = new int[nums.length];
+        return mergeSort(nums, 0, nums.length - 1);
     }
-    private int mergeSort(int[] nums, int s, int e){
-        if(s>=e) return 0;
-        int mid = s + (e-s)/2;
-        int cnt = mergeSort(nums, s, mid) + mergeSort(nums, mid+1, e);
-        for(int i = s, j = mid+1; i<=mid; i++){
-            while(j<=e && nums[i]/2.0 > nums[j]) j++;
-            cnt += j-(mid+1);
+    
+    private int mergeSort(int[] nums, int s, int e) {
+        if (s >= e) return 0;
+        int mid = s + (e - s) / 2;
+        int cnt = mergeSort(nums, s, mid) + mergeSort(nums, mid + 1, e);
+        for (int i = s, j = mid + 1; i<= mid; i++) {
+            while(j <= e && nums[i] / 2.0 > nums[j]) j++;
+            cnt += j - (mid + 1);
         }
-        //Arrays.sort(nums, s, e+1);
+        //Arrays.sort(nums, s, e + 1);
         myMerge(nums, s, mid, e);
         return cnt;
     }
-
+    
     private void myMerge(int[] nums, int s, int mid, int e){
-        for(int i = s; i<=e; i++) helper[i] = nums[i];
-        int p1 = s;//pointer for left part
-        int p2 = mid+1;//pointer for rigth part
-        int i = s;//pointer for sorted array
-        while(p1<=mid || p2<=e){
-            if(p1>mid || (p2<=e && helper[p1] >= helper[p2])){
-                nums[i++] = helper[p2++];
-            }else{
-                nums[i++] = helper[p1++];
+        for (int i = s; i <= e; i++) {
+            mHelper[i] = nums[i];
+        }
+        int p1 = s; //pointer for left part
+        int p2 = mid + 1;  //pointer for rigtht part
+        int i = s; //pointer for sorted array
+        while (p1 <= mid || p2 <= e) {
+            if (p1 > mid || (p2 <= e && mHelper[p1] >= mHelper[p2])) {
+                nums[i++] = mHelper[p2++];
+            } else {
+                nums[i++] = mHelper[p1++];
             }
         }
     }
@@ -113,14 +127,17 @@ public class Solution {
 
 BST
 BST solution is no longer acceptable, because it's performance can be very bad, O(n^2) actually,
-for extreme cases like [1,2,3,4......49999], due to the its unbalance, but I am still providing it below just FYI.
+for extreme cases like [1,2,3,4......49999], due to the its unbalance, 
+but I am still providing it below just FYI.
 We build the Binary Search Tree from right to left, and at the same time,
 search the partially built tree with nums[i]/2.0. The code below should be clear enough.
-Similar to this https://leetcode.com/problems/count-of-smaller-numbers-after-self/. But the main difference is:
+Similar to this https://leetcode.com/problems/count-of-smaller-numbers-after-self/. 
+But the main difference is:
 here, the number to add and the number to search are different (add nums[i], but search nums[i]/2.0),
 so not a good idea to combine build and search together.
 
-public class Solution {
+# TLE
+class Solution {
     public int reversePairs(int[] nums) {
         Node root = null;
         int[] cnt = new int[1];
@@ -162,6 +179,3 @@ public class Solution {
 }
 
 '''
-
-# General principles behind problems similar to "Reverse Pairs" -thinkging process
-# https://discuss.leetcode.com/topic/79227/general-principles-behind-problems-similar-to-reverse-pairs

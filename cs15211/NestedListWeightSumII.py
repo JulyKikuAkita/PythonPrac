@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/nested-list-weight-sum-ii/description/'
+__source__ = 'https://leetcode.com/problems/nested-list-weight-sum-ii/'
 # https://leetcode.com/problems/nested-list-weight-sum-ii/
 # Time:  O(n)
 # Space: O(h)
@@ -84,7 +84,7 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
+# Thought:
 /**
  * // This is the interface that allows for creating nested lists.
  * // You should not implement it, or speculate about its implementation
@@ -103,8 +103,8 @@ Java = '''
  * }
  */
 
-#69.23% 4ms
-public class Solution {
+# 2ms 100%
+class Solution {
     public int depthSumInverse(List<NestedInteger> nestedList) {
         return depthSumInverse(nestedList, getDepth(nestedList));
     }
@@ -134,15 +134,13 @@ public class Solution {
     }
 }
 
-#BFS
-#69.23% 4ms
+# BFS
+# 2ms 100%
 class Solution {
-
     public int depthSumInverse(List<NestedInteger> nestedList) {
         if (nestedList == null || nestedList.size() == 0) {
             return 0;
         }
-
         LinkedList<NestedInteger> queue = new LinkedList<NestedInteger>();
         queue.addAll(nestedList);
 
@@ -163,10 +161,9 @@ class Solution {
         }
         return weightSum;
     }
-
 }
 
-#69.23% 4ms
+# 2ms 100%
 class Solution {
     public int depthSumInverse(List<NestedInteger> nestedList) {
         int unweighted = 0, weighted = 0;

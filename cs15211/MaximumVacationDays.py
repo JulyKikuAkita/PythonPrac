@@ -1,10 +1,11 @@
-__source__ = 'https://leetcode.com/problems/maximum-vacation-days/#/solutions'
+__source__ = 'https://leetcode.com/problems/maximum-vacation-days/'
 # Time:  O(n^2 * k)
 # Space: O(n * k)
 #
-# Description:
-#LeetCode wants to give one of its best employees the option to travel among N cities to collect algorithm problems.
-#  But all work and no play makes Jack a dull boy, you could take vacations in some particular cities and weeks.
+# Description: 568. Maximum Vacation Days
+#
+# LeetCode wants to give one of its best employees the option to travel among N cities to collect algorithm problems.
+# But all work and no play makes Jack a dull boy, you could take vacations in some particular cities and weeks.
 # Your job is to schedule the traveling to maximize the number of vacation days you could take,
 # but there are certain rules and restrictions you need to follow.
 #
@@ -65,7 +66,7 @@ __source__ = 'https://leetcode.com/problems/maximum-vacation-days/#/solutions'
 # We don't consider the impact of flight hours towards the calculation of vacation days.
 # Hide Company Tags Google
 # Hide Tags Dynamic Programming
-
+#
 import unittest
 #
 # Let's maintain best[i], the most vacation days you can have ending in city i on week t.
@@ -77,6 +78,7 @@ import unittest
 # we can precompute flights_available[i] = [j for j, adj in enumerate(flights[i]) if adj or i == j]
 # instead to save some time, but this is not required.
 #
+# 2204ms 22.71%
 class Solution(object):
     def maxVacationDays(self, flights, days):
         """
@@ -106,11 +108,13 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/articles/maximum-vacation-days/
+# Thought: https://leetcode.com/problems/maximum-vacation-days/solution/
+#
 Solution 1. DFS. The idea is just try each possible city for every week and keep tracking the max vacation days.
 Time complexity O(N^K). Of course it will TLE....
 
-public class Solution {
+# TLE
+class Solution {
     int max = 0, N = 0, K = 0;
 
     public int maxVacationDays(int[][] flights, int[][] days) {
@@ -139,8 +143,8 @@ Solution 2. DP. dp[i][j] stands for the max vacation days we can get in week i s
 It's obvious that dp[i][j] = max(dp[i - 1][k] + days[j][i]) (k = 0...N - 1, if we can go from city k to city j).
 Also because values of week i only depends on week i - 1, so we can compress two dimensional dp array to one dimension.
 Time complexity O(K * N * N) as we can easily figure out from the 3 level of loops.
-
-public class Solution {
+# 145ms 47.41%
+class Solution {
     public int maxVacationDays(int[][] flights, int[][] days) {
         int N = flights.length;
         int K = days[0].length;

@@ -1,8 +1,10 @@
-__source__ = 'https://github.com/kamyu104/LeetCode/blob/master/Python/strong-password-checker.py'
+__source__ = 'https://leetcode.com/problems/strong-password-checker/'
+# https://github.com/kamyu104/LeetCode/blob/master/Python/strong-password-checker.py
 # Time:  O(n)
 # Space: O(1)
 #
-# Description:
+# Description: 420. Strong Password Checker
+#
 # A password is considered strong if below conditions are all met:
 #
 # It has at least 6 characters and at most 20 characters.
@@ -26,6 +28,7 @@ import unittest
 # For the remaining sequences, we can reduce every replacement by deleting three character.
 # ex: "aaaaaa1234567890123Ubefg" -> return 4
 #
+# 20ms 100%
 class Solution(object):
     def strongPasswordChecker(self, s):
         """
@@ -70,12 +73,12 @@ class TestMethods(unittest.TestCase):
     def test_Local(self):
         self.assertEqual(1, 1)
 
-
 if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
+# Thought:
+
 The basic principle is straightforward: if we want to make MINIMUM changes to turn s into a strong password,
 each change made should fix as many problems as possible.
 
@@ -198,9 +201,10 @@ Therefore we only need to take the larger number of changes needed for fixing th
 (which is total_missing) and for the third one
 (which is left_over, since it is the number of changes still needed after fixing the first problem).
 
-
-public int strongPasswordChecker(String s) {
-    int res = 0, a = 1, A = 1, d = 1;
+# 2ms 100%
+class Solution {
+    public int strongPasswordChecker(String s) {
+        int res = 0, a = 1, A = 1, d = 1;
     char[] carr = s.toCharArray();
     int[] arr = new int[carr.length];
 
@@ -245,5 +249,6 @@ public int strongPasswordChecker(String s) {
     }
 
     return res;
+    }
 }
 '''

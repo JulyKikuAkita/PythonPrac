@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/number-of-digit-one/description/'
+__source__ = 'https://leetcode.com/problems/number-of-digit-one/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/number-of-digit-one.py
 # Time:  O(logn)
 # Space: O(1)
@@ -44,7 +44,6 @@ class Solution:
 
             left_part /= 10
             multiplier *= 10
-
         return cnt
 
 class TestMethods(unittest.TestCase):
@@ -55,14 +54,14 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
+# Thought: https://leetcode.com/problems/number-of-digit-one/solution/
 
-#Thought: https://leetcode.com/problems/number-of-digit-one/solution/
-
-#11.11% 0ms
 # left > 1
 # left == 1
 # rest scenaio
-public class Solution {
+
+# 0ms 100%
+class Solution {
     public int countDigitOne(int n) {
         long num = n;
         long base = 1;
@@ -82,9 +81,10 @@ public class Solution {
         return result;
     }
 }
+
 # Math
-#11.11% 0ms
-public class Solution {
+# 0ms 100%
+class Solution {
     private int count;
     public int countDigitOne(int n) {
         int count = 0;
@@ -95,10 +95,9 @@ public class Solution {
         }
         return count;
     }
-
 }
 
-#11.11% 0ms
+# 0ms 100%
 class Solution {
     public int countDigitOne(int n) {
         int ones = 0, m = 1, r = 1;

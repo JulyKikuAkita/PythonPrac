@@ -1,6 +1,9 @@
-# https://leetcode.com/problems/minimum-moves-to-equal-array-elements/#/description
+__source__ = 'https://leetcode.com/problems/minimum-moves-to-equal-array-elements/'
+# https://github.com/kamyu104/LeetCode/blob/master/Python/minimum-moves-to-equal-array-elements-ii.py
 # Time:  O(nlogn)
 # Space: O(1)
+#
+# Description: 453. Minimum Moves to Equal Array Elements
 #
 # Given a non-empty integer array of size n,
 # find the minimum number of moves required to make all array elements equal,
@@ -22,30 +25,31 @@
 # Hide Tags Math
 # Hide Similar Problems (M) Minimum Moves to Equal Array Elements II
 #
-soluiont = '''
-It is a math question
-let's define sum as the sum of all the numbers, before any moves;
-minNum as the min number int the list; n is the length of the list;
-
-After, say m moves, we get all the numbers as x , and we will get the following equation
-
- sum + m * (n - 1) = x * n
-and actually,
-
-  x = minNum + m
-and finally, we will get
-
-  sum - minNum * n = m
-So, it is clear and easy now.
-
-or
-Incrementing all but one is equivalent to decrementing that one.
-So let's do that instead. How many single-element decrements to make all equal?
-No point to decrementing below the current minimum,
-so how many single-element decrements to make all equal to the current minimum?
-Just take the difference from what we currently have (the sum) to what we want (n times the minimum).
-'''
+# Note:
+# It is a math question
+# let's define sum as the sum of all the numbers, before any moves;
+# minNum as the min number int the list; n is the length of the list;
+#
+# After, say m moves, we get all the numbers as x , and we will get the following equation
+#
+#  sum + m * (n - 1) = x * n
+# and actually,
+#
+#   x = minNum + m
+# and finally, we will get
+#
+#   sum - minNum * n = m
+# So, it is clear and easy now.
+#
+# or
+# Incrementing all but one is equivalent to decrementing that one.
+# So let's do that instead. How many single-element decrements to make all equal?
+# No point to decrementing below the current minimum,
+# so how many single-element decrements to make all equal to the current minimum?
+# Just take the difference from what we currently have (the sum) to what we want (n times the minimum).
+#
 import unittest
+# 36ms 97.20%
 class Solution(object):
     def minMoves(self, nums):
         """
@@ -61,18 +65,23 @@ class TestStringMethods(unittest.TestCase):
 if __name__ == '__main__':
     unittest.main()
 
-java = '''
-public class Solution {
+Java = '''
+# Thought: https://leetcode.com/problems/minimum-moves-to-equal-array-elements/solution/
+
+# 76ms 0.96%
+class Solution {
     public int minMoves(int[] nums) {
         return IntStream.of(nums).sum() - nums.length * IntStream.of(nums).min().getAsInt();
     }
 }
 
-Adding 1 to n - 1 elements is the same as subtracting 1 from one element, w.r.t goal of making the elements in the array equal.
+Adding 1 to n - 1 elements is the same as subtracting 1 from one element, 
+w.r.t goal of making the elements in the array equal.
 So, best way to do this is make all the elements in the array equal to the min element.
 sum(array) - n * minimum
 
-public class Solution {
+# 6ms 81.12%
+class Solution {
     public int minMoves(int[] nums) {
         if ( nums.length == 0) return 0;
         int min = nums[0];

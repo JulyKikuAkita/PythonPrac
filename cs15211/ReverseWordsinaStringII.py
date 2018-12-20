@@ -5,9 +5,11 @@ __source__ = 'https://leetcode.com/problems/reverse-words-in-a-string-ii/descrip
 #
 # Description: Leetcode # 186. Reverse Words in a String II
 #
-# Given an input string, reverse the string word by word. A word is defined as a sequence of non-space characters.
+# Given an input string, reverse the string word by word.
+# A word is defined as a sequence of non-space characters.
 #
-# The input string does not contain leading or trailing spaces and the words are always separated by a single space.
+# The input string does not contain leading or trailing spaces
+# and the words are always separated by a single space.
 #
 # For example,
 # Given s = "the sky is blue",
@@ -81,10 +83,10 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
+# Thought:
 
-#34.42% 3ms
-public class Solution {
+# 4ms 26.89%
+class Solution {
     public void reverseWords(char[] s) {
         int start = 0;
         int end = 0;
@@ -130,8 +132,8 @@ public class Solution {
     }
 }
 
-#96.82% 2ms
-public class Solution {
+# 2ms 100%
+class Solution {
     public void reverseWords(char[] s) {
         int len = s.length;
         reverse(s, 0, len - 1);
@@ -155,8 +157,8 @@ public class Solution {
     }
 }
 
-#34.42% 3ms
-public class Solution {
+# 3ms 62.61%
+class Solution {
     public void reverseWords(char[] s) {
         reverse(s, 0, s.length-1);
         int i = 0;

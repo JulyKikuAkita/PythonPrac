@@ -4,6 +4,7 @@ __source__ = 'https://leetcode.com/problems/reverse-integer/'
 # Space: O(1)
 #
 # Description: Leetcode # 7. Reverse Integer
+#
 # Reverse digits of an integer.
 #
 # Example1: x = 123, return 321
@@ -12,7 +13,8 @@ __source__ = 'https://leetcode.com/problems/reverse-integer/'
 # click to show spoilers.
 #
 # Have you thought about this?
-# Here are some good questions to ask before coding. Bonus points for you if you have already thought through this!
+# Here are some good questions to ask before coding.
+# Bonus points for you if you have already thought through this!
 #
 # If the integer's last digit is 0, what should the output be? ie, cases such as 10, 100.
 #
@@ -22,7 +24,8 @@ __source__ = 'https://leetcode.com/problems/reverse-integer/'
 # For the purpose of this problem, assume that your function returns 0 when the reversed integer overflows.
 #
 # Note:
-# The input is assumed to be a 32-bit signed integer. Your function should return 0 when the reversed integer overflows.
+# The input is assumed to be a 32-bit signed integer.
+# Your function should return 0 when the reversed integer overflows.
 #
 # Companies
 # Bloomberg Apple
@@ -58,7 +61,6 @@ class Solution2(object):
 
         if x>0xFFFFFFFF:
             return 0
-
         ans = 0
         while x:
             ans *= 10
@@ -67,11 +69,9 @@ class Solution2(object):
 
             ans += x % 10
             x /= 10
-
         if neg:
             ans *= -1
         return ans
-
 
 class TestMethods(unittest.TestCase):
     def test_Local(self):
@@ -83,9 +83,10 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/problems/contains-duplicate/solution/
-# 48.90% 42ms
-public class Solution {
+# Thought: https://leetcode.com/problems/reverse-integer/solution/
+
+# 15ms 97.95%
+class Solution {
     public int reverse(int x) {
         long num = x;
         long result = 0;
@@ -101,8 +102,8 @@ public class Solution {
     }
 }
 
-#42.91% 43ms
-public class Solution {
+# 16ms 88.86%
+class Solution {
     public int reverse(int x) {
         long num = Math.abs((long) x);
         long result = 0;
@@ -115,8 +116,8 @@ public class Solution {
     }
 }
 
-#42.91% 43ms
-public class Solution {
+# 15ms 97.95%
+class Solution {
     public int reverse(int x) {
         int reversed_n = 0;
 
@@ -133,9 +134,9 @@ public class Solution {
     }
 }
 
-#63.27% 40ms
-// no type change for overflow
-public class Solution {
+# No type change for overflow
+# 16ms 88.86%
+class Solution {
     public int reverse(int x) {
         int res = 0;
         int orig = Math.abs(x);

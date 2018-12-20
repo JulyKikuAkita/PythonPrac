@@ -1,4 +1,9 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/reverse-string-ii/'
+# Time:  O(n)
+# Space: O(n)
+#
+# Description: Leetcode # 541. Reverse String II
+#
 # Given a string and an integer k, you need to reverse the first k characters
 # for every 2k characters counting from the start of the string.
 # If there are less than k characters left,
@@ -15,6 +20,8 @@ __author__ = 'July'
 # Hide Tags String
 # Hide Similar Problems (E) Reverse String (E) Reverse Words in a String III
 #
+import unittest
+# 20ms 100%
 class Solution(object):
     def reverseStr2(self, s, k):
         """
@@ -30,14 +37,23 @@ class Solution(object):
     def reverseStr(self, s, k):
         return s[:k][::-1] + s[k:2*k] + self.reverseStr(s[2*k:], k) if s else ""
 
-java = '''
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+
+if __name__ == '__main__':
+    unittest.main()
+
+Java = '''
+# Thought: https://leetcode.com/problems/reverse-string-ii/solution/
 /**
      * 0            k           2k          3k
      * |-----------|-----------|-----------|---
      * +--reverse--+           +--reverse--+
      */
 
-public class Solution {
+# 3ms 90.21%
+class Solution {
     public String reverseStr(String s, int k) {
         char[] arr = s.toCharArray();
         for (int i = 0 ; i < arr.length; i += 2 * k) {

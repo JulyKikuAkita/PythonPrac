@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/sum-root-to-leaf-numbers/description/'
+__source__ = 'https://leetcode.com/problems/sum-root-to-leaf-numbers/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/sum-root-to-leaf-numbers.py
 # Time:  O(n)
 # Space: O(h), h is height of binary tree
@@ -53,7 +53,8 @@ class Solution:
             return 0
         if root.left == None and root.right == None:
             return num * 10 + root.val
-        return self.sumNumbersRecu(root.left, num * 10 + root.val) +  self.sumNumbersRecu(root.right, num * 10 + root.val )
+        return self.sumNumbersRecu(root.left, num * 10 + root.val) \
+               +  self.sumNumbersRecu(root.right, num * 10 + root.val )
 
 class SolutionOther:
     # @param root, a tree node
@@ -111,7 +112,8 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
+# Thought:
+
 /**
  * Definition for a binary tree node.
  * public class TreeNode {
@@ -122,8 +124,8 @@ Java = '''
  * }
  */
 # BFS
-# 50.56% 0ms
-public class Solution {
+# 0ms 100%
+class Solution {
     int total;
 
     public int sumNumbers(TreeNode root) {
@@ -148,8 +150,8 @@ public class Solution {
 }
 
 # DFS
-# 50.56% 0ms
-public class Solution {
+# 0ms 100%
+class Solution {
     public int sumNumbers(TreeNode root) {
         return sum(root, 0);
     }

@@ -27,7 +27,6 @@ __source__ = 'https://leetcode.com/problems/minimum-window-subsequence/'
 # The length of T will be in the range [1, 100].
 #
 import unittest
-
 #DP 1216ms 44.01%
 class Solution(object):
     def minWindow(self, S, T):
@@ -91,18 +90,18 @@ class TestMethods(unittest.TestCase):
     def test_Local(self):
         self.assertEqual(1, 1)
 
-
 if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:https://leetcode.com/problems/minimum-window-subsequence/solution/
+# Thought: https://leetcode.com/problems/minimum-window-subsequence/solution/
+#
 Approach #1: Dynamic Programming (Postfix Variation) [Accepted]
 Complexity Analysis
 Time Complexity: O(ST), where S,T are the lengths of S, T. We have two for-loops.
 Space Complexity: O(S), the length of dp.
 
-#55ms 37.95%
+#  64ms 29.24%
 class Solution {
     public String minWindow(String S, String T) {
         int[][] dp = new int[2][S.length()];
@@ -149,7 +148,7 @@ and assuming a fixed-sized alphabet.
 The precomputation of nxt is O(S), and the other work happens in two for-loops.
 Space Complexity: O(S), the size of windows.
 
-#43ms 54.09%
+# 34ms 64.87%
 class Solution {
     public String minWindow(String S, String T) {
         int N = S.length();
@@ -192,7 +191,7 @@ class Solution {
     }
 }
 
-# 4ms 100%
+# 5ms 97.60%
 class Solution {
     public String minWindow(String S, String T) {
         int i = -1;

@@ -1,6 +1,8 @@
-__source__ = '# https://leetcode.com/problems/next-greater-element-ii/#/description'
+__source__ = 'https://leetcode.com/problems/next-greater-element-ii/'
 # Time:  O(n) stack + 2 pass
 # Space: O(n)
+#
+# Description: 503. Next Greater Element II
 #
 # Given a circular array (the next element of the last element is the first element of the array),
 # print the Next Greater Number for every element. The Next Greater Number of a number x is
@@ -23,7 +25,7 @@ __source__ = '# https://leetcode.com/problems/next-greater-element-ii/#/descript
 # Similar Questions
 # Next Greater Element I Next Greater Element III
 #
-# 312 ms
+# 160ms 89.86%
 class Solution(object):
     def nextGreaterElements(self, nums):
         """
@@ -39,8 +41,9 @@ class Solution(object):
 
 Java = '''
 Thought: https://leetcode.com/problems/next-greater-element-ii/solution/
-# 86.25% 43ms
-public class Solution {
+
+# 36ms 84.62%
+class Solution {
     public int[] nextGreaterElements(int[] nums) {
         int n = nums.length;
         int[] next = new int[n];
@@ -57,9 +60,8 @@ public class Solution {
     }
 }
 
-#30.49% 68ms
-public class Solution {
-
+# 76ms 19.52%
+class Solution {
     public int[] nextGreaterElements(int[] nums) {
         int[] res = new int[nums.length];
         Stack<Integer> stack = new Stack<>();

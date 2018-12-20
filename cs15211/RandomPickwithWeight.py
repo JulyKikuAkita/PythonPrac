@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/random-pick-with-weight/description/'
+__source__ = 'https://leetcode.com/problems/random-pick-with-weight/'
 # Time:  O()
 # Space: O()
 #
@@ -47,10 +47,11 @@ if __name__ == '__main__':
 
 Java = '''
 # Thought: https://leetcode.com/problems/random-pick-with-weight/solution/
+
 # Time Complexity: O(N) preprocessing. O(log(N)) pickIndex.
 # Space Complexity: O(N)
 # Approach 1: Prefix Sum and Binary Search
-# 84ms 99.91%
+# 83ms 96.28%
 class Solution {
     List<Integer> psum = new ArrayList<>();
     int tot = 0;

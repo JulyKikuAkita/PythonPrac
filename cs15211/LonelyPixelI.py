@@ -1,8 +1,9 @@
-__source__ = 'https://leetcode.com/problems/lonely-pixel-i/#/description'
+__source__ = 'https://leetcode.com/problems/lonely-pixel-i/'
 # Time:  O(mn)
 # Space: O(m + n)
 #
-# Description:
+# Description: Leetcode # 531. Lonely Pixel I
+#
 # Given a picture consisting of black and white pixels, find the number of black lonely pixels.
 #
 # The picture is represented by a 2D char array consisting of 'B' and 'W',
@@ -19,12 +20,14 @@ __source__ = 'https://leetcode.com/problems/lonely-pixel-i/#/description'
 #
 # Output: 3
 # Explanation: All the three 'B's are black lonely pixels.
+#
 # Note:
 # The range of width and height of the input 2D array is [1,500].
 # Hide Company Tags Google
 # Hide Tags Array Depth-first Search
 #
 import unittest
+# 116ms 99.03%
 class Solution(object):
     def findLonelyPixel(self, picture):
         """
@@ -42,7 +45,7 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
+# Thought:
 /**
  * suppose matrix is m*n, there is at most min(m, n) lonely pixels,
  because there could be no more than 1 in each row, or column;
@@ -56,8 +59,8 @@ Java = '''
  * cols[0][1][2]
  *     1  1  1
  */
-
-public class Solution {
+# 7ms 47.71%
+class Solution {
     public int findLonelyPixel(char[][] picture) {
         if (picture == null || picture.length == 0 || picture[0].length == 0) return 0;
         int m = picture.length;

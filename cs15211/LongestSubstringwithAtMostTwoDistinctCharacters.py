@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/longest-substring-with-at-most-two-distinct-characters/description/'
+__source__ = 'https://leetcode.com/problems/longest-substring-with-at-most-two-distinct-characters/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/longest-substring-with-at-most-two-distinct-characters.py
 # Time:  O(n^2)
 # Space: O(1)
@@ -77,8 +77,8 @@ if __name__ == '__main__':
 Java = '''
 #Thought:
 
-# 84.79% 7ms
-public class Solution {
+# 3ms 78.85%
+class Solution {
     public int lengthOfLongestSubstringTwoDistinct(String s) {
         if (s == null || s.length() == 0) return 0;
         int[] counts = new int[256];
@@ -98,8 +98,8 @@ public class Solution {
     }
 }
 
-# 62.63% 10ms
-public class Solution {
+# 4ms 74.10%
+class Solution {
     public int lengthOfLongestSubstringTwoDistinct(String s) {
         int i = 0, j = -1;
         int maxLen = 0;
@@ -116,8 +116,8 @@ public class Solution {
 }
 
 # https://discuss.leetcode.com/topic/71662/sliding-window-algorithm-template-to-solve-all-the-leetcode-substring-search-problem
-# 28.71% 33ms
-public class Solution {
+# 10ms 63.04%
+class Solution {
     public int lengthOfLongestSubstringTwoDistinct(String s) {
         if(s.length() < 1) return 0;
         HashMap<Character,Integer> index = new HashMap<Character,Integer>();
@@ -145,8 +145,8 @@ public class Solution {
     }
 }
 
-# 97.12% 4ms
-public class Solution {
+# 2ms 91.03%
+class Solution {
     public int lengthOfLongestSubstringTwoDistinct(String s) {
         int len = s.length();
         if (len == 0) {

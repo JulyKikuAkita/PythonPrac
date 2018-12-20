@@ -1,10 +1,13 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/repeated-substring-pattern/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/repeated-substring-pattern.py
-# KMP im detailed code:
-# http://www.geeksforgeeks.org/searching-for-patterns-set-2-kmp-algorithm/
 # Time:  O(n)
 # Space: O(n)
-
+#
+# Description: Leetcode # 459. Repeated Substring Pattern
+#
+# KMP im detailed code:
+# http://www.geeksforgeeks.org/searching-for-patterns-set-2-kmp-algorithm/
+#
 # Given a non-empty string check if it can be constructed by taking a substring of it
 # and appending multiple copies of the substring together.
 # You may assume the given string consists of lowercase English letters only and its length will not exceed 10000.
@@ -26,10 +29,11 @@ __author__ = 'July'
 #
 # Explanation: It's the substring "abc" four times. (And the substring "abcabc" twice.)
 #
-#  Amazon Google
+# Amazon Google
 # Hide Tags String
 # Hide Similar Problems (E) Implement strStr()
-
+#
+import unittest
 # KMP solution.
 class Solution(object):
     def repeatedSubstringPattern(self, s):
@@ -51,6 +55,7 @@ class Solution(object):
         prefix = getPrefix(s)
         return prefix[-1] != -1 and (prefix[-1] + 1) % (len(s) - prefix[-1] -1) == 0
 
+    # 24ms 99.78%
     def repeatedSubstringPattern2(self, str):
         """
         :type str: str
@@ -84,13 +89,24 @@ class Solution2(object):
         ss = (s + s)[1:-1]
         return ss.find(s) != -1
 
-java = '''
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+
+if __name__ == '__main__':
+    unittest.main()
+
+Java = '''
+# Thought:
+
+# https://discuss.leetcode.com/topic/68210/from-intuitive-but-slow-to-really-fast-but-a-little-hard-to-comprehend
 The length of the repeating substring must be a divisor of the length of the input string
 Search for all possible divisor of str.length, starting for length/2
 If i is a divisor of length, repeat the substring from 0 to i the number of times i is contained in s.length
 If the repeated substring is equals to the input str return true
 
-public class Solution {
+# 27ms 68.55%
+class Solution {
     public boolean repeatedSubstringPattern(String s) {
         int l = s.length();
         for (int i = l /2 ; i >= 1; i--) {
@@ -108,8 +124,9 @@ public class Solution {
     }
 }
 
-//KMP O(n)
-public class Solution {
+# KMP O(n)
+# 16ms 85.75%
+class Solution {
     //KMP
     public boolean repeatedSubstringPattern(String s) {
         int[] prefix = kmp(s);
@@ -141,5 +158,4 @@ public class Solution {
         return res;
     }
 }
-# https://discuss.leetcode.com/topic/68210/from-intuitive-but-slow-to-really-fast-but-a-little-hard-to-comprehend
 '''

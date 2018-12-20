@@ -20,7 +20,6 @@ __source__ = 'https://leetcode.com/problems/find-largest-value-in-each-tree-row/
 #
 
 # Definition for a binary tree node.
-from Note_TreeSerizalize import drawtree, deserialize
 class TreeNode(object):
      def __init__(self, x):
          self.val = x

@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/linked-list-random-node/#/description'
+__source__ = 'https://leetcode.com/problems/linked-list-random-node/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/linked-list-random-node.py
 # Time:  O(n) Reservoir sampling
 # Space: O(1)
@@ -34,6 +34,7 @@ __source__ = 'https://leetcode.com/problems/linked-list-random-node/#/descriptio
 
 import unittest
 from random import randint
+# 236ms 13.73%
 class Solution(object):
 
     def __init__(self, head):
@@ -72,7 +73,9 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: http://blog.jobbole.com/42550
+# Thought: 
+
+http://blog.jobbole.com/42550
 
 After I read this one: http://blog.jobbole.com/42550/,
 
@@ -114,7 +117,8 @@ ReservoirSample(S[1..n], R[1..k])
  *     ListNode(int x) { val = x; }
  * }
  */
-public class Solution {
+# 102ms 16.69%
+class Solution {
     ListNode mHead;
     Random random;
 
@@ -143,9 +147,8 @@ public class Solution {
  * int param_1 = obj.getRandom();
  */
 
-#100% 108ms
+# 83ms 36.04%
 class Solution {
-
     ListNode myHead;
     int len = 0;
     Random r = new Random();
@@ -169,7 +172,6 @@ class Solution {
             head = head.next;
         }
         return head.val;
-
     }
 }
 

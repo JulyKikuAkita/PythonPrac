@@ -1,8 +1,9 @@
-__source__ = 'https://leetcode.com/problems/minimum-factorization/#/description'
+__source__ = 'https://leetcode.com/problems/minimum-factorization/'
 # Time:  O(8loga)
 # Space: O(1)
 #
-# Description:
+# Description: 625. Minimum Factorization
+#
 # Given a positive integer a, find the smallest positive integer b whose multiplication of each digit equals to a.
 #
 # If there is no answer or the answer is not fit in 32-bit signed integer, then return 0.
@@ -21,9 +22,8 @@ __source__ = 'https://leetcode.com/problems/minimum-factorization/#/description'
 # 35
 # Hide Company Tags Tencent
 # Hide Tags Recursion Math
-
+#
 import unittest
-
 
 class Solution(object):
     pass  # your function here
@@ -33,13 +33,14 @@ class TestMethods(unittest.TestCase):
     def test_Local(self):
         self.assertEqual(1, 1)
 
-
 if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-1. https://leetcode.com/articles/minimum-factorization/
-public class Solution {
+Thought: https://leetcode.com/problems/minimum-factorization/solution/
+
+# 7ms 44.55%
+class Solution {
     public int smallestFactorization(int a) {
         if (a < 2)
             return a;
@@ -56,8 +57,9 @@ public class Solution {
 }
 
 2.
-#Thought: http://www.geeksforgeeks.org/find-smallest-number-whose-digits-multiply-given-number-n/
-public class Solution {
+# Thought: http://www.geeksforgeeks.org/find-smallest-number-whose-digits-multiply-given-number-n/
+# 5ms 94.55%
+class Solution {
     public int smallestFactorization(int n) {
         int i, j = 0;
         int MAX = 50;

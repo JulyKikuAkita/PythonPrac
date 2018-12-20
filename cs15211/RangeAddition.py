@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/range-addition/description/'
+__source__ = 'https://leetcode.com/problems/range-addition/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/range-addition.py
 # Time:  O(k + n)
 # Space: O(1)
@@ -74,9 +74,10 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-# Thought: https://leetcode.com/articles/range-addition/
-#33.60%, 3ms
-public class Solution {
+# Thought: https://leetcode.com/problems/range-addition/solution/
+
+# 2ms 59/22%
+class Solution {
     public int[] getModifiedArray(int length, int[][] updates) {
         int[] result = new int[length];
         for (int[] update : updates) {
@@ -92,20 +93,17 @@ public class Solution {
     }
 }
 
-#77.60% 2ms
-public class Solution {
+# 1ms 100%
+class Solution {
      public int[] getModifiedArray(int length, int[][] updates) {
         int[] res = new int[length];
          for(int[] update : updates) {
             int value = update[2];
             int start = update[0];
             int end = update[1];
-
             res[start] += value;
-
-            if(end < length - 1)
+            if (end < length - 1)
                 res[end + 1] -= value;
-
         }
 
         int sum = 0;

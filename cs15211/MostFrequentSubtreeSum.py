@@ -1,4 +1,9 @@
-__source__ = 'https://leetcode.com/problems/most-frequent-subtree-sum/#/description'
+__source__ = 'https://leetcode.com/problems/most-frequent-subtree-sum/'
+# Time:  O(N)
+# Space: O(1)
+#
+# Description: Leetcode # 508. Most Frequent Subtree Sum
+#
 # Given the root of a tree, you are asked to find the most frequent subtree sum.
 # The subtree sum of a node is defined as the sum of all the node values formed
 # by the subtree rooted at that node (including the node itself).
@@ -33,7 +38,10 @@ __source__ = 'https://leetcode.com/problems/most-frequent-subtree-sum/#/descript
 #         self.val = x
 #         self.left = None
 #         self.right = None
+#
 import collections
+import unittest
+# 72ms 26.13%
 class Solution(object):
     def findFrequentTreeSum(self, root):
         """
@@ -53,11 +61,22 @@ class Solution(object):
         frequent = max(c.values())
         return [s for s in c.keys() if c[s] == frequent]
 
-#https://discuss.leetcode.com/topic/77775/verbose-java-solution-postorder-traverse-hashmap-18ms
-java = '''
+# test
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+
+if __name__ == '__main__':
+    unittest.main()
+
+Java = '''
+# Thought:
+# https://discuss.leetcode.com/topic/77775/verbose-java-solution-postorder-traverse-hashmap-18ms
+
 Verbose Java solution, postOrder traverse, HashMap (18ms)
 For sake of saving time during contest, can't write so concise solution :)
-Idea is post-order traverse the tree and get sum of every sub-tree, put sum to count mapping to a HashMap. Then generate result based on the HashMap.
+Idea is post-order traverse the tree and get sum of every sub-tree, put sum to count mapping to a HashMap. 
+Then generate result based on the HashMap.
 
 /**
  * Definition for a binary tree node.
@@ -69,8 +88,8 @@ Idea is post-order traverse the tree and get sum of every sub-tree, put sum to c
  * }
  */
 
-88%
-public class Solution {
+# 7ms 98.12%
+class Solution {
     public int[] findFrequentTreeSum(TreeNode root) {
         Map<Integer, Integer> map = new HashMap<>();
         int[] res= new int[1];

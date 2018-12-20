@@ -1,6 +1,6 @@
-__source__ = 'https://leetcode.com/problems/non-decreasing-array/discuss/'
-# Time:  O()
-# Space: O()
+__source__ = 'https://leetcode.com/problems/non-decreasing-array/'
+# Time:  O(N)
+# Space: O(1)
 #
 # Description: Leetcode # 665. Non-decreasing Array
 #
@@ -37,13 +37,13 @@ class TestMethods(unittest.TestCase):
     def test_Local(self):
         self.assertEqual(1, 1)
 
-
 if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
-#8.33% 30ms
+# Thought: https://leetcode.com/problems/non-decreasing-array/solution/
+
+# 9ms 99.39%
 class Solution {
     public boolean checkPossibility(int[] nums) {
         int cnt = 0;   //the number of changes
@@ -58,7 +58,7 @@ class Solution {
     }
 }
 
-# 87.76% 21ms
+# 10ms 89.96%
 class Solution {
     public boolean checkPossibility(int[] nums) {
         if(nums == null || nums.length < 2)

@@ -91,13 +91,13 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
+# Thought:
 The main idea is to push to the stack every valid file name (not in {"",".",".."}),
 popping only if there's smth to pop and we met "..".
 
-# use stack
-# 37.03% 14ms
-public class Solution {
+# Stack
+# 23ms 27.33%
+class Solution {
     public String simplifyPath(String path) {
         Stack<String> stack = new Stack<>();
         Set<String> set = new HashSet<>(Arrays.asList("..",".",""));
@@ -116,8 +116,8 @@ public class Solution {
 }
 
 
-# 91.40% 8ms
-public class Solution {
+# 12ms 93.66%
+class Solution {
     public String simplifyPath(String path) {
         String[] paths = path.split("/");
         int end = 0;
@@ -141,8 +141,8 @@ public class Solution {
     }
 }
 
-#97.69% 6ms
-public class Solution {
+# 16ms 62.84%
+class Solution {
     public String simplifyPath(String path) {
         LinkedList<String> list = new LinkedList<>();
         int start = 0;
@@ -170,6 +170,45 @@ public class Solution {
         StringBuilder sb = new StringBuilder();
         while (!list.isEmpty()) {
             sb.append('/').append(list.poll());
+        }
+        return sb.toString();
+    }
+}
+
+# 10ms 99.18%
+class Solution {
+    public String simplifyPath(String path) {
+        List<String> pathList = new ArrayList<>();
+        int start = 1;
+        int end = 1;
+        while (start < path.length()) {
+            while (end < path.length() && path.charAt(end) != '/') {
+                end++;
+            }
+            String curr = path.substring(start, end);
+            if (curr.equals("..")) {
+                if (!pathList.isEmpty()) {
+                    pathList.remove(pathList.size() - 1);
+                }
+            } else if (curr.length() > 0 && !curr.equals(".")) {
+                pathList.add(curr);
+            }
+            end++;
+            start = end;
+        }
+        return printPath(pathList);
+    }
+    
+    private String printPath(List<String> pathList) {
+        StringBuilder sb = new StringBuilder();
+        for (String path : pathList) {
+            if (path.length() > 0) {
+                sb.append('/');
+                sb.append(path);
+            }
+        }
+        if (sb.length() == 0) {
+            sb.append('/');
         }
         return sb.toString();
     }

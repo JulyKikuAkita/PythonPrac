@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/shortest-subarray-with-sum-at-least-k/description/'
+__source__ = 'https://leetcode.com/problems/shortest-subarray-with-sum-at-least-k/'
 # Time:  O(N)
 # Space: O(N)
 #
@@ -95,7 +95,7 @@ class Solution {
 }
 
 # TreeMap
-#7.68% 150ms
+# 7.68% 150ms
 class Solution {
     public int shortestSubarray(int[] A, int K) {
         if (A.length == 0) return -1;

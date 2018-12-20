@@ -56,19 +56,19 @@ class TestMethods(unittest.TestCase):
     def test_Local(self):
         self.assertEqual(1, 1)
 
-
 if __name__ == '__main__':
     unittest.main()
 
 Java = '''
 # Thought: https://leetcode.com/problems/shortest-completing-word/solution/
+#
 Approach #1: Compare Counts [Accepted]
 Complexity Analysis
 Time Complexity: O(N) where N is the length of words,
 and assuming the lengths of licensePlate and words[i] are bounded by O(1)
 Space Complexity: O(1) in additional space.
 
-#7ms 95.64%
+# 7ms 95.64%
 class Solution {
     public String shortestCompletingWord(String licensePlate, String[] words) {
         int[] target = count(licensePlate);

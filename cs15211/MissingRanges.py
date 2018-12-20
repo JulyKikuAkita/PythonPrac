@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/missing-ranges/description/'
+__source__ = 'https://leetcode.com/problems/missing-ranges/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/missing-ranges.py
 # Time:  O(n)
 # Space: O(1)
@@ -55,10 +55,10 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/problems/contains-duplicate/solution/
+# Thought:
 
-#93.94% 0ms
-public class Solution {
+# 0ms 100%
+class Solution {
     public List<String> findMissingRanges(int[] nums, int lower, int upper) {
         List<String> res = new ArrayList<>();
         for(int i : nums) {
@@ -71,7 +71,7 @@ public class Solution {
     }
 }
 
-#93.94% 0ms
+# 0ms 100%
 class Solution {
     public List<String> findMissingRanges(int[] nums, int lower, int upper) {
         List<String> res = new ArrayList<String>();
@@ -106,8 +106,8 @@ Output:
 Expected:
 ["0->2147483646"]
 
-# Overflow:
-public class Solution {
+# Wrong answer
+class Solution {
     public List<String> findMissingRanges(int[] nums, int lower, int upper) {
         List<String> result = new ArrayList<>();
         int cur = lower;

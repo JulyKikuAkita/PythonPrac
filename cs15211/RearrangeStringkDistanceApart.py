@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/rearrange-string-k-distance-apart/description/'
+__source__ = 'https://leetcode.com/problems/rearrange-string-k-distance-apart/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/rearrange-string-k-distance-apart.py
 # Time:  O(n)
 # Space: O(n)
@@ -116,11 +116,10 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
+# Thought:
 1.
-#97.55% 13ms
-public class Solution {
-
+# 10ms 92.39%
+class Solution {
     public String rearrangeString(String s, int k) {
         if (k == 0) return s;
         char[] ca = s.toCharArray();
@@ -153,9 +152,9 @@ public class Solution {
 }
 
 2.
-# 33.18% 88ms
+# 42ms 56.30%
 import java.util.SortedMap;
-public class Solution {
+class Solution {
     public String rearrangeString(String str, int k) {
         if (str.length() < 2 || k <= 1) {
             return str;

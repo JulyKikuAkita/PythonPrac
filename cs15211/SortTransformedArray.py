@@ -1,4 +1,4 @@
-__author__ = 'https://leetcode.com/problems/sort-transformed-array/description/'
+__author__ = 'https://leetcode.com/problems/sort-transformed-array/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/sort-transformed-array.py
 # Time:  O(n)
 # Space: O(1)
@@ -65,8 +65,9 @@ if __name__ == '__main__':
 
 Java = '''
 # Thought:
-#29.40% 1ms
-public class Solution {
+
+# 6ms 32.30%
+class Solution {
     public int[] sortTransformedArray(int[] nums, int a, int b, int c) {
         int n = nums.length;
         int[] sorted = new int[n];
@@ -87,8 +88,8 @@ public class Solution {
     }
 }
 
-# 9.805 2ms
-public class Solution {
+# 6ms 32.30%
+class Solution {
     public int[] sortTransformedArray(int[] nums, int a, int b, int c) {
         if (nums.length == 0) {
             return nums;

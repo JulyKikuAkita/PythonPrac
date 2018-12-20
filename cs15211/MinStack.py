@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/min-stack/#/solutions'
+__source__ = 'https://leetcode.com/problems/min-stack/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/min-stack.py
 # Time:  O(n)
 # Space: O(1)
@@ -107,7 +107,7 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/problems/contains-duplicate/solution/
+# Thought:
 
 Input:
 ["MinStack","push","push","push","getMin","pop","getMin"]
@@ -117,44 +117,44 @@ Output:
 Expected:
 [null,null,null,null,0,null,0]
 
-#30.67% 123ms
-//use only one stack:
-//pop min twice
-public class MinStack {
-    int min;
-    Stack<Integer> s;
+# use only one stack:
+# pop min twice
+# 54ms 100%
+class MinStack {
+    private Stack<Integer> stack;
+    private int min;
 
     /** initialize your data structure here. */
     public MinStack() {
-        s = new Stack();
+        stack = new Stack<>();
         min = Integer.MAX_VALUE;
     }
-
+    
     public void push(int x) {
-        if ( x <= min) { //note need to have "=", see above example
-            s.push(min);
+        if (x <= min) {
+            stack.push(min);
             min = x;
         }
-        s.push(x);
+        stack.push(x);
     }
-
+    
     public void pop() {
-        if (s.pop() == min) {
-            min = s.pop();
+        if (min == stack.pop()) {
+            min = stack.pop();
         }
     }
-
+    
     public int top() {
-        return s.peek();
+        return stack.peek();
     }
-
+    
     public int getMin() {
         return min;
     }
 }
 
-#53.07% 114ms
-public class MinStack {
+# 71ms 49.15%
+class MinStack {
     Stack<Integer> dataStack;
     Stack<Integer> minStack;
 
@@ -195,8 +195,8 @@ public class MinStack {
  * int param_4 = obj.getMin();
  */
 
-#62.84% 111ms
- public class MinStack {
+# 73ms 45.84%
+class MinStack {
     Stack<Integer> stack;
     Stack<Integer> min;
 

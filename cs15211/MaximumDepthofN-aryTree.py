@@ -1,4 +1,4 @@
-__source__ = ' https://leetcode.com/problems/maximum-depth-of-n-ary-tree/description/'
+__source__ = ' https://leetcode.com/problems/maximum-depth-of-n-ary-tree/'
 # Time:  O(N)
 # Space: O(N)
 #
@@ -27,6 +27,7 @@ class Node(object):
         self.children = children
 
 class Solution(object):
+    # 104ms 93.85%
     def maxDepth(self, root): #DFS
         """
         :type root: Node
@@ -39,7 +40,7 @@ class Solution(object):
         else:
             height = [self.maxDepth(c) for c in root.children]
             return max(height) + 1
-
+    # 108ms 72.41%
     def maxDepthBFS(self, root):
         """
         :type root: Node
@@ -67,7 +68,8 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/problems/maximum-depth-of-n-ary-tree/solution/
+# Thought: https://leetcode.com/problems/maximum-depth-of-n-ary-tree/solution/
+#
 Complexity analysis
 
 Time complexity : we visit each node exactly once,
@@ -80,9 +82,6 @@ therefore the storage to keep the call stack would be O(N).
 But in the best case (the tree is completely balanced),
 the height of the tree would be log(N).
 Therefore, the space complexity in this case would be O(log(N)).
-
-# DFS
-# 2ms 100%
 /*
 // Definition for a Node.
 class Node {
@@ -97,6 +96,8 @@ class Node {
     }
 };
 */
+# DFS
+# 4ms 47.26%
 class Solution {
     public int maxDepth(Node root) {
         if (root == null) return 0;
@@ -111,7 +112,8 @@ class Solution {
     }
 }
 
-#BFS
+# BFS
+# 10ms 4.65%
 class Solution {
     public int maxDepth(Node root) {
         if (root == null) return 0;
@@ -133,7 +135,8 @@ class Solution {
     }
 }
 
-BFS + Pair
+# BFS + Pair
+# 12ms 3,34%
 import javafx.util.Pair;
 import java.lang.Math;
 
@@ -158,6 +161,6 @@ class Solution {
     }
     return depth;
   }
-};
+}
 
 '''

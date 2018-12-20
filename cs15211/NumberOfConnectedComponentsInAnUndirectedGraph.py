@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/number-of-connected-components-in-an-undirected-graph/description/'
+__source__ = 'https://leetcode.com/problems/number-of-connected-components-in-an-undirected-graph/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/number-of-connected-components-in-an-undirected-graph.py
 # Time:  O(nlog*n) ~= O(n), n is the length of the positions
 # Space: O(n)
@@ -124,10 +124,11 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:https://discuss.leetcode.com/topic/40685/java-union-find-dfs-bfs-code-very-clean
+# Thought:
+https://discuss.leetcode.com/topic/40685/java-union-find-dfs-bfs-code-very-clean
 
-#3.46% 61ms
-public class Solution {
+# 46ms 5.46%
+class Solution {
     public int countComponents(int n, int[][] edges) {
         if (n <= 0) {
             return 0;
@@ -152,8 +153,8 @@ public class Solution {
 }
 
 # DFS:
-# 41.56% 11ms
-public class Solution {
+# 7ms 43.65%
+class Solution {
     public int countComponents(int n, int[][] edges) {
         if (n <= 1) {
             return n;
@@ -188,8 +189,8 @@ public class Solution {
 }
 
 # BFS
-# 18.18% 24ms
-public class Solution {
+# 9ms 36.40%
+class Solution {
     public int countComponents(int n, int[][] edges) {
         if( n<= 1) return n;
         List<List<Integer>> adjList = new ArrayList<List<Integer>>();
@@ -220,8 +221,8 @@ public class Solution {
 
 
 # Union Find:
-#83.87% 2ms
-public class Solution {
+# 1ms 100%
+class Solution {
     public int countComponents(int n, int[][] edges) {
         int[] nodes = new int[n];
         int[] count = new int[n];
@@ -259,6 +260,7 @@ public class Solution {
         return i;
     }
 }
+
 Thought:
 This is 1D version of Number of Islands II. For more explanations, check out this 2D Solution.
 
@@ -268,9 +270,8 @@ If e[0] and e[1] are in same islands, do nothing.
 Otherwise, union two islands, and reduce islands count by 1.
 Bonus: path compression can reduce time by 50%.
 
-
-#83.87% 2ms
-public class Solution {
+# 1ms 100%
+class Solution {
     public int countComponents(int n, int[][] edges) {
         int[] root = new int[n];
         for (int i = 0; i < n; i++) {
@@ -297,9 +298,8 @@ public class Solution {
     }
 }
 
-#83.87% 2ms
-
-public class Solution {
+# 1ms 100%
+class Solution {
     public int countComponents(int n, int[][] edges) {
         if (n <= 1) {
             return n;

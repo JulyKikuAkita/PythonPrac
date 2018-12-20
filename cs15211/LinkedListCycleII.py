@@ -1,10 +1,11 @@
-__source__ = 'https://leetcode.com/problems/linked-list-cycle-ii/description/'
+__source__ = 'https://leetcode.com/problems/linked-list-cycle-ii/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/linked-list-cycle-ii.py
 # Time:  O(n)
 # Space: O(1)
 # Two Pointer
 #
 # Description: Leetcode # 142. Linked List Cycle II
+#
 # Given a linked list, return the node where the cycle begins. If there is no cycle, return null.
 #
 # Follow up:
@@ -78,7 +79,8 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
+# Thought: https://leetcode.com/problems/linked-list-cycle-ii/solution/
+
 my solution is like this:
 using two pointers, one of them one step at a time. another pointer each take two steps.
 Suppose the first meet at step k,the length of the Cycle is r. so..2k-k=nr,k=nr
@@ -90,7 +92,6 @@ s=nr-m=(n-1)r+(r-m),here we takes n = 1..so, using one pointer start from the st
 another pointer start from the first meeting node, all of them wake one step at a time,
 the first time they meeting each other is the start of the cycle.
 
-#16.42% 1ms
 /**
  * Definition for singly-linked list.
  * class ListNode {
@@ -102,7 +103,8 @@ the first time they meeting each other is the start of the cycle.
  *     }
  * }
  */
-public class Solution {
+# 1ms 49.73%
+class Solution {
     public ListNode detectCycle(ListNode head) {
         ListNode slow = head;
         ListNode fast = head;

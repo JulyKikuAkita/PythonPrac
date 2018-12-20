@@ -1,8 +1,10 @@
-__source__ = 'https://github.com/kamyu104/LeetCode/blob/master/Python/sequence-reconstruction.py'
+__source__ = 'https://leetcode.com/problems/sequence-reconstruction/'
+# https://github.com/kamyu104/LeetCode/blob/master/Python/sequence-reconstruction.py
 # Time:  O(n * s), n is the size of org, s is the size of seqs
 # Space: O(n)
 #
-# Description:
+# Description: 444. Sequence Reconstruction
+#
 # Check whether the original sequence org can be uniquely reconstructed from the sequences in seqs.
 # The org sequence is a permutation of the integers from 1 to n, with 1 <= n <= 104.
 # Reconstruction means building a shortest common supersequence of the sequences i
@@ -81,6 +83,8 @@ import collections
 
 # Time:  O(|V| + |E|)
 # Space: O(|E|)
+
+# 216ms 48.84%
 class Solution(object):
     def sequenceReconstruction(self, org, seqs):
         """
@@ -132,14 +136,15 @@ class TestMethods(unittest.TestCase):
     def test_Local(self):
         self.assertEqual(1, 1)
 
-
 if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
-Java Solution using BFS Topological Sort 30.77%
-public class Solution {
+# Thought:
+
+# BFS Topological Sort
+# 91ms 74.745%
+class Solution {
     public boolean sequenceReconstruction(int[] org, List<List<Integer>> seqs) {
         Map<Integer, Set<Integer>> map = new HashMap<>();
         Map<Integer, Integer> indegree = new HashMap<>();
@@ -189,12 +194,15 @@ public class Solution {
     }
 }
 
-2. 90%
+2.
 Java O(n) time,O(n) space AC solution 14ms like count sort
 The basic idea is to count how many numbers are smaller(self include) than the current number.
 We then compare this count to the org.
 It is pretty like the idea of count sort.
 
+# 14ms 96.57%
+class Solution {
+    public boolean sequenceReconstruction(int[] org, List<List<Integer>> seqs) {
         int len = org.length;
         int[] map = new int[len + 1];//map number to its index
         Arrays.fill(map, -1);

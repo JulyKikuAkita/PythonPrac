@@ -1,10 +1,11 @@
-__source__ = 'https://leetcode.com/problems/merge-sorted-array/description/'
+__source__ = 'https://leetcode.com/problems/merge-sorted-array/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/merge-sorted-array.py
 # Time:  O(n)
 # Space: O(1)
 # Sort
 #
 # Description: Leetcode # 88. Merge Sorted Array
+#
 # Given two sorted integer arrays A and B, merge B into A as one sorted array.
 #
 # Note:
@@ -114,15 +115,15 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/problems/contains-duplicate/solution/
+# Thought: 
 
-# 34.55%  0ms
-public class Solution {
+# 4ms 37.86%
+class Solution {
     public void merge(int[] nums1, int m, int[] nums2, int n) {
         int k = m+n-1;
         int i = m-1;
         int j = n-1;
-        while(i>=0 && j >=0){
+        while(i >= 0 && j >= 0){
         // for (int i=m-1, j=n-1; i>=0, j>=0;){
             if (nums1[i]>nums2[j]){
                 nums1[k--] = nums1[i--];
@@ -136,8 +137,8 @@ public class Solution {
     }
 }
 
-# 34.55%  0ms
-public class Solution {
+# 4ms 37.86%
+class Solution {
     public void merge(int[] nums1, int m, int[] nums2, int n) {
         int index = m + n - 1;
         int index1 = m - 1;

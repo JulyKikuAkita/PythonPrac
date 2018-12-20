@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/subsets-ii/description/'
+__source__ = 'https://leetcode.com/problems/subsets-ii/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/subsets-ii.py
 # Time:  O(n * 2^n)
 # Space: O(1)
@@ -66,7 +66,6 @@ class Solution:
                 result.append(cur)
         return result
 
-
 class Solution2:
     # @param num, a list of integer
     # @return a list of lists of integer
@@ -112,7 +111,6 @@ class SolutionOther:
 #    for i in range(1, len(S)):
 #      print "i=", i, "bin = ", (x >> (i-1)&0x03)
 
-
 class TestMethods(unittest.TestCase):
     def test_Local(self):
         #tet
@@ -129,15 +127,15 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
+# Thought:
 
-//definitely need to sort array
-//Otherwise still see [4, 4, 1, 4,4]
-// without sort array: [[],[4],[4,4],[4,4,1],[4,4,1,4],[4,4,1,4,4],[4,4,4],[4,4,4,4],[4,1],[4,1,4],[4,1,4,4],[1],[1,4],[1,4,4]]
-// correct answer: [[],[1],[1,4],[1,4,4],[1,4,4,4],[1,4,4,4,4],[4],[4,4],[4,4,4],[4,4,4,4]]
+# Definitely need to sort array
+# Otherwise still see [4, 4, 1, 4,4]
+# without sort array: [[],[4],[4,4],[4,4,1],[4,4,1,4],[4,4,1,4,4],[4,4,4],[4,4,4,4],[4,1],[4,1,4],[4,1,4,4],[1],[1,4],[1,4,4]]
+# correct answer: [[],[1],[1,4],[1,4,4],[1,4,4,4],[1,4,4,4,4],[4],[4,4],[4,4,4],[4,4,4,4]]
 
-#20.67% 4ms
-public class Solution {
+# 5ms 21.91%
+class Solution {
     public List<List<Integer>> subsetsWithDup(int[] nums) {
         List<List<Integer>> list = new ArrayList<>();
         Arrays.sort(nums);
@@ -159,8 +157,8 @@ public class Solution {
     }
 }
 
-#63.10% 2ms
-public class Solution {
+# 2ms 97.10%
+class Solution {
     public List<List<Integer>> subsetsWithDup(int[] nums) {
         List<List<Integer>> list = new ArrayList<>();
         Arrays.sort(nums);
@@ -179,8 +177,8 @@ public class Solution {
     }
 }
 
-#27.27% 3ms
-public class Solution {
+# 2ms 97.10%
+class Solution {
     public List<List<Integer>> subsetsWithDup(int[] nums) {
         List<List<Integer>> result = new ArrayList<>();
         List<Integer> cur = new ArrayList<>();

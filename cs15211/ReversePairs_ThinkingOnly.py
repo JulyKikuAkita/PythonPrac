@@ -4,7 +4,7 @@ __source__ = 'https://discuss.leetcode.com/topic/79227/general-principles-behind
 #
 
 Java = '''
-#Thought:
+# Thought:
 It looks like a host of solutions are out there (BST-based, BIT-based, Merge-sort-based).
 Here I'd like to focus on the general principles behind these solutions
 and its possible application to a number of similar problems.
@@ -57,24 +57,31 @@ where the subproblem C now becomes "find the number of important reverse pairs
 with the first element of the pair coming from subarray nums[i, j - 1]
 while the second element of the pair being nums[j]".
 
-Note that for a pair (p, q) to be an important reverse pair, it has to satisfy the following two conditions:
+Note that for a pair (p, q) to be an important reverse pair, 
+it has to satisfy the following two conditions:
 
 p < q: the first element must come before the second element;
 nums[p] > 2 * nums[q]: the first element has to be greater than twice of the second element.
 
-For subproblem C, the first condition is met automatically; so we only need to consider the second condition,
-which is equivalent to searching for all elements within subarray nums[i, j - 1] that are greater than twice of nums[j].
+For subproblem C, the first condition is met automatically; 
+so we only need to consider the second condition,
+which is equivalent to searching for all elements 
+within subarray nums[i, j - 1] that are greater than twice of nums[j].
 
-The straightforward way of searching would be a linear scan of the subarray, which runs at the order of O(j).
+The straightforward way of searching would be a linear scan of the subarray, 
+which runs at the order of O(j).
 From the sequential recurrence relation, this leads to the naive O(n^2) solution.
 
-To improve the searching efficiency, a key observation is that the order of elements in the subarray does not matter,
+To improve the searching efficiency, 
+a key observation is that the order of elements in the subarray does not matter,
 since we are only interested in the total number of important reverse pairs.
 This suggests we may sort those elements and do a binary search instead of a plain linear scan.
 
 If the searching space (formed by elements over which the search will be done) is "static"
-(it does not vary from run to run), placing the elements into an array would be perfect for us to do the binary search.
-However, this is not the case here. After the j-th element is processed, we need to add it to the searching space
+(it does not vary from run to run), 
+placing the elements into an array would be perfect for us to do the binary search.
+However, this is not the case here. 
+After the j-th element is processed, we need to add it to the searching space
 so that it becomes searchable for later elements,
 which renders the searching space expanding as more and more elements are processed.
 
@@ -84,7 +91,8 @@ which offers relatively fast performance for both operations.
 
 1. BST-based solution
 
-we will define the tree node as follows, where val is the node value and cnt is the total number of elements
+we will define the tree node as follows, 
+where val is the node value and cnt is the total number of elements
 in the subtree rooted at current node that are greater than or equal to val:
 class Node {
     int val, cnt;
@@ -164,7 +172,8 @@ private void insert(int[] bit, int i) {
 }
 
 And the main program, where again we will search for all elements greater than twice of current element
-while insert the element itself into the BIT. For each element, the "index" function will return its index in the BIT.
+while insert the element itself into the BIT. 
+For each element, the "index" function will return its index in the BIT.
 Unlike the BST-based solution, this is guaranteed to run at O(nlogn).
 
 public int reversePairs(int[] nums) {
@@ -202,9 +211,11 @@ More explanation for the BIT-based solution:
 
 We want the elements to be sorted so there is a sorted version of the input array which is copy.
 
-The bit is built upon this sorted array. Its length is one greater than that of the copy array to account for the root.
+The bit is built upon this sorted array. 
+Its length is one greater than that of the copy array to account for the root.
 
-Initially the bit is empty and we start doing a sequential scan of the input array. For each element being scanned,
+Initially the bit is empty and we start doing a sequential scan of the input array. 
+For each element being scanned,
 we first search the bit to find all elements greater than twice of it and add the result to res.
 We then insert the element itself into the bit for future search.
 
@@ -212,7 +223,8 @@ Note that conventionally searching of the bit involves traversing towards the ro
 which will yield a predefined running total of the copy array up to the corresponding index. For insertion,
 the traversing direction will be opposite and go from some index towards the end of the bit array.
 
-For each scanned element of the input array, its searching index will be given by the index of the first element
+For each scanned element of the input array, 
+its searching index will be given by the index of the first element
 in the copy array that is greater than twice of it (shifted up by 1 to account for the root),
 while its insertion index will be the index of the first element in the copy array
 that is no less than itself (again shifted up by 1). This is what the index function is for.
@@ -230,7 +242,8 @@ For partition recurrence relation, setting i = 0, j = n - 1, m = (n-1)/2, we hav
 
 T(0, n - 1) = T(0, m) + T(m + 1, n - 1) + C
 
-where the subproblem C now reads "find the number of important reverse pairs with the first element of the pair
+where the subproblem C now reads 
+"find the number of important reverse pairs with the first element of the pair
 coming from the left subarray nums[0, m]
 while the second element of the pair coming from the right subarray nums[m + 1, n - 1]".
 
@@ -239,14 +252,18 @@ As for the second condition, we have as usual this plain linear scan algorithm,
 applied for each element in the left (or right) subarray. This, to no surprise,
 leads to the O(n^2) naive solution.
 
-Fortunately the observation holds true here that the order of elements in the left or right subarray does not matter,
-which prompts sorting of elements in both subarrays. With both subarrays sorted, the number of important reverse pairs
+Fortunately the observation holds true here that 
+the order of elements in the left or right subarray does not matter,
+which prompts sorting of elements in both subarrays. With both subarrays sorted, 
+the number of important reverse pairs
 can be found in linear time by employing the so-called two-pointer technique:
 one pointing to elements in the left subarray while the other to those in the right subarray
 and both pointers will go only in one direction due to the ordering of the elements.
 
-The last question is which algorithm is best here to sort the subarrays. Since we need to partition the array
-into halves anyway, it is most natural to adapt it into a Merge-sort. Another point in favor of Merge-sort
+The last question is which algorithm is best here to sort the subarrays. 
+Since we need to partition the array
+into halves anyway, it is most natural to adapt it into a Merge-sort. 
+Another point in favor of Merge-sort
 is that the searching process above can be embedded seamlessly into its merging stage.
 
 So here is the Merge-sort-based solution, where the function "reversePairsSub" will return the total number
@@ -282,8 +299,10 @@ private int reversePairsSub(int[] nums, int l, int r) {
 
 III -- Summary
 
-Many problems involving arrays can be solved by breaking down the problem into subproblems applied on subarrays
-and then link the solution to the original problem with those of the subproblems, to which we have sequential
+Many problems involving arrays can be solved by breaking down the problem into subproblems 
+applied on subarrays
+and then link the solution to the original problem with those of the subproblems, 
+to which we have sequential
 recurrence relation and partition recurrence relation. For either case, it's crucial to identify
 the subproblem C and find efficient algorithm for approaching it.
 
@@ -293,7 +312,8 @@ that support relatively fast operations on both searching and updating
 
 If the subproblem C of partition recurrence relation involves sorting,
 Merge-sort would be a nice sorting algorithm to use.
-Also, the code could be made more elegant if the solution to the subproblem can be embedded into the merging process.
+Also, the code could be made more elegant 
+if the solution to the subproblem can be embedded into the merging process.
 
 If there are overlapping among the subproblems T(i, j),
 it's preferable to save the intermediate results for future lookup.

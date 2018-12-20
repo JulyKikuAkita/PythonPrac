@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/strobogrammatic-number/#/description'
+__source__ = 'https://leetcode.com/problems/strobogrammatic-number/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/strobogrammatic-number.py
 # Time:  O(n)
 # Space: O(1)
@@ -20,6 +20,7 @@ __source__ = 'https://leetcode.com/problems/strobogrammatic-number/#/description
 #
 
 import unittest
+# 20ms 96.19%
 class Solution:
     lookup = {'0':'0', '1':'1', '6':'9', '8':'8', '9':'6'}
     # @param {string} num
@@ -33,6 +34,7 @@ class Solution:
                 return False
         return True
 
+# 28ms 8.72%
 class Solution1(object):
     def isStrobogrammatic(self, num):
         """
@@ -64,14 +66,14 @@ class TestMethods(unittest.TestCase):
         self.assertEqual(1, 1)
         print Solution().isStrobogrammatic("878")
 
-
 if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
-#7.72%  1ms
-public class Solution {
+# Thought:
+
+# 0ms 100%
+class Solution {
     public static final Map<Character, Character> strobogramMap;
     static {
         Map<Character, Character> map = new HashMap<>();
@@ -93,8 +95,8 @@ public class Solution {
     }
 }
 
-# 54.55% 0ms
-public class Solution {
+# 0ms 100%
+class Solution {
     public boolean isStrobogrammatic(String num) {
         for (int i=0, j=num.length()-1; i <= j; i++, j--)
             if (!"00 11 88 696".contains(num.charAt(i) + "" + num.charAt(j)))
@@ -103,8 +105,8 @@ public class Solution {
     }
 }
 
-# 7.72% 1ms
-public class Solution {
+# 0ms 100%
+class Solution {
     public static Map<Character, Character> map;
     {
         map = new HashMap<>();
@@ -135,8 +137,8 @@ public class Solution {
     }
 }
 
-# 54.55% 0ms
-public class Solution {
+# 0ms 100%
+class Solution {
     public boolean isStrobogrammatic(String num) {
         int head = 0, tail = num.length() - 1;
         while(head <= tail) {

@@ -1,10 +1,11 @@
-__source__ = 'https://leetcode.com/problems/sort-list/#/description'
+__source__ = 'https://leetcode.com/problems/sort-list/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/sort-list.py
 # Time:  O(nlogn)
 # Space: O(logn) for stack call
 # Sort
 #
 # Description: Leetcode # 148. Sort List
+#
 # Sort a linked list in O(n log n) time using constant space complexity.
 #
 # Related Topics
@@ -38,7 +39,6 @@ class Solution:
         sorted_l2 = self.sortList(head)
 
         return self.mergeTwoLists(sorted_l1, sorted_l2)
-
 
     def mergeTwoLists(self, l1, l2):
         dummy = ListNode(0)
@@ -80,7 +80,6 @@ class SolutionOther:
         head2 = self.sortList(head2)
         head = self.merge(head1, head2)
         return head
-
 
     def merge(self, head1, head2):
         if head1 == None:
@@ -141,9 +140,10 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
-# 44.24% 8ms
-public class Solution {
+# Thought:
+
+# 7ms 33.52%
+class Solution {
     public ListNode sortList(ListNode head) {
         if (head == null) return head;
         if (head.next == null) return head;
@@ -180,8 +180,9 @@ public class Solution {
     }
 }
 
-#44.27% 8ms # different thinking, similar technique
-public class Solution {
+# Different thinking, similar technique
+# 5ms 69.10%
+class Solution {
     public ListNode sortList(ListNode head) {
         if (head == null || head.next == null) return head;
 
@@ -219,8 +220,8 @@ public class Solution {
     }
 }
 
-# 79.58% ms
-public class Solution {
+# 4ms 94.54%
+class Solution {
     public ListNode sortList(ListNode head) {
         if (head == null || head.next == null) {
             return head;

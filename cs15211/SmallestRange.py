@@ -1,10 +1,11 @@
-__source__ = 'https://leetcode.com/problems/smallest-range/#/solutions'
+__source__ = 'https://leetcode.com/problems/smallest-range/'
 # Time:  O(nlogn)
 # Space: O(nlogn)
 #
-# Description:
-# You have k lists of sorted integers in ascending order. Find the smallest range that includes
-# at least one number from each of the k lists.
+# Description: 632. Smallest Range
+#
+# You have k lists of sorted integers in ascending order.
+# Find the smallest range that includes at least one number from each of the k lists.
 #
 # We define the range [a,b] is smaller than range [c,d] if b-a < d-c or a < c if b-a == d-c.
 #
@@ -26,8 +27,11 @@ import unittest
 import heapq
 # Thought:
 # Keep a heap of the smallest elements. As we pop element A[i][j], we'll replace it with A[i][j+1].
-# For each such element left, we want right, the maximum of the closest value in each row of the array that is >= left,
+# For each such element left, we want right,
+# the maximum of the closest value in each row of the array that is >= left,
 # which is also equal to the current maximum of our heap. We'll keep track of right as we proceed.
+#
+# 128ms 88.58%
 class Solution(object):
     def smallestRange(self, nums):
         """
@@ -53,18 +57,19 @@ class TestMethods(unittest.TestCase):
     def test_Local(self):
         self.assertEqual(1, 1)
 
-
 if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/articles/smallest-range/
-1. Java Code using PriorityQueue.  40.97%
+# Thought: https://leetcode.com/problems/smallest-range/solution/
+
+1. Java Code using PriorityQueue.  
 similar to merge k array
 Image you are merging k sorted array using a heap. Then everytime you pop the smallest element out
 and add the next element of that array to the heap. By keep doing this, you will have the smallest range.
 
-public class Solution {
+# 73ms 70.26%
+class Solution {
     public int[] smallestRange(List<List<Integer>> nums) {
         if (nums == null || nums.size() == 0 || nums.get(0).size() == 0) return new int[0];
         PriorityQueue<Element> pq = new PriorityQueue<>((a, b) -> a.mVal - b.mVal);

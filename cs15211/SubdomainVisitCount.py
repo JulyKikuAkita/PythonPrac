@@ -48,7 +48,7 @@ __source__ = 'https://leetcode.com/problems/subdomain-visit-count/'
 #
 import unittest
 
-#52ms 96.20%
+# 84ms 20.03%
 class Solution(object):
     def subdomainVisits(self, cpdomains):
         """
@@ -79,9 +79,10 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
+# Thought: https://leetcode.com/problems/subdomain-visit-count/solution/
 
-# with substring: 31ms 39.01%
+# with substring: 
+# 35ms 28.27%
 class Solution {
     public List<String> subdomainVisits(String[] cpdomains) {
         Map<String, Integer> counts = new HashMap();
@@ -103,7 +104,7 @@ class Solution {
     }
 }
 
-#11ms 99.72%
+# 10ms 99.94%
 class Solution {
     public List<String> subdomainVisits(String[] cpdomains) {
         Map<String, Integer> map = new HashMap<>();

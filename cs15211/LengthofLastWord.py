@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/length-of-last-word/description/'
+__source__ = 'https://leetcode.com/problems/length-of-last-word/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/length-of-last-word.py
 # Time:  O(n)
 # Space: O(1)
@@ -68,9 +68,9 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/problems/contains-duplicate/solution/
+# Thought:
 
-# 38.64% 6ms
+# 3ms 84.50%
 class Solution {
     public int lengthOfLastWord(String s) {
         return s.trim().length()-s.trim().lastIndexOf(" ")-1;
@@ -78,8 +78,8 @@ class Solution {
 }
 
 
-#60.11% 5ms
-public class Solution {
+# 2ms 100%
+class Solution {
     public int lengthOfLastWord(String s) {
         int start = 0;
         int end = s.length() - 1;
@@ -94,6 +94,24 @@ public class Solution {
             start--;
         }
         return end - start;
+    }
+}
+
+# 2ms 100%
+class Solution {
+    public int lengthOfLastWord(String s) {
+        s=s.trim();
+        if(s.length()==0)
+            return 0;
+        int r=0;
+        for(int i=s.length()-1;i>=0;i--){
+            if(s.charAt(i)==' ')
+                break;
+            r++;
+            
+        }
+        
+        return r;
     }
 }
 '''

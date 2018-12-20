@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/super-pow/description/'
+__source__ = 'https://leetcode.com/problems/super-pow/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/super-pow.py
 # Time:  O(n), n is the size of b.
 # Space: O(1)
@@ -57,7 +57,8 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
+# Thought:
+
 One knowledge: ab % k = (a%k)(b%k)%k
 Since the power here is an array, we'd better handle it digit by digit.
 One observation:
@@ -68,8 +69,8 @@ f(a,1234567) = f(a, 1234560) * f(a, 7) % k = f(f(a, 123456),10) * f(a,7)%k;
 Implementation of this idea:
 
 
-#69.08% 6ms
-public class Solution {
+# 3ms 88.11%
+class Solution {
     private static final int MOD = 1337;
 
     public int superPow(int a, int[] b) {
@@ -95,7 +96,6 @@ public class Solution {
     }
 }
 
-Thought:
 1337 only has two divisors 7 and 191 exclusive 1 and itself,
 so judge if a has a divisor of 7 or 191, and note that 7 and 191 are prime numbers,
 phi of them is itself - 1, then we can use the Euler's theorem,
@@ -143,8 +143,8 @@ What's more we should assure that q != 0, if b % 1140== 0, then let b = 1140. so
 now you see condition (2) and (3) can be merged as one solution,
 if you take care of when b % 1440 == 0, and let b += 1140. Actually (1) can be merged too, but not efficient.
 
-#83.79% 2ms
-public class Solution {
+# 1ms 100%
+class Solution {
     public int superPow(int a, int[] b) {
         if (a % 1337 == 0) return 0;
         int p = 0;
@@ -163,4 +163,5 @@ public class Solution {
         return ret;
     }
 }
+
 '''

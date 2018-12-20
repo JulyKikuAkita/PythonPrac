@@ -1,6 +1,6 @@
-__source__ = 'https://leetcode.com/problems/map-sum-pairs/description/'
-# Time:  O()
-# Space: O()
+__source__ = 'https://leetcode.com/problems/map-sum-pairs/'
+# Time:  O(K)
+# Space: O(K)
 #
 # Description: Leetcode # 677. Map Sum Pairs
 #
@@ -25,6 +25,7 @@ __source__ = 'https://leetcode.com/problems/map-sum-pairs/description/'
 # Trie
 #
 import unittest
+# 20ms 100%
 class TrieNode():
     def __init__(self, count = 0):
         self.count = count
@@ -71,8 +72,6 @@ class MapSum(object):
             curr = curr.children[char]
         return curr.count
 
-
-
 # Your MapSum object will be instantiated and called as such:
 # obj = MapSum()
 # obj.insert(key,val)
@@ -82,15 +81,14 @@ class TestMethods(unittest.TestCase):
     def test_Local(self):
         self.assertEqual(1, 1)
 
-
 if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/articles/map-sum/
+# Thought: https://leetcode.com/problems/map-sum-pairs/solution/
 
 # Trie + hashmap
-# 113ms
+# 80ms 40.45%
 class MapSum {
     class TrieNode {
         Map<Character, TrieNode> children;

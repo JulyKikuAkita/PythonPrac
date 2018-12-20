@@ -23,8 +23,6 @@ __source__ = 'https://leetcode.com/problems/shortest-path-to-get-all-keys/'
 #
 # Return the lowest number of moves to acquire all keys.  If it's impossible, return -1.
 #
-#
-#
 # Example 1:
 #
 # Input: ["@.a.#","###.#","b.A.B"]
@@ -47,7 +45,6 @@ import unittest
 import collections
 import itertools
 import heapq
-
 # 10976ms 0%
 class Solution(object):
     def shortestPathAllKeys(self, grid):
@@ -156,19 +153,18 @@ class Solution2(object):
                 if d + d2 < final_dist[destination, state2]:
                     final_dist[destination, state2] = d + d2
                     heapq.heappush(pq, (d+d2, destination, state2))
-
         return -1
 
 class TestMethods(unittest.TestCase):
     def test_Local(self):
         self.assertEqual(1, 1)
 
-
 if __name__ == '__main__':
     unittest.main()
 
 Java = '''
 # Thought: https://leetcode.com/problems/shortest-path-to-get-all-keys/solution/
+
 Approach 1: Brute Force + Permutations
 Complexity Analysis
 Time Complexity: O(R*C*A*A!), where R, C are the dimensions of the grid,
@@ -208,7 +204,6 @@ class Solution {
             alphabet[i] = Character.toString((char) ('a' + i));
             //alphabet = ["a", "b", "c"], if there were 3 keys
         }
-
 
         for (String cand: permutations(alphabet, 0, num_keys)) {
             boolean found = true;
@@ -300,7 +295,6 @@ class Solution {
         return res;
     }
 }
-
 
 Approach 2: Points of Interest + Dijkstra
 Complexity Analysis
@@ -444,7 +438,7 @@ class Solution {
     }
 }
 
-#17ms 98.77%
+# 17ms 98.77%
 class Solution {
     public int shortestPathAllKeys(String[] grid) {
         int[][] dir = new int[][]{{1, 0}, {-1, 0}, {0, 1}, {0, -1}};

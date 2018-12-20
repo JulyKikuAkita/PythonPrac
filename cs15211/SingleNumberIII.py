@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/single-number-iii/description/'
+__source__ = 'https://leetcode.com/problems/single-number-iii/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/single-number-iii.py
 # Time:  O(n)
 # Space: O(1)
@@ -63,6 +63,7 @@ if __name__ == '__main__':
 
 Java = '''
 Thought:
+
 Once again, we need to use XOR to solve this problem. But this time, we need to do it in two passes:
 
 In the first pass, we XOR all elements in the array,
@@ -78,8 +79,8 @@ XOR numbers in each group, we can find a number in either group.
 by XoRing all numbers in the first group, we can get the first number.
 by XoRing all numbers in the second group, we can get the second number.
 
-# 27.30% 2ms
-public class Solution {
+# 1ms 100%
+class Solution {
     public int[] singleNumber(int[] nums) {
         // Pass 1 :
         // Get the XOR of the two numbers we need to find
@@ -107,8 +108,8 @@ public class Solution {
     }
 }
 
-# 27.30% 2ms
-public class Solution {
+# 1ms 100%
+class Solution {
     public int[] singleNumber(int[] nums) {
         int xor = 0;
         for (int num : nums) {

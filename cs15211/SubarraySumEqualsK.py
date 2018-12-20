@@ -1,5 +1,11 @@
-__author__ = 'July'
-#Given an array of integers and an integer k, you need to find the total number of continuous subarrays whose sum equals to k.
+__source__ = 'https://leetcode.com/problems/subarray-sum-equals-k/'
+# Time:  O(N)
+# Space: O(N)
+#
+# Description: Leetcode # 560. Subarray Sum Equals K
+#
+# Given an array of integers and an integer k,
+# you need to find the total number of continuous subarrays whose sum equals to k.
 #
 # Example 1:
 # Input:nums = [1,1,1], k = 2
@@ -11,6 +17,9 @@ __author__ = 'July'
 # Hide Tags Array Map
 # Hide Similar Problems (E) Two Sum (M) Continuous Subarray Sum
 #
+import unittest
+import collections
+# 64ms 24.71%
 class Solution(object):
     def subarraySum(self, nums, k):
         """
@@ -27,10 +36,18 @@ class Solution(object):
             count[su] += 1
         return ans
 
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
 
-java = '''
-O(n)
-public class Solution {
+if __name__ == '__main__':
+    unittest.main()
+
+Java = '''
+# Thought: https://leetcode.com/problems/subarray-sum-equals-k/solution/
+# O(n)
+# 17ms 98.97%
+class Solution {
     public int subarraySum(int[] a, int k) {
         int sum = 0;
 		HashMap<Integer, Integer> map = new HashMap<>();

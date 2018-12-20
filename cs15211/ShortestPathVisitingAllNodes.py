@@ -86,12 +86,11 @@ class Solution_Bellman_Ford(object):
                             dist[cover2][nei] = d + 1
                             if cover == cover2:
                                 repeat = True
-
         return min(dist[2**N - 1])
+
 class TestMethods(unittest.TestCase):
     def test_Local(self):
         self.assertEqual(1, 1)
-
 
 if __name__ == '__main__':
     unittest.main()
@@ -153,7 +152,7 @@ Time Complexity: O(2^N * N) ?O( n^3 2^N), since the inner loop essentially runs 
 in this case O(n^3) since there can be n^2 edges
 Space Complexity: O(2^N * N)
 
-#12ms 80.89%
+# 12ms 80.89%
 class Solution {
     public int shortestPathLength(int[][] graph) {
         int N = graph.length;

@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/number-of-longest-increasing-subsequence/description/'
+__source__ = 'https://leetcode.com/problems/number-of-longest-increasing-subsequence/'
 # Time:  O()
 # Space: O()
 #
@@ -37,8 +37,9 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
-#85.02% 33ms
+# Thought: https://leetcode.com/problems/number-of-longest-increasing-subsequence/solution/
+
+# 19ms 96.81%
 class Solution {
     public int findNumberOfLIS(int[] nums) {
         int len = nums.length;
@@ -67,6 +68,71 @@ class Solution {
             }
         }
         return res;
+    }
+}
+
+# 11ms 100%
+class Solution {
+    public int findNumberOfLIS(int[] nums) {
+        if(nums==null||nums.length==0)return 0;
+        Node[] nodes=new Node[nums.length];
+        nodes[0]=new Node(nums[0],1,null);
+        int idx=0;
+        for(int i=1;i<nums.length;i++){
+            if(nums[i]>nodes[idx].num){
+                int sum=0;
+                Node node=nodes[idx];
+                while(node!=null&&node.num<nums[i]){
+                    sum+=node.cnt;
+                    node=node.next;
+                }
+                nodes[++idx]=new Node(nums[i],sum,null);
+            }else {
+                int index=get(nodes,idx+1,nums[i]);
+                int sum=0;
+                if(index==0)sum=1;
+                else{
+                    Node node=nodes[index-1];
+                    while(node!=null&&node.num<nums[i]){
+                        sum+=node.cnt;
+                        node=node.next;
+                    }
+                    
+                }
+                Node tmp=new Node(nums[i],sum,nodes[index]);
+                    nodes[index]=tmp;
+            }
+        }
+        int res=0;
+        Node node=nodes[idx];
+        while(node!=null){
+            res+=node.cnt;
+            node=node.next;
+        }
+        return res;
+    }
+    public int get(Node[] nodes,int last,int target){
+        int left=0,right=last;
+        while(left<right){
+            int mid=(left+right)/2;
+            if(nodes[mid].num<target)left=mid+1;
+            else right=mid;
+        }
+        return left;
+    }
+}
+class Node{
+    int num,cnt;
+    Node next;
+    Node(){
+        num=0;
+        cnt=0;
+        next=null;
+    }
+    Node(int n,int c,Node ne){
+        num=n;
+        cnt=c;
+        next=ne;
     }
 }
 '''

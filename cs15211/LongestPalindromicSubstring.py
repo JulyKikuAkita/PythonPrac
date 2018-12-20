@@ -1,10 +1,11 @@
-__source__ = 'https://leetcode.com/problems/longest-palindromic-substring/#/description'
+__source__ = 'https://leetcode.com/problems/longest-palindromic-substring/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/longest-palindromic-substring.py
 # Time:  O(n)
 # Space: O(n)
-# String
+# String, Manacher's Algorithm
 #
-# Description: Leetcode # 5. Longest Palindromic Substring ->mancher
+# Description: Leetcode # 5. Longest Palindromic Substring
+#
 # Given a string S, find the longest palindromic substring in S.
 # You may assume that the maximum length of S is 1000,
 #  and there exists one unique longest palindromic substring.
@@ -28,14 +29,17 @@ __source__ = 'https://leetcode.com/problems/longest-palindromic-substring/#/desc
 # Shortest Palindrome Palindrome Permutation Palindrome Pairs Longest Palindromic Subsequence
 #
 # Manacher's Algorithm
-# Manacher (1975) found a linear time algorithm for listing all the palindromes that appear at the start of a given string.
-#  However, as observed e.g., by Apostolico, Breslauer & Galil (1995), the same algorithm can also be used
+# Manacher (1975) found a linear time algorithm for listing all the palindromes
+# that appear at the start of a given string.
+# However, as observed e.g., by Apostolico, Breslauer & Galil (1995), the same algorithm can also be used
 # to find all maximal palindromic substrings anywhere within the input string, again in linear time.
 # Therefore, it provides a linear time solution to the longest palindromic substring problem.
 # Alternative linear time solutions were provided by Jeuring (1994),
 # and by Gusfield (1997), who described a solution based on suffix trees.
 # Efficient parallel algorithms are also known for the problem.[1]
 # http://en.wikipedia.org/wiki/Longest_palindromic_substring
+#
+import unittest
 class Solution:
     def longestPalindrome(self, s):
         string = self.preProcess(s)
@@ -168,18 +172,10 @@ class DP:
             print table[i]
         print "----------------"
 
-
-
-if __name__ == "__main__":
-    #print Solution().longestPalindrome("abac")
-    #print Solution2().longestPalindrome("abac")
-    #print naive().longestPalindrome("abac")
-    print DP().longestPalindrome("dabcba")
-
-
 class SolutionOther:
     #dp solution :http://leetcode.com/2011/11/longest-palindromic-substring-part-i.html
-    # You may assume that the maximum length of S is 1000, and there exists one unique longest palindromic substring.
+    # You may assume that the maximum length of S is 1000,
+    # and there exists one unique longest palindromic substring.
     # @return a string
     def longestPalindrome(self, s):
         arr = ['$' , '#']
@@ -206,20 +202,29 @@ class SolutionOther:
         return s[st:st+p[ansp] - 1]
 
 #test
-test = SolutionOther()
-#print test.longestPalindrome("amorrroma")
-#print test.longestPalindrome("ccd")
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        test = SolutionOther()
+        #print test.longestPalindrome("amorrroma")
+        #print test.longestPalindrome("ccd")
 
-#str = "abcd"
-#print str[0:2]
+        #print Solution().longestPalindrome("abac")
+        #print Solution2().longestPalindrome("abac")
+        #print naive().longestPalindrome("abac")
+        print DP().longestPalindrome("dabcba")
+        #str = "abcd"
+        #print str[0:2]
 
-#Java
+if __name__ == '__main__':
+    unittest.main()
+
 Java = '''
-Thought: https://leetcode.com/problems/longest-palindromic-substring/#/solution
+# Thought: https://leetcode.com/problems/longest-palindromic-substring/solution/
+#
 # Manacher's Algorithm
 # O(n)
-#91% 16ms
-public class Solution {
+# 8ms 99.47%
+class Solution {
     public String longestPalindrome(String s) {
         if (s == null || s.length() == 0) {
             return s;
@@ -277,9 +282,9 @@ dp(i, j) represents whether s(i ... j) can form a palindromic substring,
 dp(i, j) is true when s(i) equals to s(j) and s(i+1 ... j-1) is a palindromic substring.
 When we found a palindrome, check if it's the longest one. Time complexity O(n^2).
 
-# 12.14% 124 ms
-O(n^2)
-public class Solution {
+# O(n^2)
+# 35ms 36.62%
+class Solution {
     public String longestPalindrome(String s) {
         int n = s.length();
         String res = null;
@@ -295,9 +300,8 @@ public class Solution {
     }
 }
 
-#13.03% 122ms
-# ??
-public class Solution {
+# 65ms 36.26%
+class Solution {
     public String longestPalindrome(String s) {
         if(s.length() < 2) return s;
 
@@ -328,9 +332,10 @@ public class Solution {
     }
 }
 
-Approach #4 (Expand Around Center) [Accepted] O(n^2)
-# 73.36% 19ms
-public class Solution {
+Approach #4 (Expand Around Center) [Accepted] 
+# O(n^2)
+# 10ms 95.65%
+class Solution {
     private int lo, maxLen;
     public String longestPalindrome(String s) {
         int len = s.length();
@@ -354,8 +359,8 @@ public class Solution {
     }
 }
 
-62.80% 23ms
-public class Solution {
+# 23ms 61.98%
+class Solution {
     public String longestPalindrome(String s) {
         String res = "";
         int currLength = 0;
@@ -381,8 +386,8 @@ public class Solution {
     }
 }
 
-#78.75%  18ms
-public class Solution {
+# 24ms 60.47%
+class Solution {
     public String longestPalindrome(String s) {
         int len = s.length();
         if (len < 2) {
@@ -412,6 +417,33 @@ public class Solution {
             }
         }
         return true;
+    }
+}
+
+# 51ms 43.88%
+class Solution {
+    public String longestPalindrome(String s) {
+        if (s == null || s.length() == 0) {
+            return s;
+        }
+        char[] arr = s.toCharArray();
+        int len = arr.length;
+        boolean[][] isPalin = new boolean[len][len];
+        int start = 0;
+        int end = 0;
+        int length = 0;
+        for (int i = 0; i < len; i++) {
+            isPalin[i][i] = true;
+            for (int j = i - 1; j >= 0; j--) {
+                isPalin[j][i] = arr[j] == arr[i] && (i - j < 2 || isPalin[j + 1][i - 1]);
+                if (isPalin[j][i] && i - j + 1 > length) {
+                    start = j;
+                    end = i;
+                    length = i - j + 1;
+                }
+            }
+        }
+        return s.substring(start, end + 1);
     }
 }
 '''

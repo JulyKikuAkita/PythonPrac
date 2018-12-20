@@ -1,14 +1,17 @@
-__source__ = 'https://leetcode.com/problems/repeated-dna-sequences/description/'
+__source__ = 'https://leetcode.com/problems/repeated-dna-sequences/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/repeated-dna-sequences.py
 # Time:  O(n)
 # Space: O(n)
 # Rabin-Karp algorithm, Rolling Hash
+#
 # Description: Leetcode # 187. Repeated DNA Sequences
 #
 # All DNA is composed of a series of nucleotides abbreviated as A, C, G, and T,
-# for example: "ACGAATTCCG". When studying DNA, it is sometimes useful to identify repeated sequences within the DNA.
+# for example: "ACGAATTCCG".
+# When studying DNA, it is sometimes useful to identify repeated sequences within the DNA.
 #
-# Write a function to find all the 10-letter-long sequences (substrings) that occur more than once in a DNA molecule.
+# Write a function to find all the 10-letter-long sequences (substrings)
+# that occur more than once in a DNA molecule.
 #
 # For example,
 #
@@ -78,10 +81,11 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
-Hashset + bitmap
-#99.69% 25ms
-public class Solution {
+# Thought:
+
+# Hashset + bitmap
+# 16ms 97.56%
+class Solution {
     public List<String> findRepeatedDnaSequences(String s) {
         List<String> ret = new ArrayList<>();
         int len = s.length();
@@ -116,7 +120,7 @@ public class Solution {
 }
 
 
-#82.10% 44ms
+# 21ms 80%
 class Solution {
     public List<String> findRepeatedDnaSequences(String s) {
         Set<Integer> firstShown = new HashSet<>();
@@ -144,8 +148,8 @@ class Solution {
     }
 }
 
-#31.30% 61ms
-public class Solution {
+# 18ms 92.09%
+class Solution {
     public List<String> findRepeatedDnaSequences(String s) {
         List<String> result = new ArrayList<>();
         if (s.length() <= 10) {
@@ -189,9 +193,9 @@ public class Solution {
     }
 }
 
-Rolling Hash
-#119.74% 64ms
-public class Solution {
+# Rolling Hash
+# 38ms 23.67%
+class Solution {
     private static final Map<Character, Integer> A = new HashMap<>();
     static { A.put('A',0); A.put('C',1); A.put('G',2); A.put('T',3); }
     private final int A_SIZE_POW_9 = (int) Math.pow(A.size(), 9);
@@ -209,7 +213,7 @@ public class Solution {
 }
 
 # BruteForce
-# 57.07%51ms
+# 27ms 53.69%
 class Solution {
     public List<String> findRepeatedDnaSequences(String s) {
         Set seen = new HashSet(), repeated = new HashSet();

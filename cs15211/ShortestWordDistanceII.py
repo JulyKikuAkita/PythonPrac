@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/shortest-word-distance-ii/description/'
+__source__ = 'https://leetcode.com/problems/shortest-word-distance-ii/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/shortest-word-distance-ii.py
 # Time:  init: O(n), lookup: O(a + b), a, b is occurences of word1, word2
 # Space: O(n)
@@ -34,6 +34,8 @@ import unittest
 import collections
 # Time:  init: O(n), lookup: O(a + b), a, b is occurences of word1, word2
 # Space: O(n)
+
+# 56ms 60.66%
 class WordDistance:
     # initialize your data structure here.
     # @param {string[]} words
@@ -69,8 +71,9 @@ if __name__ == '__main__':
 
 Java = '''
 # Thought:
-# 71.77% 154ms
-public class WordDistance {
+
+# 80ms 97.17%
+class WordDistance {
     private Map<String, List<Integer>> wordMap;
 
     public WordDistance(String[] words) {

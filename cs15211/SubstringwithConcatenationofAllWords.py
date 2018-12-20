@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/substring-with-concatenation-of-all-words/description/'
+__source__ = 'https://leetcode.com/problems/substring-with-concatenation-of-all-words/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/substring-with-concatenation-of-all-words.py
 # Time:  O(m * n * k), where m is string length, n is dictionary size, k is word length
 # Space: O(n * k)
@@ -77,7 +77,7 @@ class SolutionOther:
             if found:
                 res.append(start)
         return res
-#test
+# test
 test = SolutionOther()
 S = "barfoothefoobarman"
 L = ["foo", "bar"]
@@ -92,7 +92,8 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-Thought:
+# Thought:
+
 It's not too hard to find some resemblance between this problem and minimum-window-substring.
 Actually the main difference is the fact that we are interested at some interval length:
 we want intervals with fixed length K * M, where K is the number of strings in the "words" array
@@ -109,8 +110,8 @@ we have just M (being M the length of each target string) possible starting poin
 hence we end up performing M linear scans over array with length O(N/M) (being N the length of S) and
 that makes the scanning stage of the algorithm to be linear on the length of S.
 
-# 83.07% 29ms
-public class Solution {
+# 25ms 82.04%
+class Solution {
     public List<Integer> findSubstring(String s, String[] words) {
         List<Integer> result = new ArrayList<>();
         int wordCount = words.length;
@@ -179,8 +180,8 @@ public class Solution {
     }
 }
 
-// 43.43% 148ms
-public class Solution {
+# 106ms 60.57%
+class Solution {
     public List<Integer> findSubstring(String s, String[] words) {
         List<Integer> res = new ArrayList<>();
         int word_cnt = words.length;
@@ -214,8 +215,8 @@ public class Solution {
     }
 }
 
-//61.45% 37ms
-public class Solution {
+# 20ms 87.91%
+class Solution {
     public List<Integer> findSubstring(String s, String[] words) {
         List<Integer> res = new ArrayList<>();
         int word_cnt = words.length;
@@ -264,8 +265,8 @@ public class Solution {
     }
 }
 
-#83.07% 29ms
-public class Solution {
+# 15ms 96.13%
+class Solution {
     public List<Integer> findSubstring(String s, String[] words) {
         List<Integer> result = new ArrayList<>();
         Map<String, Integer> wordDict = new HashMap<>();

@@ -58,12 +58,11 @@ if __name__ == '__main__':
 
 Java = '''
 #Thought: https://leetcode.com/problems/leaf-similar-trees/solution/
+
 Approach 1: Depth First Search
 Complexity Analysis
 Time Complexity: O(T_1 + T_2), where T1, T2 are the lengths of the given trees.
 Space Complexity: O(T_1 + T_2)O, the space used in storing the leaf values.
-
-#DFS 2ms 99.33%
 
 /**
  * Definition for a binary tree node.
@@ -74,6 +73,9 @@ Space Complexity: O(T_1 + T_2)O, the space used in storing the leaf values.
  *     TreeNode(int x) { val = x; }
  * }
  */
+ 
+# DFS 
+# 2ms 99.33%
 class Solution {
     public boolean leafSimilar(TreeNode root1, TreeNode root2) {
         List<Integer> leaves1 = new ArrayList();

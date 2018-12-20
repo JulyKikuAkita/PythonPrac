@@ -1,4 +1,9 @@
-# https://leetcode.com/problems/minesweeper/#/description
+__source__ = 'https://leetcode.com/problems/minesweeper/'
+# Time:  O()
+# Space: O()
+#
+# Description: Leetcode # 529. Minesweeper
+#
 # Let's play the minesweeper game (Wikipedia, online game)!
 #
 # You are given a 2D char matrix representing the game board. 'M' represents an unrevealed mine,
@@ -48,7 +53,7 @@
 #  ['B', '1', '1', '1', 'B'],
 #  ['B', 'B', 'B', 'B', 'B']]
 #
-#Note:
+# Note:
 # The range of the input matrix's height and width is [1,50].
 # The click position will only be an unrevealed square ('M' or 'E'),
 # which also means the input board contains at least one clickable square.
@@ -59,7 +64,8 @@
 # Hide Company Tags Amazon
 # Hide Tags Depth-first Search Breadth-first Search
 #
-
+import unittest
+# 176ms 97.25%
 class Solution(object):
     def updateBoard(self, board, click):
         """
@@ -80,7 +86,15 @@ class Solution(object):
                     self.updateBoard(board, [row+r, col+c])
         return board
 
-java = '''
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+
+if __name__ == '__main__':
+    unittest.main()
+
+Java = '''
+# Thought:
 # https://discuss.leetcode.com/topic/80802/java-solution-dfs-bfs
 This is a typical Search problem, either by using DFS or BFS. Search rules:
 
@@ -88,9 +102,10 @@ If click on a mine ('M'), mark it as 'X', stop further search.
 If click on an empty cell ('E'), depends on how many surrounding mine:
 2.1 Has surrounding mine(s), mark it with number of surrounding mine(s), stop further search.
 2.2 No surrounding mine, mark it as 'B', continue search its 8 neighbors.
-DFS solution.
 
-public class Solution {
+# DFS solution.
+# 4ms 72.55%
+class Solution {
     public char[][] updateBoard(char[][] board, int[] click) {
         int m = board.length, n = board[0].length;
         int row = click[0], col = click[1];
@@ -129,9 +144,10 @@ public class Solution {
         return board;
     }
 }
-BFS solution. As you can see the basic logic is almost the same as DFS. Only added a queue to facilitate BFS.
 
-public class Solution {
+# BFS solution. As you can see the basic logic is almost the same as DFS. Only added a queue to facilitate BFS.
+# 7ms 25.09%
+class Solution {
     public char[][] updateBoard(char[][] board, int[] click) {
         int m = board.length, n = board[0].length;
         Queue<int[]> queue = new LinkedList<>();

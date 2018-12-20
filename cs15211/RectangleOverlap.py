@@ -59,12 +59,13 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
+# Thought: https://leetcode.com/problems/rectangle-overlap/solution/
+
 Approach #1: Check Position [Accepted]
 Complexity Analysis
 Time and Space Complexity: O(1)
 
-#2ms 96.56%
+# 2ms 92.67%
 class Solution {
     public boolean isRectangleOverlap(int[] rec1, int[] rec2) {
         return !(rec1[2] <= rec2[0] ||   // left
@@ -82,6 +83,7 @@ class Solution {
 # Interval B = [leftB, rightB]
 # Overlapping region:  [max(leftA, leftB) , min(rightA, rightB)]
 #
+# 2ms 92.67%
 class Solution {
     public boolean isRectangleOverlap(int[] rec1, int[] rec2) {
         // Interval overlapping: Max(left1, left2) < Min(right1, right2)
@@ -103,7 +105,7 @@ Approach #2: Check Area [Accepted]
 Complexity Analysis
 Time and Space Complexity: O(1)
 
-#2ms 96.56%
+# 2ms 92.67%
 class Solution {
     public boolean isRectangleOverlap(int[] rec1, int[] rec2) {
         //Logic here is to compare x and y of correspoding points in both rectangle

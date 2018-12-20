@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/longest-substring-with-at-least-k-repeating-characters/#/description'
+__source__ = 'https://leetcode.com/problems/longest-substring-with-at-least-k-repeating-characters/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/longest-substring-with-at-least-k-repeating-characters.py
 # Time:  O(26 * n) = O(n)
 # Space: O(26) = O(1)
@@ -33,6 +33,7 @@ __source__ = 'https://leetcode.com/problems/longest-substring-with-at-least-k-re
 #
 # Recursive solution.
 import unittest
+# 20ms 100%
 class Solution(object):
     def longestSubstring(self, s, k):
         """
@@ -65,7 +66,8 @@ class Solution(object):
 # Otherwise split by a least frequent character
 # (because it will always be too infrequent and thus can't be part of any ok substring)
 # and make the most out of the splits.
-
+#
+# 24ms 91.33%
 class Solution2(object):
     def longestSubstring(self, s, k):
         """
@@ -86,10 +88,11 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
+# Thought:
+#
 Java divide and conquer(recursion) solution
-#90.05% 4ms
-public class Solution {
+# 2ms 93.27%
+class Solution {
    private int findLongestSub(String s, int k, int start, int end) {
        //count frequency of char over [start, end]
 	   if (end < start) {
@@ -158,7 +161,8 @@ public class Solution {
 
 	   return length;
    }
-   public int longestSubstring(String s, int k) {
+   
+   private int longestSubstring(String s, int k) {
 	   //store the frequency of each character in s
 	   //if a character has frequency that is less than k
 	   //we cannot include that character in our candidate substring
@@ -173,8 +177,8 @@ public class Solution {
    }
 }
 
-#37.44% 99ms
-public class Solution {
+# 59ms 23.01%
+class Solution {
     public int longestSubstring(String s, int k) {
         char[] str = s.toCharArray();
         return dfs(str, 0, s.length(), k);
@@ -204,7 +208,7 @@ public class Solution {
     }
 }
 
-#90.05% 4ms
+#62ms 21.43%
 class Solution {
     public int longestSubstring(String s, int k) {
         return dfs(s, 0, s.length() - 1, k);
@@ -230,8 +234,8 @@ class Solution {
     }
 }
 
-#94.35% 3ms
-public class Solution {
+# 1ms 100%
+class Solution {
     char[] cs;
     int k;
     public int longestSubstring(String s, int k) {
@@ -265,5 +269,56 @@ public class Solution {
         if (begin) max = Math.max(max, lss(s, end));
         return max;
     }
+}
+
+# 1ms 100%
+class Solution {
+   private int findLongestSub(String s, int k, int start, int end) {
+       //count frequency of char over [start, end]
+	   if (end < start) {
+		   return 0;
+	   }
+	   int[] countArray = new int[26];
+	   for (int i = start; i <= end; i++) {
+		   char c = s.charAt(i);
+		   int index = c- 'a';
+		   countArray[index]++;
+	   }
+	
+	   boolean[] isValid = new boolean[26];
+	   boolean fullValid = true;
+	   for (int i = 0; i < 26; i++) {
+		   if (countArray[i] > 0 && countArray[i] < k) {
+			   isValid[i] = false;
+			   fullValid = false;
+		   }
+		   else {
+			   isValid[i] = true;
+		   }
+		   
+	   }
+	   
+	   if (fullValid) {
+		   return end-start+1;
+	   }
+	   
+	   int lastStart = start;
+	   int length = 0;
+	   for (int i = start; i <= end; i++) {
+		   char c = s.charAt(i);
+		   int index = c-'a';
+		   if (isValid[index] == false) {
+			   length = Math.max(length, findLongestSub(s, k, lastStart, i-1));
+			   lastStart = i+1;
+		   }
+	   }
+	   
+	   length = Math.max(length,  findLongestSub(s,k, lastStart, end));
+	   return length;
+   }
+   
+   public int longestSubstring(String s, int k) {
+	   return findLongestSub(s, k, 0, s.length()-1);
+   }
 }
 '''

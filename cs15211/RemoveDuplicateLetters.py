@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/remove-duplicate-letters/description/'
+__source__ = 'https://leetcode.com/problems/remove-duplicate-letters/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/remove-duplicate-letters.py
 # Time:  O(n)
 # Space: O(k), k is size of the alphabet
@@ -53,9 +53,7 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
-#13.02% 36ms
-
+# Thought:
 Given the string s, the greedy choice (i.e., the leftmost letter in the answer) is the smallest s[i], s.t.
 the suffix s[i .. ] contains all the unique letters.
 (Note that, when there are more than one smallest s[i]'s, we choose the leftmost one.
@@ -68,8 +66,8 @@ removing all s[i]'s from s.
 We then recursively solve the problem w.r.t. s'.
 
 The runtime is O(26 * n) = O(n).
-
-public class Solution {
+# 27ms 8.15%
+class Solution {
     public String removeDuplicateLetters(String s) {
         int[] cnt = new int[26];
         int pos = 0; // the position for the smallest s[i]
@@ -83,8 +81,8 @@ public class Solution {
     }
 }
 
-#96.97% 3ms
-public class Solution {
+# 3ms 96.70%
+class Solution {
     public String removeDuplicateLetters(String s) {
         int[] arr = new int[26];
         int end = -1;
@@ -119,7 +117,7 @@ public class Solution {
     }
 }
 
-# 93.87% 4ms
+# 3ms 96.70%
 class Solution {
     public String removeDuplicateLetters(String s) {
         if ( s.length() == 0) return s;

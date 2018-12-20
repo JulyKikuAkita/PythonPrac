@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/same-tree/#/description'
+__source__ = 'https://leetcode.com/problems/same-tree/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/same-tree.py
 # Time:  O(n)
 # Space: O(h), h is height of binary tree
@@ -34,7 +34,6 @@ class Solution:
             return ( p.val == q.val ) and self.isSameTree(p.left, q.left) and self.isSameTree(p.right, q.right)
         return False
 
-
 class TestMethods(unittest.TestCase):
     def test_Local(self):
         self.assertEqual(1, 1)
@@ -42,12 +41,11 @@ class TestMethods(unittest.TestCase):
         root2, root2.left, root2.right = TreeNode(1), TreeNode(2), TreeNode(3)
         print Solution().isSameTree(root1, root2)
 
-
 if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/problems/contains-duplicate/solution/
+# Thought:
 /**
  * Definition for a binary tree node.
  * public class TreeNode {
@@ -58,10 +56,9 @@ Java = '''
  * }
  */
 
-#DFS
-# 15.56% 0ms
-public class Solution {
-    //DFS
+# DFS
+# 3ms 63.11%
+class Solution {
     public boolean isSameTree(TreeNode p, TreeNode q) {
         if (p == null  && q == null) return true;
         if (p == null || q == null || p.val != q.val) return false;
@@ -69,8 +66,8 @@ public class Solution {
     }
 }
 
-#BFS
-# 1.64 1ms
+# BFS
+# 3ms 63.11%
 class Solution {
     public boolean isSameTree(TreeNode p, TreeNode q) {
         Stack<TreeNode> stack_p = new Stack<>();

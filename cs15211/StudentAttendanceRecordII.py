@@ -1,8 +1,9 @@
-__source__ = 'https://leetcode.com/problems/student-attendance-record-ii/#/description'
+__source__ = 'https://leetcode.com/problems/student-attendance-record-ii/'
 # Time:  O(n)
 # Space: O(n)
 #
-# Description:
+# Description: 552. Student Attendance Record II
+#
 # Given a positive integer n, return the number of all possible attendance records with length n,
 # which will be regarded as rewardable. The answer may be very large, return it after mod 109 + 7.
 #
@@ -11,7 +12,8 @@ __source__ = 'https://leetcode.com/problems/student-attendance-record-ii/#/descr
 # 'A' : Absent.
 # 'L' : Late.
 # 'P' : Present.
-# A record is regarded as rewardable if it doesn't contain more than one 'A' (absent) or more than two continuous 'L' (late).
+# A record is regarded as rewardable if it doesn't contain more than one 'A' (absent)
+# or more than two continuous 'L' (late).
 #
 # Example 1:
 # Input: n = 2
@@ -45,6 +47,7 @@ import unittest
 #
 # (In code nums[i+1] means dp[i])
 #
+# 512ms 80.95%
 class Solution(object):
     def checkRecord(self, n):
         """
@@ -67,21 +70,18 @@ class Solution(object):
             res %= 1000000007
         return res
 
-
-# your function here
-
 class TestMethods(unittest.TestCase):
     def test_Local(self):
         self.assertEqual(1, 1)
-
 
 if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
-1. O(n) solution:
-public class Solution {
+# Thought: https://leetcode.com/problems/student-attendance-record-ii/solution/
+
+# 5ms 99.64%
+class Solution {
     static final int M = 1000000007;
     public int checkRecord(int n) {
         long[] PorL = new long[n + 1]; // ending with P or L, no A
@@ -109,24 +109,30 @@ There can be at most j A's in the entire sequence.
 There can be at most k trailing L's.
 We give the recurrence in the following code, which should be self-explanatory, and the final answer is f[n][1][2].
 
-public int checkRecord(int n) {
-    final int MOD = 1000000007;
-    int[][][] f = new int[n + 1][2][3];
+# 318ms 7.27%
+class Solution {
+    public int checkRecord(int n) {
+        final int MOD = 1000000007;
+        int[][][] f = new int[n + 1][2][3];
 
-    f[0] = new int[][]{{1, 1, 1}, {1, 1, 1}};
-    for (int i = 1; i <= n; i++)
-        for (int j = 0; j < 2; j++)
-            for (int k = 0; k < 3; k++) {
-                int val = f[i - 1][j][2]; // ...P
-                if (j > 0) val = (val + f[i - 1][j - 1][2]) % MOD; // ...A
-                if (k > 0) val = (val + f[i - 1][j][k - 1]) % MOD; // ...L
-                f[i][j][k] = val;
-            }
-    return f[n][1][2];
+        f[0] = new int[][]{{1, 1, 1}, {1, 1, 1}};
+        for (int i = 1; i <= n; i++)
+            for (int j = 0; j < 2; j++)
+                for (int k = 0; k < 3; k++) {
+                    int val = f[i - 1][j][2]; // ...P
+                    if (j > 0) val = (val + f[i - 1][j - 1][2]) % MOD; // ...A
+                    if (k > 0) val = (val + f[i - 1][j][k - 1]) % MOD; // ...L
+                    f[i][j][k] = val;
+                }
+        return f[n][1][2];
+    }
 }
-The runtime of this solution is clearly O(n), using linear space (which can be easily optimized to O(1) though). Now, let's see how to further improve the runtime.
 
-In fact, if we treat f[i][][] and f[i-1][][] as two vectors, we can represent the recurrence of f[i][j][k] as follows:
+The runtime of this solution is clearly O(n), using linear space (which can be easily optimized to O(1) though). 
+Now, let's see how to further improve the runtime.
+
+In fact, if we treat f[i][][] and f[i-1][][] as two vectors, 
+we can represent the recurrence of f[i][j][k] as follows:
 
 f[i][0][0]   | 0 0 1 0 0 0 |   f[i-1][0][0]
 f[i][0][1]   | 1 0 1 0 0 0 |   f[i-1][0][1]
@@ -140,11 +146,11 @@ The point of this approach is that we can compute A^n using exponentiating by sq
 Therefore, the runtime improves to O(log n), which suffices to handle the case for much larger n, say 10^18.
 Update: The final answer is f[n][1][2], which involves multiplying the last row of A^n and
 the column vector [1 1 1 1 1 1].
-Interestingly, it is also equal to A^(n+1)[5][2] as the third column of A is just that vector. Credit to @StefanPochmann.
+Interestingly, it is also equal to A^(n+1)[5][2] as the third column of A is just that vector. 
+Credit to @StefanPochmann.
 
-Java Code:
-
-public class Solution {
+# 4ms 100%
+class Solution {
     final int MOD = 1000000007;
     final int M = 6;
     public int checkRecord(int n) {

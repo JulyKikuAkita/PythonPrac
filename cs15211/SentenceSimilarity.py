@@ -34,7 +34,7 @@ __source__ = 'https://leetcode.com/problems/sentence-similarity/'
 #
 import unittest
 
-#100% 20ms
+# 100% 20ms
 class Solution(object):
     def areSentencesSimilar(self, words1, words2, pairs):
         """
@@ -53,7 +53,6 @@ class TestMethods(unittest.TestCase):
     def test_Local(self):
         self.assertEqual(1, 1)
 
-
 if __name__ == '__main__':
     unittest.main()
 
@@ -67,7 +66,7 @@ Java = '''
 # so they don't take additional space.
 #
 
-#3ms 100%
+# 5ms 38.24%
 class Solution {
     public boolean areSentencesSimilar(String[] words1, String[] words2, String[][] pairs) {
         if (words1.length != words2.length) return false;
@@ -87,7 +86,7 @@ class Solution {
 }
 
 
-# 2ms 100%
+# 4ms 82.25%
 class Solution {
     public boolean areSentencesSimilar(String[] words1, String[] words2, String[][] pairs) {
         if (words1.length != words2.length) return false;
@@ -111,4 +110,5 @@ class Solution {
         return true;
     }
 }
+
 '''

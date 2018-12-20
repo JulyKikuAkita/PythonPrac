@@ -1,12 +1,10 @@
-__source__ = 'https://leetcode.com/problems/next-greater-element-iii/description/'
-# Time:  O(n)
-# Space: O(n)
-#
-# Description:
+__source__ = 'https://leetcode.com/problems/next-greater-element-iii/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/next-greater-element-iii.py
-# Time:  O(logn) = O(1)
-# Space: O(logn) = O(1)
-
+# Time:  O(n!) to O(n)
+# Space: O(n!) to O(n)
+#
+# Description: 556. Next Greater Element III
+#
 # Given a positive 32-bit integer n, you need to find the smallest 32-bit integer
 # which has exactly the same digits existing in the integer n and is greater in value than n.
 # If no such positive 32-bit integer exists, you need to return -1.
@@ -22,7 +20,9 @@ __source__ = 'https://leetcode.com/problems/next-greater-element-iii/description
 # Bloomberg, Tesla
 # Hide Tags String
 # Hide Similar Problems (E) Next Greater Element I (M) Next Greater Element II
-
+#
+import unittest
+# 20ms 96.60%
 class Solution(object):
     def nextGreaterElement(self, n):
         """
@@ -48,7 +48,16 @@ class Solution(object):
         result = int("".join(map(str, digits)))
         return -1 if result >= 0x7FFFFFFF else result
 
-java = '''
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+
+if __name__ == '__main__':
+    unittest.main()
+
+Java = '''
+# Thought: https://leetcode.com/problems/next-greater-element-iii/solution/
+#
 # http://www.geeksforgeeks.org/find-next-greater-number-set-digits/
 This solution is just a java version derived from this post:
 At first, lets look at the edge cases
@@ -72,8 +81,9 @@ III) Swap the above found two digits, we get 536974 in above example.
 IV) Now sort all digits from position next to 'd' to the end of number.
 The number that we get after sorting is the output.
 For above example, we sort digits in bold 536974. We get 536479 which is the next greater number for input 534976.
-# 25.1% 4ms
-public class Solution {
+
+# 2ms 86.09%
+class Solution {
     public int nextGreaterElement(int n) {
         char[] number = (n + "").toCharArray();
 
@@ -110,8 +120,8 @@ public class Solution {
     }
 }
 
-#68.39% 39%
-public class Solution {
+# 2ms 86.09%
+class Solution {
     public int nextGreaterElement(int n) {
         return getRealNextBiggerInteger(n);
     }

@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/maximum-swap/description/'
+__source__ = 'https://leetcode.com/problems/maximum-swap/'
 # Time:  O(N)
 # Space: O(1)
 #
@@ -26,7 +26,7 @@ __source__ = 'https://leetcode.com/problems/maximum-swap/description/'
 # Create Maximum Number
 #
 import unittest
-
+# 20ms 99.55%
 class Solution(object):
     def maximumSwap(self, num):
         """
@@ -51,7 +51,7 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/problems/maximum-swap/solution/
+# Thought: https://leetcode.com/problems/maximum-swap/solution/
 
 Use buckets to record the last position of digit 0 ~ 9 in this num.
 
@@ -60,7 +60,7 @@ For each position, we check whether there exists a larger digit in this num (sta
 We also need to make sure the position of this larger digit is behind the current one.
 If we find it, simply swap these two digits and return the result.
 
-#30.55% 10ms
+# 6ms 46.53%
 class Solution {
     public int maximumSwap(int num) {
         char[] digits = Integer.toString(num).toCharArray();
@@ -84,7 +84,7 @@ class Solution {
     }
 }
 
-# 56.39% 9ms
+# 4ms 99.50%
 class Solution {
     public int maximumSwap(int num) {
         String numCopy = String.valueOf(num);

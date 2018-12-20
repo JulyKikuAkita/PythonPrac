@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/maximal-rectangle/#/description'
+__source__ = 'https://leetcode.com/problems/maximal-rectangle/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/maximal-rectangle.py
 # Time:  O(n^2)
 # Space: O(n)
@@ -6,7 +6,8 @@ __source__ = 'https://leetcode.com/problems/maximal-rectangle/#/description'
 #
 # Description: Leetcode # 85. Maximal Rectangle
 #
-# Given a 2D binary matrix filled with 0's and 1's, find the largest rectangle containing only 1's and return its area.
+# Given a 2D binary matrix filled with 0's and 1's,
+# find the largest rectangle containing only 1's and return its area.
 #
 # For example, given the following matrix:
 #
@@ -24,8 +25,6 @@ __source__ = 'https://leetcode.com/problems/maximal-rectangle/#/description'
 # Largest Rectangle in Histogram Maximal Square
 #
 import unittest
-
-
 class Solution:
     # @param matrix, a list of lists of 1 length string
     # @return an integer
@@ -60,12 +59,10 @@ class Solution:
                 else:
                     right = j
                     #print i, j, L, left, result, right
-
         print L
         print H
         print R
         return result
-
 
 # http://www.cnblogs.com/zuoyuan/p/3784252.html
 # http://jelices.blogspot.com/2014/05/leetcode-python-maximal-rectangle.html  diff solution create a temp matrix
@@ -106,7 +103,6 @@ class SolutionOther:
             area = max(area, width * height[curr])
         return area
 
-
 #test
 class TestMethods(unittest.TestCase):
     def test_Local(self):
@@ -128,7 +124,7 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/problems/contains-duplicate/solution/
+# Thought:
 
 A O(n^2) solution based on Largest Rectangle in Histogram
 This question is similar as [Largest Rectangle in Histogram]:
@@ -139,9 +135,8 @@ and scan and update row by row to find out the largest rectangle of each row.
 For each row, if matrix[row][i] == '1'. H[i] +=1, or reset the H[i] to zero.
 and according the algorithm of [Largest Rectangle in Histogram], to update the maximum area.
 
-58% - 74%(if break when minHeight == 0)
-# 69.04% 12ms
-public class Solution {
+# 13ms 69.94%
+class Solution {
     public int maximalRectangle(char[][] matrix) {
         int m = matrix.length;
         int n = m == 0 ? 0 : matrix[0].length;
@@ -174,8 +169,8 @@ public class Solution {
     }
 }
 
-# 22.09% 35ms
-public class Solution {
+# 45ms 14%
+class Solution {
     public int maximalRectangle(char[][] matrix) {
         int m = matrix.length;
         int n = m == 0 ? 0 : matrix[0].length;
@@ -207,7 +202,6 @@ public class Solution {
     }
 }
 
-#dp
 Thought:
 The DP solution proceeds row by row, starting from the first row. Let the maximal rectangle area
 at row i and column j be computed by [right(i,j) - left(i,j)]*height(i,j).
@@ -247,8 +241,9 @@ you need to consider the left boundary on previous row as well, which is 3. So t
 
 I hope this additional explanation makes things clearer.
 
-69.04% 12ms
-public class Solution {
+# DP
+# 11ms 76.83%
+class Solution {
     public int maximalRectangle(char[][] matrix) {
         int m = matrix.length;
         int n = m == 0 ? 0 : matrix[0].length;
@@ -297,8 +292,8 @@ public class Solution {
     }
 }
 
-# 99.69% 6ms
-public class Solution {
+# 8ms 88.93%
+class Solution {
     public int maximalRectangle(char[][] matrix) {
 		/**
 		 * idea: using [LC84 Largest Rectangle in Histogram]. For each row

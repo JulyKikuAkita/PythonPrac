@@ -1,9 +1,11 @@
-__source__ = 'https://leetcode.com/problems/sort-array-by-parity/description/'
+__source__ = 'https://leetcode.com/problems/sort-array-by-parity/'
 # Time:  O(N)
 # Space: O(1) if in-place
 #
 # Description: Leetcode # 905. Sort Array By Parity
-# Given an array A of non-negative integers, return an array consisting of all the even elements of A,
+#
+# Given an array A of non-negative integers,
+# return an array consisting of all the even elements of A,
 # followed by all the odd elements of A.
 #
 # You may return any answer array that satisfies this condition.
@@ -16,7 +18,7 @@ __source__ = 'https://leetcode.com/problems/sort-array-by-parity/description/'
 #
 #
 import unittest
-
+# 60ms 86.54%
 class Solution(object):
     def sortArrayByParity(self, A):
         """
@@ -37,12 +39,12 @@ class TestMethods(unittest.TestCase):
     def test_Local(self):
         self.assertEqual(1, 1)
 
-
 if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/problems/sort-array-by-parity/solution/
+# Thought: https://leetcode.com/problems/sort-array-by-parity/solution/
+
 # 12ms 97.6%
 class Solution {
     public int[] sortArrayByParity(int[] A) {
@@ -62,7 +64,7 @@ class Solution {
     }
 }
 
-#10ms, 100%
+# 10ms, 100%
 class Solution {
     public int[] sortArrayByParity(int[] A) {
         int N = A.length;

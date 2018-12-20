@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/maximum-size-subarray-sum-equals-k/description/'
+__source__ = 'https://leetcode.com/problems/maximum-size-subarray-sum-equals-k/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/maximum-size-subarray-sum-equals-k.py
 # Time:  O(n)
 # Space: O(n)
@@ -28,6 +28,7 @@ __source__ = 'https://leetcode.com/problems/maximum-size-subarray-sum-equals-k/d
 #
 import unittest
 # O(n)
+# 40ms 72.57%
 class Solution(object):
     def maxSubArrayLen(self, nums, k):
         result, acc = 0, 0
@@ -68,9 +69,10 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
-#97.37%% 24ms
-public class Solution {
+# Thought:
+# 
+# 13ms 95.45%
+class Solution {
     public int maxSubArrayLen(int[] nums, int k) {
         if(nums == null || nums.length == 0) return 0;
         int len = nums.length;
@@ -92,8 +94,9 @@ public class Solution {
         return result;
     }
 }
-#94.85% 25ms
-public class Solution {
+
+# 23ms 26.54%
+class Solution {
     public int maxSubArrayLen(int[] nums, int k) {
         if(nums == null || nums.length == 0) return 0;
         int len = nums.length;
@@ -116,8 +119,8 @@ public class Solution {
     }
 }
 
-#11.05% 42ms
-public class Solution {
+# 29ms 13.32%
+class Solution {
     public int maxSubArrayLen(int[] nums, int k) {
         if(nums.length == 0) return 0;
 
@@ -136,6 +139,29 @@ public class Solution {
             }
         }
         return res;
+    }
+}
+
+# 11ms 99.90%
+class Solution {
+    public int maxSubArrayLen(int[] nums, int k) {
+        int[] sums = new int[nums.length + 1];
+        for (int i = 0; i < nums.length; i++) {
+            sums[i + 1] = sums[i] + nums[i];
+        }
+        Map<Integer, Integer> map = new HashMap<>();
+        for (int i = 0; i < nums.length + 1; i++) {
+            map.put(sums[i], i);
+        }
+        int result = 0;
+        for (int i = 0; i < nums.length; i++) {
+            int target = sums[i] + k;
+            Integer val = map.get(target);
+            if (val != null && val > i) {
+                result = Math.max(result, val - i);
+            }
+        }
+        return result;
     }
 }
 '''

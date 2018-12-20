@@ -68,14 +68,14 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/problems/maximize-distance-to-closest-person/solution/
+# Thought: https://leetcode.com/problems/maximize-distance-to-closest-person/solution/
 Approach #1: Next Array [Accepted]
 Complexity Analysis
 Time Complexity: O(N), where NN is the length of seats.
 Space Complexity: O(N), the space used by left and right.
 notice it is either left[i-1] + 1 if the seat is empty, or 0 if it is full.
 
-#7ms 50.38%
+# 7ms 50.38%
 class Solution {
     public int maxDistToClosest(int[] seats) {
         int N = seats.length;

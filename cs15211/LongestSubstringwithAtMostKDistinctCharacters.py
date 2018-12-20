@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/longest-substring-with-at-most-k-distinct-characters/description/'
+__source__ = 'https://leetcode.com/problems/longest-substring-with-at-most-k-distinct-characters/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/longest-substring-with-at-most-k-distinct-characters.py
 # Time:  O(n)
 # Space: O(1)
@@ -52,9 +52,11 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
+# Thought: 
+#
 # Sliding window
-# 59.03% 13ms
-public class Solution {
+# 2ms 99.83%
+class Solution {
     public int lengthOfLongestSubstringKDistinct(String s, int k) {
         int[] count = new int[256];
         int num = 0, i = 0, res = 0;
@@ -70,8 +72,8 @@ public class Solution {
     }
 }
 
-#25.11% 49ms
-public class Solution {
+# 39ms 4.29%
+class Solution {
     public int lengthOfLongestSubstringKDistinct(String s, int k) {
         int len = s.length();
         if (len <= k) {
@@ -105,8 +107,8 @@ public class Solution {
     }
 }
 
-#82.55% 9ms
-public class Solution {
+# 2ms 99.83%
+class Solution {
     public int lengthOfLongestSubstringKDistinct(String s, int k) {
         if (s == null || s.length() == 0) return 0;
         int[] counts = new int[256];

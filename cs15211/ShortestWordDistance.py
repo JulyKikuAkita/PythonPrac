@@ -1,7 +1,9 @@
-__source__ = 'https://leetcode.com/problems/shortest-word-distance/description/'
+__source__ = 'https://leetcode.com/problems/shortest-word-distance/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/shortest-word-distance.py
 # Time:  O(n)
 # Space: O(1)
+#
+# Description: Leetcode # 243. Shortest Word Distance
 #
 # Given a list of words and two words word1 and word2,
 # return the shortest distance between these two words in the list.
@@ -45,6 +47,7 @@ class Solution:
             i += 1
         return dist
 
+# 28ms 98.36%
 class Solution2(object):
     def shortestDistance(self, words, word1, word2):
         """
@@ -63,7 +66,6 @@ class Solution2(object):
                 idx2 = i
             res = min(res, abs(idx1-idx2))
         return res
-
 # test
 class TestMethods(unittest.TestCase):
     def test_Local(self):
@@ -77,8 +79,9 @@ if __name__ == '__main__':
 
 Java = '''
 # Thought: https://leetcode.com/problems/shortest-word-distance/solution/
-# 78.49% 2ms
-public class Solution {
+#
+# 1ms 100%
+class Solution {
     public int shortestDistance(String[] words, String word1, String word2) {
         int index1 = -1;
         int index2 = -1;
@@ -100,8 +103,8 @@ public class Solution {
     }
 }
 
-#13.74% 4ms
-public class Solution {
+# 1ms 100%
+class Solution {
     public int shortestDistance(String[] words, String word1, String word2) {
         int res = Integer.MAX_VALUE;
         int idx1 = -1;

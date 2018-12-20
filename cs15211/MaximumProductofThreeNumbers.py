@@ -1,8 +1,9 @@
-__source__ = 'https://leetcode.com/problems/maximum-product-of-three-numbers/tabs/description'
+__source__ = 'https://leetcode.com/problems/maximum-product-of-three-numbers/'
 # Time:  O(n)
 # Space: O(1)
 #
-# Description:
+# Description: 628. Maximum Product of Three Numbers
+#
 # Given an integer array, find three numbers whose product is maximum and output the maximum product.
 #
 # Example 1:
@@ -27,6 +28,7 @@ import heapq
 # Time:  O(n log n)
 # Space: O(1)
 class Solution(object):
+    # 64ms 75.30%
     def maximumProduct(self, nums):
         """
         :type nums: List[int]
@@ -35,6 +37,7 @@ class Solution(object):
         nums.sort()
         return max(nums[-1] * nums[-2] * nums[-3], nums[0] * nums[1] * nums[-1])
 
+    # 122ms 9.67%
     def maximumProduct(self, nums):
         """
         :type nums: List[int]
@@ -47,27 +50,27 @@ class TestMethods(unittest.TestCase):
     def test_Local(self):
         self.assertEqual(1, 1)
 
-
 if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/problems/maximum-product-of-three-numbers/tabs/solution
+# Thought: https://leetcode.com/problems/maximum-product-of-three-numbers/solution/
+#
 Approach #2 Using Sorting [Accepted]
 # Time:  O(NlogN)
 # Space: O(logN)
-# 18% 37ms
-public class Solution {
+# 20ms 47.10%
+class Solution {
     public int maximumProduct(int[] nums) {
         Arrays.sort(nums);
         return Math.max(nums[0] * nums[1] * nums[nums.length - 1], nums[nums.length - 1] * nums[nums.length - 2] * nums[nums.length - 3]);
     }
 }
 
-# 86% 14 ms
 # Time:  O(n)
 # Space: O(1)
-public class Solution {
+# 9ms 72.58%
+class Solution {
     public int maximumProduct(int[] nums) {
         int min1 = Integer.MAX_VALUE, min2 = Integer.MAX_VALUE;
         int max1 = Integer.MIN_VALUE, max2 = Integer.MIN_VALUE, max3 = Integer.MIN_VALUE;

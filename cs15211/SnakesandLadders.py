@@ -1,5 +1,3 @@
-import collections
-
 __source__ = 'https://leetcode.com/problems/snakes-and-ladders/'
 # Time:  O(N^2)
 # Space: O(N^2)
@@ -52,8 +50,8 @@ __source__ = 'https://leetcode.com/problems/snakes-and-ladders/'
 # The board square with number N*N has no snake or ladder.
 #
 import unittest
-
-# 44ms 97.37%
+import collections
+# 76ms 70.87%
 class Solution(object):
     def snakesAndLadders(self, board):
         """
@@ -71,7 +69,6 @@ class Solution(object):
             line += temp
             flip = flip ^ 1
 
-
         q = collections.deque([(1, 0)])
         visited = set([1])
         target = m*n
@@ -88,26 +85,24 @@ class Solution(object):
                     visited.add(nextloc)
                     q.append((nextloc, hop+1))
                     if nextloc == target: return hop+1
-
         return -1
 
 class TestMethods(unittest.TestCase):
     def test_Local(self):
         self.assertEqual(1, 1)
 
-
 if __name__ == '__main__':
     unittest.main()
 
 Java = '''
 # Thought: https://leetcode.com/problems/snakes-and-ladders/solution/
+
 # Approach 1: Breadth-First Search
 # Complexity Analysis
 # Time Complexity: O(N^2), where N is the length of the board.
 # Space Complexity: O(N^2)
 #
-
-#24ms 56.68%
+# 11ms 98.65%
 class Solution {
     public int snakesAndLadders(int[][] board) {
         int N = board.length;
@@ -143,8 +138,8 @@ class Solution {
     }
 }
 
-
-# 10ms 100%  # not quite understand tho...
+# not quite understand tho...
+# 10ms 100%  
 class Solution {
     public int snakesAndLadders(int[][] board) {
         int N = board.length;
@@ -187,4 +182,5 @@ class Solution {
             return ((n - 1 - i) * n + n - j);
     }
 }
+
 '''

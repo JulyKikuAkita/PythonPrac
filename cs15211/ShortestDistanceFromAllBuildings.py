@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/shortest-distance-from-all-buildings/description/'
+__source__ = 'https://leetcode.com/problems/shortest-distance-from-all-buildings/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/shortest-distance-from-all-buildings.py
 # Time:  O(k * m * n), k is the number of the buildings
 # Space: O(m * n)
@@ -72,34 +72,36 @@ class Solution(object):
             for j in xrange(n):
                 if dists[i][j] < shortest and cnts[i][j] == cnt:
                     shortest = dists[i][j]
-
         return shortest if shortest != float("inf") else -1
+
 class TestMethods(unittest.TestCase):
     def test_Local(self):
         self.assertEqual(1, 1)
-
 
 if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
+# Thought:
+
 Traverse the matrix. For each building, use BFS to compute the shortest distance from each '0' to
 this building. After we do this for all the buildings, we can get the sum of shortest distance
 from every '0' to all reachable buildings. This value is stored in 'distance[][]'.
-For example, if grid[2][2] == 0, distance[2][2] is the sum of shortest distance from this block to all reachable buildings.
+For example, if grid[2][2] == 0, distance[2][2] is the sum of shortest distance from this block 
+to all reachable buildings.
 Time complexity: O(number of 1)O(number of 0) ~ O(m^2n^2)
 
 We also count how many building each '0' can be reached. It is stored in reach[][].
 This can be done during the BFS.
 We also need to count how many total buildings are there in the matrix, which is stored in 'buildingNum'.
 
-Finally, we can traverse the distance[][] matrix to get the point having shortest distance to all buildings. O(m*n)
+Finally, we can traverse the distance[][] matrix to get the point having shortest distance to all buildings. 
+O(m*n)
 
 The total time complexity will be O(m^2*n^2), which is quite high!.
 
-# 93.76% 10ms
-public class Solution {
+# 6ms 85.93%
+class Solution {
     int[][] dirs = {{0, -1}, {-1, 0}, {0, 1}, {1, 0}};
     int min, m, n;
     public int shortestDistance(int[][] grid) {
@@ -152,8 +154,8 @@ public class Solution {
     }
 }
 
-#74.79% 17ms
-public class Solution {
+# 12ms 74.39%
+class Solution {
     private static final int[][] DIRECTIONS = new int[][] {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
 
     public int shortestDistance(int[][] grid) {

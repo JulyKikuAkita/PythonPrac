@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/longest-continuous-increasing-subsequence/description/'
+__source__ = 'https://leetcode.com/problems/longest-continuous-increasing-subsequence/'
 # Time:  O()
 # Space: O()
 #
@@ -36,9 +36,10 @@ class TestMethods(unittest.TestCase):
 if __name__ == '__main__':
     unittest.main()
 
-Java = '''
-#Thought:
-# 24.63% 6ms
+Java = ''' 
+# Thought: https://leetcode.com/problems/longest-continuous-increasing-subsequence/solution/
+
+# 4ms 35.26%
 class Solution {
     public int findLengthOfLCIS(int[] nums) {
         int res = 0, cnt = 0;
@@ -50,7 +51,7 @@ class Solution {
     }
 }
 
-#68.09% 5ms
+# 4ms 35.26%
 class Solution {
     public int findLengthOfLCIS(int[] nums) {
         if(nums == null || nums.length == 0)

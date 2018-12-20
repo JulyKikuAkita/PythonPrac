@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/russian-doll-envelopes/description/'
+__source__ = 'https://leetcode.com/problems/russian-doll-envelopes/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/russian-doll-envelopes.py
 # Time:  O(nlogn + nlogk) = O(nlogn), k is the length of the result.
 # Space: O(1)
@@ -91,15 +91,16 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
+# Thought:
+#
 Sort the array. Ascend on width and descend on height if width are same.
 Find the longest increasing subsequence based on height.
 Since the width is increasing, we only need to consider height.
 [3, 4] cannot contains [3, 3], so we need to put [3, 4]
 before [3, 3] when sorting otherwise it will be counted as an increasing number if the order is [3, 3], [3, 4]
 
-#97.15% 18ms
-public class Solution {
+# 11ms 99.65%
+class Solution {
     public int maxEnvelopes(int[][] envelopes) {
         if(envelopes == null || envelopes.length == 0
            || envelopes[0] == null || envelopes[0].length != 2)
@@ -126,8 +127,8 @@ public class Solution {
     }
 }
 
-#64.69% 83ms
-public class Solution {
+# 52ms 66.38%
+class Solution {
     public int maxEnvelopes(int[][] envelopes) {
         if ( envelopes.length < 2) return envelopes.length;
         int[] arr = new int[envelopes.length];

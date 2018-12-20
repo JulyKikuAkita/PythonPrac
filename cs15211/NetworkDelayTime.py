@@ -1,8 +1,6 @@
-import collections
-
 __source__ = 'https://leetcode.com/problems/network-delay-time/'
-# Time:  O()
-# Space: O()
+# Time:  O(N^2+E)
+# Space: O(N+E)  the size of the graph O(E), plus the size of the other objects used O(N).
 #
 # Description: Leetcode # 743. Network Delay Time
 #
@@ -22,6 +20,7 @@ __source__ = 'https://leetcode.com/problems/network-delay-time/'
 # All edges times[i] = (u, v, w) will have 1 <= u, v <= N and 1 <= w <= 100.
 #
 import unittest
+import collections
 
 # 100ms 69.56% //Dijkstra's
 class Solution(object):
@@ -64,7 +63,7 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/problems/network-delay-time/solution/
+# Thought: https://leetcode.com/problems/network-delay-time/solution/
 
 Approach #1: Depth-First Search [Accepted]
 Complexity Analysis
@@ -76,7 +75,7 @@ because of repeated use of the inequality xlogx + ylogy <= (x+y)log(x+y).
 Space Complexity: O(N + E), the size of the graph O(E),
 plus the size of the implicit call stack in our DFS (O(N)
 
-#168ms 13.36%
+# 168ms 13.36%
 class Solution {
     Map<Integer, Integer> dist;
     public int networkDelayTime(int[][] times, int N, int K) {
@@ -118,7 +117,7 @@ and O(ElogE) in the heap implementation,
 as potentially every edge gets added to the heap.
 Space Complexity: O(N + E), the size of the graph (O(E), plus the size of the other objects used (O(N)).
 
-#48ms 69.53%
+# 48ms 69.53%
 class Solution {
     Map<Integer, Integer> dist;
     public int networkDelayTime(int[][] times, int N, int K) {
@@ -163,9 +162,8 @@ class Solution {
 }
 
 
-#9ms 98.61%
+# 9ms 98.61%
 class Solution {
-
     /*
     * Dijkstra's algorithm
     *

@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/single-number/description/'
+__source__ = 'https://leetcode.com/problems/single-number/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/single-number.py
 # Time:  O(n)
 # Space: O(1)
@@ -18,7 +18,6 @@ __source__ = 'https://leetcode.com/problems/single-number/description/'
 # Similar Questions
 # Single Number II Single Number III Missing Number Find the Duplicate Number Find the Difference
 #
-#
 import operator
 import unittest
 class Solution:
@@ -26,9 +25,6 @@ class Solution:
     # @return an integer
     def singleNumber(self, A):
         return reduce(operator.xor, A)
-
-if __name__ == '__main__':
-    print Solution().singleNumber([1, 1, 2, 2, 3])
 
 class SolutionOther:
     # @param A, a list of integer
@@ -89,14 +85,16 @@ class TestMethods(unittest.TestCase):
         #print my_test.genericSingleNumber([1,5,5], 2)
         #print my_test.genericSingleNumber([1], 2)
 
+        print Solution().singleNumber([1, 1, 2, 2, 3])
+
 if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
+# Thought: https://leetcode.com/problems/single-number/solution/
 
-# 32.74% 1ms
-public class Solution {
+# 0ms 100%
+class Solution {
     public int singleNumber(int[] nums) {
         int cur = 0;
         for (int num : nums) {

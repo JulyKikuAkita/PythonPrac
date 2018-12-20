@@ -1,6 +1,4 @@
-import heapq
-
-__source__ = 'https://leetcode.com/problems/reorganize-string/description/'
+__source__ = 'https://leetcode.com/problems/reorganize-string/'
 # Time:  O()
 # Space: O()
 #
@@ -24,7 +22,7 @@ __source__ = 'https://leetcode.com/problems/reorganize-string/description/'
 # S will consist of lowercase letters and have length in range [1, 500].
 #
 import unittest
-
+import heapq
 class Solution1(object):
     def reorganizeString(self, S):
         """
@@ -66,25 +64,24 @@ class Solution(object):
                 heapq.heappush(pq, (nct2 + 1, ch2))
         return "".join(ans) + (pq[0][1] if pq else '')
 
-
 class TestMethods(unittest.TestCase):
     def test_Local(self):
         self.assertEqual(1, 1)
-
 
 if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/problems/reorganize-string/solution/
-# 3ms, 100%
+# Thought: https://leetcode.com/problems/reorganize-string/solution/
+
 # If N is the length of the string,
 # and the count of some letter is greater than (N+1) / 2, the task is impossible.
 # Approach #1: Sort by Count [Accepted]
 # Time Complexity: O(A(N+logA)), where N is the length of S, and A is the size of the alphabet.
 # In Java, our implementation is O(N+AlogA). If A is fixed, this complexity is O(N).
 # Space Complexity: O(N). In Java, our implementation is O(N+A).
-
+#
+# 3ms 98.98%
 class Solution {
     public String reorganizeString(String S) {
         int N = S.length();
@@ -116,6 +113,7 @@ class Solution {
 # and A is the size of the alphabet. If A is fixed, this complexity is O(N).
 # Space Complexity: O(A). If A is fixed, this complexity is O(1).
 
+# 54ms 19.46%
 class MultiChar{
     int count;
     char letter;

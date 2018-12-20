@@ -70,19 +70,18 @@ class TestMethods(unittest.TestCase):
     def test_Local(self):
         self.assertEqual(1, 1)
 
-
 if __name__ == '__main__':
     unittest.main()
 
 Java = '''
 # Thought: https://leetcode.com/problems/stone-game/solution/
-# 10ms 36.14%
+
 Approach 1: Dynamic Programming
 Complexity Analysis
 Time Complexity: O(N^2), where N is the number of piles.
 Space Complexity: O(N^2), the space used storing the intermediate results of each subgame.
 
-#10ms 36.14%
+# 10ms 36.14%
 class Solution {
     public boolean stoneGame(int[] piles) {
          int N = piles.length;
@@ -108,14 +107,15 @@ Approach 2: Mathematical
 Complexity Analysis
 Time and Space Complexity: O(1)
 
+
+# 3ms 53.69%
 class Solution {
     public boolean stoneGame(int[] piles) {
         return true;
     }
 }
 
-
-#2ms 99.64%
+# 2ms 99.64%
 class Solution {
     public boolean stoneGame(int[] piles) {
         int left = 0;

@@ -1,11 +1,12 @@
-__source__ = 'https://leetcode.com/problems/maximum-product-subarray/description/'
+__source__ = 'https://leetcode.com/problems/maximum-product-subarray/'
 # Time:  O(n)
 # Space: O(1)
 # DP
 #
 # Description: Leetcode # 152. Maximum Product Subarray
 #
-# Find the contiguous subarray within an array (containing at least one number) which has the largest product.
+# Find the contiguous subarray within an array (containing at least one number)
+# which has the largest product.
 #
 # For example, given the array [2,3,-2,4],
 # the contiguous subarray [2,3] has the largest product = 6.
@@ -20,7 +21,8 @@ __source__ = 'https://leetcode.com/problems/maximum-product-subarray/description
 # Thought:
 # http://www.programcreek.com/2014/03/leetcode-maximum-product-subarray-java/
 # When iterating the array, each element has two possibilities: positive number or negative number.
-# We need to track a minimum value, so that when a negative number is given, it can also find the maximum value.
+# We need to track a minimum value, so that when a negative number is given,
+# it can also find the maximum value.
 # We define two local variables, one tracks the maximum and the other tracks the minimum.
 #
 import unittest
@@ -93,15 +95,14 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
-#44.62% 3ms
+# Thought:
 
 # Loop through the array, each time remember the max and min value for the previous product,
 # the most important thing is to update the max and min value: we have to compare among max * A[i],
 # min * A[i] as well as A[i], since this is product, a negative * negative could be positive.
 
-#44.62% 3ms
-public class Solution {
+# 2ms 75.22%
+class Solution {
     public int maxProduct(int[] nums) {
         if (nums == null || nums.length == 0) return 0;
         int max = nums[0], min = nums[0], res = nums[0];
@@ -115,19 +116,23 @@ public class Solution {
     }
 }
 
-#44.62% 3ms
-public class Solution {
+# 1ms 99.94%
+class Solution {
     public int maxProduct(int[] nums) {
         if (nums.length == 0) {
             return 0;
         }
-        int max = nums[0];
         int min = nums[0];
+        int max = nums[0];
         int result = nums[0];
         for (int i = 1; i < nums.length; i++) {
-            int curMax = max;
-            max = Math.max(nums[i], Math.max(max * nums[i], min * nums[i]));
-            min = Math.min(nums[i], Math.min(curMax * nums[i], min * nums[i]));
+            if (nums[i] < 0) {
+                int tmp = min;
+                min = max;
+                max = tmp;
+            }
+            min = Math.min(nums[i], nums[i] * min);
+            max = Math.max(nums[i], nums[i] * max);
             result = Math.max(result, max);
         }
         return result;

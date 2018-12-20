@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-tree/#/description'
+__source__ = 'https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-tree/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/lowest-common-ancestor-of-a-binary-tree.py
 # Time:  O(h)
 # Space: O(h)
@@ -66,7 +66,9 @@ class Solution:
 #         self.val = x
 #         self.left = None
 #         self.right = None
+#
 
+# 60ms 98.74%
 class Solution(object):
     def lowestCommonAncestor(self, root, p, q):
         """
@@ -117,7 +119,8 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
+# Thought: https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-tree/solution/
+
 /**
  * Definition for a binary tree node.
  * public class TreeNode {
@@ -128,9 +131,9 @@ Java = '''
  * }
  */
 
-#DFS
-#25.52% 13ms
-public class Solution {
+# DFS
+# 6ms 99.80%
+class Solution {
     public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
         if (root == null || root == p || root == q) return root;
         TreeNode left = lowestCommonAncestor(root.left, p, q);
@@ -140,9 +143,9 @@ public class Solution {
     }
 }
 
-#BFS
-# 6.5% 29ms
-public class Solution {
+# BFS
+# 30ms 8.14%
+class Solution {
     public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
         Map<TreeNode, TreeNode> parent = new HashMap<>();
         parent.put(root, null);

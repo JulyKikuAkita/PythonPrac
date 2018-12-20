@@ -1,9 +1,10 @@
-__source__ = 'https://leetcode.com/problems/reverse-linked-list/#/solutions'
+__source__ = 'https://leetcode.com/problems/reverse-linked-list/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/reverse-linked-list.py
 # Time:  O(n)
 # Space: O(1)
 #
 # Description: Leetcode # 206. Reverse Linked List
+#
 # Reverse a singly linked list.
 #
 # click to show more hints.
@@ -17,6 +18,7 @@ __source__ = 'https://leetcode.com/problems/reverse-linked-list/#/solutions'
 # Linked List
 # Similar Questions
 # Reverse Linked List II Binary Tree Upside Down Palindrome Linked List
+#
 
 # Definition for singly-linked list.
 import unittest
@@ -41,6 +43,7 @@ class Solution(unittest.TestCase):
 
     def test(self):
         self.assertEqual()
+
 # Time:  O(n)
 # Space: O(n)
 # Recursive solution.
@@ -61,24 +64,6 @@ class Solution2:
             return [begin, head]
         else:
             return [head, head]
-# java solution
-# iterative and recursion
-# http://www.programcreek.com/2014/05/leetcode-reverse-linked-list-java/
-class Solution3:
-    # @param {ListNode} head
-    # @return {ListNode}
-    def reverseList(self, head):
-        if not head or not head.next:
-            return head
-        #get 2nd Node
-        second = head.next
-        # set the first's next to null
-        head.next = None
-
-        rest = self.reverseList(second)
-        second.next = head
-
-        return rest
 
 class TestMethods(unittest.TestCase):
     def test_Local(self):
@@ -88,17 +73,16 @@ class TestMethods(unittest.TestCase):
         head.next.next = ListNode(3)
         head.next.next.next = ListNode(4)
         head.next.next.next.next = ListNode(5)
-        print Solution3().reverseList(head)
 
 if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/articles/reverse-linked-list/
+# Thought: https://leetcode.com/problems/reverse-linked-list/solution/
 
-// recursion
-# 28.41% 0ms
-public class Solution {
+# Recursion
+# # 0ms 100%
+class Solution {
     public ListNode reverseList(ListNode head) {
         if (head == null || head.next == null) return head;
         ListNode p = reverseList(head.next);
@@ -116,14 +100,14 @@ public class Solution {
  *     ListNode(int x) { val = x; }
  * }
  */
-#3.84% 1ms
-public class Solution {
+# 0ms 100%
+class Solution {
     public ListNode reverseList(ListNode head) {
         if ( head == null) return head;
         //return dfs(head);
         return dfs2(head, null);
     }
-//#3.84% 1ms
+    # 0ms 100%
     private ListNode dfs(ListNode head) {
         if (head.next == null) return head;
         ListNode next = head.next;
@@ -132,7 +116,7 @@ public class Solution {
         next.next = head; //reverse
         return newHead;
     }
-//#3.84% 1ms
+    # 0ms 100%
     private ListNode dfs2(ListNode head, ListNode newHead) {
         if (head == null) return newHead;
         ListNode next = head.next;
@@ -141,9 +125,9 @@ public class Solution {
     }
 }
 
-//iteration
-# 28.41% 0ms
-public class Solution {
+# Iteration
+# 0ms 100%
+class Solution {
     public ListNode reverseList(ListNode head) {
         if (head == null || head.next == null) return head;
         ListNode dummy = null;

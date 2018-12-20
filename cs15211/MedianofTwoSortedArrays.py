@@ -1,10 +1,11 @@
-__source__ = 'https://leetcode.com/problems/median-of-two-sorted-arrays/#/description'
+__source__ = 'https://leetcode.com/problems/median-of-two-sorted-arrays/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/median-of-two-sorted-arrays.py
 # Time:  O(log(m + n))
 # Space: O(1)
 # Binary Search
 #
 # Description: Leetcode # 4. Median of Two Sorted Arrays
+#
 # There are two sorted arrays A and B of size m and n respectively.
 # Find the median of the two sorted arrays. The overall run time complexity should be O(log (m+n)).
 #
@@ -15,7 +16,7 @@ __source__ = 'https://leetcode.com/problems/median-of-two-sorted-arrays/#/descri
 #
 # using list slicing (O(k)) may be slower than solution1
 import unittest
-#95ms
+# 52ms 99.37%
 class Solution4:
     # @return a float
     def median(A, B):
@@ -99,8 +100,8 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/problems/contains-duplicate/solution/
-#Thought:
+# Thought: https://leetcode.com/problems/median-of-two-sorted-arrays/solution/
+#
 # https://discuss.leetcode.com/topic/4996/share-my-o-log-min-m-n-solution-with-explanation
 # To solve this problem, we need to understand "What is the use of median".
 # In statistics, the median is used for dividing a set into two equal length subsets,
@@ -208,8 +209,8 @@ Java = '''
 
 
 # BFS
-# 75.36% 66ms
-public class Solution {
+# 41ms 40.46%
+class Solution {
     public double findMedianSortedArrays(int[] nums1, int[] nums2) {
         int len = nums1.length + nums2.length;
         if ((len & 1) == 0) { // (1 & 1 == 1)
@@ -258,24 +259,23 @@ public class Solution {
 }
 
 # DFS
-# 75.36% 66ms
-
-public class Solution {
+# 40ms 43.34%
+class Solution {
     public double findMedianSortedArrays(int[] nums1, int[] nums2) {
         int len1 = nums1.length;
         int len2 = nums2.length;
         if (((len1 + len2) & 1) == 0) {
-            return ((double) findKthNumber(nums1, nums2, (len1 + len2) >>> 1
+            return ((double) findKthNumber(nums1, nums2, (len1 + len2) >>> 1) 
                 + findKthNumber(nums1, nums2, ((len1 + len2) >>> 1) + 1)) / 2;
         } else {
             return findKthNumber(nums1, nums2, ((len1 + len2) >>> 1) + 1);
         }
     }
-
+    
     private int findKthNumber(int[] nums1, int[] nums2, int k) {
         return findKthNumber(nums1, nums2, 0, nums1.length, 0, nums2.length, k);
     }
-
+    
     private int findKthNumber(int[] nums1, int[] nums2, int start1, int end1, int start2, int end2, int k) {
         if (end1 - start1 > end2 - start2) {
             return findKthNumber(nums2, nums1, start2, end2, start1, end1, k);
@@ -298,8 +298,8 @@ public class Solution {
     }
 }
 
-#99.70% 57ms
-public class Solution {
+# 27ms 90%
+class Solution {
     public double findMedianSortedArrays(int[] nums1, int[] nums2) {
         int n = nums1.length;
         int m = nums2.length;
@@ -325,8 +325,8 @@ public class Solution {
 }
 
 
-# 75.36% 66ms
-public class Solution {
+# 41ms 40.46%
+class Solution {
     public int data[];
     public double findMedianSortedArrays(int[] nums1, int[] nums2) {
         data = new int[nums1.length+nums2.length];

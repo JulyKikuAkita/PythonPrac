@@ -1,8 +1,10 @@
-__source__ = 'https://leetcode.com/problems/swap-nodes-in-pairs/description/'
+__source__ = 'https://leetcode.com/problems/swap-nodes-in-pairs/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/swap-nodes-in-pairs.py
 # Time:  O(n)
 # Space: O(1)
 # LinkedList
+#
+# Description: Leetcode #  24. Swap Nodes in Pairs
 #
 # Given a linked list, swap every two adjacent nodes and return its head.
 #
@@ -83,7 +85,6 @@ class SolutionOther:
             current = current.next
         return newHead
 
-
 class TestMethods(unittest.TestCase):
     def test_Local(self):
         self.assertEqual(1, 1)
@@ -100,15 +101,11 @@ class TestMethods(unittest.TestCase):
         head.next, head.next.next, head.next.next.next = ListNode(2), ListNode(3), ListNode(4)
         print Solution().swapPairs(head)
 
-
 if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/problems/contains-duplicate/solution/
-
-#BFS
-# 16.33% 5ms
+# Thought:
 
 /**
  * Definition for singly-linked list.
@@ -118,7 +115,9 @@ Java = '''
  *     ListNode(int x) { val = x; }
  * }
  */
-public class Solution {
+# BFS
+# 2ms 99.98%
+class Solution {
     public ListNode swapPairs(ListNode head) {
         ListNode fakeHead = new ListNode(0);
         fakeHead.next = head;
@@ -137,9 +136,9 @@ public class Solution {
 }
 
 
-#DFS
-# 68.67% 4ms
-public class Solution {
+# DFS
+# 2ms 99.98%
+class Solution {
     public ListNode swapPairs(ListNode head) {
         if ((head == null)||(head.next == null))
             return head;

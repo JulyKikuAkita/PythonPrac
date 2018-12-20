@@ -30,7 +30,7 @@ __source__ = 'https://leetcode.com/problems/similar-rgb-color/'
 #
 import unittest
 
-#20ms 100%
+# 20ms 100%
 class Solution:
     def similarRGB(self, color):
         """
@@ -53,17 +53,17 @@ class TestMethods(unittest.TestCase):
     def test_Local(self):
         self.assertEqual(1, 1)
 
-
 if __name__ == '__main__':
     unittest.main()
 
 Java = '''
 # Thought: https://leetcode.com/problems/similar-rgb-color/solution/
+#
 # For a color like hex1,
 # it has 3 colored components r1 = (hex1 >> 16) % 256, g1 = (hex1 >> 8) % 256, b1 = (hex1 >> 0) % 256.
 # Then, the first addend in the similarity is -(r1 - r2) * (r1 - r2), etc.
 #
-#6ms 100%
+# 6ms 100%
 class Solution {
     public String similarRGB(String color) {
         StringBuilder sb = new StringBuilder(color.length());

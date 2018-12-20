@@ -1,10 +1,10 @@
-__source__ = 'https://leetcode.com/problems/remove-9/description/'
+__source__ = 'https://leetcode.com/problems/remove-9/'
 # Time:  O()
 # Space: O()
 #
 # Description: Leetcode # 660. Remove 9
 #
-#Start from integer 1, remove any integer that contains 9 such as 9, 19, 29...
+# Start from integer 1, remove any integer that contains 9 such as 9, 19, 29...
 #
 # So now, you will have a new integer sequence: 1, 2, 3, 4, 5, 6, 7, 8, 10, 11, ...
 #
@@ -24,7 +24,8 @@ import unittest
 
 # Thought: The set of numbers without 9s is the same as the set of base-9 numbers,
 # and they occur in the same order. The answer is therefore just the n-th base-9 number.
-#32ms
+#
+# 20ms 100%
 class Solution(object):
     def newInteger(self, n):
         """
@@ -46,16 +47,17 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
-# 8ms
-public class Solution {
+# Thought: https://leetcode.com/problems/remove-9/solution/
+#
+# 3ms 100%
+class Solution {
     public int newInteger(int n) {
         return Integer.parseInt(Integer.toString(n, 9));
     }
 }
 
-# 8ms
-public class Solution {
+# 5ms 31.25%
+class Solution {
     public int newInteger(int n) {
         int res = 0, base = 1;
         while (n > 0) {

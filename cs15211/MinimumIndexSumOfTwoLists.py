@@ -1,8 +1,9 @@
-__source__ = 'https://leetcode.com/problems/minimum-index-sum-of-two-lists/#/description'
+__source__ = 'https://leetcode.com/problems/minimum-index-sum-of-two-lists/'
 # Time:  O( n + m)
 # Space: O(n)
 #
-# Description:
+# Description: 599. Minimum Index Sum of Two Lists
+#
 # Suppose Andy and Doris want to choose a restaurant for dinner,
 # and they both have a list of favorite restaurants represented by strings.
 #
@@ -23,7 +24,7 @@ __source__ = 'https://leetcode.com/problems/minimum-index-sum-of-two-lists/#/des
 # ["KFC", "Shogun", "Burger King"]
 # Output: ["Shogun"]
 # Explanation: The restaurant they both like and have the least index sum is "Shogun" with index sum 1 (0+1).
-
+#
 # Note:
 # The length of both lists will be in the range of [1, 1000].
 # The length of strings in both lists will be in the range of [1, 30].
@@ -32,14 +33,14 @@ __source__ = 'https://leetcode.com/problems/minimum-index-sum-of-two-lists/#/des
 # Hide Company Tags Yelp
 # Hide Tags Hash Table
 # Hide Similar Problems (E) Intersection of Two Linked Lists
-
+#
 # Explanation:
 # Say the lists are A and B. Let Aindex[element] be the index of that element in A.
 # For every index, value pair (j, v) in B, we have some candidate sum-of-indexes i + j,
 # where i = Aindex[v] if it exists.
 # If the candidate sum is better, it becomes our new answer;
 # if the candidate sums are the same, then we append to our answer.
-
+#
 import unittest
 
 class Solution(object):
@@ -61,18 +62,18 @@ class Solution(object):
                 ans.append(v)
         return ans
 
-
 class TestMethods(unittest.TestCase):
     def test_Local(self):
         self.assertEqual(1, 1)
-
 
 if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/articles/minimum-index-sum-of-two-lists/
-public class Solution {
+# Thought: https://leetcode.com/problems/minimum-index-sum-of-two-lists/solution/
+
+# 13ms 98.50%
+class Solution {
     public String[] findRestaurant(String[] list1, String[] list2) {
         Map<String, Integer> map = new HashMap<>();
         List<String> res = new LinkedList<>();

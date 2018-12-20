@@ -1,8 +1,9 @@
-__source__ = 'https://leetcode.com/problems/magical-string/#/description'
+__source__ = 'https://leetcode.com/problems/magical-string/'
 # Time:  O()
 # Space: O()
 #
-# Description:
+# Description: 481. Magical String
+#
 # A magical string S consists of only '1' and '2' and obeys the following rules:
 #
 # The string S is magical because concatenating the number of contiguous occurrences of characters '1' and '2'
@@ -36,26 +37,25 @@ import unittest
 class Solution(object):
     pass  # your function here
 
-
 class TestMethods(unittest.TestCase):
     def test_Local(self):
         self.assertEqual(1, 1)
-
 
 if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
+# Thought: 
+#
 Algorithm:
-
 Create an int array a and initialize the first 3 elements with 1, 2, 2.
 Create two pointers head and tail. head points to the number which will be used to generate new numbers.
 tail points to the next empty position to put the new number. Then keep generating new numbers until tail >= n.
 Need to create the array 1 element more than n to avoid overflow because the last round head might points to a number 2.
 A trick to flip number back and forth between 1 and 2: num = num ^ 3
 
-public class Solution {
+# 5ms 100%
+class Solution {
     public int magicalString(int n) {
         if (n <= 0) return 0;
         if (n <= 3) return 1;

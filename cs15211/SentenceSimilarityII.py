@@ -1,11 +1,9 @@
 # coding=utf-8
-import itertools
-
 __source__ = 'https://leetcode.com/problems/sentence-similarity-ii/'
 # Time:  O()
 # Space: O()
-#
 # Union-Find
+#
 # Description: Leetcode # 737. Sentence Similarity II
 #
 # Given two sentences words1, words2 (each represented as an array of strings),
@@ -36,9 +34,9 @@ __source__ = 'https://leetcode.com/problems/sentence-similarity-ii/'
 # The length of each words[i] and pairs[i][j] will be in the range [1, 20].
 #
 import unittest
+import itertools
 
-
-#160ms 64.69%
+# 160ms 64.69%
 class DSU:
     def __init__(self, N):
         self.par = range(N)
@@ -102,12 +100,12 @@ class TestMethods(unittest.TestCase):
     def test_Local(self):
         self.assertEqual(1, 1)
 
-
 if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/problems/sentence-similarity-ii/solution/
+# Thought: https://leetcode.com/problems/sentence-similarity-ii/solution/
+
 Approach #1: Depth-First Search [Accepted]
 Complexity Analysis
 Time Complexity: O(NP), where N is the maximum length of words1 and words2,
@@ -115,7 +113,7 @@ and P is the length of pairs.
 Each of N searches could search the entire graph.
 Space Complexity: O(P), the size of pairs.
 
-#164ms 8.69%
+# 23ms 99.29%
 class Solution {
     public boolean areSentencesSimilarTwo(String[] words1, String[] words2, String[][] pairs) {
         // input check
@@ -162,7 +160,7 @@ If we used union-by-rank,
 this complexity improves to O(N * α(P)+P)≈O(N+P), where α is the Inverse-Ackermann function.
 Space Complexity: O(P), the size of pairs.
 
-#23ms 99.35%
+# 23ms 99.35%
 class Solution {
     private class Node {
         String word;
@@ -220,8 +218,8 @@ class Solution {
     }
 }
 
-#use Map
-#26ms 96.82%
+# Use Map
+# 36ms 72.35%
 class Solution {
     public boolean areSentencesSimilarTwo(String[] words1, String[] words2, String[][] pairs) {
         int m = words1.length;

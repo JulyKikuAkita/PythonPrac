@@ -55,7 +55,7 @@ import unittest
 from collections import deque
 
 # BFS through possible 3*8 mutations in each loop instead of all 4^8 - 1 possible genes.
-#20ms 99.09%
+# 28ms 21.82%
 class Solution(object):
     def minMutation(self, start, end, bank):
         """
@@ -92,15 +92,15 @@ class TestMethods(unittest.TestCase):
     def test_Local(self):
         self.assertEqual(1, 1)
 
-
 if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/problems/minimum-genetic-mutation/discuss/187877/JAVA-BFS-(-147-Word-Ladder)
+# Thought: 
+https://leetcode.com/problems/minimum-genetic-mutation/discuss/187877/JAVA-BFS-(-147-Word-Ladder)
 # JAVA BFS ( ==147 Word Ladder)
 
-#2ms 72.08%
+# 2ms 65.05%
 class Solution {
     private Set<String> dict, seen;
     private char[] GENES = {'G','C','A','T'};
@@ -154,7 +154,7 @@ class Solution {
     }
 }
 
-# 1ms, 100%
+# 2ms 65.05%
 class Solution {
     public int minMutation(String start, String end, String[] bank) {
         if (start == null && end == null) {

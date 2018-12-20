@@ -1,9 +1,10 @@
-__source__ = 'https://leetcode.com/problems/longest-consecutive-sequence/description/'
+__source__ = 'https://leetcode.com/problems/longest-consecutive-sequence/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/longest-consecutive-sequence.py
 # Time:  O(n)
 # Space: O(n)
 #
-#  Description: Leetcode # 128. Longest Consecutive Sequence
+# Description: Leetcode # 128. Longest Consecutive Sequence
+#
 # Given an unsorted array of integers, find the length of the longest consecutive elements sequence.
 #
 # For example,
@@ -32,9 +33,7 @@ class Solution:
                 left, right = lengths.get(i-1, 0), lengths.get(i+1, 0) # dict.get(key. default=NOne)
                 length = 1 + left + right
                 result, lengths[i - left], lengths[i + right] = max(result, length), length, length
-
         return result
-
 
 class Solution2:
     # @param num, a list of integer
@@ -61,21 +60,19 @@ class Solution2:
         return maxLen
 
 #test
-test = Solution()
-seq1 = [100, 4, 200, 1, 3, 2]
-#print test.longestConsecutive(seq1)
-
 class TestMethods(unittest.TestCase):
     def test_Local(self):
-        self.assertEqual(1, 1)
+        test = Solution()
+        seq1 = [100, 4, 200, 1, 3, 2]
+        #print test.longestConsecutive(seq1)
         print Solution().longestConsecutive([1, 4, 3,2,2,2,0 , -1])
 
 if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/problems/contains-duplicate/solution/
-Thought:
+# Thought: https://leetcode.com/problems/longest-consecutive-sequence/solution/
+
 We will use HashMap. The key thing is to keep track of the sequence length and
 store that in the boundary points of the sequence. For example, as a result,
 for sequence {1, 2, 3, 4, 5}, map.get(1) and map.get(5) should both return 5.
@@ -90,8 +87,8 @@ Use left and right to locate the other end of the sequences to the left and righ
 and replace the value with the new length.
 Everything inside the for loop is O(1) so the total time is O(n). Please comment if you see something wrong. Thanks.
 1)
-# 96.13% 4ms
-public class Solution {
+# 3ms 96.24%
+class Solution {
     public int longestConsecutive(int[] nums) {
         if (nums.length <= 1) return nums.length;
         Arrays.sort(nums);
@@ -115,8 +112,8 @@ public class Solution {
 Using a set to collect all elements that hasn't been visited.
 search element will be O(1) and eliminates visiting element again.
 
-75.46% 12ms
-public class Solution {
+# 9ms 50.78%
+class Solution {
     public int longestConsecutive(int[] nums) {
         if(nums == null || nums.length == 0) return 0;
 

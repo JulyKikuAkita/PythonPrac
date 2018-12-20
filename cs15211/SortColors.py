@@ -1,11 +1,12 @@
-__source__ = 'https://leetcode.com/problems/sort-colors/description/'
+__source__ = 'https://leetcode.com/problems/sort-colors/'
 # Time:  O(n)
 # Space: O(1)
 # Sort
 #
 # Description: Leetcode # 75. Sort Colors
 #
-# Given an array with n objects colored red, white or blue, sort them so that objects of the same color are adjacent,
+# Given an array with n objects colored red, white or blue,
+# sort them so that objects of the same color are adjacent,
 # with the colors in the order red, white and blue.
 #
 # Here, we will use the integers 0, 1, and 2 to represent the color red, white, and blue respectively.
@@ -83,9 +84,10 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/problems/contains-duplicate/solution/
-# 50.57% 0ms
-public class Solution {
+# Thought:
+
+# 0ms 100%
+class Solution {
     public void sortColors(int[] nums) {
         int red = 0;
         int blue = nums.length - 1;
@@ -108,8 +110,8 @@ public class Solution {
     }
 }
 
-# two pass: count each color and then swap
-# 50.57% 0ms
+# Two pass: count each color and then swap
+# 0ms 100%
 class Solution {
     public void sortColors(int[] nums) {
         int num0 = 0, num1 = 0, num2 = 0;

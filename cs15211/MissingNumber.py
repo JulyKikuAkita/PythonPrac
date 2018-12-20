@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/missing-number/description/'
+__source__ = 'https://leetcode.com/problems/missing-number/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/missing-number.py
 # Time:  O(n)
 # Space: O(1)
@@ -62,8 +62,10 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#17.78% 4ms
-public class Solution {
+# Thought: https://leetcode.com/problems/missing-number/solution/
+
+# 1ms 66.24%
+class Solution {
     public int missingNumber(int[] nums) {
         int index = 0;
         while (index < nums.length) {
@@ -89,8 +91,8 @@ public class Solution {
 }
 
 # 1.XOR
-#37.54% 1ms
-public class Solution {
+# 1ms 66.24%
+class Solution {
     public int missingNumber(int[] nums) {
         int xor = 0, i = 0;
         for (i = 0; i < nums.length; i++) {
@@ -102,8 +104,8 @@ public class Solution {
 }
 
 2.SUM
-#37.54% 1ms
-public class Solution {
+# 1ms 66.24%
+class Solution {
     public int missingNumber(int[] nums) { //sum
         int len = nums.length;
         int sum = ( 0 + len ) * ( len + 1 ) / 2;
@@ -114,8 +116,8 @@ public class Solution {
 }
 
 3.Binary Search
-#11.58% 12ms
-public class Solution {
+# 7ms 21.05%
+class Solution {
     public int missingNumber(int[] nums) { //binary search
         Arrays.sort(nums);
         int left = 0, right = nums.length, mid= (left + right) / 2;

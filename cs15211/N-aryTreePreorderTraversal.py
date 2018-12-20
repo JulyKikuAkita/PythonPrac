@@ -1,8 +1,9 @@
-__source__ = 'https://leetcode.com/problems/n-ary-tree-preorder-traversal/description/'
+__source__ = 'https://leetcode.com/problems/n-ary-tree-preorder-traversal/'
 # Time:  O(N)
 # Space: O(N)
 #
 # Description: Leetcode # 589. N-ary Tree Preorder Traversal
+#
 # Given an n-ary tree, return the preorder traversal of its nodes' values.
 #
 # For example, given a 3-ary tree:
@@ -65,7 +66,7 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/problems/n-ary-tree-preorder-traversal/solution/
+# Thought: https://leetcode.com/problems/n-ary-tree-preorder-traversal/solution/
 Complexity Analysis
 
 Time complexity : we visit each node exactly once, and for each visit,
@@ -79,7 +80,7 @@ we could keep up to the entire tree, therefore,
 the space complexity is )O(N).
 
 # Recursion
-# 2ms 100%
+# 4ms 69.28%
 class Solution {
     public List<Integer> preorder(Node root) {
         List<Integer> result = new ArrayList<>();
@@ -96,8 +97,8 @@ class Solution {
     }
 }
 
-# iteration
-# 8.48% 10ms
+# Iteration
+# 5ms 52.20%
 class Solution {
     public List<Integer> preorder(Node root) {
         LinkedList<Integer> res = new LinkedList<>();
@@ -115,6 +116,7 @@ class Solution {
     }
 }
 
+# 7ms 27.67%
 class Solution {
   public List<Integer> preorder(Node root) {
     LinkedList<Node> stack = new LinkedList<>();

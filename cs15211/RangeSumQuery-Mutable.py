@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/range-sum-query-mutable/#/description'
+__source__ = 'https://leetcode.com/problems/range-sum-query-mutable/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/range-sum-query-mutable.py
 # Time:  ctor:   O(n),
 #        update: O(logn),
@@ -181,11 +181,11 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/problems/range-sum-query-mutable/solution/
+# Thought: https://leetcode.com/problems/range-sum-query-mutable/solution/
 
 # Segment tree
-# 15.58% 150ms
-public class NumArray {
+# 116ms 34.58%
+class NumArray {
     int[] nodes;
     int length;
 
@@ -292,10 +292,10 @@ public class NumArray {
  * j=i-(i&-i), up to j==idx-(idx&-idx) exclusive. (However, a quicker
  * way but using extra space is to store the original array.)
  */
-
-BIT:
-#83.07% 122ms
-public class NumArray {
+#
+# BIT:
+# 96ms 46.67%
+class NumArray {
 	int[] nums;
 	int[] BIT;
 	int n;

@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/max-sum-of-rectangle-no-larger-than-k/description/'
+__source__ = 'https://leetcode.com/problems/max-sum-of-rectangle-no-larger-than-k/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/max-sum-of-sub-matrix-no-larger-than-k.py
 # Time:  O(min(m, n)^2 * max(m, n) * log(max(m, n)))
 # Space: O(max(m, n))
@@ -155,15 +155,17 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
+# Thought:
+#
 The naive solution is brute-force, which is O((mn)^2). In order to be more efficient,
 I tried something similar to Kadane's algorithm. The only difference is that here we have upper bound restriction K.
 Here's the easily understanding video link for the problem "find the max sum rectangle in 2D array":
 https://www.youtube.com/watch?v=yCQN096CwWM
-Maximum Sum Rectangular Submatrix in Matrix dynamic programming/2D kadane (Trust me, it's really easy and straightforward).
+Maximum Sum Rectangular Submatrix in Matrix dynamic programming/2D kadane (Trust me, 
+it's really easy and straightforward).
 
-#39.81% 251ms
-public class Solution {
+# 203ms 29.01%
+class Solution {
     public int maxSumSubmatrix(int[][] matrix, int k) {
         int m = matrix.length;
         int n = m == 0 ? 0 : matrix[0].length;
@@ -200,8 +202,8 @@ public class Solution {
     }
 }
 
-#56.38% 163ms
-public class Solution {
+# 109ms 66.75%
+class Solution {
     /* first  consider the situation matrix is 1D
     we can save every sum of 0~i(0<=i<len) and binary search previous sum to find
     possible result for every index, time complexity is O(NlogN).
@@ -243,8 +245,8 @@ public class Solution {
     }
 }
 
-#96.59% 104ms
-public class Solution {
+# 69ms 98.35%
+class Solution {
     public int maxSumSubmatrix(int[][] matrix, int k) {
         int m = matrix.length, n = matrix[0].length, ans = Integer.MIN_VALUE;
         long[] sum = new long[m+1]; // stores sum of rect[0..p][i..j]
@@ -283,7 +285,7 @@ public class Solution {
     }
 }
 
-#100% 31ms
+# 16ms 99.76%
 class Solution {
     public int maxSumSubmatrix(int[][] matrix, int k) {
         if(matrix.length == 0) return 0;
@@ -317,7 +319,6 @@ class Solution {
             }
         }
         return result;
-
     }
 }
 '''

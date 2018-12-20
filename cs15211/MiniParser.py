@@ -1,4 +1,4 @@
-__source__ = 'https://github.com/kamyu104/LeetCode/blob/master/Python/mini-parser.py'
+__source__ = 'https://leetcode.com/problems/mini-parser/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/mini-parser.py
 # Time:  O(n)
 # Space: O(h)
@@ -43,6 +43,8 @@ __source__ = 'https://github.com/kamyu104/LeetCode/blob/master/Python/mini-parse
 # You should not implement it, or speculate about its implementation
 # """
 #
+import unittest
+
 class NestedInteger(object):
    def __init__(self, value=None):
        """
@@ -81,9 +83,7 @@ class NestedInteger(object):
        Return None if this NestedInteger holds a single integer
        :rtype List[NestedInteger]
        """
-
-
-import unittest
+# 168ms 19.51%
 class Solution(object):
     def deserialize(self, s):
         if not s:
@@ -118,13 +118,15 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
+# Thought:
+
 This approach will just iterate through every char in the string (no recursion).
 
 If encounters '[', push current NestedInteger to stack and start a new one.
 If encounters ']', end current NestedInteger and pop a NestedInteger from stack to continue.
 If encounters ',', append a new number to curr NestedInteger, if this comma is not right after a brackets.
-Update index l and r, where l shall point to the start of a integer substring, while r shall points to the end+1 of substring.
+Update index l and r, where l shall point to the start of a integer substring, 
+while r shall points to the end+1 of substring.
 
 /**
  * // This is the interface that allows for creating nested lists.
@@ -154,8 +156,8 @@ Update index l and r, where l shall point to the start of a integer substring, w
  *     public List<NestedInteger> getList();
  * }
  */
-#17.11% 28ms
-public class Solution {
+# 14ms 31.81%
+class Solution {
     public NestedInteger deserialize(String s) {
         if (s == null || s.length() == 0) return null;
         if (s.charAt(0) != '[') { // ERROR: special case
@@ -196,10 +198,10 @@ public class Solution {
         return curr;
     }
 }
-#if need full-implementation:
+# If need full-implementation:
 https://discuss.leetcode.com/topic/54268/straightforward-java-solution-with-explanation-and-a-simple-implementation-of-nestedinteger-for-your-ease-of-testing
 
-#99.47% 10ms
+# 4ms 100%
 class Solution {
     private int parse(char[] chars, int idx, NestedInteger root) {
         int num = 0;

@@ -1,10 +1,10 @@
-__source__ = 'https://leetcode.com/problems/maximum-length-of-pair-chain/discuss/'
+__source__ = 'https://leetcode.com/problems/maximum-length-of-pair-chain/'
 # Time:  O(nlogn)
 # Space: O(1)
 #
 # Description: Leetcode # 646. Maximum Length of Pair Chain
 #
-#You are given n pairs of numbers. In every pair, the first number is always smaller than the second number.
+# You are given n pairs of numbers. In every pair, the first number is always smaller than the second number.
 #
 # Now, we define a pair (c, d) can follow another pair (a, b) if and only if b < c.
 # Chain of pairs can be formed in this fashion.
@@ -27,7 +27,7 @@ __source__ = 'https://leetcode.com/problems/maximum-length-of-pair-chain/discuss
 #
 
 import unittest
-#79 ms
+# 44ms 98.46%
 class Solution(object):
     def findLongestChain(self, pairs):
         """
@@ -48,9 +48,11 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: This is equivalent to interval scheduling problem.
-#59.95% 95ms
-public class Solution {
+# Thought: https://leetcode.com/problems/maximum-length-of-pair-chain/solution/
+
+This is equivalent to interval scheduling problem.
+# 123ms 23.24%
+class Solution {
     public int findLongestChain(int[][] pairs) {
         Arrays.sort(pairs, (a,b) -> a[1] - b[1]);
         int sum = 0, n = pairs.length, i = -1;
@@ -63,8 +65,8 @@ public class Solution {
     }
 }
 
-# 96.21% 33ms
-public class Solution {
+# 31ms 89.86%
+class Solution {
     public int findLongestChain(int[][] pairs) {
         if(pairs == null || pairs.length == 0 || pairs[0].length == 0){
             return 0;
@@ -88,9 +90,9 @@ public class Solution {
     }
 }
 
-#DP
-#17.83% 158ms
-public class Solution {
+# DP
+# 115ms 27.75%
+class Solution {
     public int findLongestChain(int[][] pairs) {
         Arrays.sort(pairs, (a, b) -> (a[0] - b[0]));
 

@@ -1,9 +1,10 @@
-__source__ = 'https://github.com/kamyu104/LeetCode/blob/master/Python/minimum-moves-to-equal-array-elements-ii.py'
-# https://leetcode.com/problems/minimum-moves-to-equal-array-elements-ii/#/solutions
+__source__ = 'https://leetcode.com/problems/minimum-moves-to-equal-array-elements-ii/'
+# https://github.com/kamyu104/LeetCode/blob/master/Python/minimum-moves-to-equal-array-elements-ii.py
 # Time:  O(n) on average
 # Space: O(1)
 #
-# Description:
+# Description: 462. Minimum Moves to Equal Array Elements II
+#
 # Given a non-empty integer array, find the minimum number of moves required to make all array elements equal,
 # where a move is incrementing a selected element by 1 or decrementing a selected element by 1.
 #
@@ -29,6 +30,7 @@ import unittest
 from random import randint
 # Quick select solution.
 class Solution(object):
+    # 52ms 9.58%
     def minMoves2(self, nums):
         """
         :type nums: List[int]
@@ -69,6 +71,7 @@ class Solution(object):
         median = sorted(nums)[len(nums) / 2]
         return sum(abs(num - median) for num in nums)
 
+    # 36ms 29.34%
     def minMoves23(self, nums):
         """
         :type nums: List[int]
@@ -77,25 +80,24 @@ class Solution(object):
         nums.sort()
         return sum(nums[~i] - nums[i] for i in xrange(len(nums) / 2))
 
-
 class TestMethods(unittest.TestCase):
     def test_Local(self):
         self.assertEqual(1, 1)
 
-
 if __name__ == '__main__':
     unittest.main()
 
-
 Java = '''
-#Thought: https://leetcode.com/articles/minimum-moves-to-equal-array-elements-ii/#approach-7-using-median-of-medians-accepted
+# Thought: https://leetcode.com/problems/minimum-moves-to-equal-array-elements-ii/solution/
+https://leetcode.com/articles/minimum-moves-to-equal-array-elements-ii/#approach-7-using-median-of-medians-accepted
 Java O(n) Time using QuickSelect
 This solution relies on the fact that if we increment/decrement each element to the median of all the elements,
 the optimal number of moves is necessary.
 The median of all elements can be found in expected O(n) time using QuickSelect
 (or deterministic O(n) time using Median of Medians).
 
-public class Solution {
+# 3ms 100%
+class Solution {
     public int minMoves2(int[] nums) {
         int sum = 0;
         int median = quickSelect(nums, nums.length / 2 + 1, 0, nums.length - 1);
@@ -128,7 +130,8 @@ public class Solution {
 }
 
 # count the difference between median
-public class Solution2 {
+# 4ms 98.25%
+class Solution {
     public int minMoves2(int[] nums) {
         Arrays.sort(nums);
         int i = 0, j = nums.length - 1;

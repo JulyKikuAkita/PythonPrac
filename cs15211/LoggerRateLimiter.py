@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/logger-rate-limiter/description/'
+__source__ = 'https://leetcode.com/problems/logger-rate-limiter/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/logger-rate-limiter.py
 # Time:  O(1), amortized
 # Space: O(k), k is the max number of printed messages in last 10 seconds
@@ -82,9 +82,10 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
-# 97.72% 144ms
-public class Logger {
+# Thought:
+
+# 80ms 97.69%
+class Logger {
     private Map<String, Integer> map;
 
     /** Initialize your data structure here. */
@@ -110,8 +111,8 @@ public class Logger {
  * boolean param_1 = obj.shouldPrintMessage(timestamp,message);
  */
 
- #4.7% 199ms
- public class Logger {
+# 89ms 87.14%
+class Logger {
     HashMap<String, Integer> ok;
     /** Initialize your data structure here. */
     public Logger() {

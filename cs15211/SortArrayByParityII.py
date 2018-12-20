@@ -1,8 +1,8 @@
-__source__ = ''
+__source__ = 'https://leetcode.com/problems/sort-array-by-parity-ii/'
 # Time:  O(N)
 # Space: O(1)
 #
-# Description: Leetcode #
+# Description: Leetcode # 922. Sort Array By Parity II
 #
 # Given an array A of non-negative integers, half of the integers in A are odd,
 # and half of the integers are even.
@@ -17,7 +17,6 @@ __source__ = ''
 # Output: [4,5,2,7]
 # Explanation: [4,7,2,5], [2,5,4,7], [2,7,4,5] would also have been accepted.
 #
-#
 # Note:
 #
 # 2 <= A.length <= 20000
@@ -26,7 +25,7 @@ __source__ = ''
 #
 import unittest
 
-#140ms 96.71%
+# 136ms 98.99%
 class Solution(object):
     def sortArrayByParityII(self, A):
         """
@@ -45,13 +44,13 @@ class TestMethods(unittest.TestCase):
     def test_Local(self):
         self.assertEqual(1, 1)
 
-
 if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/problems/sort-array-by-parity-ii/solution/
-# 100% 5ms
+# Thought: https://leetcode.com/problems/sort-array-by-parity-ii/solution/
+
+# 5ms 98.24%
 class Solution {
     public int[] sortArrayByParityII(int[] A) {
         int j = 1;
@@ -65,11 +64,11 @@ class Solution {
                 A[i] = A[j];
                 A[j] = tmp;
             }
-
         return A;
     }
 }
 
+# 5ms 98.84%
 class Solution {
     public int[] sortArrayByParityII(int[] A) {
         int N = A.length; //always even

@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/longest-valid-parentheses/tabs/description'
+__source__ = 'https://leetcode.com/problems/longest-valid-parentheses/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/longest-valid-parentheses.py
 # Time:  O(n)
 # Space: O(1)
@@ -131,9 +131,10 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-Thought: https://leetcode.com/problems/longest-valid-parentheses/tabs/solution
-#82%  18ms
-public class Solution {
+# Thought: https://leetcode.com/problems/longest-valid-parentheses/solution/
+#
+# 12ms 78.01%
+class Solution {
     public int longestValidParentheses(String s) {
         int len = s.length();
         if (len < 2) {
@@ -157,8 +158,8 @@ public class Solution {
     }
 }
 
-#92%  17ms
-public class Solution {
+# 8ms 99.55%
+class Solution {
     public int longestValidParentheses(String s) {
         int result = 0;
         int lenS = s.length();
@@ -180,8 +181,8 @@ public class Solution {
     }
 }
 
-# 82.42% 18ms
-public class Solution {
+# 9ms 93.91%
+class Solution {
     public int longestValidParentheses(String s) {
         int left = 0, right = 0, maxlength = 0;
         for (int i = 0; i < s.length(); i++) {
@@ -213,8 +214,8 @@ public class Solution {
     }
 }
 
-# 30.81% 25ms
-public class Solution {
+# 17ms 47.36%
+class Solution {
     public int longestValidParentheses(String s) {
         if( s == null || s.length() < 2) return 0;
         int maxans = 0;

@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/shuffle-an-array/#/description'
+__source__ = 'https://leetcode.com/problems/shuffle-an-array/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/shuffle-an-array.py
 # Time:  O(n)
 # Space: O(n)
@@ -25,7 +25,7 @@ __source__ = 'https://leetcode.com/problems/shuffle-an-array/#/description'
 
 import unittest
 from random import random
-#979ms
+# 676ms 24.17%
 class Solution(object):
 
     def __init__(self, nums):
@@ -56,7 +56,6 @@ class Solution(object):
             nums[i], nums[j] = nums[j], nums[i]
         return nums
 
-
 # Your Solution object will be instantiated and called as such:
 # obj = Solution(nums)
 # param_1 = obj.reset()
@@ -70,8 +69,9 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
-#28.76% 278ms
+# Thought: https://leetcode.com/problems/shuffle-an-array/solution/
+
+# 141ms 96.72%
 import java.util.Random;
 public class Solution {
     private Random mRandom;
@@ -112,6 +112,4 @@ public class Solution {
  * int[] param_2 = obj.shuffle();
  */
 
-More...
-Show All
 '''

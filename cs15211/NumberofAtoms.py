@@ -1,5 +1,3 @@
-import collections
-
 __source__ = 'https://leetcode.com/problems/number-of-atoms/'
 # Time:  O(N^2)
 # Space: O(N)
@@ -51,8 +49,8 @@ __source__ = 'https://leetcode.com/problems/number-of-atoms/'
 # and is a valid formula as defined in the problem.
 #
 import unittest
-
-#24ms 78.3%
+import collections
+# 24ms 78.3%
 class Solution:
     def countOfAtoms(self, formula):
         """
@@ -123,7 +121,8 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/problems/number-of-atoms/solution/
+# Thought: https://leetcode.com/problems/number-of-atoms/solution/
+#
 # Approach #1: Recursion [Accepted]
 # Complexity Analysis
 # Time Complexity: O(N^2), where N is the length of the formula.
@@ -132,8 +131,7 @@ Java = '''
 # (inside those brackets), leading to an O(N^2) complexity.
 # Space Complexity: O(N). We aren't recording more intermediate information than what is contained in the formula.
 #
-#7ms, 70.79%
-
+# 7ms, 70.79%
 class Solution {
     private int i;
 

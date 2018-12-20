@@ -1,10 +1,11 @@
-__source__ = 'https://leetcode.com/problems/search-in-rotated-sorted-array/description/'
+__source__ = 'https://leetcode.com/problems/search-in-rotated-sorted-array/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/search-in-rotated-sorted-array.py
 # Time:  O(logn)
 # Space: O(1)
 # Binary Search
 #
 # Description: Leetcode # 33. Search in Rotated Sorted Array
+#
 # Suppose a sorted array is rotated at some pivot unknown to you beforehand.
 #
 # (i.e., 0 1 2 4 5 6 7 might become 4 5 6 7 0 1 2).
@@ -88,7 +89,6 @@ class SolutionOther:
                 begin = mid + 1
         return -1
 
-
 class Solution3(object):
     def search(self, nums, target):
         """
@@ -138,7 +138,8 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
+# Thought:
+
 Explanation
 
 Let's say nums looks like this: [12, 13, 14, 15, 16, 17, 18, 19, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
@@ -152,8 +153,9 @@ If target is let's say 7, then we adjust nums to this:
 [-inf, -inf, -inf, -inf, -inf, -inf, -inf, -inf, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
 
 And then we can simply do ordinary binary search.
-# 87.20% 13ms
-public class Solution {
+
+# 10ms 24.16%
+class Solution {
     public int search(int[] nums, int target) {
         int left = 0;
         int right = nums.length - 1;

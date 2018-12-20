@@ -1,11 +1,14 @@
-__source__ = 'https://leetcode.com/problems/regular-expression-matching/description/'
+__source__ = 'https://leetcode.com/problems/regular-expression-matching/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/regular-expression-matching.py
 # Time:  O(m * n)
 # Space: O(n)
 # DP
 # "*" cannot be the first char?
 #
-# Implement regular expression matching with support for '.' and '*'.
+# Description: Leetcode # 10. Regular Expression Matching
+#
+# Given an input string (s) and a pattern (p),
+# implement regular expression matching with support for '.' and '*'.
 #
 # '.' Matches any single character.
 # '*' Matches zero or more of the preceding element.
@@ -143,65 +146,10 @@ class Solution4:
 # For the 1st case, if the first char of pattern is not ".",
 # the first char of pattern and string should be the same. Then continue to match the left part.
 #
-# For the 2nd case, if the first char of pattern is "." or first char of pattern == the first i char of string, continue to match the left.
+# For the 2nd case, if the first char of pattern is "." or first char of pattern == the first i char of string,
+# continue to match the left.
 #
 # Be careful about the offset.
-
-#http://www.programcreek.com/2012/12/leetcode-regular-expression-matching-in-java/
-class java_readable:
-    # @return a boolean
-    def isMatch(self, s, p):
-        #base case
-        if len(p) == 0:
-            return len(s) == 0
-        #special case
-        if len(p) == 1:
-            # // if the length of s is 0, return false
-            if len(s) < 1:
-                return False
-            # if the first does not match, return false
-            elif p[0] != s[0] and p[0] != '.':
-                return False
-            # otherwise, compare the rest of the string of s and p.
-            else:
-                return self.isMatch(s[1:], p[1:])
-
-        #case 1: when the second char of p is not '*'
-        if p[1] != '*':
-            if len(s) < 1:
-                return False
-            if p[0] != s[0] and p[0] != '.':
-                return False
-            else:
-                return self.isMatch(s[1:], p[1:])
-
-        # case 2: when the second char of p is '*', complex case.
-        else:
-            # case 2.1: a char & '*' can stand for 0 element
-            if self.isMatch(s, p[2:]):
-                return True
-            # case 2.2: a char & '*' can stand for 1 or more preceding element,
-		        # so try every sub string
-            i = 0
-            while i < len(s) and s[i] == p[0] or p[0] == '.':
-                if self.isMatch(s[i+1:], p[2:]):
-                    return True
-                i += 1
-            return False
-
-
-
-if __name__ == "__main__":
-    #print Solution().isMatch("abcd","d*")
-    #print Solution().isMatch("aaaaaaaaaaaaab", "a*a*a*a*a*a*a*a*a*a*c")
-    #print Solution().isMatch("aa","a")
-    #print Solution().isMatch("aa","aa")
-    #print Solution().isMatch("aaa","aa")
-    #print Solution().isMatch("aa", "a*")
-    #print Solution2().isMatch("aa", ".*")
-    #print Solution3().isMatch("ab", ".*")
-    print Solution().isMatch("aab", "c*a*b")
-    print Solution4().isMatch("aab", "c*a*b")
 
 # http://www.cnblogs.com/zuoyuan/p/3781773.html
 class SolutionOther:
@@ -240,14 +188,28 @@ class SolutionOther:
                 i += 1
             return False
 
-#test
-#test = SolutionOther()
-#print test.isMatch("aaaaaaaaaaaaab", "a*a*a*a*a*a*a*a*a*a*c")
-#print test.isMatchTLE("aaaaaaaaaaaaab", "a*a*a*a*a*a*a*a*a*a*c")
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        pass
+        #test = SolutionOther()
+        #print test.isMatch("aaaaaaaaaaaaab", "a*a*a*a*a*a*a*a*a*a*c")
+        #print test.isMatchTLE("aaaaaaaaaaaaab", "a*a*a*a*a*a*a*a*a*a*c")
 
-#Java
+if __name__ == "__main__":
+    #print Solution().isMatch("abcd","d*")
+    #print Solution().isMatch("aaaaaaaaaaaaab", "a*a*a*a*a*a*a*a*a*a*c")
+    #print Solution().isMatch("aa","a")
+    #print Solution().isMatch("aa","aa")
+    #print Solution().isMatch("aaa","aa")
+    #print Solution().isMatch("aa", "a*")
+    #print Solution2().isMatch("aa", ".*")
+    #print Solution3().isMatch("ab", ".*")
+    print Solution().isMatch("aab", "c*a*b")
+    print Solution4().isMatch("aab", "c*a*b")
+
 Java = '''
-Thought: https://discuss.leetcode.com/topic/40371/easy-dp-java-solution-with-detailed-explanation
+# Thought: https://leetcode.com/problems/regular-expression-matching/solution/
+https://discuss.leetcode.com/topic/40371/easy-dp-java-solution-with-detailed-explanation
 This Solution use 2D DP. beat 90% solutions, very simple.
 
 Here are some conditions to figure out, then the logic can be very straightforward.
@@ -263,8 +225,8 @@ Here are some conditions to figure out, then the logic can be very straightforwa
                            or dp[i][j] = dp[i][j-2]   // in this case, a* counts as empty
 
 
-# 40.59 %, 35ms
-public class Solution {
+# 12ms 98.12%
+class Solution {
     public boolean isMatch(String s, String p) {
         int lenS = s.length();
         int lenP = p.length();
@@ -285,9 +247,8 @@ public class Solution {
     }
 }
 
-# 45% - 81%
-#80.07% 29ms
-public class Solution {
+# 80.07% 29ms
+class Solution {
     public boolean isMatch(String s, String p) {
         if (s == null || p == null) {
             return false;

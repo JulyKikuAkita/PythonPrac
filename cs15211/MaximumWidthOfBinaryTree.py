@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/maximum-width-of-binary-tree/description/'
+__source__ = 'https://leetcode.com/problems/maximum-width-of-binary-tree/'
 # Time:  O()
 # Space: O()
 #
@@ -85,7 +85,7 @@ import unittest
 # all the nodes with the same depth are searched adjacent to each other,
 # so we only need to remember the first and last positions seen for each depth.
 #
-#49ms
+# 44ms 26.52%
 class SolutionBFS(object):
     def widthOfBinaryTree(self, root):
         """
@@ -109,12 +109,12 @@ class TestMethods(unittest.TestCase):
     def test_Local(self):
         self.assertEqual(1, 1)
 
-
 if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
+# Thought: https://leetcode.com/problems/maximum-width-of-binary-tree/solution/
+#
 Regardless whether these nodes exist:
 
 Always make the id of left child as parent_id * 2;
@@ -134,8 +134,8 @@ Record the id of left most node at each level of the tree
  * }
  */
 
-#DFS
-#35.39% 13ms
+# DFS
+# 5ms 93.95%
 class Solution {
     public int widthOfBinaryTree(TreeNode root) {
         return dfs(root, 0, 1, new ArrayList<Integer>(), new ArrayList<Integer>());
@@ -153,8 +153,8 @@ class Solution {
     }
 }
 
-#BFS:
-#22.76% 15ms
+# BFS:
+# 6ms 72.39%
 import java.util.AbstractMap;
 class Solution {
     public int widthOfBinaryTree(TreeNode root) {
@@ -178,7 +178,7 @@ class Solution {
 }
 
 # Level order
-#64.30% 11ms
+# 5ms 93.95%
 class Solution {
     public int widthOfBinaryTree(TreeNode root) {
         if(root == null) return 0;

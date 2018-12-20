@@ -1,10 +1,11 @@
-__source__ = 'https://leetcode.com/problems/remove-element/description/'
+__source__ = 'https://leetcode.com/problems/remove-element/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/remove-element.py
 # Time:  O(n)
 # Space: O(1)
 # Array
 #
 # Description: Leetcode # 27. Remove Element
+#
 # Given an array and a value, remove all instances of that value in place and return the new length.
 #
 # Do not allocate extra space for another array, you must do this in place with constant memory.
@@ -35,10 +36,6 @@ class Solution:
                 i += 1
         return last + 1
 
-if __name__ == "__main__":
-    A = [1, 2, 3, 4, 5, 2, 2]
-    print Solution().removeElement(A, 2) , A
-
 class SolutionOther:
     # @param    A       a list of integers
     # @param    elem    an integer, value need to be removed
@@ -57,16 +54,18 @@ class TestMethods(unittest.TestCase):
         t1 = SolutionOther()
         print t1.removeElement([1,1,1],1)
         print t1.removeElement([1, 2, 3, 4, 5, 2, 2], 2)
+        A = [1, 2, 3, 4, 5, 2, 2]
+        print Solution().removeElement(A, 2) , A
 
 if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/articles/remove-element/
+# Thought: https://leetcode.com/problems/remove-element/solution/
 
-#Two pointers
-#27.72% 10ms
-public class Solution {
+# Two pointers
+# 27.72% 10ms
+class Solution {
     public int removeElement(int[] nums, int val) {
         int end = -1;
         for (int i = 0; i < nums.length; i++) {
@@ -78,9 +77,9 @@ public class Solution {
     }
 }
 
-#Two pointers
-#27.72% 10ms
-public class Solution {
+# Two pointers
+# 4ms 98.55%
+class Solution {
     public int removeElement(int[] nums, int val) {
         int j = 0;
         for (int i = 0; i < nums.length; i++) {
@@ -92,8 +91,8 @@ public class Solution {
     }
 }
 
-#27.72% 10ms
-public class Solution {
+# 6ms 45.82%
+class Solution {
     public int removeElement(int[] nums, int val) {
         int i = 0;
         int n = nums.length;
@@ -111,8 +110,8 @@ public class Solution {
 }
 
 
-# 92.56% 8ms
-public class Solution {
+# 4ms 98.55%
+class Solution {
     public int removeElement(int[] nums, int val) {
         int end = nums.length;
         for (int i = 0; i < end; i++) {
@@ -129,6 +128,5 @@ public class Solution {
         nums[j] = tmp;
     }
 }
-
 
 '''

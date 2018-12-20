@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/largest-divisible-subset/description/'
+__source__ = 'https://leetcode.com/problems/largest-divisible-subset/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/largest-divisible-subset.py
 # Time:  O(n^2)
 # Space: O(n)
@@ -64,10 +64,10 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
+# Thought:
 
-#40.19% 41ms
-public class Solution {
+# 21ms 94.39%
+class Solution {
     public List<Integer> largestDivisibleSubset(int[] nums) {
         List<Integer> result = new ArrayList<>();
         int[] dp = new int[nums.length];
@@ -103,7 +103,7 @@ public class Solution {
     }
 }
 
-#98.41% 30ms
+# 37ms 29.93%
 class Solution {
     public List<Integer> largestDivisibleSubset(int[] nums) {
         List<Integer> res = new ArrayList();
@@ -140,8 +140,8 @@ class Solution {
     }
 }
 
-#99.89% 20ms
-public class Solution {
+# 16ms 100%
+class Solution {
     public List<Integer> largestDivisibleSubset(int[] nums) {
         int n = nums.length, maxIdx = 0;
         List<Integer> ans = new LinkedList<>();

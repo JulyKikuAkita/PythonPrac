@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/rotate-list/description/'
+__source__ = 'https://leetcode.com/problems/rotate-list/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/rotate-list.py
 # Time:  O(n)
 # Space: O(1)
@@ -112,7 +112,7 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-
+# Thought:
 /**
  * Definition for singly-linked list.
  * public class ListNode {
@@ -121,14 +121,15 @@ Java = '''
  *     ListNode(int x) { val = x; }
  * }
  */
-#Thought: The basic idea is to connect the list into a circle.
+
+The basic idea is to connect the list into a circle.
 First, count the length of list while going through the list to find the end of it.
 Connect the tail to head. The problem asked to rotate k nodes,
 however, now the tail is at the end of the list and its difficult to move backward,
 so move (k - len) nodes along the list instead. "k = k % len" saves the unnecessary moves
 because rotate a list with length = len by len times doesn't change the list at all.
 
-#55.05% 16ms
+# 6ms 100%
 class Solution {
     public ListNode rotateRight(ListNode head, int k) {
         if (head == null) return null;
@@ -147,7 +148,6 @@ class Solution {
     }
 }
 
-Thought:
 Since n may be a large number compared to the length of list.
 So we need to know the length of linked list.After that,
 move the list after the (l-n%l )th node to the front to finish the rotation.
@@ -164,8 +164,8 @@ Move to the (l-n%l)th node
 
 3)Do the rotation
 
-#55.05% 16ms
-public class Solution {
+# 6ms 100%
+class Solution {
     public ListNode rotateRight(ListNode head, int n) {
         if (head==null||head.next==null) return head;
         ListNode dummy = new ListNode(0);
@@ -187,8 +187,8 @@ public class Solution {
     }
 }
 
-#55.05% 16ms
-public class Solution {
+# 6ms 100%
+class Solution {
     public ListNode rotateRight(ListNode head, int k) {
         if (head == null || k <= 0) {
             return head;

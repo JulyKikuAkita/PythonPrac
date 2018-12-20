@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/meeting-rooms/#/description'
+__source__ = 'https://leetcode.com/problems/meeting-rooms/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/meeting-rooms.py
 # Time:  O(nlogn)
 # Space: O(n)
@@ -25,6 +25,7 @@ __source__ = 'https://leetcode.com/problems/meeting-rooms/#/description'
 #         self.start = s
 #         self.end = e
 import unittest
+# 60ms 9.28%
 class Solution:
     # @param {Interval[]} intervals
     # @return {boolean}
@@ -44,7 +45,7 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-Thought: https://leetcode.com/articles/meeting-rooms/
+Thought: https://leetcode.com/problems/meeting-rooms/solution/
 /**
  * Definition for an interval.
  * public class Interval {
@@ -54,8 +55,9 @@ Thought: https://leetcode.com/articles/meeting-rooms/
  *     Interval(int s, int e) { start = s; end = e; }
  * }
  */
-# 25.50% 14ms
-public class Solution {
+#
+# 7ms 54.94%
+class Solution {
     public boolean canAttendMeetings(Interval[] intervals) {
         if(intervals ==null || intervals.length == 0) return true;
 
@@ -78,8 +80,8 @@ public class Solution {
 }
 
 # Java 8:
-# 41.65% 12ms
-public class Solution {
+# 69ms 5.37%
+class Solution {
     public boolean canAttendMeetings(Interval[] intervals) {
         if(intervals == null || intervals.length == 0) return true;
         Arrays.sort(intervals, (Interval a, Interval b) -> a.start - b.start); //asc
@@ -90,21 +92,22 @@ public class Solution {
     }
 }
 
-# 93.77% 4ms
+# 3ms 95.18%
 class Solution {
     public boolean canAttendMeetings(Interval[] intervals) {
-        if (intervals == null) return false;
         int len = intervals.length;
-        int[] s = new int[len];
-        int[] e = new int[len];
+        int[] start = new int[len];
+        int[] end = new int[len];
         for (int i = 0; i < len; i++) {
-            s[i] = intervals[i].start;
-            e[i] = intervals[i].end;
+            start[i] = intervals[i].start;
+            end[i] = intervals[i].end;
         }
-        Arrays.sort(s);
-        Arrays.sort(e);
-        for (int i = 0; i < len - 1; i++) {
-            if (s[i + 1] < e[i]) return false;
+        Arrays.sort(start);
+        Arrays.sort(end);
+        for (int i = 1; i < len; i++) {
+            if (end[i - 1] > start[i]) {
+                return false;
+            }
         }
         return true;
     }

@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/maximum-depth-of-binary-tree/#/description'
+__source__ = 'https://leetcode.com/problems/maximum-depth-of-binary-tree/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/maximum-depth-of-binary-tree.py
 # Time:  O(n)
 # Space: O(h), h is height of binary tree
@@ -141,8 +141,7 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
-
+# Thought: https://leetcode.com/problems/maximum-depth-of-binary-tree/solution/
 
 /**
  * Definition for a binary tree node.
@@ -154,16 +153,18 @@ Java = '''
  * }
  */
 
-#DFS: 15.60% 1ms
-public class Solution {
+# DFS: 
+# 0ms 100%
+class Solution {
     public int maxDepth(TreeNode root) {
         if (root == null) return 0;
         return 1 + Math.max(maxDepth(root.left), maxDepth(root.right));
     }
 }
 
-#DFS: 15.60% 1ms
-public class Solution {
+# DFS: 
+# 0ms 100%
+class Solution {
     public int maxDepth(TreeNode root) {
         if (root == null){ return 0; }
         int l = 1 + maxDepth(root.left);
@@ -173,8 +174,9 @@ public class Solution {
     }
 }
 
-#BFS: 8.81% 2ms
-public class Solution {
+# BFS: 
+# 2ms 7.04%
+class Solution {
     public int maxDepth(TreeNode root) {
         if (root == null) return 0;
         Queue<TreeNode> q = new LinkedList<>();

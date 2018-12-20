@@ -3,6 +3,7 @@ __source__ = 'https://leetcode.com/problems/number-of-distinct-islands-ii/'
 # Space: O()
 #
 # Description: Leetcode # 711. Number of Distinct Islands II
+#
 # similar question: Starry Night
 # http://olympiads.win.tue.nl/ioi/ioi98/contest/day1/starry/starry.html
 #
@@ -171,7 +172,7 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/problems/number-of-distinct-islands-ii/solution/
+# Thought: https://leetcode.com/problems/number-of-distinct-islands-ii/solution/
 
 Approach #1: Canonical Hash [Accepted]
 Complexity Analysis
@@ -181,7 +182,7 @@ Complexity Analysis
 # The log factor comes from sorting the shapes.
 # Space complexity: O(R*C), the space used to keep track of the shapes.
 
-#69ms 96.52%
+# 69ms 96.52%
 class Solution {
     int[][] grid;
     boolean[][] seen;
@@ -246,7 +247,7 @@ class Solution {
     }
 }
 ####################################################################################################################
-#46ms 100%  # add all rotate result to list
+# 46ms 100%  # add all rotate result to list
 
 class Solution {
     private class Island {
@@ -390,7 +391,7 @@ class Solution {
 #####################################################################################################################
 # solution for Starry Night:
 
-#77ms 82.61%
+# 77ms 82.61%
 import java.util.*;
 
 class Solution {

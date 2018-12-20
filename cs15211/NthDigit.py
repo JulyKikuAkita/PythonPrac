@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/nth-digit/description/'
+__source__ = 'https://leetcode.com/problems/nth-digit/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/nth-digit.py
 # Time:  O(logn)
 # Space: O(1)
@@ -36,6 +36,7 @@ __source__ = 'https://leetcode.com/problems/nth-digit/description/'
 # Math
 #
 import unittest
+# 20ms 99.50%
 class Solution(object):
     def findNthDigit(self, n):
         """
@@ -62,15 +63,16 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
+# Thought:
+
 Straight forward way to solve the problem in 3 steps:
 
 find the length of the number where the nth digit is from
 find the actual number where the nth digit is from
 find the nth digit and return
 
-#25.59% 6ms
-public class Solution {
+# 3ms 87.33%
+class Solution {
     public int findNthDigit(int n) {
         int len = 1;
         long count = 9;

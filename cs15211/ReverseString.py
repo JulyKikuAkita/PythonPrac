@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/reverse-string/description/'
+__source__ = 'https://leetcode.com/problems/reverse-string/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/reverse-string.py
 # Time:  O(n)
 # Space: O(1)
@@ -32,6 +32,7 @@ class Solution(object):
 
 # Time:  O(n)
 # Space: O(n)
+# 24ms 99.93%
 class Solution2(object):
     def reverseString(self, s):
         """
@@ -48,16 +49,17 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
-#28.64% 4ms
-public class Solution {
+# Thought:
+#
+# 2ms 73.79%
+class Solution {
     public String reverseString(String s) {
         return  new StringBuilder(s).reverse().toString();
     }
 }
 
-#49.61% 3ms
-public class Solution {
+# 1ms 100%
+class Solution {
     public String reverseString(String s) {
         if(s == null || s.length() == 0) return "";
         char[] chars = s.toCharArray();
@@ -75,8 +77,8 @@ public class Solution {
     }
 }
 
-#49.61% 3ms
-public class Solution {
+# 1ms 100%
+class Solution {
     public String reverseString(String s) {
         char[] tmp = s.toCharArray();
         for (int i=0, j=tmp.length - 1; i < j; i++, j--){

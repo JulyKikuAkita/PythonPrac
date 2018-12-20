@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/sum-of-two-integers/description/'
+__source__ = 'https://leetcode.com/problems/sum-of-two-integers/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/sum-of-two-integers.py
 # Time:  O(1)
 # Space: O(1)
@@ -48,14 +48,16 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
+# Thought:
+
 I have been confused about bit manipulation for a very long time. So I decide to do a summary about it here.
 
 "&" AND operation, for example, 2 (0010) & 7 (0111) => 2 (0010)
 
 "^" XOR operation, for example, 2 (0010) ^ 7 (0111) => 5 (0101)
 
-"~" NOT operation, for example, ~2(0010) => -3 (1101) what??? Don't get frustrated here. It's called two's complement.
+"~" NOT operation, for example, ~2(0010) => -3 (1101) what??? 
+Don't get frustrated here. It's called two's complement.
 
 1111 is -1, in two's complement
 
@@ -85,9 +87,9 @@ Then, we shift carry one position left and assign it to b, b = 0010.
 
 Iterate until there is no carry (or b == 0)
 
-#BFS:
-#5.05% 0ms
-public class Solution {
+# BFS:
+# 0ms 100%
+class Solution {
     public int getSum(int a, int b) {
         while (b != 0) {
             int carry = (a & b) << 1;
@@ -98,27 +100,27 @@ public class Solution {
     }
 }
 
-#5.05% 0ms
-#DFS:
-public class Solution {
+
+# DFS:
+# 0ms 100%
+class Solution {
     public int getSum(int a, int b) {
-        return b == 0? a : getSum(a ^ b, (a & b) << 1);
+        return b == 0 ? a : getSum(a ^ b, (a & b) << 1);
     }
 }
 
 
-// Iterative
-public int getSum(int a, int b) {
-	if (a == 0) return b;
-	if (b == 0) return a;
-
-	while (b != 0) {
-		int carry = a & b;
-		a = a ^ b;
-		b = carry << 1;
-	}
-
-	return a;
+# Iterative
+# 0ms 100%
+class Solution {
+    public int getSum(int a, int b) {
+        while (b != 0) {
+            int carry = (a & b) << 1;
+            a ^= b;
+            b = carry;
+        }
+        return a;
+    }
 }
 
 // Iterative

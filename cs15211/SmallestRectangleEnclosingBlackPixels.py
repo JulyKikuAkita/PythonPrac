@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/smallest-rectangle-enclosing-black-pixels/description/'
+__source__ = 'https://leetcode.com/problems/smallest-rectangle-enclosing-black-pixels/'
 # Time:  O(m long n + n log m) m and nn are the height and width of the image
 # Space: O(1)
 #
@@ -47,7 +47,6 @@ class Solution(object):
                     left = mid + 1
             return left
 
-
         searchColumns = lambda image, has_one, mid: any([int(row[mid]) for row in image]) == has_one
         left = binarySearch(0, y - 1, searchColumns, image, True)
         right = binarySearch(y + 1, len(image[0]) - 1, searchColumns, image, False)
@@ -66,11 +65,11 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/problems/smallest-rectangle-enclosing-black-pixels/solution/
-
-Approach #3 (Binary Search) [Accepted]
-#58.71% 1ms
-public class Solution {
+# Thought: https://leetcode.com/problems/smallest-rectangle-enclosing-black-pixels/solution/
+# Approach #3 (Binary Search) [Accepted]
+#
+# 8ms 56.06%
+class Solution {
     public int minArea(char[][] image, int x, int y) {
         int m = image.length, n = image[0].length;
         int left = searchColumns(image, 0, y, 0, m, true);
@@ -103,8 +102,8 @@ public class Solution {
     }
 }
 
-#58.71% 1ms
-public class Solution {
+# 5ms 99.24%
+class Solution {
     public int minArea(char[][] image, int x, int y) {
         int m = image.length;
         int n = m == 0 ? 0 : image[0].length;

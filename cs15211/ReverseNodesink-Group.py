@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/reverse-nodes-in-k-group/description/'
+__source__ = 'https://leetcode.com/problems/reverse-nodes-in-k-group/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/reverse-nodes-in-k-group.py
 # Time:  O(n)
 # Space: O(1)
@@ -87,7 +87,6 @@ class SolutionOther:
             newhead.next = tmp
         return (end, start)
 
-
     def reverseKGroup(self, head, k):
         if head == None:
             return head
@@ -134,8 +133,7 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/problems/contains-duplicate/solution/
-# 18.81% 9ms
+# Thought:
 /**
  * Definition for singly-linked list.
  * public class ListNode {
@@ -144,7 +142,9 @@ Java = '''
  *     ListNode(int x) { val = x; }
  * }
  */
-public class Solution {
+
+# 5ms 44.94%
+class Solution {
     public ListNode reverseKGroup(ListNode head, int k) {
         if (k < 2) {
             return head;
@@ -183,8 +183,8 @@ public class Solution {
     }
 }
 
-# 74.84% 7ms
-public class Solution {
+# 10ms 4.78%
+class Solution {
     public ListNode reverseKGroup(ListNode head, int k) {
         ListNode curr = head;
         int count = 0;

@@ -1,8 +1,9 @@
-__source__ = 'https://leetcode.com/problems/range-addition-ii/#/description'
+__source__ = 'https://leetcode.com/problems/range-addition-ii/'
 # Time:  O(n)
 # Space: O(1)
 #
-# Description:
+# Description: 598. Range Addition II
+#
 # Given an m * n matrix M initialized with all 0's and several update operations.
 #
 # Operations are represented by a 2D array,
@@ -50,8 +51,9 @@ __source__ = 'https://leetcode.com/problems/range-addition-ii/#/description'
 # Thus, when there is at least one operation, all squares (x, y) with 0 <= x < min(x_1, x_2, ..., x_n)
 #  and 0 <= y < min(y_1, y_2, ..., y_n) get marked; and there are min_i(x_i) * min_i(y_i) of them.
 # If there are no operations, then what is marked is the entire board.
-
+#
 import unittest
+# 36ms 24.49%
 class Solution(object):
     def maxCount(self, m, n, ops):
         """
@@ -65,20 +67,19 @@ class Solution(object):
         X, Y = zip(*ops)
         return min(X) * min(Y)
 
-
 class TestMethods(unittest.TestCase):
     def test_Local(self):
         self.assertEqual(1, 1)
-
 
 if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/articles/range-addition-ii/
+# Thought: https://leetcode.com/problems/range-addition-ii/solution/
 Time complexity : O(x). Single traversal of all operations is done. xx refers to the number of operations.
 Space complexity : O(1). No extra space is used.
-public class Solution {
+# 3ms 97.91%
+class Solution {
     public int maxCount(int m, int n, int[][] ops) {
         if (ops == null || ops.length == 0) {
             return m * n;

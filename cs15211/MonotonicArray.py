@@ -1,16 +1,15 @@
-__source__ = 'https://leetcode.com/problems/monotonic-array/description/'
+__source__ = 'https://leetcode.com/problems/monotonic-array/'
 # Time:  O(N)
 # Space: O(1)
 #
 # Description: Leetcode # 896. Monotonic Array
+#
 # An array is monotonic if it is either monotone increasing or monotone decreasing.
 #
 # An array A is monotone increasing if for all i <= j, A[i] <= A[j].
 # An array A is monotone decreasing if for all i <= j, A[i] >= A[j].
 #
 # Return true if and only if the given array A is monotonic.
-#
-#
 #
 # Example 1:
 #
@@ -33,7 +32,6 @@ __source__ = 'https://leetcode.com/problems/monotonic-array/description/'
 # Input: [1,1,1]
 # Output: true
 #
-#
 # Note:
 #
 # 1 <= A.length <= 50000
@@ -41,23 +39,30 @@ __source__ = 'https://leetcode.com/problems/monotonic-array/description/'
 #
 import unittest
 
-
+# 72ms 72.45%
 class Solution(object):
-    pass  # your function here
-
+    def isMonotonic(self, A):
+        store = 0
+        for i in xrange(len(A) - 1):
+            c = cmp(A[i], A[i+1])
+            if c:
+                if c != store != 0:
+                    return False
+                store = c
+        return True
 
 class TestMethods(unittest.TestCase):
     def test_Local(self):
         self.assertEqual(1, 1)
-
 
 if __name__ == '__main__':
     unittest.main()
 
 Java = '''
 # Thought: https://leetcode.com/problems/monotonic-array/solution/
-# one pass 13ms 100%
-#
+
+# one pass
+# 13ms 82.04%
 class Solution {
     public boolean isMonotonic(int[] A) {
         boolean increasing = true;
@@ -70,7 +75,8 @@ class Solution {
     }
 }
 
-#two pass
+# two pass
+# 11ms 99.66%
 class Solution {
     public boolean isMonotonic(int[] A) {
         boolean isMonotonic = true;
@@ -95,7 +101,6 @@ class Solution {
                 isMonotonic = true;
             }
         }
-
         return isMonotonic;
     }
 }

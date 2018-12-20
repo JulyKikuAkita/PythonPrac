@@ -1,10 +1,11 @@
-__source__ = 'https://leetcode.com/problems/linked-list-cycle/description/'
+__source__ = 'https://leetcode.com/problems/linked-list-cycle/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/linked-list-cycle.py
 # Time:  O(n)
 # Space: O(1)
 # Two Pointer
 #
 # Description: Leetcode # 141. Linked List Cycle
+#
 # Given a linked list, determine if it has a cycle in it.
 #
 # Follow up:
@@ -90,9 +91,7 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/articles/linked-list-cycle/
-Approach #2 (Two Pointers) [Accepted]
-#10.26% 1ms
+# Thought: https://leetcode.com/problems/linked-list-cycle/solution
 /**
  * Definition for singly-linked list.
  * class ListNode {
@@ -104,7 +103,9 @@ Approach #2 (Two Pointers) [Accepted]
  *     }
  * }
  */
-public class Solution {
+# Approach #2 (Two Pointers) [Accepted]
+# 0ms 100%
+class Solution {
     public boolean hasCycle(ListNode head) {
         ListNode slow = head;
         ListNode fast = head;
@@ -119,9 +120,9 @@ public class Solution {
     }
 }
 
-Approach #1 (Hash Table) [Accepted]
-#6.59% 9ms
-public class Solution {
+# Approach #1 (Hash Table) [Accepted]
+# 5ms 16.46%
+class Solution {
     public boolean hasCycle(ListNode head) {
         Set<ListNode> nodesSeen = new HashSet<>();
         while (head != null) {

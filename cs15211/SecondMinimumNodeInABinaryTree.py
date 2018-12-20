@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/second-minimum-node-in-a-binary-tree/description/'
+__source__ = 'https://leetcode.com/problems/second-minimum-node-in-a-binary-tree/'
 # Time:  O()
 # Space: O()
 #
@@ -48,6 +48,7 @@ import unittest
 #         self.left = None
 #         self.right = None
 
+# 20ms 100%
 class Solution(object):
     def findSecondMinimumValue(self, root):
         """
@@ -72,13 +73,13 @@ class TestMethods(unittest.TestCase):
     def test_Local(self):
         self.assertEqual(1, 1)
 
-
 if __name__ == '__main__':
     unittest.main()
 
 Java = '''
 
-#Thought:/**
+# Thought: https://leetcode.com/problems/second-minimum-node-in-a-binary-tree/solution/
+/**
  * Definition for a binary tree node.
  * public class TreeNode {
  *     int val;
@@ -88,8 +89,8 @@ Java = '''
  * }
  */
 
-#BFS
-#24.48% 4ms
+# BFS
+# 1ms 100%
 class Solution {
     public int findSecondMinimumValue(TreeNode root) {
         if (root == null) return -1;
@@ -116,7 +117,7 @@ class Solution {
 }
 
 
-# 24.48% 4ms
+# 1ms 100%
 class Solution {
     public int findSecondMinimumValue(TreeNode root) {
         if (root == null || root.left == null) return -1;

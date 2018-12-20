@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/strobogrammatic-number-iii/description/'
+__source__ = 'https://leetcode.com/problems/strobogrammatic-number-iii/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/strobogrammatic-number-iii.py
 # Time:  O(5^(n/2))
 # Space: O(n)
@@ -24,6 +24,7 @@ __source__ = 'https://leetcode.com/problems/strobogrammatic-number-iii/descripti
 # Time:  O(5^(n/2))
 # Space: O(n)
 import unittest
+# 28ms 93.99%
 class Solution:
     lookup = {'0':'0', '1':'1', '6':'9', '8':'8', '9':'6'}
     cache = {}
@@ -102,14 +103,14 @@ class TestMethods(unittest.TestCase):
         self.assertEqual(1, 1)
         print Solution().strobogrammaticInRange3("50","100")
 
-
 if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
-# 91.61% 9ms
-public class Solution {
+# Thought:
+
+# 5ms 96.73%
+class Solution {
     private static char[] SINGLE_NUM = new char[] {'0', '1', '8'};
     private static char[][] DOUBLE_NUM = new char[][] {{'0', '0'}, {'1', '1'}, {'6', '9'}, {'8', '8'}, {'9', '6'}};
 
@@ -160,8 +161,8 @@ public class Solution {
 }
 
 # DP
-# 95.80% 1ms
-public class Solution {
+# 0ms 100%
+class Solution {
     char[] one={'0','1','6','8','9'},two={'0','1','9','8','6'};
     int count=0;
     public int strobogrammaticInRange(String low, String high) {

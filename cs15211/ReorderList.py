@@ -1,10 +1,11 @@
-__source__ = 'https://leetcode.com/problems/reorder-list/description/'
+__source__ = 'https://leetcode.com/problems/reorder-list/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/reorder-list.py
 # Time:  O(n)
 # Space: O(1)
 # reorder list
 #
 # Description: Leetcode # 143. Reorder List
+#
 # Given a singly linked list L: L0->L1->...->Ln-1->Ln,
 # reorder it to: L0->Ln->L1->Ln-1->L2->Ln-2->...
 #
@@ -33,7 +34,6 @@ class Solution:
     def reorderList(self, head):
         if head == None or head.next == None:
             return head
-
         fast, slow, prev = head, head, None
         dummyNode = ListNode(0)
 
@@ -47,7 +47,6 @@ class Solution:
         while cur :
             cur.next, prev, cur = prev, cur, cur.next
 
-
         #combine first and last lists
         l1 = head
         l2 = prev
@@ -55,7 +54,6 @@ class Solution:
         while l1 and l2:
             cur.next, cur, l1 = l1, l1, l1.next
             cur.next, cur, l2 = l2, l2, l2.next
-
         return dummyNode.next
 
 # http://www.cnblogs.com/zuoyuan/p/3700846.html
@@ -119,12 +117,13 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
-This question is a combination of Reverse a linked list I & II. It should be pretty straight forward to do it in 3 steps :)
+# Thought:
 
+This question is a combination of Reverse a linked list I & II. 
+It should be pretty straight forward to do it in 3 steps :)
 
-#17.81% 3ms
-public class Solution {
+# 2ms 99.28%
+class Solution {
     public void reorderList(ListNode head) {
         if (head == null || head.next == null) {
             return;
@@ -164,9 +163,8 @@ public class Solution {
     }
 }
 
-#17.81% 3ms
-
-public class Solution {
+# 2ms 99.28%
+class Solution {
     public void reorderList(ListNode head) {
         if(head==null||head.next==null) return;
 

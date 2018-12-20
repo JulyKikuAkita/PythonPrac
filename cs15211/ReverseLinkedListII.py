@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/reverse-linked-list-ii/description/'
+__source__ = 'https://leetcode.com/problems/reverse-linked-list-ii/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/reverse-linked-list-ii.py
 # Time:  O(n)
 # Space: O(1)
@@ -171,8 +171,7 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-# 26.12% 4ms
-#Thought: https://leetcode.com/problems/contains-duplicate/solution/
+# Thought:
 /**
  * Definition for singly-linked list.
  * public class ListNode {
@@ -181,7 +180,9 @@ Java = '''
  *     ListNode(int x) { val = x; }
  * }
  */
-public class Solution {
+ 
+# 2ms 96.55%
+class Solution {
     public ListNode reverseBetween(ListNode head, int m, int n) {
         if(head == null) return null;
         ListNode dummy = new ListNode(0); // create a dummy node to mark the head of this list
@@ -202,17 +203,14 @@ public class Solution {
             pre.next = then;
             then = start.next;
         }
-
         // first reversing : dummy->1 - 3 - 2 - 4 - 5; pre = 1, start = 2, then = 4
         // second reversing: dummy->1 - 4 - 3 - 2 - 5; pre = 1, start = 2, then = 5 (finish)
-
         return dummy.next;
-
     }
 }
 
-# 26.12% 4ms
-public class Solution {
+# 1ms 100%
+class Solution {
     public ListNode reverseBetween(ListNode head, int m, int n) {
         ListNode fakeHead = new ListNode(0);
         fakeHead.next = head;

@@ -1,6 +1,9 @@
-__author__ = 'July'#
-# 460. LFU Cache Add to List
-# https://leetcode.com/problems/lfu-cache/#/description
+__source__ = 'https://leetcode.com/problems/lfu-cache/'
+# Time:  O(n)
+# Space: O(h)
+#
+# Description: Leetcode # 460. LFU Cache
+#
 # Design and implement a data structure for Least Frequently Used (LFU) cache.
 # It should support the following operations: get and put.
 #
@@ -31,7 +34,16 @@ __author__ = 'July'#
 # Hide Tags Design
 # Hide Similar Problems (H) LRU Cache
 #
-java = '''
+import unittest
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+
+if __name__ == '__main__':
+    unittest.main()
+
+Java = '''
+# Thought:
 Java O(1) Accept Solution Using HashMap, DoubleLinkedList and LinkedHashSet
 Two HashMaps are used, one to store <key, value> pair, another store the <key, node>.
 I use double linked list to keep the frequent of each key. In each double linked list node,
@@ -41,7 +53,8 @@ If the following node exist and the frequent is larger by one, add key to the ke
 else create a new node and add it following the current node.
 All operations are guaranteed to be O(1).
 
-public class LFUCache {
+# 163ms 17.46%
+class LFUCache {
     private Node head = null;
     private int cap = 0;
     private HashMap<Integer, Integer> valueHash = null;
@@ -159,7 +172,8 @@ The second one: TreeMap + HashMap set O(log(capacity)) get O(log(capacity))
 The third one: HashMap + HashMap + DoubleLinkedList set O(1) get O(1)
 
 1. PriorityQueue + HashMap: set O(capacity) get O(capacity) w/ Pair compareTo
-public class LFUCache {
+# 141ms 29.42%
+class LFUCache {
     long mStamp;
     int mCapacity;
     int mNum;
@@ -242,7 +256,8 @@ public class LFUCache {
  }
 
  2. TreeMap + HashMap: set O(log(capacity)) get O(log(capacity))
-public class LFUCache {
+# 120ms 48.25%
+class LFUCache {
     private int mCapacity;
     private int mStamp;
     private HashMap<Integer, Tuple> mHashMap;

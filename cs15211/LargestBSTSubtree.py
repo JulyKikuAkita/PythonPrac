@@ -1,4 +1,5 @@
-__source__ = 'https://github.com/kamyu104/LeetCode/blob/master/Python/largest-bst-subtree.py'
+__source__ = 'https://leetcode.com/problems/largest-bst-subtree/'
+# https://github.com/kamyu104/LeetCode/blob/master/Python/largest-bst-subtree.py
 # Time:  O(n)
 # Space: O(h)
 #
@@ -72,6 +73,7 @@ class Solution(object):
 # N is the size of the largest BST in the tree.
 # If the tree is a BST, then n is the number of nodes, otherwise it's -infinity.
 # If the tree is a BST, then min and max are the minimum/maximum value in the tree.
+    # 68ms 8.41%
     def largestBSTSubtree2(self, root):
         """
         :type root: TreeNode
@@ -107,8 +109,8 @@ Java = '''
  * }
  */
 
-#58.85% 7ms
-public class Solution {
+# 4ms 55.84%
+class Solution {
     private int maxSize;
 
     public int largestBSTSubtree(TreeNode root) {
@@ -148,8 +150,8 @@ public class Solution {
     }
 }
 
-#58.29% 7ms
-public class Solution {
+# 3ms 100%
+class Solution {
     public int largestBSTSubtree(TreeNode root) {
         if (root == null) return 0;
         if (root.left == null && root.right == null) return 1;

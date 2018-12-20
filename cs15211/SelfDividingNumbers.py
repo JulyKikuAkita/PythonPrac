@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/self-dividing-numbers/description/'
+__source__ = 'https://leetcode.com/problems/self-dividing-numbers/'
 # Time:  O()
 # Space: O()
 #
@@ -23,7 +23,7 @@ __source__ = 'https://leetcode.com/problems/self-dividing-numbers/description/'
 #
 import unittest
 
-#100% 28ms
+# 28ms 100%
 class Solution(object):
     def selfDividingNumbers(self, left, right):
         """
@@ -50,17 +50,17 @@ class TestMethods(unittest.TestCase):
     def test_Local(self):
         self.assertEqual(1, 1)
 
-
 if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/problems/self-dividing-numbers/solution/
+# Thought: https://leetcode.com/problems/self-dividing-numbers/solution/
+
 Time Complexity: O(D), where D is the number of integers in the range [L, R],
 and assuming log(R) is bounded. (In general, the complexity would be O(DlogR).)
 Space Complexity: O(D), the length of the answer.
 
-# 99.83,  3ms
+# 3ms 99.88%
 class Solution {
     public List<Integer> selfDividingNumbers(int left, int right) {
         List<Integer> res = new ArrayList();
@@ -97,8 +97,8 @@ class Solution {
     }
 }
 
-#cheat:
-# 100% 2ms
+# Cheat:
+# 2ms 100%
 class Solution {
     public List<Integer> selfDividingNumbers(int left, int right) {
         List<Integer> list=new ArrayList<>();
@@ -114,4 +114,5 @@ class Solution {
         return list;
     }
 }
+
 '''

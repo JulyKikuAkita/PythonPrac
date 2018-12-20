@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/solve-the-equation/description/'
+__source__ = 'https://leetcode.com/problems/solve-the-equation/'
 # Time:  O(n)
 # Space: O(n)
 #
@@ -50,11 +50,11 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/articles/solve-the-equation/
+# Thought: https://leetcode.com/problems/solve-the-equation/solution/
 
-Approach #2 Using regex for spliting [Accepted]
-# 11.23% 14ms
-public class Solution {
+# Approach #2 Using regex for spliting [Accepted]
+# 11ms 13.21%
+class Solution {
     public String coeff(String x) {
         if (x.length() > 1 && x.charAt(x.length() - 2) >= '0' && x.charAt(x.length() - 2) <= '9')
             return x.replace("x", "");
@@ -86,8 +86,8 @@ public class Solution {
     }
 }
 
-# 85.93% 5ms
-public class Solution {
+# 3ms 91.58%
+class Solution {
     private final String NoSolution = "No solution";
     private final String InfiniteSolutions = "Infinite solutions";
     private final char X = 'x';

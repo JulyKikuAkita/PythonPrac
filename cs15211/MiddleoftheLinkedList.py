@@ -1,14 +1,13 @@
-__source__ = 'https://leetcode.com/problems/middle-of-the-linked-list/description/'
+__source__ = 'https://leetcode.com/problems/middle-of-the-linked-list/'
 # Time:  O(N)
 # Space: O(1)
 #
 # Description: Leetcode # 876. Middle of the Linked List
+#
 # Given a non-empty, singly linked list with head node head,
 # return a middle node of linked list.
 #
 # If there are two middle nodes, return the second middle node.
-#
-#
 #
 # Example 1:
 #
@@ -63,7 +62,8 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/problems/middle-of-the-linked-list/solution/
+# Thought: https://leetcode.com/problems/middle-of-the-linked-list/solution/
+#
 # Approach 1: Output to Array
 # Intuition and Algorithm
 #
@@ -71,7 +71,7 @@ Java = '''
 # Then the middle node is just A[A.length // 2],
 # since we can retrieve each node by index.
 #
-
+# Give input = [1,2,3,4,5,6], expect [4,5,6], the given result was [3,4,5,6]
 class WrongSolution {
     public ListNode middleNode(ListNode head) {
         ListNode[] A = new ListNode[100];
@@ -102,6 +102,7 @@ Expected:
  *     ListNode(int x) { val = x; }
  * }
  */
+# 0ms 100%
 class Solution {
     public ListNode middleNode(ListNode head) {
         ListNode fast = head, slow = head;

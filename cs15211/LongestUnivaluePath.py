@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/longest-univalue-path/description/'
+__source__ = 'https://leetcode.com/problems/longest-univalue-path/'
 # Time:  O(n) where NN is the number of nodes in the tree. We process every node once.
 # Space: O(h) where HH is the height of the tree. Our recursive call stack could be up to HH layers deep.
 #
@@ -61,7 +61,8 @@ import unittest
 #         self.val = x
 #         self.left = None
 #         self.right = None
-#612ms
+#
+# 812ms 4.06%
 class Solution(object):
     def longestUnivaluePath(self, root):
         """
@@ -86,17 +87,14 @@ class TestMethods(unittest.TestCase):
     def test_Local(self):
         self.assertEqual(1, 1)
 
-
 if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/articles/longest-univalue-path/
+# Thought: https://leetcode.com/problems/longest-univalue-path/solution/
 
 Longest-Univalue-Path of a tree is among those Longest-Univalue-Path-Across at each node;
 Longest-Univalue-Path-Across a node is sum of { Longest-Univalue-Path-Start-At each child with same value, + 1}
-
-#76.50% 14ms
 /**
  * Definition for a binary tree node.
  * public class TreeNode {
@@ -106,6 +104,7 @@ Longest-Univalue-Path-Across a node is sum of { Longest-Univalue-Path-Start-At e
  *     TreeNode(int x) { val = x; }
  * }
  */
+# 5ms 99.84%
 class Solution {
     int max = 0;
     public int longestUnivaluePath(TreeNode root) {
@@ -124,7 +123,7 @@ class Solution {
     }
 }
 
-
+# 7ms 75.37%
 class Solution {
     public int longestUnivaluePath(TreeNode root) {
         int[] res = new int[1];

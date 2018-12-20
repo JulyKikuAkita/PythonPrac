@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/number-of-islands/description/'
+__source__ = 'https://leetcode.com/problems/number-of-islands/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/number-of-islands.py
 # Time:  O(m * n)
 # Space: O(m * n)
@@ -106,6 +106,7 @@ class Solution2:
         #if j != len(grid[0]) - 1:
         self.mergeIsland(grid, i , j+1)
 
+# 172ms 9.08%
 class Solution3(object):
     def numIslands(self, grid):
         """
@@ -137,9 +138,11 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
+# Thought: https://leetcode.com/problems/number-of-islands/solution/
 
-//BFS 24.71%  7ms
-public class Solution {
+# BFS 
+# 9ms 15.83%
+class Solution {
     private static final int[][] DIRECTIONS = new int[][] {{0, -1}, {0, 1}, {-1, 0}, {1, 0}};
 
     public int numIslands(char[][] grid) {
@@ -182,8 +185,8 @@ public class Solution {
 
 
 2. DFS:
-# 40.31%, 4 ms
-public class Solution {
+# 4ms 78.12%
+class Solution {
     private static final int[][] DIRECTIONS = new int[][] {{0, -1}, {0, 1}, {-1, 0}, {1, 0}};
 
     public int numIslands(char[][] grid) {
@@ -217,9 +220,9 @@ public class Solution {
     }
 }
 
-//Union Find
-#10.60%, 11ms
-public class Solution {
+# Union Find
+# 7ms 28.60%
+class Solution {
     public int numIslands(char[][] grid) {
         if(grid.length == 0 || grid[0].length == 0) return 0;
         int m = grid.length, n = grid[0].length;
@@ -292,4 +295,33 @@ public class Solution {
     }
 }
 
+# 3ms 100%
+class Solution {
+    public int numIslands(char[][] grid) {
+        if (grid == null || grid.length == 0 || grid[0].length == 0) {
+            return 0;
+        }
+        int count = 0;
+        for (int i = 0; i < grid.length; i++) {
+            for (int j = 0; j < grid[0].length; j++) {
+                if (grid[i][j] == '1') {
+                    count++;
+                    fill(grid, i, j);
+                }
+            }
+        }
+        return count;
+    }
+
+    private void fill(char[][] grid, int row, int col) {
+        if (row < 0 || row >= grid.length || col < 0 || col >= grid[0].length || grid[row][col] == '0') {
+            return;
+        }
+        grid[row][col] = '0';
+        fill(grid, row - 1, col);
+        fill(grid, row + 1, col);
+        fill(grid, row, col - 1);
+        fill(grid, row, col + 1);
+    }
+}
 '''

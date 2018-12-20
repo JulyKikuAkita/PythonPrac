@@ -1,9 +1,10 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/sum-of-left-leaves/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/sum-of-left-leaves.py
-
 # Time:  O(n)
 # Space: O(h)
-
+#
+# Description: 404. Sum of Left Leaves
+#
 # Find the sum of all left leaves in a given binary tree.
 #
 # Example:
@@ -26,7 +27,8 @@ __author__ = 'July'
 #         self.val = x
 #         self.left = None
 #         self.right = None
-
+import unittest
+# 36ms 20.14%
 class Solution(object):
     def sumOfLeftLeaves(self, root):
         """
@@ -40,15 +42,25 @@ class Solution(object):
                 return root.val if is_left else 0
             return sumOfLeftLeavesHelper(root.left, True) + \
                    sumOfLeftLeavesHelper(root.right, False)
-
         return sumOfLeftLeavesHelper(root, False)
 
-jav = '''
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+
+if __name__ == '__main__':
+    unittest.main()
+
+Java = '''
+# Thought:
+
 Java iterative and recursive solutions
 Recursive method. For given node we check whether its left child is a leaf. If it is the case,
 we add its value to answer, otherwise recursively call method on left child.
 For right child we call method only if it has at least one nonnull child.
-public class Solution {
+
+# 3ms 100%
+class Solution {
     public int sumOfLeftLeaves(TreeNode root) {
         return helper(root, false);
     }
@@ -62,44 +74,52 @@ public class Solution {
     }
 }
 
-public int sumOfLeftLeaves(TreeNode root) {
-    if(root == null) return 0;
-    int ans = 0;
-    if(root.left != null) {
-        if(root.left.left == null && root.left.right == null) ans += root.left.val;
-        else ans += sumOfLeftLeaves(root.left);
-    }
-    ans += sumOfLeftLeaves(root.right);
+# 6ms 34.38%
+class Solution {
+    public int sumOfLeftLeaves(TreeNode root) {
+        if(root == null) return 0;
+        int ans = 0;
+        if(root.left != null) {
+            if(root.left.left == null && root.left.right == null) ans += root.left.val;
+            else ans += sumOfLeftLeaves(root.left);
+        }
+        ans += sumOfLeftLeaves(root.right);
 
-    return ans;
+        return ans;
+    }
 }
+
 Iterative method. Here for each node in the tree we check whether its left child is a leaf.
 If it is true, we add its value to answer, otherwise add left child to the stack to process it later.
 For right child we add it to stack only if it is not a leaf.
 
-public int sumOfLeftLeaves(TreeNode root) {
-    if(root == null) return 0;
-    int ans = 0;
-    Stack<TreeNode> stack = new Stack<TreeNode>();
-    stack.push(root);
+# 8ms 10.09%
+class Solution {
+    public int sumOfLeftLeaves(TreeNode root) {
+        if(root == null) return 0;
+        int ans = 0;
+        Stack<TreeNode> stack = new Stack<TreeNode>();
+        stack.push(root);
 
-    while(!stack.empty()) {
-        TreeNode node = stack.pop();
-        if(node.left != null) {
-            if (node.left.left == null && node.left.right == null)
-                ans += node.left.val;
-            else
-                stack.push(node.left);
+        while(!stack.empty()) {
+            TreeNode node = stack.pop();
+            if(node.left != null) {
+                if (node.left.left == null && node.left.right == null)
+                    ans += node.left.val;
+                else
+                    stack.push(node.left);
+            }
+            if(node.right != null) {
+                if (node.right.left != null || node.right.right != null)
+                    stack.push(node.right);
+            }
         }
-        if(node.right != null) {
-            if (node.right.left != null || node.right.right != null)
-                stack.push(node.right);
-        }
+        return ans;
     }
-    return ans;
 }
 
-public class Solution {
+# 6ms 34.38%
+class Solution {
     public int sumOfLeftLeaves(TreeNode root) {
         if(root == null || root.left == null && root.right == null) return 0;
 

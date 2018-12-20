@@ -1,6 +1,3 @@
-import collections
-import itertools
-
 __source__ = 'https://leetcode.com/problems/sliding-puzzle/'
 # Time:  O()
 # Space: O()
@@ -43,8 +40,9 @@ __source__ = 'https://leetcode.com/problems/sliding-puzzle/'
 # board[i][j] will be a permutation of [0, 1, 2, 3, 4, 5].
 #
 import unittest
-
-#36ms 86.96%
+import collections
+import itertools
+# 36ms 83.75%
 class Solution(object):
     def slidingPuzzle(self, board):
         """
@@ -78,19 +76,19 @@ class TestMethods(unittest.TestCase):
     def test_Local(self):
         self.assertEqual(1, 1)
 
-
 if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/problems/sliding-puzzle/solution/
+# Thought: https://leetcode.com/problems/sliding-puzzle/solution/
+#
 Approach #1: Breadth-First Search [Accepted]
 Complexity Analysis
 Time Complexity: O(R * C * (R * C)!), where R, C are the number of rows and columns in board.
 There are O((R * C)!) possible board states.
 Space Complexity: O(R * C * (R * C)!).
 
-#28ms 23.89%
+# 28ms 23.89%
 class Solution {
     public int slidingPuzzle(int[][] board) {
         int R = board.length, C = board[0].length;
@@ -166,7 +164,7 @@ Tighter bounds are possible, but difficult to prove. (In testing with random per
  about 50 times less nodes were searched compared to breadth-first-search.)
 Space Complexity: O(R * C * (R * C)!).
 
-#89ms 6.27%
+# 84ms 6.99%
 class Solution {
     public int slidingPuzzle(int[][] board) {
         int R = board.length, C = board[0].length;
@@ -258,7 +256,7 @@ class Node {
     }
 }
 
-#6ms 99.89%
+# 12ms 53.26%
 class Solution {
     public int slidingPuzzle(int[][] board) {
         String target = "123450";
@@ -295,7 +293,7 @@ class Solution {
     }
 }
 
-#5ms 100%
+# 9ms 75.03%
 class Solution {
     public int slidingPuzzle(int[][] board) {
         String target = "123450";
@@ -336,7 +334,5 @@ class Solution {
         return new String(arr);
     }
 }
-
-
 
 '''

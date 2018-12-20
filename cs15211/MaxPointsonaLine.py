@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/max-points-on-a-line/description/'
+__source__ = 'https://leetcode.com/problems/max-points-on-a-line/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/max-points-on-a-line.py
 # Time:  O(n^2)
 # Space: O(n)
@@ -95,22 +95,17 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
+# Thought:
+#
 Given point A, we need to calculate all slopes between A and other points. There will be three cases:
-
 Some other point is the same as point A.
-
 Some other point has the same x coordinate as point A, which will result to a positive infinite slope.
-
 General case. We can calculate slope.
-
 We can store all slopes in a hash table. And we find which slope shows up mostly.
-Then add the number of same points to it. Then we know the maximum number of points on the same line for point A.
-
+Then add the number of same points to it. 
+Then we know the maximum number of points on the same line for point A.
 We can do the same thing to point B, point C...
-
 Finally, just return the maximum result among point A, point B, point C...
-
 
 check [[0,0],[94911151,94911150],[94911152,94911151]]
 /**
@@ -122,10 +117,11 @@ check [[0,0],[94911151,94911150],[94911152,94911151]]
  *     Point(int a, int b) { x = a; y = b; }
  * }
  */
+ 
 # Map count points with the same slope
 # do not divide by 0 when calculate slope
-#89.62% 23ms
-public class Solution {
+# 14ms 83.71%
+class Solution {
     public int maxPoints(Point[] points) {
         int len = points.length;
         if (len == 0) {
@@ -157,7 +153,7 @@ public class Solution {
     }
 }
 
-#99.68% 8ms
+# 4ms 95.37%
 class Solution {
     public int maxPoints(Point[] points) {
         int n = points.length;

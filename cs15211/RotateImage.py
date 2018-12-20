@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/rotate-image/description/'
+__source__ = 'https://leetcode.com/problems/rotate-image/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/rotate-image.py
 # Time:  O(n^2)
 # Space: O(1)
@@ -50,6 +50,7 @@ class Solution:
 
 # Time:  O(n^2)
 # Space: O(n^2)
+# 32ms 26.15%
 class Solution2:
     # @param matrix, a list of lists of integers
     # @return a list of lists of integers
@@ -85,10 +86,10 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
+# Thought: https://leetcode.com/problems/rotate-image/solution/
 
-#49.88% 2ms
-public class Solution {
+# 2ms 32.93%
+class Solution {
     public void rotate(int[][] matrix) {
         int n = matrix.length;
         for (int i = 0; i < (n + 1) / 2; i++) {
@@ -103,22 +104,24 @@ public class Solution {
     }
 }
 
-#49.88% 2ms
-public void rotate(int[][] matrix) {
-    int n = matrix.length;
-    // Reverse row
-    for (int i = 0; i < n / 2; ++i) {
-        int j = n - 1 - i;
-        int[] cache = matrix[i];
-        matrix[i] = matrix[j];
-        matrix[j] = cache;
-    }
-    // Transpose
-    for (int i = 0; i < n; ++i) {
-        for (int j = i + 1; j < n; ++j) {
-            int cache = matrix[i][j];
-            matrix[i][j] = matrix[j][i];
-            matrix[j][i] = cache;
+# 1ms 100%
+class Solution {
+    public void rotate(int[][] matrix) {
+        int n = matrix.length;
+        // Reverse row
+        for (int i = 0; i < n / 2; ++i) {
+            int j = n - 1 - i;
+            int[] cache = matrix[i];
+            matrix[i] = matrix[j];
+            matrix[j] = cache;
+        }
+        // Transpose
+        for (int i = 0; i < n; ++i) {
+            for (int j = i + 1; j < n; ++j) {
+                int cache = matrix[i][j];
+                matrix[i][j] = matrix[j][i];
+                matrix[j][i] = cache;
+            }
         }
     }
 }

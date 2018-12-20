@@ -1,10 +1,11 @@
-__source__ = 'https://leetcode.com/problems/remove-boxes/#/description'
-# 3-d DP
-# From the bottom-up solution, the time complexity will be O(n^4) and the space complexity will be O(n^3).
+__source__ = 'https://leetcode.com/problems/remove-boxes/'
 # Time:  O(n^4)
 # Space: O(n^3)
+# 3-d DP
+# From the bottom-up solution, the time complexity will be O(n^4) and the space complexity will be O(n^3).
 #
 # Description: Leetcode # 546. Remove Boxes
+#
 # Given several boxes with different colors represented by different positive numbers.
 # You may experience several rounds to remove boxes until there is no box left.
 # Each time you can choose some continuous boxes with the same color
@@ -58,6 +59,7 @@ import unittest
 # The "i, k = m, k + m - i" part skips order (m-i)*(j-i) calls to dp,
 # and is necessary to get this kind of solution to pass in Python.
 #
+# 352ms 46.41%
 class Solution(object):
     def removeBoxes(self, boxes):
         """
@@ -90,7 +92,7 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/articles/remove-boxes/
+# Thought: https://leetcode.com/problems/remove-boxes/solution/
 
 1. Java DP + Memorization 60ms
 When facing this problem, I am keeping thinking how to simulate the case
@@ -104,8 +106,8 @@ The transformation function is as below
 dp[i][j][k] = max(dp[i+1][m-1][1] + dp[m][j][k+1]) when box[i] = box[m]
 So the Java code with memorization is as below. Kindly ask me any questions.
 
-#32.86% 156ms
-public class Solution {
+# 142ms 14.20%
+class Solution {
     public int removeBoxes(int[] boxes) {
         if (boxes == null || boxes.length == 0) {
             return 0;
@@ -233,8 +235,8 @@ From the bottom-up solution, the time complexity will be O(n^4) and the space co
 
 
 # Topdown DP:
-# 38.86% 152ms
-public class Solution {
+# 123ms 20.99%
+class Solution {
     public int removeBoxes(int[] boxes) {
     int n = boxes.length;
     int[][][] dp = new int[n][n][n];
@@ -259,8 +261,8 @@ public class Solution {
 }
 
 # Bottom-up DP:
-# 70.86% 130ms
-public class Solution {
+# 123ms 20.99%
+class Solution {
     public int removeBoxes(int[] boxes) {
         int n = boxes.length;
         int[][][] dp = new int[n][n][n];
@@ -288,14 +290,13 @@ public class Solution {
         	    }
         	}
         }
-
-    return (n == 0 ? 0 : dp[0][n - 1][0]);
+        return (n == 0 ? 0 : dp[0][n - 1][0]);
     }
 }
 
-# 100% 22ms
+# 19ms 70.37%
 import java.util.*;
-public class Solution {
+class Solution {
     static long[][] k = new long[33][3];
     static long[] res2 = new long[33];
 
@@ -329,10 +330,9 @@ public class Solution {
     }
 }
 
-#DP
-# 100%  18ms
-public class Solution {
-
+# DP
+# 13ms 82.10%
+class Solution {
 	public int removeBoxes(int[] boxes) {
 		int n = boxes.length;
 		int[] dp = new int[n * n * n];
@@ -367,10 +367,8 @@ public class Solution {
 				res = Math.max(res, dfs(boxes, q, m - 1, 1, dp) + dfs(boxes, m, j, p, dp));
 			}
 		}
-
 		dp[pos] = res;
 		return res;
 	}
-
 }
 '''

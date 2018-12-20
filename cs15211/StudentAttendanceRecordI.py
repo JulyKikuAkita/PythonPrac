@@ -1,9 +1,8 @@
-
-__source__ = 'https://leetcode.com/problems/student-attendance-record-i/#/description'
+__source__ = 'https://leetcode.com/problems/student-attendance-record-i/'
 # Time:  O()
 # Space: O()
 #
-# Description:
+# Description: 551. Student Attendance Record I
 #
 # You are given a string representing an attendance record for a student.
 # The record only contains the following three characters:
@@ -29,6 +28,7 @@ __source__ = 'https://leetcode.com/problems/student-attendance-record-i/#/descri
 
 import unittest
 import re
+# 20ms 100%
 class Solution(object):
     def checkRecord(self, s):
         """
@@ -37,29 +37,29 @@ class Solution(object):
         """
         return re.match('.*LLL.*|.*A.*A.*', s) == None #if no match, return None
 
-# your function here
-
 class TestMethods(unittest.TestCase):
     def test_Local(self):
         self.assertFalse(Solution().checkRecord("PPALLL"))
         self.assertTrue(Solution().checkRecord("PPALLP"))
 
-
 if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/articles/student-attendance-record-i/
-
-public class Solution {
+# Thought: https://leetcode.com/problems/student-attendance-record-i/solution/
+# 4ms 96.35%
+class Solution {
     public boolean checkRecord(String s) {
         if(s.indexOf("A") != s.lastIndexOf("A") || s.contains("LLL"))
             return false;
         return true;
     }
+} 
 
-    public boolean checkRecord2(String s) {
-    return !s.matches(".*LLL.*|.*A.*A.*");
-}
+# 10ms 9.87%
+class Solution {
+    public boolean checkRecord(String s) {
+        return !s.matches(".*LLL.*|.*A.*A.*");
+    }
 }
 '''

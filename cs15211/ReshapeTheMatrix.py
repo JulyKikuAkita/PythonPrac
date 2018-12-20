@@ -1,5 +1,10 @@
-__author__ = 'July'
-#In MATLAB, there is a very useful function called 'reshape',
+__source__ = 'https://leetcode.com/problems/reshape-the-matrix/'
+# Time:  O(n * m )
+# Space: O(n * m)
+#
+# Description: Leetcode # 566. Reshape the Matrix
+#
+# In MATLAB, there is a very useful function called 'reshape',
 # which can reshape a matrix into a new one with different size but keep its original data.
 #
 # You're given a matrix represented by a two-dimensional array,
@@ -21,7 +26,8 @@ __author__ = 'July'
 # Output:
 # [[1,2,3,4]]
 # Explanation:
-# The row-traversing of nums is [1,2,3,4]. The new reshaped matrix is a 1 * 4 matrix, fill it row by row by using the previous list.
+# The row-traversing of nums is [1,2,3,4]. The new reshaped matrix is a 1 * 4 matrix,
+# fill it row by row by using the previous list.
 # Example 2:
 # Input:
 # nums =
@@ -46,7 +52,9 @@ __author__ = 'July'
 # makes converting the result to the correct type easier than what I had originally.
 
 import numpy as np
-
+import unittest
+import itertools
+# 88ms 75.26%
 class Solution(object):
     def matrixReshape1(self, nums, r, c):
         try:
@@ -72,9 +80,19 @@ class Solution(object):
         it = itertools.chain(*nums)
         return [list(itertools.islice(it, c)) for _ in xrange(r)]
 
-java = '''
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+
+if __name__ == '__main__':
+    unittest.main()
+
+Java = '''
+# Thought: https://leetcode.com/problems/reshape-the-matrix/solution/
 We can use matrix[index / width][index % width] for both the input and the output matrix.
-public class Solution {
+
+# 4ms 89.12%
+class Solution {
     public int[][] matrixReshape(int[][] nums, int r, int c) {
         int m = nums.length, n = nums[0].length;
         if ( m * n != r * c) return nums;

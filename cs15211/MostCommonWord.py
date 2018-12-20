@@ -1,7 +1,3 @@
-import collections
-import re
-import operator
-
 __source__ = 'https://leetcode.com/problems/most-common-word/'
 # Time:  O()
 # Space: O()
@@ -42,8 +38,11 @@ __source__ = 'https://leetcode.com/problems/most-common-word/'
 # Words only consist of letters, never apostrophes or other punctuation symbols.
 #
 import unittest
+import collections
+import re
+import operator
 
-#24ms 98.80%
+# 24ms 99.56%
 class Solution:
     def mostCommonWord(self, paragraph, banned):
         count=collections.Counter(piece for piece in re.split('[ !?\',;.]',paragraph.lower()) if piece)
@@ -54,18 +53,17 @@ class TestMethods(unittest.TestCase):
     def test_Local(self):
         self.assertEqual(1, 1)
 
-
 if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-# Thought:
+# Thought: https://leetcode.com/problems/most-common-word/solution/
 
 Complexity Analysis
 Time Complexity: O(P + B), where P is the size of paragraph and B is the size of banned.
 Space Complexity: O(P + B)), to store the count and the banned set.
 
-#6ms 99.89%
+# 7ms 94.80%
 class Solution {
     public String mostCommonWord(String paragraph, String[] banned) {
         paragraph += ".";
@@ -98,7 +96,7 @@ class Solution {
     }
 }
 
-# 49ms 21.99%
+# 33ms 34.60%
 class Solution {
     public String mostCommonWord(String paragraph, String[] banned) {
         Set<String> set = new HashSet();
@@ -123,7 +121,7 @@ class Solution {
 }
 
 # without String utility, with Trie and 2 pointers
-# 5ms 100%
+# 5ms 99.96%
 class Solution {
     private class Trie{
         Trie child[] = new Trie[26];

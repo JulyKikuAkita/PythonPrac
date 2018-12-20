@@ -1,6 +1,6 @@
 __source__ = 'https://leetcode.com/problems/new-21-game/'
-# Time:  O()
-# Space: O()
+# Time:  O(N+W)
+# Space: O(N+W)
 #
 # Description: Leetcode # 837. New 21 Game
 #
@@ -36,7 +36,6 @@ __source__ = 'https://leetcode.com/problems/new-21-game/'
 # The judging time limit has been reduced for this question.
 #
 import unittest
-
 class Solution(object):
     def new21Game(self, N, K, W):
         """
@@ -61,20 +60,18 @@ class TestMethods(unittest.TestCase):
     def test_Local(self):
         self.assertEqual(1, 1)
 
-
 if __name__ == '__main__':
     unittest.main()
 
 Java = '''
 # Thought: https://leetcode.com/problems/new-21-game/solution/
-# DP
+
 Complexity Analysis
 Time and Space Complexity: O(N + W)
 Note that we can reduce the time complexity to O(max(K,W))
 and the space complexity to O(W) by only keeping track of the last W values of dp, but it isn't required.
-
-#13ms 66.74%
-
+# DP
+# 9ms 82.62%
 class Solution {
     public double new21Game(int N, int K, int W) {
         double[] dp = new double[N + W + 1];

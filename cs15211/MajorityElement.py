@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/majority-element/#/description'
+__source__ = 'https://leetcode.com/problems/majority-element/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/majority-element.py
 # Time:  O(n)
 # Space: O(1)
@@ -16,7 +16,7 @@ __source__ = 'https://leetcode.com/problems/majority-element/#/description'
 # Similar Questions
 # Majority Element II
 #
-
+#
 import unittest
 class Solution:
     # @param num, a list of integers
@@ -45,27 +45,30 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
+# Thought: https://leetcode.com/problems/majority-element/solution/
+#
 Java solutions (sorting, hashmap, moore voting, bit manipulation).
 
-public class Solution {
-    // Sorting
-    #38.82% 4ms
-    public int majorityElement1(int[] nums) {
+# Sorting
+# 5ms 67.62%
+class Solution {
+    public int majorityElement(int[] nums) {
         Arrays.sort(nums);
         return nums[nums.length/2];
     }
+}
 
-    // Hashtable
-    #9.34% 39ms
-    public int majorityElement2(int[] nums) {
+# Hashtable
+# 25ms 24%
+class Solution {
+    public int majorityElement(int[] nums) {
         Map<Integer, Integer> myMap = new HashMap<Integer, Integer>();
         //Hashtable<Integer, Integer> myMap = new Hashtable<Integer, Integer>();
         int ret=0;
         for (int num: nums) {
             if (!myMap.containsKey(num))
                 myMap.put(num, 1);
-            else
+            else 
                 myMap.put(num, myMap.get(num)+1);
             if (myMap.get(num)>nums.length/2) {
                 ret = num;
@@ -74,24 +77,11 @@ public class Solution {
         }
         return ret;
     }
+}
 
-    // Moore voting algorithm
-    #73.49% 2ms
-    public int majorityElement3(int[] nums) {
-        int count=0, ret = 0;
-        for (int num: nums) {
-            if (count==0)
-                ret = num;
-            if (num!=ret)
-                count--;
-            else
-                count++;
-        }
-        return ret;
-    }
-
-    // Bit manipulation
-    # 32.47% 12ms
+# Bit manipulation
+# 7ms 47.62%
+class Solution {
     public int majorityElement(int[] nums) {
         int[] bit = new int[32];
         for (int num: nums)
@@ -102,6 +92,42 @@ public class Solution {
         for (int i=0; i<32; i++) {
             bit[i]=bit[i]>nums.length/2?1:0;
             ret += bit[i]*(1<<(31-i));
+        }
+        return ret;
+    }
+}
+
+# Moore voting algorithm
+# 3ms 100%
+class Solution {
+    public int majorityElement(int[] nums) {
+        int res = nums[0], count = 1;
+        for (int i = 1; i < nums.length; i++) {
+            if (res == nums[i]) {
+                count++;
+            } else {
+                count--;
+                if(count == 0) {
+                    res= nums[i];
+                    count = 1;
+                }
+            }
+        }
+        return res; 
+    }
+}
+
+# 3ms 100%
+class Solution {
+    public int majorityElement(int[] nums) {
+        int count=0, ret = 0;
+        for (int num: nums) {
+            if (count==0)
+                ret = num;
+            if (num!=ret)
+                count--;
+            else
+                count++;
         }
         return ret;
     }

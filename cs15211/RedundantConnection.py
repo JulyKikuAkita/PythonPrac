@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/redundant-connection/description/'
+__source__ = 'https://leetcode.com/problems/redundant-connection/'
 # Time:  O()
 # Space: O()
 #
@@ -47,21 +47,41 @@ __source__ = 'https://leetcode.com/problems/redundant-connection/description/'
 # Redundant Connection II
 #
 import unittest
+import collections
+# 80ms 7,30%
 class Solution(object):
-    pass  # your function here
+    def findRedundantConnection(self, edges):
+        """
+        :type edges: List[List[int]]
+        :rtype: List[int]
+        """
+        graph = collections.defaultdict(set)
 
+        def dfs(source, target):
+            if source not in seen:
+                seen.add(source)
+                if source == target: return True
+                return any(dfs(nei, target) for nei in graph[source])
+
+        for u, v in edges:
+            seen = set()
+            if u in graph and v in graph and dfs(u, v):
+                return u, v
+            graph[u].add(v)
+            graph[v].add(u)
 
 class TestMethods(unittest.TestCase):
     def test_Local(self):
         self.assertEqual(1, 1)
 
-
 if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: union find
-#60.16% 7ms
+# Thought: https://leetcode.com/problems/redundant-connection/solution/
+
+# union find
+# 3ms 80.49%
 class Solution {
     public int[] findRedundantConnection(int[][] edges) {
         int[] parent = new int[2001];
@@ -72,7 +92,6 @@ class Solution {
             if (find(parent, f) == find(parent, t)) return edge;
             else parent[find(parent, f)] = find(parent, t);
         }
-
         return new int[2];
     }
 
@@ -84,7 +103,7 @@ class Solution {
     }
 }
 
-#73.71% 6ms
+# 3ms 80.49%
 class Solution {
     public int[] findRedundantConnection(int[][] edges) {
         int[] root = new int[1001];

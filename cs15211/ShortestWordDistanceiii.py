@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/shortest-word-distance-iii/description/'
+__source__ = 'https://leetcode.com/problems/shortest-word-distance-iii/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/shortest-word-distance-iii.py
 # Time:  O(n)
 # Space: O(1)
@@ -7,7 +7,8 @@ __source__ = 'https://leetcode.com/problems/shortest-word-distance-iii/descripti
 #
 # This is a follow up of Shortest Word Distance. The only difference is now word1 could be the same as word2.
 #
-# Given a list of words and two words word1 and word2, return the shortest distance between these two words in the list.
+# Given a list of words and two words word1 and word2,
+# return the shortest distance between these two words in the list.
 #
 # word1 and word2 may be the same and they represent two individual words in the list.
 #
@@ -27,27 +28,32 @@ __source__ = 'https://leetcode.com/problems/shortest-word-distance-iii/descripti
 # Similar Questions
 # Shortest Word Distance Shortest Word Distance II
 #
+import collections
 import unittest
-class Solution:
-    # @param {string[]} words
-    # @param {string} word1
-    # @param {string} word2
-    # @return {integer}
+# 32ms 43.84%
+class Solution(object):
     def shortestWordDistance(self, words, word1, word2):
-        dist = float("inf")
-        i, index1, index2 = 0, None, None
-        while i < len(words):
-            if words[i] == word1:
-                if index1 is not None:
-                    dist = min(dist, abs(index1 - i))
-                index1 = i
-            elif words[i] == word2:
-                index2 = i
+        """
+        :type words: List[str]
+        :type word1: str
+        :type word2: str
+        :rtype: int
+        """
+        if not words or len(words) == 0:
+            return 0
+        d = collections.defaultdict(list)
+        for i, word in enumerate(words):
+            d[word].append(i)
 
-            if index1 is not None and index2 is not None:
-                dist = min(dist, abs(index1 - index2))
-            i += 1
-        return dist
+        res = 0x7FFFFFFF
+        l1 = d[word1]
+        l2 = d[word2]
+
+        for idx1 in l1:
+            for idx2 in l2:
+                if idx1 != idx2:
+                    res = min(res, abs(idx1-idx2))
+        return res
 
 # test
 class TestMethods(unittest.TestCase):
@@ -61,9 +67,10 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/problems/contains-duplicate/solution/
-# 96.06% 1ms
-public class Solution {
+# Thought: 
+
+# 0ms 100%
+class Solution {
     public int shortestWordDistance(String[] words, String word1, String word2) {
         return word1.equals(word2) ? shortestWordSame(words, word1) : shortestWordNotSame(words, word1, word2);
     }
@@ -103,4 +110,40 @@ public class Solution {
     }
 }
 
+# 0ms 100%
+class Solution {
+    public int shortestWordDistance(String[] words, String word1, String word2) {
+        int minDistance = Integer.MAX_VALUE;
+        int index1 = -1;
+        int index2 = -1;
+        if (word1.equals(word2)) {
+            for (int i = 0; i < words.length; i++) {
+                if (words[i].equals(word1)) {
+                    index1 = index2;
+                    index2 = i;
+                    minDistance = calculateMin(minDistance, index1, index2);
+                }
+            }
+        } else {
+            for (int i = 0; i < words.length; i++) {
+                if (words[i].equals(word1)) {
+                    index1 = i;
+                } else if (words[i].equals(word2)) {
+                    index2 = i;
+                } else {
+                    continue;
+                }
+                minDistance = calculateMin(minDistance, index1, index2);
+            }
+        }
+        return minDistance;
+    }
+    
+    private int calculateMin(int currMin, int index1, int index2) {
+        if (index1 == -1 || index2 == -1) {
+            return currMin;
+        }
+        return Math.min(currMin, Math.abs(index1 - index2));
+    }
+}
 '''

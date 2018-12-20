@@ -1,5 +1,3 @@
-import heapq
-
 __source__ = 'https://leetcode.com/problems/minimum-cost-to-hire-k-workers/'
 # Time:  O(NlogN) sorting, PQ
 # Space: O(N)
@@ -35,7 +33,7 @@ __source__ = 'https://leetcode.com/problems/minimum-cost-to-hire-k-workers/'
 # Answers within 10^-5 of the correct answer will be considered correct.
 #
 import unittest
-
+import heapq
 #100 ms 99.8%
 class Solution(object):
     def mincostToHireWorkers(self, quality, wage, K):
@@ -98,7 +96,7 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/problems/minimum-cost-to-hire-k-workers/solution/
+# Thought: https://leetcode.com/problems/minimum-cost-to-hire-k-workers/solution/
 
 Approach 1: Greedy:TLE
 Complexity Analysis
@@ -113,7 +111,7 @@ Space Complexity: O(N)
 
 # https://leetcode.com/problems/minimum-cost-to-hire-k-workers/discuss/141768/Detailed-explanation-O(NlogN)
 
-#62.62% 71ms
+# 62.62% 71ms
 class Solution {
     public double mincostToHireWorkers(int[] quality, int[] wage, int K) {
         double[][] workers = new double[quality.length][2];
@@ -133,7 +131,8 @@ class Solution {
     }
 }
 
-#28ms 99.85% #(comparator class faster than lambda expression ?)
+#(comparator class faster than lambda expression ?)
+# 28ms 99.85% 
 class Solution {
     public double mincostToHireWorkers(int[] quality, int[] wage, int k) {
         if (k == 0) return 0;

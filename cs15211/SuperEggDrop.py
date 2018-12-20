@@ -2,11 +2,9 @@
 __source__ = 'https://leetcode.com/problems/super-egg-drop/'
 # Time:  O(KlongN)
 # Space: O(NK)
-#
 # DP
 # dp(K,N)= min(max(dp(K−1,X−1),dp(K,N−X))))
 # 1≤X≤N
-#
 #
 # Description: Leetcode # 887. Super Egg Drop
 #
@@ -51,7 +49,7 @@ __source__ = 'https://leetcode.com/problems/super-egg-drop/'
 #
 import unittest
 
-#20ms 100%
+# 20ms 100%
 class Solution(object):
     def superEggDrop(self, K, N):
         """
@@ -80,7 +78,7 @@ class Solution(object):
         # print dp
         # return j
 
-#20ms 100%
+# 20ms 100%
 class SolutionBinominal(object):
     def superEggDrop(self, K, N):
         def f(x):
@@ -102,7 +100,7 @@ class SolutionBinominal(object):
                 hi = mi
         return lo
 
-#2200 ms 11.11%
+# 2200 ms 11.11%
 class SolutionBottomUpDP(object):
     def superEggDrop(self, K, N):
 
@@ -132,19 +130,18 @@ class TestMethods(unittest.TestCase):
     def test_Local(self):
         self.assertEqual(1, 1)
 
-
 if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/problems/super-egg-drop/solution/
+# Thought: https://leetcode.com/problems/super-egg-drop/solution/
 
 # Approach 1: Dynamic Programming with Binary Search
 Complexity Analysis
 Time Complexity: O(K *NlogN)
 Space Complexity: O(K * N)
 
-#152ms 12.44%
+# 152ms 12.44%
 class Solution { //K eggs, N floors
     Map<Integer, Integer> memo = new HashMap();
     public int superEggDrop(int K, int N) {
@@ -211,7 +208,7 @@ class Solution {
 
 Approach 3: Mathematical
 
-#4ms 100%
+# 4ms 100%
 class Solution {
     public int superEggDrop(int K, int N) {
         int lo = 1, hi = N;
@@ -235,7 +232,7 @@ class Solution {
     }
 }
 
-#DP:
+# DP:
 https://leetcode.com/problems/super-egg-drop/discuss/158974/C%2B%2BJavaPython-2D-and-1D-DP-O(KlogN)
 # Drop eggs is a very classical problem.
 # Some people may come up with idea O(KN^2)
@@ -262,6 +259,7 @@ https://leetcode.com/problems/super-egg-drop/discuss/158974/C%2B%2BJavaPython-2D
 # example 2 split at mid, third fl, and it become part of example 1
 class Solution {
     // 2-d DP
+    # 8ms 75.45%
     public int superEggDrop(int K, int N) {
         int[][] floors = new int[K + 1][N + 1];
         for (int j = 1; j < N + 1; j++) {
@@ -274,6 +272,7 @@ class Solution {
     }
 
     //100% - 1d dp: Dynamic Program
+    # 5ms 86.63%
     public int superEggDrop(int K, int N) {
         int[] floors = new int[K+1];
 

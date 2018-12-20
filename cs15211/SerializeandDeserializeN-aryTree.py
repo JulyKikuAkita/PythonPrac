@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/serialize-and-deserialize-n-ary-tree/description/'
+__source__ = 'https://leetcode.com/problems/serialize-and-deserialize-n-ary-tree/'
 # Time:  O()
 # Space: O()
 #
@@ -28,26 +28,22 @@ __source__ = 'https://leetcode.com/problems/serialize-and-deserialize-n-ary-tree
 #
 import unittest
 
-
 class Solution(object):
     pass  # your function here
-
 
 class TestMethods(unittest.TestCase):
     def test_Local(self):
         self.assertEqual(1, 1)
 
-
 if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
+# Thought:
+#
 # Template for N-Ray tree vs binary tree
 # https://leetcode.com/problems/serialize-and-deserialize-n-ary-tree/discuss/190318/Serialize-and-Deserialize-Binary-and-N-ary-Tree-Summary
-#
-# 77.57% 13ms
-#
+
 /*
 // Definition for a Node.
 class Node {
@@ -62,6 +58,8 @@ class Node {
     }
 };
 */
+
+# 13ms 65.42%
 class Codec {
     String NN = "X";
     String spliter = ",";
@@ -115,9 +113,8 @@ class Codec {
 // codec.deserialize(codec.serialize(root));
 
 # Java BFS using queue
-# 12ms, 82.27%
+# 12ms 72.48%
 class Codec {
-
     // Encodes a tree to a single string.
     public String serialize(Node root) {
         if (root == null) return "0,-1";

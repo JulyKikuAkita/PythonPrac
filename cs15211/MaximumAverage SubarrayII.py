@@ -1,8 +1,9 @@
-__source__ = 'https://leetcode.com/problems/maximum-average-subarray-ii/tabs/description'
+__source__ = 'https://leetcode.com/problems/maximum-average-subarray-ii/'
 # Time:  O()
 # Space: O()
 #
-# Description:
+# Description: 644. Maximum Average Subarray II
+#
 # Given an array consisting of n integers, find the contiguous subarray
 # whose length is greater than or equal to k that has the maximum average value.
 #  And you need to output the maximum average value.
@@ -45,6 +46,8 @@ import unittest
 # in a geometric interpretation where d(a, b) = the slope of the line segment (a, P[a]) to (b+1, P[b+1]).
 # Then, we can prove that discarding components with lower density than our current candidate d(hull[0], j)
 #  must leave us with the highest density option remaining.
+#
+# 704ms 76.19%
 class Solution(object):
     def findMaxAverage(self, nums, k):
         """
@@ -70,21 +73,20 @@ class Solution(object):
             while len(hull) >= 2 and d(hull[0], hull[1]-1) <= d(hull[0], j):
                 hull.popleft()
             ans = max(ans, d(hull[0], j))
-
         return ans
 
 class TestMethods(unittest.TestCase):
     def test_Local(self):
         self.assertEqual(1, 1)
 
-
 if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/articles/maximum-average-subarray-ii/
-#28% 111 ms
-public class Solution {
+# Thought: https://leetcode.com/problems/maximum-average-subarray-ii/solution/
+#
+# 19ms 100%
+class Solution {
     public double findMaxAverage(int[] nums, int k) {
         double max_val = Integer.MIN_VALUE;
         double min_val = Integer.MAX_VALUE;
@@ -126,8 +128,8 @@ Time complexity: O(nlog(max_val - min_val)).
 checkcheck takes O(n) time and it is executed O(log(max_val - min_val)) times.
 Space complexity :O(1). Constant Space is used
 
-# 97% 27ms
-public class Solution {
+# 20ms 100%
+class Solution {
     public double findMaxAverage(int[] nums, int k) {
         int n = nums.length;
         int[] sum = new int[n + 1];

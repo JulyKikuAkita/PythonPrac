@@ -1,8 +1,9 @@
-__source__ = 'https://leetcode.com/problems/split-array-into-consecutive-subsequences/description/'
+__source__ = 'https://leetcode.com/problems/split-array-into-consecutive-subsequences/'
 # Time:  O(n)
 # Space: O(n)
 #
 # Description: Leetcode # 659. Split Array into Consecutive Subsequences
+#
 # You are given an integer array sorted in ascending order (may contain duplicates),
 # you need to split them into several subsequences,
 # where each subsequences consist of at least 3 consecutive integers.
@@ -15,6 +16,7 @@ __source__ = 'https://leetcode.com/problems/split-array-into-consecutive-subsequ
 # You can split them into two consecutive subsequences :
 # 1, 2, 3
 # 3, 4, 5
+#
 # Example 2:
 # Input: [1,2,3,3,4,4,5,5]
 # Output: True
@@ -22,6 +24,7 @@ __source__ = 'https://leetcode.com/problems/split-array-into-consecutive-subsequ
 # You can split them into two consecutive subsequences :
 # 1, 2, 3, 4, 5
 # 3, 4, 5
+#
 # Example 3:
 # Input: [1,2,3,4,4,5]
 # Output: False
@@ -51,7 +54,7 @@ import heapq
 # we are more likely to make sure all the seqs are longer than 3.
 # So I use a PriorityQueue to store these length.
 #
-#812ms
+# 808ms 3%
 class Solution(object):
     def isPossible(self, nums):
         """
@@ -81,19 +84,19 @@ class TestMethods(unittest.TestCase):
     def test_Local(self):
         self.assertEqual(1, 1)
 
-
 if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
-# 47.83% 101ms
+# Thought: https://leetcode.com/problems/split-array-into-consecutive-subsequences/solution/
+
 We iterate through the array once to get the frequency of all the elements in the array
 We iterate through the array once more and for each element we either
 see if it can be appended to a previously constructed consecutive sequence or
 if it can be the start of a new consecutive sequence. If neither are true, then we return false.
 
-public class Solution {
+# 95ms 15.67%
+class Solution {
     public boolean isPossible(int[] nums) {
         Map<Integer, Integer> freq = new HashMap<>(), appendfreq = new HashMap<>();
         for (int i : nums) freq.put(i, freq.getOrDefault(i,0) + 1);
@@ -115,8 +118,8 @@ public class Solution {
     }
 }
 
-#98.11% 18ms
-public class Solution {
+# 14ms 85.73%
+class Solution {
     public boolean isPossible(int[] nums) {
         if (nums.length < 3) {
             return false;
@@ -166,8 +169,8 @@ public class Solution {
     }
 }
 
-# 99.05% 17ms
-public class Solution {
+# 12ms 88.89%
+class Solution {
     public boolean isPossible(int[] nums) {
         int needTwo = 0;
         int nextNeedTwo = 0;

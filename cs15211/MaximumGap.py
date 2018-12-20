@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/maximum-gap/description/'
+__source__ = 'https://leetcode.com/problems/maximum-gap/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/maximum-gap.py
 # Time:  O(n)
 # Space: O(n)
@@ -130,13 +130,12 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/articles/maximum-gap/
-#81.85% 4ms
+# Thought: https://leetcode.com/problems/maximum-gap/solution/
+
+# 3ms 99.83%
 class Solution {
     public int maximumGap(int[] nums) {
-        if(nums.length<2){
-            return 0;
-        }
+        if(nums.length < 2) return 0;
         Arrays.sort(nums);  //O(logn)
         int maxGap=0;
         for(int i=1;i<nums.length;i++){
@@ -149,7 +148,7 @@ class Solution {
     }
 }
 
-# 56.77% 5ms
+# 4ms 90.20%
 class Solution {
     public int maximumGap(int[] nums) {
         int len = nums.length;
@@ -180,8 +179,8 @@ class Solution {
     }
 }
 
-# 56.77% 5ms
-public class Solution {
+# 3ms 99.83%
+class Solution {
     public int maximumGap(int[] nums) {
         int len = nums.length;
         if (len < 2) {

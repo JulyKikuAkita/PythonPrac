@@ -1,7 +1,5 @@
 # coding=utf-8
-import collections
-
-__source__ = 'https://leetcode.com/problems/longest-word-in-dictionary/description/'
+__source__ = 'https://leetcode.com/problems/longest-word-in-dictionary/'
 # Time:  O(m) sum of the length of words[i]
 # Space: O(m) the space used by our trie
 #
@@ -34,7 +32,7 @@ __source__ = 'https://leetcode.com/problems/longest-word-in-dictionary/descripti
 #
 
 import unittest
-
+import collections
 #32 ms 100%
 class Solution(object):
     def longestWord(self, words):
@@ -94,9 +92,8 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/problems/longest-word-in-dictionary/solution/
-
-# 8ms 100%
+# Thought: https://leetcode.com/problems/longest-word-in-dictionary/solution/
+#
 # Approach #2: Trie + Depth-First Search [Accepted]
 #
 # Time complexity : O(∑w i2), where w_i is the length of words[i].
@@ -107,6 +104,7 @@ Java = '''
 #
 # Space Complexity: O(∑w i0), the space used by our trie.
 
+# 8ms 100%
 class Solution {
     public String longestWord(String[] words) {
         Trie trie = new Trie();
@@ -148,14 +146,15 @@ class Solution {
     }
 }
 
-#8ms 100%
-#BruceForce
+
 
 Complexity Analysis
 Time complexity : O(∑w i2), where w_i is the length of words[i].
 Checking whether all prefixes of words[i] are in the set is O(∑wi2).
 Space complexity : O(∑wi2) to create the substrings.
 
+# BruceForce
+# 8ms 100%
 class Solution {
     public String longestWord(String[] words) {
         String res = "";

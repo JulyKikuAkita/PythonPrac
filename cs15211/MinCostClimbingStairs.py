@@ -1,7 +1,6 @@
-__source__ = 'https://leetcode.com/problems/min-cost-climbing-stairs/description/'
+__source__ = 'https://leetcode.com/problems/min-cost-climbing-stairs/'
 # Time:  O(N)
 # Space: O(1)
-#
 # DP:  the final cost f[i] to climb the staircase from some step i is
 # f[i] = cost[i] + min(f[i+1], f[i+2])
 #
@@ -64,7 +63,8 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/problems/min-cost-climbing-stairs/solution/
+# Thought: https://leetcode.com/problems/min-cost-climbing-stairs/solution/
+#
 # 100% 9ms
 class Solution {
     public int minCostClimbingStairs(int[] cost) {
@@ -78,6 +78,7 @@ class Solution {
     }
 }
 
+# 13ms 35.93%
 class Solution {
     public int minCostClimbingStairs(int[] cost) {
         int n=cost.length;

@@ -1,5 +1,4 @@
-__source__ = 'https://leetcode.com/problems/number-of-islands-ii/description/'
-# https://leetcode.com/problems/number-of-islands-ii/#/description
+__source__ = 'https://leetcode.com/problems/number-of-islands-ii/'
 # Time:  O(klog*k) ~= O(k), k is the length of the positions
 # Space: O(k)
 #
@@ -147,9 +146,11 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://discuss.leetcode.com/topic/29613/easiest-java-solution-with-explanations
-# 81.60% 18ms
-public class Solution {
+# Thought: https://leetcode.com/problems/number-of-islands-ii/solution/
+https://discuss.leetcode.com/topic/29613/easiest-java-solution-with-explanations
+
+# 9ms 98.15%
+class Solution {
     int[][] dirs = {{0, 1}, {1, 0}, {-1, 0}, {0, -1}};
 
     public List<Integer> numIslands2(int m, int n, int[][] positions) {
@@ -193,8 +194,8 @@ public class Solution {
     }
 }
 
-#95.94% 16ms
-public class Solution {
+# 18ms 48.36%
+class Solution {
     private static final int[][] DIRECTIONS = new int[][] {{0, -1}, {0, 1}, {-1, 0}, {1, 0}};
 
     public List<Integer> numIslands2(int m, int n, int[][] positions) {
@@ -256,7 +257,8 @@ public class Solution {
         return i;
     }
 }
-#https://discuss.leetcode.com/topic/29518/java-python-clear-solution-with-unionfind-class-weighting-and-path-compression
+
+# https://discuss.leetcode.com/topic/29518/java-python-clear-solution-with-unionfind-class-weighting-and-path-compression
 Java/Python clear solution with UnionFind Class (Weighting and Path compression)
 Union Find
 is an abstract data structure supporting find and unite on disjointed sets of objects,
@@ -293,9 +295,8 @@ But from a design point of view a separate class dedicated to the data sturcture
 
 I implemented the idea with 2D interface to better fit the problem.
 
-#81.60% 18ms
-public class Solution {
-
+# 81.60% 18ms
+class Solution {
     private int[][] dir = {{0, 1}, {0, -1}, {-1, 0}, {1, 0}};
 
     public List<Integer> numIslands2(int m, int n, int[][] positions) {
@@ -315,6 +316,7 @@ public class Solution {
     }
 }
 
+# 15ms 60.63%
 class UnionFind2D {
     private int[] id;
     private int[] sz;
@@ -365,9 +367,8 @@ class UnionFind2D {
         return i;
     }
 }
-//Runtime: 20 ms
 
-#88.56% 17ms
+# 11ms 88.04%
 class Solution {
     int[] dx = {0, 1, -1, 0};
     int[] dy = {1, 0, 0, -1};

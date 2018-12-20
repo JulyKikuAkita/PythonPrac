@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/sliding-window-maximum/description/'
+__source__ = 'https://leetcode.com/problems/sliding-window-maximum/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/sliding-window-maximum.py
 # Time:  O(n)
 # Space: O(k)
@@ -77,9 +77,9 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
-#86.21% 20ms
-public class Solution {
+# Thought:
+# 14ms 58.29%
+class Solution {
     public int[] maxSlidingWindow(int[] nums, int k) {
         if(nums == null || nums.length == 0){
             return new int[0];
@@ -109,8 +109,8 @@ public class Solution {
     }
 }
 
-#86.21% 20ms
-public class Solution {
+# 9ms 88.53%
+class Solution {
     public int[] maxSlidingWindow(int[] nums, int k) {
         int len = nums.length;
         if (len == 0) {
@@ -134,10 +134,11 @@ public class Solution {
     }
 }
 
-#https://discuss.leetcode.com/topic/26480/o-n-solution-in-java-with-two-simple-pass-in-the-array
-O(n) solution in Java with two simple pass in the array
-#94.88% 8ms
-public class Solution {
+# https://discuss.leetcode.com/topic/26480/o-n-solution-in-java-with-two-simple-pass-in-the-array
+# O(n) solution in Java with two simple pass in the array
+
+# 6ms 91.06%
+class Solution {
     public int[] maxSlidingWindow(int[] nums, int k) {
         if (nums == null || nums.length == 0) return new int[0];
         final int[] max_left = new int[nums.length];

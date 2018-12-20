@@ -1,7 +1,4 @@
-import collections
-import itertools
-
-__source__ = 'https://leetcode.com/problems/number-of-corner-rectangles/description/'
+__source__ = 'https://leetcode.com/problems/number-of-corner-rectangles/'
 # Time:  O()
 # Space: O()
 #
@@ -47,7 +44,8 @@ __source__ = 'https://leetcode.com/problems/number-of-corner-rectangles/descript
 # The number of 1s in the grid will be at most 6000.
 #
 import unittest
-
+import collections
+import itertools
 class Solution(object):
     def countCornerRectangles(self, grid):
         """
@@ -65,7 +63,7 @@ class Solution(object):
                         count[c1,c2] += 1
         return ans
 
-#54.19% 856ms
+# 54.19% 856ms
 class Solution2(object):
     def countCornerRectangles(self, grid):
         """
@@ -117,12 +115,11 @@ class TestMethods(unittest.TestCase):
     def test_Local(self):
         self.assertEqual(1, 1)
 
-
 if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/problems/number-of-corner-rectangles/solution/
+# Thought: https://leetcode.com/problems/number-of-corner-rectangles/solution/
 
 Approach #1: Count Corners [Accepted]
 
@@ -130,7 +127,7 @@ Complexity Analysis
 Time Complexity: O(R*C^2) where R,C is the number of rows and columns.
 Space Complexity: O(C^2) in additional space.
 
-#78.50 % 70ms
+# 78.50 % 70ms
 class Solution {
     public int countCornerRectangles(int[][] grid) {
         Map<Integer, Integer> count = new HashMap();
@@ -186,6 +183,7 @@ Idea II -- Divide the candidate rectangles into groups and then count the number
 Time complexity: O(m^2 * n)
 Space complexity: O(1)
 
+# 165ms 45.74%
 class Solution {
     public int countCornerRectangles(int[][] grid) {
 
@@ -216,6 +214,7 @@ resulting from the added row
 Time complexity: O(m * n^2)
 Space complexity: O(n^2)
 # T(i, j, q) = T(i-1, j, q) + cnt where cnt = 1 if grid[i][j] == 1 && grid[i][q] == 1, otherwise cnt = 0
+# 31ms 84.06%
 class Solution {
     public int countCornerRectangles(int[][] grid) {
         int m = grid.length, n = grid[0].length, res = 0;
@@ -231,4 +230,5 @@ class Solution {
         return res;
     }
 }
+
 '''

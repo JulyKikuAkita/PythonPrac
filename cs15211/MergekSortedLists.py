@@ -1,8 +1,9 @@
-__source__ = 'https://leetcode.com/problems/merge-k-sorted-lists/#/description'
+__source__ = 'https://leetcode.com/problems/merge-k-sorted-lists/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/merge-k-sorted-lists.py
 # Time:  O(nlogk)
 # Space: O(1)
 # heap
+#
 # Description: Leetcode # 23. Merge k Sorted Lists
 #
 # Merge k sorted linked lists and return it as one sorted list. Analyze and describe its complexity.
@@ -152,7 +153,7 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/problems/contains-duplicate/solution/
+# Thought: https://leetcode.com/problems/merge-k-sorted-lists/solution/
 /**
  * Definition for singly-linked list.
  * public class ListNode {
@@ -162,9 +163,9 @@ Java = '''
  * }
  */
 
-# 43.16% 21ms
- //1. use minHeap
- public class Solution {
+# 1. use minHeap
+# 50ms 38.14%
+class Solution {
     public ListNode mergeKLists(ListNode[] lists) {
         if (lists == null || lists.length == 0) return null;
         PriorityQueue<ListNode> pq = new PriorityQueue<>((ListNode a, ListNode b) -> a.val - b.val);
@@ -187,8 +188,9 @@ Java = '''
     }
 }
 
- //2. idea of merge sort DFS
-public class Solution {
+# 2. idea of merge sort DFS
+# 7ms 93.25%
+class Solution {
     public static ListNode mergeKLists(ListNode[] lists){
         return partion(lists,0,lists.length-1);
     }
@@ -216,9 +218,9 @@ public class Solution {
     }
 }
 
-//Merge BFS
-# 97.94% 12ms
-public class Solution {
+# Merge BFS
+# 10ms 81.75%
+class Solution {
     public ListNode mergeKLists(ListNode[] lists) {
         return mergeKLists(lists, 0, lists.length - 1);
     }
@@ -263,9 +265,9 @@ public class Solution {
     }
 }
 
-//Merge DFS
+# Merge DFS
 # 71.69% 17ms
-public class Solution {
+class Solution {
     public ListNode mergeKLists(ListNode[] lists) {
         return partion(lists, 0, lists.length - 1);
     }

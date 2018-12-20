@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/subarray-product-less-than-k/description/'
+__source__ = 'https://leetcode.com/problems/subarray-product-less-than-k/'
 # Time:  O(N)
 # Space: O(1)
 #
@@ -23,7 +23,7 @@ __source__ = 'https://leetcode.com/problems/subarray-product-less-than-k/descrip
 #
 import unittest
 
-#84.31% 192ms
+# 284ms 29.27%
 class Solution(object):
     def numSubarrayProductLessThanK(self, nums, k):
         """
@@ -47,18 +47,17 @@ class TestMethods(unittest.TestCase):
     def test_Local(self):
         self.assertEqual(1, 1)
 
-
 if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/problems/subarray-product-less-than-k/solution/
+# Thought: https://leetcode.com/problems/subarray-product-less-than-k/solution/
 
 Approach #2: Sliding Window [Accepted]
 Time Complexity: O(N), where N is the length of nums. left can only be incremented at most N times.
 Space Complexity: O(1), the space used by prod, left, and ans.
 
-#35.33% 19ms
+# 18ms 38.88%
 class Solution {
     public int numSubarrayProductLessThanK(int[] nums, int k) {
         if ( k <= 1) return 0;
@@ -88,7 +87,7 @@ Time Complexity: O(NlogN), where N is the length of nums.
 Inside our for loop, each binary search operation takes O(logN) time.
 Space Complexity: O(N), the space used by prefix.
 
-# 102 ms 0%
+# 89ms 0.98%
 class Solution {
     public int numSubarrayProductLessThanK(int[] nums, int k) {
         if (k == 0) return 0;

@@ -1,16 +1,24 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/reverse-words-in-a-string-iii/'
+# Time : O(n)
+# Space: O(n)
+#
+# Description: Leetcode # 557. Reverse Words in a String III
+#
 # Given a string, you need to reverse the order of characters in each word
 # within a sentence while still preserving whitespace and initial word order.
 #
 # Example 1:
 # Input: "Let's take LeetCode contest"
 # Output: "s'teL ekat edoCteeL tsetnoc"
-# Note: In the string, each word is separated by single space and there will not be any extra space in the string.
+# Note: In the string,
+# each word is separated by single space and there will not be any extra space in the string.
 #
 # Hide Company Tags Zappos
 # Hide Tags String
 # Hide Similar Problems (E) Reverse String II
 #
+import unittest
+# 40ms 48.80%
 class Solution(object):
     def reverseWords(self, s):
         """
@@ -25,9 +33,19 @@ class Solution(object):
     def reverseWords3(self, s):
         return ' '.join(x[::-1] for x in s.split())
 
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+        print Solution().reverseBits(1)
 
-java = '''
-public class Solution {
+if __name__ == '__main__':
+    unittest.main()
+
+Java = '''
+# Thought: https://leetcode.com/problems/reverse-words-in-a-string-iii/solution/
+
+# 6ms 90.40%
+class Solution {
     public String reverseWords(String s) {
         if (s == null || s.length() <= 1) return s;
         char[] arr = s.toCharArray();

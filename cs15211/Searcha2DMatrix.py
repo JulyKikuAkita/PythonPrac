@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/search-a-2d-matrix/#/description'
+__source__ = 'https://leetcode.com/problems/search-a-2d-matrix/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/search-a-2d-matrix.py
 # Time:  O(logm + logn)
 # Space: O(1)
@@ -46,11 +46,6 @@ class Solution:
                 j = mid
         return False
 
-
-if __name__ == "__main__":
-    matrix = [[1, 3, 5, 7], [10, 11, 16, 20], [23, 30, 34, 50]]
-    print Solution().searchMatrix(matrix, 3)
-
 class SolutionOther:
     # @param matrix, a list of lists of integers
     # @param target, an integer
@@ -69,8 +64,6 @@ class SolutionOther:
             else :
                 return True
         return False
-
-
 #test
 test = SolutionOther()
 matrix = \
@@ -79,16 +72,23 @@ matrix = \
 [10, 11, 16, 20],
 [23, 30, 34, 50]
 ]
-#print test.searchMatrix(matrix, 49)
-print test.searchMatrix(matrix, 0)
-#print 11 >> 2 # // 4
-#print 11 >> 1 # // 2
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        #print test.searchMatrix(matrix, 49)
+        #print 11 >> 2 # // 4
+        #print 11 >> 1 # // 2
+        matrix = [[1, 3, 5, 7], [10, 11, 16, 20], [23, 30, 34, 50]]
+        print Solution().searchMatrix(matrix, 3)
 
-#java
-java = '''
-Thought: Don't treat it as a 2D matrix, just treat it as a sorted list
-#65.79% 0ms
-public class Solution {
+if __name__ == '__main__':
+    unittest.main()
+
+Java = '''
+# Thought:
+
+Don't treat it as a 2D matrix, just treat it as a sorted list
+# 7ms 35.55%
+class Solution {
     public boolean searchMatrix(int[][] matrix, int target) {
         int n = matrix.length;
         if (n == 0) {
@@ -111,8 +111,8 @@ public class Solution {
     }
 }
 
-#65.79% 0ms
-public class Solution {
+# 4ms 100%
+class Solution {
     public boolean searchMatrix(int[][] matrix, int target) {
         int m = matrix.length;
         if (m == 0) {

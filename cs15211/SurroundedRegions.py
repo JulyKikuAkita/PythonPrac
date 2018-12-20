@@ -127,10 +127,10 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/problems/contains-duplicate/solution/
+# Thought: 
 
-# 43.77% 9ms
-public class Solution {
+# 4ms 96.63%
+class Solution {
     public static final int[][] DIRECTIONS = new int[][] {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
 
     public void solve(char[][] board) {
@@ -185,8 +185,8 @@ private void fillBoarder(char[][] board, int row, int col){
 }
 
 # Java DFS + boundary cell turning solution
-# 58.28% 6MS
-public class Solution {
+# 3ms 100%
+class Solution {
     public void solve(char[][] board) {
         if (board.length == 0 || board[0].length == 0)
             return;
@@ -235,9 +235,9 @@ public class Solution {
     }
 }
 
-#BFS
-# 37.72% 10ms
-public class Solution {
+# BFS
+# 7ms 38.10%
+class Solution {
     private static final int[][] DIRECTIONS = new int[][] {{0, -1}, {0, 1}, {-1, 0}, {1, 0}};
 
     public void solve(char[][] board) {

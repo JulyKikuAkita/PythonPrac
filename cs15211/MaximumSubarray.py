@@ -1,9 +1,10 @@
-__source__ = 'https://leetcode.com/problems/maximum-subarray/#/description'
+__source__ = 'https://leetcode.com/problems/maximum-subarray/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/maximum-subarray.py
 # Time:  O(n)
 # Space: O(1)
 #
 # Description: Leetcode # 53. Maximum Subarray
+#
 # Find the contiguous subarray within an array (containing at least one number) which has the largest sum.
 #
 # For example, given the array [-2,1,-3,4,-1,2,1,-5,4],
@@ -92,7 +93,8 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/problems/contains-duplicate/solution/
+# Thought: 
+#
 this problem was discussed by Jon Bentley (Sep. 1984 Vol. 27 No. 9 Communications of the ACM P885)
 
 the paragraph below was copied from his paper (with a little modifications)
@@ -106,8 +108,8 @@ sum in the first I elements is either the maximum sum in the first i - 1 element
 
 MaxEndingHere is either A[i] plus the previous MaxEndingHere, or just A[i], whichever is larger.
 
-# 24.67% 17ms
-public class Solution {
+# 7ms 87.03%
+class Solution {
     public int maxSubArray(int[] A) {
         int maxSoFar=A[0], maxEndingHere=A[0];
         for (int i=1;i<A.length;++i){
@@ -118,8 +120,8 @@ public class Solution {
     }
 }
 
-#10.39% 19ms
-public class Solution {
+# 10ms 38.86%
+class Solution {
     public int maxSubArray(int[] nums) {
         int result = Integer.MIN_VALUE;
         int cur = 0;
@@ -132,8 +134,8 @@ public class Solution {
     }
 }
 
-#40.66% 16ms
-public class Solution {
+# 6ms 99.93%
+class Solution {
     public int maxSubArray(int[] nums) {
         int max = Integer.MIN_VALUE;
         int sum = 0;
@@ -174,8 +176,9 @@ because there's a limitation that A[i] should be contained in that sequence and 
 maxSubArray(A, i) = maxSubArray(A, i - 1) > 0 ? maxSubArray(A, i - 1) : 0 + A[i];
 And here's the code
 
-#24.67% 17ms
-public int maxSubArray(int[] A) {
+# 10ms 38.86%
+class Solution {
+    public int maxSubArray(int[] A) {
         int n = A.length;
         int[] dp = new int[n];//dp[i] means the maximum subarray ending with A[i];
         dp[0] = A[0];
@@ -187,5 +190,7 @@ public int maxSubArray(int[] A) {
         }
 
         return max;
+    }
 }
+
 '''

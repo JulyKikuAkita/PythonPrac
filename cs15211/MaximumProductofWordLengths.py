@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/maximum-product-of-word-lengths/description/'
+__source__ = 'https://leetcode.com/problems/maximum-product-of-word-lengths/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/maximum-product-of-word-lengths.py
 # Time:  O(n) ~ O(n^2)
 # Space: O(n)
@@ -107,10 +107,10 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
+# Thought:
 
-#85.24% 25ms
-public class Solution {
+# 12ms 84.36%
+class Solution {
     public int maxProduct(String[] words) {
         int len = words.length;
         int[] nums = new int[len];
@@ -137,8 +137,8 @@ public class Solution {
     }
 }
 
-#59.97% 36ms
-public class Solution {
+# 12ms 84.36%
+class Solution {
     public int maxProduct(String[] words) {
         int max = 0;
         int[] bytes = new int[words.length];
@@ -157,4 +157,5 @@ public class Solution {
         return max;
     }
 }
+
 '''

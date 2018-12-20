@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-search-tree/#/solutions'
+__source__ = 'https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-search-tree/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/lowest-common-ancestor-of-a-binary-search-tree.py
 # Time:  O(n)
 # Space: O(1)
@@ -59,7 +59,8 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
+# Thought:
+
 /**
  * Definition for a binary tree node.
  * public class TreeNode {
@@ -69,8 +70,8 @@ Java = '''
  *     TreeNode(int x) { val = x; }
  * }
  */
-#10.07% 10ms
-public class Solution {
+# 5ms 83.66%
+class Solution {
     public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
         if (root.val > p.val && root.val > q.val) {
             return lowestCommonAncestor(root.left, p, q);
@@ -82,13 +83,30 @@ public class Solution {
     }
 }
 
-#52.64% 8ms
-public class Solution {
+# 5ms 83.66%
+class Solution {
     public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
         if (root == null) return null;
         if ((p.val - root.val) * (q.val - root.val) <= 0) return root;
         else if (p.val > root.val) return lowestCommonAncestor(root.right, p, q);
         else return lowestCommonAncestor(root.left, p, q);
+    }
+}
+
+# 4ms 100%
+class Solution {
+    public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+        if (root == null) {
+            return root;
+        }
+        while((root.val - p.val) * (root.val - q.val) > 0) {
+            if (p.val < root.val) {
+                root = root.left;
+            } else {
+                root = root.right;
+            }
+        }
+        return root;
     }
 }
 '''

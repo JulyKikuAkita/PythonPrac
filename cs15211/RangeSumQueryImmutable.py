@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/range-sum-query-immutable/description/'
+__source__ = 'https://leetcode.com/problems/range-sum-query-immutable/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/range-sum-query-immutable.py
 # Time:  ctor:   O(n),
 #        update: O(logn),
@@ -113,13 +113,14 @@ class NumArray(object):
     class _SegmentTreeNode:
         def __init__(self, i, j, s):
             self.start, self.end, self.sum = i, j ,s
-
+#
 # Time:  ctor:   O(nlogn),
 #        update: O(logn),
 #        query:  O(logn)
 # Space: O(n)
 # Binary Indexed Tree (BIT) solution.
-# 129ms
+#
+# 112ms 26.40%
 class NumArray2(object):
     def __init__(self, nums):
         """
@@ -183,10 +184,10 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/articles/range-sum-query-immutable/
+# Thought: https://leetcode.com/problems/range-sum-query-immutable/solution/
 
-#73.20% 213ms
-public class NumArray {
+# 73.20% 213ms
+class NumArray {
     int[] sum;
     public NumArray(int[] nums) {
         int n = nums.length;
@@ -202,8 +203,8 @@ public class NumArray {
     }
 }
 
-#67.19% 219ms
-public class NumArray {
+# 115ms 98.39%
+class NumArray {
     int[] mSum;
     public NumArray(int[] nums) {
         for (int i = 1; i < nums.length; i++) {
@@ -224,8 +225,8 @@ public class NumArray {
 // numArray.sumRange(1, 2);
 
 # BIT
-# 34.42% 243ms
-public class NumArray {
+# 142ms 75.89%
+class NumArray {
     int[] mNums;
     int[] mBit;
     public NumArray(int[] nums) {
@@ -260,8 +261,8 @@ public class NumArray {
 }
 
 # Segment Tree:
-#4.82% 414ms
-public class NumArray {
+# 201ms 38.86%
+class NumArray {
     Node mRoot = null;
     public NumArray(int[] nums) {
         mRoot = buildStree(nums, 0, nums.length - 1);

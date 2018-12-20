@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/verify-preorder-serialization-of-a-binary-tree/description/'
+__source__ = 'https://leetcode.com/problems/reconstruct-itinerary/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/reconstruct-itinerary.py
 # Time:  O(t! / (n1! * n2! * ... nk!)), t is the total number of tickets,
 #                                       ni is the number of the ticket which from is city i,
@@ -108,10 +108,12 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-# Thought: http://algobox.org/reconstruct-itinerary/
+# Thought: 
+# http://algobox.org/reconstruct-itinerary/
 Just Eulerian path. Greedy DFS, building the route backwards when retreating.
 
-All the airports are vertices and tickets are directed edges. Then all these tickets form a directed graph.
+All the airports are vertices and tickets are directed edges. 
+Then all these tickets form a directed graph.
 
 The graph must be Eulerian since we know that a Eulerian path exists.
 
@@ -119,12 +121,13 @@ Thus, start from "JFK", we can apply the Hierholzer's algorithm
 to find a Eulerian path in the graph which is a valid reconstruction.
 
 Since the problem asks for lexical order smallest solution,
-we can put the neighbors in a min-heap. In this way, we always visit the smallest possible neighbor first in our trip.
+we can put the neighbors in a min-heap. In this way, 
+we always visit the smallest possible neighbor first in our trip.
 
 
 
-# 99.43% 8ms
-public class Solution {
+# 7ms 75.17%
+class Solution {
     public List<String> findItinerary(String[][] tickets) {
         HashMap<String, PriorityQueue<String>> map = new HashMap<String, PriorityQueue<String>>();
 	    LinkedList<String> result = new LinkedList<String>();
@@ -148,8 +151,8 @@ public class Solution {
 }
 
 
-#BFS
-#6.37% 92ms
+# BFS
+# 77ms 3.33%
 class Solution {
     public List<String> findItinerary(String[][] tickets) {
         Map<String, PriorityQueue<String>> targets = new HashMap<>();
@@ -167,8 +170,8 @@ class Solution {
     }
 }
 
-# 57.22% 12ms
-public class Solution {
+# 7ms 75.17%
+class Solution {
     public List<String> findItinerary(String[][] tickets) {
         String[] path = new String[tickets.length + 1];
         path[0] = "JFK";

@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/summary-ranges/description/'
+__source__ = 'https://leetcode.com/problems/summary-ranges/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/summary-ranges.py
 # Time:  O(n)
 # Space: O(1)
@@ -85,8 +85,9 @@ if __name__ == '__main__':
 
 Java = '''
 # Thought: https://leetcode.com/problems/summary-ranges/solution/
-#5.34% 1ms
-public class Solution {
+#
+# 1ms 100%
+class Solution {
     public List<String> summaryRanges(int[] nums) {
         List<String> summary = new ArrayList<>();
         for (int i, j = 0; j < nums.length; ++j){
@@ -104,8 +105,8 @@ public class Solution {
     }
 }
 
-#5.34% 1ms
-public class Solution {
+# 2ms 42.59%
+class Solution {
     public List<String> summaryRanges(int[] nums) {
         List<String> summary = new ArrayList<>();
         for (int i = 0, j = 0; j < nums.length; ++j) {
@@ -123,8 +124,8 @@ public class Solution {
     }
 }
 
-#5.34% 1ms
-public class Solution {
+# 1ms 100%
+class Solution {
     public List<String> summaryRanges(int[] nums) {
         List<String> result = new ArrayList<>();
         if (nums.length == 0) {

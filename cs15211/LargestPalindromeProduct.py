@@ -1,8 +1,9 @@
-__source__ = 'https://leetcode.com/problems/largest-palindrome-product/#/discuss'
+__source__ = 'https://leetcode.com/problems/largest-palindrome-product/'
 # Time:  O(n)
 # Space: O(1)
 #
 # Description: Leetcode # 479. Largest Palindrome Product
+#
 # Find the largest palindrome made from the product of two n-digit numbers.
 #
 # Since the result could be very large, you should return the largest palindrome mod 1337.
@@ -20,6 +21,7 @@ __source__ = 'https://leetcode.com/problems/largest-palindrome-product/#/discuss
 # The range of n is [1,8].
 # Companies
 # Yahoo
+#
 
 import unittest
 
@@ -36,7 +38,7 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
+# Thought:
 
 #bug:
 n = 1 -> 9
@@ -46,7 +48,9 @@ n = 4 -> 597
 n = 5 -> 956
 n = 6 -> -372
 
-public class Solution {
+# Wrong answer: 
+# input 5, expect 677 but return 956
+class Solution {
     public int largestPalindrome(int n) {
         if (n == 1) return 9;
 
@@ -87,8 +91,8 @@ public class Solution {
     }
 }
 
-#62.58% 496ms
-public class Solution {
+# 313ms 79.08%
+class Solution {
     public int largestPalindrome(int n) {
         if (n == 1) return 9;
         int max=(int)Math.pow(10, n) - 1;
@@ -102,8 +106,9 @@ public class Solution {
     }
 }
 
-94%
-public class Solution {
+# cheating
+# 0ms 100%
+class Solution {
     public int largestPalindrome(int n) {
         int[] result = {9,987,123,597,677,1218,877,475};
         return result[n - 1];

@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/search-in-a-binary-search-tree/description/'
+__source__ = 'https://leetcode.com/problems/search-in-a-binary-search-tree/'
 # Time:  O(N)
 # Space: O(N)
 #
@@ -33,21 +33,18 @@ __source__ = 'https://leetcode.com/problems/search-in-a-binary-search-tree/descr
 
 import unittest
 
-
 class Solution(object):
     pass  # your function here
-
 
 class TestMethods(unittest.TestCase):
     def test_Local(self):
         self.assertEqual(1, 1)
 
-
 if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
+# Thought:
 
 /**
  * Definition for a binary tree node.
@@ -58,6 +55,7 @@ Java = '''
  *     TreeNode(int x) { val = x; }
  * }
  */
+# 2ms 91.91%
 class Solution {
     public TreeNode searchBST(TreeNode root, int val) {
         if (root == null || root.val == val) return root;

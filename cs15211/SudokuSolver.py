@@ -1,9 +1,10 @@
-__source__ = 'https://leetcode.com/problems/sudoku-solver/description/'
-# not understanding 02.23.2015
+__source__ = 'https://leetcode.com/problems/sudoku-solver/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/sudoku-solver.py
 # Time:  ((9!)^9)
 # Space: (1)
 # DFS
+#
+# Description: Leetcode # 37. Sudoku Solver
 #
 # Write a program to solve a Sudoku puzzle by filling the empty cells.
 #
@@ -18,8 +19,6 @@ __source__ = 'https://leetcode.com/problems/sudoku-solver/description/'
 # Valid Sudoku
 #
 import unittest
-
-
 class Solution:
     # @param board, a 9x9 2D array
     # Solve the Sudoku by modifying the input board in-place.
@@ -38,7 +37,6 @@ class Solution:
                     return False
         return True
 
-
     def isValid(self, board, x, y):
         for i in xrange(9):
             if i != x and board[i][y] == board[x][y]:
@@ -56,7 +54,6 @@ class Solution:
                 j += 1
             i += 1
         return True
-
 
 # http://www.cnblogs.com/zuoyuan/p/3770271.html
 class Solution2:
@@ -119,11 +116,11 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
+# Thought:
 
 # DFS
-# 63.92% 24ms
-public class Solution {
+# 7ms 91.16%
+class Solution {
     public void solveSudoku(char[][] board) {
         dfs(board);
     }
@@ -170,8 +167,8 @@ public class Solution {
     }
 }
 
-#82.66% 16ms
-public class Solution {
+# 13ms 61.74%
+class Solution {
     public void solveSudoku(char[][] board) {
         solveSudoku(board, findEmptyCells(board), 0);
     }

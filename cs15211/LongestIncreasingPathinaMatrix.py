@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/longest-increasing-path-in-a-matrix/description/'
+__source__ = 'https://leetcode.com/problems/longest-increasing-path-in-a-matrix/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/longest-increasing-path-in-a-matrix.py
 # Time:  O(m * n)
 # Space: O(m * n)
@@ -74,9 +74,10 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/articles/longest-increasing-path-matrix/
-#87.19% 14ms
-public class Solution {
+# Thought: https://leetcode.com/problems/longest-increasing-path-in-a-matrix/solution/
+#
+# 10ms 66.08%
+class Solution {
     public static final int[][] DIRECTIONS = new int[][] {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
 
     public int longestIncreasingPath(int[][] matrix) {
@@ -115,10 +116,11 @@ public class Solution {
     }
 }
 
-#14.17% 39ms
-// Topological Sort Based Solution
-// An Alternative Solution
-public class Solution {
+
+# Topological Sort Based Solution
+# An Alternative Solution
+# 27ms 18.22%
+class Solution {
     private static final int[][] dir = {{0, 1}, {1, 0}, {0, -1}, {-1, 0}};
     private int m, n;
     public int longestIncreasingPath(int[][] grid) {

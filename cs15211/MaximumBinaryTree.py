@@ -1,8 +1,9 @@
-__source__ = 'https://leetcode.com/problems/maximum-binary-tree/description/'
+__source__ = 'https://leetcode.com/problems/maximum-binary-tree/'
 # Time:  O(n^2)
 # Space: O(n)
 #
 # Description: Leetcode # 654. Maximum Binary Tree
+#
 # Given an integer array with no duplicates. A maximum tree building on this array is defined as follow:
 #
 # The root is the maximum number in the array.
@@ -29,9 +30,7 @@ __source__ = 'https://leetcode.com/problems/maximum-binary-tree/description/'
 # Related Topics
 # Tree
 #
-#
 import unittest
-# 236ms
 # Definition for a binary tree node.
 class TreeNode(object):
     def __init__(self, x):
@@ -39,6 +38,7 @@ class TreeNode(object):
         self.left = None
         self.right = None
 
+# 128ms 67.74%
 class Solution(object):
     def constructMaximumBinaryTree(self, nums):
         """
@@ -64,12 +64,12 @@ class TestMethods(unittest.TestCase):
     def test_Local(self):
         self.assertEqual(1, 1)
 
-
 if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/problems/maximum-binary-tree/solution/
+# Thought: https://leetcode.com/problems/maximum-binary-tree/solution/
+#
 /**
  * Definition for a binary tree node.
  * public class TreeNode {
@@ -80,8 +80,8 @@ Java = '''
  * }
  */
 
-# 85.61% 12ms
-public class Solution {
+# 9ms 57.26%
+class Solution {
     public TreeNode constructMaximumBinaryTree(int[] nums) {
         if (nums == null) return null;
         return build(nums, 0, nums.length - 1);
@@ -98,16 +98,14 @@ public class Solution {
         }
 
         TreeNode root = new TreeNode(nums[idxMax]);
-
         root.left = build(nums, start, idxMax - 1);
         root.right = build(nums, idxMax + 1, end);
-
         return root;
     }
 }
 
-# 32.25% 16ms
-public class Solution {
+# 10ms 48.49%
+class Solution {
     public TreeNode constructMaximumBinaryTree(int[] nums) {
         return construct(nums, 0, nums.length);
     }

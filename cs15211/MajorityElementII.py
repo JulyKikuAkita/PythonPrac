@@ -1,8 +1,9 @@
-__source__ = 'https://leetcode.com/problems/majority-element-ii/#/description'
+__source__ = 'https://leetcode.com/problems/majority-element-ii/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/majority-element-ii.py
 # Time:  O(n)
 # Space: O(1)
 # Boyer-Moore Majority Vote algorithm
+#
 # Description: Leetcode # 229. Majority Element II
 #
 # Given an integer array of size n,
@@ -82,22 +83,24 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
+# Thought:
 
 For those who aren't familiar with Boyer-Moore Majority Vote algorithm,
 I found a great article (http://goo.gl/64Nams) that helps me to understand this fantastic algorithm!!
 Please check it out!
 
-The essential concepts is you keep a counter for the majority number X. If you find a number Y that is not X,
-the current counter should deduce 1. The reason is that if there is 5 X and 4 Y, there would be one (5-4) more X than Y.
+The essential concepts is you keep a counter for the majority number X. 
+If you find a number Y that is not X,
+the current counter should deduce 1. The reason is that if there is 5 X and 4 Y, 
+there would be one (5-4) more X than Y.
 This could be explained as "4 X being paired out by 4 Y".
 
 And since the requirement is finding the majority for more than ceiling of [n/3],
 the answer would be less than or equal to two numbers.
 So we can modify the algorithm to maintain two counters for two majorities.
 
-#47.62% 3ms
-public class Solution {
+# 1ms 100%
+class Solution {
     public List<Integer> majorityElement(int[] nums) {
     	if (nums == null || nums.length == 0)
     		return new ArrayList<Integer>();

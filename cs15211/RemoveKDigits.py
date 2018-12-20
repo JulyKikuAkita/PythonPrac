@@ -1,8 +1,9 @@
-__source__ = 'https://github.com/kamyu104/LeetCode/blob/master/Python/remove-k-digits.py'
+__source__ = 'https://leetcode.com/problems/remove-k-digits/'
 # Time:  O(n)
 # Space: O(n)
 #
-# Description:
+# Description: 402. Remove K Digits
+#
 # Given a non-negative integer num represented as a string,
 # remove k digits from the number so that the new number is the smallest possible.
 #
@@ -30,6 +31,7 @@ __source__ = 'https://github.com/kamyu104/LeetCode/blob/master/Python/remove-k-d
 #
 import unittest
 
+# 28ms 89.87%
 class Solution(object):
     def removeKdigits(self, num, k):
         """
@@ -54,8 +56,11 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: A greedy method using stack, O(n) time and O(n) space
-public class Solution {
+# Thought: 
+A greedy method using stack, O(n) time and O(n) space
+
+# 4ms 95.36%
+class Solution {
     public String removeKdigits(String num, int k) {
         int digits = num.length() - k;
         char[] stk = new char[num.length()];

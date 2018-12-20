@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/remove-duplicates-from-sorted-list/description/'
+__source__ = 'https://leetcode.com/problems/remove-duplicates-from-sorted-list/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/remove-duplicates-from-sorted-list.py
 # Time:  O(n)
 # Space: O(1)
@@ -99,14 +99,11 @@ class Solutionif:
                     curr.next = None
                     nextnode.val =None
                     nextnode.next=None
-
         return head
 
 # test
 class TestMethods(unittest.TestCase):
     def test_Local(self):
-        self.assertEqual(1, 1)
-
         head, head.next, head.next.next = ListNode(1), ListNode(1), ListNode(2)
         head.next.next.next, head.next.next.next.next = ListNode(3), ListNode(3)
         print Solution().deleteDuplicates(head)
@@ -115,10 +112,7 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/problems/remove-duplicates-from-sorted-list/solution/
-
-# Recursion
-# 12.48% 1ms
+# Thought: https://leetcode.com/problems/remove-duplicates-from-sorted-list/solution/
 
  * Definition for singly-linked list.
  * public class ListNode {
@@ -127,7 +121,9 @@ Java = '''
  *     ListNode(int x) { val = x; }
  * }
  */
-public class Solution {
+# Recursion
+# 0ms 100%
+class Solution {
     public ListNode deleteDuplicates(ListNode head) {
         if(head == null || head.next == null)return head;
         head.next = deleteDuplicates(head.next);
@@ -135,8 +131,8 @@ public class Solution {
     }
 }
 
-#12.48% 1ms
-public class Solution {
+# 0ms 100%
+class Solution {
     public ListNode deleteDuplicates(ListNode head) {
         ListNode cur = head;
         while (cur != null && cur.next != null) {
@@ -150,8 +146,8 @@ public class Solution {
     }
 }
 
-#12.48% 1ms
-public class Solution {
+# 0ms 100%
+class Solution {
     public ListNode deleteDuplicates(ListNode head) {
         if ( head == null || head.next == null) return head;
         ListNode cur = head.next;

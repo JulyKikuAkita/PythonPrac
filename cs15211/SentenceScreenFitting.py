@@ -1,8 +1,9 @@
-__source__ = 'https://github.com/kamyu104/LeetCode/blob/master/Python/sentence-screen-fitting.py'
+__source__ = 'https://leetcode.com/problems/sentence-screen-fitting/'
 # Time:  O(r + n * c)
 # Space: O(n)
 #
-# Description:
+# Description: 418. Sentence Screen Fitting
+#
 # Given a rows x cols screen and a sentence represented by a list of non-empty words,
 # find how many times the given sentence can be fitted on the screen.
 #
@@ -60,7 +61,7 @@ __source__ = 'https://github.com/kamyu104/LeetCode/blob/master/Python/sentence-s
 # Hide Tags Dynamic Programming
 
 import unittest
-
+# 460ms 7.30%
 class Solution(object):
     def wordsTyping(self, sentence, rows, cols):
         """
@@ -95,12 +96,12 @@ class TestMethods(unittest.TestCase):
     def test_Local(self):
         self.assertEqual(1, 1)
 
-
 if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
+# Thought:
+
 Say sentence=["abc", "de", "f], rows=4, and cols=6.
 The screen should look like
 
@@ -108,7 +109,8 @@ The screen should look like
 "f abc "
 "de f  "
 "abc de"
-Consider the following repeating sentence string, with positions of the start character of each row on the screen.
+Consider the following repeating sentence string, 
+with positions of the start character of each row on the screen.
 
 "abc de f abc de f abc de f ..."
  ^      ^     ^    ^      ^
@@ -118,7 +120,8 @@ Since actually it's the length of everything earlier,
 we can get the answer by dividing this number by the length of (non-repeated) sentence string.
 Note that the non-repeated sentence string has a space at the end; it is "abc de f " in this example.
 
-Here is how we find that position. In each iteration, we need to adjust start based on spaces either added or removed.
+Here is how we find that position. 
+In each iteration, we need to adjust start based on spaces either added or removed.
 
 "abc de f abc de f abc de f ..." // start=0
  012345                          // start=start+cols+adjustment=0+6+1=7 (1 space removed in screen string)
@@ -127,9 +130,9 @@ Here is how we find that position. In each iteration, we need to adjust start ba
                    012345        // start=18+6+1=25 (1 space added)
                           012345
 
-
-
-public class Solution {
+#
+# 16ms 48.14%
+class Solution {
     public int wordsTyping(String[] sentence, int rows, int cols) {
         String s = String.join(" ", sentence) + " ";
         int start = 0, l = s.length();
@@ -143,7 +146,6 @@ public class Solution {
                 }
             }
         }
-
         return start / s.length();
     }
 }

@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/reverse-vowels-of-a-string/tabs/description'
+__source__ = 'https://leetcode.com/problems/reverse-vowels-of-a-string/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/reverse-vowels-of-a-string.py
 # Time:  O(n)
 # Space: O(1)
@@ -64,8 +64,9 @@ if __name__ == '__main__':
 
 Java = '''
 # Thought:
-# 82.37% 5ms
-public class Solution {
+
+# 4ms 83.59%
+class Solution {
     public String reverseVowels(String s) {
         char[] arr = s.toCharArray();
         int start = 0;
@@ -100,7 +101,7 @@ public class Solution {
     }
 }
 
-# 95.76% 4ms
+# 2ms 99.82%
 class Solution {
     public String reverseVowels(String s) {
         int start =0;

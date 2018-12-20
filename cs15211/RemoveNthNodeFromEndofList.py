@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/remove-nth-node-from-end-of-list/description/'
+__source__ = 'https://leetcode.com/problems/remove-nth-node-from-end-of-list/'
 # https://github.com/kamyu104/LeetCode#linked-list
 # Time:  O(n)
 # Space: O(1)
@@ -49,7 +49,6 @@ class Solution:
         slow.next = slow.next.next  # if slow = fast, fails when n =1
         return dummy.next
 
-
 class SolutionOther:
     # @return a ListNode
     def removeNthFromEnd(self, head, n):
@@ -99,9 +98,9 @@ if __name__ == '__main__':
 Java = '''
 #Thought: https://leetcode.com/problems/remove-nth-node-from-end-of-list/solution/
 
-# two pass //get to know linked node length at first loop
-# 93.23% 13ms
-public class Solution {
+# Two pass: get to know linked node length at first loop
+# 9ms 47.49%
+class Solution {
     public ListNode removeNthFromEnd(ListNode head, int n) {
         ListNode dummy = new ListNode(0);
         dummy.next = head;
@@ -121,9 +120,9 @@ public class Solution {
     }
 }
 
-# one pass, slow and fast separate by n
-# 44.82% 15ms
-public class Solution {
+# One pass, slow and fast separate by n
+# 9ms 47.49%
+class Solution {
     public ListNode removeNthFromEnd(ListNode head, int n) {
         ListNode fakeHead = new ListNode(0);
         fakeHead.next = head;

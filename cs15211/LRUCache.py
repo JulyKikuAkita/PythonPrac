@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/lru-cache/#/description'
+__source__ = 'https://leetcode.com/problems/lru-cache/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/lru-cache.py
 # Time:  O(1)
 # Space: O(n)
@@ -245,12 +245,12 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://discuss.leetcode.com/topic/6613/java-hashtable-double-linked-list-with-a-touch-of-pseudo-nodes
+# Thought: 
+# https://discuss.leetcode.com/topic/6613/java-hashtable-double-linked-list-with-a-touch-of-pseudo-nodes
 # HashMap + doubly-linked list implementation:
 # Without dummyhead tail
 
-# 76.69% 145ms
-public class LRUCache {
+# 98ms 47.75%
     private int capacityLeft;
     private Map<Integer, DoublyLinkedNode<KeyValuePair>> keyElementMap;
     private DoublyLinkedNode<KeyValuePair> first;
@@ -344,14 +344,12 @@ class KeyValuePair {
         this.value = value;
     }
 }
-'''
 
-LinkedHashMap= '''
-# 74.62% 146ms
 #https://discuss.leetcode.com/topic/43961/laziest-implementation-java-s-linkedhashmap-takes-care-of-everything
 This is the laziest implementation using Java's LinkedHashMap. In the real interview,
 however, it is definitely not what interviewer expected.
-
+# LinkedHashMap
+# 84ms 77.58%
 import java.util.LinkedHashMap;
 public class LRUCache {
     private LinkedHashMap<Integer, Integer> map;
@@ -387,11 +385,9 @@ public class LRUCache {
  * int param_1 = obj.get(key);
  * obj.put(key,value);
  */
-'''
 
-slow = '''
-#12.04% 195ms
-public class LRUCache {
+# 126ms 24.69%
+class LRUCache {
     Node head = null;
     Node tail = null;
     Map<Integer, Node> map;

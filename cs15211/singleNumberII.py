@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/single-number-ii/description/'
+__source__ = 'https://leetcode.com/problems/single-number-ii/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/singleNumberII.py
 # Time:  O(n)
 # Space: O(1)
@@ -184,10 +184,11 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/problems/contains-duplicate/solution/
+# Thought:
 # General idea: count bits and mod by count
-#41.77% 5ms
-public class Solution {
+
+# 0ms 100%
+class Solution {
     public int singleNumber(int[] nums) {
         int[] bits = new int[32];
         for (int num : nums) {
@@ -210,8 +211,8 @@ public class Solution {
     }
 }
 
-#73.33% 1ms
-public class Solution {
+# 0ms 100%
+class Solution {
     public int singleNumber(int[] nums) {
         int ones = 0, twos = 0;
         for(int i = 0; i < nums.length; i++){

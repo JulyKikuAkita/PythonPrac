@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/longest-uncommon-subsequence-i/#/description'
+__source__ = 'https://leetcode.com/problems/longest-uncommon-subsequence-i/'
 # Time:  O(n) or O(min(x,y)), more precisely
 # O(|a| if |a|==|b| else 1) due to  equals probably only compares the characters if the lengths are the same
 # Space: O(1)
@@ -46,7 +46,7 @@ __source__ = 'https://leetcode.com/problems/longest-uncommon-subsequence-i/#/des
 # Longest Uncommon Subsequence II
 #
 import unittest
-#49ms
+# 20ms 98.41%
 class Solution(object):
     def findLUSlength(self, a, b):
         """
@@ -64,12 +64,12 @@ class TestMethods(unittest.TestCase):
     def test_Local(self):
         self.assertEqual(1, 1)
 
-
 if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/articles/longest-uncommon-subsequence-i/
+# Thought: https://leetcode.com/problems/longest-uncommon-subsequence-i/solution/
+#
 These three cases are possible with string a and b:
 
 1) a == b If both the strings are identical, it is obvious that no subsequence will be uncommon. Hence, return -1.
@@ -88,8 +88,8 @@ Time complexity : O(min(x,y)). where x and y are the lengths of strings a and b 
     Here equals method will take min(x,y) time .
 Space complexity : O(1). No extra space require
 
-#59.97% 3ms
-public class Solution {
+# 28ms 81.17%
+class Solution {
     public int findLUSlength(String a, String b) {
         return a.equals(b) ? -1 : Math.max(a.length(), b.length());
     }
@@ -105,7 +105,8 @@ Time complexity : O(2^x+2^y). where x and y are the lengths of strings aa and bb
 Number of subsequences will be 2^x+2^y
 Space complexity : O(2^x+2^y) 2^x+2^y subsequences will be generated.
 
-public class Solution {
+# TLE
+class Solution {
     public int findLUSlength(String a, String b) {
         HashMap < String, Integer > map = new HashMap < > ();
         for (String s: new String[] {a, b}) {

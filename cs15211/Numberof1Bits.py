@@ -1,9 +1,10 @@
-__source__ = 'https://leetcode.com/problems/number-of-1-bits/description/'
+__source__ = 'https://leetcode.com/problems/number-of-1-bits/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/number-of-1-bits.py
 # Time:  O(m)
 # Space: O(1)
 #
 # Description: Leetcode # 191. Number of 1 Bits
+#
 # Write a function that takes an unsigned integer
 # and returns the number of '1' bits it has (also known as the Hamming weight).
 #
@@ -53,8 +54,8 @@ Approach #2 (Bit Manipulation Trick) [Accepted]
 The key idea here is to realize that for any number n,
 doing a bit-wise AND of n and n - 1 flips the least-significant 1-bit in n to 0.
 
-# 79.87% 1ms
-public class Solution {
+# 1ms 95.92%
+class Solution {
     // you need to treat n as an unsigned value
     public int hammingWeight(int n) {
         int result = 0;
@@ -69,8 +70,8 @@ public class Solution {
 Approach #1 (Loop and Flip) [Accepted]
 # Time:  O(m) 32 bit
 # Space: O(1)
-# 9.34% 2ms
-public class Solution {
+# 1ms 95.92%
+class Solution {
     // you need to treat n as an unsigned value
     public int hammingWeight(int n) {
         int bits = 0;

@@ -1,7 +1,6 @@
 __source__ = 'https://leetcode.com/problems/number-of-music-playlists/'
 # Time:  O()
 # Space: O()
-#
 # DP
 #
 # Description: Leetcode # 920. Number of Music Playlists
@@ -95,14 +94,15 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/problems/number-of-music-playlists/solution/
+# Thought: https://leetcode.com/problems/number-of-music-playlists/solution/
+#
 Approach 1: Dynamic Programming
 Complexity Analysis
 Time Complexity: O(NL)
 Space Complexity: O(NL)
 (However, we can adapt this algorithm to only store the last row of dp to easily get O(L) space complexity.)
 
-#17ms 18.69%
+# 17ms 18.69%
 class Solution {
     public int numMusicPlaylists(int N, int L, int K) {
         int MOD = 1_000_000_007;
@@ -125,7 +125,7 @@ Complexity Analysis
 Time Complexity: O(NL)
 Space Complexity: O(L)
 
-#4ms 99.86%
+# 4ms 99.86%
 class Solution {
     public int numMusicPlaylists(int N, int L, int K) {
         int MOD = 1_000_000_007;

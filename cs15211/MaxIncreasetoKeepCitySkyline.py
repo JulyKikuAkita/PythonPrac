@@ -68,10 +68,11 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/problems/max-increase-to-keep-city-skyline/solution/
+# Thought: https://leetcode.com/problems/max-increase-to-keep-city-skyline/solution/
+#
 Approach #1: Row and Column Maximums [Accepted]
 
-#7ms 89.66%
+# 7ms 89.66%
 class Solution {
     public int maxIncreaseKeepingSkyline(int[][] grid) {
         int N = grid.length;
@@ -94,4 +95,5 @@ class Solution {
         return ans;
     }
 }
+
 '''

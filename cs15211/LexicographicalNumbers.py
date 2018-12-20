@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/lexicographical-numbers/description/'
+__source__ = 'https://leetcode.com/problems/lexicographical-numbers/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/lexicographical-numbers.py
 # Time:  O(n)
 # Space: O(1)
@@ -16,6 +16,7 @@ __source__ = 'https://leetcode.com/problems/lexicographical-numbers/description/
 # Bloomberg
 #
 import unittest
+# 440ms 97.79%
 class Solution(object):
     def lexicalOrder(self, n):
         result = []
@@ -52,7 +53,8 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/problems/contains-duplicate/solution/
+# Thought: 
+
 The basic idea is to find the next number to add.
 Take 45 for example: if the current number is 45, the next one will be 450 (450 == 45 * 10)(if 450 <= n),
 or 46 (46 == 45 + 1) (if 46 <= n) or 5 (5 == 45 / 10 + 1)(5 is less than 45 so it is for sure less than n).
@@ -60,9 +62,10 @@ We should also consider n = 600, and the current number = 499, the next number i
 after "4" in "499" so we should divide 499 by 10 until the last digit is not "9".
 It is like a tree, and we are easy to get a sibling, a left most child and the parent of any node.
 
-#BFS
-#96.94% 123ms
-public List<Integer> lexicalOrder(int n) {
+# BFS
+# 118ms 71.40%
+class Solution {
+    public List<Integer> lexicalOrder(int n) {
         List<Integer> list = new ArrayList<>(n);
         int curr = 1;
         for (int i = 1; i <= n; i++) {
@@ -80,16 +83,18 @@ public List<Integer> lexicalOrder(int n) {
         }
         return list;
     }
+}
 
-Simple Java DFS Solution
-The idea is pretty simple. If we look at the order we can find out we just keep adding digit from 0 to 9 to every digit and make it a tree.
-Then we visit every node in pre-order.
-       1        2        3    ...
-      /\        /\       /\
-   10 ...19  20...29  30...39   ....
-
-#71.07% 173ms
-public class Solution {
+# Simple Java DFS Solution
+# The idea is pretty simple. If we look at the order we can find out 
+# we just keep adding digit from 0 to 9 to every digit and make it a tree.
+# Then we visit every node in pre-order.
+#        1        2        3    ...
+#       /\        /\       /\
+#    10 ...19  20...29  30...39   ....
+#
+# 105ms 82.72%
+class Solution {
     public List<Integer> lexicalOrder(int n) {
         List<Integer> res = new ArrayList<>();
         for (int i = 1; i < 10; i++) {
@@ -108,8 +113,8 @@ public class Solution {
     }
 }
 
-#100% 102ms
-public class Solution {
+# 62ms 99.59%
+class Solution {
     public List<Integer> lexicalOrder(int n) {
         Integer[] arr = new Integer[n];
         lexicalOrder(arr, n, 0, 0);

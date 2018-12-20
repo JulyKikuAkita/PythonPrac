@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/random-pick-index/description/'
+__source__ = 'https://leetcode.com/problems/random-pick-index/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/random-pick-index.py
 # Time:  O(n)
 # Space: O(1)
@@ -34,8 +34,8 @@ __source__ = 'https://leetcode.com/problems/random-pick-index/description/'
 #
 from random import randint
 import unittest
+# 60ms 85.04%
 class Solution(object):
-
     def __init__(self, nums):
         """
 
@@ -70,10 +70,10 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
+# Thought:
 
-#97.26% 272ms
-public class Solution {
+# 175ms 38.31%
+class Solution {
     int[] nums;
     Random rand;
 
@@ -104,8 +104,8 @@ public class Solution {
  * int param_1 = obj.pick(target);
  */
 
-#97.74% 270ms
-public class Solution {
+# 209ms 17.46%
+class Solution {
     int[] nums;
     Random rand;
 

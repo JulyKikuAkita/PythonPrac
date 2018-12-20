@@ -1,7 +1,8 @@
-__source__ = 'https://leetcode.com/problems/shortest-palindrome/description/'
+__source__ = 'https://leetcode.com/problems/shortest-palindrome/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/shortest-palindrome.py
 # Time:  O(n)
 # Space: O(n)
+#
 # Description: Leetcode # 214. Shortest Palindrome
 #
 # Given a string S, you are allowed to convert it to a palindrome by adding characters in front of it.
@@ -44,7 +45,6 @@ class Solution:
                 j += 1
             prefix[i] = j
         return prefix
-
 
 class Solution2(unittest.TestCase):
     def shortestPalindrome(self, s):
@@ -95,7 +95,6 @@ class Solution_TLE:
                 max_len = palindrome[i]
         return s[len(s) - 1: max_len-1: -1] + s
 
-
     def preProcess(selfs, s):
         if not s:
             return "^$"
@@ -108,7 +107,6 @@ class Solution_TLE:
 class TestMethods(unittest.TestCase):
     def test_Local(self):
         self.assertEqual(1, 1)
-
         print Solution().shortestPalindrome("baaabc")
         print Solution().shortestPalindrome("aba")
 
@@ -116,7 +114,8 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/problems/shortest-palindrome/solution/
+# Thought: https://leetcode.com/problems/shortest-palindrome/solution/
+#
 # 1.  The idea is to use two anchors j and i to compare the String from beginning and end.
 If j can reach the end, the String itself is Palindrome.
 Otherwise, we divide the String by j, and get mid = s.substring(0, j) and suffix.
@@ -124,8 +123,8 @@ Otherwise, we divide the String by j, and get mid = s.substring(0, j) and suffix
 We reverse suffix as beginning of result and recursively
 call shortestPalindrome to get result of mid then append suffix to get result.
 
-#71.76% 5ms
-public class Solution {
+# 1ms 100%
+class Solution {
     public String shortestPalindrome(String s) {
         if ( s == null || s.length() == 0 ) return s;
         int i = 0, j = s.length() - 1;
@@ -141,8 +140,8 @@ public class Solution {
     }
 }
 
-#98.79% 3ms
-public class Solution {
+# 1ms 100%
+class Solution {
     public String shortestPalindrome(String s) {
         if (s == null || s.length() == 0) return s;
 
@@ -178,10 +177,10 @@ We iterate over i from 0 to n-1 and check for s[0:n-i] == rev[i:]
 Pondering over this statement, had the rev been concatenated to s,
 this statement is just finding the longest prefix that is equal to the suffix. Voila!
 
-#KMP
-#62.18% 8ms
+# KMP
 # KMP initialized as j = -1, i = 0, lps = int[needle.length() + 1]
-public class Solution {
+# 5ms 61.95%
+class Solution {
     public String shortestPalindrome(String s) {
         String temp = s + "#" + new StringBuilder(s).reverse().toString();
         int[] lps = getLps(temp);
@@ -203,10 +202,10 @@ public class Solution {
     }
 }
 
-#49.58% 11ms
 # KMP:
 # KMP initialized as j = 0, i = 1, lps = int[needle.length()]
-public class Solution {
+# 4ms 70.80%
+class Solution {
     public String shortestPalindrome(String s) {
         String temp = s + "#" + new StringBuilder(s).reverse().toString();
         int[] table = getTable(temp);
@@ -241,17 +240,15 @@ public class Solution {
                 }
                 table[i] = index;
             }
-
         }
         return table;
     }
-
 }
 
 # KMP
-#49.58% 11ms
 # KMP initialized as j = 0, i = 1, lps = int[needle.length()]
-public class Solution {
+# 3ms 81.91%
+class Solution {
     public String shortestPalindrome(String s) {
         String reversed = new StringBuilder(s).reverse().toString();
         char[] full = new StringBuilder().append(s).append('#').append(reversed).toString().toCharArray();

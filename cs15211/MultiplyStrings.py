@@ -1,8 +1,10 @@
-__source__ = 'https://leetcode.com/problems/multiply-strings/description/'
+__source__ = 'https://leetcode.com/problems/multiply-strings/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/multiply-strings.py
 # Time:  O(m * n)
 # Space: O(m + n)
 # String
+#
+# Description: Leetcode # 346. Moving Average from Data Stream
 #
 # Given two numbers represented as strings, return multiplication of the numbers as a string.
 #
@@ -77,10 +79,11 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://discuss.leetcode.com/topic/30508/easiest-java-solution-with-graph-explanation with pic
+# Thought: 
+# https://discuss.leetcode.com/topic/30508/easiest-java-solution-with-graph-explanation with pic
 
-# 80.45% 27ms
-public class Solution {
+# 13ms 93.57%
+class Solution {
     public String multiply(String num1, String num2) {
         int len1 = num1.length();
         int len2 = num2.length();
@@ -108,8 +111,8 @@ public class Solution {
     }
 }
 
-#41.81% 31ms
-public class Solution {
+# 16ms 68.27%
+class Solution {
     public String multiply(String num1, String num2) {
         int n1 = num1.length();
         int n2 = num2.length();

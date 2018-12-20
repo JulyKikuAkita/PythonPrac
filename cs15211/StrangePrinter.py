@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/strange-printer/description/'
+__source__ = 'https://leetcode.com/problems/strange-printer/'
 # Time:  O(n^3)
 # Space: O(n^2)
 #
@@ -54,14 +54,14 @@ class TestMethods(unittest.TestCase):
     def test_Local(self):
         self.assertEqual(1, 1)
 
-
 if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
-# 87.72% 43ms
+# Thought: https://leetcode.com/problems/strange-printer/solution/
+
 # DP
+# 19ms 89.56%
 class Solution {
     public int strangePrinter(String s) {
        int n=s.length();
@@ -87,8 +87,8 @@ class Solution {
     }
 }
 
-#DFS
-# 99.70% 28ms
+# DFS
+# 23ms 78.02%
 class Solution {
      public int strangePrinter(String s) {
         if (s == null || s.length() <= 0) {
@@ -126,6 +126,6 @@ class Solution {
         cache[left][right] = cnt;
         return cnt;
     }
-
 }
+
 '''

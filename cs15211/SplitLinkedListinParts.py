@@ -77,19 +77,18 @@ class TestMethods(unittest.TestCase):
     def test_Local(self):
         self.assertEqual(1, 1)
 
-
 if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/problems/split-linked-list-in-parts/solution/
+# Thought: https://leetcode.com/problems/split-linked-list-in-parts/solution/
+#
 Approach #1: Create New Lists [Accepted]
 Complexity Analysis
 Time Complexity: O(N + k), where N is the number of nodes in the given list.
 If k is large, it could still require creating many new empty lists.
 Space Complexity: O(max(N, k)), the space used in writing the answer.
 
-#2ms 100%
 /**
  * Definition for singly-linked list.
  * public class ListNode {
@@ -98,6 +97,7 @@ Space Complexity: O(max(N, k)), the space used in writing the answer.
  *     ListNode(int x) { val = x; }
  * }
  */
+# 2ms 100%
 class Solution {
     public ListNode[] splitListToParts(ListNode root, int k) {
         ListNode cur = root;
@@ -123,14 +123,13 @@ class Solution {
     }
 }
 
-
 Approach #2: Split Input List [Accepted]
 Complexity Analysis
 Time Complexity: O(N + k), where N is the number of nodes in the given list.
 If k is large, it could still require creating many new empty lists.
 Space Complexity: O(k), the additional space used in writing the answer.
-#2ms 100%
 
+# 2ms 100%
 class Solution {
     public ListNode[] splitListToParts(ListNode root, int k) {
         ListNode cur = root;

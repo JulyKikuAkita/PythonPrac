@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/symmetric-tree/#/description'
+__source__ = 'https://leetcode.com/problems/symmetric-tree/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/symmetric-tree.py
 # Time:  O(n)
 # Space: O(h), h is height of binary tree
@@ -6,6 +6,7 @@ __source__ = 'https://leetcode.com/problems/symmetric-tree/#/description'
 # Stack
 #
 # Description: Leetcode #  101. Symmetric Tree
+#
 # For example, this binary tree is symmetric:
 #
 #     1
@@ -80,7 +81,6 @@ class SolutionRecu:
 
         if left.val != right.val:
             return False
-
         return self.checkSymmetric(left.left, right.right ) and self.checkSymmetric(left.right, right.left)
 
 # inorder won't work
@@ -128,31 +128,8 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-# Thought:  https://leetcode.com/articles/symmetric-tree/
+# Thought: https://leetcode.com/problems/symmetric-tree/solution/
 
-# DFS
-# 22.55% 1ms
-public boolean isSymmetric(TreeNode root) {
-    return isMirror(root, root);
-}
-
-public boolean isMirror(TreeNode t1, TreeNode t2) {
-    if (t1 == null && t2 == null) return true;
-    if (t1 == null || t2 == null) return false;
-    return (t1.val == t2.val)
-        && isMirror(t1.right, t2.left)
-        && isMirror(t1.left, t2.right);
-}
-private boolean isMirror2(TreeNode t1, TreeNode t2){
-    if(t1==null || t2==null)
-        return t1==t2;
-    if(t1.val!=t2.val)
-        return false;
-    return isMirror2(t1.left, t2.right) && isMirror2(t1.right, t2.left);
-}
-
-# BFS
-# 10.79% 2ms
 /**
  * Definition for a binary tree node.
  * public class TreeNode {
@@ -162,7 +139,48 @@ private boolean isMirror2(TreeNode t1, TreeNode t2){
  *     TreeNode(int x) { val = x; }
  * }
  */
-public class Solution {
+ 
+# DFS
+# 9ms 41.87%
+class Solution {
+    public boolean isSymmetric(TreeNode root) {
+        return root == null || dfs(root.left, root.right);
+    }
+    
+    public boolean dfs(TreeNode left, TreeNode right) {
+        if (left == null || right == null) {
+            return left == right;
+        }
+        if (left.val != right.val) return false;
+        return dfs(left.left, right.right) && dfs(left.right, right.left);
+    }
+}
+
+# 7ms 68.98%
+class Solution {
+    public boolean isSymmetric(TreeNode root) {
+        return isMirror(root, root);
+    }
+
+    public boolean isMirror(TreeNode t1, TreeNode t2) {
+        if (t1 == null && t2 == null) return true;
+        if (t1 == null || t2 == null) return false;
+        return (t1.val == t2.val)
+            && isMirror(t1.right, t2.left)
+            && isMirror(t1.left, t2.right);
+    }
+    private boolean isMirror2(TreeNode t1, TreeNode t2){
+        if(t1==null || t2==null)
+            return t1==t2;
+        if(t1.val!=t2.val)
+            return false;
+        return isMirror2(t1.left, t2.right) && isMirror2(t1.right, t2.left);
+    }
+}
+
+# BFS
+# 11ms 22.67%
+class Solution {
     public boolean isSymmetric(TreeNode root) {
         Queue<TreeNode> q = new LinkedList<TreeNode>();
         if(root == null) return true;

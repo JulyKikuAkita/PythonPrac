@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/recover-binary-search-tree/#/description'
+__source__ = 'https://leetcode.com/problems/recover-binary-search-tree/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/recover-binary-search-tree.py
 # Time:  O(n)
 # Space: O(1)
@@ -132,6 +132,7 @@ class SolutionOther:
         for i in range(len(list)):
             listp[i].val = list[i]
         return root
+
 class TestMethods(unittest.TestCase):
     def test_Local(self):
         self.assertEqual(1, 1)
@@ -141,7 +142,8 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-Thought:
+# Thought:
+
 Let's start by writing the in order traversal:
 
 private void traverse (TreeNode root) {
@@ -170,9 +172,8 @@ Really, what we are comparing is the current node and its previous node in the "
 Let us define three variables, firstElement, secondElement, and prevElement. 
 Now we just need to build the "do some business" logic as finding the two elements. See the code below:
 
-# 70.41% 3ms
-public class Solution {
-    
+# 23ms 98.56%
+class Solution {
     TreeNode firstElement = null;
     TreeNode secondElement = null;
     // The reason for this initialization is to avoid null pointer exception 
@@ -215,8 +216,7 @@ public class Solution {
     }
 }
 
-# 70.41% 3ms
-
+# 38ms 32.97%
 class Solution {
     private TreeNode pre = null;
     private TreeNode first = null, second = null;
@@ -243,7 +243,6 @@ class Solution {
     }
 }
 
-# 70.41% 3ms
 /**
  * Definition for a binary tree node.
  * public class TreeNode {
@@ -253,7 +252,8 @@ class Solution {
  *     TreeNode(int x) { val = x; }
  * }
  */
-public class Solution {
+# 31ms 56.25%
+class Solution {
     private TreeNode err1;
     private TreeNode err2;
     private TreeNode prev;
@@ -302,8 +302,8 @@ We need to take case this case without destroy the previous analysis.
 So the first node will still be pre, and the second will be just set to root. 
 Once we meet this case again, the first node will not be affected.
 
-# 29.86% 4ms
-public class Solution {
+# 41ms 25.12%
+class Solution {
     public void recoverTree(TreeNode root) {
         TreeNode pre = null;
         TreeNode err1 = null, err2 = null;

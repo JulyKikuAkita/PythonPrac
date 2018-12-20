@@ -53,7 +53,7 @@ class TreeNode(object):
         self.left = None
         self.right = None
 
-#20ms 100%
+# 20ms 100%
 class Solution(object):
     def splitBST(self, root, V):
         """
@@ -80,12 +80,12 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/problems/split-bst/solution/
+# Thought: https://leetcode.com/problems/split-bst/solution/
+
 Complexity Analysis
 Time Complexity: O(N), where N is the number of nodes in the input tree, as each node is checked once.
 Space Complexity: O(N).
 
-#99.36% 2ms
 /**
  * Definition for a binary tree node.
  * public class TreeNode {
@@ -95,6 +95,7 @@ Space Complexity: O(N).
  *     TreeNode(int x) { val = x; }
  * }
  */
+# 2ms 98.59%
 class Solution {
     public TreeNode[] splitBST(TreeNode root, int V) {
         if (root == null) return new TreeNode[]{null, null};
@@ -112,7 +113,7 @@ class Solution {
     }
 }
 
-#99.36% 2ms
+# 2ms 98.59%
 class Solution {
     public TreeNode[] splitBST(TreeNode root, int V) {
         TreeNode[] res = new TreeNode[2];

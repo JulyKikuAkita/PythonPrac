@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/serialize-and-deserialize-binary-tree/#/description'
+__source__ = 'https://leetcode.com/problems/serialize-and-deserialize-binary-tree/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/serialize-and-deserialize-binary-tree.py
 # Time:  O(n)
 # Space: O(h)
@@ -43,6 +43,8 @@ class TreeNode(object):
          self.val = x
          self.left = None
          self.right = None
+
+# 104ms 87.17%
 class Codec:
     def serialize(self, root):
         """Encodes a tree to a single string.
@@ -151,10 +153,21 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
-#BFS
-# 24.56% 32ms
-public class Codec {
+# Thought: https://leetcode.com/problems/serialize-and-deserialize-binary-tree/solution/
+
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+ 
+# BFS
+# 11ms 89.75%
+class Codec {
     private static final String DELIMITER = ";";
     private static final String NULL_NODE = "#";
 
@@ -217,18 +230,9 @@ building the string on the fly. For deserializing, we use a Queue to store
 the pre-order traversal and since we have "X" as null node, we know exactly
 how to where to end building subtress.
 
-/**
- * Definition for a binary tree node.
- * public class TreeNode {
- *     int val;
- *     TreeNode left;
- *     TreeNode right;
- *     TreeNode(int x) { val = x; }
- * }
- */
 # DFS
-# 73.05% 22ms
-public class Codec {
+# 10ms 94.03%
+class Codec {
     private static final String spliter = ",";
     private static final String NN = "X";
     // Encodes a tree to a single string.
@@ -271,9 +275,9 @@ public class Codec {
 // Codec codec = new Codec();
 // codec.deserialize(codec.serialize(root));
 
-#99.71% 1ms
-public class Codec {
-
+# Cheat
+# 0ms 100%
+class Codec {
     private TreeNode hack;
     // Encodes a tree to a single string.
     public String serialize(TreeNode root) {

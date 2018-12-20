@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/minimum-size-subarray-sum/description/'
+__source__ = 'https://leetcode.com/problems/minimum-size-subarray-sum/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/minimum-size-subarray-sum.py
 # Time:  O(n)
 # Space: O(1)
@@ -6,13 +6,15 @@ __source__ = 'https://leetcode.com/problems/minimum-size-subarray-sum/descriptio
 # Description: Leetcode # 209. Minimum Size Subarray Sum
 #
 # Given an array of n positive integers and a positive integer s,
-# find the minimal length of a subarray of which the sum >=s. IF there isn't one, return 0 instead.
+# find the minimal length of a subarray of which the sum >=s.
+# IF there isn't one, return 0 instead.
 #
 # For example, given the array [2,3,1,2,4,3] and s = 7,
 # the subarray [4,3] has the minimal length under the problem constraint.
 #
 # More practice:
-# If you have figured out the O(n) solution, try coding another solution of which the time complexity is O(n log n).
+# If you have figured out the O(n) solution,
+# try coding another solution of which the time complexity is O(n log n).
 #
 # Companies
 # Facebook
@@ -81,9 +83,10 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/articles/minimum-size-subarray-sum/
-#63.52% 2ms
-public class Solution {
+# Thought: https://leetcode.com/problems/minimum-size-subarray-sum/solution/
+
+# 3ms 51.78%
+class Solution {
     public int minSubArrayLen(int s, int[] nums) {
         if(s == 0 || nums == null || nums.length == 0) return 0;
         int sum = 0;
@@ -114,9 +117,9 @@ the cumulative sum must be strictly increasing.
 Then, a subarray sum can expressed as the difference between two cumulative sum.
 Hence, given a start index for the cumulative sum array, the other end index can be searched using binary search.
 
-#Use binary search for end index
-#13.34% 8ms
-public class Solution {
+# Use binary search for end index
+# 8ms 13.72%
+class Solution {
     public int minSubArrayLen(int s, int[] nums) {
         return solveNLogN(s, nums);
     }
@@ -154,6 +157,29 @@ public class Solution {
            }
         }
         return lo;
+    }
+}
+
+# 2ms 99.91%
+class Solution {
+    public int minSubArrayLen(int s, int[] nums) {
+        if (nums == null || nums.length == 0) {
+            return 0;
+        }
+        int start = 0;
+        int curr = 0;
+        int length = 0;
+        for (int i = 0; i < nums.length; i++) {
+            curr += nums[i];
+            if (curr >= s) {
+                while (start < i && curr - nums[start] >= s) {
+                    curr -= nums[start];
+                    start++;
+                }
+                length = length == 0 ? i - start + 1 : Math.min(length, i - start + 1);
+            }
+        }
+        return length;
     }
 }
 '''

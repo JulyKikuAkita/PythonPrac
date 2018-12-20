@@ -1,8 +1,10 @@
-__source__ = 'https://leetcode.com/problems/search-in-rotated-sorted-array-ii/description/'
+__source__ = 'https://leetcode.com/problems/search-in-rotated-sorted-array-ii/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/search-in-rotated-sorted-array-ii.py
 # Time:  O(logn) When there are duplicates, the worst case is O(n).
 # Space: O(1)
 # Binary Search
+#
+# Description: Leetcode # 34. Search for a Range
 #
 # Follow up for "Search in Rotated Sorted Array":
 # What if duplicates are allowed?
@@ -48,13 +50,11 @@ class Solution:
 
 # below Fail
 class SolutionCC150: # fail at [1,3,1,1,1], 3
-
     # @param A, a list of integers
     # @param target, an integer to be searched
     # @return an integer
     def search(self, A, target):
         low, high = 0, len(A) - 1
-
         while low <= high:
             mid = (low + high) / 2
             if A[mid] == target:
@@ -132,10 +132,10 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
+# Thought:
 
-# 12.82% 1ms
-public class Solution {
+# 1ms 46.84%
+class Solution {
     public boolean search(int[] nums, int target) {
         int start = 0;
         int end = nums.length;
@@ -160,14 +160,13 @@ public class Solution {
                 start++;
             }
         }
-
         return false;
     }
 }
 
 # DFS:
-# 12.82% 1ms
-public class Solution {
+# 0ms 100%
+class Solution {
     public boolean search(int[] nums, int target) {
         return search(nums, target, 0, nums.length - 1);
     }
@@ -198,8 +197,8 @@ public class Solution {
     }
 }
 
-# 12.82% 1ms
-public class Solution {
+# 0ms 100%
+class Solution {
     public boolean search(int[] nums, int target) {
         if(nums == null || nums.length < 1) return false;
         int start = 0;

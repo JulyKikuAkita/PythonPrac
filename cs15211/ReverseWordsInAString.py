@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/reverse-words-in-a-string/#/description'
+__source__ = 'https://leetcode.com/problems/reverse-words-in-a-string/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/reverse-words-in-a-string.py
 # Time:  O(n)
 # Space: O(n)
@@ -35,6 +35,7 @@ class Solution:
     # @return a string
     def reverseWords(self, s):
         #print s.split()[::-1] # return string list -> join to string
+        # return " ".join(s.split()[::-1]) # 20ms 99.53%
         return ' '.join(reversed(s.split())) #reversed have no return
 
 #testobj.reverse2Words("the sky is blue")
@@ -47,8 +48,6 @@ class Test(unittest.TestCase):
         s3 = "the sky is blue"
         self.assertEqual(Solution().reverseWords(s3), "blue is sky the")
         self.assertEqual(Solution().reverseWords(s1), "fails it why but works,")
-if __name__ == '__main__':
-    print Solution().reverseWords("Hello World!")
 
 # Write a function reverse the words in a string
 # eg: "Today is Tuesday"
@@ -63,20 +62,23 @@ class SalesForceTest(unittest.TestCase):
             tmp.append(w[::-1])
         return " ".join(tmp)
 
-    def test(self):
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
         t1 = "Today is Tuesday"
         t2 = "yadoT si yadseuT"
         self.assertEqual(self.reverse(t1), t2, "Test1")
         self.assertEqual(self.reverse(t2), t1, "Test2")
+        print Solution().reverseWords("Hello World!")
 
-#Java
-#inplace
+if __name__ == '__main__':
+    unittest.main()
+
 Java = '''
-Thought:
+# Thought:
 
-// use collections
-# 44.03% 10ms
-public class Solution {
+# Use collections
+# 36ms 17.61%
+class Solution {
     public String reverseWords(String s) {
         String[] parts = s.trim().split("\\s+");
         Collections.reverse(Arrays.asList(parts));
@@ -84,8 +86,8 @@ public class Solution {
     }
 }
 
-#99.64% 2ms
-public class Solution {
+# 2ms 94.28%
+class Solution {
     public String reverseWords(String s) {
         s = s.trim();
         if (s.length()==0) return s;
@@ -98,13 +100,12 @@ public class Solution {
             }
         }
         return sb.toString();
-
     }
 }
 
-//First, reverse the whole string, then reverse each word.
-# 11.18% 81ms
-public class Solution {
+# First, reverse the whole string, then reverse each word.
+# 53ms 8.79%
+class Solution {
     public String reverseWords(String s) {
         String[] parts = s.trim().split("\\s+");
         String out = "";
@@ -115,9 +116,9 @@ public class Solution {
     }
 }
 
-// inplace
-#83.03% 4ms
-public class Solution {
+# Inplace
+# 3ms 81.56%
+class Solution {
     public String reverseWords(String s) {
         char[] arr = s.toCharArray();
         int newEnd = -1;

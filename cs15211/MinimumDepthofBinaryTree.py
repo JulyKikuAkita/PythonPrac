@@ -1,10 +1,11 @@
-__source__ = 'https://leetcode.com/problems/minimum-depth-of-binary-tree/#/description'
+__source__ = 'https://leetcode.com/problems/minimum-depth-of-binary-tree/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/minimum-depth-of-binary-tree.py
 # Time:  O(n)
 # Space: O(h), h is height of binary tree
 # divide and conquer
 #
 # Description: Leetcode # 111. Minimum Depth of Binary Tree
+#
 # Given a binary tree, find its minimum depth.
 #
 # The minimum depth is the number of nodes along the shortest path from the root node down to the nearest leaf node.
@@ -13,6 +14,7 @@ __source__ = 'https://leetcode.com/problems/minimum-depth-of-binary-tree/#/descr
 # Tree Depth-first Search Breadth-first Search
 # Similar Questions
 # Binary Tree Level Order Traversal Maximum Depth of Binary Tree
+#
 
 import  unittest
 # Definition for a  binary tree node
@@ -33,7 +35,6 @@ class Solution:
         if root.right == None:
             return self.minDepth(root.left) + 1
         return min(self.minDepth(root.left), self.minDepth(root.right)) + 1
-
 
 class Solution2:
     # @param root, a tree node
@@ -94,8 +95,8 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-# Thought:
-#DFS 16.84%
+# Thought: https://leetcode.com/problems/minimum-depth-of-binary-tree/solution/
+
 /**
  * Definition for a binary tree node.
  * public class TreeNode {
@@ -105,8 +106,10 @@ Java = '''
  *     TreeNode(int x) { val = x; }
  * }
  */
-# 12.73% 1ms
-public class Solution {
+
+# DFS
+# 0ms 100%
+class Solution {
     public int minDepth(TreeNode root) {
         if (root == null) return 0;
         int left = minDepth(root.left);
@@ -115,7 +118,7 @@ public class Solution {
     }
 }
 
-# 12.73% 1ms
+# 0ms 100%
 class Solution {
     public int minDepth(TreeNode root) {
         if (root == null) return 0;
@@ -126,8 +129,8 @@ class Solution {
     }
 }
 
-# 12.73% 1ms
-public class Solution {
+# 0ms 100%
+class Solution {
     public int minDepth(TreeNode root) {
         if(root==null)        
             return 0;
@@ -142,9 +145,9 @@ public class Solution {
     }
 }
 
-#BFS:
-# 12.73% 1ms
-public class Solution {
+# BFS:
+# 1ms 33.76%
+class Solution {
     public int minDepth(TreeNode root) {
         if (root == null) {
             return 0;

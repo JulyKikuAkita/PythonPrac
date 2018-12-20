@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/single-element-in-a-sorted-array/description/'
+__source__ = 'https://leetcode.com/problems/single-element-in-a-sorted-array/'
 # Time:  O(log(n))
 # Space: O(n)
 #
@@ -15,7 +15,7 @@ __source__ = 'https://leetcode.com/problems/single-element-in-a-sorted-array/des
 # Output: 10
 # Note: Your solution should run in O(log n) time and O(1) space.
 #
-# 42ms
+# 32ms 22.63%
 import unittest
 class Solution(object):
     def singleNonDuplicate(self, nums):
@@ -36,16 +36,17 @@ class TestMethods(unittest.TestCase):
     def test_Local(self):
         self.assertEqual(1, 1)
 
-
 if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
+# Thought:
+
 lo and hi are not regular index, but the pair index here.
 Basically you want to find the first even-index number not followed by the same number.
-#16.11% 1ms
-public class Solution {
+
+# 0ms 100%
+class Solution {
     public int singleNonDuplicate(int[] nums) {
         // binary search
         int n = nums.length, lo = 0, high = n / 2;
@@ -58,7 +59,7 @@ public class Solution {
     }
 }
 
-#16.11% 1ms
+# 0ms 100%
 class Solution {
      public static int singleNonDuplicate(int[] nums) {
         int start = 0, end = nums.length - 1;

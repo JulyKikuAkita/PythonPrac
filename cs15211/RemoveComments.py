@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/remove-comments/description/'
+__source__ = 'https://leetcode.com/problems/remove-comments/'
 # Time:  O(N) N: length of source code
 # Space: O(N)
 #
@@ -67,12 +67,16 @@ __source__ = 'https://leetcode.com/problems/remove-comments/description/'
 # }
 #
 # Explanation:
-# The string /* denotes a block comment, including line 1 and lines 6-9. The string // denotes line 4 as comments.
+# The string /* denotes a block comment, including line 1 and lines 6-9.
+# The string // denotes line 4 as comments.
 # Example 2:
 # Input:
 # source = ["a/*comment", "line", "more_comment*/b"]
 # Output: ["ab"]
-# Explanation: The original source string is "a/*comment\nline\nmore_comment*/b", where we have bolded the newline characters.  After deletion, the implicit newline characters are deleted, leaving the string "ab", which when delimited by newline characters becomes ["ab"].
+# Explanation: The original source string is "a/*comment\nline\nmore_comment*/b",
+# where we have bolded the newline characters.
+# After deletion, the implicit newline characters are deleted, leaving the string "ab",
+# which when delimited by newline characters becomes ["ab"].
 # Note:
 #
 # The length of source is in the range [1, 100].
@@ -115,12 +119,11 @@ class TestMethods(unittest.TestCase):
     def test_Local(self):
         self.assertEqual(1, 1)
 
-
 if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/problems/remove-comments/solution/
+# Thought: https://leetcode.com/problems/remove-comments/solution/
 Complexity Analysis
 Time Complexity: O(S), where SS is the total length of the source code.
 Space Complexity: O(S), the space used by recording the source code into ans.

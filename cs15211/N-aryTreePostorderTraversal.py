@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/n-ary-tree-postorder-traversal/description/'
+__source__ = 'https://leetcode.com/problems/n-ary-tree-postorder-traversal/'
 # Time:  O(N)
 # Space: O(N)
 #
@@ -12,7 +12,7 @@ __source__ = 'https://leetcode.com/problems/n-ary-tree-postorder-traversal/descr
 # Note:
 #
 # Recursive solution is trivial, could you do it iteratively?
-
+#
 import unittest
 
 # Definition for a Node.
@@ -21,7 +21,7 @@ class Node(object):
         self.val = val
         self.children = children
 
-# 75.29% 120ms
+# 196ms 12.49%
 class Solution(object):
     def postorder(self, root):
         """
@@ -48,7 +48,7 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/problems/n-ary-tree-postorder-traversal/solution/
+# Thought: https://leetcode.com/problems/n-ary-tree-postorder-traversal/solution/
 
 /*
 // Definition for a Node.
@@ -65,8 +65,8 @@ class Node {
 };
 */
 
-#recursion
-#76.83% 4ms
+# Recursion
+# 2ms 100%
 class Solution {
     List<Integer> res = new ArrayList();
     public List<Integer> postorder(Node root) {
@@ -79,8 +79,8 @@ class Solution {
     }
 }
 
-# iteration
-# 45.91% 6ms
+# Iteration
+# 6ms 43.59%
 class Solution {
     public List<Integer> postorder(Node root) {
         LinkedList<Integer> res = new LinkedList<>();

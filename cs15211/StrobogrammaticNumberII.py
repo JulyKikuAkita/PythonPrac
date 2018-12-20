@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/strobogrammatic-number-ii/tabs/description'
+__source__ = 'https://leetcode.com/problems/strobogrammatic-number-ii/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/strobogrammatic-number-ii.py
 # Time:  O(n^2 * 5^(n/2))
 # Space: O(n)
@@ -22,6 +22,7 @@ __source__ = 'https://leetcode.com/problems/strobogrammatic-number-ii/tabs/descr
 import unittest
 # Time:  O(n^2 * 5^(n/2))
 # Space: O(n)
+# 236ms 16.97%
 class Solution:
     lookup = {'0':'0', '1':'1', '6':'9', '8':'8', '9':'6'}
 
@@ -52,12 +53,13 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-# Thought: https://leetcode.com/discuss/68215/simple-java-solution-without-recursion
-# No recursion
-# 20.09% 30ms
-public class Solution {
-    public List<String> findStrobogrammatic(int n) {
+# Thought: 
 
+# https://leetcode.com/discuss/68215/simple-java-solution-without-recursion
+# No recursion
+# 9ms 78.31%
+class Solution {
+    public List<String> findStrobogrammatic(int n) {
         List<String> one = Arrays.asList("0", "1", "8"), two = Arrays.asList("") ;
         List<String> res = two;
         if (n % 2 == 1) res = one;
@@ -79,8 +81,8 @@ public class Solution {
     }
 }
 
-#47.04% 23ms
-public class Solution {
+# 9ms 78.31%
+class Solution {
     public List<String> findStrobogrammatic(int n) {
         return findStrobogrammatic(n, n);
     }
@@ -109,9 +111,8 @@ public class Solution {
     }
 }
 
-#
-# 945.02% 5ms
-public class Solution {
+# 3ms 92.22%
+class Solution {
     public static final char[] SINGLE_STROBO = new char[] {'0', '1', '8'};
     public static final char[][] DOUBLE_STROBO = new char[][] {{'0', '0'}, {'1', '1'}, {'6', '9'}, {'8', '8'}, {'9', '6'}};
 

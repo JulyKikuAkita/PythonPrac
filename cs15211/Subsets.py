@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/subsets/description/'
+__source__ = 'https://leetcode.com/problems/subsets/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/subsets.py
 # Time:  O(n * 2^n)
 # Space: O(1)
@@ -131,8 +131,6 @@ class Solution3(object):
         return res
 
     def dfs(self, nums, idx, res, cur):
-
-
         if idx >= len(nums):
             res.append(cur + [])
             return
@@ -182,17 +180,19 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: general approach for perm/comb
+# Thought: 
+
+General approach for perm/comb
 https://discuss.leetcode.com/topic/46159/a-general-approach-to-backtracking-questions-in-java-subsets-permutations-combination-sum-palindrome-partitioning
 
-#23.26% 2ms
-public class Solution {
+# 1ms 100%
+class Solution {
     public List<List<Integer>> subsets(int[] nums) {
         List<List<Integer>> list = new ArrayList<>();
         backtrack(list, new ArrayList<>(), nums, 0);
         return list;
     }
-    private void backtrack(List<List<Integer>> list , List<Integer> tempList, int [] nums, int start){
+    private void backtrack(List<List<Integer>> list, List<Integer> tempList, int [] nums, int start){
         list.add(new ArrayList<>(tempList));
         //Set<Integer> s = new HashSet<>();
         for (int i = start ; i < nums.length; i++) {
@@ -206,8 +206,8 @@ public class Solution {
     }
 }
 
-#23.26% 2ms
-public class Solution {
+# 1ms 100%
+class Solution {
     public List<List<Integer>> subsets(int[] nums) {
         List<List<Integer>> list = new ArrayList<>();
         backtrack(list, new ArrayList<>(), nums, 0);
@@ -218,7 +218,6 @@ public class Solution {
             list.add(new ArrayList<>(tempList));
             return;
         }
-
         backtrack(list, tempList, nums, start + 1);
         tempList.add(nums[start]);
         backtrack(list, tempList, nums, start + 1);
@@ -226,9 +225,9 @@ public class Solution {
     }
 }
 
-#BFS
-#23.26% 2ms
-public class Solution {
+# BFS
+# 1ms 100%
+class Solution {
     public List<List<Integer>> subsets(int[] nums) {
         List<List<Integer>> result = new ArrayList<>();
         int max = 1;

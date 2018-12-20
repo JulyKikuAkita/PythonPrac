@@ -24,7 +24,7 @@ __source__ = 'https://leetcode.com/problems/minimize-max-distance-to-gas-station
 #
 import unittest
 
-#612ms 12.10%
+# 612ms 12.10%
 class Solution(object):
     def minmaxGasDist(self, stations, K):
         """
@@ -44,7 +44,7 @@ class Solution(object):
                 lo = mi
         return lo
 
-#96ms 100%
+# 96ms 100%
 class SolutionHeapq(object):
     def minmaxGasDist(self, stations, k):
         """
@@ -80,7 +80,7 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/problems/minimize-max-distance-to-gas-station/solution/
+# Thought: https://leetcode.com/problems/minimize-max-distance-to-gas-station/solution/
 
 Approach #1: Dynamic Programming [Memory Limit Exceeded]
 Complexity Analysis
@@ -128,7 +128,7 @@ is the range of possible answers (10^8),
 divided by the acceptable level of precision (10^{-6}.
 Space Complexity: O(1) in additional space complexity.
 
-#21ms 73.60%
+# 21ms 73.60%
 class Solution {
     public double minmaxGasDist(int[] stations, int K) {
         double lo = 0, hi = 1e8;

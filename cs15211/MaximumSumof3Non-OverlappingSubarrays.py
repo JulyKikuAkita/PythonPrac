@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/maximum-sum-of-3-non-overlapping-subarrays/description/'
+__source__ = 'https://leetcode.com/problems/maximum-sum-of-3-non-overlapping-subarrays/'
 # Time:  O(N)
 # Space: O(N)
 #
@@ -42,13 +42,13 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/articles/maximum-sum-of-3-non-overlapping-intervals/
+# Thought: https://leetcode.com/problems/maximum-sum-of-3-non-overlapping-subarrays/solution/
 
 The basic idea is that construct leftmax array and rightmax array to save the leftkmax subarray index
 and rightkmax subarray index. After that, we use these prepossessed array to solve this question using O(N)
 since we have saved all of max subarray index!
 
-# 76.74% 9ms
+# 4ms 100%
 class Solution {
     public int[] maxSumOfThreeSubarrays(int[] nums, int k) {
         int n = nums.length;
@@ -89,7 +89,7 @@ class Solution {
     }
 }
 
-#78.48% 9ms
+# 8ms 35.66%
 class Solution {
     public int[] maxSumOfThreeSubarrays(int[] nums, int k) {
         //W is an array of sums of windows

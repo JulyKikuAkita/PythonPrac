@@ -1,9 +1,10 @@
-__source__ = 'https://leetcode.com/problems/longest-palindromic-subsequence/description/'
+__source__ = 'https://leetcode.com/problems/longest-palindromic-subsequence/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/longest-palindrome.py
 # Time:  O(n^2)
 # Space: O(n^2)
 #
 # Description: Leetcode # 516. Longest Palindromic Subsequence
+#
 # Given a string s, find the longest palindromic subsequence's length in s.
 # You may assume that the maximum length of s is 1000.
 #
@@ -35,9 +36,9 @@ __source__ = 'https://leetcode.com/problems/longest-palindromic-subsequence/desc
 # Else, dp[i][j] = max(dp[i+1][j], dp[i][j-1])
 #
 # Rolling array O(2n) space
-
+#
 import unittest
-# 1559 ms
+# 1440ms 34.94%
 class Solution(object):
     def longestPalindromeSubseq(self, s):
         """
@@ -84,7 +85,7 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
+# Thought:
 dp[i][j]: the longest palindromic subsequence's length of substring(i, j)
 State transition:
 dp[i][j] = dp[i+1][j-1] + 2 if s.charAt(i) == s.charAt(j)
@@ -92,11 +93,10 @@ otherwise, dp[i][j] = Math.max(dp[i+1][j], dp[i][j-1])
 Initialization: dp[i][i] = 1
 
 # Straight forward Java DP solution O(n^2) dp
-#80.94% 53ms
-public class Solution {
+# 23ms 87.77%
+class Solution {
     public int longestPalindromeSubseq(String s) {
         int[][] dp = new int[s.length()][s.length()];
-
         for (int i = s.length() - 1; i >= 0; i--) {
             dp[i][i] = 1;
             for (int j = i+1; j < s.length(); j++) {
@@ -112,8 +112,8 @@ public class Solution {
 }
 
 3. O(n^2) dp
-#90.74% 49ms
-public class Solution {
+# 34ms 52.47%
+class Solution {
     public int longestPalindromeSubseq(String s) {
         int n = s.length();
         int[][] dp = new int[n + 1][n];
@@ -140,7 +140,8 @@ then they must be included in the longest palindrome subsequence.
 Otherwise, both ends cannot be included in the longest palindrome subsequence.
 
 1. O(n^2) brute force - OT
-public class Solution {
+# TLE
+class Solution {
     public int longestPalindromeSubseq(String s) {
         return helper(0, s.length()-1, s);
     }
@@ -157,8 +158,8 @@ public class Solution {
 }
 
 2. O(n^2) Recursion + Memorization
-# 30.82% 73ms
-public class Solution {
+# 49ms 22.35%
+class Solution {
     public int longestPalindromeSubseq(String s) {
         return dfs(s, 0, s.length() - 1, new Integer[s.length()][s.length()]);
     }

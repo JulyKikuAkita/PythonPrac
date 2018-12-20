@@ -1,6 +1,9 @@
-__source__ = 'https://leetcode.com/problems/max-consecutive-ones/#/description'
+__source__ = 'https://leetcode.com/problems/max-consecutive-ones/'
 # Time:  O(n)
 # Space: O(1)
+#
+# Description: 485. Max Consecutive Ones
+#
 # Given a binary array, find the maximum number of consecutive 1s in this array.
 #
 # Example 1:
@@ -16,7 +19,8 @@ __source__ = 'https://leetcode.com/problems/max-consecutive-ones/#/description'
 # Hide Tags Array
 # Hide Similar Problems (M) Max Consecutive Ones II
 #
-
+import unittest
+# 60ms 57.78%
 class Solution(object):
     def findMaxConsecutiveOnes(self, nums):
         """
@@ -33,8 +37,18 @@ class Solution(object):
                 cnt = 0
         return ans
 
-java = '''
-public class Solution {
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+
+if __name__ == '__main__':
+    unittest.main()
+
+Java = '''
+# Thought:
+#
+# 8ms 22.64%
+class Solution {
     public int findMaxConsecutiveOnes(int[] nums) {
         int cnt = 0;
         int res = 0;

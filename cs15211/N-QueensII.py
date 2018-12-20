@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/n-queens-ii/description/'
+__source__ = 'https://leetcode.com/problems/n-queens-ii/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/n-queens-ii.py
 # Time:  O(n!)
 # Space: O(n)
@@ -151,17 +151,16 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
+# Thought:
+
 This is a classic backtracking problem.
-
-Start row by row, and loop through columns. At each decision point, skip unsafe positions by using three boolean arrays.
-
+Start row by row, and loop through columns. At each decision point, 
+skip unsafe positions by using three boolean arrays.
 Start going back when we reach row n.
-
 Just FYI, if using HashSet, running time will be at least 3 times slower!
 
-# 71.35% 3ms
-public class Solution {
+# 2ms 87.63%
+class Solution {
     public int totalNQueens(int n) {
         boolean[] cols = new boolean[n];     // columns   |
         boolean[] d1 = new boolean[2 * n];   // diagonals \
@@ -184,8 +183,8 @@ public class Solution {
     }
 }
 
-#55.74% 4ms
-public class Solution {
+# 2ms 87.63%
+class Solution {
     public int totalNQueens(int n) {
         return totalNQueens(new int[n], 0);
     }
@@ -214,8 +213,8 @@ public class Solution {
     }
 }
 
-#98.30% 1ms
-public class Solution {
+# 1ms 99.52%
+class Solution {
     public int totalNQueens(int n) {
         if (n < 1) return 0;
         int upLimit = (1 << n) - 1;

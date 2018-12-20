@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/letter-combinations-of-a-phone-number/#/description'
+__source__ = 'https://leetcode.com/problems/letter-combinations-of-a-phone-number/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/letter-combinations-of-a-phone-number.py
 # Time:  O(n * 4^n)
 # Space: O(n)
@@ -117,10 +117,11 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
-Recursion:
-#79.78% 3ms
-public class Solution {
+# Thought:
+
+# Recursion:
+# 2ms 84.14%
+class Solution {
     public static String[] dict = new String[] {null, null, "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
 
     public List<String> letterCombinations(String digits) {
@@ -144,9 +145,9 @@ public class Solution {
     }
 }
 
-Iteration:
-# 16.28% 5ms
-public class Solution {
+# Iteration:
+# 3ms 37.73%
+class Solution {
     public static String[] dict = new String[] {null, null, "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
 
     public List<String> letterCombinations(String digits) {
@@ -168,10 +169,9 @@ public class Solution {
     }
 }
 
-# recursion
-#81.78% 3ms
-
-public class Solution {
+# Recursion
+# 2ms 84.14%
+class Solution {
     public List<String> letterCombinations(String digits) {
         if(digits.length() == 0){return new ArrayList<String>();}
         String[] letters = new String[digits.length()];

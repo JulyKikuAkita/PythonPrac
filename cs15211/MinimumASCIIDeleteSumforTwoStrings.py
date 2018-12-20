@@ -97,9 +97,8 @@ Java = '''
 # We use nested for loops: each loop is O(M) and O(N) respectively.
 # Space Complexity: O(M*N), the space used by dp.
 #
+# One dimension DP
 # 12ms 100%
-# one dimension DP
-#
 class Solution {
     public int minimumDeleteSum(String s1, String s2) {
         int m = s1.length(), n = s2.length();

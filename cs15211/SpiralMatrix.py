@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/spiral-matrix/#/description'
+__source__ = 'https://leetcode.com/problems/spiral-matrix/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/spiral-matrix.py
 # Time:  O(m * n)
 # Space: O(1)
@@ -72,6 +72,7 @@ class Solution:
 
         return result
 
+    # 20ms 99.60%
     def spiralOrder3(self, matrix):
         """
         :type matrix: List[List[int]]
@@ -113,7 +114,6 @@ class SolutionOther:
 
             direct = (direct + 1) % 4
 
-
 class TestMethods(unittest.TestCase):
     def test_Local(self):
         matrix = [
@@ -130,7 +130,8 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/problems/contains-duplicate/solution/
+# Thought: https://leetcode.com/problems/spiral-matrix/solution/
+
 This is a very simple and easy to understand solution. I traverse right and increment rowBegin,
 then traverse down and decrement colEnd, then I traverse left and decrement rowEnd,
 and finally I traverse up and increment colBegin.
@@ -138,7 +139,7 @@ and finally I traverse up and increment colBegin.
 The only tricky part is that when I traverse left or up I have to check whether the row
 or col still exists to prevent duplicates.
 
-# 3ms 16.82%
+# 2ms 37.67%
 public class Solution {
     public List<Integer> spiralOrder(int[][] matrix) {
 
@@ -187,8 +188,8 @@ public class Solution {
     }
 }
 
-# 3ms 16.82%
-public class Solution {
+# 1ms 100%
+class Solution {
     public List<Integer> spiralOrder(int[][] matrix) {
         List<Integer> result = new ArrayList<>();
         if (matrix == null || matrix.length == 0 || matrix[0].length == 0) {

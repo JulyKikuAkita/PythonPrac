@@ -1,6 +1,4 @@
-import collections
-
-__source__ = 'https://leetcode.com/problems/number-of-distinct-islands/description/'
+__source__ = 'https://leetcode.com/problems/number-of-distinct-islands/'
 # Time:  O()
 # Space: O()
 #
@@ -43,7 +41,8 @@ __source__ = 'https://leetcode.com/problems/number-of-distinct-islands/descripti
 # Number of Islands
 #
 import unittest
-#76ms 98.09%
+import collections
+# 76ms 98.09%
 class Solution(object):
     def numDistinctIslands(self, grid):
         """
@@ -121,7 +120,8 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/problems/number-of-distinct-islands/solution/
+# Thought: https://leetcode.com/problems/number-of-distinct-islands/solution/
+
 Approach #1: Hash By Local Coordinates [Accepted]
 
 # 32ms 53.77%
@@ -152,8 +152,8 @@ class Solution {
     }
 }
 
-#rolling hash
-#19ms 99.84%
+# Rolling hash
+# 19ms 99.84%
 class Solution {
     public int numDistinctIslands(int[][] grid) {
         HashSet<Integer> set = new HashSet<>();

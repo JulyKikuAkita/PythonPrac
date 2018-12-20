@@ -1,10 +1,10 @@
-__source__ = 'https://leetcode.com/problems/remove-duplicates-from-sorted-array-ii/description/'
+__source__ = 'https://leetcode.com/problems/remove-duplicates-from-sorted-array-ii/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/remove-duplicates-from-sorted-array-ii.py
 # Time:  O(n)
 # Space: O(1)
 # Array
 #
-# Description: Leetcode # 217. Contains Duplicate
+# Description: Leetcode # 80. Remove Duplicates from Sorted Array II
 #
 # Follow up for "Remove Duplicates":
 # What if duplicates are allowed at most twice?
@@ -21,7 +21,7 @@ __source__ = 'https://leetcode.com/problems/remove-duplicates-from-sorted-array-
 # Related Topics
 # Array Two Pointers
 # 26. Remove Duplicates from Sorted Array
-
+#
 import unittest
 class Solution:
     # @param a list of integers
@@ -84,9 +84,10 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
+# Thought:
+
 #24.92% 1ms
-public class Solution {
+class Solution {
     public int removeDuplicates(int[] nums) {
         int i = 0;
         for (int n : nums)
@@ -107,8 +108,8 @@ public class Solution {
         return i;
     }
 
-#24.92% 1ms
-public class Solution {
+# 10ms 33.50%
+class Solution {
     public int removeDuplicates(int[] nums) {
         int len = nums.length;
         if (len < 2) {
@@ -141,9 +142,7 @@ we need to check this count, if it is already k, then we need to skip it, otherw
 we can keep this element. The following is the implementation and can pass both OJ:
 
 int removeDuplicates(int A[], int k) {
-
             if (A.length <= k) return A.length;
-
             int i = 1, j = 1;
             int cnt = 1;
             while (j < A.length) {
@@ -160,6 +159,6 @@ int removeDuplicates(int A[], int k) {
                 ++j;
             }
             return i;
-}
+    }
 
 '''

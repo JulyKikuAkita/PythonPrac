@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/range-sum-query-2d-immutable/description/'
+__source__ = 'https://leetcode.com/problems/range-sum-query-2d-immutable/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/range-sum-query-2d-immutable.py
 # Time:  ctor:   O(m * n),
 #        lookup: O(1)
@@ -92,10 +92,10 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/articles/range-sum-query-2d-immutable/
+# Thought: https://leetcode.com/problems/range-sum-query-2d-immutable/solution/
 
-#97.22% 116ms
-public class NumMatrix {
+# 72ms 83.94%
+class NumMatrix {
     int[][] sums;
 
     public NumMatrix(int[][] matrix) {

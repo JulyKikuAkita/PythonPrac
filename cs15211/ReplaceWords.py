@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/replace-words/description/'
+__source__ = 'https://leetcode.com/problems/replace-words/'
 # Time:  O(m) words in sentences
 # Space: O(m) words in sentences
 #
@@ -36,8 +36,10 @@ import unittest
 # 1. We can check the prefixes directly. For each word in the sentence,
 # we'll look at successive prefixes and see if we saw them before.
 # 2. We could also use a trie. We'll insert each root in the trie.
-# Then, for each word in the sentence, we'll replace it with the first root we encounter upon traversal of the trie.
-#462ms
+# Then, for each word in the sentence,
+# we'll replace it with the first root we encounter upon traversal of the trie.
+#
+# 304ms 32.65%
 class Solution1(object):
     def replaceWords(self, dict, sentence):
         """
@@ -55,7 +57,7 @@ class Solution1(object):
 
         return " ".join(map(replace, sentence.split()))
 
-#136ms
+# 136ms
 class Solution2(object):
     def replaceWords(self, dict, sentence):
         """
@@ -87,15 +89,15 @@ class TestMethods(unittest.TestCase):
     def test_Local(self):
         self.assertEqual(1, 1)
 
-
 if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
+# Thought: https://leetcode.com/problems/replace-words/solution/
+
 1. Hashset:
-#19.49% 343 ms
-public class Solution {
+# 222ms 18.78%
+class Solution {
     public String replaceWords(List<String> dict, String sentence) {
         if (dict == null || dict.size() == 0) return sentence;
         Set<String> set = new HashSet<>();
@@ -116,8 +118,8 @@ public class Solution {
     }
 }
 
-#91.59%  28ms
-public class Solution {
+# 22ms 71.41%
+class Solution {
     public String replaceWords(List<String> dict, String sentence) {
         String[] tokens = sentence.split(" ");
         TrieNode trie = buildTrie(dict);
@@ -176,9 +178,9 @@ public class Solution {
     }
 }
 
-#Trie, build tree with dfs
-# 41.21% 156ms
-public class Solution {
+# Trie, build tree with dfs
+# 112ms 29.31%
+class Solution {
     public String replaceWords(List<String> dict, String sentence) {
         Trie trie = new Trie(256); //cannot use 26, array out of bound when build tree
         dict.forEach(s -> trie.buildTree(s));

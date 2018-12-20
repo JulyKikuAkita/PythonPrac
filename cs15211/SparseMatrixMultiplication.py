@@ -1,4 +1,4 @@
-__author__ = 'https://leetcode.com/problems/sparse-matrix-multiplication/description/'
+__author__ = 'https://leetcode.com/problems/sparse-matrix-multiplication/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/sparse-matrix-multiplication.py
 # Time:  O(m * n * l), A is m x n matrix, B is n x l matrix
 # Space: O(m * l)
@@ -35,6 +35,7 @@ __author__ = 'https://leetcode.com/problems/sparse-matrix-multiplication/descrip
 # Time:  O(m * n * l), A is m x n matrix, B is n x l matrix
 # Space: O(m * l)
 import unittest
+# 92ms 73.21%
 class Solution(object):
     def multiply(self, A, B):
         """
@@ -59,9 +60,10 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
-# 54.29% 73ms
-public class Solution {
+# Thought:
+#
+# 28ms 97.85%
+class Solution {
     public int[][] multiply(int[][] A, int[][] B) {
         if (A.length == 0 || B.length == 0) {
             return new int[0][0];
@@ -80,8 +82,8 @@ public class Solution {
     }
 }
 
-#21.85% 145ms
-public class Solution {
+# 90ms 36.69%
+class Solution {
     public int[][] multiply(int[][] A, int[][] B) {
         if (A == null || A.length == 0 || A[0].length == 0 || B.length == 0 || B[0].length == 0 || A[0].length != B.length) {
             return new int[0][0];

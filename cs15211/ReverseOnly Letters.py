@@ -4,7 +4,8 @@ __source__ = 'https://leetcode.com/problems/reverse-only-letters/'
 #
 # Description: Leetcode # 917. Reverse Only Letters
 #
-# Given a string S, return the "reversed" string where all characters that are not a letter stay in the same place,
+# Given a string S, return the "reversed" string
+# where all characters that are not a letter stay in the same place,
 # and all letters reverse their positions.
 #
 # Example 1:
@@ -62,18 +63,17 @@ class Solution2(object):
                 s[i] = chars.pop()
         return "".join(s)
 
-
 class TestMethods(unittest.TestCase):
     def test_Local(self):
         self.assertEqual(1, 1)
-
 
 if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/problems/reverse-only-letters/solution/
-#two pointers
+# Thought: https://leetcode.com/problems/reverse-only-letters/solution/
+
+# Two pointers
 # 6ms 70.99%
 class Solution {
     public String reverseOnlyLetters(String S) {

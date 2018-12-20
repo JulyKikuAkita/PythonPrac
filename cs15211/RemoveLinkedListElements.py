@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/remove-linked-list-elements/description/'
+__source__ = 'https://leetcode.com/problems/remove-linked-list-elements/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/remove-linked-list-elements.py
 # Time:  O(n)
 # Space: O(1)
@@ -56,9 +56,10 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
-# 8.44% 2ms
-public class Solution {
+# Thought:
+
+# 5ms 37.28%
+class Solution {
     public ListNode removeElements(ListNode head, int val) {
         ListNode fakeHead = new ListNode(0);
         fakeHead.next = head;
@@ -75,8 +76,8 @@ public class Solution {
     }
 }
 
-# 8.44% 2ms
-public class Solution {
+# 3ms 100%
+class Solution {
     public ListNode removeElements(ListNode head, int val) {
         if(head == null) return head;
 
@@ -91,7 +92,6 @@ public class Solution {
                 cur = cur.next;
             }
         }
-
         return dummy.next;
     }
 }

@@ -1,7 +1,8 @@
-__source__ = 'https://leetcode.com/problems/nim-game/description/'
+__source__ = 'https://leetcode.com/problems/nim-game/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/nim-game.py
 # Time:  O(1)
 # Space: O(1)
+#
 # Description: # 292. Nim Game
 #
 # You are playing the following Nim Game with your friend:
@@ -25,9 +26,9 @@ __source__ = 'https://leetcode.com/problems/nim-game/description/'
 # Similar Questions
 # Flip Game II
 #
-# 35ms
-import unittest
 
+import unittest
+# 24ms 30.30%
 class Solution(object):
     def canWinNim(self, n):
         """
@@ -45,10 +46,10 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/articles/nim-game/
+# Thought: https://leetcode.com/problems/nim-game/solution/
 
-# 5.05% 0ms
-public class Solution {
+# 0ms 100%
+class Solution {
     public boolean canWinNim(int n) {
         return n % 4 != 0;
     }

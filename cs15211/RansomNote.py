@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/ransom-note/description/'
+__source__ = 'https://leetcode.com/problems/ransom-note/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/ransom-note.py
 # Time:  O(n)
 # Space: O(1)
@@ -70,9 +70,10 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
-#90.68% 13ms
-public class Solution {
+# Thought:
+
+# 10ms 85.04%
+class Solution {
     public boolean canConstruct(String ransomNote, String magazine) {
         int[] count = new int[128];
         for (char c : magazine.toCharArray()) {

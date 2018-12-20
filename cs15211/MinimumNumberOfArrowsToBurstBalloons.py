@@ -1,12 +1,14 @@
-__source__ = 'https://leetcode.com/problems/minimum-number-of-arrows-to-burst-balloons/#/description'
+__source__ = 'https://leetcode.com/problems/minimum-number-of-arrows-to-burst-balloons/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/minimum-number-of-arrows-to-burst-balloons.py
 # Time:  O(nlogn)
 # Space: O(1)
 #
-# Description:
+# Description: 452. Minimum Number of Arrows to Burst Balloons
+#
 # There are a number of spherical balloons spread in two-dimensional space. For each balloon,
 # provided input is the start and end coordinates of the horizontal diameter.
-# Since it's horizontal, y-coordinates don't matter and hence the x-coordinates of start and end of the diameter suffice.
+# Since it's horizontal, y-coordinates don't matter and
+# hence the x-coordinates of start and end of the diameter suffice.
 # Start is always smaller than end. There will be at most 104 balloons.
 #
 # An arrow can be shot up exactly vertically from different points along the x-axis.
@@ -34,6 +36,7 @@ import unittest
 # Only count valid intervals we need, and skip overlapping intervals
 # return the count
 
+# 76ms 100%
 class Solution(object):
     def findMinArrowShots(self, points):
         """
@@ -69,18 +72,19 @@ class Solution(object):
             result += 1
             i = j
         return result
+
 class TestMethods(unittest.TestCase):
     def test_Local(self):
         self.assertEqual(1, 1)
-
 
 if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
+# Thought:
 Idea:
-We know that eventually we have to shoot down every balloon, so for each ballon there must be an arrow
+We know that eventually we have to shoot down every balloon, 
+so for each ballon there must be an arrow
 whose position is between balloon[0] and balloon[1].
 Given that, we can sort the array of balloons by their ending position.
 Then we make sure that while we take care of each balloon from the beginning,
@@ -106,7 +110,8 @@ So first of all, we shoot at position 4,
 we go through the array and see that all first 4 balloons can be taken care of by this single shot.
 Then we need another shot for one last balloon. So the result should be 2.
 
-public class Solution {
+# 74ms 30.20%
+class Solution {
     public int findMinArrowShots(int[][] points) {
         if (points.length == 0) {
             return 0;

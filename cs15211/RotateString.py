@@ -1,6 +1,6 @@
 __source__ = 'https://leetcode.com/problems/rotate-string/'
-# Time:  O()
-# Space: O()
+# Time:  O(N)
+# Space: O(N)
 #
 # Description: Leetcode # 796. Rotate String
 #
@@ -125,18 +125,19 @@ class TestMethods(unittest.TestCase):
     def test_Local(self):
         self.assertEqual(1, 1)
 
-
 if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/problems/rotate-string/solution/
+# Thought: https://leetcode.com/problems/rotate-string/solution/
+
 Approach #1: Brute Force [Accepted]
 Complexity Analysis
-Time Complexity: O(N^2), where N is the length of A. For each rotation s, we check up to N elements in A and B.
+Time Complexity: O(N^2), where N is the length of A. For each rotation s, 
+we check up to N elements in A and B.
 Space Complexity: O(1). We only use pointers to elements of A and B.
 
-#2ms 99.54%
+# 2ms 99.54%
 class Solution {
     public boolean rotateString(String A, String B) {
         StringBuilder sb = new StringBuilder(A);
@@ -154,6 +155,7 @@ class Solution {
     }
 }
 
+# 2ms 99.54%
 class Solution {
     public boolean rotateString(String A, String B) {
         StringBuilder sb = new StringBuilder(A);
@@ -176,13 +178,14 @@ Complexity Analysis
 Time Complexity: O(N^2), where N is the length of A.
 Space Complexity: O(N), the space used building A+A.
 
-#2ms 99.54%
+# 2ms 99.54%
 class Solution {
     public boolean rotateString(String A, String B) {
         return A.length() == B.length() && (A + A).contains(B);
     }
 }
 
+# 1ms 100%
 class Solution {
     public boolean rotateString(String A, String B) {
         String duplicate = A + A;
@@ -195,7 +198,7 @@ Complexity Analysis
 Time Complexity: O(N), where N is the length of A.
 Space Complexity: O(N), to perform the final check A_rotation == B.
 
-#6ms 7.02%
+# 6ms 7.02%
 import java.math.BigInteger;
 
 class Solution {
@@ -236,7 +239,7 @@ Complexity Analysis
 Time Complexity: O(N), where NN is the length of A.
 Space Complexity: O(N), to create the shift table shifts.
 
-#2ms 99.54%
+# 2ms 99.54%
 class Solution {
     public boolean rotateString(String A, String B) {
         int N = A.length();

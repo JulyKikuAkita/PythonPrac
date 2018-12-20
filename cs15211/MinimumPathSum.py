@@ -1,7 +1,9 @@
-__source__ = 'https://leetcode.com/problems/minimum-path-sum/tabs/description'
+__source__ = 'https://leetcode.com/problems/minimum-path-sum/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/minimum-path-sum.py
 # Time:  O(m * n)
 # Space: O(m + n)
+#
+# Description: Leetcode # 64. Minimum Path Sum
 #
 # Given a m x n grid filled with non-negative numbers,
 # find a path from top left to bottom right which minimizes the sum of all numbers along its path.
@@ -70,14 +72,14 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
-Thought: https://leetcode.com/problems/minimum-path-sum/tabs/solution
+# Thought: https://leetcode.com/problems/minimum-path-sum/solution/
+
 Recursion relation:
 dp(i, j)=grid(i,j)+min(dp(i+1,j),dp(i,j+1)) dp(i,j)=grid(i,j)+min(dp(i+1,j),dp(i,j+1))
 
-# naive:
+# Naive:
 # TLE
-public class Solution {
+class Solution {
     public int calculate(int[][] grid, int i, int j) {
         if (i == grid.length || j == grid[0].length) return Integer.MAX_VALUE;
         if (i == grid.length - 1 && j == grid[0].length - 1) return grid[i][j];
@@ -92,7 +94,8 @@ Approach #4 Dynamic Programming (Without Extra Space) [Accepted]
 # 4.67% 6ms
 # Time:  O(m * n)
 # Space: O(m * n)
-public class Solution {
+# 9ms 14.42%
+class Solution {
     public int minPathSum(int[][] grid) {
         int[][] dp = new int[grid.length][grid[0].length];
         for (int i = grid.length - 1; i >= 0; i--) {
@@ -113,7 +116,7 @@ public class Solution {
 
 Approach #3 Dynamic Programming 1D [Accepted]
 # 84.80%, 3ms
-public class Solution {
+class Solution {
     public int minPathSum(int[][] grid) {
         int m = grid.length;
         if (m == 0) {

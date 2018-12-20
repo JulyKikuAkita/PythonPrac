@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/search-a-2d-matrix-ii/#/description'
+__source__ = 'https://leetcode.com/problems/search-a-2d-matrix-ii/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/search-a-2d-matrix-ii.py
 # Time:  O(m + n)
 # Space: O(1)
@@ -63,7 +63,8 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
+# Thought: https://leetcode.com/problems/search-a-2d-matrix-ii/solution/
+
 We start search the matrix from top right corner, initialize the current position to top right corner,
 if the target is greater than the value in current position,
 then the target can not be in entire row of current position because the row is sorted,
@@ -71,8 +72,8 @@ if the target is less than the value in current position,
 then the target can not in the entire column because the column is sorted too.
 We can rule out one row or one column each time, so the time complexity is O(m+n).
 
-#73.33% 13ms
-public class Solution {
+# 6ms 96.25%
+class Solution {
     public boolean searchMatrix(int[][] matrix, int target) {
          if(matrix == null || matrix.length < 1 || matrix[0].length <1) {
             return false;

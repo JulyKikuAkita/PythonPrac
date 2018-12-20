@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/sqrtx/description/'
+__source__ = 'https://leetcode.com/problems/sqrtx/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/sqrtx.py
 # Time:  O(logn)
 # Space: O(1)
@@ -66,10 +66,10 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
+# Thought:
 
-# 9.53% 4ms
-public class Solution {
+# 15ms 98.71%
+class Solution {
     public int mySqrt(int x) {
         if (x <= 0) {
             return 0;
@@ -88,8 +88,8 @@ public class Solution {
     }
 }
 
-# 16.30% 3ms
-public class Solution {
+# 15ms 98.71%
+class Solution {
     public int mySqrt(int x) {
         long r = x;
         while (r*r > x)
@@ -98,8 +98,8 @@ public class Solution {
     }
 }
 
-# 64.48% 2ms
-public class Solution {
+# 16ms 88.96%
+class Solution {
     public int mySqrt(int x) {
         return (int)Math.sqrt(x);
     }

@@ -1,15 +1,18 @@
-__source__ = ' https://leetcode.com/problems/robot-room-cleaner/description/ '
+__source__ = 'https://leetcode.com/problems/robot-room-cleaner/'
 # Time:  O()
 # Space: O()
 #
 # Description: Leetcode # 489. Robot Room Cleaner
+#
 # Given a robot cleaner in a room modeled as a grid.
 #
 # Each cell in the grid can be empty or blocked.
 #
-# The robot cleaner with 4 given APIs can move forward, turn left or turn right. Each turn it made is 90 degrees.
+# The robot cleaner with 4 given APIs can move forward, turn left or turn right.
+# Each turn it made is 90 degrees.
 #
-# When it tries to move into a blocked cell, its bumper sensor detects the obstacle and it stays on the current cell.
+# When it tries to move into a blocked cell,
+# its bumper sensor detects the obstacle and it stays on the current cell.
 #
 # Design an algorithm to clean the entire room using only the 4 given APIs shown below.
 #
@@ -46,15 +49,19 @@ __source__ = ' https://leetcode.com/problems/robot-room-cleaner/description/ '
 # From the top left corner, its position is one row below and three columns right.
 # Notes:
 #
-# The input is only given to initialize the room and the robot's position internally. You must solve this problem "blindfolded". In other words, you must control the robot using only the mentioned 4 APIs, without knowing the room layout and the initial robot's position.
+# The input is only given to initialize the room and the robot's position internally.
+# You must solve this problem "blindfolded". In other words,
+# you must control the robot using only the mentioned 4 APIs,
+# without knowing the room layout and the initial robot's position.
 # The robot's initial position will always be in an accessible cell.
 # The initial direction of the robot will be facing up.
-# All accessible cells are connected, which means the all cells marked as 1 will be accessible by the robot.
+# All accessible cells are connected,
+# which means the all cells marked as 1 will be accessible by the robot.
 # Assume all four edges of the grid are all surrounded by wall.
 #
 import unittest
 
-#https://leetcode.com/problems/robot-room-cleaner/discuss/150132/Very-clear-Python-DFS-code-beat-99-+
+# https://leetcode.com/problems/robot-room-cleaner/discuss/150132/Very-clear-Python-DFS-code-beat-99-+
 
 # """
 # This is the robot's control interface.
@@ -88,7 +95,7 @@ import unittest
 #        :rtype void
 #        """
 
-#97.68% 52ms
+# 52ms 98.74%
 class Solution(object):
     def cleanRoom(self, robot):
         """
@@ -122,7 +129,9 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:  https://leetcode.com/problems/robot-room-cleaner/discuss/151942/Java-DFS-Solution-with-Detailed-Explanation-and-6ms-(99)-Solution
+# Thought:
+#
+# https://leetcode.com/problems/robot-room-cleaner/discuss/151942/Java-DFS-Solution-with-Detailed-Explanation-and-6ms-(99)-Solution
 # DFS + backtracking + visited
 #
 # We want to do a DFS with backtracking.
@@ -158,7 +167,6 @@ Java = '''
 # After all 4 directions are tried it is automatically turned to the original direction
 # after the loop since we turned right 4 times.
 #
-# 93.28% 10ms
 /**
  * // This is the robot's control interface.
  * // You should not implement it, or speculate about its implementation
@@ -176,6 +184,8 @@ Java = '''
  *     public void clean();
  * }
  */
+ 
+# 16ms 11.04%
 class Solution {
     final int[][] dirs = new int[][]{{-1,0},{0,1},{1,0},{0,-1}};
 

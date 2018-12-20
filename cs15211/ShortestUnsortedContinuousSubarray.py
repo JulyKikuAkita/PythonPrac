@@ -1,8 +1,9 @@
-__source__ = 'https://leetcode.com/problems/shortest-unsorted-continuous-subarray/#/description'
+__source__ = 'https://leetcode.com/problems/shortest-unsorted-continuous-subarray/'
 # Time:  O()
 # Space: O()
 #
-# Description:
+# Description: 581. Shortest Unsorted Continuous Subarray
+#
 # Given an integer array, you need to find one continuous subarray that
 # if you only sort this subarray in ascending order, then the whole array will be sorted in ascending order, too.
 #
@@ -21,6 +22,7 @@ __source__ = 'https://leetcode.com/problems/shortest-unsorted-continuous-subarra
 import unittest
 
 # Sort the list and check if it's still the same number in the list.
+# 100ms 17.54%
 class Solution(object):
     def findUnsortedSubarray(self, nums):
         """
@@ -34,13 +36,14 @@ class TestMethods(unittest.TestCase):
     def test_Local(self):
         self.assertEqual(1, 1)
 
-
 if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
-public class Solution {
+# Thought: https://leetcode.com/problems/shortest-unsorted-continuous-subarray/solution/
+
+# 11ms 95.04%
+class Solution {
     public int findUnsortedSubarray(int[] nums) {
         int n = nums.length, start = -1, end = -2, min = nums[n-1], max = nums[0];
         for (int i=1;i<n;i++) {

@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/largest-rectangle-in-histogram/#/description'
+__source__ = 'https://leetcode.com/problems/largest-rectangle-in-histogram/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/largest-rectangle-in-histogram.py
 # Time:  O(n)
 # Space: O(n)
@@ -86,13 +86,13 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-Thought: http://www.geeksforgeeks.org/largest-rectangle-under-histogram/
-https://leetcode.com/problems/largest-rectangle-in-histogram/#/solution
+# Thought: https://leetcode.com/problems/largest-rectangle-in-histogram/#/solution
+# http://www.geeksforgeeks.org/largest-rectangle-under-histogram/
 # with segment tree: http://www.geeksforgeeks.org/largest-rectangular-area-in-a-histogram-set-1/
 
-# 65.83% 22ms
 # O(n)
-public class Solution {
+# 22ms 44.60%
+class Solution {
     public int largestRectangleArea(int[] heights) {
         Stack<Integer> stack = new Stack<>();
         int len = heights.length;
@@ -112,8 +112,8 @@ public class Solution {
     }
 }
 
-#16.69% 29ms
-public class Solution {
+# 20ms 59.13%
+class Solution {
     public int largestRectangleArea(int[] height) {
         int len = height.length;
         Stack<Integer> s = new Stack<Integer>();
@@ -133,8 +133,9 @@ public class Solution {
 }
 
 # Thought: https://discuss.leetcode.com/topic/39151/5ms-o-n-java-solution-explained-beats-96
-# 90.38% 4ms
-public static int largestRectangleArea(int[] height) {
+# 3ms 96.31%
+class Solution {
+    public static int largestRectangleArea(int[] height) {
     if (height == null || height.length == 0) {
         return 0;
     }
@@ -167,11 +168,12 @@ public static int largestRectangleArea(int[] height) {
     }
 
     return maxArea;
+    }
 }
 
-//divide and conquer
-# 98.88% 2ms
-public class Solution {
+# divide and conquer
+# 1ms 100%
+class Solution {
     //int max=0;
     public int largestRectangleArea(int[] heights) {
         if(heights==null|heights.length==0) return 0;
@@ -200,6 +202,27 @@ public class Solution {
         int res=Math.max(l,r);
         res=Math.max(res,heights[min]*(end-start+1));
         return res;
+    }
+}
+
+# 8ms 91.55%
+class Solution {
+    public int largestRectangleArea(int[] height) {
+        if (height == null || height.length == 0) {
+            return 0;
+        }
+        int result = 0;
+        for (int i = 0; i < height.length; i++) {
+            if (i < height.length - 1 && height[i] <= height[i + 1]) {
+                continue;
+            }
+            int minHeight = height[i];
+            for (int j = i; j >= 0; j--) {
+                minHeight = Math.min(minHeight, height[j]);
+                result = Math.max(result, (i - j + 1) * minHeight);
+            }
+        }
+        return result;
     }
 }
 '''

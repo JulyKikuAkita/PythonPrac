@@ -1,15 +1,7 @@
-__source__ = 'https://leetcode.com/problems/minimum-swaps-to-make-sequences-increasing/description/'
+__source__ = 'https://leetcode.com/problems/minimum-swaps-to-make-sequences-increasing/'
 # Time:  O(N)
 # Space: O(1)
-#
 # DP
-#
-# 1) if a1 < a2 and b1 < b2, then it is allowed to have both of these columns natural (unswapped),
-# or both of these columns swapped. This possibility leads to n2 = min(n2, n1) and s2 = min(s2, s1 + 1).
-#
-# 2) Another, (not exclusive) possibility is that a1 < b2 and b1 < a2.
-# This means that it is allowed to have exactly one of these columns swapped.
-# This possibility leads to n2 = min(n2, s1) or s2 = min(s2, n1 + 1).
 #
 # Description: Leetcode # 801. Minimum Swaps To Make Sequences Increasing
 #
@@ -37,8 +29,14 @@ __source__ = 'https://leetcode.com/problems/minimum-swaps-to-make-sequences-incr
 # A[i], B[i] are integer values in the range [0, 2000].
 #
 import unittest
+# 1) if a1 < a2 and b1 < b2, then it is allowed to have both of these columns natural (unswapped),
+# or both of these columns swapped. This possibility leads to n2 = min(n2, n1) and s2 = min(s2, s1 + 1).
+#
+# 2) Another, (not exclusive) possibility is that a1 < b2 and b1 < a2.
+# This means that it is allowed to have exactly one of these columns swapped.
+# This possibility leads to n2 = min(n2, s1) or s2 = min(s2, n1 + 1).
 
-#81.92% 32ms
+# 32ms 84.09%
 class Solution(object):
     def minSwap(self, A, B):
         """
@@ -62,14 +60,13 @@ class TestMethods(unittest.TestCase):
     def test_Local(self):
         self.assertEqual(1, 1)
 
-
 if __name__ == '__main__':
     unittest.main()
 
 Java = '''
 # Thought: https://leetcode.com/problems/minimum-swaps-to-make-sequences-increasing/solution/
-# 100% 4ms
 #
+# 5ms 97.53%
 class Solution {
     public int minSwap(int[] A, int[] B) {
         int swap = 1;
@@ -91,60 +88,24 @@ class Solution {
     }
 }
 
-#118ms 65.67%
+# 5ms 97.53%
 class Solution {
-    public int orderOfLargestPlusSign(int N, int[][] mines) {
-        int[][] grid = new int[N][N], dp = new int[N][N];
-        for (int i = 0; i < mines.length; i++) {
-            grid[mines[i][0]][mines[i][1]] = 1;
-        }
-
-        // left
-        for (int i = 0; i < N; i++) {
-            int count = 0;
-            for (int j = 0; j < N; j++) {
-                if (grid[i][j] == 1) count = 0;
-                else count++;
-                dp[i][j] = count;
+    public int minSwap(int[] A, int[] B) {
+        // n: natural, s: swapped
+        int n1 = 0, s1 = 1;
+        for (int i = 1; i < A.length; ++i) {
+            int n2 = Integer.MAX_VALUE, s2 = Integer.MAX_VALUE;
+            if (A[i-1] < A[i] && B[i-1] < B[i]) {
+                n2 = Math.min(n2, n1);
+                s2 = Math.min(s2, s1 + 1);
             }
-        }
-        // right
-        for (int i = 0; i < N; i++) {
-            int count = 0;
-            for (int j = N - 1; j >= 0; j--) {
-                if (grid[i][j] == 1) count = 0;
-                else count++;
-                dp[i][j] = Math.min(count, dp[i][j]);
+            if (A[i-1] < B[i] && B[i-1] < A[i]) {
+                n2 = Math.min(n2, s1);
+                s2 = Math.min(s2, n1 + 1);
             }
+            n1 = n2;
+            s1 = s2;
         }
-
-        //up
-        for (int i = 0; i < N; i++) {
-            int count = 0;
-            for (int j = 0; j < N; j++) {
-                if (grid[j][i] == 1) count = 0;
-                else count++;
-                dp[j][i] = Math.min(count, dp[j][i]);
-            }
-        }
-
-        //down
-        for (int i = 0; i < N; i++) {
-            int count = 0;
-            for (int j = N -1; j >= 0; j--) {
-                if (grid[j][i] == 1) count = 0;
-                else count++;
-                dp[j][i] = Math.min(count, dp[j][i]);
-            }
-        }
-
-        int ans = 0;
-        for (int i = 0; i < N; i++) {
-            for (int j = 0; j < N; j++) {
-                ans = Math.max(ans, dp[i][j]);
-            }
-        }
-        return ans;
+        return Math.min(n1, s1);
     }
-}
-'''
+}'''

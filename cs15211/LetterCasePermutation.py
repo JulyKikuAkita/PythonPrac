@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/letter-case-permutation/description/'
+__source__ = 'https://leetcode.com/problems/letter-case-permutation/'
 # Time:  O(2^{N} * N)
 # Space: O(2^{N} * N)
 #
@@ -24,6 +24,7 @@ __source__ = 'https://leetcode.com/problems/letter-case-permutation/description/
 import unittest
 import itertools
 # Time and Space Complexity: O(2^{N} * N)
+# 104ms 22.31%
 class Solution(object):
     def letterCasePermutation(self, S):
         """
@@ -42,9 +43,9 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
+# Thought: https://leetcode.com/problems/letter-case-permutation/solution/
 
-#3ms 100%
+# 5ms 96,17%
 class Solution {
     public List<String> letterCasePermutation(String S) {
         List<String> res = new ArrayList<>();
@@ -71,7 +72,8 @@ class Solution {
     }
 }
 
-Approach #1: Recursion [Accepted] 11ms 48.30%
+Approach #1: Recursion [Accepted] 
+# 8ms 64.84%
 class Solution {
     public List<String> letterCasePermutation(String S) {
         List<StringBuilder> res = new ArrayList<>();
@@ -100,8 +102,8 @@ class Solution {
     }
 }
 
-Approach #2: Binary Mask [Accepted] 11ms 48.30%
-
+Approach #2: Binary Mask [Accepted] 
+# 21ms 12.14%
 class Solution {
     public List<String> letterCasePermutation(String S) {
         int B = 0;

@@ -1,8 +1,9 @@
-__source__ = 'https://leetcode.com/problems/non-negative-integers-without-consecutive-ones/#/description'
+__source__ = 'https://leetcode.com/problems/non-negative-integers-without-consecutive-ones/'
 # Time:  O(n)
 # Space: O(n)
 #
-# Description:
+# Description: 600. Non-negative Integers without Consecutive Ones
+#
 # Given a positive integer n, find the number of non-negative integers less than or equal to n,
 # whose binary representations do NOT contain consecutive ones.
 #
@@ -23,7 +24,7 @@ __source__ = 'https://leetcode.com/problems/non-negative-integers-without-consec
 # Hide Company Tags Pocket Gems
 # Hide Tags Dynamic Programming
 # Hide Similar Problems (E) House Robber (M) House Robber II (M) Ones and Zeroes
-
+#
 import unittest
 
 
@@ -40,10 +41,11 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/articles/non-negative-integers-without-consecutive-ones/
+# Thought: https://leetcode.com/problems/non-negative-integers-without-consecutive-ones/solution/
 Reference: http://www.geeksforgeeks.org/count-number-binary-strings-without-consecutive-1s/
 
-public class Solution {
+# 19ms 32.79%
+class Solution {
     public int findIntegers(int num) {
         StringBuilder sb = new StringBuilder(Integer.toBinaryString(num)).reverse();
         int n = sb.length();

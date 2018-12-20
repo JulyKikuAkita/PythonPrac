@@ -1,8 +1,10 @@
-__source__ = 'https://leetcode.com/problems/largest-number/description/'
+__source__ = 'https://leetcode.com/problems/largest-number/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/largest-number.py
 # Time:  O(n^2)
 # Space: O(n)
 # Sort
+#
+# Description: Leetcode # 179. Largest Number
 #
 # Given a list of non negative integers, arrange them such that they form the largest number.
 #
@@ -38,9 +40,10 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
-#11.35% 148ms
-public class Solution {
+# Thought: https://leetcode.com/problems/largest-number/solution/
+
+# 60ms 19.71%
+class Solution {
     public String largestNumber(int[] num) {
         String[] array = Arrays.stream(num).mapToObj(String::valueOf).toArray(String[]::new);
         Arrays.sort(array, (String s1, String s2) -> (s2 + s1).compareTo(s1 + s2));
@@ -49,11 +52,10 @@ public class Solution {
 }
 
 #83.53% 112ms
-public class Solution {
+class Solution {
     public String largestNumber(int[] nums) {
-
-		if (nums == null || nums.length == 0) {
-			return "";
+        if (nums == null || nums.length == 0) {
+        	return "";
 		}
 
 		String[] array = new String[nums.length];
@@ -81,16 +83,16 @@ public class Solution {
 		}
 
 		return sb.toString();
-	}
+    }
 }
 
-#Same as above but use Java8 lambda
-#33.46% 130ms
+# Same as above but use Java8 lambda
+# 57ms 21.98%
 class Solution {
     public String largestNumber(int[] nums) {
         if (nums == null || nums.length == 0) return "";
 
-		String[] arr = new String[nums.length];
+        String[] arr = new String[nums.length];
         for (int i = 0; i < nums.length; i++) {
             arr[i] = String.valueOf(nums[i]);
         }
@@ -107,8 +109,8 @@ class Solution {
     }
 }
 
-#154ms 7.72%
-public class Solution {
+# 13ms 81.54%
+class Solution {
     public String largestNumber(int[] nums) {
         StringBuilder sb = new StringBuilder();
         mergeSort(nums, 0, nums.length - 1);
@@ -169,8 +171,8 @@ public class Solution {
     }
 }
 
-#2.59% 174ms
-public class Solution {
+# 12ms 84.53%
+class Solution {
     public String largestNumber(int[] nums) {
         StringBuilder sb = new StringBuilder();
         Integer[] numbers = new Integer[nums.length];
@@ -208,4 +210,5 @@ public class Solution {
         return sb.substring(start);
     }
 }
+
 '''

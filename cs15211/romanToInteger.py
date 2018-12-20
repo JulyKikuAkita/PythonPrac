@@ -1,10 +1,11 @@
-__source__ = 'https://leetcode.com/problems/roman-to-integer/description/'
+__source__ = 'https://leetcode.com/problems/roman-to-integer/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/roman-to-integer.py
 # Time:  O(n)
 # Space: O(1)
 # Math
 #
 # Description: Leetcode # 13. Roman to Integer
+#
 # Given a roman numeral, convert it to an integer.
 #
 # Input is guaranteed to be within the xrange from 1 to 3999.
@@ -70,10 +71,10 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/problems/contains-duplicate/solution/
+# Thought: 
 
-# 84.10% 93ms
-public class Solution {
+# 53ms 56.20%
+class Solution {
     public static final Map<Character, Integer> ROMAN_MAP;
     static {
         Map<Character, Integer> map = new HashMap<>();
@@ -109,8 +110,8 @@ public class Solution {
 }
 
 
-#72.08% 97ms
-public class Solution {
+# 40ms 88.14%
+class Solution {
     public int romanToInt(String s) {
         char[] sc = s.toCharArray();
         int sum = 0;

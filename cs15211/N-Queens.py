@@ -1,9 +1,9 @@
-__source__ = 'https://leetcode.com/problems/n-queens/description/'
+__source__ = 'https://leetcode.com/problems/n-queens/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/n-queens.py
 # Time:  O(n!)
 # Space: O(n)
 #
-# Description: Leetcode # 217. Contains Duplicate
+# Description: Leetcode # 51. N-Queens
 #
 # The n-queens puzzle is the problem of placing n queens on
 # an nxn chess board such that no two queens attack each other.
@@ -130,42 +130,39 @@ class SolutionOther:
         result = []
         DFS([],[],[])
         return [ ["."*i + "Q" + "."*(n-i-1) for i in sol] for sol in result]
+#
+# reduce(function, iterable[, initializer])
+# Apply function of two arguments cumulatively to the items of iterable, from left to right,
+# so as to reduce the iterable to a single value.
+# For example, reduce(lambda x, y: x+y, [1, 2, 3, 4, 5]) calculates ((((1+2)+3)+4)+5).
+# The left argument, x, is the accumulated value and the right argument, y,
+# is the update value from the iterable. If the optional initializer is present,
+# it is placed before the items of the iterable in the calculation, and serves as
+# a default when the iterable is empty. If initializer is not given and iterable contains only one item,
+# the first item is returned. Roughly equivalent to:
+#
+# def reduce(function, iterable, initializer=None):
+#     it = iter(iterable)
+#     if initializer is None:
+#         try:
+#             initializer = next(it)
+#         except StopIteration:
+#             raise TypeError('reduce() of empty sequence with no initial value')
+#     accum_value = initializer
+#     for x in it:
+#         accum_value = function(accum_value, x)
+#     return accum_value
+#
+#     Map:
+#     def fahrenheit(T):
+#     return ((float(9)/5)*T + 32)
+# def celsius(T):
+#     return (float(5)/9)*(T-32)
+# temp = (36.5, 37, 37.5,39)
+#
+# F = map(fahrenheit, temp)
+# C = map(celsius, F)
 
-# Thought:
-redeuce = '''
-reduce(function, iterable[, initializer])
-Apply function of two arguments cumulatively to the items of iterable, from left to right,
-so as to reduce the iterable to a single value.
-For example, reduce(lambda x, y: x+y, [1, 2, 3, 4, 5]) calculates ((((1+2)+3)+4)+5).
-The left argument, x, is the accumulated value and the right argument, y,
-is the update value from the iterable. If the optional initializer is present,
-it is placed before the items of the iterable in the calculation, and serves as
-a default when the iterable is empty. If initializer is not given and iterable contains only one item,
-the first item is returned. Roughly equivalent to:
-
-def reduce(function, iterable, initializer=None):
-    it = iter(iterable)
-    if initializer is None:
-        try:
-            initializer = next(it)
-        except StopIteration:
-            raise TypeError('reduce() of empty sequence with no initial value')
-    accum_value = initializer
-    for x in it:
-        accum_value = function(accum_value, x)
-    return accum_value
-
-    Map:
-    def fahrenheit(T):
-    return ((float(9)/5)*T + 32)
-def celsius(T):
-    return (float(5)/9)*(T-32)
-temp = (36.5, 37, 37.5,39)
-
-F = map(fahrenheit, temp)
-C = map(celsius, F)
-
-'''
 # test
 class TestMethods(unittest.TestCase):
     def test_Local(self):
@@ -181,10 +178,10 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
+# Thought:
 
-#75.29% 7ms
-public class Solution {
+# 3ms 96.59%
+class Solution {
     public List<List<String>> solveNQueens(int n) {
         List<List<String>> result = new ArrayList<>();
         solveNQueens(new int[n], 0, result);
@@ -230,8 +227,8 @@ public class Solution {
     }
 }
 
-#96.87% 4ms
-public class Solution {
+# 2ms 100%
+class Solution {
     public List<List<String>> solveNQueens(int n) {
         List<List<String>> res=new ArrayList();
         if(n == 0) return res;

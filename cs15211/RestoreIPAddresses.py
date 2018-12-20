@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/restore-ip-addresses/description/'
+__source__ = 'https://leetcode.com/problems/restore-ip-addresses/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/restore-ip-addresses.py
 # Time:  O(n^m) = O(3^4)
 # Space: O(n * m) = O(3 * 4)
@@ -132,7 +132,7 @@ In isValid, strings whose length greater than 3 or equals to 0 is not valid;
 or if the string's length is longer than 1 and the first letter is '0' then it's invalid;
 or the string whose integer representation greater than 255 is invalid.
 
-#44.19% 5ms
+# 4ms 33.49%
 class Solution {
     public List<String> restoreIpAddresses(String s) {
         List<String> solutions = new ArrayList<String>();
@@ -153,8 +153,8 @@ class Solution {
     }
 }
 
-# 89.97% 3ms
-public class Solution {
+# 1ms 99.64%
+class Solution {
     public List<String> restoreIpAddresses(String s) {
         List<String> result = new ArrayList<>();
         if (s.length() < 4 || s.length() > 12) {
@@ -195,7 +195,7 @@ public class Solution {
     }
 }
 
-# 89.97% 3ms
+# 1ms 99.64%
 class Solution {
     public List<String> restoreIpAddresses(String s) {
         List<String> result = new ArrayList<String>();

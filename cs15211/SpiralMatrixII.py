@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/spiral-matrix-ii/#/description'
+__source__ = 'https://leetcode.com/problems/spiral-matrix-ii/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/spiral-matrix-ii.py
 # Time:  O(n^2)
 # Space: O(1)
@@ -144,8 +144,8 @@ If you can understand that, this one is a no brainer :)
 Guess what? I just made several lines of change (with comment "//change")
 from that and I have the following AC code:
 
-#54% 2ms
-public class Solution {
+# 1ms 100%
+class Solution {
     public int[][] generateMatrix(int n) {
         // Declaration
         int[][] matrix = new int[n][n];
@@ -194,8 +194,8 @@ public class Solution {
 Obviously, you could merge colStart and colEnd into rowStart and rowEnd
 because it is a square matrix. But this is easily extensible to matrices that are m*n.
 
-# 13.31 % 3ms
-public class Solution {
+# 1ms 100%
+class Solution {
     public int[][] generateMatrix(int n) {
         if (n <= 0) {
             return new int[0][0];

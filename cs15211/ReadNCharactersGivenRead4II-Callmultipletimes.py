@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/read-n-characters-given-read4-ii-call-multiple-times/description/'
+__source__ = 'https://leetcode.com/problems/read-n-characters-given-read4-ii-call-multiple-times/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/read-n-characters-given-read4-ii-call-multiple-times.py
 # Time:  O(n)
 # Space: O(1)
@@ -81,13 +81,13 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
+# Thought:
 
 /* The read4 API is defined in the parent class Reader4.
       int read4(char[] buf); */
 
-# 22.71% 2ms
-public class Solution extends Reader4 {
+# 1ms 100%
+class Solution extends Reader4 {
     /**
      * @param buf Destination buffer
      * @param n   Maximum number of characters to read
@@ -113,8 +113,8 @@ public class Solution extends Reader4 {
     }
 }
 
-# 22.71% 2ms
-public class Solution extends Reader4 {
+# 1ms 100%
+class Solution extends Reader4 {
     /**
      * @param buf Destination buffer
      * @param n   Maximum number of characters to read
@@ -146,8 +146,8 @@ public class Solution extends Reader4 {
 
 
 # Queue
-#5.1% 3ms
-public class Solution extends Reader4 {
+# 3ms 3.29%
+class Solution extends Reader4 {
     /**
      * @param buf Destination buffer
      * @param n   Maximum number of characters to read

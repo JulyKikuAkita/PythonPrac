@@ -1,4 +1,5 @@
-__source__ = 'https://leetcode.com/problems/scramble-string/#/description'
+# coding=utf-8
+__source__ = 'https://leetcode.com/problems/scramble-string/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/scramble-string.py
 # Time:  O(n^4)
 # Space: O(n^3)
@@ -72,7 +73,8 @@ class Solution:
             for i in xrange(len(s1) - n + 1):
                 for j in xrange(len(s2) -n + 1):
                     for k in xrange(1, n):
-                        if result[k][i][j] and result[n - k][i + k][j + k] or result[k][i][j + n - k] and result[n - k][i + k][j]:
+                        if result[k][i][j] and result[n - k][i + k][j + k] or result[k][i][j + n - k] \
+                                and result[n - k][i + k][j]:
                             result[n][i][j] = True
                             break
         #for n in xrange(len(s1)+1):
@@ -138,7 +140,6 @@ class TestMethods(unittest.TestCase):
         test = SolutionOther()
         #print test.isScramble("great", "rgeat")
         print test.isScramble("abc", "cab")
-
         #print test.isScrambleDP("great", "rgeat")
         #print test.isScrambleDP("abc", "cab")
 
@@ -146,10 +147,11 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
+# Thought:
+
 # DFS
-# 67.79% 5ms
-public class Solution {
+# 2ms 99.21%
+class Solution {
     public boolean isScramble(String s1, String s2) {
         if (s1.equals(s2)) return true;
 
@@ -173,40 +175,47 @@ public class Solution {
     }
 }
 
-#99.11% 2ms
-public class Solution {
-    public boolean isScramble(String s1, String s2) {
-        char[] t1 = s1.toCharArray();
-        char[] t2 = s2.toCharArray();
-        return scramble(t1, 0, t2, 0, t2.length);
-    }
+# 2ms 99.21%
+class Solution {  
+    public boolean isScramble(String s1, String s2) {  
+        char[] t1 = s1.toCharArray();  
+        char[] t2 = s2.toCharArray();  
+        return scramble(t1, 0, t2, 0, t2.length);  
+    }  
+  
+  
+    //此方法做出来一下这几点的优化方案：  
+    //用 字符数组和长度来替代字符串不用每次都切割子串  
+    // 在判断字符的数组中的元素是否相同的时候少了一个对letter的循环遍历  
+    private  boolean scramble(char[] s1, int i, char[] s2, int j, int n) {  
+        //当 n == 1 的时候应该向上回溯  
+        if (n == 1) return s1[i] == s2[j];  
+  
+        //判断字符是否相等  
+        int[] letter = new int[26];  
+        for (int k = i; k < i+n; k++) {  
+            ++letter[s1[k]-'a'];  
+        }  
+        for (int k = j; k < j+n; k++) {  
+            //存在不想等的字符  
+            if (--letter[s2[k]-'a'] < 0)  
+                return false;  
+        }  
+        for (int l = 1; l < n; l++) {  
+            //将字符数组的前半部分和后半部分分别的进行对比 相当于s.substring()  
+            if (scramble(s1,i,s2,j,l)  
+                    && scramble(s1,i+l,s2,j+l,n-l)) return true;  
+            //将s1前半部分和s2的后半部分对比，  
+            if (scramble(s1,i,s2,n+j-l,l)  
+                    && scramble(s1,i+l,s2,j,n-l)) return true;  
+        }  
+        return false;  
+    }  
+}  
 
-    private  boolean scramble(char[] s1, int i, char[] s2, int j, int n) {
-        if (n == 1) return s1[i] == s2[j];
-
-        int[] letter = new int[26];
-        for (int k = i; k < i+n; k++) {
-            ++letter[s1[k]-'a'];
-        }
-        for (int k = j; k < j+n; k++) {
-            if (--letter[s2[k]-'a'] < 0)
-                return false;
-        }
-        for (int l = 1; l < n; l++) {
-            if (scramble(s1,i,s2,j,l)
-                    && scramble(s1,i+l,s2,j+l,n-l)) return true;
-            if (scramble(s1,i,s2,n+j-l,l)
-                    && scramble(s1,i+l,s2,j,n-l)) return true;
-        }
-        return false;
-    }
-
-}
-
-
-//dp
-# 29.93% 23ms
-public class Solution {
+# DP
+# 12ms 27.34%
+class Solution {
 	public boolean isScramble(String s1, String s2) {
 		if (s1.length() != s2.length()) return false;
 		int len = s1.length();
@@ -248,8 +257,8 @@ public class Solution {
 	}
 }
 
-#39.15% 17ms
-public class Solution {
+# 17ms 19.15%
+class Solution {
     public boolean isScramble(String s1, String s2) {
         if ( s1.length() != s2.length()) return false;
         int len = s1.length();
@@ -279,8 +288,8 @@ public class Solution {
     }
 }
 
-#45% 10ms
-public class Solution {
+# 4ms 59.58%
+class Solution {
     public boolean isScramble(String s1, String s2) {
         int len1 = s1.length();
         int len2 = s2.length();

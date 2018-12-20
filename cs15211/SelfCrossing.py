@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/self-crossing/description/'
+__source__ = 'https://leetcode.com/problems/self-crossing/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/self-crossing.py
 # Time:  O(n)
 # Space: O(1)
@@ -85,33 +85,34 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
-// Categorize the self-crossing scenarios, there are 3 of them:
-// 1. Fourth line crosses first line and works for fifth line crosses second line and so on...
-// 2. Fifth line meets first line and works for the lines after
-// 3. Sixth line crosses first line and works for the lines after
-Suppose i is the current line, then:
+# Thought:
+#
+# Categorize the self-crossing scenarios, there are 3 of them:
+# 1. Fourth line crosses first line and works for fifth line crosses second line and so on...
+# 2. Fifth line meets first line and works for the lines after
+# 3. Sixth line crosses first line and works for the lines after
+# Suppose i is the current line, then:
+# 
+# i and i-3 can cross
+# i and i-4 can cross
+# i and i-5 can cross
+# no more or no less just exactly the right combination.
+# 
+# Now it's time for us to restrict the conditions to make them just happen.
+# 
+# i and i-3
+# 
+# i>=i-2 && i-1<=i-3
+# i and i-4
+# 
+# i+i-4>=i-2 && i-1==i-3
+# i and i-5
+# 
+# i+i-4>=i-2 && i-2>=i-4 && i-1+i-5>=i-3 && i-1<=i-3
+#
 
-i and i-3 can cross
-i and i-4 can cross
-i and i-5 can cross
-no more or no less just exactly the right combination.
-
-Now it's time for us to restrict the conditions to make them just happen.
-
-i and i-3
-
-i>=i-2 && i-1<=i-3
-i and i-4
-
-i+i-4>=i-2 && i-1==i-3
-i and i-5
-
-i+i-4>=i-2 && i-2>=i-4 && i-1+i-5>=i-3 && i-1<=i-3
-
-
-# 6.95% 1ms
-public class Solution {
+# 0ms 100%
+class Solution {
     public boolean isSelfCrossing(int[] x) {
         int len = x.length;
         if (len < 4) {
@@ -138,8 +139,8 @@ public class Solution {
     }
 }
 
-# 6.95% 1ms
-public class Solution {
+# 0ms 100%
+class Solution {
     public boolean isSelfCrossing(int[] x) {
         int n = x.length;
         if (n <= 3) return false;

@@ -1,6 +1,6 @@
 __source__ = 'https://leetcode.com/problems/nth-magical-number/'
-# Time:  O()
-# Space: O()
+# Time:  O(A + B)
+# Space: O(1)
 #
 # Description: Leetcode # 878. Nth Magical Number
 #
@@ -81,7 +81,8 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/problems/nth-magical-number/solution/
+# Thought: https://leetcode.com/problems/nth-magical-number/solution/
+
 Approach 1: Mathematical
 Complexity Analysis
 
@@ -90,7 +91,7 @@ The calculation of q * L is O(1).
 The calculation of the rr-th magical number after q*M is O(M) which is O(A+B.
 Space Complexity: O(1).
 
-#5ms 50%
+# 5ms 50%
 class Solution {
     public int nthMagicalNumber(int N, int A, int B) {
         int MOD = 1_000_000_007;
@@ -124,7 +125,7 @@ Complexity Analysis
 Time Complexity: O(log(N*max(A,B))).
 Space Complexity: O(1).
 
-#3ms 95.73%
+# 3ms 95.73%
 class Solution {
     public int nthMagicalNumber(int N, int A, int B) {
         int MOD = 1_000_000_007;

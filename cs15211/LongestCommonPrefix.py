@@ -1,8 +1,10 @@
-__source__ = 'https://leetcode.com/problems/longest-common-prefix/description/'
+__source__ = 'https://leetcode.com/problems/longest-common-prefix/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/longest-common-prefix.py
 # Time:  O(n * k), k is the length of the common prefix
 # Space: O(1)
-# Description: 14. Longest Common Prefix
+#
+# Description: Leetcode # 14. Longest Common Prefix
+#
 # Write a function to find the longest common prefix string
 # amongst an array of strings.
 #
@@ -11,6 +13,7 @@ __source__ = 'https://leetcode.com/problems/longest-common-prefix/description/'
 # Related Topics
 # String
 #
+import unittest
 class Solution:
     # @return a string
     def longestCommonPrefix(self, strs):
@@ -23,11 +26,6 @@ class Solution:
                 i += 1
             longest = longest[:i]
         return longest
-
-
-if __name__ == "__main__":
-    print Solution().longestCommonPrefix(["hello", "heaven", "heavy"])
-
 
 class SolutionOther:
     # @return a string
@@ -64,21 +62,39 @@ class SolutionOther:
         return common_prefix
 
 #test
-test = SolutionOther()
-str = ['panda', 'panda', "giana"]
-str1 = ["aba","abc"]
-str2 = ["aba","a"]
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        test = SolutionOther()
+        str = ['panda', 'panda', "giana"]
+        str1 = ["aba","abc"]
+        str2 = ["aba","a"]
+        print  test.longestCommonPrefix(str1)
+        print  test.longestCommonPrefix(str2)
+        print Solution().longestCommonPrefix(["hello", "heaven", "heavy"])
 
-print  test.longestCommonPrefix(str1)
-print  test.longestCommonPrefix(str2)
+if __name__ == '__main__':
+    unittest.main()
 
-
-#Java
 Java = '''
-Thought: https://leetcode.com/problems/longest-common-prefix/solution/
+# Thought: https://leetcode.com/problems/longest-common-prefix/solution/
+
+# 3ms 100%
+class Solution {
+    public String longestCommonPrefix(String[] strs) {
+        if (strs.length == 0) return "";
+        String candidate = strs[0];
+        for (int i = 1; i < strs.length; i++) {
+            while (!strs[i].startsWith(candidate)) {
+                candidate = candidate.substring(0, candidate.length() - 1);
+            }
+        }
+        return candidate;
+    }
+}
+
 Approach #1 (Horizontal scanning)
-# 89.41% 9ms
-public class Solution {
+# 4ms 99.82%
+class Solution {
     public String longestCommonPrefix(String[] strs) {
         if(strs == null || strs.length == 0)    return "";
         String pre = strs[0];
@@ -92,23 +108,8 @@ public class Solution {
     }
 }
 
-# 43.13% 12ms
-public class Solution {
-    public String longestCommonPrefix(String[] strs) {
-        if(strs == null || strs.length == 0)    return "";
-        String pre = strs[0];
-        int i = 1;
-        while(i < strs.length){
-            while(strs[i].indexOf(pre) != 0)
-                pre = pre.substring(0,pre.length()-1);
-            i++;
-        }
-        return pre;
-    }
-}
-
-#59.86% 11ms
-public class Solution {
+# 5ms 90.07%
+class Solution {
     public String longestCommonPrefix(String[] strs) {
         if (strs == null || strs.length == 0 ) return "";
         int prefix = strs[0].length();
@@ -134,8 +135,8 @@ public class Solution {
 }
 
 Approach #3 (Divide and conquer)
-# 29.70%  13ms
-public class Solution {
+# 9ms 29.45%
+class Solution {
     public String longestCommonPrefix(String[] strs) {
         if (strs == null || strs.length == 0) return "";
         return longestCommonPrefix(strs, 0 , strs.length - 1);
@@ -162,5 +163,32 @@ public class Solution {
         return left.substring(0, min);
     }
 
+}
+
+# 4ms 99.82%
+class Solution {
+    public String longestCommonPrefix(String[] strs) {
+        if (strs.length == 0) {
+            return "";
+        }
+        int minLength = getMinLength(strs);
+        for (int i = 0; i < minLength; i++) {
+            char c = strs[0].charAt(i);
+            for (int j = 1; j < strs.length; j++) {
+                if (strs[j].charAt(i) != c) {
+                    return strs[0].substring(0, i);
+                }
+            }
+        }
+        return strs[0].substring(0, minLength);
+    }
+    
+    private int getMinLength(String[] strs) {
+        int result = Integer.MAX_VALUE;
+        for (int i = 0; i < strs.length; i++) {
+            result = Math.min(result, strs[i].length());
+        }
+        return result;
+    }
 }
 '''

@@ -28,7 +28,7 @@ __source__ = 'https://leetcode.com/problems/special-binary-string/'
 #
 import unittest
 
-#20ms 100%
+# 20ms 100%
 class Solution(object):
     def makeLargestSpecial(self, S):
         """
@@ -52,12 +52,12 @@ class TestMethods(unittest.TestCase):
     def test_Local(self):
         self.assertEqual(1, 1)
 
-
 if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/problems/special-binary-string/solution/
+# Thought: https://leetcode.com/problems/special-binary-string/solution/
+
 Note: special string:
 In such a drawing, "1" is a line up one unit,
 and "0" is a line down one unit, bwhere all lines are 45 degrees from horizontal.
@@ -74,9 +74,10 @@ Complexity Analysis
 Time Complexity: O(N^2), where N is the length of SS.
 Space Complexity: O(N)
 
-In that case, it must start with "1" and end with "0", so the answer is "1" + F([S[1], S[2], ..., S[N-2]]) + "0".
+In that case, it must start with "1" and end with "0", 
+so the answer is "1" + F([S[1], S[2], ..., S[N-2]]) + "0".
 
-#4ms 100%
+# 4ms 100%
 class Solution {
     public String makeLargestSpecial(String S) {
         if (S.length() == 0) return S;

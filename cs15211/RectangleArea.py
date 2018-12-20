@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/rectangle-area/description/'
+__source__ = 'https://leetcode.com/problems/rectangle-area/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/rectangle-area.py
 # Time:  O(1)
 # Space: O(1)
@@ -68,8 +68,10 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-# 36.53% 4ms
-public class Solution {
+# Thought: 
+
+# 2ms 100%
+class Solution {
     public int computeArea(int A, int B, int C, int D, int E, int F, int G, int H) {
         if(B>=H || F>=D || C<=E || G<=A) {
             return (C-A)*(D-B)+(G-E)*(H-F);
@@ -82,8 +84,8 @@ public class Solution {
     }
 }
 
-# 36.53% 4ms
-public class Solution {
+# 2ms 100%
+class Solution {
     public int computeArea(int A, int B, int C, int D, int E, int F, int G, int H) {
         return (int) (computeArea(A, B, C, D) + computeArea(E, F, G, H) -
             computeArea(Math.max(A, E), Math.max(B, F), Math.min(C, G), Math.min(D, H)));
@@ -94,8 +96,8 @@ public class Solution {
     }
 }
 
-# 14.32% 5ms
-public class Solution {
+# 3ms 56.63%
+class Solution {
     public int computeArea(int A, int B, int C, int D, int E, int F, int G, int H) {
         int left = Math.max(A,E), right = Math.max(Math.min(C,G), left);
         int bottom = Math.max(B,F), top = Math.max(Math.min(D,H), bottom);
