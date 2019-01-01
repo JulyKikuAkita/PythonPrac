@@ -87,7 +87,7 @@ Complexity Analysis
 Time Complexity: O(A+B), where A and B is the total amount of information in A and B respectively.
 Space Complexity: O(A.length+B.length).
 
-#28ms 74.91%
+# 28ms 74.91%
 class Solution {
     public List<String> wordSubsets(String[] A, String[] B) {
         int[] bmax = count("");
@@ -117,7 +117,7 @@ class Solution {
     }
 }
 
-#32ms 62.54%
+# 32ms 62.54%
 class Solution {
     public List<String> wordSubsets(String[] A, String[] B) {
         int[] bmax = count("");
@@ -152,7 +152,7 @@ class Solution {
     }
 }
 
-#45ms 34.39%
+# 45ms 34.39%
 class Solution {
     public List<String> wordSubsets(String[] A, String[] B) {
         int[] bmax = count("");
@@ -183,7 +183,7 @@ class Solution {
     }
 }
 
-#20ms 94.94%
+# 20ms 94.94%
 class Solution {
     private boolean isSubset(String str, int[] maxs, int len) {
         if (str.length() < len) {

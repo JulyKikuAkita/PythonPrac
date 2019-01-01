@@ -1,8 +1,9 @@
-__source__ = 'https://leetcode.com/problems/unique-morse-code-words/description/'
+__source__ = 'https://leetcode.com/problems/unique-morse-code-words/'
 # Time:  O()
 # Space: O()
 #
 # Description: Leetcode # 804. Unique Morse Code Words
+#
 # International Morse Code defines a standard encoding where each letter is mapped to a series of dots and dashes,
 # as follows: "a" maps to ".-", "b" maps to "-...", "c" maps to "-.-.", and so on.
 #
@@ -58,7 +59,7 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/problems/unique-morse-code-words/solution/
+# Thought: https://leetcode.com/problems/unique-morse-code-words/solution/
 # Approach #1: Hash Set [Accepted]
 #
 # Time Complexity: O(S), where S is the sum of the lengths of words in words.
@@ -85,7 +86,7 @@ class Solution {
     }
 }
 
-#90.28% 6ms
+# 90.28% 6ms
 class Solution {
     public int uniqueMorseRepresentations(String[] words) {
         String alphabet = "abcdefghijklmnopqrstuvwxyz";

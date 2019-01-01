@@ -76,7 +76,7 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/problems/asteroid-collision/solution/
+# Thought: https://leetcode.com/problems/asteroid-collision/solution/
 
 # 10ms 99.72%
 class Solution {
@@ -99,4 +99,5 @@ class Solution {
         return Arrays.copyOf(asteroids, l + 1);
     }
 }
+
 '''

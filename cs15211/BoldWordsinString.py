@@ -25,7 +25,7 @@ __source__ = 'https://leetcode.com/problems/bold-words-in-string/'
 #
 import unittest
 
-#32ms 98.7%
+# 32ms 98.7%
 class Solution(object):
     def boldWords(self, words, S):
         """
@@ -71,7 +71,7 @@ Complexity Analysis
 Time Complexity: O(N∑w i), where N is the length of S and w_i is the sum of W.
 Space Complexity: O(N.
 
-#8ms 90.29%
+# 8ms 90.29%
 class Solution {
     public String boldWords(String[] words, String S) {
         boolean[] f = new boolean[S.length()];

@@ -55,12 +55,14 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/problems/consecutive-numbers-sum/solution/
+# Thought: https://leetcode.com/problems/consecutive-numbers-sum/solution/
+#
 Approach #1: Brute Force [Time Limit Exceeded]
 Complexity Analysis
 Time Complexity: O(N^2)
 Space Complexity: O(1)
 
+# TLE
 class Solution {
     public int consecutiveNumbersSum(int N) {
         int ans = 0;
@@ -88,11 +90,11 @@ Complexity Analysis
 Time Complexity: O(sqrt(N)
 Space Complexity: O(1)
 
-
-
-#6ms 99.20%
+# 6ms 99.20%
 class Solution {
     public int consecutiveNumbersSum(int N) {
+        // it is easy to find that sum of consecutive number satisfy
+        // the rule 2*N = k(2*x + k + 1)2∗N=k(2∗x+k+1)
         while ((N & 1) == 0) N >>= 1;
         int ans = 1, d = 3;
 
@@ -113,10 +115,12 @@ class Solution {
 
 # math explanation:
 https://leetcode.com/problems/consecutive-numbers-sum/discuss/128946/Short-Math-Solution-with-explanation
-The goal is to looking for the number of arithmetic sequences whos summation is N. Let the starting number of a sequence be i and the length of the sequence be n. From the summation equation, we know
+The goal is to looking for the number of arithmetic sequences whose summation is N. 
+Let the starting number of a sequence be i and the length of the sequence be n. 
+From the summation equation, we know
 
 (i+i+n-1)*n/2 = N  (1)
-rearrange the equation we obtaion
+rearrange the equation we obtain
 
 i = (2*N-n(n-1))/(2*n) (2)
 If there exist such i, the denominator should satisfy
