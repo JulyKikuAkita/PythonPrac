@@ -159,7 +159,14 @@ we should reverse it back to correct ordering or use a stack.
  It takes O(|E|) to arrange graph information and O(n) to do BFS.
  * space complexity O(n)
  */
-
+# Approach 1: Using Depth First Search
+# Complexity Analysis
+# Time Complexity: O(N) considering there are N courses in all. 
+# We essentially perform a complete depth first search covering all the nodes in the forest. 
+# It's a forest and not a graph because not all nodes will be connected together. 
+# There can be disjoint components as well.
+# Space Complexity: O(N), the space utilized by the recursion stack 
+# (not the stack we used to maintain the topologically sorted order) 
 # DFS
 # 4ms 99.97%
 class Solution {
@@ -231,7 +238,13 @@ class Solution {
     }
 }
 
-
+# Approach 2: Using Node Indegree
+# Complexity Analysis
+# Time Complexity: O(N) since we process each node exactly once and end up processing the entire graph given to us.
+# Space Complexity: O(N) since we use an intermediate queue data structure to keep all the nodes with 0 in-degree. 
+# In the worst case, there won't be any prerequisite relationship 
+# and the queue will contain all the vertices initially since all of them will have 0 in-degree.
+#
 # Topological sort (BFS) with list
 # 6ms 96.66%
 class Solution {

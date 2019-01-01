@@ -67,8 +67,10 @@ if __name__ == '__main__':
 
 Java = '''
 # Thought:
-
-# 15ms 98.71%
+# https://leetcode.com/problems/sqrtx/discuss/25198/3-JAVA-solutions-with-explanation
+# Binary Search: Time complexity = O(lg(x)) = O(32)=O(1)
+# use long incase of overflow when mid * mid
+# 17ms 73.08%
 class Solution {
     public int mySqrt(int x) {
         if (x <= 0) {
@@ -87,7 +89,24 @@ class Solution {
         return (int) (end * end <= x ? end : start);
     }
 }
+# use mid > x / mid to avoid overflow
+# 21ms 47.08%
+class Solution {
+    public int mySqrt(int x) {
+        if (x == 0) return 0;
+        int start = 1, end = x;
+        while (start + 1 < end) {
+            int mid = start + (end - start) / 2;
+            if (mid <= x / mid && (mid + 1) > x / (mid + 1)) return mid;
+            else if (mid > x / mid) end = mid;
+            else start = mid;
+        }
+        return end * end < x ? end : start;
+    }
+}
 
+# Newton Solution: 
+# Time complexity = O(lg(x))
 # 15ms 98.71%
 class Solution {
     public int mySqrt(int x) {
@@ -95,6 +114,54 @@ class Solution {
         while (r*r > x)
             r = (r + x/r) / 2;
         return (int) r;
+    }
+}
+
+# Brute force
+# Look for the critical point: i * i <= x && (i+1)(i+1) > x
+# A little trick is using i <= x / i for comparison, instead of i * i <= x, to avoid exceeding integer upper limit.
+# 112ms 3.64%
+class Solution {
+    public int mySqrt(int x) {
+        if (x == 0) return 0;
+        for (int i = 1; i <= x / i; i++) {
+            if (i <= x / i && (i + 1) > x / (i + 1)) { // Look for the critical point: i*i <= x && (i+1)(i+1) > x
+                return i;
+            }
+        }
+        return -1;
+    }
+}
+
+# https://leetcode.com/problems/sqrtx/discuss/25048/Share-my-O(log-n)-Solution-using-bit-manipulation
+# Bit Manipulation
+# 18ms 59.46%
+class Solution {
+     public int mySqrt(int x) {
+        int res = 0;
+        for (int mask = 1 << 15; mask != 0; mask >>>= 1) {
+            int next = res | mask; //set bit
+            if (next <= x / next) res = next;
+        }
+        return res;
+    }
+}
+
+# 16ms 90.05%
+class Solution {
+    public int mySqrt(int x) {
+        int ans = 0; // no need to define as "long"
+        int bit = 1 << 15; // no need to define as "long"
+        while (bit > 0) {
+            ans |= bit;
+            // the original condition is "ans * ans > x" or "((long)ans) * ((long)ans) > x", this is revised version.
+            if (ans > x / ans) {
+                // if ans * ans > x, then ans = (ans | bit) ^ bit = ans | (bit ^ bit) = ans (the "previous" ans).
+                ans ^= bit; 
+            }
+            bit >>= 1;
+        }
+        return ans;
     }
 }
 

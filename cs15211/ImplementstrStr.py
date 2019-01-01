@@ -186,6 +186,7 @@ class Solution {
     }
 }
 
+# https://leetcode.com/problems/implement-strstr/discuss/12807/Elegant-Java-solution
 # 7ms 44.59%
 class Solution {
     public int strStr(String haystack, String needle) {
@@ -237,7 +238,7 @@ class Solution {
         int[] next = next(needle);
         int i = 0, j = 0;
         while(i < hLen && j < nLen) {
-            if(j == -1 || haystack.charAt(i) == needle.charAt(j)) {
+            if(j == -1 || haystack.charAt(i) == needle.charAt(j)) { //lps[0] == -1
                 i++; j++;
             } else {
                 j = next[j];
@@ -281,7 +282,7 @@ class Solution {
 
         int i = 0, j  = 0; //note j != -1
         while ( i < haystack.length()) {
-            while (j >= 0 && haystack.charAt(i) != needle.charAt(j)) {
+            while (j >= 0 && haystack.charAt(i) != needle.charAt(j)) { //lps[0] == -1
                 j = lps[j];
             }
             i++;

@@ -75,7 +75,7 @@ because of repeated use of the inequality xlogx + ylogy <= (x+y)log(x+y).
 Space Complexity: O(N + E), the size of the graph O(E),
 plus the size of the implicit call stack in our DFS (O(N)
 
-# 168ms 13.36%
+# 113ms 23.29%
 class Solution {
     Map<Integer, Integer> dist;
     public int networkDelayTime(int[][] times, int N, int K) {
@@ -117,7 +117,7 @@ and O(ElogE) in the heap implementation,
 as potentially every edge gets added to the heap.
 Space Complexity: O(N + E), the size of the graph (O(E), plus the size of the other objects used (O(N)).
 
-# 48ms 69.53%
+# 20ms 91.46%
 class Solution {
     Map<Integer, Integer> dist;
     public int networkDelayTime(int[][] times, int N, int K) {
@@ -161,14 +161,9 @@ class Solution {
     }
 }
 
-
+# Dijkstra's algorithm
 # 9ms 98.61%
 class Solution {
-    /*
-    * Dijkstra's algorithm
-    *
-    * . -
-    */
     public int networkDelayTime(int[][] times, int N, int K) {
         Integer[][] graph = buildGraph(times, N);
 
@@ -176,7 +171,7 @@ class Solution {
         boolean[] finalized = new boolean[N + 1];
         minTimes[K] = 0;
 
-        // Need to update minTimes N - 1 times
+        // Note: N range from 1 - N
         for (int count = 0; count < N - 1; count++) {
             int minDistanceNode = minDistanceIndex(minTimes, finalized);
             if (minDistanceNode == -1) {
@@ -220,6 +215,94 @@ class Solution {
             graph[time[0]][time[1]] = time[2];
         }
         return graph;
+    }
+}
+
+# https://leetcode.com/problems/network-delay-time/discuss/183873/Java-solutions-using-Dijkstra-FloydWarshall-and-Bellman-Ford-algorithm
+# Dijkstra's algorithm + PQ
+# Time complexity: O(Nlog(N) + E), Space complexity: O(N + E)
+# 56ms 64.93%
+class Solution {
+    public int networkDelayTime(int[][] times, int N, int K) {
+        Map<Integer, List<int[]>> graph = new HashMap<>();
+        for (int[] edge : times) {
+            graph.computeIfAbsent(edge[0], k -> new ArrayList<>()).add(new int[]{edge[1], edge[2]});
+        }
+        PriorityQueue<int[]> pq = new PriorityQueue<>((a, b) -> (a[0] - b[0]));
+        boolean[] visited = new boolean[N + 1];
+        int[] minDis = new int[N + 1];
+        Arrays.fill(minDis, Integer.MAX_VALUE);
+        minDis[K] = 0;
+        pq.offer(new int[]{0, K});
+        int ans = 0;
+        while(!pq.isEmpty()) {
+            int[] cur = pq.poll();
+            if (visited[cur[1]]) continue;
+            visited[cur[1]] = true;
+            ans = cur[0];
+            N--;
+            if (!graph.containsKey(cur[1])) continue;
+            for (int[] next : graph.get(cur[1])) {
+                if (!visited[next[0]] && cur[0] + next[1] < minDis[next[0]]) {
+                    minDis[next[0]] = cur[0] + next[1]; //better performance
+                    pq.offer(new int[] {cur[0] + next[1], next[0]});
+                }
+            }
+        }
+        return N == 0 ? ans : -1;
+    }
+}
+
+# Bellman Ford
+# Time complexity: O(N*E), Space complexity: O(N)
+# 29ms 85.14%
+class Solution {
+    public int networkDelayTime(int[][] times, int N, int K) {
+        int[] dist = new int[N + 1];
+        Arrays.fill(dist, Integer.MAX_VALUE);
+        dist[K] = 0;
+        for (int i = 0; i < N; i++) {
+            for (int[] e : times) {
+                int u = e[0], v = e[1], w = e[2];
+                if (dist[u] != Integer.MAX_VALUE && dist[v] > dist[u] + w) {
+                    dist[v] = dist[u] + w;
+                }
+            }
+        }
+        
+        int maxWait = 0;
+        for (int i = 1; i <= N; i++) {
+            maxWait = Math.max(dist[i], maxWait);
+        }
+        return maxWait == Integer.MAX_VALUE ? -1 : maxWait;
+    }
+}
+
+# Floyd-Warshall algorithm
+# Time complexity: O(N^3), Space complexity: O(N^2)
+# 35ms 79.48%
+class Solution {
+    public int networkDelayTime(int[][] times, int N, int K) {
+        double[][] disTo = new double[N + 1][N + 1];
+        for (int i = 1; i < N + 1; i++) Arrays.fill(disTo[i], Double.POSITIVE_INFINITY);
+        for (int i = 1; i < N + 1; i++) disTo[i][i] = 0;
+        for (int[] edge: times) disTo[edge[0]][edge[1]] = edge[2];
+
+        for (int k = 1; k < N + 1; k++) {
+            for (int i = 1; i < N + 1; i++) {
+                for (int j = 1; j < N + 1; j++) {
+                    if (disTo[i][j] > disTo[i][k] + disTo[k][j]) {
+                        disTo[i][j] = disTo[i][k] + disTo[k][j];
+                    }
+                }
+            }
+        }
+        double max = Double.MIN_VALUE;
+        for (int i = 1; i < N + 1; i++) {
+            if (disTo[K][i] == Double.POSITIVE_INFINITY) return -1;
+            max = Math.max(disTo[K][i], max);
+        }
+        return (int) max;
     }
 }
 '''

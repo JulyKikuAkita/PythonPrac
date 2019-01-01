@@ -1,6 +1,8 @@
 __source__ = 'https://leetcode.com/problems/lfu-cache/'
 # Time:  O(n)
 # Space: O(h)
+# Reading: http://dhruvbird.com/lfu.pdf
+# Build frequency table
 #
 # Description: Leetcode # 460. LFU Cache
 #
@@ -166,13 +168,62 @@ class LFUCache {
     }
 }
 
-Java solutions of three different ways. PriorityQueue : O(capacity) TreeMap : O(log(capacity)) DoubleLinkedList : O(1)
-The first one: PriorityQueue + HashMap set O(capacity) get O(capacity)
-The second one: TreeMap + HashMap set O(log(capacity)) get O(log(capacity))
-The third one: HashMap + HashMap + DoubleLinkedList set O(1) get O(1)
+# https://leetcode.com/problems/lfu-cache/discuss/94521/JAVA-O(1)-very-easy-solution-using-3-HashMaps-and-LinkedHashSet
+# JAVA O(1) very easy solution using 3 HashMaps and LinkedHashSet
+# Note: the implementation does not remove list, list is growing
+# 100ms 83.72% 
+class LFUCache {
+    HashMap<Integer, Integer> vals;
+    HashMap<Integer, Integer> counts;
+    HashMap<Integer, LinkedHashSet<Integer>> lists;
+    int cap;
+    int min = -1;
+    public LFUCache(int capacity) {
+        cap = capacity;
+        vals = new HashMap<>();
+        counts = new HashMap<>();
+        lists = new HashMap<>();
+        lists.put(1, new LinkedHashSet<>());
+    }
+    
+    public int get(int key) {
+        if (!vals.containsKey(key)) return -1;
+        int cnt = counts.get(key);
+        counts.put(key, cnt + 1);
+        lists.get(cnt).remove(key);
+        if (cnt == min && lists.get(min).size() == 0) min++;
+        lists.computeIfAbsent(cnt + 1, k -> new LinkedHashSet<>()).add(key);
+        return vals.get(key);
+    }
+    
+    public void put(int key, int value) {
+        if (cap <= 0) return;
+        if (!vals.containsKey(key)) {
+            if (vals.size() >= cap) {
+                int toRemove = lists.get(min).iterator().next();
+                lists.get(min).remove(toRemove);
+                vals.remove(toRemove);
+            }
+            vals.put(key, value);
+            counts.put(key, 1);
+            min = 1;
+            lists.computeIfAbsent(min, k -> new LinkedHashSet<>()).add(key);
+        } else {
+            vals.put(key, value);
+            get(key);
+        }
+    }
+}
+
+
+# Java solutions of three different ways. 
+# PriorityQueue : O(capacity) TreeMap : O(log(capacity)) DoubleLinkedList : O(1)
+# The first one: PriorityQueue + HashMap set O(capacity) get O(capacity)
+# The second one: TreeMap + HashMap set O(log(capacity)) get O(log(capacity))
+# The third one: HashMap + HashMap + DoubleLinkedList set O(1) get O(1)
 
 1. PriorityQueue + HashMap: set O(capacity) get O(capacity) w/ Pair compareTo
-# 141ms 29.42%
+# 130ms 20%
 class LFUCache {
     long mStamp;
     int mCapacity;
@@ -197,7 +248,7 @@ class LFUCache {
             mHashMap.put(key, newNode);
             mMinHeap.offer(newNode);
             return mHashMap.get(key).mValue;
-        }else {
+        } else {
             return -1;
         }
     }
@@ -211,14 +262,14 @@ class LFUCache {
             Pair newNode = new Pair(key, value, old.mTimes + 1, mStamp++);
             mHashMap.put(key, newNode);
             mMinHeap.offer(newNode);
-        }else if(mNum == mCapacity) {
+        } else if(mNum == mCapacity) {
             Pair old = mMinHeap.poll();
             mHashMap.remove(old.mKey);
 
             Pair newNode = new Pair(key, value, 1, mStamp++);
             mHashMap.put(key, newNode);
             mMinHeap.offer(newNode);
-        }else {
+        } else {
             mNum++;
             Pair p = new Pair(key, value, 1, mStamp++);
             mHashMap.put(key, p);
@@ -227,13 +278,7 @@ class LFUCache {
     }
 }
 
-/**
- * Your LFUCache object will be instantiated and called as such:
- * LFUCache obj = new LFUCache(capacity);
- * int param_1 = obj.get(key);
- * obj.put(key,value);
- */
- class Pair implements Comparable<Pair> {
+class Pair implements Comparable<Pair> {
      long mStamp;
      int mKey;
      int mValue;
@@ -253,7 +298,7 @@ class LFUCache {
              return mTimes - that.mTimes;
          }
      }
- }
+}
 
  2. TreeMap + HashMap: set O(log(capacity)) get O(log(capacity))
 # 120ms 48.25%
@@ -326,14 +371,177 @@ class LFUCache {
     }
 }
 
+3. The third one: Using Two HashMap and One DoubleLinkedList O(1) get O(1)
+# 109ms 65,56%
+class LFUCache {
+    final int capacity;
+    int curSize;
+    int minFrequency;
+    Map<Integer, DLLNode> cache;
+    Map<Integer, DoubleLinkedList> frequencyMap;
+
+    /*.*/
+    /*
+    * @param capacity: total capacity of LFU Cache
+    * @param curSize: current size of LFU cache
+    * @param minFrequency: frequency of the last linked list (the minimum frequency of entire LFU cache)
+    * @param cache: a hash map that has key to Node mapping, which used for storing all nodes by their keys
+    * @param frequencyMap: a hash map that has key to linked list mapping, which used for storing all
+    * double linked list by their frequencies
+    * */
+    public LFUCache(int capacity) {
+        this.capacity = capacity;
+        this.curSize = 0;
+        this.minFrequency = 0;
+
+        this.cache = new HashMap<>();
+        this.frequencyMap = new HashMap<>();
+    }
+
+    /** get node value by key, and then update node frequency as well as relocate that node **/
+    public int get(int key) {
+        DLLNode curNode = cache.get(key);
+        if (curNode == null) {
+            return -1;
+        }
+        updateNode(curNode);
+        return curNode.val;
+    }
+
+    /**
+     * add new node into LFU cache, as well as double linked list
+     * condition 1: if LFU cache has input key, update node value and node position in list
+     * condition 2: if LFU cache does NOT have input key
+     *  - sub condition 1: if LFU cache does NOT have enough space, remove the Least Recent Used node
+     *  in minimum frequency list, then add new node
+     *  - sub condition 2: if LFU cache has enough space, add new node directly
+     * **/
+    public void put(int key, int value) {
+        // corner case: check cache capacity initialization
+        if (capacity == 0) {
+            return;
+        }
+
+        if (cache.containsKey(key)) {
+            DLLNode curNode = cache.get(key);
+            curNode.val = value;
+            updateNode(curNode);
+        }
+        else {
+            curSize++;
+            if (curSize > capacity) {
+                // get minimum frequency list
+                DoubleLinkedList minFreqList = frequencyMap.get(minFrequency);
+                DLLNode deleteNode = minFreqList.removeTail();
+                cache.remove(deleteNode.key);
+                curSize--;
+            }
+            // reset min frequency to 1 because of adding new node
+            minFrequency = 1;
+            DLLNode newNode = new DLLNode(key, value);
+
+            // get the list with frequency 1, and then add new node into the list, as well as into LFU cache
+            DoubleLinkedList curList = frequencyMap.getOrDefault(1, new DoubleLinkedList());
+            curList.addNode(newNode);
+            frequencyMap.put(1, curList);
+            cache.put(key, newNode);
+        }
+    }
+
+    public void updateNode(DLLNode curNode) {
+        int curFreq = curNode.frequency;
+        DoubleLinkedList curList = frequencyMap.get(curFreq);
+        curList.removeNode(curNode);
+
+        // if current list the the last list which has lowest frequency and current node is the only node in that list
+        // we need to remove the entire list and then increase min frequency value by 1
+        if (curFreq == minFrequency && curList.listSize == 0) {
+            minFrequency++;
+        }
+
+        curNode.frequency++;
+        // add current node to another list has current frequency + 1,
+        // if we do not have the list with this frequency, initialize it
+        DoubleLinkedList newList = frequencyMap.getOrDefault(curNode.frequency, new DoubleLinkedList());
+        newList.addNode(curNode);
+        frequencyMap.put(curNode.frequency, newList);
+    }
+
+    /*
+    * @param key: node key
+    * @param val: node value
+    * @param frequency: frequency count of current node
+    * (all nodes connected in same double linked list has same frequency)
+    * @param prev: previous pointer of current node
+    * @param next: next pointer of current node
+    * */
+    class DLLNode {
+        int key;
+        int val;
+        int frequency;
+        DLLNode prev;
+        DLLNode next;
+
+        public DLLNode(int key, int val) {
+            this.key = key;
+            this.val = val;
+            this.frequency = 1;
+        }
+    }
+
+    /*
+    * @param listSize: current size of double linked list
+    * @param head: head node of double linked list
+    * @param tail: tail node of double linked list
+    * */
+    class DoubleLinkedList {
+        int listSize;
+        DLLNode head;
+        DLLNode tail;
+        public DoubleLinkedList() {
+            this.listSize = 0;
+            this.head = new DLLNode(0, 0);
+            this.tail = new DLLNode(0, 0);
+            head.next = tail;
+            tail.prev = head;
+        }
+
+        /** add new node into head of list and increase list size by 1 **/
+        public void addNode(DLLNode curNode) {
+            DLLNode nextNode = head.next;
+            curNode.next = nextNode;
+            curNode.prev = head;
+            head.next = curNode;
+            nextNode.prev = curNode;
+            listSize++;
+        }
+
+        /** remove input node and decrease list size by 1**/
+        public void removeNode(DLLNode curNode) {
+            DLLNode prevNode = curNode.prev;
+            DLLNode nextNode = curNode.next;
+            prevNode.next = nextNode;
+            nextNode.prev = prevNode;
+            listSize--;
+        }
+
+        /** remove tail node **/
+        public DLLNode removeTail() {
+            // DO NOT FORGET to check list size
+            if (listSize > 0) {
+                DLLNode tailNode = tail.prev;
+                removeNode(tailNode);
+                return tailNode;
+            }
+            return null;
+        }
+    }
+}
+
 /**
  * Your LFUCache object will be instantiated and called as such:
  * LFUCache obj = new LFUCache(capacity);
  * int param_1 = obj.get(key);
  * obj.put(key,value);
  */
-
-
- 3. The third one: HashMap + HashMap + DoubleLinkedList set O(1) get O(1)
-
 '''

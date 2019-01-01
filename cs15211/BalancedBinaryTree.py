@@ -143,23 +143,19 @@ returns a non-negative value as the height.
 Otherwise -1 is returned. According to the leftHeight and rightHeight of the two children,
 the parent node could check if the sub tree is balanced, and decides its return value.
 
-//DFS2
+# DFS
 # 87.89% 1ms
 class Solution {
     public boolean isBalanced(TreeNode root) {
-         return dfsHeight(root) != -1;
+        return dfsHeight(root) != -1;
     }
-
+    
     public int dfsHeight(TreeNode root) {
         if (root == null) return 0;
-        int left_count = dfsHeight(root.left);
-        int right_count = dfsHeight(root.right);
-        if ( left_count == -1 || right_count == -1
-            || Math.abs(left_count - right_count) > 1){
-                return -1;
-            } else {
-                return Math.max(left_count, right_count) + 1;
-            }
+        int left = dfsHeight(root.left);
+        int right = dfsHeight(root.right);
+        if (left == -1 || right == -1 || Math.abs(left - right) > 1) return -1;
+        return Math.max(left, right) + 1;
     }
 }
 
@@ -176,25 +172,6 @@ class Solution {
     public int getDpeth(TreeNode root) {
         if (root == null) return 0;
         return Math.max(getDpeth(root.left), getDpeth(root.right)) + 1;
-    }
-}
-
-# DFS
-# 87.89% 1ms
-class Solution {
-    public boolean isBalanced(TreeNode root) {
-        if (root == null) return true;
-        return getHeight(root) != -1;
-    }
-
-    public int getHeight(TreeNode node) {
-        if (node == null ) return 0;
-        int left = getHeight(node.left);
-        if (left == -1) return -1;
-        int right = getHeight(node.right);
-        if (right == -1) return -1;
-        if (left - right < -1 || left - right > 1) return -1;
-        return Math.max(left, right) + 1;
     }
 }
 '''

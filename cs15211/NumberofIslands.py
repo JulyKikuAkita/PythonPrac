@@ -140,51 +140,47 @@ if __name__ == '__main__':
 Java = '''
 # Thought: https://leetcode.com/problems/number-of-islands/solution/
 
-# BFS 
-# 9ms 15.83%
+# Approach #2: BFS [Accepted]
+# Complexity Analysis
+# Time complexity : O(M x N) where M is the number of rows and N is the number of columns.
+# Space complexity : O(min(M,N)) because in worst case where the grid is filled with lands, 
+# the size of queue can grow up to min(M,N).
+# 13ms 16.89%
 class Solution {
-    private static final int[][] DIRECTIONS = new int[][] {{0, -1}, {0, 1}, {-1, 0}, {1, 0}};
-
+    static int[][] dirs = {{0,1}, {1,0}, {-1,0}, {0, -1}};
     public int numIslands(char[][] grid) {
-        int result = 0;
-        int m = grid.length;
-        int n = m == 0 ? 0 : grid[0].length;
-        if (m == 0 || n == 0) {
-            return 0;
-        }
-        for (int i = 0; i < m; i++) {
-            for (int j = 0; j < n; j++) {
+        int cnt = 0;
+        for(int i = 0; i < grid.length; i++) {
+            for (int j = 0; j < grid[0].length; j++) {
                 if (grid[i][j] == '1') {
+                    cnt ++;
                     grid[i][j] = '2';
-                    bfs(grid, i, j);
-                    result++;
+                    Queue<Integer> queue = new LinkedList<>();
+                    queue.add(i * grid[0].length + j);
+                    while (!queue.isEmpty()) {
+                        int cur = queue.poll();
+                        int curI = cur / grid[0].length;
+                        int curJ = cur % grid[0].length;
+                        for (int[] dir : dirs) {
+                            int x = curI + dir[0];
+                            int y = curJ + dir[1];
+                            if (x >= 0 && x < grid.length && y >= 0 && y <grid[0].length && grid[x][y] == '1') {
+                                grid[x][y] = '2';
+                                queue.add(x * grid[0].length + y);
+                            }
+                        }
+                    }
                 }
             }
         }
-        return result;
-    }
-
-    private void bfs(char[][] grid, int i, int j) {
-        Queue<Integer> queue = new LinkedList<>();
-        queue.add(i * grid[0].length + j);
-        while (!queue.isEmpty()) {
-            int cur = queue.poll();
-            int curI = cur / grid[0].length;
-            int curJ = cur % grid[0].length;
-            for (int[] direction : DIRECTIONS) {
-                int newI = curI + direction[0];
-                int newJ = curJ + direction[1];
-                if (newI >= 0 && newI < grid.length && newJ >= 0 && newJ < grid[0].length && grid[newI][newJ] == '1') {
-                    grid[newI][newJ] = '2';
-                    queue.add(newI * grid[0].length + newJ);
-                }
-            }
-        }
+        return cnt;
     }
 }
 
-
-2. DFS:
+# Approach #1 DFS [Accepted]
+# Complexity Analysis
+# Time complexity : O(M x N) where M is the number of rows and N is the number of columns.
+# Space complexity : worst case O(M x N) in case that the grid map is filled with lands where DFS goes by M x N deep.
 # 4ms 78.12%
 class Solution {
     private static final int[][] DIRECTIONS = new int[][] {{0, -1}, {0, 1}, {-1, 0}, {1, 0}};
@@ -220,7 +216,12 @@ class Solution {
     }
 }
 
-# Union Find
+# Approach #3: Union Find (aka Disjoint Set) [Accepted]
+# Complexity Analysis
+# Time complexity : O(M x N) where M is the number of rows and NN is the number of columns. 
+# Note that Union operation takes essentially constant time^1 
+# when UnionFind is implemented with both path compression and union by rank.
+# Space complexity : O(M x N) as required by UnionFind data structure.
 # 7ms 28.60%
 class Solution {
     public int numIslands(char[][] grid) {

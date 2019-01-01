@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/integer-to-roman/description/'
+__source__ = 'https://leetcode.com/problems/integer-to-roman/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/integer-to-roman.py
 # Time:  O(n)
 # Space: O(1)

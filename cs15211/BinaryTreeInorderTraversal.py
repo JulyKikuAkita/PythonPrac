@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/binary-tree-inorder-traversal/#/description'
+__source__ = 'https://leetcode.com/problems/binary-tree-inorder-traversal/'
 #https://github.com/kamyu104/LeetCode/blob/master/Python/binary-tree-inorder-traversal.py
 # Time:  O(n)
 # Space: O(1)

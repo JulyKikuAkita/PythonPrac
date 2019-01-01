@@ -85,10 +85,27 @@ class Solution {
     }
 }
 
-Iteration:
-N = 9 = 2^3 + 2^0 = 1001 in binary. Then:
-
-x^9 = x^(2^3) * x^(2^0)
+# Iteration:
+# N = 9 = 2^3 + 2^0 = 1001 in binary. Then:
+# x^9 = x^(2^3) * x^(2^0)
+# 9ms 80.93%
+class Solution {
+    public double myPow(double x, int n) {
+        long N = n;
+        if (N < 0) {
+            N = -N;
+            x = 1 / x;
+        }
+        
+        double ans = 1;
+        double cur = x;
+        for (long i = N; i > 0; i /= 2) {
+            if (i % 2 == 1) ans = ans * cur;
+            cur = cur * cur;
+        }
+        return ans;
+    }
+}
 
 We can see that every time we encounter a 1 in the binary representation of N,
 we need to multiply the answer with x^(2^i) where i is the ith bit of the exponent.

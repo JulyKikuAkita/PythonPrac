@@ -70,10 +70,10 @@ class Solution {
     public int firstUniqChar(String s) {
         int res = s.length();
         for(char i = 'a' ;i <= 'z';i++) {
-        	int idx = s.indexOf(i);
-        	if(idx != -1 && idx == s.lastIndexOf(i)) {
-        		res = Math.min(res, idx);
-        	}
+            int idx = s.indexOf(i);
+            if(idx != -1 && idx == s.lastIndexOf(i)) {
+                res = Math.min(res, idx);
+            }
         }
         return res == s.length() ? -1 : res;
     }

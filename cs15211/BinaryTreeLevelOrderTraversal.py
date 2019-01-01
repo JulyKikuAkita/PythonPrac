@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/binary-tree-level-order-traversal/#/description'
+__source__ = 'https://leetcode.com/problems/binary-tree-level-order-traversal/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/binary-tree-level-order-traversal.py
 # Time:  O(n)
 # Space: O(n)

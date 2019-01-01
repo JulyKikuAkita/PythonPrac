@@ -1,5 +1,3 @@
-import itertools
-
 __source__ = 'https://leetcode.com/problems/buddy-strings/'
 # Time:  O(N) where NN is the length of A and B
 # Space: O(1)
@@ -38,8 +36,8 @@ __source__ = 'https://leetcode.com/problems/buddy-strings/'
 # A and B consist only of lowercase letters.
 #
 import unittest
-
-#88.96% 24ms
+import itertools
+# 88.96% 24ms
 class Solution(object):
     def buddyStrings(self, A, B):
         """
@@ -106,6 +104,41 @@ class Solution {
             return (second != -1 && A.charAt(first) == B.charAt(second) && A.charAt(second) == B.charAt(first));
         }
 
+    }
+}
+
+# use char array
+# 2ms 98.73%
+class Solution {
+    public boolean buddyStrings(String A, String B) {
+        if (A == null || B == null) return false;
+        if (A.length() != B.length()) return false;
+        if (A.equals(B)) {
+            int[] alphabets = new int[26];
+            for (int i = 0; i < A.length(); i++) {
+                if (++alphabets[A.charAt(i) - 90] > 1) return true;
+            }
+            return false;
+        }
+        
+        int diffCnt = 0;
+        char[] arrA = new char[2];
+        char[] arrB = new char[2];
+        for (int i = 0; i < A.length(); i++) {
+            if (A.charAt(i) != B.charAt(i)) {
+                if (diffCnt == 0) {
+                    arrA[0] = A.charAt(i);
+                    arrB[0] = B.charAt(i);
+                } else {
+                    arrA[1] = A.charAt(i);
+                    arrB[1] = B.charAt(i);
+                }
+                diffCnt++;
+            }
+            if (diffCnt > 2) return false;
+        }
+        if (arrA[0] == arrB[1] && arrA[1] == arrB[0]) return true;
+        return false;
     }
 }
 '''

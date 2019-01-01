@@ -127,6 +127,7 @@ Java = '''
 # Thought:
 https://discuss.leetcode.com/topic/40685/java-union-find-dfs-bfs-code-very-clean
 
+# Union Find:
 # 46ms 5.46%
 class Solution {
     public int countComponents(int n, int[][] edges) {
@@ -270,44 +271,13 @@ If e[0] and e[1] are in same islands, do nothing.
 Otherwise, union two islands, and reduce islands count by 1.
 Bonus: path compression can reduce time by 50%.
 
+# Union Find:
 # 1ms 100%
 class Solution {
     public int countComponents(int n, int[][] edges) {
-        int[] root = new int[n];
-        for (int i = 0; i < n; i++) {
-            root[i] = i;
-        }
-
-        for (int[] edge: edges) {
-            int root1 = findRoot(root, edge[0]);
-            int root2 = findRoot(root, edge[1]);
-            if (root1 != root2) {
-                root[root1] = root2;
-                n--;
-            }
-        }
-        return n;
-    }
-
-    private int findRoot(int[]root, int id) {
-        while (root[id] != id) {
-            root[id] = root[root[id]];
-            id = root[id];
-        }
-        return id;
-    }
-}
-
-# 1ms 100%
-class Solution {
-    public int countComponents(int n, int[][] edges) {
-        if (n <= 1) {
-            return n;
-        }
+        if (n <= 1) return n;
         int[] roots = new int[n];
-        for (int i = 0; i < n; i++) {
-            roots[i] = i;
-        }
+        for (int i = 0; i < n; i++) roots[i] = i;
         for (int[] edge : edges) {
             int x = find(roots, edge[0]);
             int y = find(roots, edge[1]);
@@ -318,18 +288,10 @@ class Solution {
         }
         return n;
     }
-
-    public int find(int[] roots, int id) {
-        int x = id;
-        while (roots[id] != id) {
-            id = roots[id];
-        }
-        while (roots[x] != id) {
-            int fa = roots[x];
-            roots[x] = id;
-            x = fa;
-        }
-        return id;
+    
+    public int find(int[] nums, int x) {
+        if (x != nums[x]) nums[x] = find(nums, nums[x]);
+        return nums[x];
     }
 }
 

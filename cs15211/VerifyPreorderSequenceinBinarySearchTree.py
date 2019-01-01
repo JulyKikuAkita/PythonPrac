@@ -84,6 +84,17 @@ class Solution {
     }
 }
 
+# assume no duplicate  (since bst doesnt allow duplicate)
+# we have to do it in place
+# i = is the virtual stack that we maintained 
+# if we the array index we traverse is smaller than the previous one
+# means that we are still traversing to the left subtree,
+# if we find out the current index is bigger than the previous one we traverse it 
+# means that we are on the right subtree or the right hand side of the bst 
+# so we simply pop out all the elements in the stack that is smaller than the current index 
+# also use the popped value as the new min 
+# (since we are in right subtree means we must never come across a smaller number)
+# index = index that traverse through the array
 # 2ms 100%
 class Solution {
     public boolean verifyPreorder(int[] preorder) {
@@ -97,61 +108,6 @@ class Solution {
                 min = preorder[index--];
             }
             preorder[++index] = preorder[i];
-        }
-        return true;
-    }
-}
-
-//assume no duplicate  (since bst doesnt allow duplicate)
-//we have to do it in place
-//slow = is the virtual stack that we maintained if we the array index we traverse is smaller than the previous one
-//means that we are still traversing to the left subtree,
-//if we found out the current index is bigger than the previous one we traverse it means that we are on the right
-//subtree or the right hand side of the bst so we simply pop out all the elements in the stack that is smaller
-//than the current index also use the popped value as the new min (since we are in right subtree means we must
-//never come across a smaller number)
-// fast = index that traverse through the array
-
-# 3ms 83.88%
-class Solution {
-    public boolean verifyPreorder(int[] preorder) {
-        //min
-        int min = Integer.MIN_VALUE, slow = -1;
-
-        for(int fast : preorder){
-            if(min > fast){
-                return false;
-            }
-
-            while(slow >= 0 && fast > preorder[slow]){
-                min = preorder[slow--];
-            }
-
-            preorder[++slow] = fast;
-        }
-        return true;
-    }
-}
-
-# 2ms 100%
-class Solution {
-    public boolean verifyPreorder(int[] preorder) {
-        int min = Integer.MIN_VALUE;
-        int n = preorder.length;
-        int index = 0; //stack top
-        for(int i = 1; i < n; i++){
-            int num = preorder[i];
-            if(num < min) return false;
-            if(num < preorder[i-1]) {
-                preorder[++index] = num;
-            }else{
-                //right branch, find it's which node's right branch, set min to that node
-                while(index >= 0 && num > preorder[index]){
-                    min = preorder[index];
-                    index--;
-                }
-                preorder[++index] = num;
-            }
         }
         return true;
     }

@@ -1,8 +1,12 @@
 __source__ = 'https://leetcode.com/problems/generate-parentheses/description/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/generate-parentheses.py
-# Time:  O(4^n / n^(3/2)) ~= Catalan numbers
+# Time:  O(4^n / n^(1/2)) ~= Catalan numbers # https://leetcode.windliang.cc/leetCode-22-Generate-Parentheses.html
 # Space: O(n)
+# more about Catalan numbers # https://leetcode.windliang.cc/leetCode-22-Generate-Parentheses.html
 #
+# Note: if asking given n, how many possible combination of valid parentheses,
+# the answer would be a catalan number: 1/ (n + 1) (2n over n) = 2n! / ((n +1)! * n!)
+ #
 # Description: Leetcode # 22. Generate Parentheses
 #
 # Given n pairs of parentheses, write a function to generate
@@ -81,6 +85,7 @@ if __name__ == '__main__':
 
 Java = '''
 # Thought: https://leetcode.com/problems/generate-parentheses/solution/
+# https://leetcode.windliang.cc/leetCode-22-Generate-Parentheses.html
 
 # 1ms 100%
 class Solution {
@@ -137,6 +142,13 @@ class Solution {
     }
 }
 
+# Complexity Analysis
+# Our complexity analysis rests on understanding how many elements there are in generateParenthesis(n). 
+# This analysis is outside the scope of this article, 
+# but it turns out this is the n-th Catalan number 1 / (n + 1) (2n over n), 
+# which is bounded asymptotically by 4^n / n * (n ^ 1/2)
+# Time Complexity : O(4^n / n * (n ^ 1/2)). Each valid sequence has at most n steps during the backtracking procedure.
+# Space Complexity : O(4^n / n * (n ^ 1/2)), as described above, and using O(n) space to store the sequence. 
 # 2ms 66.17%
 class Solution {
     public List<String> generateParenthesis(int n) {
@@ -157,7 +169,7 @@ class Solution {
     }
 }
 
-# iteration:
+# Iteration:
 # 26.31% 5ms
 
 My method is DP. First consider how to get the result f(n) from previous result f(0)...f(n-1).
@@ -196,6 +208,26 @@ class Solution {
             lists.add(list);
         }
         return lists.get(lists.size() - 1);
+    }
+}
+
+# same idea
+# 7ms 9.25%
+class Solution {
+    public List<String> generateParenthesis(int n) {
+        List<String> ans = new ArrayList();
+        if (n == 0) {
+            ans.add("");
+        } else {
+            for (int a = 0; a < n; a++) {
+                for (String left : generateParenthesis(a)) {
+                    for (String right : generateParenthesis(n - a - 1)) {
+                        ans.add("(" + left + ")" + right);
+                    }
+                }
+            }
+        }
+        return ans;
     }
 }
 

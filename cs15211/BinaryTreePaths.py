@@ -202,8 +202,39 @@ class Solution {
         StringBuilder mSB;
         public NodeSB(TreeNode node, StringBuilder sb) {
             mNode = node;
-            mSB= sb;
+            mSB = sb;
         }
+    }
+}
+
+# BFS
+# 15ms 16.47%
+class Solution {
+    public List<String> binaryTreePaths(TreeNode root) {
+        LinkedList<String> res = new LinkedList();
+        if (root == null) return res;
+        
+        LinkedList<TreeNode> node_stack = new LinkedList();
+        LinkedList<String> path_stack = new LinkedList();
+        node_stack.add(root);
+        path_stack.add(Integer.toString(root.val));
+        TreeNode node;
+        String path;
+        
+        while ( !node_stack.isEmpty() ) {
+            node = node_stack.pollLast();
+            path = path_stack.pollLast();
+            if (node.left == null && node.right == null) res.add(path);
+            if (node.left != null) {
+                node_stack.add(node.left);
+                path_stack.add(path + "->" + Integer.toString(node.left.val));
+            }
+            if (node.right != null) {
+                node_stack.add(node.right);
+                path_stack.add(path + "->" + Integer.toString(node.right.val));
+            }
+        }
+        return res;
     }
 }
 '''

@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/binary-tree-preorder-traversal/#/description'
+__source__ = 'https://leetcode.com/problems/binary-tree-preorder-traversal/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/binary-tree-preorder-traversal.py
 # Time:  O(n)
 # Space: O(1)
@@ -175,8 +175,7 @@ class Solution {
       if (node.left == null) {
         output.add(node.val);
         node = node.right;
-      }
-      else {
+      } else {
         TreeNode predecessor = node.left;
         while ((predecessor.right != null) && (predecessor.right != node)) {
           predecessor = predecessor.right;
@@ -281,35 +280,4 @@ class Solution {
         }
         return result;
     }
-
-
-# For comparison
-class Solution {
-    public List<Integer> preorderTraversal(TreeNode root) {
-        return preorderDFS(root);
-    }
-
-    public List<Integer> preorderBFS(TreeNode root) {
-        List<Integer> result = new ArrayList<>();
-        preorder(root, result);
-        return result;
-    }
-
-
-    public List<Integer> preorderDFS(TreeNode root) {
-        List<Integer> result = new ArrayList<>();
-        preorder(root, result);
-        return result;
-    }
-
-    private void preorder(TreeNode root, List<Integer> result) {
-        if (root == null) {
-            return;
-        }
-        result.add(root.val);
-        preorder(root.left, result);
-        preorder(root.right, result);
-    }
-}
-
 '''

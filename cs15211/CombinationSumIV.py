@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/combination-sum-iv/description/'
+__source__ = 'https://leetcode.com/problems/combination-sum-iv/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/combination-sum-iv.py
 # Time:  O(nlon + n * t), t is the value of target.
 # Space: O(t)
@@ -111,6 +111,7 @@ public class Solution {
 //Last executed input:
 //[4,2,1]
 //32
+# TLE
 public class Solution {
     public int combinationSum4(int[] nums, int target) {
         List<List<Integer>> result = new ArrayList<>();
@@ -144,7 +145,7 @@ class Solution {
     public int combinationSum4(int[] nums, int target) {
         int count = 0;
         if (nums == null || nums.length == 0 || target < 0 ) return 0;
-        if ( target ==0  ) return 1;
+        if ( target == 0  ) return 1;
         if (map.containsKey(target)) return map.get(target);
         for (int num: nums){
             count += combinationSum4(nums, target-num);

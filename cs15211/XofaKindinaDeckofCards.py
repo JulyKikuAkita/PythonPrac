@@ -1,6 +1,4 @@
 # coding=utf-8
-import collections
-
 __source__ = 'https://leetcode.com/problems/x-of-a-kind-in-a-deck-of-cards/'
 # Time:  O()
 # Space: O()
@@ -48,8 +46,8 @@ __source__ = 'https://leetcode.com/problems/x-of-a-kind-in-a-deck-of-cards/'
 # 0 <= deck[i] < 10000
 #
 import unittest
-
-#100% 28ms
+import collections
+# 100% 28ms
 class Solution(object):
     def hasGroupsSizeX(self, deck):
         """
@@ -127,7 +125,7 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/problems/x-of-a-kind-in-a-deck-of-cards/solution/
+# Thought: https://leetcode.com/problems/x-of-a-kind-in-a-deck-of-cards/solution/
 
 # Approach 1: Brute Force
 # Complexity Analysis
@@ -172,7 +170,7 @@ class Solution {
 # Better bounds exist, but are outside the scope of this article to develop.
 # Space Complexity: O(N).
 
-#5ms 99.65%
+# 5ms 99.65%
 class Solution {
     public boolean hasGroupsSizeX(int[] deck) {
         int[] count = new int[10000];  // 0 <= deck[i] < 10000

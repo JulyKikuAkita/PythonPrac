@@ -76,74 +76,7 @@ if __name__ == '__main__':
 
 Java = '''
 # Thought:
-
-dp[i + 1] = dp[i]
-dp[i + 1] = dp[i - 1] + dp[i + 1]
-
-# 1ms 96.14%
-class Solution {
-    public int numDecodings(String s) {
-        if (s == null || s.length() == 0) return 0;
-        char[] a = s.toCharArray();
-        int[] dp = new int[s.length()+1];
-        dp[0] = 1;
-        dp[1] = a[0] == '0' ? 0 : 1;
-        for (int i = 1; i < s.length(); i++) {
-            if (a[i] != '0') dp[i + 1] = dp[i];
-            int temp = (a[i - 1] - '0') * 10 + (a[i] - '0');
-            if (temp >= 10 && temp <= 26) dp[i+1] += dp[i - 1];
-        }
-        return dp[s.length()];
-    }
-}
-
-I used a dp array of size n + 1 to save subproblem solutions.
-dp[0] means an empty string will have one way to decode,
-dp[1] means the way to decode a string of size 1.
-I then check one digit and two digit combination and save the results along the way.
-In the end, dp[n] will be the end result.
-
-# 3ms 54.05%
-class Solution {
-    public int numDecodings(String s) {
-        if(s == null || s.length() == 0) {
-            return 0;
-        }
-        int n = s.length();
-        int[] dp = new int[n+1];
-        dp[0] = 1;
-        dp[1] = s.charAt(0) != '0' ? 1 : 0;
-        for(int i = 2; i <= n; i++) {
-            int first = Integer.valueOf(s.substring(i-1, i));
-            int second = Integer.valueOf(s.substring(i-2, i));
-            if(first >= 1 && first <= 9) {
-               dp[i] += dp[i-1];
-            }
-            if(second >= 10 && second <= 26) {
-                dp[i] += dp[i-2];
-            }
-        }
-        return dp[n];
-    }
-}
-
-# 5ms 23.04%
-class Solution {
-    public int numDecodings(String s) {
-        int n = s.length();
-        if (n == 0) return 0;
-
-        int[] memo = new int[n+1];
-        memo[n]  = 1;
-        memo[n-1] = s.charAt(n-1) != '0' ? 1 : 0;
-
-        for (int i = n - 2; i >= 0; i--)
-            if (s.charAt(i) == '0') continue;
-            else memo[i] = (Integer.parseInt(s.substring(i,i+2))<=26) ? memo[i+1]+memo[i+2] : memo[i+1];
-
-        return memo[0];
-    }
-}
+# https://leetcode.com/problems/decode-ways/discuss/30451/Evolve-from-recursion-to-dp
 
 # DFS:
 # 8ms 10.85%
@@ -175,41 +108,145 @@ class Solution {
     }
 }
 
+# DFS Top-down
+# 4ms 62.59%
+class Solution {
+    public int numDecodings(String s) {
+        if (s == null || s.length() == 0) return 0;
+        return dfs(s.toCharArray(), 1, new HashMap());
+    }
+    
+    // top down, be aware of idx
+    // edge case: "10", "01", "00"
+    private int dfs(char[] s, int idx, Map<Integer, Integer> map) {
+        if (idx == s.length + 1) return 1;
+        if (idx == s.length ) return s[idx -1] == '0' ? 0 : 1;
+        if (map.containsKey(idx)) return map.get(idx);
+        int count = 0;
+        if (s[idx - 1] >= '1' && s[idx - 1] <= '9') count = dfs(s, idx + 1, map);
+        if (s[idx - 1] != '0') { //'05' is not a qualified double digit 
+            int doubleDigits = (s[idx - 1] - '0') * 10 + s[idx] - '0';
+            if (doubleDigits >= 1 && doubleDigits <= 26) count += dfs(s, idx + 2, map);
+        }
+        map.put(idx, count);
+        return count;
+    }
+}
+
+# DFS Bottom up Geek for Geek
+# 4ms 62.59%
+class Solution {
+    public int numDecodings(String s) {
+        if (s == null || s.length() == 0) return 0;
+        return dfs(s.toCharArray(), s.length(), new HashMap());
+    }
+    
+    private int dfs(char[] s, int idx, Map<Integer, Integer> map) {
+        if (idx == 0) return 1;
+        if (idx == 1) return s[0] == '0' ? 0 : 1;
+        if (map.containsKey(idx)) return map.get(idx);
+        int count = 0;
+        
+        //If we have a non zero number located at the last digit of the string, then recurse on the rest
+        if (s[idx - 1] >= '1' && s[idx - 1] <= '9') count += dfs(s, idx - 1, map);
+        
+        //Count the last 2 digits of the number
+        if (s[idx - 2] == '1' || (s[idx - 2] == '2' && s[idx - 1] <= '6')) count += dfs(s, idx - 2, map);
+        map.put(idx, count);
+        return count;
+    }
+}
+
+# convert to DP
+dp[i + 1] = dp[i]
+dp[i + 1] = dp[i - 1] + dp[i + 1]
+
 # 1ms 96.14%
 class Solution {
     public int numDecodings(String s) {
-        if (s == null || s.length() == 0 || s.startsWith("0")) {
-            return 0;
-        }
-
-        int left = 1;
-        int right = 1;
-
+        if (s == null || s.length() == 0) return 0;
+        char[] a = s.toCharArray();
+        int[] dp = new int[s.length()+1];
+        dp[0] = 1;
+        dp[1] = a[0] == '0' ? 0 : 1;
         for (int i = 1; i < s.length(); i++) {
-            if (isImpossible(s.charAt(i - 1), s.charAt(i))) {
-                return 0;
-            } else if (isDouble(s.charAt(i - 1), s.charAt(i)) && (i == s.length() - 1 || s.charAt(i + 1) != '0')) {
-                int tmp = left + right;
-                left = right;
-                right = tmp;
-            } else {
-                left = right;
+            if (a[i] != '0') dp[i + 1] = dp[i];
+            int temp = (a[i - 1] - '0') * 10 + (a[i] - '0');
+            if (temp >= 10 && temp <= 26) dp[i+1] += dp[i - 1];
+        }
+        return dp[s.length()];
+    }
+}
+
+# 1. Recursion O(2^n)
+# 580ms 7%
+class Solution {
+    public int numDecodings(String s) {
+        return s.length() == 0 ? 0 : dfs(0, s.toCharArray());   
+    }
+    
+    private int dfs(int i, char[] s) {
+        int n = s.length;
+        if (i == n) return 1;
+        if (s[i] == '0') return 0;
+        int res = dfs(i + 1, s);
+        if (i < n - 1 && (s[i] == '1' || s[i] == '2' && s[i + 1] < '7')) res += dfs(i + 2, s);
+        return res;
+    }
+}
+
+# 2. Memoization O(n)
+# 2ms 92.16%
+class Solution {
+    public int numDecodings(String s) {
+        int n = s.length();
+        int[] memo = new int[n + 1];
+        Arrays.fill(memo, -1);
+        memo[n] = 1;
+        return s.length() == 0 ? 0 : dfs(0, s.toCharArray(), memo);   
+    }
+    
+    private int dfs(int i, char[] s, int[] memo) {
+        if (memo[i] > -1) return memo[i];
+        if (s[i] == '0') return memo[i] = 0;
+        int res = dfs(i + 1, s, memo);
+        if (i < s.length - 1 && (s[i] == '1' || s[i] == '2' && s[i + 1] < '7')) res += dfs(i + 2, s, memo);
+        return memo[i] = res;
+    }
+}
+
+# 3. DP O(n) time and space, this can be converted from #2 with copy and paste.
+# 1ms 100%
+class Solution {
+    public int numDecodings(String s) {
+        int n = s.length();
+        char[] arr = s.toCharArray();
+        int[] dp = new int[n + 1];
+        dp[n] = 1;
+        for (int i  = n - 1; i >= 0; i--) {
+            if (arr[i] == '0') dp[i] = 0;
+            else {
+                dp[i] = dp[i + 1];
+                if (i < n - 1 && (arr[i] == '1' || arr[i] == '2' && arr[i + 1] < '7')) dp[i] += dp[ i + 2];
             }
         }
-
-        return right;
+        return dp[0];
     }
+}
 
-    private boolean isDouble(char a, char b) {
-        int a1 = a - '0';
-        int b1 = b - '0';
-        return b1 != 0 && (a1 == 1 || (a1 == 2 && b1 <= 6));
-    }
-
-    private boolean isImpossible(char a, char b) {
-        int a1 = a - '0';
-        int b1 = b - '0';
-        return b1 == 0 && (a1 == 0 || a1 > 2);
+# 4. DP constant space
+# 1ms 100%
+class Solution {
+    public int numDecodings(String s) {
+        int p = 1, pp = 0, n = s.length();
+        char[] arr = s.toCharArray();
+        for (int i  = n - 1; i >= 0; i--) {
+            int cur = arr[i] == '0' ? 0 : p;
+            if (i < n - 1 && (arr[i] == '1' || arr[i] == '2' && arr[i + 1] < '7')) cur += pp;
+            pp = p;
+            p = cur;
+        }
+        return p;
     }
 }
 '''

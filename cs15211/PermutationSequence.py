@@ -226,6 +226,34 @@ class Solution {
     }
 }
 
+# Educator.io
+# 7ms 95.92%
+class Solution {
+    public String getPermutation(int n, int k) {
+        ArrayList<Integer> tmp = new ArrayList<>();
+        for (int i = 1; i <= n; i++) tmp.add(i);
+        StringBuilder sb = new StringBuilder();
+        findKthPerm(k, tmp, sb);
+        return sb.toString();
+    }
+    
+    public void findKthPerm(int k, ArrayList<Integer> tmp, StringBuilder sb) {
+        if (tmp.isEmpty()) return;
+        int n = tmp.size();
+        int fac = getFactorial(n - 1);
+        int idx = (k - 1) / fac;
+        sb.append(tmp.get(idx));
+        tmp.remove(idx);
+        k -= idx * fac;
+        findKthPerm(k, tmp, sb);
+    }
+    
+    public int getFactorial(int n) {
+        if (n == 0 || n == 1) return 1;
+        return n * getFactorial(n - 1);
+    }
+}
+
 Thought:
 The logic is as follows:
 for n numbers the permutations can be divided to (n-1)! groups,

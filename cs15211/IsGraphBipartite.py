@@ -154,6 +154,7 @@ class Solution {
     }
 }
 
+# DFS
 # 5ms 73.41%
 class Solution {
     public boolean isBipartite(int[][] graph) {
@@ -175,4 +176,100 @@ class Solution {
         return true;
     }
 }
+
+# BFS
+# 8ms 34.72%
+class Solution {
+    public boolean isBipartite(int[][] graph) {
+        int RED = 1, BLUE = -1, n = graph.length;
+        int[] color = new int[n];
+        Queue<Integer> queue = new LinkedList<Integer>();
+        for (int i = 0; i < n; i++) {
+            if (color[i] != 0) continue;
+            color[i] = RED;
+            queue.add(i);
+            while (!queue.isEmpty()) {
+                int node = queue.poll();
+                for (int nei : graph[node]) {
+                    if (color[nei] == color[node]) return false;
+                    if (color[nei] != 0) continue;
+                    color[nei] = -color[node];
+                    queue.add(nei);
+                }
+            }
+        }
+        return true;
+    }
+}
+
+# Use 2 sets
+# For every connected component in the graph, arbitrarily assign one vertex in set A. 
+# Then do a depth first search starting from that arbitrary vertex, 
+# assign the neighbors of every vertex into a different set from itself. 
+# If no vertex appears in both sets, then the graph is bipartite, otherwise it's not.
+# 26ms 5.54%
+class Solution {
+    public boolean isBipartite(int[][] graph) {
+        Set<Integer> A = new HashSet<>();
+        Set<Integer> B = new HashSet<>();
+        Set<Integer> visited = new HashSet<>();
+        
+        for (int i = 0; i < graph.length; i++) {
+            if (!visited.contains(i)) {
+                visited.add(i);
+                A.add(i);
+                dfs(graph, i, A, B, visited);
+            }
+        }
+        
+        for (int i = 0; i < graph.length; i++) {
+            if (A.contains(i) && B.contains(i)) return false;
+        }
+        return true;
+    }
+    
+    private void dfs(int[][] graph, int cur, Set<Integer> A, Set<Integer> B, Set<Integer> visited) {
+        visited.add(cur);
+        if (A.contains(cur)) {
+            for (int nei : graph[cur]) {
+                B.add(nei);
+                if (!visited.contains(nei)) dfs(graph, nei, A, B, visited);
+            }
+        } else {
+            for (int nei : graph[cur]) {
+                A.add(nei);
+                if (!visited.contains(nei)) dfs(graph, nei, A, B, visited);
+            }
+        }
+    }
+}
+
+# Union Find
+# considering if need more than 2 colors
+# 10ms 21.99%
+class Solution {
+    public boolean isBipartite(int[][] graph) {
+        int n = graph.length;
+        int[] p = new int[n];
+        for (int i = 0 ; i < n; i++) p[i] = i;
+        for (int i = 0 ; i < n; i++) {
+            for (int j = 0; j < graph[i].length; j++) {
+                int node = graph[i][j];
+                if (find(p, i) == find(p, node)) return false; //i, node can't be in the same set
+                int n1 = find(p, graph[i][0]);
+                int n2 = find(p, graph[i][j]);
+                if (n1 != n2) p[n1] = n2;
+            }
+        }
+        return true;
+    }
+    
+    public int find(int[] p, int x) {
+        while (x != p[x]) {
+            p[x] = p[p[x]];
+            x = p[x];
+        }
+        return x;
+    }
+} 
 '''

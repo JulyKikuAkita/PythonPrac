@@ -31,7 +31,6 @@ class Solution(unittest.TestCase):
         else:
             return result if result < 0x7FFFFFFF else 0x7FFFFFFF
 
-
     def divide2(self, dividend, divisor):
         flag, ans = 0, 0
         if dividend < 0:
@@ -137,8 +136,7 @@ class Solution {
             if(n > 31) return Integer.MAX_VALUE;
             result = result + (1 << n);
         }
-        if((dividend > 0 && divisor < 0) || (dividend < 0 && divisor > 0))
-        {
+        if((dividend > 0 && divisor < 0) || (dividend < 0 && divisor > 0)) {
             result = -result;
         }
         return result;

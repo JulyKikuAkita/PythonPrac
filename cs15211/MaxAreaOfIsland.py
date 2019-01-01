@@ -117,28 +117,47 @@ class Solution {
     }
 }
 
-# 15ms 97.50%
+# 27ms 97.50%
 class Solution {
-    int res=0;
+    int res = 0;
     private int dfs(int[][] grid, int x, int y){
-        if(x<0 || y<0 || x>=grid.length || y>=grid[0].length || grid[x][y]!=1){
-            return 0;
-        }
-        grid[x][y]=0;
-
-        int till = 1+ dfs(grid,x+1,y)+dfs(grid,x,y+1)+dfs(grid,x,y-1)+dfs(grid,x-1,y);
-        res = till>res?till:res;
-
+        if(x < 0 || y < 0 || x >= grid.length || y >= grid[0].length || grid[x][y] != 1) return 0;
+        grid[x][y] = 0;
+        int till = 1 + dfs(grid, x + 1, y) + dfs(grid, x, y + 1) + dfs(grid, x, y - 1) + dfs(grid, x - 1, y);
+        res = till > res ? till : res;
         return till;
-
     }
     public int maxAreaOfIsland(int[][] grid) {
-        for(int x=0;x<grid.length;x++){
-            for(int y=0;y<grid[0].length;y++){
-                dfs(grid, x,y);
+        for (int i = 0; i < grid.length; i++) {
+            for (int j = 0; j < grid[0].length; j++) {
+                dfs(grid, i, j);
             }
         }
         return res;
+    }
+}
+
+# 31ms 60.85%
+class Solution {
+    int res = 0;
+    
+    public int maxAreaOfIsland(int[][] grid) {
+        for (int i = 0; i < grid.length; i++) {
+            for (int j = 0; j < grid[0].length; j++) {
+                if (grid[i][j] == 1) dfs(grid, i, j);
+            }
+        }
+        return res;
+    }
+    
+    private int dfs(int[][] grid, int x, int y){
+        int area = 0;
+        if (x >= 0 && x < grid.length && y >= 0 && y < grid[0].length && grid[x][y] == 1) {
+            grid[x][y] = -1;
+            area = 1 + dfs(grid, x + 1, y) + dfs(grid, x - 1, y) + dfs(grid, x , y + 1) + dfs(grid, x, y - 1);
+            res = Math.max(res, area);
+        }
+        return area;
     }
 }
 '''

@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/unique-email-addresses/description/'
+__source__ = 'https://leetcode.com/problems/unique-email-addresses/'
 # Time:  O()
 # Space: O()
 #
@@ -63,8 +63,8 @@ Java = '''
 # Approach 1: Canonical Form
 # Time Complexity: O(C), where C is the total content of emails.
 # Space Complexity: O(C).
-# 23ms 845.08%
 #
+# 22ms 84.02%
 class Solution {
     public int numUniqueEmails(String[] emails) {
         Set<String> res = new HashSet<>();
@@ -82,7 +82,8 @@ class Solution {
     }
 }
 
-#cheating 100%
+#Cheating
+# 13ms 97.81%
 class Solution {
     public int numUniqueEmails(String[] emails) {
         Set<String> seen = new HashSet();

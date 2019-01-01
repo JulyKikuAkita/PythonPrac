@@ -1,6 +1,8 @@
 __source__ = 'https://leetcode.com/problems/couples-holding-hands/'
 # Time:  O(N)
 # Space: O(N)
+# Cyclic swapping
+# https://leetcode.com/problems/couples-holding-hands/discuss/113362/JavaC%2B%2B-O(N)-solution-using-cyclic-swapping
 #
 # Description: Leetcode # 765. Couples Holding Hands
 #
@@ -221,7 +223,34 @@ class Solution {
     }
 }
 
+# cyclic swapping O(N^2)
+# 3ms 85.25%
+class Solution {
+    public int minSwapsCouples(int[] row) {
+        int res = 0;
+        for (int i = 0; i < row.length; i += 2) {
+            int target = row[i] % 2 == 0 ? row[i] + 1 : row[i] - 1;
+            if (row[i + 1] == target) continue;
+            for (int j = i + 2; j < row.length; j++) {
+                if (row[j] == target) {
+                    swap(row, i + 1, j);
+                    res++;
+                }
+            }
+        }
+        return res;
+    }
+    
+    private void swap(int[] row, int i, int j) {
+        int t = row[i];
+        row[i] = row[j];
+        row[j] = t;
+    }
+}
 
+# Proof
+# https://leetcode.com/problems/couples-holding-hands/discuss/113369/Formal-proof-of-the-optimality-of-greedy-algorithm
+# By defining nodes as n pairs of seats, it suffices to show that it takes n - m swaps to form m circles from n isolated nodes.
 Approach #3: Greedy [Accepted]
 Complexity Analysis
 Time Complexity: O(N^2), where N is the number of couples.
@@ -232,11 +261,11 @@ class Solution {
         int ans = 0;
         for (int i = 0; i < row.length; i += 2) {
             int x = row[i];
-            if (row[i  +1] == (x ^ 1)) continue;
+            if (row[i + 1] == (x ^ 1)) continue; // == x + 1
             ans ++;
             for (int j = i + 1; j < row.length; j++) {
                 if (row[j] == (x ^ 1)) {
-                    row[j] = row[ i + 1];
+                    row[j] = row[i + 1];
                     row[i + 1] = x ^ 1;
                     break;
                 }
@@ -286,5 +315,40 @@ class Solution {
             count--;
         }
     }
+}
+# https://leetcode.com/problems/couples-holding-hands/discuss/160104/Union-find-understand-in-60-seconds-beats-99.6
+# Quick Union 0(n^2)
+# 2ms 100% 
+class Solution {
+    public int minSwapsCouples(int[] row) {
+        int len = row.length;
+        int[] parent = new int[len];
+        for (int i = 0; i < len / 2; i++) {
+            parent[2 * i] = i;
+            parent[2 * i + 1] = i;
+        }
+        
+        int cnt = 0;
+        for (int i = 0; i < len / 2; i++) {    
+            if (row[2 * i] / 2 != row[2 * i + 1] / 2) {
+               if (find(parent, row[2 * i]) != find(parent, row[2 * i + 1])) {
+                    union(parent, row[2 * i], row[2 * i + 1]);
+                    cnt++;
+                } 
+            }
+        }
+        return cnt;
+    }
+    
+    public int find(int[] root, int x) {
+        return root[x];
+    }
+    
+    public void union(int[] root, int x, int y) {
+        int group = root[x];
+        for (int i = 0; i < root.length; i++) {
+            if (group == root[i]) root[i] = root[y];
+        }
+    }   
 }
 '''

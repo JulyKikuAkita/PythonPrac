@@ -134,6 +134,7 @@ class Solution {
     }
 }
 
+# https://leetcode.com/problems/binary-tree-maximum-path-sum/discuss/212993/Detailed-Explanation-on-%40wei-bung's-code-on-Max-Path-Sum
 # 1ms 99.42%
 # with global var
 public class Solution {

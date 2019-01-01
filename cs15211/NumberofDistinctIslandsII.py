@@ -4,6 +4,7 @@ __source__ = 'https://leetcode.com/problems/number-of-distinct-islands-ii/'
 #
 # Description: Leetcode # 711. Number of Distinct Islands II
 #
+# https://en.wikipedia.org/wiki/Dihedral_group
 # similar question: Starry Night
 # http://olympiads.win.tue.nl/ioi/ioi98/contest/day1/starry/starry.html
 #
@@ -113,9 +114,7 @@ class Solution(object):
             for j in range(n):
                 if grid[i][j] == 1:
                     self.bfs(grid, i, j)
-
         return self.rst
-
 
     def bfs(self, grid, i0, j0):
         grid[i0][j0] = -1
@@ -387,9 +386,147 @@ class Solution {
         return count;
     }
 }
+#####################################################################################################################
+https://leetcode.com/problems/number-of-distinct-islands-ii/discuss/108794/Consise-C%2B%2B-solution-using-DFS-%2Bsorting-to-find-canonical-representation-for-each-island
+# 206ms 26.92%
+class Solution {
+    int[][] r90  = {{0,-1}, {1,0}};//rotate 90 degrees
+    int[][] r180 = {{-1,0}, {0,-1}};
+    int[][] r270 = {{0,1}, {-1,0}};
+    int[][] updownR = {{1,0},{0,-1}};//up-down mirror
+    int[][] leftRightR = {{-1,0},{0,1}};//left right mirror
+
+    //i doubt following two transforms, from the problem description
+    //there are only 5 transforms, but if i dont put following two, then 
+    //there are one case it will fail.
+    int[][] mirror45 ={{0,1},{1,0}};
+    int[][] mirror135 ={{0,-1},{-1,0}};
+    int[][][] transforms = {r90,r180,r270, updownR, leftRightR,mirror45,mirror135};
+    int[][] dir = {{0,-1},{0,1},{-1, 0},{1, 0}};
+    int m =0, n =0;
+    
+    public int numDistinctIslands2(int[][] grid) {
+        if (grid == null || grid.length == 0 || grid[0] == null || grid[0].length == 0) return 0;
+        
+        m = grid.length;
+        n = grid[0].length;
+        Set<String> allIslands = new HashSet<>();
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                if (grid[i][j] == 1) {
+                    List<int[]> island = new ArrayList<>();
+                    buildIsland(grid, i, j, island);
+                    String normalString = normalizeIsland(island);
+                    allIslands.add(normalString);
+                }
+            }
+        }
+        return allIslands.size();
+    }
+    
+    private void buildIsland(int[][] grid, int i, int j, List<int[]> island){
+        island.add(new int[]{i,j});
+        grid[i][j] = 0;
+        for (int k = 0; k < 4; k++) {
+            int ni = i + dir[k][0];
+            int nj = j + dir[k][1];
+            if (ni < 0 || ni >= m || nj < 0 || nj >= n || grid[ni][nj] == 0) continue;
+            buildIsland(grid, ni, nj, island);
+        }
+    }
+    
+    private String normalizeIsland(List<int[]> island){
+        List<String> codedIsland = new ArrayList<>();
+        codedIsland.add(encodeIsland(island));
+        for(int[][] transform: transforms){
+            List<int[]> newIsland = new ArrayList<>();
+            for(int[] cell : island) {
+                newIsland.add(transform(transform, cell));
+            }
+            codedIsland.add(encodeIsland(newIsland));
+        }
+        Collections.sort(codedIsland);
+        return codedIsland.get(0);
+    }
+    
+    private int[] transform(int[][] matrix, int[] point){
+        int[] res = new int[matrix.length];
+        for (int i = 0; i < matrix.length; i++) {
+            for (int j = 0; j < matrix[i].length; j++) {
+                res[i] += (matrix[i][j] * point[j]);
+            }
+        }
+        return res;
+    }
+    
+    private String encodeIsland(List<int[]> island){
+        Collections.sort(island, (a,b)->{//sort the cells from up->down and left->right
+            if (a[0] == b[0]) return a[1] - b[1];
+            else return a[0] - b[0];
+        });
+        StringBuilder sb = new StringBuilder();
+        int anchorX = island.get(0)[0];
+        int anchorY = island.get(0)[1];
+        
+        for(int[] cell: island){
+            sb.append(cell[0] - anchorX).append(":").append(cell[1] - anchorY).append("_"); //"x:y_"
+        }
+        return sb.toString();   
+    }
+}
 
 #####################################################################################################################
-# solution for Starry Night:
+# With TreeSet 
+# 160ms 38.46%
+class Solution {
+    public int numDistinctIslands2(int[][] a) {
+        Set<String> islands = new HashSet<>();
+        for (int i = 0; i < a.length; i++)
+            for (int j = 0; j < a[0].length; j++)
+                if (a[i][j] == 1) {
+                    List<int[]> cells = new LinkedList<>();
+                    dfs(i, j, a, cells);
+                    islands.add(norm(cells));
+                }
+        return islands.size();
+    }
+
+    String norm(List<int[]> cells) {
+        TreeSet<String> normShapes = new TreeSet<>();
+        for (int i = -1; i <= 1; i += 2)
+            for (int j = -1; j <= 1; j += 2) {
+                List<int[]> s1 = new ArrayList<>(), s2 = new ArrayList<>();
+                for (int[] cell : cells) {
+                    int x = cell[0], y = cell[1];
+                    s1.add(new int[]{i * x, j * y});
+                    s2.add(new int[]{i * y, j * x});
+                }
+                for (List<int[]> s : Arrays.asList(s1, s2)) {
+                    s.sort(new Comparator<int[]>() {
+                        @Override public int compare(int[] o1, int[] o2) {
+                            return o1[0] != o2[0] ? o1[0] - o2[0] : o1[1] - o2[1];
+                        }
+                    });
+                    int x = s.get(0)[0], y = s.get(0)[1];
+                    StringBuilder b = new StringBuilder();
+                    for (int[] p : s)
+                        b.append(p[0] - x).append(":").append(p[1] - y).append(":");
+                    normShapes.add(b.toString());
+                }
+            }
+        return normShapes.first();
+    }
+
+    void dfs(int i, int j, int[][] a, List<int[]> cells) {
+        if (i < 0 || i >= a.length || j < 0 || j >= a[0].length || a[i][j] != 1) return;
+        cells.add(new int[]{i, j});
+        a[i][j] = -1;
+        dfs(i + 1, j, a, cells); dfs(i - 1, j, a, cells);
+        dfs(i, j + 1, a, cells); dfs(i, j - 1, a, cells);
+    }
+}
+#####################################################################################################################
+# solution for Starry Night: http://olympiads.win.tue.nl/ioi/ioi98/contest/day1/starry/starry.html
 
 # 77ms 82.61%
 import java.util.*;

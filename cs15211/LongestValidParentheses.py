@@ -161,26 +161,24 @@ class Solution {
 # 8ms 99.55%
 class Solution {
     public int longestValidParentheses(String s) {
-        int result = 0;
-        int lenS = s.length();
-        int[] dp = new int[lenS];
-        for (int i = 1; i < lenS; i++) {
-            if (s.charAt(i) == '(') {
-                continue;
-            }
-            int left = i - dp[i - 1] - 1;
-            if (left >= 0 && s.charAt(left) == '(') {
-                dp[i] = dp[i - 1] + 2;
-                if (left - 1 >= 0) {
-                    dp[i] += dp[left - 1];
+        int maxans = 0;
+        int dp[] = new int[s.length()];
+        for (int i = 1; i < s.length(); i++) {
+            if (s.charAt(i) == ')') {
+                if (s.charAt(i - 1) == '(') {
+                    dp[i] = ( i >= 2 ? dp[i - 2] : 0) + 2;
+                } else if ( i - dp[i - 1] > 0 && s.charAt(i - dp[i - 1] - 1) == '(') {
+                    dp[i] = dp [i - 1] + ((i - dp[i - 1]) >= 2 ? dp[i - dp[i - 1] - 2] : 0) + 2;
                 }
-                result = Math.max(result, dp[i]);
+                maxans = Math.max(maxans, dp[i]);
             }
         }
-        return result;
+        return maxans;
     }
 }
 
+# https://leetcode.windliang.cc/leetCode-32-Longest-Valid-Parentheses.html
+# Ex: "((())"
 # 9ms 93.91%
 class Solution {
     public int longestValidParentheses(String s) {

@@ -1,3 +1,4 @@
+# coding=utf-8
 __source__ = 'https://leetcode.com/problems/redundant-connection/'
 # Time:  O()
 # Space: O()
@@ -79,31 +80,8 @@ if __name__ == '__main__':
 
 Java = '''
 # Thought: https://leetcode.com/problems/redundant-connection/solution/
-
 # union find
-# 3ms 80.49%
-class Solution {
-    public int[] findRedundantConnection(int[][] edges) {
-        int[] parent = new int[2001];
-        for (int i = 0; i < parent.length; i++) parent[i] = i;
-
-        for (int[] edge: edges){
-            int f = edge[0], t = edge[1];
-            if (find(parent, f) == find(parent, t)) return edge;
-            else parent[find(parent, f)] = find(parent, t);
-        }
-        return new int[2];
-    }
-
-    private int find(int[] parent, int f) {
-        if (f != parent[f]) {
-          parent[f] = find(parent, parent[f]);
-        }
-        return parent[f];
-    }
-}
-
-# 3ms 80.49%
+# 2ms 100%
 class Solution {
     public int[] findRedundantConnection(int[][] edges) {
         int[] root = new int[1001];
@@ -125,4 +103,114 @@ class Solution {
     }
 }
 
+# union find
+# 2ms 100%
+class Solution {
+    public int[] findRedundantConnection(int[][] edges) {
+        int[] root = new int[1001];
+        for (int i = 0; i < edges.length; i++) {
+            root[i] = i;
+        }
+        
+        for (int[] edge : edges) {
+            int x = find(root, edge[0]);
+            int y = find(root, edge[1]);
+            if (x == y) return edge;
+            root[x] = y;
+        }
+        throw new AssertionError();
+    }
+    
+    private int find(int[] root, int x) {
+        if (root[x] != x) root[x] = find(root, root[x]);
+        return root[x];
+    }
+}
+
+# Approach #1: DFS [Accepted]
+# DFS
+# Complexity Analysis
+# Time Complexity: O(N^2) where N is the number of vertices (and also the number of edges) in the graph. 
+# In the worst case, for every edge we include, we have to search every previously-occurring edge of the graph.
+# Space Complexity: O(N). The current construction of the graph has at most NN nodes.
+class Solution {
+    Set<Integer> seen = new HashSet();
+    int MAX_EDGE_VAL = 1000;
+    public int[] findRedundantConnection(int[][] edges) {
+        ArrayList<Integer>[] graph = new ArrayList[MAX_EDGE_VAL + 1];
+        for (int i = 0; i<= MAX_EDGE_VAL; i++) {
+            graph[i] = new ArrayList();
+        }
+        
+        for (int[] edge : edges) {
+            seen.clear();
+            if (!graph[edge[0]].isEmpty() && !graph[edge[1]].isEmpty() && dfs(graph, edge[0], edge[1])) return edge;
+            graph[edge[0]].add(edge[1]);
+            graph[edge[1]].add(edge[0]);
+        }
+        throw new AssertionError();
+    }
+    
+    public boolean dfs(ArrayList<Integer>[] graph, int source, int target) {
+        if (!seen.contains(source)) {
+            seen.add(source);
+            if (source == target) return true;
+            for (int nei: graph[source]) {
+                if (dfs(graph, nei, target)) return true;
+            }
+        } 
+        return false;
+    }
+}
+
+# Approach #2: Union-Find [Accepted]
+# Complexity Analysis
+# Time Complexity: O(Nα(N))≈O(N), where N is the number of vertices (and also the number of edges) in the graph, 
+# α is the Inverse-Ackermann function. 
+# We make up to N queries of dsu.union, which takes (amortized) O(α(N)) time. 
+# Outside the scope of this article, it can be shown why dsu.union has O(α(N)) complexity, 
+# what the Inverse-Ackermann function is, and why O(α(N)) is approximately O(1).
+# Space Complexity: O(N). The current construction of the graph (embedded in our dsu structure) has at most N nodes.
+# 6ms 39.17%
+class Solution {
+    int MAX_EDGE_VAL = 1000;
+    public int[] findRedundantConnection(int[][] edges) {
+        DSU dsu = new DSU(MAX_EDGE_VAL + 1);
+        for (int[] edge: edges) {
+            if (!dsu.union(edge[0], edge[1])) return edge;
+        }
+        throw new AssertionError();
+    }
+    
+    class DSU {
+        int[] parent;
+        int[] rank;
+        
+        public DSU(int size) {
+            parent = new int[size];
+            rank = new int[size];
+            for (int i = 0; i < size; i++) parent[i] = i;
+        }
+        
+        public int find(int x) {
+            if (x != parent[x]) parent[x] = find(parent[x]);
+            return parent[x];
+        }
+        
+        public boolean union(int x, int y) {
+            int xr = find(x), yr = find(y);
+            if (xr == yr) {
+                return false;
+            } else if (rank[xr] < rank[yr]) {
+                parent[xr] = yr;
+            } else if (rank[xr] > rank[yr]) {
+                parent[yr] = xr;
+            } else {
+                parent[yr] = xr;
+                rank[xr]++;
+            }
+            return true;
+        }
+    }
+}
 '''

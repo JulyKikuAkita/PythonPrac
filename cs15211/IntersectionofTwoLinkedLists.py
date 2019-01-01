@@ -184,7 +184,7 @@ When pA reaches the end of a list, then redirect it to the head of B (yes, B, th
 similarly when pB reaches the end of a list, redirect it the head of A.
 If at any point pA meets pB, then pA/pB is the intersection node.
 
-# 2ms 38.83%
+# 1ms 100%
 class Solution {
     public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
         //boundary check

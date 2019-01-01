@@ -70,20 +70,15 @@ Java = '''
 # 225ms 17.29%
 class Solution {
     public String licenseKeyFormatting(String S, int K) {
-        // Replacing all - and converting all letters to uppercase
-        String S1 = S.replace("-","");
-        S1 = S1.toUpperCase();
-
-        // Making stringBuilder
+        String s1 = S.replace("-", "");
+        s1 = s1.toUpperCase();
+        
         StringBuilder sb = new StringBuilder();
-         for(int i=0; i<S1.length();i++) {
-            sb.append(S1.charAt(i));
+        for (int i = 0; i < s1.length(); i++) sb.append(s1.charAt(i));
+        int len = sb.length();
+        for (int i = K; i < len; i += K) {
+            sb.insert(len - i, '-');
         }
-        int len = sb.toString().length();
-        // Inserting '-' from back at every K position
-        for(int i=K; i < len; i=i+K) {
-                sb.insert(len-i,'-');
-            }
         return sb.toString();
     }
 }

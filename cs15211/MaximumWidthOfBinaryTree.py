@@ -1,6 +1,6 @@
 __source__ = 'https://leetcode.com/problems/maximum-width-of-binary-tree/'
-# Time:  O()
-# Space: O()
+# Time:  O(N)
+# Space: O(N)
 #
 # Description: Leetcode # 662. Maximum Width of Binary Tree
 #
@@ -155,26 +155,35 @@ class Solution {
 
 # BFS:
 # 6ms 72.39%
-import java.util.AbstractMap;
 class Solution {
     public int widthOfBinaryTree(TreeNode root) {
-        if (root == null) return 0;
-        int max = 0;
-        Queue<Map.Entry<TreeNode, Integer>> q = new LinkedList<Map.Entry<TreeNode, Integer>>();
-        q.offer(new AbstractMap.SimpleEntry(root, 1));
-
-        while (!q.isEmpty()) {
-            int l = q.peek().getValue(), r = l; // right started same as left
-            for (int i = 0, n = q.size(); i < n; i++) {
-                TreeNode node = q.peek().getKey();
-                r = q.poll().getValue();
-                if (node.left != null) q.offer(new AbstractMap.SimpleEntry(node.left, r * 2));
-                if (node.right != null) q.offer(new AbstractMap.SimpleEntry(node.right, r * 2 + 1));
+        if (root == null) return 1;
+            
+        Queue<TreeNode> queue = new LinkedList<>();
+        int maxWidth = 0, left = 0;
+        Map<TreeNode, Integer> map = new HashMap<>();
+        map.put(root, 0);
+        queue.add(root);
+        while (!queue.isEmpty()){
+            
+            int len = queue.size();
+            left = map.get(queue.peek());
+            for (int i =  0; i < len; i++){
+                TreeNode p = queue.poll();
+                int pos = map.get(p);
+                maxWidth = Math.max(maxWidth, pos - left + 1);
+                if (p.left != null){
+                    queue.offer(p.left);
+                    map.put(p.left, 2 * pos);
+                }
+                if (p.right != null){
+                    queue.offer(p.right);
+                    map.put(p.right, 2 * pos + 1);
+                }
             }
-            max = Math.max(max, r + 1 - l);
         }
-        return max;
-    }
+        return maxWidth;
+    } 
 }
 
 # Level order

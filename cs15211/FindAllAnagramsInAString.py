@@ -106,38 +106,60 @@ class Solution {
         }
         return list;
     }
+}
 
+# get rid of auto increment and decrement
+# 24ms 50.64%
+class Solution {
+    public List<Integer> findAnagrams(String s, String p) {
+        List<Integer> ans = new ArrayList<>();
+        if (s == null || s.length() == 0 || p == null || p.length() == 0) return ans;
+        int[] counts = new int[256];
+        for (char c : p.toCharArray()) counts[c]++;
+        int len = p.length(), left = 0, right = 0;
+        while (right < s.length()) {
+            if (counts[s.charAt(right)] >= 1) len--;
+            counts[s.charAt(right)]--;
+            right++;
+            
+            if (len == 0) ans.add(left);
+            if (right - left == p.length()){
+                if(counts[s.charAt(left)] >= 0) len++;
+                counts[s.charAt(left)]++;
+                left++;
+            } 
+        }
+        return ans;
+    }
 }
 
 template:
 https://discuss.leetcode.com/topic/68976/sliding-window-algorithm-template-to-solve-all-the-leetcode-substring-search-problem
 
 2. HashTable + sliding window
-# 5ms 100%
-public class Solution {
+# 15ms 66.83%
+class Solution {
     public List<Integer> findAnagrams(String s, String p) {
-        List<Integer> list = new ArrayList<>();
-        char[] pchar = p.toCharArray();
-        char[] schar = s.toCharArray();
-        int count = pchar.length;
-        int left = 0;
-        int right = 0;
-        int hash[] = new int[256];
-        for (char c : pchar) {
-        	hash[c] ++;
+        List<Integer> ans = new ArrayList<>();
+        if (s == null || s.length() == 0 || p == null || p.length() == 0) return ans;
+        int[] counts = new int[256];
+        for (char c : p.toCharArray()) counts[c]++;
+        int len = p.length(), left = 0, right = 0;
+        while (right < s.length()) {
+            char c = s.charAt(right);
+            right++;
+            if (counts[c] >= 1) len--;
+            counts[c]--;
+           
+            while (right - left > p.length()) {
+                char prev = s.charAt(left);
+                if (counts[prev] >= 0) len++;
+                counts[prev]++;
+                left++;
+            }
+            if (len == 0) ans.add(left);
         }
-        while(right < schar.length) {
-        	char c = schar[right ++];
-        	if(hash[c] -- >= 1) count --;
-        	while(right - left > pchar.length){
-        		char prev = schar[left ++];
-        		if (hash[prev] ++ >= 0) count ++;
-        	}
-        	if (count == 0) {
-        		list.add(left);
-        	}
-        }
-        return list;
+        return ans;
     }
 }
 

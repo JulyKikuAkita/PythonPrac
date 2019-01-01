@@ -5,6 +5,10 @@ __source__ = 'https://leetcode.com/problems/binary-tree-vertical-order-traversal
 #
 # Description: Leetcode # 314. Binary Tree Vertical Order Traversal
 #
+# Note: When two nodes have the same position (i.e. same X and same Y value),
+# 314 asks us to sort them in the result based on X ("from left to right"),
+# while 987 asks us to sort them in the result based on the nodes' values.
+#
 # Given a binary tree, return the vertical order traversal of its nodes' values.
 # (ie, from top to bottom, column by column).
 #
@@ -80,7 +84,9 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
+# Thought:
+# https://leetcode.com/problems/binary-tree-vertical-order-traversal/discuss/76401/5ms-Java-Clean-Solution
+
 /**
  * Definition for a binary tree node.
  * public class TreeNode {
@@ -90,130 +96,76 @@ Java = '''
  *     TreeNode(int x) { val = x; }
  * }
  */
-
-# 1ms 100%
+# BFS
+# 2ms 96.49%
 class Solution {
     public List<List<Integer>> verticalOrder(TreeNode root) {
-        List<List<Integer>> result = new ArrayList<>();
-        if (root == null) {
-            return result;
-        }
-        Queue<TreeNode> nodeQueue = new LinkedList<>();
-        Queue<Integer> indexQueue = new LinkedList<>();
-        nodeQueue.add(root);
-        indexQueue.add(0);
-        int zeroIndex = 0;
-        while (!nodeQueue.isEmpty()) {
-            TreeNode curNode = nodeQueue.poll();
-            int curIndex = indexQueue.poll();
-            if (curIndex >= 0) {
-                int offsetIndex = curIndex + zeroIndex;
-                if (offsetIndex == result.size()) {
-                    result.add(new ArrayList<>());
+        List<List<Integer>> res = new ArrayList<>();
+        if (root == null) return res;
+
+        Map<Integer, ArrayList<Integer>> map = new HashMap<>();
+        Queue<TreeNode> q = new LinkedList<>();
+        Queue<Integer> cols = new LinkedList<>();
+
+        q.add(root); 
+        cols.add(0);
+
+        int min = 0;
+        int max = 0;
+        
+        while (!q.isEmpty()) {
+            int size = q.size();
+            for (int i = 0; i < size; i++) {
+                TreeNode cur = q.poll();
+                int col = cols.poll();
+                if (!map.containsKey(col)) map.put(col, new ArrayList());
+                map.get(col).add(cur.val);
+                min = Math.min(min, col);
+                max = Math.max(max, col);
+                
+                if (cur.left != null) {
+                    q.add(cur.left);
+                    cols.add(col - 1);
                 }
-                result.get(offsetIndex).add(curNode.val);
-            } else {
-                int offsetIndex = curIndex + zeroIndex;
-                if (offsetIndex < 0) {
-                    result.add(0, new ArrayList<>());
-                    zeroIndex++;
-                    offsetIndex++;
+                
+                if (cur.right != null) {
+                    q.add(cur.right);
+                    cols.add(col + 1);
                 }
-                result.get(offsetIndex).add(curNode.val);
-            }
-            if (curNode.left != null) {
-                nodeQueue.add(curNode.left);
-                indexQueue.add(curIndex - 1);
-            }
-            if (curNode.right != null) {
-                nodeQueue.add(curNode.right);
-                indexQueue.add(curIndex + 1);
             }
         }
-        return result;
+        for (int i = min; i <= max; i++) res.add(map.get(i));
+        return res;
     }
 }
 
-# 2ms 98.20%
-public class Solution {
-    public List<List<Integer>> verticalOrder(TreeNode root) {
-        List<List<Integer>> result = new ArrayList<>();
-        List<List<Integer>> leftList = new ArrayList<>();
-        List<List<Integer>> rightList = new ArrayList<>();
-        Queue<TreeNode> nodeQueue = new LinkedList<>();
-        Queue<Integer> indexQueue = new LinkedList<>();
 
-        if (root == null) {
-            return result;
-        }
-        nodeQueue.add(root);
-        indexQueue.add(0);
-        while (!nodeQueue.isEmpty()) {
-            TreeNode curNode = nodeQueue.poll();
-            int curIndex = indexQueue.poll();
-            if (curIndex >= 0) {
-                if (rightList.size() == curIndex) {
-                    rightList.add(new ArrayList<>());
-                }
-                rightList.get(curIndex).add(curNode.val);
-            } else {
-                if (leftList.size() == -curIndex - 1) {
-                    leftList.add(new ArrayList<>());
-                }
-                leftList.get(-curIndex - 1).add(curNode.val);
-            }
-            if (curNode.left != null) {
-                nodeQueue.add(curNode.left);
-                indexQueue.add(curIndex - 1);
-            }
-            if (curNode.right != null) {
-                nodeQueue.add(curNode.right);
-                indexQueue.add(curIndex + 1);
-            }
-        }
-        Collections.reverse(leftList);
-        result.addAll(leftList);
-        result.addAll(rightList);
-        return result;
-    }
-}
-
-# 4ms 33.71%
+# DFS
+# 5ms 23.43%
 class Solution {
     public List<List<Integer>> verticalOrder(TreeNode root) {
-        List<List<Integer>> result = new ArrayList<>();
-        Map<Integer, List<Integer>> map = new TreeMap<>();
-        verticalOrder(root, map);
-        for (Map.Entry<Integer, List<Integer>> entry : map.entrySet()) {
-            result.add(entry.getValue());
+        List<List<Integer>> res = new ArrayList();
+        TreeMap<Integer, TreeMap<Integer, List<Integer>>> map = new TreeMap<>();
+        dfs(map, 0, 0, root);
+        for (TreeMap<Integer, List<Integer>> depMap : map.values()) {
+            List<Integer> val = new ArrayList();
+            for (List<Integer> q : depMap.values()) {
+                val.addAll(0, q);
+            }
+            res.add(val);
         }
-        return result;
+        return res;
     }
-
-    private void verticalOrder(TreeNode root, Map<Integer, List<Integer>> map) {
-        if (root == null) {
-            return;
+    
+    public void dfs(TreeMap<Integer, TreeMap<Integer, List<Integer>>> map, int col, int dep, TreeNode root) {
+        if (root == null) return;
+        if (map.get(col) == null) map.put(col,new TreeMap());
+        if (map.get(col).get(dep) == null) {
+            map.get(col).put(dep, new LinkedList());
         }
-        LinkedList<TreeNode> nodeList = new LinkedList<>();
-        LinkedList<Integer> colList = new LinkedList<>();
-        nodeList.add(root);
-        colList.add(0);
-        while (!nodeList.isEmpty()) {
-            TreeNode curr = nodeList.poll();
-            int col = colList.poll();
-            if (!map.containsKey(col)) {
-                map.put(col, new ArrayList<Integer>());
-            }
-            map.get(col).add(curr.val);
-            if (curr.left != null) {
-                nodeList.add(curr.left);
-                colList.add(col - 1);
-            }
-            if (curr.right != null) {
-                nodeList.add(curr.right);
-                colList.add(col + 1);
-            }
-        }
+        dfs(map, col - 1, dep - 1, root.left);
+        dfs(map, col + 1, dep - 1, root.right);
+        map.get(col).get(dep).add(root.val);
     }
 }
 '''

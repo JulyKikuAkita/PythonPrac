@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/3sum-closest/description/'
+__source__ = 'https://leetcode.com/problems/3sum-closest/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/3sum-closest.py
 # Time:  O(n^2)
 # Space: O(1)
@@ -76,7 +76,7 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
+# Thought:
 Similar to 3 Sum problem, use 3 pointers to point current element,
 next element and the last element. If the sum is less than target,
 it means we have to add a larger element so next element move to the next.
@@ -85,40 +85,7 @@ If the sum is greater, it means we have to add a smaller element so last element
 Keep doing this until the end. Each time compare the difference between sum and target,
 if it is less than minimum difference so far, then replace result with it, otherwise keep iterating.
 
-#94.73% 10ms
-class Solution {
-    public int threeSumClosest(int[] nums, int target) {
-        int len = nums.length;
-        if (len < 3) {
-            return 0;
-        }
-        long result = target > 0 ? Integer.MIN_VALUE : Integer.MAX_VALUE;
-        Arrays.sort(nums);
-        int i = 0;
-        while (i < len - 2) {
-            int curTarget = target - nums[i];
-            int j = i + 1;
-            int k = len - 1;
-            while (j < k) {
-                int sum = nums[j] + nums[k];
-                if (Math.abs(target - result) > Math.abs(curTarget - sum)) {
-                    result = nums[i] + sum;
-                }
-                if (sum < curTarget) {
-                    while (++j < k && nums[j - 1] == nums[j]);
-                } else if (sum > curTarget) {
-                    while (--k > j && nums[k + 1] == nums[k]);
-                } else {
-                    return target;
-                }
-            }
-            while (++i < len - 2 && nums[i - 1] == nums[i]);
-        }
-        return (int) result;
-    }
-}
-
-#94.73% 10ms
+# 94.73% 10ms
 class Solution {
     public int threeSumClosest(int[] nums, int target) {
         if (nums == null || nums.length < 3) {
@@ -172,29 +139,24 @@ class Solution {
     }
 }
 
-#8ms 99.74%
+# 6ms 100%
 class Solution {
     public int threeSumClosest(int[] nums, int target) {
+        Arrays.sort(nums);
         for(int i = 0;;i++){
-            if(hasSumOfTarget(nums, target + i)) return target + i;
-            if(hasSumOfTarget(nums, target - i)) return target - i;
+            if (hasSum(nums, target + i)) return target + i;
+            if (hasSum(nums, target - i)) return target - i;
         }
     }
-
-    public boolean hasSumOfTarget(int[] nums, int target){
-        if(nums == null || nums.length < 3) return false;
-        Arrays.sort(nums);
-        for(int i = 0; i < nums.length - 2; i++){
-            int j = i + 1;
-            int k = nums.length - 1;
-            while(j < k){
-                if((nums[j] + nums[k]) == (target - nums[i])){
-                    return true;
-                }else if((nums[j] + nums[k]) < (target - nums[i])){
-                    j++;
-                }else{
-                    k--;
-                }
+    
+    private boolean hasSum(int[] nums, int target) {
+        for (int i = 0; i < nums.length - 2; i++) {
+            if (i > 0 && nums[i] == nums[i - 1]) continue;
+            int j = i + 1, k = nums.length - 1;
+            while (j < k) {
+                if (nums[i] + nums[j] + nums[k] == target) return true;
+                else if (nums[i] + nums[j] + nums[k] < target) j++;
+                else k--;
             }
         }
         return false;

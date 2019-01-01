@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/3sum-smaller/description/'
+__source__ = 'https://leetcode.com/problems/3sum-smaller/'
 # Time:  O(n^2)
 # Space: O(1)
 #
@@ -69,8 +69,8 @@ and hi is initialized at the end of the array. If we know that nums[i] + nums[lo
 then we know that since the array is sorted, we can replace hi with any element from lo+1 to nums.length-1,
 and the requirements will still be met. Just like in the example above, we know that since -2 + 0 + 3 < 2,
 we can replace hi (3) with 1, and it would still work. Therefore, we can just add hi - lo to the triplet count.
-
-#99.60% 3ms
+# No need to skip duplicats, those count as one triplet
+# 99.60% 3ms
 class Solution {
     public int threeSumSmaller(int[] nums, int target) {
         int result = 0;
@@ -96,7 +96,7 @@ class Solution {
     }
 }
 
-#41.45% 5ms
+# 41.45% 5ms
 class Solution {
     public int threeSumSmaller(int[] nums, int target) {
         Arrays.sort(nums);

@@ -64,7 +64,10 @@ if __name__ == '__main__':
 
 Java = '''
 # Thought: https://leetcode.com/problems/min-cost-climbing-stairs/solution/
-#
+# Approach #1: Dynamic Programming [Accepted]
+# Complexity Analysis
+# Time Complexity: O(N) where N is the length of cost.
+# Space Complexity: O(1), the space used by f1, f2.
 # 100% 9ms
 class Solution {
     public int minCostClimbingStairs(int[] cost) {
@@ -78,19 +81,26 @@ class Solution {
     }
 }
 
-# 13ms 35.93%
+# 8ms 99.37%
 class Solution {
     public int minCostClimbingStairs(int[] cost) {
-        int n=cost.length;
-        int[] dp = new int[n];
-        dp[0]=cost[0];
-        dp[1]=cost[1];
-
-        for(int i=2;i<n;i++){
-            dp[i]=Math.min(dp[i-1],dp[i-2])+cost[i];
+        int step0 = cost[0], step1 = cost[1], res;
+        for (int i = 2; i < cost.length; i++) {
+            res = cost[i] + Math.min(step0, step1);
+            step0 = step1;
+            step1 = res;    
         }
+        return Math.min(step0, step1);
+    }
+}
 
-        return Math.min(dp[n-1],dp[n-2]);
+# 8ms 99.37%
+class Solution {
+    public int minCostClimbingStairs(int[] cost) {
+        for (int i = 2; i < cost.length; i++) {
+            cost[i] += Math.min(cost[i -1], cost[i -2]);
+        }
+        return Math.min(cost[cost.length - 1], cost[cost.length - 2]);
     }
 }
 '''

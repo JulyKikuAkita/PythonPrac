@@ -64,7 +64,10 @@ if __name__ == '__main__':
 
 Java = '''
 # Thought: https://leetcode.com/problems/implement-queue-using-stacks/solution/
-
+# The application for this implementation is to separate read & write of a queue in multi-processing. 
+# One of the stack is for read, and another is for write. 
+# They only interfere each other when the former one is full or latter is empty.
+# recommend, O(1), amortized Time; output stack is desired order 
 # 75ms 26.49%
 class MyQueue {
     Stack<Integer> input;
@@ -102,6 +105,7 @@ class MyQueue {
     }
 }
 
+# not as good as above, thought?
 # 55ms 90.38%
 class MyQueue {
     Stack<Integer> orig;

@@ -76,7 +76,36 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/problems/asteroid-collision/solution/
+# Thought: https://leetcode.com/problems/asteroid-collision/solution/
+# Approach #1: Stack [Accepted]
+# Complexity Analysis
+# Time Complexity: O(N), where N is the number of asteroids. Our stack pushes and pops each asteroid at most once.
+# Space Complexity: O(N), the size of ans.
+# 24ms 44.23%
+class Solution {
+    public int[] asteroidCollision(int[] asteroids) {
+        Stack<Integer> s = new Stack<>();
+        boolean doPush;
+        for (int n : asteroids) {
+            doPush = true;
+            while (!s.isEmpty() && s.peek() > 0 && n < 0) {
+                int cur = s.pop();
+                if (cur > Math.abs(n)) n = cur;
+                else if (cur == Math.abs(n)) {
+                    doPush = false;
+                    break;
+                }
+            } 
+            if (doPush) s.push(n);
+        }
+        
+        int[] ans = new int[s.size()];
+        for (int i = s.size() - 1; i >= 0; i--) {
+            ans[i] = s.pop();
+        }
+        return ans;
+    }
+}
 
 # 10ms 99.72%
 class Solution {
@@ -99,4 +128,5 @@ class Solution {
         return Arrays.copyOf(asteroids, l + 1);
     }
 }
+
 '''

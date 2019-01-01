@@ -171,52 +171,7 @@ if __name__ == '__main__':
 
 Java = '''
 # Thought:
-
-# 0ms 100%
-class Solution {
-    public boolean validTree(int n, int[][] edges) {
-        if (n != edges.length + 1) {
-            return false;
-        }
-        int[] groups = new int[n];
-        int[] count = new int[n];
-        for (int i = 1; i < n; i++) {
-            groups[i] = i;
-        }
-        Arrays.fill(count, 1);
-        for (int[] edge : edges) {
-            if (!union(groups, count, edge[0], edge[1])) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    private boolean union(int[] groups, int[] count, int i, int j) {
-        int rootI = root(groups, i);
-        int rootJ = root(groups, j);
-        if (rootI == rootJ) {
-            return false;
-        }
-        if (count[rootI] < count[rootJ]) {
-            groups[rootI] = rootJ;
-            count[rootJ] += count[rootI];
-        } else {
-            groups[rootJ] = rootI;
-            count[rootI] += count[rootJ];
-        }
-        return true;
-    }
-
-    private int root(int[] groups, int i) {
-        while (groups[i] != i) {
-            groups[i] = groups[groups[i]];
-            i = groups[i];
-        }
-        return i;
-    }
-}
-
+# union find
 # 0ms 100%
 class Solution {
     public boolean validTree(int n, int[][] edges) {
@@ -238,69 +193,96 @@ class Solution {
     }
 }
 
+# union find
 # 0ms 100%
 class Solution {
     public boolean validTree(int n, int[][] edges) {
-        if (n < 1 || edges.length != n - 1) {
-            return false;
-        }
+        if (n < 1 || edges.length < n - 1) return false; //eg. n = 4, [[0,1],[2,3]]
         int[] nodes = new int[n];
-        for (int i = 0; i < n; i++) {
-            nodes[i] = i;
-        }
-        for (int[] edge : edges) {
-            int i = find(nodes, edge[0]);
-            int j = find(nodes, edge[1]);
-            if (i == j) {
-                return false;
-            }
-            nodes[j] = i;
+        for (int i = 0; i < n; i++) nodes[i] = i;
+        for (int[] edge: edges) {
+            int x = find(nodes, edge[0]);
+            int y = find(nodes, edge[1]);
+            if (x == y) return false;
+            nodes[x] = y;
         }
         return true;
     }
-
-    private int find(int[] nodes, int index) {
-        if (nodes[index] != index) {
-            return find(nodes, nodes[index]);
-        } else {
-            return index;
+    
+    public int find(int[] nodes, int x) {
+        if (x != nodes[x]) {
+            nodes[x] = find(nodes, nodes[x]);
         }
+        return nodes[x];
     }
 }
 
 # DFS
-# 7ms 25.96%
+# 11ms 8.22% 
 class Solution {
     public boolean validTree(int n, int[][] edges) {
-        // initialize adjacency list
-        List<List<Integer>> adjList = new ArrayList<List<Integer>>(n);
-        // initialize vertices
-        for (int i = 0; i < n ; i++) adjList.add(i, new ArrayList<>());
-        //add edges
-        for (int i = 0; i < edges.length; i++) {
-            int u = edges[i][0], v = edges[i][1];
-            adjList.get(u).add(v);
-            adjList.get(v).add(u);
+        if (n < 1 || edges.length < n - 1) return false;
+        // build the graph using adjacent list
+        List<Set<Integer>> graph = new ArrayList<Set<Integer>>();
+        for (int i = 0; i < n; i++) graph.add(new HashSet());
+        
+        for (int[] edge : edges) {
+            graph.get(edge[0]).add(edge[1]);
+            graph.get(edge[1]).add(edge[0]);
         }
-
+        
         boolean[] visited = new boolean[n];
-        if (hasCycle(adjList, 0, visited, -1)) return false;
-
-        // make sure all vertices are connected
-        for (int i = 0; i < n; i++) {
-            if (!visited[i]) return false;
+        Stack<Integer> s = new Stack<>();
+        s.push(0);
+        while (!s.isEmpty()) {
+            int node = s.pop();
+            if (visited[node]) return false;
+            visited[node] = true;
+            for (int nei : graph.get(node)) {
+                s.push(nei);
+                graph.get(nei).remove(node);
+            }
+        }
+        
+        for (boolean v : visited) {
+            if (!v) return false;
         }
         return true;
     }
+}
 
-    private boolean hasCycle(List<List<Integer>> adjList, int u, boolean[] visited, int parent) {
-        visited[u] = true;
-        for (int i = 0; i < adjList.get(u).size(); i++) {
-            int v = adjList.get(u).get(i);
-            if ((visited[v] && parent != v)
-                || (!visited[v] && hasCycle(adjList, v, visited, u))) return true;
+# BFS
+# 8ms 12.33%
+class Solution {
+    public boolean validTree(int n, int[][] edges) {
+        if (n < 1 || edges.length < n - 1) return false;
+        // build the graph using adjacent list
+        List<Set<Integer>> graph = new ArrayList<Set<Integer>>();
+        for (int i = 0; i < n; i++) graph.add(new HashSet());
+        
+        for (int[] edge : edges) {
+            graph.get(edge[0]).add(edge[1]);
+            graph.get(edge[1]).add(edge[0]);
         }
-        return false;
+        
+        boolean[] visited = new boolean[n];
+        Queue<Integer> q = new LinkedList<>();
+        q.add(0);
+        while (!q.isEmpty()) {
+            int node = q.poll();
+            if (visited[node]) return false;
+            visited[node] = true;
+            for (int nei : graph.get(node)) {
+                q.offer(nei);
+                graph.get(nei).remove(node);
+            }
+        }
+        
+        for (boolean v : visited) {
+            if (!v) return false;
+        }
+        return true;
     }
 }
+
 '''

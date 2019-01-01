@@ -151,7 +151,7 @@ Now one may ask. What about '('?  What if s = '(()(()' in which we need remove '
 The answer is: do the same from right to left.
 However a cleverer idea is: reverse the string and reuse the code!
 Here is the final implement in Java.
-
+# https://leetcode.com/problems/remove-invalid-parentheses/discuss/75027/Easy-Short-Concise-and-Fast-Java-DFS-3-ms-solution
 # 2ms 83.93%
 class Solution {
     public List<String> removeInvalidParentheses(String s) {
@@ -178,12 +178,76 @@ class Solution {
     }
 }
 
-The idea is straightforward, with the input string s, we generate all possible states by removing one ( or ), c
-heck if they are valid, if found valid ones on the current level, put them to the final result list and we are done,
+# Reformat above code
+class Solution {
+    public List<String> removeInvalidParentheses(String s) {
+        List<String> output = new ArrayList<>();
+        removeHelper(s, output, 0, 0, '(', ')');
+        return output;
+    }
+
+    public void removeHelper(String s, List<String> output, int iStart, int jStart, char openParen, char closedParen) {
+        int numOpenParen = 0, numClosedParen = 0;
+        for (int i = iStart; i < s.length(); i++) {
+            if (s.charAt(i) == openParen) numOpenParen++;
+            if (s.charAt(i) == closedParen) numClosedParen++;
+            if (numClosedParen > numOpenParen) { // We have an extra closed paren we need to remove
+                for (int j = jStart; j <= i; j++) // Try removing one at each position, skipping duplicates
+                    if (s.charAt(j) == closedParen && (j == jStart || s.charAt(j - 1) != closedParen))
+                    // Recursion: iStart = i since we now have valid # closed parenthesis thru i. jStart = j prevents duplicates
+                        removeHelper(s.substring(0, j) + s.substring(j + 1, s.length()), output, i, j, openParen, closedParen);
+                return; // Stop here. The recursive calls handle the rest of the string.
+            }
+        }
+        // No invalid closed parenthesis detected. Now check opposite direction, or reverse back to original direction.
+        String reversed = new StringBuilder(s).reverse().toString();
+        if (openParen == '(')
+            removeHelper(reversed, output, 0, 0, ')','(');
+        else
+            output.add(reversed);
+    }
+}
+
+# Reformat without control flow: continue and return
+class Solution {
+    public List<String> removeInvalidParentheses(String s) {
+        List<String> output = new ArrayList<>();
+        removeHelper(s, output, 0, 0, '(', ')', 0);
+        return output;
+    }
+    
+    private void removeHelper(String s, List<String> ans, int iStart, int jStart, char openParen, char closedParen, int count) {
+        if (iStart == s.length() && openParen == ')') {
+            ans.add(new StringBuilder(s).reverse().toString());
+            return;
+        }
+        
+        if (iStart == s.length() && openParen == '(') {
+            String reverse = new StringBuilder(s).reverse().toString();
+            removeHelper(reverse, ans, 0, 0, ')', '(', 0);
+            return;
+        }
+        char c = s.charAt(iStart);
+        if (c == closedParen && count == 0) {
+            for (int j = jStart; j <= iStart; j++) {
+                if (s.charAt(j) == closedParen && (j == jStart || s.charAt(j - 1) != closedParen)) {
+                    removeHelper(s.substring(0, j) + s.substring(j + 1), ans, iStart, j, openParen, closedParen, 0);
+                }
+            }
+        } else {
+            if (c == openParen) count++;
+            if (c == closedParen) count--;
+            removeHelper(s, ans, iStart + 1, jStart, openParen, closedParen, count);
+        }
+    }
+}
+
+The idea is straightforward, with the input string s, we generate all possible states by removing one ( or ),
+check if they are valid, if found valid ones on the current level, put them to the final result list and we are done,
 otherwise, add them to a queue and carry on to the next level.
 
-The good thing of using BFS is that we can guarantee the number of parentheses that need to be removed is minimal, a
-lso no recursion call is needed in BFS.
+The good thing of using BFS is that we can guarantee the number of parentheses that need to be removed is minimal,
+also no recursion call is needed in BFS.
 
 Time complexity:
 
@@ -315,6 +379,46 @@ class Solution {
             remove(s, index + 1, result, sb, leftRemove, rightRemove, diff, lastRemoved);
             sb.setLength(len);
         }
+    }
+}
+# https://leetcode.com/problems/remove-invalid-parentheses/discuss/75034/Easiest-9ms-Java-Solution
+# 7ms 60.95%
+# Time Complexity : O(2^N)
+# Space Complexity : O(N)
+class Solution {
+    public List<String> removeInvalidParentheses(String s) {
+        int rmL = 0, rmR = 0;
+        for (int i = 0; i < s.length(); i++) {
+            if (s.charAt(i) == '(') {
+                rmL++;
+            } else if (s.charAt(i) == ')') {
+                if (rmL > 0) rmL--;
+                else rmR++;
+            }
+        }
+        
+        Set<String> res = new HashSet<>();
+        helper(s, 0, res, new StringBuilder(), rmL, rmR, 0);
+        return new ArrayList<String>(res);
+    }
+    
+    private void helper(String s, int i, Set<String> res, StringBuilder sb, int rmL, int rmR, int open) {
+        if (rmL < 0 || rmR < 0 || open < 0) return;
+        if (i == s.length()) {
+            if (rmL == 0 && rmR == 0 && open == 0) res.add(sb.toString());
+            return;
+        }
+        char c = s.charAt(i); 
+        if (c == '(') {
+            helper(s, i + 1, res, sb, rmL - 1, rmR, open); //not use
+            helper(s, i + 1, res, sb.append(c), rmL, rmR, open + 1);
+        } else if (c == ')') {
+            helper(s, i + 1, res, sb, rmL, rmR - 1, open); //not use
+            helper(s, i + 1, res, sb.append(c), rmL, rmR, open - 1);
+        } else {
+            helper(s, i + 1, res, sb.append(c), rmL, rmR, open);
+        }
+        sb.setLength(sb.length() - 1);
     }
 }
 '''

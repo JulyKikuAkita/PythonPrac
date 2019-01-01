@@ -1,6 +1,6 @@
-__source__ = 'https://leetcode.com/problems/course-schedule-iii/description/'
-# Time:  O()
-# Space: O()
+__source__ = 'https://leetcode.com/problems/course-schedule-iii/'
+# Time:  O(nlog(n))
+# Space: O(n)
 #
 # Description: Leetcode # 630. Course Schedule III
 #
@@ -63,6 +63,156 @@ if __name__ == '__main__':
 Java = '''
 # Thought: https://leetcode.com/problems/course-schedule-iii/solution/
 
+# Approach #1 Brute Force [Time Limit Exceeded]
+# Algorithm
+# The most naive solution will be to consider every possible permutation of the given courses
+# Complexity Analysis
+# Time complexity : O((n+1)!). A total of n! permutations are possible for the courses array of length n. 
+# For every permutation, we scan over the n elements of the permutation 
+# to find the number of courses that can be taken in each case.
+# Space complexity : O(n). Each permutation needs nn space.
+
+Approach #2 Using Recursion with memoization[Time Limit Exceeded]
+Complexity Analysis
+Time complexity : O(n * d). memomemo array of size n x d is filled once. 
+Here, n refers to the number of courses in the given course array 
+and d refers to the maximum value of the end day from all the end days in the courses array.
+Space complexity : O(n * d). memomemo array of size n x d is used.
+# MLE
+class Solution {
+    public int scheduleCourse(int[][] courses) {
+        Arrays.sort(courses, (a, b) -> a[1] - b[1]);
+         Integer[][] memo = new Integer[courses.length][courses[courses.length - 1][1] + 1];
+        return schedule(courses, 0, 0, memo);
+    }
+    
+    public int schedule(int[][] courses, int i, int time, Integer[][] memo) {
+        if (i == courses.length) return 0;
+        if (memo[i][time] != null) return memo[i][time];
+        int taken = 0;
+        if (time + courses[i][0] <= courses[i][1]) {
+            taken = 1 + schedule(courses, i + 1, time + courses[i][0], memo);
+        }
+        int not_taken = schedule(courses, i + 1, time, memo);
+        memo[i][time] = Math.max(taken, not_taken);
+        return memo[i][time];
+    }
+}
+Approach #3 Iterative Solution [Time Limit Exceeded]
+Complexity Analysis
+Time complexity : O(n^2). We iterate over the count array of size nn once. 
+For every element currently considered, we could scan backwards till the first element, giving O(n^2) complexity. 
+Sorting the count array takes O(nlog(n)) time for count array.
+Space complexity : O(1). Constant extra space is used.
+# 1349ms 0%
+class Solution {
+    public int scheduleCourse(int[][] courses) {
+        Arrays.sort(courses, (a, b) -> a[1] - b[1]);
+        int time = 0, count = 0;
+        for (int i = 0; i < courses.length; i++) {
+            if (time + courses[i][0] <= courses[i][1]) { 
+                time += courses[i][0];
+                count++;
+            } else {
+                int max_i = i;
+                for (int j = 0; j < i; j++) {
+                    if (courses[j][0] > courses[max_i][0]) max_i = j;
+                }
+                if (courses[max_i][0] > courses[i][0]) {
+                    time += courses[i][0] - courses[max_i][0];
+                }
+                courses[max_i][0] = -1;
+                
+            }
+        }
+        return count;
+    }
+}
+Approach #4 Optimized Iterative [Accepted]
+Complexity Analysis
+Time complexity : O(n * count). We iterate over a total of nn elements of the coursescourses array. 
+For every element, we can traverse backwards upto atmost countcount(final value) number of elements.
+Space complexity : O(1). Constant extra space is used.
+# 401ms 4%
+class Solution {
+    public int scheduleCourse(int[][] courses) {
+        Arrays.sort(courses, (a, b) -> a[1] - b[1]);
+        int time = 0, count = 0;
+        for (int i = 0; i < courses.length; i++) {
+            if (time + courses[i][0] <= courses[i][1]) { 
+                time += courses[i][0];
+                courses[count++] = courses[i];
+            } else {
+                int max_i = i;
+                for (int j = 0; j < count; j++) {
+                    if (courses[j][0] > courses[max_i][0]) max_i = j;
+                }
+                if (courses[max_i][0] > courses[i][0]) {
+                    time += courses[i][0] - courses[max_i][0];
+                    courses[max_i] = courses[i];
+                }
+                
+            }
+        }
+        return count;
+    }
+}
+Approach #5 Using Extra List [Accepted]
+Complexity Analysis
+Time complexity : O(n * m). We iterate over a total of n elements of the courses array. 
+For every element, we can traverse over atmost mm number of elements. 
+Here, mm refers to the final length of the alid_list.
+Space complexity : O(n). The valid_list can contain at most n courses.
+# 639ms 1%
+class Solution {
+    public int scheduleCourse(int[][] courses) {
+        Arrays.sort(courses, (a, b) -> a[1] - b[1]);
+        List< Integer > valid_list = new ArrayList < > ();
+        int time = 0;
+        for (int[] c: courses) {
+            if (time + c[0] <= c[1]) {
+                valid_list.add(c[0]);
+                time += c[0];
+            } else {
+                int max_i=0;
+                for(int i=1; i < valid_list.size(); i++) {
+                    if(valid_list.get(i) > valid_list.get(max_i))
+                        max_i = i;
+                }
+                if (valid_list.size() > max_i && valid_list.get(max_i) > c[0]) {
+                    time += c[0] - valid_list.get(max_i);
+                    valid_list.set(max_i, c[0]);
+                }
+            }
+        }
+        return valid_list.size();
+    }
+}
+
+Approach #6 Using Priority Queue [Accepted]
+Complexity Analysis
+Time complexity : O(nlog(n)). At most nn elements are added to the queue. 
+Adding each element is followed by heapification, which takes O(log(n)) time.
+Space complexity : O(n). The queuequeue containing the durations of the courses taken can have atmost nn elements
+# 159ms 59% 
+class Solution {
+    public int scheduleCourse(int[][] courses) {
+        Arrays.sort(courses, (a, b) -> a[1] - b[1]);
+        PriorityQueue<Integer> pq = new PriorityQueue<>((a, b) -> (b - a));
+        int time = 0;
+        for (int[] c: courses) {
+            if (time + c[0] <= c[1]) {
+                pq.offer(c[0]);
+                time += c[0];
+            } else if (!pq.isEmpty() && pq.peek() > c[0]){
+                time += c[0] - pq.poll();
+                pq.offer(c[0]);
+            }
+        }
+        return pq.size();
+    }
+}
+
 #72.98% 157ms
 class Solution {
     public int scheduleCourse(int[][] courses) {
@@ -76,17 +226,14 @@ class Solution {
                 time += courses[i][0];
                 pq.add(courses[i]);
                 count++;
-            }
-            else{
+            } else{
                 if(pq.peek()[0] > courses[i][0]){
                     time -= pq.remove()[0];
                     time += courses[i][0];
                     pq.add(courses[i]);
                 }
             }
-
         }
-
         return count;
     }
 }

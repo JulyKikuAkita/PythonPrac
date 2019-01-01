@@ -95,26 +95,6 @@ class Solution {
     }
 }
 
-# Time:  O(n)
-# Space: O(2)
-# 2ms 93.38%
-class Solution {
-    public int climbStairs(int n) {
-        if (n <= 0) {
-            return 0;
-        }
-        int[] dp = new int[2];
-        dp[0] = 1;
-        dp[1] = 2;
-        int index = 0;
-        for (int i = 3; i <= n; i++) {
-            dp[index] += dp[1 - index];
-            index = 1 - index;
-        }
-        return dp[1 - (n & 1)];
-    }
-}
-
 # 2ms 93.38%
 # Time:  O(logn)
 # Space: O(1)
@@ -129,25 +109,8 @@ class Solution {
 
 # 2ms 93.38%
 class Solution {
-    //same as fibonacci.
     public int climbStairs(int n) {
-       if (n <= 2) return n;
-        int n_One = 2;
-        int n_Two = 1;
-        int res = 0;
-        for (int i = 2; i < n; i++) { //i < n as cur start with 2
-            res = n_One+ n_Two;
-            n_Two = n_One;
-            n_One = res;
-        }
-        return res;
-    }
-}
-
-# 2ms 93.38%
-class Solution {
-    public int climbStairs(int n) {
-        if ( n < 3) return n;
+        if (n < 3) return n;
         int cur = 1, prev = 1, sum = 0;
         for (int i = 2; i <= n; i++) {  //i == n as cur start with 1
             sum = prev + cur;
@@ -160,10 +123,29 @@ class Solution {
 
 Recursion: TLE
 Time: O(2^n) draw the recursion tree or think 2 choices( take 1 or 2 steps) for n time
+# 7154ms 5.01%
 class Solution {
     public int climbStairs(int n) {
         if (n <= 2) return n;
         return climbStairs(n - 1) + climbStairs(n -2);
+    }
+}
+
+# https://www.geeksforgeeks.org/tail-recursion-fibonacci/
+# Tail Recursion 
+# A recursive function is tail recursive when the recursive call is the last thing executed by the function.
+# Time:  O(n)
+# Space: O(n)
+# 2ms 92.85%
+class Solution {
+    public int climbStairs(int n) {
+        return tailRecursionFib(n, 1, 1);
+    }
+    
+    private int tailRecursionFib(int n, int a, int b) {
+        if (n == 0) return a;
+        if (n == 1) return b;
+        return tailRecursionFib(n - 1, b, a + b);
     }
 }
 

@@ -83,7 +83,7 @@ This represents the size of the implicit call stack in our recursion.
  * }
  */
 
-#1ms 100%
+# 1ms 100%
 class Solution {
     public TreeNode pruneTree(TreeNode root) {
         return containsOne(root) ? root : null;
