@@ -1,6 +1,6 @@
 __source__ = 'https://leetcode.com/problems/redundant-connection-ii/description/'
-# Time:  O()
-# Space: O()
+# Time:  O(V) numbert of vertices
+# Space: O(V)
 #
 # Description: Leetcode # 685. Redundant Connection II
 #
@@ -103,6 +103,84 @@ if __name__ == '__main__':
 Java = '''
 # Thought: https://leetcode.com/problems/redundant-connection-ii/solution/
 #
+Approach #1: Depth-First Search [Accepted]
+Complexity Analysis
+Time Complexity: O(N) where N is the number of vertices (and also the number of edges) in the graph. 
+We perform a depth-first search.
+Space Complexity: O(N), the size of the graph.
+# 23ms 6.62%
+class Solution {
+    public int[] findRedundantDirectedConnection(int[][] edges) {
+        int N = edges.length;
+        Map<Integer, Integer> parent = new HashMap();
+        List<int[]> candidates = new ArrayList();
+        for (int[] edge: edges) {
+            if (parent.containsKey(edge[1])) {
+                candidates.add(new int[]{parent.get(edge[1]), edge[1]});
+                candidates.add(edge);
+            } else {
+                parent.put(edge[1], edge[0]);
+            }
+        }
+
+        int root = orbit(1, parent).node;
+        if (candidates.isEmpty()) {
+            Set<Integer> cycle = orbit(root, parent).seen;
+            int[] ans = new int[]{0, 0};
+            for (int[] edge: edges) {
+                if (cycle.contains(edge[0]) && cycle.contains(edge[1])) {
+                    ans = edge;
+                }
+            }
+            return ans;
+        }
+
+        Map<Integer, List<Integer>> children = new HashMap();
+        for (int v: parent.keySet()) {
+            int pv = parent.get(v);
+            if (!children.containsKey(pv))
+                children.put(pv, new ArrayList<Integer>());
+            children.get(pv).add(v);
+        }
+
+        boolean[] seen = new boolean[N+1];
+        seen[0] = true;
+        Stack<Integer> stack = new Stack();
+        stack.add(root);
+        while (!stack.isEmpty()) {
+            int node = stack.pop();
+            if (!seen[node]) {
+                seen[node] = true;
+                if (children.containsKey(node)) {
+                    for (int c: children.get(node))
+                        stack.push(c);
+                }
+            }
+        }
+        for (boolean b: seen) if (!b)
+            return candidates.get(0);
+        return candidates.get(1);
+    }
+
+    public OrbitResult orbit(int node, Map<Integer, Integer> parent) {
+        Set<Integer> seen = new HashSet();
+        while (parent.containsKey(node) && !seen.contains(node)) {
+            seen.add(node);
+            node = parent.get(node);
+        }
+        return new OrbitResult(node, seen);
+    }
+
+}
+class OrbitResult {
+    int node;
+    Set<Integer> seen;
+    OrbitResult(int n, Set<Integer> s) {
+        node = n;
+        seen = s;
+    }
+}
+
 This problem is limited to a graph with N nodes and N edges.
 No node is singled out if a edge is removed.
 For example, [[1,2],[2,4],[3,4]], 4 nodes 3 edges, is not applicable to this problem.
@@ -110,17 +188,19 @@ You cannot remove [3,4] to single out node 3.
 
 There are 3 cases:
 
-No loop, but there is one node who has 2 parents.
-A loop, and there is one node who has 2 parents, that node must be inside the loop.
-A loop, and every node has only 1 parent.
+Case 1) No loop, but there is one node who has 2 parents.
+Case 2) A loop, and there is one node who has 2 parents, that node must be inside the loop.
+Case 3) A loop, and every node has only 1 parent.
 Case 1: e.g. [[1,2],[1,3],[2,3]] ,node 3 has 2 parents ([1,3] and [2,3]). 
 Return the edge that occurs last that is, return [2,3].
 Case 2: e.g. [[1,2],[2,3],[3,1],[4,1]] , {1->2->3->1} is a loop, node 1 has 2 parents ([4,1] and [3,1]).
 Return the edge that is inside the loop, that is, return [3,1].
 Case 3: e.g. [[1,2],[2,3],[3,1],[1,4]] , {1->2->3->1} is a loop, you can remove any edge in a loop,
 the graph is still valid. Thus, return the one that occurs last, that is, return [3,1].
+Also, [[2,1],[3,1],[4,2],[1,4]] is a good example
 
-# 4ms 55.39%
+# Union Find
+# 5ms 95.59%%
 class Solution {
     public int[] findRedundantDirectedConnection(int[][] edges) {
         int[] ancestor = new int[edges.length + 1];
@@ -149,6 +229,57 @@ class Solution {
             if(res[1] == removed0[1] && getAncestor(ancestor, res[1])  == getAncestor(ancestor, removed1[1]))
                 return res;
         return new int[2];
+    }
+}
+# Union Find
+# 5ms 95.59%%
+class Solution {
+    public int[] findRedundantDirectedConnection(int[][] edges) {
+        int[] parent = new int[edges.length+1];
+        for (int i = 0; i < parent.length; i++) {
+            parent[i] = i;
+        }
+        int[] cycleEdge = null;
+        int[] mParent = null;
+
+        for (int[] edge : edges) {
+            int x = find(parent, edge[0]);
+            int y = find(parent, edge[1]);
+            
+            if (x == y)
+                cycleEdge = edge;
+            else {
+                if (y != edge[1])
+                    mParent = edge;
+                else
+                    parent[y] = x;
+            }
+        }
+        // means we only got the multiparent problem, and the edges we recorded using parent so far are good, so juse return this one.
+        if (cycleEdge == null)
+            return mParent;
+
+        // means we only got the cycle problem, in this case we can remove any edge in the cycle, so just remove this one.
+        if (mParent == null)
+            return cycleEdge;
+
+        // now, it means we have both cycle and multi-parent problem.
+        // In my code, i didn't record an edge into parent if we think it's involved into the multi-parent problem,
+        // but we are still getting the cycle problem. Since in this problem we can only have edges point to the same
+        // node, so, current mParent edge is the wrong one, we need to remove the other one pointint to the same
+        // dest as mParent ex: [[2,1],[3,1],[4,2],[1,4]]
+        for (int[] edge : edges) {
+            if (edge[1] == mParent[1])
+                return edge;
+        }
+
+        return new int[2];
+    }
+    
+    public int find(int[] parent, int x) {
+        if (parent[x] == x)
+            return x;
+        return find(parent, parent[x]);
     }
 }
 '''

@@ -26,6 +26,8 @@ __source__ = 'https://leetcode.com/problems/palindrome-partitioning/'
 #
 
 import unittest
+
+
 # Time:  O(n^2 ~ 2^n)
 # Space: O(n^2)
 # dynamic programming solution
@@ -35,23 +37,24 @@ class Solution:
     def partition(self, s):
         n = len(s)
         is_palindrome = [[0 for j in xrange(n)] for i in xrange(n)]
-        for i in reversed(xrange(0,n)):
+        for i in reversed(xrange(0, n)):
             for j in xrange(i, n):
-                is_palindrome[i][j] = s[i] == s[j] and((j - i < 2) or is_palindrome[i + 1][j - 1])
+                is_palindrome[i][j] = s[i] == s[j] and ((j - i < 2) or is_palindrome[i + 1][j - 1])
 
         sub_partition = [[] for i in xrange(n)]
-        #print sub_partition
+        # print sub_partition
         for i in reversed(xrange(n)):
             for j in xrange(i, n):
                 if is_palindrome[i][j]:
                     if j + 1 < n:
-                        for p in sub_partition[ j + 1]:
-                            sub_partition[i].append([s[i:j +1]] + p)
-                           # print i, j, s[i:j +1], p
+                        for p in sub_partition[j + 1]:
+                            sub_partition[i].append([s[i:j + 1]] + p)
+                        # print i, j, s[i:j +1], p
                     else:
-                        sub_partition[i].append([s[i:j+1]])
+                        sub_partition[i].append([s[i:j + 1]])
 
         return sub_partition[0]
+
 
 # Time:  O(2^n)
 # Space: O(n)
@@ -66,10 +69,10 @@ class Solution2:
 
     def partitionRecu(self, result, cur, s, i):
         if i == len(s):
-            result.append(list(cur)) # Converts a tuple into list.
+            result.append(list(cur))  # Converts a tuple into list.
         else:
             for j in xrange(i, len(s)):
-                #print i, j, s[i:j + 1], cur
+                # print i, j, s[i:j + 1], cur
                 if self.isPalindrome(s[i:j + 1]):
                     cur.append(s[i: j + 1])
                     self.partitionRecu(result, cur, s, j + 1)
@@ -77,9 +80,10 @@ class Solution2:
 
     def isPalindrome(self, s):
         for i in xrange(len(s) / 2):
-            if s[i] != s[-(i+1)]:
+            if s[i] != s[-(i + 1)]:
                 return False
         return True
+
 
 class SolutionOther:
     # @param s, a string
@@ -98,17 +102,19 @@ class SolutionOther:
     def dfs(self, s, stringlist):
         if len(s) == 0:
             Solution.res.append(stringlist)
-        for i in range(1, len(s) +1):
-            print i, s[:i],self.isPalindrome(s[:i]), stringlist ,s[i:]
+        for i in range(1, len(s) + 1):
+            print i, s[:i], self.isPalindrome(s[:i]), stringlist, s[i:]
             if self.isPalindrome(s[:i]):
-                self.dfs(s[i:], stringlist+[s[:i]])
+                self.dfs(s[i:], stringlist + [s[:i]])
+
 
 class TestMethods(unittest.TestCase):
     def test_Local(self):
         self.assertEqual(1, 1)
-         #print Solution().partition("aab")
+        # print Solution().partition("aab")
         print Solution2().partition("aab")
-        #print DP().partition("aab")
+        # print DP().partition("aab")
+
 
 if __name__ == '__main__':
     unittest.main()
@@ -152,29 +158,29 @@ class Solution {
 # DP O(n^2)
 # 8ms 41.73%
 class Solution {
- 	public static List<List<String>> partition(String s) {
-		int len = s.length();
-		List<List<String>>[] result = new List[len + 1];
-		result[0] = new ArrayList<List<String>>();
-		result[0].add(new ArrayList<String>());
-
-		boolean[][] pair = new boolean[len][len];
-		for (int i = 0; i < s.length(); i++) {
-			result[i + 1] = new ArrayList<List<String>>();
-			for (int left = 0; left <= i; left++) {
-				if (s.charAt(left) == s.charAt(i) && (i-left <= 1 || pair[left + 1][i - 1])) {
-					pair[left][i] = true;
-					String str = s.substring(left, i + 1);
-					for (List<String> r : result[left]) {
-						List<String> ri = new ArrayList<String>(r);
-						ri.add(str);
-						result[i + 1].add(ri);
-					}
-				}
-			}
-		}
-		return result[len];
-	}
+    public List<List<String>> partition(String s) {
+        int len = s.length();
+        List<List<String>>[] result = new List[len + 1];
+        result[0] = new ArrayList<List<String>>();
+        result[0].add(new ArrayList<String>());
+        
+        boolean[][] pair = new boolean[len][len];
+        for (int i = 0; i < s.length(); i++) {
+            result[i + 1] = new ArrayList<List<String>>();
+            for (int left = 0; left <= i; left++) {
+                if (s.charAt(left) == s.charAt(i) && (i - left <= 1 || pair[left + 1][i - 1])) {
+                    pair[left][i] = true;
+                    String str = s.substring(left, i + 1);
+                    for (List<String> list : result[left]) {
+                        List<String> newList = new ArrayList<String>(list);
+                        newList.add(str);
+                        result[i + 1].add(newList);
+                    }
+                }
+            }
+        }
+        return result[len];
+    }
 }
 
 # 3ms 99.86%
@@ -220,6 +226,37 @@ class Solution {
             }
             end++;
         }
+    }
+}
+
+# 7ms 47.95%
+class Solution {
+    public List<List<String>> partition(String s) {
+        List<List<String>> res = new ArrayList<>();
+        if (s == null || s.isEmpty()) return res;
+        List<String> first = new ArrayList<>();
+        first.add(s.charAt(0) + "");
+        res.add(first);
+        for (int i = 1; i < s.length(); i++) {
+            String letter = s.charAt(i) + "";
+            int count = res.size();
+            for (int j = 0; j < count; j++) {
+                List<String> tmp = res.get(j);
+                int last = tmp.size() - 1;
+                if (tmp.get(last).equals(letter)) { // case: aa
+                    List<String> newTmp = new ArrayList<>(tmp);
+                    newTmp.add(newTmp.remove(last) + letter);
+                    res.add(newTmp);
+                }
+                if (last > 0 && tmp.get(last - 1).equals(letter)) { //case ana
+                    List<String> newTmp = new ArrayList<>(tmp);
+                    newTmp.add(newTmp.remove(last - 1) + newTmp.remove(last - 1) + letter);
+                    res.add(newTmp);
+                }
+                tmp.add(letter);
+            }
+        }
+        return res;
     }
 }
 '''

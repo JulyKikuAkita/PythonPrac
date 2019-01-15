@@ -106,28 +106,26 @@ class Solution {
 # 5ms 54.65%
 class Solution {
     public List<List<Integer>> permuteUnique(int[] nums) {
-        List<List<Integer>> res = new ArrayList<List<Integer>>();
-        if(nums==null || nums.length==0) return res;
-        boolean[] used = new boolean[nums.length];
-        List<Integer> list = new ArrayList<Integer>();
+        List<List<Integer>> list = new ArrayList<>();
         Arrays.sort(nums);
-        dfs(nums, used, list, res);
-        return res;
+        backtrack(list, new ArrayList<>(), nums, new boolean[nums.length]);
+        return list;
     }
 
-    public void dfs(int[] nums, boolean[] used, List<Integer> list, List<List<Integer>> res){
-        if(list.size()==nums.length){
-            res.add(new ArrayList<Integer>(list));
-            return;
+     private void backtrack(List<List<Integer>> list, List<Integer> tempList, int [] nums, boolean[] used){
+        if (tempList.size() == nums.length) {
+             list.add(new ArrayList<>(tempList));
+             return;
         }
-        for(int i=0;i<nums.length;i++){
-            if(used[i]) continue;
-            if(i>0 &&nums[i-1]==nums[i] && !used[i-1]) continue;
-            used[i]=true;
-            list.add(nums[i]);
-            dfs(nums,used,list,res);
-            used[i]=false;
-            list.remove(list.size()-1);
+        for (int i = 0; i < nums.length; i++) {
+            if (i > 0 && nums[i - 1] == nums[i] && !used[i - 1]) continue;
+            if (!used[i]) {
+                tempList.add(nums[i]);
+                used[i] = true;
+                backtrack(list, tempList, nums, used);
+                tempList.remove(tempList.size() - 1);
+                used[i] = false;
+            }
         }
     }
 }
@@ -162,65 +160,47 @@ class Solution {
 }
 
 # 3ms 98.56%
-class Solution
-{
-    public List<List<Integer>> permuteUnique(int[] nums)
-    {
-
-        len = nums.length;
-
-        r = new ArrayList<>();
-
-        permuteUnique(nums, 0);
-
-        return r;
+class Solution {
+    List<List<Integer>> ans;
+    public List<List<Integer>> permuteUnique(int[] nums) {
+        ans = new ArrayList();
+        permute(nums, 0);
+        return ans;
     }
-
-    List<List<Integer>> r;
-    int len;
-
-    void permuteUnique(int[] nums, int p) {
-
-        if (p >= len - 1)
-        {
-            List<Integer> v = new ArrayList<>(len);
-            for (int x: nums)
-                v.add(x);
-            r.add(v);
-            return;
-        }
-
-        int t = nums[p];
-        for (int i = p; i < len; i++)
-        {
-            int x = nums[i];
-            if (i > p)
-            {
-                boolean skip = false;
-                for (int j = p; j < i; j++)
-                {
-                    if (nums[j] == x)
-                    {
-                        skip = true;   // skip duplicates
-                        break;
-                    }
-                }
-                if (skip)
-                    continue;
+    
+    void permute(int[] nums, int l) {
+        if (l == nums.length) {
+            List<Integer> tmp = new ArrayList();
+            for (int t: nums) {
+                tmp.add(t);
             }
-
-            //swap: p <=> i
-            nums[p] = x;
-            nums[i] = t;
-
-            permuteUnique(nums, p + 1);
-
-            //backtrack
-            //swap: p <=> i
-            nums[i] = x;
-            nums[p] = t;
+            ans.add(new ArrayList(tmp));
+            return;
+        } else{
+            for (int i = l ; i < nums.length; i++) {
+                int next = nums[i];
+                if (i > l) {
+                    boolean skip = false;
+                    for (int j = l; j < i; j++) {
+                        if (nums[j] == next) {
+                            skip = true;
+                            break;
+                        }
+                    }
+                    if (skip) continue;
+                }
+                swap(nums, l, i);
+                permute(nums, l + 1);
+                swap(nums, l, i);
+            }
         }
+        
     }
-
+    
+    public void swap(int[] s, int i, int j) {
+        int temp = s[i];
+        s[i] = s[j];
+        s[j] = temp;
+    }
 }
 '''

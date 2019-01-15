@@ -90,51 +90,48 @@ if __name__ == '__main__':
 
 Java = '''
 # Thought: https://leetcode.com/problems/decode-ways-ii/solution/
-
-# DFS TLE
-
-# Wrong ans
-#
-# Input: "**********1111111111"
-# Output: 881150112
-# Expected: 133236775
-
+# 64ms 32.81%
 class Solution {
-    int M = 1000000007;
+    private static final int M = 1000000007;
+
     public int numDecodings(String s) {
-        Integer[] memo=new Integer[s.length()];
-        return ways(s, s.length() - 1,memo);
-    }
-    public int ways(String s, int i,Integer[] memo) {
-        if (i < 0)
-            return 1;
-        if(memo[i]!=null)
-            return memo[i];
-        if (s.charAt(i) == '*') {
-            long res = 9 * ways(s, i - 1,memo);
-            if (i > 0 && s.charAt(i - 1) == '1')
-                res = (res + 9 * ways(s, i - 2,memo)) % M;
-            else if (i > 0 && s.charAt(i - 1) == '2')
-                res = (res + 6 * ways(s, i - 2,memo)) % M;
-            else if (i > 0 && s.charAt(i - 1) == '*')
-                res = (res + 15 * ways(s, i - 2,memo)) % M;
-            memo[i]=(int)res;
-            return memo[i];
+        long[] dp = new long[s.length() + 1]; // use long to prevent overflow
+        dp[0] = 1;
+        dp[1] = ways(s.charAt(0));
+        for (int i = 1; i < s.length(); i++) { // off-by-one error, notice s.charAt(i)'s result is stored in dp[i + 1]
+            long oneCharWays = ways(s.charAt(i)) * dp[i];
+            long twoCharWays = ways(s.charAt(i - 1), s.charAt(i)) * dp[i - 1];
+            dp[i + 1] = add(oneCharWays, twoCharWays);
         }
-        long res = s.charAt(i) != '0' ? ways(s, i - 1,memo) : 0;
-        if (i > 0 && s.charAt(i - 1) == '1')
-            res = (res + ways(s, i - 2,memo)) % M;
-        else if (i > 0 && s.charAt(i - 1) == '2' && s.charAt(i) <= '6')
-            res = (res + ways(s, i - 2,memo)) % M;
-        else if (i > 0 && s.charAt(i - 1) == '*')
-                res = (res + (s.charAt(i)<='6'?2:1) * ways(s, i - 2,memo)) % M;
-        memo[i]= (int)res;
-        return memo[i];
+        return (int)dp[s.length()];
+    }
+    
+    // function of addition with mod
+    private long add(long num1, long num2) {
+        return (num1 % M + num2 % M) % M;
+    }
+    
+    // how many ways to decode using one char
+    private long ways(char a) {
+        return (a == '*') ? 9 : (a != '0') ? 1 : 0;
+    }
+    
+    // how many ways to decode using two chars
+    private long ways(char a, char b) {
+        if (a == '*' && b == '*') { // "**" neither is digit
+            return 15;
+        } else if (a == '*') {      // "*D" snd is a digit
+            return (b > '6') ? 1 : 2;
+        } else if (b == '*') {      // "D*" fst is a digit
+            return (a == '1') ? 9 : (a == '2') ? 6 : 0;
+        } else {                    // "DD" both r digits
+            int val = Integer.valueOf("" + a + b);
+            return (val >= 10 && val <= 26) ? 1 : 0;
+        }
     }
 }
 
-
-# 25ms 95.22%
+# 35ms 100%
 class Solution {
     static final int[][] map = new int[58][58];
     static {
@@ -171,6 +168,49 @@ class Solution {
     }
 }
 
+# Approach #1 Using Recursion with memoization [Stack Overflow]
+# Complexity Analysis
+# Time complexity : O(n). Size of recursion tree can go upto n, since memo array is filled exactly once. 
+# Here, n refers to the length of the input string.
+# Space complexity : O(n). The depth of recursion tree can go upto n.
+# 82ms 23.44%
+class Solution {
+    int M = 1000000007;
+    public int numDecodings(String s) {
+        long[] memo = new long[s.length()];
+        Arrays.fill(memo, -1);
+        return (int)ways(s, s.length() - 1, memo);
+    }
+    
+    private long ways(String s, int i, long[] memo) {
+        if (i < 0) return 1;
+        if (memo[i] != -1) return memo[i];
+        if (s.charAt(i) == '*') {
+            long res = 9 * ways(s, i - 1, memo);
+            if (i > 0 && s.charAt(i - 1) == '1')
+                res = (res + 9 * ways(s, i - 2,memo)) % M;
+            else if (i > 0 && s.charAt(i - 1) == '2')
+                res = (res + 6 * ways(s, i - 2,memo)) % M;
+            else if (i > 0 && s.charAt(i - 1) == '*')
+                res = (res + 15 * ways(s, i - 2,memo)) % M;
+            memo[i] = res;
+            return memo[i];
+        }
+        long res = s.charAt(i) != '0' ? ways(s, i - 1, memo) : 0;
+        if (i > 0 && s.charAt(i - 1) == '1')
+            res = (res + ways(s, i - 2, memo)) % M;
+        else if (i > 0 && s.charAt(i - 1) == '2' && s.charAt(i) <= '6')
+            res = (res + ways(s, i - 2, memo)) % M;
+        else if (i > 0 && s.charAt(i - 1) == '*')
+            res = (res + (s.charAt(i) <= '6' ? 2 : 1) * ways(s, i - 2, memo)) % M;
+        memo[i]= (int)res;
+        return memo[i];
+    }
+}
+
+# Approach #2 Dynamic Programming [Accepted]
+# Time complexity : O(n). dp array of size n+1 is filled once only. Here, nn refers to the length of the input string.
+# Space complexity : O(n). dp array of size n+1 is used.
 # 32ms 71.50%
 class Solution {
     int M = 1000000007;
@@ -201,6 +241,11 @@ class Solution {
     }
 }
 
+# Approach #3 Constant Space Dynamic Programming [Accepted]:
+# Complexity Analysis
+# Time complexity : O(n). Single loop upto n is required to find the required result. 
+# Here, n refers to the length of the input string s.
+# Space complexity : O(1). Constant space is used.
 # 24ms 97.88%
 class Solution {
     public int numDecodings(String s) {
@@ -240,8 +285,67 @@ class Solution {
     }
 }
 
-https://discuss.leetcode.com/topic/95518/java-o-n-by-general-solution-for-all-dp-problems
-#Bottome-up DP
+# https://leetcode.com/problems/decode-ways-ii/discuss/200629/27ms-Java-solution-with-succinct-explanation.
+# More DP Example
+# 58ms 43.75%
+class Solution {
+    // - Examples:
+    // Ways to decode the last one digit w/ or w/o the previous digit to one single leter:
+    // 1. xxx12 -> w/o previous digit: (B); w/ previous digit: (L)
+    // 2. xxx*1 -> w/o previous digit: (A); w/ preious digit: [11](K), [21](U)
+    // 3. xxx1* -> w/o previous digit: (A),(B),...,(I); w/ the previous digit: [10](J), ..., [19](S)
+    // 4. xxx** -> w/o previous digit: (A),(B),...,(I); w/ the previous digit: [10](J), ..., [19](S), [20](T), ..., [26](Z).
+    
+    // - Design of Algorithms
+    // Use dynamic programming approuch:
+    // To remember for each length of string, how many ways of decoding. 
+    // If the current digit is number, it can be used as one letter by itseft, or be combined with previous digit to be used as one letter (2/3 possibilities) based on the current digit, if the previous letter is smaller than 3, or is *.
+    // If the current number is *, it can be used as 9 possible single letter, or combined with the previous digit to be used as single letter, if previous number is smaller than 3.
+    
+    // - Trick:
+    // 1. Beyond that, now the encoded string can also contain the character '*', which can be treated as one of the numbers from 1 to 9. It is NOT from 0.
+    public int numDecodings(String s) {
+        long[] dpm = new long[s.length()+1];
+        dpm[0] = 1;
+        char[] charArray = s.toCharArray();
+        long LETTERS_SMALLER_THAN_TEN = 9;
+        long LETTERS_BIGGER_THAN_NINE_NO_DIGIT_IS_ZERO = 26-9-2; 
+        long LETTERS_BIGGER_THAN_TWENTY_SMALLER_THAN_TWENTY_SEVEN = 26-20;
+        long LETTERS_BIGGER_THAN_TEN_SMALLER_THAN_TENTY = 19-10;
+        long MOD_BASE = 1000_000_007L;
+        for(int i = 0; i < s.length(); i++) {
+            char c = charArray[i];
+            if (c == '*') {
+                dpm[i+1] += LETTERS_SMALLER_THAN_TEN * dpm[i]; // w/o previous letter: 1-9
+                if(i > 0) { // w/ previous letter
+                    if (charArray[i-1] == '*') {
+                        dpm[i+1] += LETTERS_BIGGER_THAN_NINE_NO_DIGIT_IS_ZERO * dpm[i-1];
+                    } else if(charArray[i-1] == '2') {
+                        dpm[i+1] += LETTERS_BIGGER_THAN_TWENTY_SMALLER_THAN_TWENTY_SEVEN * dpm[i-1]; // 21-26
+                    } else if(charArray[i-1] == '1') {
+                        dpm[i+1] += LETTERS_BIGGER_THAN_TEN_SMALLER_THAN_TENTY * dpm[i-1]; // 11-19
+                    }
+                }
+            } else { // current digit is number
+                dpm[i+1] += c == '0' ? 0 : dpm[i]; // w/o previous letter
+                if(i > 0) { // w/ previous letter
+                    if (charArray[i-1] == '*') {
+                        dpm[i+1] += (c < '7' ? 2 : 1) * dpm[i-1];
+                    } else if(charArray[i-1] == '2') {
+                        dpm[i+1] += (c < '7' ? 1 : 0) * dpm[i-1];
+                    } else if(charArray[i-1] == '1') {
+                        dpm[i+1] += dpm[i-1];
+                    }
+                }
+            }
+            dpm[i+1] = dpm[i+1] % MOD_BASE;
+        }
+        return (int)dpm[s.length()];
+    }
+}
+
+# https://discuss.leetcode.com/topic/95518/java-o-n-by-general-solution-for-all-dp-problems
+# Bottome-up DP
 
 Here, I try to provide not only code but also the steps and thoughts of solving this problem completely
 which can also be applied to many other DP problems.

@@ -107,7 +107,7 @@ class Solution {
         stack.push(root);
         while ( !stack.isEmpty()) {
             Node node = stack.pop();
-            res.addLast(node.val);
+            res.add(node.val);
             for (int i = node.children.size() - 1; i >= 0; i--) {
                 stack.push(node.children.get(i));
             }

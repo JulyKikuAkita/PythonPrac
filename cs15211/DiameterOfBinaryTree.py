@@ -63,6 +63,32 @@ if __name__ == '__main__':
 Java = '''
 # Thought: https://leetcode.com/problems/diameter-of-binary-tree/solution/
 
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+# 7ms 46.10%
+class Solution {
+    public int diameterOfBinaryTree(TreeNode root) {
+        int[] res = new int[1];
+        getHeight(root, res);
+        return res[0];
+    }
+    
+    private int getHeight(TreeNode root, int[] res) {
+        if (root == null) return 0;
+        int left = getHeight(root.left, res);
+        int right = getHeight(root.right, res);
+        res[0] = Math.max(res[0], left + right);
+        return 1 + Math.max(left, right);
+    }
+}
+
 # 4ms 99.46%
 class Solution {
     int max = 0;

@@ -146,36 +146,33 @@ Java = '''
  *     TreeNode(int x) { val = x; }
  * }
  */
+# DFS
+# 14ms 13.28%
 class Solution {
     public void flatten(TreeNode root) {
-        dfs_flatten(root, null);
+        dfs(root, null);
     }
-
-    # DFS
-    # 10ms 45.14%
-    private TreeNode dfs_flatten(TreeNode root, TreeNode prev) {
-        if (root == null) {
-            return prev;
-        }
-        prev = dfs_flatten(root.right, prev);
-        prev = dfs_flatten(root.left, prev);
+    
+    private TreeNode dfs(TreeNode root, TreeNode prev) {
+        if (root == null) return prev;
+        prev = dfs(root.right, prev);
+        prev = dfs(root.left, prev);
         root.right = prev;
         root.left = null;
         return root;
     }
-    
-    # BFS # morris traverse?
-    # 7ms 90.99%
-    private void bfs_flatten(TreeNode root) {
+}
+
+# Morris Traversal
+# 14ms 13.28%
+class Solution {
+    public void flatten(TreeNode root) {
         TreeNode cur = root;
         while (cur != null) {
             if (cur.left != null) {
-                //Find current node's prenode that links to current node's right subtree
                 TreeNode pre = cur.left;
-                while (pre.right != null) pre = pre.right;
+                while(pre.right != null) pre = pre.right;
                 pre.right = cur.right;
-                //Use current node's left subtree to replace its right subtree(original right 
-                //subtree is already linked by current node's prenode
                 cur.right = cur.left;
                 cur.left = null;
             }

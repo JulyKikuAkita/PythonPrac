@@ -193,22 +193,68 @@ class Solution {
     }
 }
 
-# Union find
-# 11ms 100%
+# https://leetcode.com/problems/making-a-large-island/discuss/127015/C%2B%2B-O(n*m)-15-ms-colorful-islands
+# Same as coloring each existing island without using extra id[]
+# 28ms 41.15%
+class Solution {
+    public int largestIsland(int[][] grid) {
+        Map<Integer, Integer> map = new HashMap<>(); //Key: color, Val: size of island painted of that color
+        map.put(0, 0); //We won't paint island 0, hence make its size 0, we will use this value later   
+        int n = grid.length; 
+        int colorIndex = 2; //0 and 1 is already used in grid, hence we start colorIndex from 2 
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                if (grid[i][j] == 1) {
+                    int size = paint(grid, i, j, colorIndex);
+                    map.put(colorIndex, size);
+                    colorIndex++;
+                }
+            }
+        }
+        
+        //If there is no island 0 from grid, res should be the size of islands of first color
+        //If there is no island 1 from grid, res should be 0 
+        int res = map.getOrDefault(2, 0); 
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                if (grid[i][j] == 0) {
+                    Set<Integer> set = new HashSet(); //We use a set to avoid repeatly adding islands with the same color
+                    //If current island is at the boundary, we add 0 to the set, whose value is 0 in the map
+                    set.add(i > 0 ? grid[i - 1][j] : 0);
+                    set.add(j > 0 ? grid[i][j - 1] : 0);
+                    set.add(i < n - 1 ? grid[i + 1][j] : 0);
+                    set.add(j < n - 1 ? grid[i][j + 1] : 0);
+                    
+                    int newSize = 1; //We need to count current island as well, hence we init newSize with 1
+                    for (int color : set) newSize += map.get(color);
+                    res = Math.max(res, newSize);
+                }
+            }
+        }
+         return res;
+    }
+    
+    private int paint(int[][] grid, int i, int j, int color) {
+        if (i < 0 || j < 0 || i >= grid.length || j >= grid[0].length || grid[i][j] != 1) return 0;
+        grid[i][j] = color;
+        return 1 + paint(grid, i + 1, j, color) + paint(grid, i - 1, j , color) 
+                 + paint(grid, i, j + 1, color) + paint(grid, i, j - 1, color);
+    }
+}
+
+# Union find, same idea as above
+# 20ms 97.92%
 class Solution {
     private int[] id;
     private int[] size;
     private int[] dx = new int[]{1, 0, -1, 0};
     private int[] dy = new int[]{0, -1, 0, 1};
-
     private int max;
+    
     public int largestIsland(int[][] grid) {
-        if (grid == null) {
-            return 0;
-        }
+        if (grid == null) return 0;
         int rows = grid.length;
         int cols = grid[0].length;
-        // y * cols + x -> y - 1
         id = new int[rows * cols];
         size = new int[rows * cols];
         for (int i = 0; i < rows * cols; i++) {
@@ -216,58 +262,51 @@ class Solution {
             size[i] = 1;
         }
         
-        for (int y = 0; y < rows; y++) {
-            for (int x = 0; x < cols; x++) {
-                if (grid[y][x] != 0) {
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                if (grid[i][j] != 0) {
                     max = Math.max(max, 1);
-                    if (x > 0 && grid[y][x - 1] != 0) {
-                        union(y * cols + x, y * cols + (x - 1));
+                    if (i > 0 && grid[i - 1][j] != 0) {
+                        union((i - 1) * cols + j, i * cols + j);
                     }
-                    if (y > 0 && grid[y - 1][x] != 0) {
-                        union(y * cols + x, (y - 1) * cols + x);
-                    }  
+                    if (j > 0 && grid[i][j - 1] != 0) {
+                        union(i * cols + (j - 1), i * cols + j);
+                    }
                 }
-                
             }
         }
         
-        for (int y = 0; y < rows; y++) {
-            for (int x = 0; x < cols; x++) {
-                if (grid[y][x] == 0) {
+         for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                if (grid[i][j] == 0) {
                     Set<Integer> visited = new HashSet<>();
                     int currSize = 1;
-                    for (int i = 0; i < 4; i++) {
-                        if (x + dx[i] >= 0 && x + dx[i] < cols && y + dy[i] >= 0 && y + dy[i] < rows
-                           && grid[y + dy[i]][x + dx[i]] != 0) {
-                            int rootId = root((y + dy[i]) * cols + x + dx[i]);
+                    for (int k = 0; k < 4; k++) {
+                        int x = i + dx[k], y = j + dy[k];
+                        if (x >= 0 && x < rows && y >= 0 && y < cols && grid[x][y] != 0) {
+                            int rootId = root(x * cols + y);
                             if (!visited.contains(rootId)) {
-                                currSize += size[rootId];
                                 visited.add(rootId);
+                                currSize += size[rootId];
                             }
                         }
-                        
                     }
                     max = Math.max(max, currSize);
-                }
+                }      
             }
         }
         return max;
     }
     
     private int root(int i) {
-        while (id[i] != i) {
-            id[i] = id[id[i]];
-            i = id[i];
-        }
-        return i;
+        if (i == id[i]) return i;
+        return root(id[i]);
     }
     
     private void union(int p, int q) {
         int rootP = root(p);
         int rootQ = root(q);
-        if (rootP == rootQ) {
-            return;
-        }
+        if (rootP == rootQ) return;
         if (size[rootP] < size[rootQ]) {
             id[rootP] = rootQ;
             size[rootQ] += size[rootP];

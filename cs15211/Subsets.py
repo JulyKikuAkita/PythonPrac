@@ -243,7 +243,7 @@ class Solution {
                 if ((cur & 1) == 1) {
                     list.add(nums[index]);
                 }
-                cur >>>= 1;
+                cur >>>= 1; //>>> is unsigned-shift; it'll insert 0. >> is signed, and will extend the sign bit.
                 index++;
             }
             result.add(list);

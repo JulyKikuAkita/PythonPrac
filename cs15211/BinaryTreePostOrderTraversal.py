@@ -199,47 +199,28 @@ class Solution {
         return res;
     }
 }
-3. Comparison
-# 44.87% 1ms
-public class Solution {
-    public List<Integer> postorderTraversal(TreeNode root) {
-        List<Integer> result = new ArrayList<>();
-        if (root == null) {
-            return result;
-        }
-        Stack<TreeNode> stack = new Stack<>();
-        stack.push(root);
-        while (!stack.isEmpty()) {
-            TreeNode cur = stack.pop();
-            result.add(cur.val);
-            if (cur.left != null) {
-                stack.push(cur.left);
-            }
-            if (cur.right != null) {
-                stack.push(cur.right);
-            }
-        }
-        Collections.reverse(result);
-        return result;
-    }
 
-     # PostOrder
-     # 44.87% 1ms
-     public List<Integer> postorderBFS(TreeNode root) {
-        LinkedList<Integer> result = new LinkedList<>();
-        Deque<TreeNode> stack = new ArrayDeque<>();
-        while(!stack.isEmpty() || root != null) {
-            if (root != null) {
-                stack.push(root);
-                result.addFirst(root.val); // Reverse the process of preorder
-                root = root.right; // Reverse the process of preorder
+# PostOrder
+# 44.87% 1ms
+class Solution {
+    public List<Integer> postorderTraversal(TreeNode root) {
+        List<Integer> res = new ArrayList();
+        if (root == null) return res;
+        Stack<TreeNode> stack = new Stack<>();
+        TreeNode p = root;
+        while (!stack.isEmpty() || p != null) {
+            if (p != null) {
+                stack.push(p);
+                res.add(0, p.val);
+                p = p.right;
             } else {
                 TreeNode node = stack.pop();
-                root = node.left; // Reverse the process of preorder
+                p = node.left;
             }
         }
-        return result;
-     }
+        return res;
+    }
+}
 
 ##################################################################
     # In Order Traverse

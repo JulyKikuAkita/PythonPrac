@@ -48,47 +48,6 @@ The basic idea is that construct leftmax array and rightmax array to save the le
 and rightkmax subarray index. After that, we use these prepossessed array to solve this question using O(N)
 since we have saved all of max subarray index!
 
-# 4ms 100%
-class Solution {
-    public int[] maxSumOfThreeSubarrays(int[] nums, int k) {
-        int n = nums.length;
-
-        int[] s = new int[n + 1];
-        for (int i = 0; i < n; i++) {
-            s[i + 1] = s[i] + nums[i];
-        }
-
-        for (int i = 0; i <= n - k; i++) {
-            s[i] = s[i + k] - s[i];
-        }
-        int[] result = new int[3];
-        int sum = Integer.MIN_VALUE;
-        int l = 0;
-        int[] m = new int[n + 1];
-        m[n - k] = n - k;
-        for (int i = n - k - 1; i >= 0; i--) {
-            if (s[i] >= s[m[i + 1]]) {
-                m[i] = i;
-            } else {
-                m[i] = m[i + 1];
-            }
-        }
-
-        for (int i = k; i <= n - k - k; i++) {
-            if (s[i - k] > s[l]) {
-                l = i - k;
-            }
-            if (s[l] + s[i] + s[m[i + k]] > sum) {
-                sum = s[l] + s[i] + s[m[i + k]];
-                result[0] = l;
-                result[1] = i;
-                result[2] = m[i + k];
-            }
-        }
-        return result;
-    }
-}
-
 # 8ms 35.66%
 class Solution {
     public int[] maxSumOfThreeSubarrays(int[] nums, int k) {
@@ -125,6 +84,49 @@ class Solution {
             }
         }
         return ans;
+    }
+}
+# Given :[1,2,1,2,6,7,5,1], K = 2
+# W[]:   3, 3, 3, 8, 13, 12, 6, 
+# Left:  0, 0, 0, 3, 4,  4,  4, 
+# Right: 4, 4, 4, 4, 4,  5,  6, 
+
+# https://leetcode.com/problems/maximum-sum-of-3-non-overlapping-subarrays/discuss/108239/Java-DP-Generic-Solution-for-M-subarrays
+# DP for any subarray
+# 16ms
+class Solution {
+    public int[] maxSumOfThreeSubarrays(int[] nums, int k) {
+        int n = nums.length;
+        int m = 3;
+        int[] sums = new int[n+1];
+        int[][] max = new int[n+1][m+1];
+        int[][] indices = new int[n+1][m+1];
+        for (int i = 1; i <= n; i++) {
+            sums[i] = sums[i - 1] + nums[i - 1];
+        }
+        
+        // The outer loop is for the number of partitions - (for this problem it is 3)
+        // The inner loop tries to find the max sum and the starting index for each partition - 
+        // starting from the end of the previous partition.
+        // So the first partition ends at k-1, so 2nd partition starts at k and 2nd partition ends at 2*(k-1), 
+        // 3rd partition starts at 3k and ends at 3(k-1) and so on.
+        for (int i = 1; i <= m ; i++) {
+            for (int j = i * k; j <= n; j++) {
+                if (max[j - k][i - 1] + sums[j] - sums[j - k] > max[j - 1][i]) {
+                    indices[j][i] = j - k;
+                    max[j][i] = max[j - k][i - 1] + sums[j] - sums[j - k];
+                } else {
+                    indices[j][i] = indices[j - 1][i];
+                    max[j][i] = max[j - 1][i];
+                }
+            }
+        }
+        int[] res = new int[m];
+        res[m - 1] = indices[n][m];
+        for (int i = m - 2; i >= 0; i--) {
+            res[i] = indices[res[i + 1]][i + 1];
+        }
+        return res;
     }
 }
 '''

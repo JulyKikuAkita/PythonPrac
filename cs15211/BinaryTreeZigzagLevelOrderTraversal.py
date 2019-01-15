@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/zigzag-conversion/#/description'
+__source__ = 'https://leetcode.com/problems/binary-tree-zigzag-level-order-traversal/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/binary-tree-zigzag-level-order-traversal.py
 # Time:  O(n)
 # Space: O(n)
@@ -140,7 +140,7 @@ public class Solution {
                 TreeNode cur = q.poll();
                 if (cur.left != null) q.offer(cur.left);
                 if (cur.right != null) q.offer(cur.right);
-                if (fromRight) {
+                if (fromRight) { //res.size() % 2 == 0
                     tmp.add(0, cur.val);
                 } else {
                     tmp.add(cur.val);
@@ -186,25 +186,20 @@ class Solution {
 # 1ms 94.17%
 class Solution {
     public List<List<Integer>> zigzagLevelOrder(TreeNode root) {
-        List<List<Integer>> result = new ArrayList<List<Integer>>();
-        zigzag(result, root, 0);
-        for (int i = 1; i < result.size(); i += 2) {
-            Collections.reverse(result.get(i));
+        List<List<Integer>> res = new ArrayList<>();
+        dfs(root, res, 0);
+        for (int i = 1; i < res.size(); i += 2) {
+            Collections.reverse(res.get(i));
         }
-        return result;
+        return res;
     }
-
-    private void zigzag(List<List<Integer>> result, TreeNode root, int depth) {
-        if (root == null) {
-            return;
-        }
-        while (result.size() <= depth) {
-            List<Integer> list = new ArrayList<Integer>();
-            result.add(list);
-        }
-        result.get(depth).add(root.val);
-        zigzag(result, root.left, depth + 1);
-        zigzag(result, root.right, depth + 1);
+    
+    private void dfs(TreeNode root, List<List<Integer>> res, int level) {
+        if (root == null) return;
+        if (res.size() == level) res.add(new ArrayList());
+        res.get(level).add(root.val);
+        dfs(root.left, res, level+1);
+        dfs(root.right, res, level+1);
     }
 }
 '''

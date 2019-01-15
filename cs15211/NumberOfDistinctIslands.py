@@ -121,34 +121,84 @@ if __name__ == '__main__':
 
 Java = '''
 # Thought: https://leetcode.com/problems/number-of-distinct-islands/solution/
-
 Approach #1: Hash By Local Coordinates [Accepted]
+Complexity Analysis
+Time Complexity: O(R*C), where R is the number of rows in the given grid, and C is the number of columns. 
+We visit every square once.
+Space complexity: O(R*C), the space used by seen to keep track of visited squares, and shapes.
 
 # 32ms 53.77%
 class Solution {
-    private static int[][] delta = { {0, 1}, {1, 0}, {0, -1}, {-1, 0} };
-
+    int[][] grid;
+    boolean[][] seen;
+    Set<Integer> shape;
+    
+    public void explore(int r, int c, int r0, int c0) {
+        if (0 <= r && r < grid.length && 0 <= c && c < grid[0].length &&
+                grid[r][c] == 1 && !seen[r][c]) {
+            seen[r][c] = true;
+            shape.add((r - r0) * 2 * grid[0].length + (c - c0));
+            explore(r+1, c, r0, c0);
+            explore(r-1, c, r0, c0);
+            explore(r, c+1, r0, c0);
+            explore(r, c-1, r0, c0);
+        }
+    }
     public int numDistinctIslands(int[][] grid) {
-        int m = grid.length, n = grid[0].length;
-        Set<List<List<Integer>>> islands = new HashSet<>();
-        for (int i = 0; i < m; i++) {
-            for (int j = 0; j < n; j++) {
-                List<List<Integer>> island = new ArrayList<>();
-                if (dfs(i, j, i, j, grid, m, n, island))
-                    islands.add(island);
+        this.grid = grid;
+        seen = new boolean[grid.length][grid[0].length];
+        Set shapes = new HashSet<HashSet<Integer>>();
+
+        for (int r = 0; r < grid.length; r++) {
+            for (int c = 0; c < grid[0].length; c++) {
+                shape = new HashSet<Integer>();
+                explore(r, c, r, c);
+                if (!shape.isEmpty()) {
+                    shapes.add(shape);
+                }
             }
         }
-        return islands.size();
-    }
 
-    private boolean dfs(int i0, int j0, int i, int j, int[][] grid, int m, int n, List<List<Integer>> island) {
-        if (i < 0 || m <= i || j < 0 || n <= j || grid[i][j] <= 0) return false;
-        island.add(Arrays.asList(i - i0, j - j0));
-        grid[i][j] *= -1;
-        for (int d = 0; d < 4; d++) {
-            dfs(i0, j0, i + delta[d][0], j + delta[d][1], grid, m, n, island);
+        return shapes.size();
+    }
+}
+
+# Approach #2: Hash By Path Signature [Accepted]
+# Complexity Analysis
+# Time and Space Complexity: O(R * C). The analysis is the same as in Approach #1.
+# When we start a depth-first search on the top-left square of some island, 
+# the path taken by our depth-first search will be the same if and only if the shape is the same.
+# 50ms 39.12%
+class Solution {
+    int[][] grid;
+    boolean[][] seen;
+    ArrayList<Integer> shape;
+    
+    public int numDistinctIslands(int[][] grid) {
+        this.grid = grid;
+        seen = new boolean[grid.length][grid[0].length];
+        Set shapes = new HashSet<ArrayList<Integer>>();
+        
+        for (int r = 0; r < grid.length; r++) {
+            for (int c = 0; c < grid[0].length; c++) {
+                shape = new ArrayList<Integer>();
+                explore(r, c, 0);
+                if (!shape.isEmpty()) shapes.add(shape);
+            }
         }
-        return true;
+        return shapes.size();
+    }
+    
+    public void explore(int r, int c, int di) {
+        if (0 <= r && r < grid.length && 0 <= c && c < grid[0].length && grid[r][c] == 1 && !seen[r][c]) {
+            seen[r][c] = true;
+            shape.add(di);
+            explore(r+1, c, 1);
+            explore(r-1, c, 2);
+            explore(r, c+1, 3);
+            explore(r, c-1, 4);
+            shape.add(0);
+        }
     }
 }
 

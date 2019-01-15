@@ -222,6 +222,10 @@ Java = '''
 # Thought: https://leetcode.com/problems/longest-palindromic-substring/solution/
 #
 # Manacher's Algorithm
+# https://www.youtube.com/watch?v=nbTSfrEfo6M watch this to know 
+# 1) len of longest palindrome(manArr[i]) = min(right - i, len[mirror] = manarr[2 * cneter - i]) 
+# depends on if beyond boundry
+# 2) if len of longest palindrome beyond right boundry, rest center and right boundry
 # O(n)
 # 8ms 99.47%
 class Solution {
@@ -287,16 +291,43 @@ When we found a palindrome, check if it's the longest one. Time complexity O(n^2
 class Solution {
     public String longestPalindrome(String s) {
         int n = s.length();
-        String res = null;
+        String res = "";
 
         boolean[][] dp = new boolean[n][n];
         for (int i = n - 1; i >= 0; i--) {
             for (int j = i; j < n; j++) {
                 dp[i][j] = s.charAt(i) == s.charAt(j) && (j - i < 3 || dp[i+1][j-1]);
-                if (dp[i][j] && (res == null || j - i + 1 > res.length())) res = s.substring(i, j+1);
+                if (dp[i][j] && (res == "" || j - i + 1 > res.length())) res = s.substring(i, j+1);
             }
         }
         return res;
+    }
+}
+
+# 51ms 43.88%
+class Solution {
+    public String longestPalindrome(String s) {
+        if (s == null || s.length() == 0) {
+            return s;
+        }
+        char[] arr = s.toCharArray();
+        int len = arr.length;
+        boolean[][] isPalin = new boolean[len][len];
+        int start = 0;
+        int end = 0;
+        int length = 0;
+        for (int i = 0; i < len; i++) {
+            isPalin[i][i] = true;
+            for (int j = i - 1; j >= 0; j--) {
+                isPalin[j][i] = arr[j] == arr[i] && (i - j < 2 || isPalin[j + 1][i - 1]);
+                if (isPalin[j][i] && i - j + 1 > length) {
+                    start = j;
+                    end = i;
+                    length = i - j + 1;
+                }
+            }
+        }
+        return s.substring(start, end + 1);
     }
 }
 
@@ -342,7 +373,7 @@ class Solution {
         if (len < 2) return s;
         for (int i = 0; i < len - 1; i++) {
             extendPalindrome(s, i, i);  //assume odd length, try to extend Palindrome as possible
-     	    extendPalindrome(s, i, i+1); //assume even length.
+            extendPalindrome(s, i, i+1); //assume even length.
         }
         return s.substring(lo, lo + maxLen);
     }
@@ -359,28 +390,59 @@ class Solution {
     }
 }
 
-# 23ms 61.98%
+class Solution {
+    public String longestPalindrome(String s) {
+        if (s == null || s.length() < 1) return "";
+        int start = 0, end = 0;
+        for (int i = 0; i < s.length(); i++) {
+            int len1 = expandAroundCenter(s, i, i);
+            int len2 = expandAroundCenter(s, i, i + 1);
+            int len = Math.max(len1, len2);
+            if (len > end - start) {
+                start = i - (len - 1) / 2 ;
+                end = i + len / 2;
+            }
+        }
+        return s.substring(start, end + 1);
+    }
+    
+    private int expandAroundCenter(String s, int left, int right) {
+        int L = left, R = right;
+        while (L >= 0 && R < s.length() && s.charAt(L) == s.charAt(R)) {
+            L--;
+            R++;
+        }
+        return R - L - 1;
+    }
+}
+
+# Approach 2: Brute Force
+# Time complexity : O(n^3) Assume that nn is the length of the input string, 
+# there are a total of choose n 2 = n * (n - 1) / 2  such substrings 
+# (excluding the trivial solution where a character itself is a palindrome). 
+# Since verifying each substring takes O(n) time, the run time complexity is O(n^3)
+# Space complexity : O(1)
+# 25ms 58.72%
 class Solution {
     public String longestPalindrome(String s) {
         String res = "";
-        int currLength = 0;
-        for(int i=0;i<s.length();i++){
-            if(isPalindrome(s,i-currLength-1,i)){
-                res = s.substring(i-currLength-1,i+1);
-                currLength = currLength+2;
-            }
-            else if(isPalindrome(s,i-currLength,i)){
-                res = s.substring(i-currLength,i+1);
-                currLength = currLength+1;
+        int len = 0;
+        for (int i = 0; i < s.length(); i++) {
+            if (isPalindrome(s, i - len - 1, i)) {
+                res = s.substring(i - len - 1, i + 1);
+                len = len + 2; // (i + 1 - (i - len - 1))
+            } else if (isPalindrome(s, i - len, i)) {
+                res = s.substring(i - len, i + 1);
+                len = len + 1;
             }
         }
         return res;
     }
-
-    public boolean isPalindrome(String s, int begin, int end){
-        if(begin<0) return false;
-        while(begin<end){
-        	if(s.charAt(begin++)!=s.charAt(end--)) return false;
+    
+    private boolean isPalindrome(String s, int begin, int end){
+        if (begin < 0) return false;
+        while (begin < end) {
+            if (s.charAt(begin++) != s.charAt(end--)) return false;
         }
         return true;
     }
@@ -420,30 +482,5 @@ class Solution {
     }
 }
 
-# 51ms 43.88%
-class Solution {
-    public String longestPalindrome(String s) {
-        if (s == null || s.length() == 0) {
-            return s;
-        }
-        char[] arr = s.toCharArray();
-        int len = arr.length;
-        boolean[][] isPalin = new boolean[len][len];
-        int start = 0;
-        int end = 0;
-        int length = 0;
-        for (int i = 0; i < len; i++) {
-            isPalin[i][i] = true;
-            for (int j = i - 1; j >= 0; j--) {
-                isPalin[j][i] = arr[j] == arr[i] && (i - j < 2 || isPalin[j + 1][i - 1]);
-                if (isPalin[j][i] && i - j + 1 > length) {
-                    start = j;
-                    end = i;
-                    length = i - j + 1;
-                }
-            }
-        }
-        return s.substring(start, end + 1);
-    }
-}
+
 '''

@@ -208,30 +208,4 @@ class Solution {
     }
 }
 
-# 100% 1ms
-class Solution {
-    public int maxProfit(int[] prices) {
-        if(prices == null || prices.length <= 1){
-            return 0;
-        }
-        int firstBuy = Integer.MIN_VALUE, secondBuy = Integer.MIN_VALUE;
-        int firstSell = 0, secondSell = 0;
-        for(int curPrice : prices){
-            if(firstBuy < -curPrice){
-                firstBuy = -curPrice;
-            }
-            if(firstSell < firstBuy + curPrice){
-                firstSell = firstBuy + curPrice;
-            }
-            if(secondBuy < firstSell - curPrice){
-                secondBuy = firstSell - curPrice;
-            }
-            if(secondSell < secondBuy + curPrice){
-                secondSell = secondBuy + curPrice;
-            }
-        }
-
-        return secondSell;
-    }
-}
 '''

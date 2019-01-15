@@ -192,16 +192,16 @@ Thought:
 (ii) p == char != s : F
 (iii) p == * : p = dp[i+1][j] || dp[i][j+1]
 
-# 88.84% 31ms
+# 57ms 69.30%
 class Solution {
     public boolean isMatch(String s, String p) {
         boolean[][] dp = new boolean[s.length() + 1][p.length() + 1];
         dp[s.length()][p.length()] = true;
         for (int i = p.length() - 1; i >= 0; i--) {
-            if (p.charAt(i) != '*') break;
-            else dp[s.length()][i] = true;
+            if (p.charAt(i) == '*') dp[s.length()][i] = true;
+            else break;
         }
-
+        
         for (int i = s.length() - 1; i >= 0; i--) {
             for (int j = p.length() - 1; j >= 0; j--) {
                 if (s.charAt(i) == p.charAt(j) || p.charAt(j) == '?') {
@@ -210,7 +210,7 @@ class Solution {
                     dp[i][j] = dp[i + 1][j] || dp[i][j + 1];
                 } else {
                     dp[i][j] = false;
-                }
+                }       
             }
         }
         return dp[0][0];
@@ -260,42 +260,28 @@ class Solution {
     }
 }
 
-# 95.69% 27ms
+# 43ms 96.23%
 class Solution {
     public boolean isMatch(String s, String p) {
-        int lenS = s.length();
-        int lenP = p.length();
-        int indexS = 0;
-        int indexP = 0;
-        int lastS = -1;
-        int lastStar = -1;
-        while (indexS < lenS) {
-            boolean isMatch = true;
-            if (indexP == lenP) {
-                isMatch = false;
-            } else if (p.charAt(indexP) == '?' || p.charAt(indexP) == s.charAt(indexS)) {
-                indexS++;
-                indexP++;
-            } else if (p.charAt(indexP) == '*') {
-                lastS = indexS;
-                lastStar = indexP;
-                indexP++;
+        int i = 0, j = 0, starIdx = -1, iIdx = -1;
+        while (i < s.length()) {
+            if (j < p.length() && (p.charAt(j) == '?' || p.charAt(j) == s.charAt(i))) {
+                i++;
+                j++;
+            } else if (j < p.length() && p.charAt(j) == '*') {
+                starIdx = j;
+                iIdx = i;
+                j++;
+            } else if (starIdx != -1) {
+                j = starIdx + 1;
+                i = iIdx + 1;
+                iIdx++;
             } else {
-                isMatch = false;
-            }
-            if (!isMatch) {
-                if (lastStar >= 0) {
-                    indexS = ++lastS;
-                    indexP = lastStar + 1;
-                } else {
-                    return false;
-                }
+                return false;
             }
         }
-        while (indexP < lenP && p.charAt(indexP) == '*') {
-            indexP++;
-        }
-        return indexP == lenP;
+        while (j < p.length() && p.charAt(j) == '*') j++;
+        return j == p.length();
     }
 }
 '''

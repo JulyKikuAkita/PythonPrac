@@ -1,3 +1,4 @@
+# coding=utf-8
 __source__ = 'https://leetcode.com/problems/next-permutation/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/next-permutation.py
 # Time:  O(n)

@@ -106,41 +106,41 @@ The core idea of this algorithm:
  */
 
 # DFS
-#
+# 2ms
 class Solution {
     public List<Integer> rightSideView(TreeNode root) {
-        List<Integer> result = new ArrayList<>();
-        rightSideView(root, result, 0);
-        return result;
+        List<Integer> res = new ArrayList<>();
+        dfs(root, res, 0);
+        return res;
     }
     
-    #loop left tree first, need to reset every node val
-    # 0ms 100%
-    private void rightSideView(TreeNode root, List<Integer> result, int depth) {
-        if (root == null) {
-            return;
-        }
-        if (result.size() == depth) {
-            result.add(root.val);
-        } else {
-            result.set(depth, root.val);
-        }
-        rightSideView(root.left, result, depth + 1);
-        rightSideView(root.right, result, depth + 1);
-    }
-        
-    # loop right tree first  
-    # 1ms 81.06%
-    private void dfs2(TreeNode root, List<Integer> res, int currDepth){
+    private void dfs(TreeNode root, List<Integer> res, int level){ 
         if (root == null) return;
-        if (res.size() == currDepth) {
-            res.add(root.val);
-        }
-        dfs2(root.right, res, currDepth + 1);
-        dfs2(root.left, res, currDepth + 1);
+        if (res.size() == level) res.add(root.val);
+        dfs(root.right, res, level + 1);
+        dfs(root.left, res, level + 1);
     }
 }
 
+# DFS
+# 2ms
+class Solution {
+    public List<Integer> rightSideView(TreeNode root) {
+        List<Integer> res = new ArrayList<>();
+        dfs(root, res, 0);
+        return res;
+    }
+    
+    private void dfs(TreeNode root, List<Integer> res, int level){ 
+        if (root == null) return;
+        if (res.size() == level) res.add(root.val);
+        else {
+            res.set(level, root.val);
+        }
+        dfs(root.left, res, level + 1);
+        dfs(root.right, res, level + 1);
+    }
+}
 
 # BFS
 # 1ms 81.06%
@@ -165,35 +165,4 @@ class Solution {
     }
 }
 
-# 1ms 81.06%
-# loop to left child first
-class Solution {
-    public List<Integer> rightSideView(TreeNode root) {
-        List<Integer> result = new ArrayList<>();
-        if (root == null) {
-            return result;
-        }
-        Queue<TreeNode> queue = new LinkedList<>();
-        queue.add(root);
-        while (!queue.isEmpty()) {
-            int size = queue.size();
-            for (int i = 0; i < size - 1; i++) {
-                traverse(queue, queue.poll());
-            }
-            TreeNode cur = queue.poll();
-            result.add(cur.val);
-            traverse(queue, cur);
-        }
-        return result;
-    }
-    
-    private void traverse(Queue<TreeNode> queue, TreeNode cur) {
-        if (cur.left != null) {
-            queue.add(cur.left);
-        }
-        if (cur.right != null) {
-            queue.add(cur.right);
-        }
-    }
-}
 '''

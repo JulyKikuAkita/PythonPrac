@@ -122,7 +122,8 @@ Java = '''
 general ideas:
 1)
 - Permutation dfs for loop always starts with 0 as [1,2,3] and [3,2,1] are diff
-- combination dfs for loop starts with next idx (i + 1) and needs to pass in start idx as parameter, [1,2,3] and [3,2,1] are the same
+- combination dfs for loop starts with next idx (i + 1) and needs to pass in start idx as parameter, 
+[1,2,3] and [3,2,1] are the same
 2) for permutation, ex [1,2,3]
 there will be a lot of duplicated calculations for dfs:
 - use visited = boolean[] to avoid result for [1,1,1]
@@ -214,35 +215,36 @@ class Solution {
 # 3ms 76.09%
 class Solution {
     public List<List<Integer>> permute(int[] nums) {
-        List<List<Integer>> result = new ArrayList<List<Integer>>();
-		permute_heap(result, nums, nums.length);
-		return result;
+        List<List<Integer>> res = new ArrayList<>();
+        if(nums == null || nums.length == 0) {
+            return res;
+        }
+        help(res, nums, 0);
+        return res;
     }
-    private void permute_heap(List<List<Integer>> result, int[] array, int end) {
-		if (end == 1) {
-			List<Integer> current = new ArrayList<Integer>();
-			for (int a : array) {
-				current.add(a);
-			}
-			result.add(current);
+    
+    private void help(List<List<Integer>> res, int[] nums, int index) {
+        if(index == nums.length) {
+            List<Integer> tmp = new ArrayList<>();
+            for(int num : nums) {
+                tmp.add(num);
+            }
+            res.add(tmp);
             return;
-		}
-	    for (int i = 0; i < end; i++) {
-			permute_heap(result, array, end - 1);
-            if (end % 2 == 0) {
-                swap(array, end - 1, 0);
-            }
-            else {
-                swap(array, end - 1, i);
-            }
-		}
-	}
-
-	private void swap(int[] array, int i, int j) {
-		int temp = array[i];
-		array[i] = array[j];
-		array[j] = temp;
-	}
+        }
+        
+        for(int i = index; i < nums.length; i++) {
+            swap(nums, index, i);
+            help(res, nums, index + 1);
+            swap(nums, index, i);
+        }
+    }
+    
+    private void swap(int[] nums, int x, int y) {
+        int tmp = nums[x];
+        nums[x] = nums[y];
+        nums[y] = tmp;
+    }
 }
 
 Iteration:

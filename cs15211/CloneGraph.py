@@ -121,6 +121,7 @@ Java = '''
  *     UndirectedGraphNode(int x) { label = x; neighbors = new ArrayList<UndirectedGraphNode>(); }
  * };
  */
+# Note: Need to use map to pass cloned object reference during recursion
 # DFS:
 # 2ms 100%
 class Solution {
@@ -185,9 +186,10 @@ class Solution {
             for(UndirectedGraphNode neighbor : n.neighbors) {
                 if (!map.containsKey(neighbor.label)) {
                     map.put(neighbor.label, new UndirectedGraphNode(neighbor.label));
-                    queue.add(neighbor);
+                    queue.add(neighbor); // only add to queue if not visited
                 }
                 map.get(n.label).neighbors.add(map.get(neighbor.label));
+                // queue.add(neighbor); // DONT, created an infinite loop if graph has loop{0,0,0}
             }
         }
         return clone;

@@ -149,7 +149,8 @@ Java = '''
 # Thought: https://leetcode.com/problems/number-of-islands-ii/solution/
 https://discuss.leetcode.com/topic/29613/easiest-java-solution-with-explanations
 
-# 9ms 98.15%
+# Union-Find
+# 17ms 91.20%
 class Solution {
     int[][] dirs = {{0, 1}, {1, 0}, {-1, 0}, {0, -1}};
 
@@ -194,70 +195,6 @@ class Solution {
     }
 }
 
-# 18ms 48.36%
-class Solution {
-    private static final int[][] DIRECTIONS = new int[][] {{0, -1}, {0, 1}, {-1, 0}, {1, 0}};
-
-    public List<Integer> numIslands2(int m, int n, int[][] positions) {
-        List<Integer> result = new ArrayList<>();
-        int[][] matrix = new int[m][n];
-        int[] islands = new int[positions.length];
-        int[] count = new int[positions.length];
-        int numIslands = 0;
-
-        for (int i = 0; i < islands.length; i++) {
-            islands[i] = i;
-        }
-        Arrays.fill(count, 1);
-        for (int i = 0; i < positions.length; i++) {
-            int x = positions[i][0];
-            int y = positions[i][1];
-            if (matrix[x][y] > 0) {
-                result.add(numIslands);
-                continue;
-            }
-            matrix[x][y] = i + 1;
-            numIslands++;
-            for (int[] direction : DIRECTIONS) {
-                int newX = x + direction[0];
-                int newY = y + direction[1];
-                if (newX >= 0 && newX < m && newY >= 0 && newY < n && matrix[newX][newY] > 0 && union(islands, count, i, matrix[newX][newY] - 1)) {
-                    numIslands--;
-                }
-            }
-            result.add(numIslands);
-        }
-        return result;
-    }
-
-    private boolean union(int[] arr, int[] count, int i, int j) {
-        int iRoot = root(arr, i);
-        int jRoot = root(arr, j);
-        if (iRoot != jRoot) {
-            if (count[iRoot] <= count[jRoot]) {
-                arr[iRoot] = jRoot;
-                count[jRoot] += count[iRoot];
-                count[iRoot] = 0;
-            } else {
-                arr[jRoot] = iRoot;
-                count[iRoot] += count[jRoot];
-                count[jRoot] = 0;
-            }
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    private int root(int[] arr, int i) {
-        while (arr[i] != i) {
-            arr[i] = arr[arr[i]];
-            i = arr[i];
-        }
-        return i;
-    }
-}
-
 # https://discuss.leetcode.com/topic/29518/java-python-clear-solution-with-unionfind-class-weighting-and-path-compression
 Java/Python clear solution with UnionFind Class (Weighting and Path compression)
 Union Find
@@ -295,6 +232,7 @@ But from a design point of view a separate class dedicated to the data sturcture
 
 I implemented the idea with 2D interface to better fit the problem.
 
+# Union-Find 2D
 # 81.60% 18ms
 class Solution {
     private int[][] dir = {{0, 1}, {0, -1}, {-1, 0}, {1, 0}};
@@ -316,7 +254,6 @@ class Solution {
     }
 }
 
-# 15ms 60.63%
 class UnionFind2D {
     private int[] id;
     private int[] sz;
@@ -408,6 +345,162 @@ class Solution {
             return id;
         }
         return roots[id] = findRoot(roots[id], roots);
+    }
+}
+
+# Non Union Find
+Approach #2: (Ad hoc) [Accepted]
+Complexity Analysis
+Time complexity : O(L^2), for ach operation, 
+we have to traverse the entire HashMap to update island id and the number of operations is LL.
+Space complexity : O(L) for the HashMap.
+
+# 1618ms 4.89%
+class Solution {
+    public List<Integer> numIslands2(int m, int n, int[][] positions) {
+        List<Integer> ans = new ArrayList<>();
+        HashMap<Integer, Integer> land2id = new HashMap<Integer, Integer>();
+        int num_islands = 0;
+        int island_id = 0;
+        
+        for (int[] pos: positions) {
+            int r = pos[0], c = pos[1];
+            Set<Integer> overlap = new HashSet<Integer>();
+            if (r - 1 >= 0 && land2id.containsKey((r - 1) * n + c)) {
+                overlap.add(land2id.get((r-1) * n + c));
+            }
+            if (r + 1 < m && land2id.containsKey((r+1) * n + c)) {
+                overlap.add(land2id.get((r+1) * n + c));
+            }
+            if (c - 1 >= 0 && land2id.containsKey(r * n + c - 1)) {
+                overlap.add(land2id.get(r * n + c - 1));
+            }
+            if (c + 1 < n && land2id.containsKey(r * n + c + 1)) {
+                overlap.add(land2id.get(r * n + c + 1));
+            }
+            
+            if (overlap.isEmpty()) {
+                ++num_islands;
+                land2id.put(r * n + c, island_id++);
+            } else if (overlap.size() == 1) {
+                land2id.put(r * n + c, overlap.iterator().next());
+            } else {
+                int root_id = overlap.iterator().next();
+                for (Map.Entry<Integer, Integer> entry : land2id.entrySet()) {
+                    int k = entry.getKey();
+                    int id = entry.getValue();
+                    if (overlap.contains(id)) {
+                        land2id.put(k, root_id);
+                    }
+                }
+                land2id.put(r * n + c, root_id);
+                num_islands -= (overlap.size() - 1);
+            }
+            ans.add(num_islands);
+        }
+        return ans;
+    }
+}
+
+Approach #3: Union Find (aka Disjoint Set) [Accepted]
+Complexity Analysis
+Time complexity : O(m x n + L) where L is the number of operations, 
+m is the number of rows and n is the number of columns. 
+it takes O(m x n) to initialize UnionFind, and O(L) to process positions. 
+Note that Union operation takes essentially constant time^1 
+when UnionFind is implemented with both path compression and union by rank.
+Space complexity : O(m x n) as required by UnionFind data structure.
+
+# 32ms 39.85%
+class Solution {
+    public List<Integer> numIslands2(int m, int n, int[][] positions) {
+        List<Integer> ans = new ArrayList<>();
+        UnionFind uf = new UnionFind(m * n);
+        
+        for (int[] pos : positions) {
+            int r = pos[0], c = pos[1];
+            List<Integer> overlap = new ArrayList<>();
+            
+            if (r - 1 >= 0 && uf.isValid((r-1) * n + c)) overlap.add((r-1) * n + c);
+            if (r + 1 < m && uf.isValid((r+1) * n + c)) overlap.add((r+1) * n + c);
+            if (c - 1 >= 0 && uf.isValid(r * n + c - 1)) overlap.add(r * n + c - 1);
+            if (c + 1 < n && uf.isValid(r * n + c + 1)) overlap.add(r * n + c + 1);
+            
+            int index = r * n + c;
+            uf.setParent(index);
+            for (int i : overlap) uf.union(i, index);
+            ans.add(uf.getCount());
+        }
+        return ans;
+    }
+    
+    class UnionFind {
+        int count;
+        int[] parent;
+        int[] rank;
+        
+        public UnionFind(char[][] grid) {  // for problem 200
+            count = 0;
+            int m = grid.length;
+            int n = grid[0].length;
+            parent = new int[m * n];
+            rank = new int[m * n];
+            for (int i = 0; i < m; i++) {
+                for (int j = 0; j < n ; j++) {
+                    if (grid[i][j] == '1') {
+                        parent[i * n + j] = i * n + j;
+                        ++count;
+                    }
+                    rank[i * n + j] = 0;
+                }
+            }
+        }
+        
+        public UnionFind(int N) { // for problem 305 and others
+            count = 0;
+            parent = new int[N];
+            rank = new int[N];
+            for (int i = 0; i < N; ++i) {
+                parent[i] = -1;
+                rank[i] = 0;
+            }
+        }
+        
+        public boolean isValid(int i) { // for problem 305
+            return parent[i] >= 0;
+        }
+
+        public void setParent(int i) {
+            parent[i] = i;
+            ++count;
+        }
+        
+        public int getCount() {
+            return count;
+        }
+        
+        public int find(int i) { // path compression
+            if (i != parent[i]) {
+                parent[i] = find(parent[i]);
+            }
+            return parent[i];
+        }
+        
+        public void union(int x, int y) {
+            int rootx = find(x);
+            int rooty = find(y);
+            if (rootx != rooty) { 
+                if (rank[rootx] > rank[rooty]) {
+                    parent[rooty] = rootx;
+                } else if (rank[rootx] < rank[rooty]) {
+                    parent[rootx] = rooty;
+                } else {
+                    parent[rooty] = rootx;
+                    rank[rootx]++;
+                }
+                --count;
+            }
+        }
     }
 }
 '''

@@ -154,6 +154,13 @@ class Solution {
     }
 }
 
+# For anyone stumped by why this change is necessary, 
+# it's because you should not continue exploring (recursing) 
+# when you know that there won't be enough numbers left until n to fill the needed k slots. 
+# If n = 10, k = 5, and you're in the outermost level of recursion, you choose only i = 1...6 , 
+# because if you pick i=7 and go into backTracking() you only have 8,9,10 to pick from, 
+# so at most you will get [7,8,9,10]... but we need 5 elements!
+#
 # 2ms 99.89%  , optimize by n - k + 1
 class Solution {
     public List<List<Integer>> combine(int n, int k) {
@@ -201,6 +208,29 @@ class Solution {
         cur.add(index);
         combine(n, k - 1, index + 1, result, cur);
         cur.remove(cur.size() - 1);
+    }
+}
+
+# https://leetcode.com/problems/combinations/discuss/27019/A-short-recursive-Java-solution-based-on-C(nk)C(n-1k-1)%2BC(n-1k)
+# C(n,k)=C(n-1,k-1)+C(n-1,k)
+# Here C(n,k) is divided into two situations. 
+# Situation one, number n is selected, so we only need to select k-1 from n-1 next. 
+# Situation two, number n is not selected, and the rest job is selecting k from n-1.
+
+# 82ms 12.28%
+class Solution {
+    public List<List<Integer>> combine(int n, int k) {
+        if (k == n || k == 0) {
+            List<Integer> row = new LinkedList<>();
+            for (int i = 1; i <= k; i++) {
+                row.add(i);
+            }
+            return new LinkedList<>(Arrays.asList(row));
+        }
+        List<List<Integer>> result = this.combine(n - 1, k - 1);
+        result.forEach(e -> e.add(n));
+        result.addAll(this.combine(n - 1, k));
+        return result;
     }
 }
 '''
