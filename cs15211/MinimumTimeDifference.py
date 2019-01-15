@@ -1,8 +1,9 @@
-__source__ = 'https://leetcode.com/problems/minimum-time-difference/#/description'
+__source__ = 'https://leetcode.com/problems/minimum-time-difference/'
 # Time:  O()
 # Space: O()
 #
-# Description:
+# Description: 539. Minimum Time Difference
+#
 # Given a list of 24-hour clock time points in "Hour:Minutes" format,
 # find the minimum minutes difference between any two time points in the list.
 #
@@ -16,12 +17,12 @@ __source__ = 'https://leetcode.com/problems/minimum-time-difference/#/descriptio
 # Hide Tags String
 #
 import unittest
-
 # Convert each timestamp to it's integer number of minutes past midnight,
 # and sort the array of minutes.
 # The required minimum difference must be a difference between two adjacent elements in the circular array
 # (so the last element is "adjacent" to the first.) We take the minimum value of all of them.
 
+# 72ms 44.96%
 class Solution(object):
     def findMinDifference(self, timePoints):
         """
@@ -39,16 +40,17 @@ class TestMethods(unittest.TestCase):
     def test_Local(self):
         self.assertEqual(1, 1)
 
-
 if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
+# Thought:
 There is only 24 * 60 = 1440 possible time points.
 Just create a boolean array, each element stands for if we see that time point or not.
 Then things become simple...
-public class Solution {
+
+# 7ms 98.19%
+class Solution {
     public int findMinDifference(List<String> timePoints) {
         boolean[] mark = new boolean[24 * 60];
         for (String time : timePoints) {
@@ -71,15 +73,14 @@ public class Solution {
                 prev = i;
             }
         }
-
         min = Math.min(min, (24 * 60 - last + first));
-
         return min;
     }
 }
 
 2. Java sorting with a sentinel node
-public class Solution {
+# 25ms 59.93%
+class Solution {
     public int findMinDifference(List<String> timePoints) {
         int n = timePoints.size();
         List<Time> times = new ArrayList<>();
@@ -101,31 +102,30 @@ public class Solution {
         }
         return minDiff;
     }
-
-}
-
-class Time implements Comparable<Time> {
-    int h;
-    int m;
-    public Time(int h, int m) {
-        this.h = h;
-        this.m = m;
-    }
-
-    public int compareTo(Time other) {
-        if (this.h == other.h) {
-            return this.m - other.m;
+    class Time implements Comparable<Time> {
+        int h;
+        int m;
+        public Time(int h, int m) {
+            this.h = h;
+            this.m = m;
         }
-        return this.h - other.h;
-    }
-
-    public int getDiff(Time other) {
-        return (this.h - other.h) * 60 + (this.m - other.m);
+    
+        public int compareTo(Time other) {
+            if (this.h == other.h) {
+                return this.m - other.m;
+            }
+            return this.h - other.h;
+        }
+    
+        public int getDiff(Time other) {
+            return (this.h - other.h) * 60 + (this.m - other.m);
+        }
     }
 }
 
 3.
-public class Solution {
+# 156ms 6.86%
+class Solution {
     public int findMinDifference(List<String> timePoints) {
         int mm = Integer.MAX_VALUE;
         List<Integer> time = new ArrayList<>();

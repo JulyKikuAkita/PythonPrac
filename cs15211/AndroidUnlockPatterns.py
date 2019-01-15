@@ -1,43 +1,46 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/android-unlock-patterns/#/description'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/android-unlock-patterns.py
-q = '''
-Given an Android 3x3 key lock screen and two integers m and n, where 1 <= m<= n <= 9, count the total number of unlock patterns
-of the Android lock screen, which consist of minimum of m keys and maximum n keys.
-
-Rules for a valid pattern:
-Each pattern must connect at least m keys and at most n keys.
-All the keys must be distinct.
-If the line connecting two consecutive keys in the pattern passes through any other keys,
-the other keys must have previously selected in the pattern. No jumps through non selected key is allowed.
-The order of keys used matters.
-
-Explanation:
-| 1 | 2 | 3 |
-| 4 | 5 | 6 |
-| 7 | 8 | 9 |
-Invalid move: 4 - 1 - 3 - 6
-Line 1 - 3 passes through key 2 which had not been selected in the pattern.
-
-Invalid move: 4 - 1 - 9 - 2
-Line 1 - 9 passes through key 5 which had not been selected in the pattern.
-
-Valid move: 2 - 4 - 1 - 3 - 6
-Line 1 - 3 is valid because it passes through key 2, which had been selected in the pattern
-
-Valid move: 6 - 5 - 4 - 1 - 9 - 2
-Line 1 - 9 is valid because it passes through key 5, which had been selected in the pattern.
-
-Example:
-Given m = 1, n = 1, return 9.
-
-Credits:
-
-Hide Company Tags Google
-Show Tags
-
-'''
 # Time:  O(9^2 * 2^9)
 # Space: O(9 * 2^9)
+#
+# Description: Leetcode # 351. Android Unlock Patterns
+#
+# Given an Android 3x3 key lock screen and two integers m and n,
+# where 1<= m <= n <= 9, count the total number of unlock patterns of the Android lock screen,
+# which consist of minimum of m keys and maximum n keys.
+#
+# Rules for a valid pattern:
+# Each pattern must connect at least m keys and at most n keys.
+# All the keys must be distinct.
+# If the line connecting two consecutive keys in the pattern passes through any other keys,
+# the other keys must have previously selected in the pattern. No jumps through non selected key is allowed.
+# The order of keys used matters.
+#
+# Explanation:
+# | 1 | 2 | 3 |
+# | 4 | 5 | 6 |
+# | 7 | 8 | 9 |
+# Invalid move: 4 - 1 - 3 - 6
+# Line 1 - 3 passes through key 2 which had not been selected in the pattern.
+#
+# Invalid move: 4 - 1 - 9 - 2
+# Line 1 - 9 passes through key 5 which had not been selected in the pattern.
+#
+# Valid move: 2 - 4 - 1 - 3 - 6
+# Line 1 - 3 is valid because it passes through key 2, which had been selected in the pattern
+#
+# Valid move: 6 - 5 - 4 - 1 - 9 - 2
+# Line 1 - 9 is valid because it passes through key 5, which had been selected in the pattern.
+#
+# Example:
+# Given m = 1, n = 1, return 9.
+#
+# Companies
+# Google
+# Related Topics
+# Dynamic Programming Backtracking
+#
+import unittest
 
 # DP solution.
 class Solution(object):
@@ -95,9 +98,7 @@ class Solution(object):
                              continue
 
                     dp[merge(used, j)][j] += dp[used][i]
-
         return res
-
 
 # Time:  O(9^2 * 2^9)
 # Space: O(9 * 2^9)
@@ -160,9 +161,7 @@ class Solution2(object):
 
                 if m <= number <= n:
                     res += dp[used][i]
-
         return res
-
 
 # Time:  O(9!)
 # Space: O(9)
@@ -204,9 +203,7 @@ class Solution_TLE(object):
                          continue
 
                 number += numberOfPatternsHelper(m, n, level + 1, merge(used, j), j)
-
             return number
-
 
         number = 0
         # 1, 3, 7, 9
@@ -217,10 +214,82 @@ class Solution_TLE(object):
         number += numberOfPatternsHelper(m, n, 1, merge(0, 4), 4)
         return number
 
-#java
-js = '''
-Thought: https://leetcode.com/articles/android-unlock-patterns/
-'public class Solution {
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+
+if __name__ == '__main__':
+    unittest.main()
+
+Java = '''
+#Thought: https://leetcode.com/problems/android-unlock-patterns/#/solution
+
+#100% 0ms //cheating
+public class Solution {
+    public int numberOfPatterns(int m, int n) {
+        int[] arr = {9,56,320,1624,7152, 26016,72912,140704,140704};
+        int sum = 0;
+        for (int i = m; i <= n; i++) {
+            sum += arr[i - 1];
+        }
+        return sum;
+    }
+}
+
+# 35.08% 32ms
+class Solution {
+
+    private boolean used[] = new boolean[9];
+
+    public int numberOfPatterns(int m, int n) {
+        int res = 0;
+        for (int len = m; len <= n; len++) {
+            res += calcPatterns(-1, len);
+            for (int i = 0; i < 9; i++) {
+                used[i] = false;
+            }
+        }
+        return res;
+    }
+
+    private boolean isValid(int index, int last) {
+        if (used[index])
+            return false;
+        // first digit of the pattern
+        if (last == -1)
+            return true;
+        // knight moves or adjacent cells (in a row or in a column)
+        if ((index + last) % 2 == 1)
+            return true;
+        // indexes are at both end of the diagonals for example 0,0, and 8,8
+        int mid = (index + last)/2;
+        if (mid == 4)
+            return used[mid];
+        // adjacent cells on diagonal  - for example 0,0 and 1,0 or 2,0 and //1,1
+        if ((index%3 != last%3) && (index/3 != last/3)) {
+            return true;
+        }
+        // all other cells which are not adjacent
+        return used[mid];
+    }
+
+    private int calcPatterns(int last, int len) {
+        if (len == 0)
+            return 1;
+        int sum = 0;
+        for (int i = 0; i < 9; i++) {
+            if (isValid(i, last)) {
+                used[i] = true;
+                sum += calcPatterns(i, len - 1);
+                used[i] = false;
+            }
+        }
+        return sum;
+    }
+}
+
+# 98.92% 50ms
+class Solution {
     public static final int[][] SKIP_LIST;
     static {
         SKIP_LIST = new int[10][10];
@@ -254,6 +323,73 @@ Thought: https://leetcode.com/articles/android-unlock-patterns/
         }
         isVisited[curPos] = false;
         return result;
+    }
+}
+
+#38ms 25.86%
+class Solution {
+    private static final int[][] DIRECTIONS_JUMP = new int[][] {{-2, -2}, {-2, 0}, {-2, 2}, {0, -2}, {0, 2}, {2, -2}, {2, 0}, {2, 2}};
+    private static final int[][] DIRECTIONS_NON_JUMP = new int[][] {{-1, -1}, {-1, 0}, {-1, 1}, {0, -1}, {0, 1}, {1, -1}, {1, 0}, {1, 1}, {-2, -1}, {-2, 1}, {-1, 2}, {1, 2}, {2, -1}, {2, 1}, {-1, -2}, {1, -2}};
+
+    public int numberOfPatterns(int m, int n) {
+        boolean[][] visited = new boolean[3][3];
+        n = Math.min(n, 9);
+        if (n <= 0 || n < m) {
+            return 0;
+        }
+        return helperCorner(m, n) + helperSide(m, n) + helperMiddle(m, n);
+    }
+
+    private int helperCorner(int m, int n) {
+        boolean[][] visited = new boolean[3][3];
+        visited[0][0] = true;
+        int result = numberOfPatterns(m, n, 1, 0, 0, visited);
+        return result << 2;
+    }
+
+    private int helperSide(int m, int n) {
+        boolean[][] visited = new boolean[3][3];
+        visited[0][1] = true;
+        int result = numberOfPatterns(m, n, 1, 0, 1, visited);
+        return result << 2;
+    }
+
+    private int helperMiddle(int m, int n) {
+        boolean[][] visited = new boolean[3][3];
+        visited[1][1] = true;
+        return numberOfPatterns(m, n, 1, 1, 1, visited);
+    }
+
+    private int numberOfPatterns(int m, int n, int curLength, int i, int j, boolean[][] visited) {
+        int result = 0;
+        if (curLength == n) {
+            return 1;
+        } else if (curLength >= m) {
+            result++;
+        }
+        for (int[] direction : DIRECTIONS_JUMP) {
+            int newI = i + direction[0];
+            int newJ = j + direction[1];
+            if (isValid(newI, newJ, visited) && visited[Math.abs(i + direction[0] / 2)][Math.abs(j + direction[1] / 2)]) {
+                visited[newI][newJ] = true;
+                result += numberOfPatterns(m, n, curLength + 1, newI, newJ, visited);
+                visited[newI][newJ] = false;
+            }
+        }
+        for (int[] direction : DIRECTIONS_NON_JUMP) {
+            int newI = i + direction[0];
+            int newJ = j + direction[1];
+            if (isValid(newI, newJ, visited)) {
+                visited[newI][newJ] = true;
+                result += numberOfPatterns(m, n, curLength + 1, newI, newJ, visited);
+                visited[newI][newJ] = false;
+            }
+        }
+        return result;
+    }
+
+    private boolean isValid(int i, int j, boolean[][] visited) {
+        return i >= 0 && i < 3 && j >= 0 && j < 3 && !visited[i][j];
     }
 }
 '''

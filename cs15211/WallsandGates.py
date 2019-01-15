@@ -1,30 +1,40 @@
-__author__ = 'July'
-# https://leetcode.com/discuss/60149/straightforward-python-solution-without-recursion
-# http://lidang.blogspot.com/2016/02/leetcode-286pythonwalls-and.html
-'''
-You are given a m x n 2D grid initialized with these three possible values.
-
--1 - A wall or an obstacle.
-0 - A gate.
-INF - Infinity means an empty room. We use the value 231 - 1 = 2147483647 to represent INF as you may assume that the distance to a gate is less than 2147483647.
-Fill each empty room with the distance to its nearest gate. If it is impossible to reach a gate, it should be filled with INF.
-
-For example, given the 2D grid:
-INF  -1  0  INF
-INF INF INF  -1
-INF  -1 INF  -1
-  0  -1 INF INF
-After running your function, the 2D grid should be:
-  3  -1   0   1
-  2   2   1  -1
-  1  -1   2  -1
-  0  -1   3   4
+__source__ = 'https://leetcode.com/problems/walls-and-gates/description/'
+# https://github.com/kamyu104/LeetCode/blob/master/Python/walls-and-gates.py
+# Time:  O(m * n)
+# Space: O(g)
 #
-#  Google Facebook
-# Hide Tags Breadth-first Search
-# Hide Similar Problems (M) Surrounded Regions (M) Number of Islands (H) Shortest Distance from All Buildings
+# Description: Leetcode # 286. Walls and Gates
+#
+# You are given a m x n 2D grid initialized with these three possible values.
+#
+# -1 - A wall or an obstacle.
+# 0 - A gate.
+# INF - Infinity means an empty room.
+#
+# We use the value 231 - 1 = 2147483647 to represent INF
+# as you may assume that the distance to a gate is less than 2147483647.
+# Fill each empty room with the distance to its nearest gate.
+# If it is impossible to reach a gate, it should be filled with INF.
+#
+# For example, given the 2D grid:
+# INF  -1  0  INF
+# INF INF INF  -1
+# INF  -1 INF  -1
+#   0  -1 INF INF
+# After running your function, the 2D grid should be:
+#   3  -1   0   1
+#   2   2   1  -1
+#   1  -1   2  -1
+#   0  -1   3   4
+#
+# Companies
+# Google Facebook
+# Related Topics
+# Breadth-first Search
+# Similar Questions
+# Surrounded Regions Number of Islands Shortest Distance from All Buildings
 
-'''
+import unittest
 #BFS
 class Solution(object):
     def wallsAndGates(self, rooms):
@@ -99,8 +109,6 @@ class Solution3(object):
                 if rooms[i][j] == 0:
                     self.dfs(rooms, m, n, i, j, padding)
 
-
-
     def dfs(self, rooms, m, n, i, j, padding):
         for k in xrange(4):
             p = i + padding[k]
@@ -110,56 +118,46 @@ class Solution3(object):
                 rooms[p][q] = rooms[i][j] + 1
                 self.dfs(rooms, m, n, p, q, padding)
 
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
 
-#java
-js = '''
-public class Solution {
+if __name__ == '__main__':
+    unittest.main()
+
+Java = '''
+# Thought: https://leetcode.com/problems/walls-and-gates/solution/
+# DFS
+# 99.31% 4ms
+class Solution {
     public static final int[][] DIRECTIONS = new int[][] {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
 
     public void wallsAndGates(int[][] rooms) {
-        if (rooms.length == 0) {
-            return;
-        }
         int m = rooms.length;
-        int n = rooms[0].length;
+        int n = m == 0 ? 0 : rooms[0].length;
         for (int i = 0; i < m; i++) {
             for (int j = 0; j < n; j++) {
                 if (rooms[i][j] == 0) {
-                    wallsAndGates(rooms, m, n, i, j, DIRECTIONS);
+                    dfs(rooms, m, n, i, j, 1);
                 }
             }
         }
     }
 
-    private void wallsAndGates(int[][] rooms, int m, int n, int row, int col, int[][] directions) {
-        Queue<Integer> rowQueue = new LinkedList<>();
-        Queue<Integer> colQueue = new LinkedList<>();
-        rowQueue.add(row);
-        colQueue.add(col);
-        int distance = 0;
-        while (!rowQueue.isEmpty()) {
-            int size = rowQueue.size();
-            for (int k = 0; k < size; k++) {
-                int i = rowQueue.poll();
-                int j = colQueue.poll();
-                rooms[i][j] = Math.min(rooms[i][j], distance);
-                for (int[] direction : directions) {
-                    int newI = i + direction[0];
-                    int newJ = j + direction[1];
-                    if (newI >= 0 && newI < m && newJ >= 0 && newJ < n && rooms[newI][newJ] >= distance) {
-                        rowQueue.add(newI);
-                        colQueue.add(newJ);
-                    }
-                }
+    private void dfs(int[][] rooms, int m, int n, int i, int j, int steps) {
+        for (int[] direction : DIRECTIONS) {
+            int newI = i + direction[0];
+            int newJ = j + direction[1];
+            if (newI >= 0 && newI < m && newJ >= 0 && newJ < n && rooms[newI][newJ] > steps) {
+                rooms[newI][newJ] = steps;
+                dfs(rooms, m, n, newI, newJ, steps + 1);
             }
-            distance++;
         }
     }
 }
-#https://discuss.leetcode.com/topic/35242/benchmarks-of-dfs-and-bfs
-BFS/DFS with benchmark
 
-DFS
+# DFS
+# 99.31% 4ms
 public class Solution {
     private static int[] dir = {0, 1, 0, -1, 0};
     public void wallsAndGates(int[][] rooms) {
@@ -181,6 +179,8 @@ public class Solution {
     }
 }
 
+# BFS
+# 59.16% 9ms
 public class Solution {
     //The Multi End BFS solution used is this
     public static final int[] d = {0, 1, 0, -1, 0};
@@ -193,9 +193,7 @@ public class Solution {
         for (int i = 0; i < m ; i++) {
             for (int j = 0; j < n; j++) {
                 if (rooms[i][j] == 0){
-                    queue.offer(i *n + j);
-                    // bfs(rooms, i, j)  //naive BFS solution
-                }
+                    queue.offer(i *n + j);                }
             }
         }
 
@@ -207,6 +205,45 @@ public class Solution {
                 if (0 <= p && p < m && 0 <= q && q < n && rooms[p][q] == Integer.MAX_VALUE) {
                     rooms[p][q] = rooms[i][j] + 1;
                     queue.offer(p * n + q);
+                }
+            }
+        }
+    }
+
+    private void bfs(int[][] rooms, int i, int j) {
+        int m = rooms.length, n = rooms[0].length;
+        Deque<Integer> queue = new ArrayDeque<>();
+        queue.offer(i * n + j); // Put gate in the queue
+        while (!queue.isEmpty()) {
+            int x = queue.poll();
+            i = x / n; j = x % n;
+            for (int k = 0; k < 4; ++k) {
+               int p = i + d[k], q = j + d[k+1];
+               if (0 <= p && p < m && 0 <= q && q < n && rooms[p][q] > rooms[i][j] + 1) {
+                   rooms[p][q] = rooms[i][j] + 1;
+                   queue.offer(p * n + q);
+               }
+            }
+        }
+    }
+}
+
+# BFS2
+# 32.38% 13ms
+class Solution {
+    //The Multi End BFS solution used is this
+    public static final int[] d = {0, 1, 0, -1, 0};
+
+    public void wallsAndGates(int[][] rooms) {
+        if (rooms.length == 0) return;
+        int m = rooms.length, n = rooms[0].length;
+
+        Deque<Integer> queue = new ArrayDeque<>();
+        for (int i = 0; i < m ; i++) {
+            for (int j = 0; j < n; j++) {
+                if (rooms[i][j] == 0){
+                    queue.offer(i * n + j);
+                    bfs(rooms, i, j);  //naive BFS solution
                 }
             }
         }

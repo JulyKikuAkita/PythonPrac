@@ -5,6 +5,8 @@ __source__ = 'https://leetcode.com/problems/best-time-to-buy-and-sell-stock-iv/#
 # Space: O(k)
 # DP
 #
+# Description: Leetcode # 188. Best Time to Buy and Sell Stock IV
+#
 # Say you have an array for which the ith element is the price of a given stock on day i.
 #
 # Design an algorithm to find the maximum profit. You may complete at most k transactions.
@@ -17,20 +19,22 @@ __source__ = 'https://leetcode.com/problems/best-time-to-buy-and-sell-stock-iv/#
 # Similar Questions
 # Best Time to Buy and Sell Stock Best Time to Buy and Sell Stock II Best Time to Buy and Sell Stock III
 #
+# Thought:
 #
-'''
-# http://www.programcreek.com/2014/03/leetcode-best-time-to-buy-and-sell-stock-iv-java/
-This is a generalized version of Best Time to Buy and Sell Stock III. If we can solve this problem, we can also use k=2 to solve III.
+# # http://www.programcreek.com/2014/03/leetcode-best-time-to-buy-and-sell-stock-iv-java/
+# This is a generalized version of Best Time to Buy and Sell Stock III.
+# If we can solve this problem, we can also use k=2 to solve III.
+#
+# The problem can be solve by using dynamic programming. The relation is:
+#
+# local[i][j] = max(global[i-1][j-1] + max(diff,0), local[i-1][j]+diff)
+# global[i][j] = max(local[i][j], global[i-1][j])
+# We track two arrays - local and global.
+# The local array tracks maximum profit of j transactions & the last transaction is on ith day.
+# The global array tracks the maximum profit of j transactions until ith day.
+#
 
-The problem can be solve by using dynamic programming. The relation is:
-
-local[i][j] = max(global[i-1][j-1] + max(diff,0), local[i-1][j]+diff)
-global[i][j] = max(local[i][j], global[i-1][j])
-We track two arrays - local and global. The local array tracks maximum profit of j transactions & the last transaction is on ith day.
-The global array tracks the maximum profit of j transactions until ith day.
-
-
-'''
+import unittest
 class Solution:
     # @return an integer as the maximum profit
     def maxProfit(self, k, prices):
@@ -90,16 +94,23 @@ class JavaSol1DDP:
         return max_sell[k]
 
 #test
-if __name__ == '__main__':
-    prices = [1, 2, 3, 4]
-    print Solution().maxProfit(2, prices)
-    print JavaSol2DDP().maxProfit(2, prices)
-    print JavaSol1DDP().maxProfit(2, prices)
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+        prices = [1, 2, 3, 4]
+        print Solution().maxProfit(2, prices)
+        print JavaSol2DDP().maxProfit(2, prices)
+        print JavaSol1DDP().maxProfit(2, prices)
 
-#Java
+if __name__ == '__main__':
+    unittest.main()
+
 Java = '''
-46.88%
-public class Solution {
+#Thought:
+DP: t(i,j) is the max profit for up to i transactions by time j (0<=i<=K, 0<=j<=T).
+
+# 3ms 97.26%
+class Solution {
     public int maxProfit(int k, int[] prices) {
         int len = prices.length;
         if (k <= 0 || len < 2) {
@@ -128,8 +139,8 @@ public class Solution {
     }
 }
 
-27%
-public class Solution {
+66% 4ms
+class Solution {
     public int maxProfit(int k, int[] prices) {
         int n = prices.length;
         if( n < 2 || k < 1) return 0;
@@ -158,8 +169,8 @@ public class Solution {
     }
 }
 
-27%
-public class Solution {
+# 3ms 97.26%
+class Solution {
     public int maxProfit(int k, int[] prices) {
         int len = prices.length;
         if (k >= len / 2) return quickSolve(prices);
@@ -185,8 +196,8 @@ public class Solution {
     }
 }
 
-87%
-public class Solution {
+# 3ms 97.26%
+class Solution {
     public int maxProfit(int k, int[] prices) {
         if(prices == null || prices.length < 2) {
             return 0;

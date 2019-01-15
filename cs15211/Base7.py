@@ -2,7 +2,8 @@ __source__ = 'https://leetcode.com/problems/base-7/#/description'
 # Time:  O(n)
 # Space: O()
 #
-# Description:
+# Description: 504. Base 7
+#
 # Given an integer, return its base 7 string representation.
 #
 # Example 1:
@@ -14,7 +15,7 @@ __source__ = 'https://leetcode.com/problems/base-7/#/description'
 # Note: The input will be in range of [-1e7, 1e7].
 
 import unittest
-
+# 20ms 100%
 class Solution(object):
     def convertToBase7(self, num):
         if num < 0: return '-' + self.convertToBase7(-num)
@@ -45,15 +46,16 @@ if __name__ == '__main__':
 Java = '''
 #Thought: Just keep dividing the current number by 7...
 
-
-public String convertTo7(int num) {
-    if (num < 0)
-        return '-' + convertTo7(-num);
-    if (num < 7)
-        return num + "";
-    return convertTo7(num / 7) + num % 7;
+# 6ms 100%
+class Solution {
+    public String convertToBase7(int num) {
+        if ( num < 0) return '-' + convertToBase7(-num);
+        if ( num < 7) return num + "";
+        return convertToBase7(num / 7) + num % 7;
+    }
 }
 
+# 7ms 99.13%
 public class Solution {
     public String convertTo7(int num) {
         if (num == 0) return "0";

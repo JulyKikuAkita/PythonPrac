@@ -1,7 +1,9 @@
 # https://github.com/kamyu104/LeetCode/blob/master/Python/add-strings.py
 # Time:  O(n)
 # Space: O(1)
-
+#
+# Description: Leetcode # 415. Add Strings
+#
 # Given two non-negative numbers num1 and num2 represented as string,
 # return the sum of num1 and num2.
 #
@@ -17,7 +19,7 @@
 # Google Airbnb
 # Hide Tags Math
 # Hide Similar Problems (M) Add Two Numbers (M) Multiply Strings
-
+#
 class Solution(object):
     def addStrings(self, num1, num2):
         """
@@ -62,8 +64,11 @@ class Solution(object):
             res += '1'
         return res[::-1]
 
-java = '''
-public class Solution {
+Java = '''
+#Thought:
+
+#15ms 69.95%
+class Solution {
     public String addStrings(String num1, String num2) {
         StringBuilder sb = new StringBuilder();
         int carry = 0;

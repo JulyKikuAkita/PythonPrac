@@ -1,11 +1,15 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/reverse-words-in-a-string-ii/description/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/reverse-words-in-a-string-ii.py
 # Time: O(n)
 # Space:O(1)
 #
-# Given an input string, reverse the string word by word. A word is defined as a sequence of non-space characters.
+# Description: Leetcode # 186. Reverse Words in a String II
 #
-# The input string does not contain leading or trailing spaces and the words are always separated by a single space.
+# Given an input string, reverse the string word by word.
+# A word is defined as a sequence of non-space characters.
+#
+# The input string does not contain leading or trailing spaces
+# and the words are always separated by a single space.
 #
 # For example,
 # Given s = "the sky is blue",
@@ -13,15 +17,20 @@ __author__ = 'July'
 #
 # Could you do it in-place without allocating extra space?
 #
-# Amazon Microsoft
-
+# Companies
+# Amazon Microsoft Uber
+# Related Topics
+# String
+# Similar Questions
+# Reverse Words in a String Rotate Array
+#
+import unittest
 class Solution:
     # @param s, a list of 1 length strings, e.g., s = ['h','e','l','l','o']
     # @return nothing
     def reverseWords(self, s):
         #reverse whole sentence
         self.reverse(s, 0, len(s))
-
 
         i = 0
         #reverse each word
@@ -30,14 +39,13 @@ class Solution:
                 self.reverse(s, i, j )
                 i = j + 1
 
-
     def reverse(self, s, begin, end):
         for i in xrange((end - begin) / 2):
             #print end, begin, (end - begin) / 2
             #s[begin + i], s[end - 1 - i] = s[end - 1 - i], s[begin + i]
             s[begin + i], s[end  - i - 1] = s[end - i - 1], s[begin + i]
 
-class Solution(object):
+class Solution2(object):
     def reverseWords(self, s):
         """
         :type s: a list of 1 length strings (List[str])
@@ -59,18 +67,26 @@ class Solution(object):
             start += 1
             end -= 1
 
-#test
-if __name__ == "__main__":
-    s = ['h','e','l','l','o', ' ', 'w', 'o', 'r', 'l', 'd']
-    Solution().reverseWords(s)
-    print s
+# Test
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+        s = ['h','e','l','l','o', ' ', 'w', 'o', 'r', 'l', 'd']
+        Solution().reverseWords(s)
+        print s
 
-    #s1= ['h','e','l','l','o', ' ', 'w', 'o', 'r', 'l', 'd']
-    #s1.reverse()
-    #print s1
-#java
-js = '''
-public class Solution {
+        #s1= ['h','e','l','l','o', ' ', 'w', 'o', 'r', 'l', 'd']
+        #s1.reverse()
+        #print s1
+
+if __name__ == '__main__':
+    unittest.main()
+
+Java = '''
+# Thought:
+
+# 4ms 26.89%
+class Solution {
     public void reverseWords(char[] s) {
         int start = 0;
         int end = 0;
@@ -116,7 +132,33 @@ public class Solution {
     }
 }
 
-public class Solution {
+# 2ms 100%
+class Solution {
+    public void reverseWords(char[] s) {
+        int len = s.length;
+        reverse(s, 0, len - 1);
+        int begin = 0;
+        for (int i = 1; i < len; i++) {
+            if (s[i] == ' ') {
+                reverse(s, begin, i - 1);
+                begin = i + 1;
+                i++;
+            }
+        }
+        reverse(s, begin, len - 1);
+    }
+
+    private void reverse(char[] s, int from, int to) {
+        for (int lo = from, hi = to; lo < hi; lo++, hi--) {
+            char tmp = s[lo];
+            s[lo] = s[hi];
+            s[hi] = tmp;
+        }
+    }
+}
+
+# 3ms 62.61%
+class Solution {
     public void reverseWords(char[] s) {
         reverse(s, 0, s.length-1);
         int i = 0;

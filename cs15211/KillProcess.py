@@ -38,6 +38,7 @@ __source__ = 'https://leetcode.com/problems/kill-process/#/description'
 
 import unittest
 import collections
+# 180ms 87.34%
 class Solution(object):
     def killProcess(self, pid, ppid, kill):
         """
@@ -51,6 +52,7 @@ class Solution(object):
         bfs = [kill]
         for i in bfs: bfs.extend(d.get(i, []))
         return bfs
+
 class TestMethods(unittest.TestCase):
     def test_Local(self):
         self.assertEqual(1, 1)
@@ -60,8 +62,10 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/articles/kill-process/
-public class Solution {
+# Thought: https://leetcode.com/problems/kill-process/solution/
+
+# 44ms 76.99%
+class Solution {
     public List<Integer> killProcess(List<Integer> pid, List<Integer> ppid, int kill) {
         // Store process tree as an adjacency list
         Map<Integer, List<Integer>> adjacencyLists = new HashMap<>();

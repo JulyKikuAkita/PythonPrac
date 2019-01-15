@@ -2,7 +2,8 @@ __source__ = 'https://leetcode.com/problems/queue-reconstruction-by-height/#/des
 # Time:  O()
 # Space: O()
 #
-# Description:
+# Description: 406. Queue Reconstruction by Height
+#
 # Suppose you have a random list of people standing in a queue.
 # Each person is described by a pair of integers (h, k),
 # where h is the height of the person and k is the number of people in front of this person
@@ -32,6 +33,7 @@ import unittest
 # subarray after step 1: [[7,0], [7,1]]
 # subarray after step 2: [[7,0], [6,1], [7,1]]
 #
+# 80ms 76.66%
 class Solution(object):
     def reconstructQueue(self, people):
         """
@@ -80,6 +82,7 @@ class Solution(object):
 # That's what the above solution does, Sorting the people from the first-tallest to the last-smallest,
 # and inserting them one by one as appropriate.
 
+    # 140ms 33.79%
     def reconstructQueue2(self, people):
             people.sort(key=lambda (h, k): (-h, k))
             queue = []
@@ -96,7 +99,7 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
+# Thought:
 We first sort the people to make them stand from the highest to shortest.
 For people with same height, sort them according to the count of people before them from small to big.
 
@@ -106,7 +109,8 @@ so we just insert him in the "right" place to make the people before him as his 
 Since he is shorter than all the people in the sorted list,
 the "count" of the "existing" people does not be broken by the insertion.
 
-public class Solution {
+# 74ms 12.62%
+class Solution {
     public int[][] reconstructQueue(int[][] people) {
         if (people == null || people.length == 0 || people[0].length == 0)
             return new int[0][0];

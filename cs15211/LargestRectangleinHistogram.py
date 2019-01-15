@@ -1,7 +1,9 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/largest-rectangle-in-histogram/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/largest-rectangle-in-histogram.py
 # Time:  O(n)
 # Space: O(n)
+#
+# Description: Leetcode # 84. Largest Rectangle in Histogram
 #
 # Given n non-negative integers representing the histogram's bar
 # height where the width of each bar is 1,
@@ -11,7 +13,12 @@ __author__ = 'July'
 # Given height = [2,1,5,6,2,3],
 # return 10.
 #
+# Related Topics
 # Array Stack
+# Similar Questions
+# Maximal Rectangle
+#
+import unittest
 class Solution:
     # @param height, a list of integer
     # @return an integer
@@ -30,7 +37,6 @@ class Solution:
                     area = max(area, height[last] * (i - increasing[-1] - 1))
                     #print "at else :" ,area
         return area
-
 
 # http://www.cnblogs.com/zuoyuan/p/3783993.html
 class Solution2:
@@ -67,18 +73,26 @@ class Solution2:
         return maxArea
 
 #test
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        rec1 = [2, 0, 2]
+        rec2 = [2, 1, 5, 6, 2, 3]
+        rec3 = [1, 2, 3, 1]
+        #print Solution().largestRectangleArea(rec1)
+        #print Solution().largestRectangleArea(rec2)
+        print Solution().largestRectangleArea(rec3)
+
 if __name__ == '__main__':
-    rec1 = [2, 0, 2]
-    rec2 = [2, 1, 5, 6, 2, 3]
-    rec3 = [1, 2, 3, 1]
-    #print Solution().largestRectangleArea(rec1)
-    #print Solution().largestRectangleArea(rec2)
-    print Solution().largestRectangleArea(rec3)
+    unittest.main()
 
+Java = '''
+# Thought: https://leetcode.com/problems/largest-rectangle-in-histogram/#/solution
+# http://www.geeksforgeeks.org/largest-rectangle-under-histogram/
+# with segment tree: http://www.geeksforgeeks.org/largest-rectangular-area-in-a-histogram-set-1/
 
-#java
-js = '''
-public class Solution {
+# O(n)
+# 22ms 44.60%
+class Solution {
     public int largestRectangleArea(int[] heights) {
         Stack<Integer> stack = new Stack<>();
         int len = heights.length;
@@ -98,34 +112,117 @@ public class Solution {
     }
 }
 
-public class Solution {
-    public int largestRectangleArea(int[] heights) {
-        if( heights == null ||heights.length == 0) return 0;
-        int res = 0;
-
-        int[] record = new int[heights.length + 1];
-        for(int i = 0; i < heights.length;i++){
-            record[i] = heights[i];
-        }
-        record[heights.length] = 0;
-
-        Stack<Integer> stack = new Stack<>();
-        for(int i = 0; i <record.length; i++){
-            if(stack.isEmpty() || record[stack.peek()] <= record[i]){
-                stack.push(i);
+# 20ms 59.13%
+class Solution {
+    public int largestRectangleArea(int[] height) {
+        int len = height.length;
+        Stack<Integer> s = new Stack<Integer>();
+        int maxArea = 0;
+        for(int i = 0; i <= len; i++){
+            int h = (i == len ? 0 : height[i]);
+            if(s.isEmpty() || h >= height[s.peek()]){
+                s.push(i);
             }else{
-                int h = record[stack.pop()];
-                int curArea;
-                if(stack.isEmpty()){
-                    curArea = h * i;
-                }else{
-                    curArea = h * (i - stack.peek() - 1);
-                }
-                res = Math.max(res, curArea);
+                int tp = s.pop();
+                maxArea = Math.max(maxArea, height[tp] * (s.isEmpty() ? i : i - 1 - s.peek()));
                 i--;
             }
         }
+        return maxArea;
+    }
+}
+
+# Thought: https://discuss.leetcode.com/topic/39151/5ms-o-n-java-solution-explained-beats-96
+# 3ms 96.31%
+class Solution {
+    public static int largestRectangleArea(int[] height) {
+    if (height == null || height.length == 0) {
+        return 0;
+    }
+    int[] lessFromLeft = new int[height.length]; // idx of the first bar the left that is lower than current
+    int[] lessFromRight = new int[height.length]; // idx of the first bar the right that is lower than current
+    lessFromRight[height.length - 1] = height.length;
+    lessFromLeft[0] = -1;
+
+    for (int i = 1; i < height.length; i++) {
+        int p = i - 1;
+
+        while (p >= 0 && height[p] >= height[i]) {
+            p = lessFromLeft[p];
+        }
+        lessFromLeft[i] = p;
+    }
+
+    for (int i = height.length - 2; i >= 0; i--) {
+        int p = i + 1;
+
+        while (p < height.length && height[p] >= height[i]) {
+            p = lessFromRight[p];
+        }
+        lessFromRight[i] = p;
+    }
+
+    int maxArea = 0;
+    for (int i = 0; i < height.length; i++) {
+        maxArea = Math.max(maxArea, height[i] * (lessFromRight[i] - lessFromLeft[i] - 1));
+    }
+
+    return maxArea;
+    }
+}
+
+# divide and conquer
+# 1ms 100%
+class Solution {
+    //int max=0;
+    public int largestRectangleArea(int[] heights) {
+        if(heights==null|heights.length==0) return 0;
+        return divide(heights,0,heights.length-1);
+        //return max;
+    }
+    public int divide(int[] heights,int start,int end){
+        if(start>end) return 0;
+        if(start==end) return heights[start];
+        boolean sorted=true;
+        int min=start;
+        //int max=0;
+        for(int i=start+1;i<=end;i++){
+            if(heights[i]<heights[i-1]) sorted=false;
+            if(heights[i]<heights[min]) min=i;
+        }
+        if(sorted){
+            int max=0;
+            for(int i=start;i<=end;i++){
+                max=Math.max(max,heights[i]*(end-i+1));
+            }
+            return max;
+        }
+        int l=divide(heights,start,min-1);
+        int r=divide(heights,min+1,end);
+        int res=Math.max(l,r);
+        res=Math.max(res,heights[min]*(end-start+1));
         return res;
+    }
+}
+
+# 8ms 91.55%
+class Solution {
+    public int largestRectangleArea(int[] height) {
+        if (height == null || height.length == 0) {
+            return 0;
+        }
+        int result = 0;
+        for (int i = 0; i < height.length; i++) {
+            if (i < height.length - 1 && height[i] <= height[i + 1]) {
+                continue;
+            }
+            int minHeight = height[i];
+            for (int j = i; j >= 0; j--) {
+                minHeight = Math.min(minHeight, height[j]);
+                result = Math.max(result, (i - j + 1) * minHeight);
+            }
+        }
+        return result;
     }
 }
 '''

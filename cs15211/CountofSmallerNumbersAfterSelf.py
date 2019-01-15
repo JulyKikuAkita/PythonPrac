@@ -2,7 +2,9 @@ __source__ = 'https://github.com/kamyu104/LeetCode/blob/master/Python/count-of-s
 # https://leetcode.com/problems/count-of-smaller-numbers-after-self/#/description
 # Time:  O(nlogn)
 # Space: O(n)
-
+#
+# Description: Leetcode # 315. Count of Smaller Numbers After Self
+#
 # You are given an integer array nums and you have to
 # return a new counts array. The counts array has the
 # property where counts[i] is the number of smaller
@@ -17,10 +19,15 @@ __source__ = 'https://github.com/kamyu104/LeetCode/blob/master/Python/count-of-s
 # To the right of 6 there is 1 smaller element (1).
 # To the right of 1 there is 0 smaller element.
 # Return the array [2, 1, 1, 0].
-#  Google
-# Hide Tags Divide and Conquer Binary Indexed Tree Segment Tree Binary Search Tree
-# Hide Similar Problems (H) Count of Range Sum (M) Queue Reconstruction by Height (H) Reverse Pairs
 #
+# Companies
+# Google
+# Related Topics
+# Divide and Conquer Binary Indexed Tree Segment Tree Binary Search Tree
+# Similar Questions
+# Count of Range Sum Queue Reconstruction by Height Reverse Pairs
+#
+import unittest
 # BIT solution.
 class Solution(object):
     def countSmaller(self, nums):
@@ -65,7 +72,6 @@ class Solution(object):
             ans[i] = bit.query(places[i])
             bit.__add__(places[i] + 1, 1)
         return ans
-
 
 # Time:  O(nlogn)
 # Space: O(n)
@@ -132,9 +138,40 @@ class Solution2(object):
                     return count + curr.count
             return 0
 
-#java
+# MergeSort
+# Thought: https://discuss.leetcode.com/topic/31162/mergesort-solution
+# 128ms 64.78%
+class Solution3(object):
+    def countSmaller(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: List[int]
+        """
+        def sort(enum):
+            half = len(enum) / 2
+            if half:
+                left, right = sort(enum[:half]), sort(enum[half:])
+                for i in range(len(enum))[::-1]:
+                    if not right or left and left[-1][1] > right[-1][1]:
+                        smaller[left[-1][0]] += len(right)
+                        enum[i] = left.pop()
+                    else:
+                        enum[i] = right.pop()
+            return enum
+        smaller = [0] * len(nums)
+        sort(list(enumerate(nums)))
+        return smaller
+
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+
+if __name__ == '__main__':
+    unittest.main()
+
 Java = '''
 Thought:
+
 1. building BST:
 Every node will maintain a val sum recording the total of number on it's left bottom side,
 dup counts the duplication. For example, [3, 2, 2, 6, 1], from back to beginning,we would have:
@@ -154,7 +191,8 @@ the nodes where we turn right is 1(0,1), 2,(0,2), 3(0,1), so the answer should b
 
 if we insert 7, the right-turning nodes are 1(0,1), 6(3,1), so answer should be (0 + 1) + (3 + 1) = 5
 
-public class Solution {
+# 5ms 97.81%
+class Solution {
     class Node {
         Node left, right;
         int val, sum, dup = 1;
@@ -189,7 +227,8 @@ public class Solution {
 }
 
 # building BST
-public class Solution {
+# 10ms 58.31%
+class Solution {
     public List<Integer> countSmaller(int[] nums) {
         List<Integer> result = new ArrayList<>();
         Tree tree = new Tree();
@@ -251,6 +290,61 @@ public class Solution {
     }
 }
 
+# BIT
+# 3ms 100%
+public class Solution {
+    public List<Integer> countSmaller(int[] nums) {
+         if (nums == null || nums.length == 0) {
+             return new ArrayList<Integer>();
+         }
+         makePositive(nums);
+         int max = findMax(nums);
+         int[] tree = new int[max + 1];
+         Integer[] result = new Integer[nums.length];
+         for (int i = nums.length - 1; i >= 0; i--) {
+             result[i] = findResult(nums[i], tree);
+             updateTree(nums[i] + 1, tree);
+         }
+         return Arrays.asList(result);
+    }
+
+    private void makePositive(int[] nums) {
+        int minus = 0;
+        for (int num : nums) {
+            minus = Math.min(minus, num);
+        }
+        if (minus < 0) {
+            minus = -minus + 1;
+            for (int i = 0; i < nums.length; i++) {
+                nums[i] += minus;
+            }
+        }
+    }
+
+    private int findMax(int[] nums) {
+        int max = 0;
+        for (int num : nums) {
+            max = Math.max(max, num);
+        }
+        return max;
+    }
+
+    private void updateTree(int index, int[] tree) {
+        while (index < tree.length && index > 0) {
+            tree[index]++;
+            index += index & (-index);
+        }
+    }
+
+    private int findResult(int index, int[] tree) {
+        int result = 0;
+        while (index > 0) {
+            result += tree[index];
+            index &= index - 1;
+        }
+        return result;
+    }
+}
 
 
 2.Traverse from the back to the beginning of the array, maintain an sorted array of numbers have been visited.
@@ -261,8 +355,115 @@ Then we insert 2 into the sorted array to form [1,2,3,6].
 Due to the O(n) complexity of ArrayList insertion,
 the total runtime complexity is not very fast, but anyway it got AC for around 53ms.
 
+# 34ms 28.40%
+class Solution {
+    public List<Integer> countSmaller(int[] nums) {
+        Integer[] ans = new Integer[nums.length];
+        List<Integer> sorted = new ArrayList<Integer>();
+        for (int i = nums.length - 1; i >= 0; i--) {
+            int index = findIndex(sorted, nums[i]);
+            ans[i] = index;
+            sorted.add(index, nums[i]);
+        }
+        return Arrays.asList(ans);
+    }
+    private int findIndex(List<Integer> sorted, int target) {
+        if (sorted.size() == 0) return 0;
+        int start = 0;
+        int end = sorted.size() - 1;
+        if (sorted.get(end) < target) return end + 1;
+        if (sorted.get(start) >= target) return 0;
+        while (start + 1 < end) {
+            int mid = start + (end - start) / 2;
+            if (sorted.get(mid) < target) {
+                start = mid;
+            } else {
+                end = mid;
+            }
+        }
+        if (sorted.get(start) >= target) return start;
+        return end;
+    }
+}
 
+3. MergeSort:
 
+The basic idea is to do merge sort to nums[].
+To record the result, we need to keep the index of each number in the original array.
+So instead of sort the number in nums, we sort the indexes of each number.
+
+Example: nums = [5,2,6,1], indexes = [0,1,2,3]
+After sort: indexes = [3,1,0,2]
+
+While doing the merge part, say that we are merging left[] and right[], left[] and right[] are already sorted.
+
+We keep a rightcount to record how many numbers from right[] we have added and keep an array count[] to record the result.
+
+When we move a number from right[] into the new sorted array, we increase rightcount by 1.
+
+When we move a number from left[] into the new sorted array, we increase count[ index of the number ] by rightcount.
+
+# 6ms 87.08%
+class Solution {
+    int[] count;
+    public List<Integer> countSmaller(int[] nums) {
+        List<Integer> res = new ArrayList<Integer>();
+
+        count = new int[nums.length];
+        int[] indexes = new int[nums.length];
+        for(int i = 0; i < nums.length; i++){
+            indexes[i] = i;
+        }
+        mergesort(nums, indexes, 0, nums.length - 1);
+        for(int i = 0; i < count.length; i++){
+            res.add(count[i]);
+        }
+        return res;
+    }
+    private void mergesort(int[] nums, int[] indexes, int start, int end){
+        if(end <= start){
+            return;
+        }
+        int mid = (start + end) / 2;
+        mergesort(nums, indexes, start, mid);
+        mergesort(nums, indexes, mid + 1, end);
+
+        merge(nums, indexes, start, end);
+    }
+    private void merge(int[] nums, int[] indexes, int start, int end){
+        int mid = (start + end) / 2;
+        int left_index = start;
+        int right_index = mid+1;
+        int rightcount = 0;
+        int[] new_indexes = new int[end - start + 1];
+
+        int sort_index = 0;
+        while(left_index <= mid && right_index <= end){
+            if(nums[indexes[right_index]] < nums[indexes[left_index]]){
+                new_indexes[sort_index] = indexes[right_index];
+                rightcount++;
+                right_index++;
+            }else{
+                new_indexes[sort_index] = indexes[left_index];
+                count[indexes[left_index]] += rightcount;
+                left_index++;
+            }
+            sort_index++;
+        }
+        while(left_index <= mid){
+            new_indexes[sort_index] = indexes[left_index];
+            count[indexes[left_index]] += rightcount;
+            left_index++;
+            sort_index++;
+        }
+        while(right_index <= end){
+            new_indexes[sort_index++] = indexes[right_index++];
+        }
+        for(int i = start; i <= end; i++){
+            indexes[i] = new_indexes[i - start];
+        }
+    }
+}
 '''
 
 

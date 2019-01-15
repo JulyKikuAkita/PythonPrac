@@ -1,8 +1,9 @@
-__source__ = 'https://leetcode.com/problems/freedom-trail/#/description'
+__source__ = 'https://leetcode.com/problems/freedom-trail/'
 # Time:  O(m*n) dp
 # Space: O(m*n)
 #
-# Description:
+# Description: 514. Freedom Trail
+#
 # In the video game Fallout 4, the quest "Road to Freedom" requires players to reach a metal dial
 # called the "Freedom Trail Ring", and use the dial to spell a specific keyword in order to open the door.
 #
@@ -58,6 +59,8 @@ import unittest
 # One can actually improve this method by doing it backward.
 # In this way, we can just return the cost to position = 0
 # instead of searching over all possible end positions.
+#
+# 216ms 50.94%
 class Solution(object):
     def findRotateSteps(self, ring, key):
         """
@@ -106,9 +109,11 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
+# Thought:
 DP:
-public class Solution {
+
+# 56ms 46%
+class Solution {
     public int findRotateSteps(String ring, String key) {
         int n = ring.length();
         int m = key.length();
@@ -131,7 +136,6 @@ public class Solution {
     }
 }
 
-#DFS:
 The key point in the problem is to make decision whether to move clockwise or anticlockwise.
 Actually to get optimal answer, we have to move clockwise for some characters of
 key and anti-clockwise for others. If apply brute force, then for each position in key we have two options,
@@ -144,7 +148,9 @@ for some positions. Therefore, we need to memorize states.
 The state is defined by position of thering and the index of character in the key.
 This way, we can avoid calculating number of steps for the same state. Code will clarify the idea more.
 
-public class Solution {
+# DFS:
+# 71ms 27%
+class Solution {
     Map<String, Map<Integer, Integer>> memo;
 
     public int findRotateSteps(String ring, String key) {

@@ -1,8 +1,10 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/search-insert-position/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/search-insert-position.py
 # Time:  O(logn)
 # Space: O(1)
 # Binary Search
+#
+# Description: Leetcode # 35. Search Insert Position
 #
 # Given a sorted array and a target value, return the index if the target is found.
 #
@@ -16,7 +18,12 @@ __author__ = 'July'
 # [1,3,5,6], 7 -> 4
 # [1,3,5,6], 0 -> 0
 #
+# Related Topics
+# Array Binary Search
+# Similar Questions
+# First Bad Version
 
+import unittest
 class Solution:
     # @param A, a list of integers
     # @param target, an integer to be inserted
@@ -34,30 +41,6 @@ class Solution:
                 high = mid - 1
         return low
 
-
-# Java solution
-# http://www.programcreek.com/2013/01/leetcode-search-insert-position/
-# Time: O(n)
-class Naive:
-    # @param A, a list of integers
-    # @param target, an integer to be inserted
-    # @return integer
-    def searchInsert(self, A, target):
-        if not A:
-            return 0
-        if target <= A[0]: return 0
-
-        for i in xrange(len(A) - 1):
-            if target > A[i] and target <= A[i+1]:
-                return i+1
-        return len(A)
-
-if __name__ == "__main__":
-    print Solution().searchInsert([1, 3, 5, 6], 5)
-    print Solution().searchInsert([1, 3, 5, 6], 2)
-    print Solution().searchInsert([1, 3, 5, 6], 7)
-    print Solution().searchInsert([1, 3, 5, 6], 0)
-
 class SolutionOther:
     # @param A, a list of integers
     # @param target, an integer to be inserted
@@ -71,11 +54,88 @@ class SolutionOther:
             else:
                 r = m
         return l
-
-
  #test
-test = SolutionOther()
-print test.searchInsert([], 8 )
-print test.searchInsert([-100, -1], 8 )
-print test.searchInsert([1,3,5,7,9], 8 )
-print test.searchInsert([1,3,5,7,9], 7 )
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+        test = SolutionOther()
+        print test.searchInsert([], 8 )
+        print test.searchInsert([-100, -1], 8 )
+        print test.searchInsert([1,3,5,7,9], 8 )
+        print test.searchInsert([1,3,5,7,9], 7 )
+        print Solution().searchInsert([1, 3, 5, 6], 5)
+        print Solution().searchInsert([1, 3, 5, 6], 2)
+        print Solution().searchInsert([1, 3, 5, 6], 7)
+        print Solution().searchInsert([1, 3, 5, 6], 0)
+
+if __name__ == '__main__':
+    unittest.main()
+
+Java = '''
+# Thought:
+# 2ms 100%
+class Solution {
+    public int searchInsert(int[] nums, int target) {
+        if (nums.length == 0 || nums[nums.length - 1] < target) {
+            return nums.length;
+        }
+        int start = 0;
+        int end = nums.length - 1;
+        while (start < end) {
+            int mid = start + (end - start) / 2;
+            if (nums[mid] < target) {
+                start = mid + 1;
+            } else {
+                end = mid;
+            }
+        }
+        return start;
+    }
+}
+
+# Binary search
+# version 1: find the first position >= target
+# 4ms 36.75%
+class Solution {
+    public int searchInsert(int[] A, int target) {
+        if (A == null || A.length == 0) {
+            return 0;
+        }
+        int start = 0, end = A.length - 1;
+
+        while (start + 1 < end) {
+            int mid = start + (end - start) / 2;
+            if (A[mid] == target) {
+                return mid;
+            } else if (A[mid] < target) {
+                start = mid;
+            } else {
+                end = mid;
+            }
+        }
+
+        if (A[start] >= target) {
+            return start;
+        } else if (A[end] >= target) {
+            return end;
+        } else {
+            return end + 1;
+        }
+    }
+}
+
+# 4ms 36.75%
+class Solution {
+    public int searchInsert(int[] A, int target) {
+        if (A == null || A.length == 0) {
+            return 0;
+        }
+        for (int i = 0; i < A.length; i++) {
+            if (target <= A[i]) {
+                return i;
+            }
+        }
+        return A.length;
+    }
+}
+'''

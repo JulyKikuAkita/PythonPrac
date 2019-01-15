@@ -1,8 +1,10 @@
-__source__ = 'https://leetcode.com/problems/longest-palindromic-substring/#/description'
+__source__ = 'https://leetcode.com/problems/longest-palindromic-substring/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/longest-palindromic-substring.py
 # Time:  O(n)
 # Space: O(n)
-# String
+# String, Manacher's Algorithm
+#
+# Description: Leetcode # 5. Longest Palindromic Substring
 #
 # Given a string S, find the longest palindromic substring in S.
 # You may assume that the maximum length of S is 1000,
@@ -27,14 +29,17 @@ __source__ = 'https://leetcode.com/problems/longest-palindromic-substring/#/desc
 # Shortest Palindrome Palindrome Permutation Palindrome Pairs Longest Palindromic Subsequence
 #
 # Manacher's Algorithm
-# Manacher (1975) found a linear time algorithm for listing all the palindromes that appear at the start of a given string.
-#  However, as observed e.g., by Apostolico, Breslauer & Galil (1995), the same algorithm can also be used
+# Manacher (1975) found a linear time algorithm for listing all the palindromes
+# that appear at the start of a given string.
+# However, as observed e.g., by Apostolico, Breslauer & Galil (1995), the same algorithm can also be used
 # to find all maximal palindromic substrings anywhere within the input string, again in linear time.
 # Therefore, it provides a linear time solution to the longest palindromic substring problem.
 # Alternative linear time solutions were provided by Jeuring (1994),
 # and by Gusfield (1997), who described a solution based on suffix trees.
 # Efficient parallel algorithms are also known for the problem.[1]
 # http://en.wikipedia.org/wiki/Longest_palindromic_substring
+#
+import unittest
 class Solution:
     def longestPalindrome(self, s):
         string = self.preProcess(s)
@@ -167,18 +172,10 @@ class DP:
             print table[i]
         print "----------------"
 
-
-
-if __name__ == "__main__":
-    #print Solution().longestPalindrome("abac")
-    #print Solution2().longestPalindrome("abac")
-    #print naive().longestPalindrome("abac")
-    print DP().longestPalindrome("dabcba")
-
-
 class SolutionOther:
     #dp solution :http://leetcode.com/2011/11/longest-palindromic-substring-part-i.html
-    # You may assume that the maximum length of S is 1000, and there exists one unique longest palindromic substring.
+    # You may assume that the maximum length of S is 1000,
+    # and there exists one unique longest palindromic substring.
     # @return a string
     def longestPalindrome(self, s):
         arr = ['$' , '#']
@@ -205,20 +202,33 @@ class SolutionOther:
         return s[st:st+p[ansp] - 1]
 
 #test
-test = SolutionOther()
-#print test.longestPalindrome("amorrroma")
-#print test.longestPalindrome("ccd")
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        test = SolutionOther()
+        #print test.longestPalindrome("amorrroma")
+        #print test.longestPalindrome("ccd")
 
-#str = "abcd"
-#print str[0:2]
+        #print Solution().longestPalindrome("abac")
+        #print Solution2().longestPalindrome("abac")
+        #print naive().longestPalindrome("abac")
+        print DP().longestPalindrome("dabcba")
+        #str = "abcd"
+        #print str[0:2]
 
-#Java
+if __name__ == '__main__':
+    unittest.main()
+
 Java = '''
-Thought: https://leetcode.com/problems/longest-palindromic-substring/#/solution
+# Thought: https://leetcode.com/problems/longest-palindromic-substring/solution/
+#
 # Manacher's Algorithm
+# https://www.youtube.com/watch?v=nbTSfrEfo6M watch this to know 
+# 1) len of longest palindrome(manArr[i]) = min(right - i, len[mirror] = manarr[2 * cneter - i]) 
+# depends on if beyond boundry
+# 2) if len of longest palindrome beyond right boundry, rest center and right boundry
 # O(n)
-# 96%
-public class Solution {
+# 8ms 99.47%
+class Solution {
     public String longestPalindrome(String s) {
         if (s == null || s.length() == 0) {
             return s;
@@ -271,31 +281,58 @@ public class Solution {
 }
 
 
-#dp
+Approach #3 (Dynamic Programming) [Accepted]
 dp(i, j) represents whether s(i ... j) can form a palindromic substring,
 dp(i, j) is true when s(i) equals to s(j) and s(i+1 ... j-1) is a palindromic substring.
 When we found a palindrome, check if it's the longest one. Time complexity O(n^2).
 
-18.73%
-O(n^2)
-public class Solution {
+# O(n^2)
+# 35ms 36.62%
+class Solution {
     public String longestPalindrome(String s) {
         int n = s.length();
-        String res = null;
+        String res = "";
 
         boolean[][] dp = new boolean[n][n];
         for (int i = n - 1; i >= 0; i--) {
             for (int j = i; j < n; j++) {
                 dp[i][j] = s.charAt(i) == s.charAt(j) && (j - i < 3 || dp[i+1][j-1]);
-                if (dp[i][j] && (res == null || j - i + 1 > res.length())) res = s.substring(i, j+1);
+                if (dp[i][j] && (res == "" || j - i + 1 > res.length())) res = s.substring(i, j+1);
             }
         }
         return res;
     }
 }
 
-11.39%
-public class Solution {
+# 51ms 43.88%
+class Solution {
+    public String longestPalindrome(String s) {
+        if (s == null || s.length() == 0) {
+            return s;
+        }
+        char[] arr = s.toCharArray();
+        int len = arr.length;
+        boolean[][] isPalin = new boolean[len][len];
+        int start = 0;
+        int end = 0;
+        int length = 0;
+        for (int i = 0; i < len; i++) {
+            isPalin[i][i] = true;
+            for (int j = i - 1; j >= 0; j--) {
+                isPalin[j][i] = arr[j] == arr[i] && (i - j < 2 || isPalin[j + 1][i - 1]);
+                if (isPalin[j][i] && i - j + 1 > length) {
+                    start = j;
+                    end = i;
+                    length = i - j + 1;
+                }
+            }
+        }
+        return s.substring(start, end + 1);
+    }
+}
+
+# 65ms 36.26%
+class Solution {
     public String longestPalindrome(String s) {
         if(s.length() < 2) return s;
 
@@ -326,15 +363,17 @@ public class Solution {
     }
 }
 
-91%
-public class Solution {
+Approach #4 (Expand Around Center) [Accepted] 
+# O(n^2)
+# 10ms 95.65%
+class Solution {
     private int lo, maxLen;
     public String longestPalindrome(String s) {
         int len = s.length();
         if (len < 2) return s;
         for (int i = 0; i < len - 1; i++) {
             extendPalindrome(s, i, i);  //assume odd length, try to extend Palindrome as possible
-     	    extendPalindrome(s, i, i+1); //assume even length.
+            extendPalindrome(s, i, i+1); //assume even length.
         }
         return s.substring(lo, lo + maxLen);
     }
@@ -344,42 +383,73 @@ public class Solution {
             left--;
             right++;
         }
-        if (maxLen < right - left - 1) {
+        if (maxLen < right - left - 1) { //-1 b.c additinoal i--, j++ when leave loop
             lo = left + 1;
             maxLen = right - left - 1;
         }
     }
 }
 
-63%
-public class Solution {
+class Solution {
+    public String longestPalindrome(String s) {
+        if (s == null || s.length() < 1) return "";
+        int start = 0, end = 0;
+        for (int i = 0; i < s.length(); i++) {
+            int len1 = expandAroundCenter(s, i, i);
+            int len2 = expandAroundCenter(s, i, i + 1);
+            int len = Math.max(len1, len2);
+            if (len > end - start) {
+                start = i - (len - 1) / 2 ;
+                end = i + len / 2;
+            }
+        }
+        return s.substring(start, end + 1);
+    }
+    
+    private int expandAroundCenter(String s, int left, int right) {
+        int L = left, R = right;
+        while (L >= 0 && R < s.length() && s.charAt(L) == s.charAt(R)) {
+            L--;
+            R++;
+        }
+        return R - L - 1;
+    }
+}
+
+# Approach 2: Brute Force
+# Time complexity : O(n^3) Assume that nn is the length of the input string, 
+# there are a total of choose n 2 = n * (n - 1) / 2  such substrings 
+# (excluding the trivial solution where a character itself is a palindrome). 
+# Since verifying each substring takes O(n) time, the run time complexity is O(n^3)
+# Space complexity : O(1)
+# 25ms 58.72%
+class Solution {
     public String longestPalindrome(String s) {
         String res = "";
-        int currLength = 0;
-        for(int i=0;i<s.length();i++){
-            if(isPalindrome(s,i-currLength-1,i)){
-                res = s.substring(i-currLength-1,i+1);
-                currLength = currLength+2;
-            }
-            else if(isPalindrome(s,i-currLength,i)){
-                res = s.substring(i-currLength,i+1);
-                currLength = currLength+1;
+        int len = 0;
+        for (int i = 0; i < s.length(); i++) {
+            if (isPalindrome(s, i - len - 1, i)) {
+                res = s.substring(i - len - 1, i + 1);
+                len = len + 2; // (i + 1 - (i - len - 1))
+            } else if (isPalindrome(s, i - len, i)) {
+                res = s.substring(i - len, i + 1);
+                len = len + 1;
             }
         }
         return res;
     }
-
-    public boolean isPalindrome(String s, int begin, int end){
-        if(begin<0) return false;
-        while(begin<end){
-        	if(s.charAt(begin++)!=s.charAt(end--)) return false;
+    
+    private boolean isPalindrome(String s, int begin, int end){
+        if (begin < 0) return false;
+        while (begin < end) {
+            if (s.charAt(begin++) != s.charAt(end--)) return false;
         }
         return true;
     }
 }
 
-79%
-public class Solution {
+# 24ms 60.47%
+class Solution {
     public String longestPalindrome(String s) {
         int len = s.length();
         if (len < 2) {
@@ -411,4 +481,6 @@ public class Solution {
         return true;
     }
 }
+
+
 '''

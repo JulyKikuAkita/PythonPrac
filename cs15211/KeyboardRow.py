@@ -1,3 +1,9 @@
+__source__ = 'https://leetcode.com/problems/keyboard-row/'
+# Time:  O()
+# Space: O()
+#
+# Description: 500. Keyboard Row
+#
 # Given a List of words, return the words that can be typed using letters of alphabet on
 # only one row's of American keyboard like the image below.
 # https://leetcode.com/problems/keyboard-row/#/description
@@ -24,14 +30,18 @@ class Solution(object):
             ret.append(word)
         return ret
 
-java  = '''
-public class Solution {
+Java = '''
+# Thought:
+
+# 76ms 0.96%
+class Solution {
     public String[] findWords(String[] words) {
         return Stream.of(words).filter(s -> s.toLowerCase().matches("[qwertyuiop]*|[asdfghjkl]*|[zxcvbnm]*")).toArray(String[]::new);
     }
 }
 
-public class Solution {
+# 3ms 51.86%
+class Solution {
     public String[] findWords(String[] words) {
         String[] groups = {"qwertyuiop","asdfghjkl","zxcvbnm"};
         Map<Character, Integer> map = new HashMap<>();

@@ -1,8 +1,10 @@
-__source__ = 'https://leetcode.com/problems/populating-next-right-pointers-in-each-node/#/description'
+__source__ = 'https://leetcode.com/problems/populating-next-right-pointers-in-each-node/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/populating-next-right-pointers-in-each-node.py
 # Time:  O(n)
 # Space: O(1)
 # Divide and conquer
+#
+# Description: Leetcode # 116. Populating Next Right Pointers in Each Node
 #
 # Given a binary tree
 #
@@ -11,14 +13,17 @@ __source__ = 'https://leetcode.com/problems/populating-next-right-pointers-in-ea
 #       TreeLinkNode *right;
 #       TreeLinkNode *next;
 #     }
-# Populate each next pointer to point to its next right node. If there is no next right node, the next pointer should be set to NULL.
+#
+# Populate each next pointer to point to its next right node.
+# If there is no next right node, the next pointer should be set to NULL.
 #
 # Initially, all next pointers are set to NULL.
 #
 # Note:
 #
 # You may only use constant extra space.
-# You may assume that it is a perfect binary tree (ie, all leaves are at the same level, and every parent has two children).
+# You may assume that it is a perfect binary tree
+# (ie, all leaves are at the same level, and every parent has two children).
 # For example,
 # Given the following perfect binary tree,
 #          1
@@ -38,21 +43,21 @@ __source__ = 'https://leetcode.com/problems/populating-next-right-pointers-in-ea
 # (M) Populating Next Right Pointers in Each Node II (M) Binary Tree Right Side View
 # Company:
 # Microsoft
-
-
+#
+import unittest
 #Definition for a  binary tree node
 class TreeNode:
-     def __init__(self, x):
-         self.val = x
-         self.left = None
-         self.right = None
-         self.next = None
+    def __init__(self, x):
+        self.val = x
+        self.left = None
+        self.right = None
+        self.next = None
 
-     def __repr__(self):
-         if self == None:
-             return "Nil"
-         else:
-             return "{} -> {}".format(self.val, repr(self.next))
+    def __repr__(self):
+        if self == None:
+            return "Nil"
+        else:
+            return "{} -> {}".format(self.val, repr(self.next))
 
 class Solution:
     # @param root, a tree node
@@ -84,14 +89,6 @@ class Solution2:
         self.connect(root.left)
         self.connect(root.right)
 
-if __name__ == "__main__":
-    root, root.left, root.right = TreeNode(1), TreeNode(2), TreeNode(3)
-    root.left.left, root.left.right, root.right.left, root.right.right = TreeNode(4), TreeNode(5), TreeNode(6), TreeNode(7)
-    Solution().connect(root)
-    print root
-    print root.left
-    print root.left.left
-
 
 class SolutionOther:
     # @param root, a tree node
@@ -110,10 +107,9 @@ class SolutionOther:
             nl = nl.right
             nr = nr.left
 
-
     def preorderTraversal1(self, root):
         ans = []
-        p =root
+        p = root
 
         def preorder(p, ans):
             if p is None:
@@ -125,64 +121,81 @@ class SolutionOther:
             if p.right != None:
                 preorder(p.right, ans)
 
-        preorder(p,ans)
+        preorder(p, ans)
         return ans
 
-#############test
-#creating BST tree ####
-root0=TreeNode(0)
-tree1=TreeNode(1)
-tree2=TreeNode(2)
-tree3=TreeNode(3)
-tree4=TreeNode(4)
-tree5=TreeNode(5)
-tree6=TreeNode(6)
-root0.left=tree1
-root0.right=tree2
-tree1.left=tree3
-tree1.right=tree4
-tree2.left=tree5
-tree2.right=tree6
-#end of creating BST tree ####
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+        #############test
+        #creating BST tree ####
+        root0 = TreeNode(0)
+        tree1 = TreeNode(1)
+        tree2 = TreeNode(2)
+        tree3 = TreeNode(3)
+        tree4 = TreeNode(4)
+        tree5 = TreeNode(5)
+        tree6 = TreeNode(6)
+        root0.left = tree1
+        root0.right = tree2
+        tree1.left = tree3
+        tree1.right = tree4
+        tree2.left = tree5
+        tree2.right = tree6
+        #end of creating BST tree ####
 
-test = SolutionOther()
-test.connect(root0)
-#print test.preorderTraversal1(root0)
+        root, root.left, root.right = TreeNode(1), TreeNode(2), TreeNode(3)
+        root.left.left, root.left.right, root.right.left, root.right.right = TreeNode(4), TreeNode(5), TreeNode(
+            6), TreeNode(7)
+        Solution().connect(root)
+        print root
+        print root.left
+        print root.left.left
 
-#java
-java = '''
-#DFS:
-public void connect(TreeLinkNode root) {
-    if(root == null)
-        return;
+        test = SolutionOther()
+        test.connect(root0)
+        #print test.preorderTraversal1(root0)
 
-    if(root.left != null){
-        root.left.next = root.right;
-        if(root.next != null)
-            root.right.next = root.next.left;
+if __name__ == '__main__':
+    unittest.main()
+
+Java = '''
+# Thought:
+
+# DFS:
+# 0ms 100%
+class Solution {
+    public void connect(TreeLinkNode root) {
+        if (root == null) return;
+        if (root.left != null) {
+            root.left.next = root.right;
+            if (root.next != null) {
+                root.right.next = root.next.left;
+            }
+        }
+        connect(root.left);
+        connect(root.right);
     }
-
-    connect(root.left);
-    connect(root.right);
 }
 
 # BFS
-public class Solution {
+# 0ms 100%
+class Solution {
     public void connect(TreeLinkNode root) {
-        if( root == null || root.left == null) return ;
-
+        if (root == null || root.left == null) {
+            return;
+        }
         TreeLinkNode leftMost = root.left;
-        while(leftMost != null){
+        while (leftMost != null) {
             root.left.next = root.right;
-            if(root.next != null){
+            if (root.next != null) {
                 root.right.next = root.next.left;
                 root = root.next;
-            }else{
+            } else {
                 root = leftMost;
                 leftMost = leftMost.left;
             }
         }
-
     }
 }
 '''

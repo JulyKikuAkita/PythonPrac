@@ -1,9 +1,10 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/minimum-height-trees/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/minimum-height-trees.py
-
 # Time:  O(n)
 # Space: O(n)
-
+#
+# Description: Leetcode # 310. Minimum Height Trees
+#
 # For a undirected graph with tree characteristics, we can
 # choose any node as the root. The result graph is then a
 # rooted tree. Among all possible rooted trees, those with
@@ -56,8 +57,16 @@ __author__ = 'July'
 #
 # (2) The height of a rooted tree is the number of edges on the
 #     longest downward path between the root and a leaf.
-
+#
+# Companies
+# Google
+# Related Topics
+# Breadth-first Search Graph
+# Similar Questions
+# Course Schedule Course Schedule II
+#
 import collections
+import unittest
 class Solution(object):
     def findMinHeightTrees(self, n, edges):
         """
@@ -65,7 +74,6 @@ class Solution(object):
         :type edges: List[List[int]]
         :rtype: List[int]
         """
-
         if n == 1:
             return [0]
 
@@ -85,7 +93,6 @@ class Solution(object):
         # BFS from the leaves until the number
         # of the unvisited nodes is less than 3.
 
-
         while len(unvisited) > 2:
             cur_level = []
             for u in pre_level:
@@ -99,3 +106,117 @@ class Solution(object):
 
         return list(unvisited)
 
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+
+if __name__ == '__main__':
+    unittest.main()
+
+Java = '''
+# Thought: 
+Our problem want us to find the minimum height trees and return their root labels.
+First we can think about a simple case -- a path graph.
+
+For a path graph of n nodes, find the minimum height trees is trivial.
+Just designate the middle point(s) as roots.
+
+Despite its triviality, let design a algorithm to find them.
+
+Suppose we don't know n, nor do we have random access of the nodes.
+We have to traversal. It is very easy to get the idea of two pointers.
+One from each end and move at the same speed. When they meet or they are one step away,
+(depends on the parity of n), we have the roots we want.
+
+This gives us a lot of useful ideas to crack our real problem.
+
+For a tree we can do some thing similar. We start from every end,
+by end we mean vertex of degree 1 (aka leaves). We let the pointers move the same speed.
+When two pointers meet, we keep only one of them, 
+until the last two pointers meet or one step away we then find the roots.
+
+It is easy to see that the last two pointers are from the two ends of the longest path in the graph.
+
+The actual implementation is similar to the BFS topological sort.
+Remove the leaves, update the degrees of inner vertexes.
+Then remove the new leaves. Doing so level by level until there are 2 or 1 nodes left. 
+What's left is our answer!
+
+The time complexity and space complexity are both O(n).
+
+Note that for a tree we always have V = n, E = n-1.
+
+# Easy to understand
+# 31ms 57.29%  
+class Solution {
+    public List<Integer> findMinHeightTrees(int n, int[][] edges) {
+        if (n == 1) return Collections.singletonList(0);
+
+        List<Set<Integer>> adj = new ArrayList<>(n);
+        for (int i = 0; i < n; ++i) adj.add(new HashSet<>());
+        for (int[] edge : edges) {
+            adj.get(edge[0]).add(edge[1]);
+            adj.get(edge[1]).add(edge[0]);
+        }
+
+        List<Integer> leaves = new ArrayList<>();
+        for (int i = 0; i < n; ++i)
+            if (adj.get(i).size() == 1) leaves.add(i);
+
+        while (n > 2) {
+            n -= leaves.size();
+            List<Integer> newLeaves = new ArrayList<>();
+            for (int i : leaves) {
+                int j = adj.get(i).iterator().next();
+                adj.get(j).remove(i);
+                if (adj.get(j).size() == 1) newLeaves.add(j);
+            }
+            leaves = newLeaves;
+        }
+        return leaves;
+    }
+}
+
+# 16ms 91.48%
+class Solution {
+    public List<Integer> findMinHeightTrees(int n, int[][] edges) {
+        List<Integer> result = new ArrayList<>();
+        List<List<Integer>> graph = new ArrayList<>();
+        int[] degrees = new int[n];
+        int count = n;
+        Queue<Integer> queue = new LinkedList<>();
+        for (int i = 0; i < n; i++) {
+            graph.add(new ArrayList<>());
+        }
+        for (int[] edge : edges) {
+            degrees[edge[0]]++;
+            degrees[edge[1]]++;
+            graph.get(edge[0]).add(edge[1]);
+            graph.get(edge[1]).add(edge[0]);
+        }
+        for (int i = 0; i < n; i++) {
+            if (degrees[i] <= 1) { //cannot use ==, TLE
+                queue.add(i);
+                count--;
+            }
+        }
+        while (count > 0) {
+            int size = queue.size();
+            while (size-- > 0) {
+                int cur = queue.poll();
+                for (int neighbor : graph.get(cur)) {
+                    degrees[neighbor]--;
+                    if (degrees[neighbor] == 1) {
+                        queue.add(neighbor);
+                        count--;
+                    }
+                }
+            }
+        }
+        while (!queue.isEmpty()) {
+            result.add(queue.poll());
+        }
+        return result;
+    }
+}
+'''

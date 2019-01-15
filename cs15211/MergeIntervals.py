@@ -1,8 +1,10 @@
-__source__ = 'https://leetcode.com/problems/merge-intervals/#/description'
+__source__ = 'https://leetcode.com/problems/merge-intervals/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/merge-intervals.py
 # Time:  O(nlogn)
 # Space: O(1)
 # sort
+#
+# Description: Leetcode # 56. Merge Intervals
 #
 # Given a collection of intervals, merge all overlapping intervals.
 #
@@ -10,13 +12,18 @@ __source__ = 'https://leetcode.com/problems/merge-intervals/#/description'
 # Given [1,3],[2,6],[8,10],[15,18],
 # return [1,6],[8,10],[15,18].
 #
-# Topics:
-# Array Sort
-# You might like:
-# (H) Insert Interval (E) Meeting Rooms (M) Meeting Rooms II (M) Teemo Attacking (M) Add Bold Tag in String
-# Company:
-# LinkedIn Google Facebook Twitter Microsoft Bloomberg Yelp
+# Given [[1,4],[2,3]]
+# return [[1,4]]
 #
+# Companies
+# LinkedIn Google Facebook Twitter Microsoft Bloomberg Yelp
+# Related Topics
+# Array Sort
+# Similar Questions
+# Insert Interval Meeting Rooms Meeting Rooms II Teemo Attacking Add Bold Tag in String
+#
+#
+import unittest
 # Definition for an interval.
 class Interval:
     def __init__(self, s=0, e=0):
@@ -42,16 +49,17 @@ class Solution:
                 result.append(cur)
         return result
 
-if __name__ == "__main__":
-    print Solution().merge([Interval(1, 3), Interval(2, 6), Interval(8, 10), Interval(15,18)])
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+        print Solution().merge([Interval(1, 3), Interval(2, 6), Interval(8, 10), Interval(15,18)])
 
+if __name__ == '__main__':
+    unittest.main()
 
-#Java Solution:
-# http://www.programcreek.com/2012/12/leetcode-merge-intervals/
+Java = '''
+# Thought: https://leetcode.com/problems/merge-intervals/solution/
 
-
-#java
-js = '''
 /**
  * Definition for an interval.
  * public class Interval {
@@ -61,35 +69,34 @@ js = '''
  *     Interval(int s, int e) { start = s; end = e; }
  * }
  */
-#16%
-public List<Interval> merge(List<Interval> intervals) {
-    if (intervals.size() <= 1)
-        return intervals;
-
-    // Sort by ascending starting point using an anonymous Comparator
-    intervals.sort((i1, i2) -> Integer.compare(i1.start, i2.start));
-
-    List<Interval> result = new LinkedList<Interval>();
-    int start = intervals.get(0).start;
-    int end = intervals.get(0).end;
-
-    for (Interval interval : intervals) {
-        if (interval.start <= end) // Overlapping intervals, move the end if needed
-            end = Math.max(end, interval.end);
-        else {                     // Disjoint intervals, add the previous one and reset bounds
-            result.add(new Interval(start, end));
-            start = interval.start;
-            end = interval.end;
+# 73ms 10.01%
+class Solution {
+    public List<Interval> merge(List<Interval> intervals) {
+        List<Interval> result = new ArrayList<>();
+        if (intervals.isEmpty()) {
+            return result;
         }
+        Collections.sort(intervals, (i1, i2) -> i1.start != i2.start ? Integer.compare(i1.start, i2.start) : Integer.compare(i1.end, i2.end));
+        
+        int start = intervals.get(0).start;
+        int end = intervals.get(0).end;
+        for (int i = 1; i < intervals.size(); i++) {
+            Interval cur = intervals.get(i);
+            if (end < cur.start) {
+                result.add(new Interval(start, end));
+                start = cur.start;
+                end = cur.end;
+            } else {
+                end = Math.max(end, cur.end);
+            }
+        }
+        result.add(new Interval(start, end));
+        return result;
     }
-
-    // Add the last interval
-    result.add(new Interval(start, end));
-    return result;
 }
 
-#99%
-public class Solution {
+# 10ms 96.43%
+class Solution {
     public List<Interval> merge(List<Interval> intervals) {
         int n = intervals.size();
         int[] starts = new int[n];
@@ -110,6 +117,85 @@ public class Solution {
             }
         }
         return res;
+    }
+}
+
+# Merge Sort
+# 48ms 42.89%
+class Solution {
+    public List<Interval> merge(List<Interval> intervals) {
+        if (intervals == null) {
+            return null;
+        }
+        List<Interval> result = new ArrayList<Interval>();
+        Interval curr = null;
+        Interval[] array = sort(intervals);
+        
+        for (int i = 0; i < array.length; i++) {
+            if (curr == null) {
+                curr = array[i];
+            } else if (curr.end >= array[i].start) {
+                if (curr.end < array[i].end) {
+                    curr = new Interval(curr.start, array[i].end);
+                }
+            } else {
+                result.add(curr);
+                curr = array[i];
+            }
+        }
+        
+        if (curr != null) {
+            result.add(curr);
+        }
+        
+        return result;
+    }
+    
+    public Interval[] sort(List<Interval> intervals) {
+        Interval[] result = intervals.toArray(new Interval[intervals.size()]);
+        mergeSort(result);
+        return result;
+    }
+    
+    public void mergeSort(Interval[] intervals) {
+        mergeSort(intervals, 0, intervals.length - 1);
+    }
+    
+    private void mergeSort(Interval[] intervals, int start, int end) {
+        if (start < end) {
+            int middle = (start + end) / 2;
+            mergeSort(intervals, start, middle);
+            mergeSort(intervals, middle + 1, end);
+            merge(intervals, start, middle, end);
+        }
+    }
+    
+    private void merge(Interval[] intervals, int start, int middle, int end) {
+        Interval[] helper = new Interval[intervals.length];
+        for (int i = start; i <= end; i++) {
+            helper[i] = intervals[i];
+        }
+        
+        int left = start;
+        int right = middle + 1;
+        int curr = start;
+        
+        while (left <= middle && right <= end) {
+            if (helper[left].start < helper[right].start) {
+                intervals[curr] = helper[left];
+                left++;
+            } else {
+                intervals[curr] = helper[right];
+                right++;
+            }
+            curr++;
+        }
+        
+        while (left <= middle) {
+            intervals[curr] = helper[left];
+            left++;
+            curr++;
+        }
     }
 }
 '''

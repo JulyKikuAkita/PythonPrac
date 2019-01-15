@@ -1,10 +1,12 @@
-__source__ = 'https://github.com/kamyu104/LeetCode/blob/master/Python/number-of-segments-in-a-string.py'
-# https://leetcode.com/problems/number-of-segments-in-a-string/#/description
+__source__ = 'https://leetcode.com/problems/number-of-segments-in-a-string/'
+# https://github.com/kamyu104/LeetCode/blob/master/Python/number-of-segments-in-a-string.py
 # Time:  O(n)
 # Space: O(1)
 # Count the number of segments in a string,
 # where a segment is defined to be a contiguous
 # sequence of non-space characters.
+#
+# Description: Leetcode # 434. Number of Segments in a String
 #
 # Please note that the string does not
 # contain any non-printable characters.
@@ -14,7 +16,7 @@ __source__ = 'https://github.com/kamyu104/LeetCode/blob/master/Python/number-of-
 # Input: "Hello, my name is John"
 # Output: 5
 # String
-
+#
 import unittest
 
 class Solution(object):
@@ -32,6 +34,7 @@ class Solution(object):
                 result += 1
         return result
 
+    # 20ms 97.59%
     def countSegments2(self, s):
         """
         :type s: str
@@ -49,13 +52,18 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
-public class Solution {
+# Thought: https://leetcode.com/problems/number-of-segments-in-a-string/solution/
+
+# 5ms 10.30%
+class Solution {
     public int countSegments(String s) {
         return ("x " + s).split(" +").length - 1;
     }
+}
 
-    public int countSegments2(String s) {
+# 1ms 100%
+class Solution {
+    public int countSegments(String s) {
         int res = 0;
         for (int i = 0; i < s.length(); i++) {
             if (s.charAt(i) != ' ' && ( i == 0 || s.charAt(i-1) == ' ')) {

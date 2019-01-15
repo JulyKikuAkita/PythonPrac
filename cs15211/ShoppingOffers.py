@@ -1,8 +1,9 @@
-__source__ = 'https://leetcode.com/problems/shopping-offers/#/discuss'
+__source__ = 'https://leetcode.com/problems/shopping-offers/'
 # Time:  O(2^n)
 # Space: O(n)
 #
-# Description:
+# Description: 638. Shopping Offers
+#
 # In LeetCode Store, there are some kinds of items to sell. Each item has a price.
 #
 # However, there are some special offers,
@@ -27,6 +28,7 @@ __source__ = 'https://leetcode.com/problems/shopping-offers/#/discuss'
 # In special offer 1, you can pay $5 for 3A and 0B
 # In special offer 2, you can pay $10 for 1A and 2B.
 # You need to buy 3A and 2B, so you may pay $10 for 1A and 2B (special offer #2), and $4 for 2A.
+#
 # Example 2:
 # Input: [2,3,4], [[1,1,0,4],[2,2,1,9]], [1,2,1]
 # Output: 11
@@ -51,6 +53,8 @@ import unittest
 # Terminate when
 # (1) The condition met: return accumulated value
 # (2) The condition violated: not an option, hence infinity
+
+# 248ms 5.93%
 class Solution(object):
     def shoppingOffers(self, price, special, needs):
         """
@@ -74,14 +78,14 @@ class TestMethods(unittest.TestCase):
     def test_Local(self):
         self.assertEqual(1, 1)
 
-
 if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/articles/shopping-offers/
-85%
-public class Solution {
+# Thought: https://leetcode.com/problems/shopping-offers/solution/
+
+# 6ms 98.42%
+class Solution {
     public int shoppingOffers(List < Integer > price, List < List < Integer >> special, List < Integer > needs) {
         return shopping(price, special, needs, 0);
     }

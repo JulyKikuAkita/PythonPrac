@@ -2,7 +2,8 @@ __source__ = 'https://github.com/kamyu104/LeetCode/blob/master/Python/binary-tre
 # Time:  O(n)
 # Space: O(h)
 #
-# Description:
+# Description: 549. Binary Tree Longest Consecutive Sequence II
+#
 # Given a binary tree, you need to find the length of Longest Consecutive Path in Binary Tree.
 #
 # Especially, this path can be either increasing or decreasing.
@@ -39,6 +40,7 @@ class TreeNode(object):
         self.left = None
         self.right = None
 
+# 44ms 97.42%
 class Solution(object):
     def longestConsecutive(self, root):
         """
@@ -97,7 +99,7 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/articles/binary-tree-longest-consecutive-sequence-ii/
+#Thought: https://leetcode.com/problems/binary-tree-longest-consecutive-sequence-ii/solution/
 Recursively count increasing or decreasing seq from current node
 
 /**
@@ -109,7 +111,9 @@ Recursively count increasing or decreasing seq from current node
  *     TreeNode(int x) { val = x; }
  * }
  */
-public class Solution {
+
+# 6ms 96.37%
+class Solution {
     int maxval = 0;
     public int longestConsecutive(TreeNode root) {
         longestPath(root);

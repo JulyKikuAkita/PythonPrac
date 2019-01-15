@@ -2,7 +2,8 @@ __source__ = 'https://github.com/kamyu104/LeetCode/blob/master/Python/unique-sub
 # Time:  O(n)
 # Space: O(1)
 #
-# Description:
+# Description: 467. Unique Substrings in Wraparound
+#
 # Consider the string s to be the infinite wraparound string of
 # "abcdefghijklmnopqrstuvwxyz", so s will look like this:
 # "...zabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcd....".
@@ -59,7 +60,8 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
+# Thought:
+
 After failed with pure math solution and time out with DFS solution, I finally realized that this is a DP problem...
 The idea is, if we know the max number of unique substrings in p ends with 'a', 'b', ..., 'z',
 then the summary of them is the answer. Why is that?
@@ -74,7 +76,8 @@ No matter how long is a contiguous substring in p, it is in s since s has infini
 Now we know the max number of unique substrings in p ends with 'a', 'b', ..., 'z'
 and those substrings are all in s. Summary is the answer, according to the question.
 
-public class Solution {
+# 12ms 72.20%
+class Solution {
     public int findSubstringInWraproundString(String p) {
         // count[i] is the maximum unique substring end with ith letter.
         // 0 - 'a', 1 - 'b', ..., 25 - 'z'.

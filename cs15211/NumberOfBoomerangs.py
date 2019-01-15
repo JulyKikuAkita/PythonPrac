@@ -1,9 +1,9 @@
-__source__ = 'https://github.com/kamyu104/LeetCode/blob/master/Python/number-of-boomerangs.py'
+__source__ = 'https://leetcode.com/problems/number-of-boomerangs/'
 # Time:  O(n^2)
 # Space: O(n)
 #
-# Description:
-# https://leetcode.com/problems/number-of-boomerangs/#/description
+# Description: 447. Number of Boomerangs
+#
 # Given n points in the plane that are all pairwise distinct,
 # a "boomerang" is a tuple of points (i, j, k) such that the distance
 # between i and j equals the distance between i and k (the order of the tuple matters).
@@ -23,11 +23,11 @@ __source__ = 'https://github.com/kamyu104/LeetCode/blob/master/Python/number-of-
 #  Google
 # Hide Tags Hash Table
 # Hide Similar Problems (M) Line Reflection
-
+#
 import collections
 import unittest
 class Solution(object):
-    #70.88%
+    # 948ms 44.74%
     def numberOfBoomerangs(self, points):
         res = 0
         for p in points:
@@ -77,21 +77,20 @@ class Solution(object):
 
 
 # your function here
-
 class TestMethods(unittest.TestCase):
     def test_Local(self):
         self.assertEqual(1, 1)
-
 
 if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
+# Thought:
 Time complexity:  O(n^2)
 Space complexity: O(n)
 
-public class Solution {
+# 133ms 57.14%
+class Solution {
     public int numberOfBoomerangs(int[][] points) {
         int res = 0;
         Map<Integer, Integer> map = new HashMap<>();

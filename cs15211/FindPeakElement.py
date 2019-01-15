@@ -1,6 +1,8 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/find-peak-element/description/'
 # Time:  O(logn)
 # Space: O(1)
+#
+# Description: Leetcode # 162. Find Peak Element
 #
 # A peak element is an element that is greater than its neighbors.
 #
@@ -14,9 +16,12 @@ __author__ = 'July'
 #
 # Note:
 # Your solution should be in logarithmic complexity.
+# Companies
 # Microsoft Google
-
-
+# Related Topics
+# Binary Search Array
+#
+import unittest
 class Solution:
     # @param num, a list of integer
     # @return an integer
@@ -32,13 +37,7 @@ class Solution:
                 high = mid - 1
             else:
                 low = mid + 1
-
         return low
-
-if __name__ == "__main__":
-   # print Solution().findPeakElement([1,2,1])
-    print Solution().findPeakElement([1,2,3, 1])
-
 
 # http://bookshadow.com/weblog/2014/12/06/leetcode-find-peak-element/
 class SolutionOther:
@@ -97,14 +96,6 @@ class Solution2(object):
         else:
             return end
 
-
-
-#test
-test = SolutionOther()
-arr = [1, 2, 3, 1]
-print test.findPeakElement(arr)
-print test.findPeakElementOn(arr)
-
 ##### Same expression#############
 #  return [false_val, true_val][true or false]
 #  return [start, end][num[start] < num[end]]
@@ -114,10 +105,47 @@ print test.findPeakElementOn(arr)
 #            else:
 #                return start
 
+# test
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+        # print Solution().findPeakElement([1,2,1])
+        print Solution().findPeakElement([1,2,3, 1])
+        test = SolutionOther()
+        arr = [1, 2, 3, 1]
+        print test.findPeakElement(arr)
+        print test.findPeakElementOn(arr)
 
-#java
-js = '''
-public class Solution {
+if __name__ == '__main__':
+    unittest.main()
+
+Java = '''
+# Thought: https://leetcode.com/problems/find-peak-element/solution/
+
+1. O(n) linear scan:
+# 3ms 67.71%
+class Solution {
+    public int findPeakElement(int[] nums) {
+        for (int i = 0; i < nums.length - 1; i++) {
+            if (nums[i] > nums[i + 1])
+                return i;
+        }
+        return nums.length - 1;
+    }
+}
+
+Thought: https://leetcode.com/problems/find-peak-element/solution/
+This problem is similar to Local Minimum. And according to the given condition,
+num[i] != num[i+1], there must exist a O(logN) solution. So we use binary search for this problem.
+
+If num[i-1] < num[i] > num[i+1], then num[i] is peak
+If num[i-1] < num[i] < num[i+1], then num[i+1...n-1] must contains a peak
+If num[i-1] > num[i] > num[i+1], then num[0...i-1] must contains a peak
+If num[i-1] > num[i] < num[i+1], then both sides have peak
+(n is num.length)
+
+# 2ms 100%
+class Solution {
     public int findPeakElement(int[] nums) {
         int start = 0;
         int end = nums.length - 1;
@@ -133,7 +161,8 @@ public class Solution {
     }
 }
 
-public class Solution {
+# 2ms 100%
+class Solution {
     public int findPeakElement(int[] nums) {
         if(nums == null || nums.length == 0) return 0;
 
@@ -141,7 +170,7 @@ public class Solution {
         int end = nums.length - 1;
         while(start + 1 < end){
             int mid = start + (end - start ) / 2;
-            if(nums[mid] > nums[mid+1]){
+            if(nums[mid] > nums[mid + 1]){
                 end = mid;
             }else{
                 start = mid;
@@ -149,6 +178,23 @@ public class Solution {
         }
 
         return nums[start] > nums[end] ? start: end;
+    }
+}
+
+# 2ms 100%
+class Solution {
+    public int findPeakElement(int[] nums) {
+        int start = 0;
+        int end = nums.length - 1;
+        while (start + 1 < end) {
+            int mid = start + (end - start) / 2;
+            if (nums[mid] > nums[mid - 1]) {
+                start = mid;
+            } else {
+                end = mid;
+            }
+        }
+        return nums[start] > nums[end] ? start : end;
     }
 }
 '''

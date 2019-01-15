@@ -1,8 +1,10 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/unique-paths-ii/description/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/unique-paths-ii.py
 # Time:  O(m * n)
 # Space: O(m + n)
 # DP
+#
+# Description: Leetcode # 63. Unique Paths II
 #
 # Follow up for "Unique Paths":
 #
@@ -22,9 +24,14 @@ __author__ = 'July'
 #
 # Note: m and n will be at most 100.
 #
+# Companies
 # Bloomberg
-
-
+# Related Topics
+# Array Dynamic Programming
+# Similar Questions
+# Unique Paths
+#
+import unittest
 class Solution:
     # @param obstacleGrid, a list of lists of integers
     # @return an integer
@@ -69,18 +76,43 @@ class SolutionLeetcode:
                     dp[i][j] = dp[i][j+1] + dp[i+1][j]
         return dp[0][0]
 
-if __name__ == "__main__":
-    obstacleGrid = [
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+        obstacleGrid = [
                       [0,0,0],
                       [0,1,0],
                       [0,0,0]
                    ]
-    print Solution().uniquePathsWithObstacles(obstacleGrid)
-    print SolutionLeetcode().uniquePathsWithObstacles(obstacleGrid)
+        print Solution().uniquePathsWithObstacles(obstacleGrid)
+        print SolutionLeetcode().uniquePathsWithObstacles(obstacleGrid)
 
-#java
-js = '''
-public class Solution {
+if __name__ == '__main__':
+    unittest.main()
+
+Java = '''
+# Thought: https://leetcode.com/problems/unique-paths-ii/solution/
+
+# 0ms 100%
+class Solution {
+    public int uniquePathsWithObstacles(int[][] obstacleGrid) {
+        int width = obstacleGrid[0].length;
+        int[] dp = new int[width];
+        dp[0] = 1;
+        for (int[] row : obstacleGrid) {
+            for (int j = 0; j < width; j++) {
+                if (row[j] == 1)
+                    dp[j] = 0;
+                else if (j > 0)
+                    dp[j] += dp[j - 1];
+            }
+        }
+        return dp[width - 1];
+    }
+}
+
+# 0ms 100%
+class Solution {
     public int uniquePathsWithObstacles(int[][] obstacleGrid) {
         int m = obstacleGrid.length;
         if (m == 0) {
@@ -106,6 +138,39 @@ public class Solution {
             }
         }
         return dp[n - 1];
+    }
+}
+
+# 2D DP
+# 0ms 100%
+class Solution {
+    public int uniquePathsWithObstacles(int[][] obstacleGrid) {
+        if (obstacleGrid == null || obstacleGrid.length == 0 || obstacleGrid[0].length == 0) {
+            return 0;
+        }
+
+        int[][] matrix = new int[obstacleGrid.length][obstacleGrid[0].length];
+        for (int i = 0; i < obstacleGrid.length; i++) {
+            if (obstacleGrid[i][0] == 0) {
+                matrix[i][0] = 1;
+            } else {
+                break;
+            }
+        }
+        for (int j = 0; j < obstacleGrid[0].length; j++) {
+            if (obstacleGrid[0][j] == 0) {
+                matrix[0][j] = 1;
+            } else {
+                break;
+            }
+        }
+        for (int i = 1; i < obstacleGrid.length; i++) {
+            for (int j = 1; j < obstacleGrid[0].length; j++) {
+                matrix[i][j] = obstacleGrid[i][j] == 0 ? matrix[i - 1][j] + matrix[i][j - 1] : 0;
+            }
+        }
+
+        return matrix[matrix.length - 1][matrix[0].length - 1];
     }
 }
 '''

@@ -1,7 +1,9 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/sliding-window-maximum/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/sliding-window-maximum.py
 # Time:  O(n)
 # Space: O(k)
+#
+# Description: Leetcode # 239. Sliding Window Maximum
 #
 # Given an array nums, there is a sliding window of size k
 # which is moving from the very left of the array to the
@@ -27,12 +29,17 @@ __author__ = 'July'
 # Follow up:
 # Could you solve it in linear time?
 #
+# Companies
 # Amazon Google Zenefits
-# Hide Tags Heap
-# Hide Similar Problems (H) Minimum Window Substring (E) Min Stack (H) Longest Substring with At Most Two Distinct Characters (H) Paint House II
-
+# Related Topics
+# Heap
+# Similar Questions
+# Minimum Window Substring Min Stack
+# Longest Substring with At Most Two Distinct Characters
+# Paint House II
+#
 from collections import deque
-
+import unittest
 class Solution:
     # @param {integer[]} nums
     # @param {integer} k
@@ -62,10 +69,17 @@ class Solution:
 
         return max_numbers
 
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
 
-#java
-js = '''
-public class Solution {
+if __name__ == '__main__':
+    unittest.main()
+
+Java = '''
+# Thought:
+# 14ms 58.29%
+class Solution {
     public int[] maxSlidingWindow(int[] nums, int k) {
         if(nums == null || nums.length == 0){
             return new int[0];
@@ -95,7 +109,8 @@ public class Solution {
     }
 }
 
-public class Solution {
+# 9ms 88.53%
+class Solution {
     public int[] maxSlidingWindow(int[] nums, int k) {
         int len = nums.length;
         if (len == 0) {
@@ -119,9 +134,11 @@ public class Solution {
     }
 }
 
-#https://discuss.leetcode.com/topic/26480/o-n-solution-in-java-with-two-simple-pass-in-the-array
-O(n) solution in Java with two simple pass in the array
-public class Solution {
+# https://discuss.leetcode.com/topic/26480/o-n-solution-in-java-with-two-simple-pass-in-the-array
+# O(n) solution in Java with two simple pass in the array
+
+# 6ms 91.06%
+class Solution {
     public int[] maxSlidingWindow(int[] nums, int k) {
         if (nums == null || nums.length == 0) return new int[0];
         final int[] max_left = new int[nums.length];

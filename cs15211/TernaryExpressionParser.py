@@ -3,7 +3,8 @@ __source__ = 'https://github.com/kamyu104/LeetCode/blob/master/Python/ternary-ex
 # Time:  O(n)
 # Space: O(1)
 #
-# Description:
+# Description: 439. Ternary Expression Parser
+#
 # Given a string representing arbitrarily nested ternary expressions,
 # calculate the result of the expression.
 # You can always assume that the given expression is valid and only consists of digits 0-9, ?, :,
@@ -50,6 +51,7 @@ __source__ = 'https://github.com/kamyu104/LeetCode/blob/master/Python/ternary-ex
 # Hide Similar Problems (M) Mini Parser
 
 import unittest
+# 52ms 82.09%
 class Solution(object):
     def parseTernary(self, expression):
         """
@@ -92,32 +94,33 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
+# Thought:
+
 # Iterate the expression from tail, whenever encounter a character before '?',
 # calculate the right value and push back to stack.
 #
 # P.S. this code is guaranteed only if "the given expression is valid" base on the requirement.
 
-public String parseTernary(String expression) {
-    if (expression == null || expression.length() == 0) return "";
-    Deque<Character> stack = new LinkedList<>();
+# 15ms 41.57%
+class Solution {
+    public String parseTernary(String expression) {
+        if (expression == null || expression.length() == 0) return "";
+        Deque<Character> stack = new LinkedList<>();
+        for ( int i = expression.length() - 1; i >= 0; i--) {
+            char c = expression.charAt(i);
+            if (!stack.isEmpty() && stack.peek() == '?') {
+                stack.pop(); //'?'
+                char first = stack.pop();
+                stack.pop(); //':'
+                char second = stack.pop();
 
-    for (int i = expression.length() - 1; i >= 0; i--) {
-        char c = expression.charAt(i);
-        if (!stack.isEmpty() && stack.peek() == '?') {
-
-            stack.pop(); //pop '?'
-            char first = stack.pop();
-            stack.pop(); //pop ':'
-            char second = stack.pop();
-
-            if (c == 'T') stack.push(first);
-            else stack.push(second);
-        } else {
-            stack.push(c);
+                if (c == 'T') stack.push(first);
+                else stack.push(second); //'F'
+            } else {
+                stack.push(c);
+            }
         }
+        return String.valueOf(stack.peek());
     }
-
-    return String.valueOf(stack.peek());
 }
 '''

@@ -5,6 +5,8 @@ __source__ = 'https://leetcode.com/problems/word-search/#/description'
 # DFS
 # floodfill
 #
+# Description: Leetcode # 79. Word Search
+#
 # Given a 2D board and a word, find if the word exists in the grid.
 #
 # The word can be constructed from letters of sequentially adjacent cell,
@@ -29,7 +31,8 @@ __source__ = 'https://leetcode.com/problems/word-search/#/description'
 # Array Backtracking
 # Similar question
 # Word Search II
-
+#
+import unittest
 class SolutionSlow(object):
     dir = (0,1), (0,-1),(1,0),(-1,0)
     def exist(self, board, word):
@@ -150,25 +153,28 @@ class SolutionOther:
                 return True
             board[x][y] = tmp
 
-        #return False
 
-
-test1 = SolutionOther()
-
-if __name__ == "__main__":
-    board = [
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+        board = [
               "ABCE",
               "SFCS",
               "ADEE"
-            ]
-    print Solution2().exist(board, "ABCCED")
-    print Solution2().exist(board, "SFCS")
-    print Solution2().exist(board, "ABCB")
+        ]
+        print Solution2().exist(board, "ABCCED")
+        print Solution2().exist(board, "SFCS")
+        print Solution2().exist(board, "ABCB")
 
-#java
-java = '''
-#unble to use BFS as elegant as DFS due to for BFS, hard to mark what is unvisited node for each popup point
-public class Solution {
+if __name__ == '__main__':
+    unittest.main()
+
+Java = '''
+# Thought:
+#
+# DFS
+# 41.39% 14ms
+class Solution {
     public static final int[][] DIRECTIONS = new int[][] {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
 
     public boolean exist(char[][] board, String word) {
@@ -200,6 +206,91 @@ public class Solution {
             }
         }
         board[row][col] = c;
+        return false;
+    }
+}
+
+# BFS + DFS:
+# 99.91% 7ms
+class Solution {
+    public boolean exist(char[][] board, String word) {
+        return bt(board,new boolean[board.length][board[0].length], 0, word, 0, 0);
+    }
+
+    private boolean bt(char[][] board, boolean[][] used, int index, String word, int row, int col){
+        if (index == word.length()) return true;
+        else if (index == 0) {
+            for (int i = 0; i < board.length; i++) {
+                for (int j = 0; j < board[0].length; j++) {
+                    if (board[i][j] == word.charAt(0)) {
+                        used[i][j] = true;
+                        if(bt(board, used, 1, word, i , j)) return true;
+                        used[i][j] = false;
+                    }
+                }
+            }
+        } else {
+            char ch = word.charAt(index);
+            if (row - 1 >= 0 && !used[row - 1][col] && board[row-1][col] == ch) {
+                used[row - 1][col] = true;
+                if (bt(board, used, index + 1, word, row - 1, col)) return true;
+                used[row - 1][col] = false;
+            }
+            if (col - 1 >= 0 && !used[row][col-1] && board[row][col-1] == ch) {
+                used[row][col - 1] = true;
+                if (bt(board, used, index + 1, word, row, col - 1)) return true;
+                used[row][col - 1] = false;
+            }
+            if (row + 1 < board.length && !used[row + 1][col] && board[row + 1][col] == ch) {
+                used[row + 1][col] = true;
+                if (bt(board, used, index + 1, word, row + 1, col)) return true;
+                used[row + 1][col] = false;
+            }
+            if (col + 1 < board[0].length && !used[row][col + 1] && board[row][col + 1] == ch) {
+                used[row][col + 1] = true;
+                if (bt(board, used, index + 1, word, row, col + 1)) return true;
+                used[row][col + 1] = false;
+            }
+            return false;
+        }
+        return false;
+    }
+}
+
+# 78.86% 9ms
+class Solution {
+    public boolean exist(char[][] board, String word) {
+        char[] charArray = word.toCharArray();
+
+       for (int x = 0; x < board.length; x ++) {
+           for (int y = 0; y < board[x].length; y ++) {
+             if (checkNextBit(board, charArray, x, y, 0)) {
+                 return true;
+             }
+           }
+       }
+
+        return false;
+    }
+
+    private boolean checkNextBit(char[][] board, char[] charArray, int x, int y, int index) {
+        if (index == charArray.length) return true;
+
+        if (x < 0 || y < 0 || x == board.length || y == board[0].length) return false;
+
+        if (charArray[index] != board[x][y]) return false;
+
+        board[x][y] ^= 256;
+        if (checkNextBit(board, charArray, x + 1, y, index + 1)
+           || checkNextBit(board, charArray, x, y + 1, index + 1)
+           || checkNextBit(board, charArray, x - 1, y, index + 1)
+           || checkNextBit(board, charArray, x, y - 1, index + 1)) {
+            return true;
+        }
+        else {
+            board[x][y] ^= 256;
+        }
+
         return false;
     }
 }

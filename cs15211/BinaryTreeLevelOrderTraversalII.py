@@ -1,8 +1,10 @@
-__source__ = 'https://leetcode.com/problems/binary-tree-level-order-traversal-ii/#/description'
+__source__ = 'https://leetcode.com/problems/binary-tree-level-order-traversal-ii/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/binary-tree-level-order-traversal-ii.py
 # Time:  O(n)
 # Space: O(n)
 # BFS
+#
+# Description: Leetcode # 107. Binary Tree Level Order Traversal II
 #
 # Given a binary tree, return the bottom-up level order traversal of its nodes' values.
 #  (ie, from left to right, level by level from leaf to root).
@@ -21,11 +23,12 @@ __source__ = 'https://leetcode.com/problems/binary-tree-level-order-traversal-ii
 #   [3]
 # ]
 #
-# Topics:
+# Related Topics
 # Tree Breadth-first Search
-# You might like:
-# (M) Binary Tree Level Order Traversal
+# Similar Questions
+# Binary Tree Level Order Traversal Average of Levels in Binary Tree
 #
+import unittest
 # Definition for a  binary tree node
 class TreeNode:
      def __init__(self, x):
@@ -51,9 +54,6 @@ class Solution:
             cur = next_level
             result.insert(0, val) # diff from up -> down
         return result
-
-
-
 
 class SolutionOther:
     # @param root, a tree node
@@ -95,39 +95,46 @@ class SolutionOther:
 
         return ans[::-1]
 
-#test
-#############test
-#creating BST tree ####
-root0=TreeNode(0)
-tree1=TreeNode(1)
-tree2=TreeNode(2)
-tree3=TreeNode(3)
-tree4=TreeNode(4)
-tree5=TreeNode(5)
-tree6=TreeNode(6)
-root0.left=tree1
-root0.right=tree2
-tree1.left=tree3
-tree1.right=tree4
-tree2.left=tree5
-tree2.right=tree6
-#end of creating BST tree ####
-test = SolutionOther()
-#print test.levelOrderBottom(root0)
-#print test.levelOrderBottom2(root0)
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
 
-if __name__ == "__main__":
-    root = TreeNode(3)
-    root.left = TreeNode(9)
-    root.right = TreeNode(20)
-    root.right.left = TreeNode(15)
-    root.right.right = TreeNode(7)
-    result = Solution().levelOrderBottom(root)
-    SolutionOther().levelOrderBottom(root)
-    print result
+        #test
+        #############test
+        #creating BST tree ####
+        root0=TreeNode(0)
+        tree1=TreeNode(1)
+        tree2=TreeNode(2)
+        tree3=TreeNode(3)
+        tree4=TreeNode(4)
+        tree5=TreeNode(5)
+        tree6=TreeNode(6)
+        root0.left=tree1
+        root0.right=tree2
+        tree1.left=tree3
+        tree1.right=tree4
+        tree2.left=tree5
+        tree2.right=tree6
+        #end of creating BST tree ####
+        test = SolutionOther()
+        #print test.levelOrderBottom(root0)
+        #print test.levelOrderBottom2(root0)
 
-# Java
-java ='''
+        root = TreeNode(3)
+        root.left = TreeNode(9)
+        root.right = TreeNode(20)
+        root.right.left = TreeNode(15)
+        root.right.right = TreeNode(7)
+        result = Solution().levelOrderBottom(root)
+        SolutionOther().levelOrderBottom(root)
+        print result
+
+if __name__ == '__main__':
+    unittest.main()
+
+Java = '''
+# Thought:
+#
 /**
  * Definition for a binary tree node.
  * public class TreeNode {
@@ -137,66 +144,63 @@ java ='''
  *     TreeNode(int x) { val = x; }
  * }
  */
-
-public class Solution {
+# BFS
+# 2ms 26.54%
+class Solution {
     public List<List<Integer>> levelOrderBottom(TreeNode root) {
-        //return levelOrderBottomBFS(root);
-
-        //below for DFS
-        List<List<Integer>> res = new LinkedList<List<Integer>>();
-        if(root == null) return res;
-
-        //User Collections
-        //levelOrderBottomDFS(root, res, 0);
-        //Collections.reverse(res);
-
-        //no user Collecitons.reverse
-        levelOrderBottomDFS2(root, res, 0);
-        return res;
-    }
-
-    #70%
-    public List<List<Integer>> levelOrderBottomBFS(TreeNode root) {
+        List<List<Integer>> res = new ArrayList();
         Queue<TreeNode> q = new LinkedList<TreeNode>();
-        List<List<Integer>> res = new LinkedList<List<Integer>>();
-        if(root == null) return res;
-
+        if (root == null) return res;
         q.offer(root);
+        
         while(!q.isEmpty()) {
-            int len = q.size();
-            List<Integer> tmp = new LinkedList<Integer>();
-            for (int i = 0; i < len; i++) {
+            int size = q.size();
+            List<Integer> tmp = new ArrayList();
+            for (int i = 0; i < size; i++) {
                 TreeNode cur = q.poll();
-                if (cur.left != null) q.add(cur.left);
-                if (cur.right != null) q.offer(cur.right);
                 tmp.add(cur.val);
+                if (cur.left != null) q.offer(cur.left);
+                if (cur.right != null) q.offer(cur.right);
             }
             res.add(0, tmp);
         }
         return res;
     }
+}
 
-    public void levelOrderBottomDFS(TreeNode root, List<List<Integer>> res, int level) {
-        if(root == null) return;
-
-        if (res.size() <= level) {
-            res.add(level, new LinkedList<Integer>());
-        }
-        res.get(level).add(root.val);
-        levelOrderBottomDFS(root.left, res, level + 1);
-        levelOrderBottomDFS(root.right, res, level + 1);
+# DFS
+# 1ms 99.31%
+class Solution {
+    public List<List<Integer>> levelOrderBottom(TreeNode root) {
+        List<List<Integer>> res = new ArrayList();
+        dfs(root, res, 0);
+        return res;
     }
-
-    #11.25%
-    public void levelOrderBottomDFS2(TreeNode root, List<List<Integer>> res, int level) {
-        if(root == null) return;
-
-        if (res.size() <= level) {
-            res.add(0, new LinkedList<Integer>());
-        }
-        levelOrderBottomDFS2(root.left, res, level + 1);
-        levelOrderBottomDFS2(root.right, res, level + 1);
+    
+    private void dfs(TreeNode root, List<List<Integer>> res, int level) {
+        if (root == null) return;
+        if (level == res.size()) res.add(0, new ArrayList());
         res.get(res.size() - level - 1).add(root.val);
+        dfs(root.left, res, level + 1);
+        dfs(root.right, res, level + 1);
     }
 }
-'''
+
+# DFS
+# 2ms 56.34%
+class Solution {
+    public List<List<Integer>> levelOrderBottom(TreeNode root) {
+        List<List<Integer>> res = new ArrayList();
+        dfs(root, res, 0);
+        Collections.reverse(res);
+        return res;
+    }
+    
+    private void dfs(TreeNode root, List<List<Integer>> res, int level) {
+        if(root == null) return;
+        if (res.size() <= level) res.add(level, new LinkedList<Integer>());
+        res.get(level).add(root.val);
+        dfs(root.left, res, level + 1);
+        dfs(root.right, res, level + 1);
+    }
+}'''

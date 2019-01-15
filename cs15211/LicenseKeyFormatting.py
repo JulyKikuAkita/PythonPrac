@@ -1,9 +1,11 @@
-__source__ = ''
-# Time:  O()
-# Space: O()
+__source__ = 'https://leetcode.com/problems/license-key-formatting/'
+# Time:  O(n)
+# Space: O(n)
 #
-# Description:
-# Now you are given a string S, which represents a software license key which we would like to format.
+# Description: 482. License Key Formatting
+#
+# Now you are given a string S,
+# which represents a software license key which we would like to format.
 # The string S is composed of alphanumerical characters and dashes.
 # The dashes split the alphanumerical characters within the string into groups.
 # (i.e. if there are M dashes, the string is split into M+1 groups).
@@ -28,15 +30,16 @@ __source__ = ''
 #
 # Output: "24-A0R-74K"
 #
-# Explanation: The string S has been split into three parts, each part has 3 characters except the first part as it could be shorter as said above.
+# Explanation: The string S has been split into three parts, each part has 3 characters
+# except the first part as it could be shorter as said above.
 # Note:
 # The length of string S will not exceed 12,000, and K is a positive integer.
 # String S consists only of alphanumerical characters (a-z and/or A-Z and/or 0-9) and dashes(-).
 # String S is non-empty.
 # Hide Company Tags Google
-
+#
 import unittest
-
+# 1040ms 31.45%
 class Solution(object):
     def licenseKeyFormatting(self, S, K):
         """
@@ -62,8 +65,10 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
-public class Solution {
+# Thought:
+
+# 225ms 17.29%
+class Solution {
     public String licenseKeyFormatting(String S, int K) {
         // Replacing all - and converting all letters to uppercase
         String S1 = S.replace("-","");
@@ -83,4 +88,24 @@ public class Solution {
     }
 }
 
+# 16ms 82.10%
+class Solution {
+    public String licenseKeyFormatting(String S, int K) {
+        int cnt = 0;
+        StringBuilder sb = new StringBuilder();
+        char[] arr = S.toCharArray();
+        for(int i = arr.length - 1; i >= 0; i--) {
+            char c = arr[i];
+            if (c == '-') {
+                continue;
+            }
+            if (cnt % K == 0 && cnt != 0) {
+                sb.append('-');
+            }
+            sb.append('a' <= c && c <= 'z' ? (char)(c - 'a' + 'A') : c);
+            cnt++;
+        }
+        return sb.reverse().toString();
+    }
+}
 '''

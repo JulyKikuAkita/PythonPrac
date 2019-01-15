@@ -1,18 +1,24 @@
-__author__ = 'July'
-# not understanding 02.23.2015
+__source__ = 'https://leetcode.com/problems/sudoku-solver/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/sudoku-solver.py
 # Time:  ((9!)^9)
 # Space: (1)
 # DFS
+#
+# Description: Leetcode # 37. Sudoku Solver
 #
 # Write a program to solve a Sudoku puzzle by filling the empty cells.
 #
 # Empty cells are indicated by the character '.'.
 #
 # You may assume that there will be only one unique solution.
-# Uber
-# Hide Tags Backtracking Hash Table
-
+# Companies
+# Snapchat Uber
+# Related Topics
+# Backtracking Hash Table
+# Similar Questions
+# Valid Sudoku
+#
+import unittest
 class Solution:
     # @param board, a 9x9 2D array
     # Solve the Sudoku by modifying the input board in-place.
@@ -20,17 +26,16 @@ class Solution:
     def solveSudoku(self, board):
         for i in xrange(len(board)):
             for j in xrange(len(board[0])):
-                if(board[i][j] == '.'):
+                if (board[i][j] == '.'):
                     for k in xrange(9):
                         #print chr(ord('1') + k), "i, j =", i, j, board[i][j]
-                        board[i][j] = chr(ord('1') + k) # turn (1 + k ) into str # ord('1') = int 49 ; chr(49) = str 1
+                        board[i][j] = chr(ord('1') + k)  # turn (1 + k ) into str # ord('1') = int 49 ; chr(49) = str 1
                         #board[i][j] = str(1 + k) the same as use chr(ord())
                         if self.isValid(board, i, j) and self.solveSudoku(board):
                             return True
                         board[i][j] = '.'
                     return False
         return True
-
 
     def isValid(self, board, x, y):
         for i in xrange(9):
@@ -57,7 +62,7 @@ class Solution2:
     # Do not return any value.
     # dfs
     def solveSudoku(self, board):
-        def isValid(x,y):
+        def isValid(x, y):
             tmp = board[x][y]
             board[x][y] = 'D'
             for i in range(9):
@@ -66,7 +71,7 @@ class Solution2:
                 if board[x][i] == tmp: return False
             for i in range(3):
                 for j in range(3):
-                    if board[(x/3)*3+i][(y/3)*3+j] == tmp: return False
+                    if board[(x / 3) * 3 + i][(y / 3) * 3 + j] == tmp: return False
             board[x][y] = tmp
             return True
 
@@ -76,7 +81,7 @@ class Solution2:
                     if board[i][j] == '.':
                         for k in '123456789':
                             board[i][j] = k
-                            if isValid(i,j) and dfs(board):
+                            if isValid(i, j) and dfs(board):
                                 return True
                             board[i][j] = '.'
                         return False
@@ -84,31 +89,38 @@ class Solution2:
 
         dfs(board)
 
-
 #test
 test = Solution2()
-board1 = [["..9748..."],["7........"],[".2.1.9..."],["..7...24."],[".64.1.59."],[".98...3.."],["...8.3.2."],["........6"],["...2759.."]]
+board1 = [["..9748..."], ["7........"], [".2.1.9..."], ["..7...24."], [".64.1.59."], [".98...3.."], ["...8.3.2."],
+          ["........6"], ["...2759.."]]
 # ans = ["519748632","783652419","426139875","357986241","264317598","198524367","975863124","832491756","641275983"]
-
 #print test.solveSudoku(board1)
 
-if __name__ == "__main__":
-    board = [['5', '3', '.', '.', '7', '.', '.', '.', '.'],
-             ['6', '.', '.', '1', '9', '5', '.', '.', '.'],
-             ['.', '9', '8', '.', '.', '.', '.', '6', '.'],
-             ['8', '.', '.', '.', '6', '.', '.', '.', '3'],
-             ['4', '.', '.', '8', '.', '3', '.', '.', '1'],
-             ['7', '.', '.', '.', '2', '.', '.', '.', '6'],
-             ['.', '6', '.', '.', '.', '.', '2', '8', '.'],
-             ['.', '.', '.', '4', '1', '9', '.', '.', '5'],
-             ['.', '.', '.', '.', '8', '.', '.', '7', '9']]
-    Solution().solveSudoku(board)
-    for i in xrange(9):
-        print board[i]
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+        board = [['5', '3', '.', '.', '7', '.', '.', '.', '.'],
+                 ['6', '.', '.', '1', '9', '5', '.', '.', '.'],
+                 ['.', '9', '8', '.', '.', '.', '.', '6', '.'],
+                 ['8', '.', '.', '.', '6', '.', '.', '.', '3'],
+                 ['4', '.', '.', '8', '.', '3', '.', '.', '1'],
+                 ['7', '.', '.', '.', '2', '.', '.', '.', '6'],
+                 ['.', '6', '.', '.', '.', '.', '2', '8', '.'],
+                 ['.', '.', '.', '4', '1', '9', '.', '.', '5'],
+                 ['.', '.', '.', '.', '8', '.', '.', '7', '9']]
+        Solution().solveSudoku(board)
+        for i in xrange(9):
+            print board[i]
 
-#java
-js = '''
-public class Solution {
+if __name__ == '__main__':
+    unittest.main()
+
+Java = '''
+# Thought:
+
+# DFS
+# 7ms 91.16%
+class Solution {
     public void solveSudoku(char[][] board) {
         dfs(board);
     }
@@ -155,9 +167,8 @@ public class Solution {
     }
 }
 
-#sol 2
-
-public class Solution {
+# 13ms 61.74%
+class Solution {
     public void solveSudoku(char[][] board) {
         solveSudoku(board, findEmptyCells(board), 0);
     }

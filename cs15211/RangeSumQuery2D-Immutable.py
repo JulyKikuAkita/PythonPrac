@@ -1,8 +1,10 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/range-sum-query-2d-immutable/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/range-sum-query-2d-immutable.py
 # Time:  ctor:   O(m * n),
 #        lookup: O(1)
 # Space: O(m * n)
+#
+# Description: Leetcode # 304. Range Sum Query 2D - Immutable
 #
 # Given a 2D matrix matrix, find the sum of the elements inside
 # the rectangle defined by its upper left corner (row1, col1)
@@ -25,11 +27,18 @@ __author__ = 'July'
 # sumRegion(2, 1, 4, 3) -> 8
 # sumRegion(1, 1, 2, 2) -> 11
 # sumRegion(1, 2, 2, 4) -> 12
+#
 # Note:
 # You may assume that the matrix does not change.
 # There are many calls to sumRegion function.
 # You may assume that row1 <= row2 and col1 <= col2.
-
+#
+# Related Topics
+# Dynamic Programming
+# Similar Questions
+# Range Sum Query - Immutable Range Sum Query 2D - Mutable
+#
+import unittest
 class NumMatrix(object):
     def __init__(self, matrix):
         """
@@ -61,28 +70,32 @@ class NumMatrix(object):
         """
         return self.__sums[row2+1][col2+1] - self.__sums[row2+1][col1] - \
                 self.__sums[row1][col2+1] + self.__sums[row1][col1]
-
-
 # Your NumMatrix object will be instantiated and called as such:
 # numMatrix = NumMatrix(matrix)
 # numMatrix.sumRegion(0, 1, 2, 3)
 # numMatrix.sumRegion(1, 2, 3, 4)
 
-matrix = [
-   [3, 0, 1, 4, 2],
-   [5, 6, 3, 2, 1],
-   [1, 2, 0, 1, 5],
-   [4, 1, 0, 1, 7],
-   [1, 0, 3, 0, 5]
- ]
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        matrix = [
+           [3, 0, 1, 4, 2],
+           [5, 6, 3, 2, 1],
+           [1, 2, 0, 1, 5],
+           [4, 1, 0, 1, 7],
+           [1, 0, 3, 0, 5]
+         ]
+        self.assertEqual(1, 1)
+        numMatrix = NumMatrix(matrix)
+        print numMatrix.sumRegion(0, 1, 2, 3)
 
-if __name__ == "__main__":
-    numMatrix = NumMatrix(matrix)
-    print numMatrix.sumRegion(0, 1, 2, 3)
+if __name__ == '__main__':
+    unittest.main()
 
-#java
-js = '''
-public class NumMatrix {
+Java = '''
+# Thought: https://leetcode.com/problems/range-sum-query-2d-immutable/solution/
+
+# 72ms 83.94%
+class NumMatrix {
     int[][] sums;
 
     public NumMatrix(int[][] matrix) {

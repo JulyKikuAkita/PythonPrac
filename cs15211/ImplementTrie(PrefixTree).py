@@ -1,27 +1,28 @@
-__author__ = 'https://leetcode.com/problems/implement-trie-prefix-tree/#/description'
+__author__ = 'https://leetcode.com/problems/implement-trie-prefix-tree/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/implement-trie-prefix-tree.py
 # Time:  O(n), per operation
 # Space: O(1)
+#
+# Description: Leetcode # 208. Implement Trie (Prefix Tree)
 #
 # Implement a trie with insert, search, and startsWith methods.
 #
 # Note:
 # You may assume that all inputs are consist of lowercase letters a-z.
 #
-# Companines
+# Companies
 # Google Uber Facebook Twitter Microsoft Bloomberg
 # Related Topics
 # Design Trie
-# Similar question
-# Add and Search Word - Data structure design
+# Similar Questions
+# Add and Search Word - Data structure design Design Search Autocomplete System Replace Words
 #
-
+import unittest
 class TrieNode:
     # Initialize your data structure here.
     def __init__(self):
         self.is_string = False
         self.leaves = {}
-
 
 class Trie:
 
@@ -68,74 +69,84 @@ class Trie:
 # trie = Trie()
 # trie.insert("somestring")
 # trie.search("key")
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
 
-#java
+if __name__ == '__main__':
+    unittest.main()
+
 Java = '''
-Thought: https://leetcode.com/articles/implement-trie-prefix-tree/
+# Thought: https://leetcode.com/problems/implement-trie-prefix-tree/solution/
 
-class TrieNode {
-    TrieNode[] children;
-    boolean isWord;
-
-    // Initialize your data structure here.
-    public TrieNode() {
-        children = new TrieNode[26];
-    }
-}
-
+# 92ms 95.72%
 public class Trie {
-    private TrieNode root;
-
+    TrieNode root;
+    /** Initialize your data structure here. */
     public Trie() {
         root = new TrieNode();
     }
 
-    // Inserts a word into the trie.
+    /** Inserts a word into the trie. */
     public void insert(String word) {
         TrieNode cur = root;
-        for (int i = 0; i < word.length(); i++) {
-            int index = word.charAt(i) - 'a';
-            if (cur.children[index] == null) {
-                cur.children[index] = new TrieNode();
+        for (char c : word.toCharArray()) {
+            if (cur.children[c -'a'] == null) {
+                cur.children[c -'a'] = new TrieNode();
             }
-            cur = cur.children[index];
+            cur = cur.children[c -'a'];
         }
         cur.isWord = true;
+        cur.word = word;
     }
 
-    // Returns if the word is in the trie.
+    /** Returns if the word is in the trie. */
     public boolean search(String word) {
-        TrieNode node = getNode(word);
+        TrieNode node = findNode(word);
         return node != null && node.isWord;
     }
 
-    // Returns if there is any word in the trie
-    // that starts with the given prefix.
+    /** Returns if there is any word in the trie that starts with the given prefix. */
     public boolean startsWith(String prefix) {
-        TrieNode node = getNode(prefix);
+        TrieNode node = findNode(prefix);
         return node != null;
     }
 
-    private TrieNode getNode(String word) {
+    private TrieNode findNode(String word) {
         TrieNode cur = root;
-        for (int i = 0; i < word.length(); i++) {
-            int index = word.charAt(i) - 'a';
-            cur = cur.children[index];
-            if (cur == null) {
+        for (char c : word.toCharArray()) {
+            if (cur.children[c -'a'] == null) {
                 return null;
             }
+            cur = cur.children[c -'a'];
         }
         return cur;
     }
+
+    class TrieNode{
+        TrieNode[] children;
+        boolean isWord;
+        String word;
+
+        public TrieNode() {
+            children = new TrieNode[26];
+            isWord = false;
+            word = null;
+        }
+    }
 }
 
-// Your Trie object will be instantiated and called as such:
-// Trie trie = new Trie();
-// trie.insert("somestring");
-// trie.search("key");
-
+/**
+ * Your Trie object will be instantiated and called as such:
+ * Trie obj = new Trie();
+ * obj.insert(word);
+ * boolean param_2 = obj.search(word);
+ * boolean param_3 = obj.startsWith(prefix);
+ */
 
 fullway:
+
+# 141ms 25.77%
 class TrieNode {
 
     // R links to node children
@@ -212,6 +223,94 @@ class Trie {
     public boolean startsWith(String prefix) {
         TrieNode node = searchPrefix(prefix);
         return node != null;
+    }
+}
+
+# Use hashmap
+# 151ms 18.95%
+class Trie {
+    private class TrieNode {
+        char c;
+        HashMap<Character, TrieNode> children = new HashMap<>();
+        boolean hasWord;
+        public TrieNode() {
+
+        }
+
+        public TrieNode(char c) {
+            this.c = c;
+        }
+    }
+
+    private TrieNode root;
+    /** Initialize your data structure here. */
+    public Trie() {
+        root = new TrieNode();
+    }
+
+    /** Inserts a word into the trie. */
+    public void insert(String word) {
+        if (word.length() == 0) {
+            return;
+        }
+
+        if (search(word)) {
+            return;
+        }
+
+        TrieNode curt = root;
+        HashMap<Character, TrieNode> curtChildren = curt.children;
+        char[] wordArr = word.toCharArray();
+        for (int i = 0; i < wordArr.length; i++) {
+            char curtChar = wordArr[i];
+            if (!curtChildren.containsKey(curtChar)) {
+                curtChildren.put(curtChar, new TrieNode(curtChar));
+            }
+
+            curt = curtChildren.get(curtChar);
+            curtChildren = curt.children;
+
+            if (i == wordArr.length - 1) {
+                curt.hasWord = true;
+            }
+        }
+    }
+
+    /** Returns if the word is in the trie. */
+    public boolean search(String word) {
+        TrieNode node = searchNode(word);
+        if (node == null || !node.hasWord) {
+            return false;
+        }
+
+        return true;
+    }
+
+    /** Returns if there is any word in the trie that starts with the given prefix. */
+    public boolean startsWith(String prefix) {
+        TrieNode node = searchNode(prefix);
+        if (node != null) {
+            return true;
+        }
+
+        return false;
+    }
+
+    private TrieNode searchNode(String word) {
+        TrieNode curt = root;
+        HashMap<Character, TrieNode> curtChildren = curt.children;
+        char[] wordArr = word.toCharArray();
+        for (int i = 0; i < wordArr.length; i++) {
+            char curtChar = wordArr[i];
+            if (!curtChildren.containsKey(curtChar)) {
+                return null;
+            }
+
+            curt = curtChildren.get(curtChar);
+            curtChildren = curt.children;
+        }
+
+        return curt;
     }
 }
 '''

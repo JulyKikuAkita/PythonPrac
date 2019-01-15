@@ -1,17 +1,22 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/remove-duplicates-from-sorted-list-ii/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/remove-duplicates-from-sorted-list-ii.py
 # Time:  O(n)
 # Space: O(1)
 # LinkedList
 #
+# Description: Leetcode # 82. Remove Duplicates from Sorted List II
+#
 # Given a sorted linked list, delete all nodes that have duplicate numbers,
-#  leaving only distinct numbers from the original list.
+# leaving only distinct numbers from the original list.
 #
 # For example,
 # Given 1->2->3->3->4->4->5, return 1->2->5.
 # Given 1->1->1->2->3, return 2->3.
 #
-
+# Related Topics
+# Linked List
+#
+import unittest
 # Definition for singly-linked list.
 class ListNode:
     def __init__(self, x):
@@ -59,13 +64,6 @@ class Solution:
                 current = current.next
         return dummy.next
 
-
-if __name__ == "__main__":
-    head, head.next, head.next.next = ListNode(1), ListNode(1), ListNode(1)
-    head.next.next.next, head.next.next.next.next = ListNode(1), ListNode(1)
-    head.next.next.next.next.next, head.next.next.next.next.next.next = ListNode(1), ListNode(1)
-    print Solution().deleteDuplicates(head)
-
 class SolutionOther:
     # @param head, a ListNode
     # @return a ListNode
@@ -85,49 +83,64 @@ class SolutionOther:
             else:
                 head = head.next
         return nHead.next
-#test
-c1 = ListNode(1)
-c2 = ListNode(2)
-c3 = ListNode(2)
-c1.next = c2
-c2.next = c3
 
-test = SolutionOther()
-ans = test.deleteDuplicates(c1)
-while ans:
-    print ans.val
-    ans = ans.next
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        #test
+        c1 = ListNode(1)
+        c2 = ListNode(2)
+        c3 = ListNode(2)
+        c1.next = c2
+        c2.next = c3
 
-#java
-js = '''
-public class Solution {
+        test = SolutionOther()
+        ans = test.deleteDuplicates(c1)
+        while ans:
+            print ans.val
+            ans = ans.next
+
+        head, head.next, head.next.next = ListNode(1), ListNode(1), ListNode(1)
+        head.next.next.next, head.next.next.next.next = ListNode(1), ListNode(1)
+        head.next.next.next.next.next, head.next.next.next.next.next.next = ListNode(1), ListNode(1)
+        print Solution().deleteDuplicates(head)
+
+if __name__ == '__main__':
+    unittest.main()
+
+Java = '''
+# Thought:
+
+# if current node is not unique, return deleteDuplicates with head.next.
+# If current node is unique, link it to the result of next list made by recursive call. Any improvement?
+# 14.08% 1ms
+# DFS
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) { val = x; }
+ * }
+ */
+# 1ms 70.96%
+class Solution {
     public ListNode deleteDuplicates(ListNode head) {
-        if (head == null || head.next == null) return head;
-        ListNode dummy = new ListNode(0);
-        dummy.next = head;
-        ListNode prev = dummy;
-        ListNode cur = head;
+        if (head == null) return null;
 
-        int cnt = 0;
-
-        while (cur != null) {
-            cnt = 0;
-            while (cur != null && cur.val == prev.next.val){
-                cnt++;
-                cur = cur.next;
+        if (head.next != null && head.val == head.next.val) {
+            while (head.next != null && head.val == head.next.val) {
+                head = head.next;
             }
-            if (cnt > 1){
-                prev.next = cur;
-            }else{
-                prev = prev.next;
-            }
-
+            return deleteDuplicates(head.next);
+        } else {
+            head.next = deleteDuplicates(head.next);
         }
-        return dummy.next;
+        return head;
     }
 }
 
-public class Solution {
+# 1ms 70.96%
+class Solution {
     public ListNode deleteDuplicates(ListNode head) {
         ListNode fakeHead = new ListNode(0);
         fakeHead.next = head;
@@ -147,6 +160,31 @@ public class Solution {
             head = head.next;
         }
         return fakeHead.next;
+    }
+}
+
+# Use fasr, slow pointer
+# 1ms 70.96%
+class Solution {
+    public ListNode deleteDuplicates(ListNode head) {
+        //use two pointers, slow - track the node before the dup nodes,
+        // fast - to find the last node of dups.
+        ListNode dummy = new ListNode(0), fast = head, slow = dummy;
+        slow.next = fast;
+        while(fast != null) {
+            while (fast.next != null && fast.val == fast.next.val) {
+                fast = fast.next;    //while loop to find the last node of the dups.
+            }
+            if (slow.next != fast) { //duplicates detected.
+                slow.next = fast.next; //remove the dups.
+                fast = slow.next;     //reposition the fast pointer.
+            } else { //no dup, move down both pointer.
+                slow = slow.next;
+                fast = fast.next;
+            }
+
+        }
+        return dummy.next;
     }
 }
 '''

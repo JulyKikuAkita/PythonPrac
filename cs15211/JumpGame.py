@@ -1,8 +1,10 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/jump-game/description/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/jump-game.py
 # Time:  O(n)
 # Space: O(1)
 # Greedy
+#
+# Description: Leetcode # 55. Jump Game
 #
 # Given an array of non-negative integers, you are initially positioned at the first index of the array.
 #
@@ -14,9 +16,13 @@ __author__ = 'July'
 # A = [2,3,1,1,4], return true.
 #
 # A = [3,2,1,0,4], return false.
-#  Microsoft, Amazon
-#  Array Greedy
-
+#
+# Companies
+# Microsoft Amazon
+# Related Topics
+# Array Greedy
+#
+import unittest
 class Solution:
     # @param A, a list of integers
     # @return a boolean
@@ -43,24 +49,31 @@ class Solution2:
         return True
 
 #test
-test = Solution2()
-A1 = [2,3,1,1,4]
-A2 = [3,2,1,0,4]
-#print test.canJump(A1)
-#print test.canJump(A2)
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        test = Solution2()
+        A1 = [2,3,1,1,4]
+        A2 = [3,2,1,0,4]
+        #print test.canJump(A1)
+        #print test.canJump(A2)
 
-if __name__ == "__main__":
-    print Solution().canJump([2,3,1,1,4])
-    print Solution().canJump([3,2,1,0,4])
+        print Solution().canJump([2,3,1,1,4])
+        print Solution().canJump([3,2,1,0,4])
 
-#java
-java = '''
+if __name__ == '__main__':
+    unittest.main()
+
+Java = '''
+#Thought: https://leetcode.com/problems/jump-game/solution/
+https://leetcode.com/articles/jump-game/ well-written
+
 # We can track the maximum length a position can reach.
 # The key to solve this problem is to find 2 conditions:
 # 1) the position can not reach next step (return false) , and
 # 2) the maximum reach the end (return true).
 
-public class Solution {
+#97.15% 4ms
+class Solution {
     public boolean canJump(int[] nums) {
         int end = 0;
         int cur = 0;
@@ -72,7 +85,8 @@ public class Solution {
     }
 }
 
-public class Solution {
+#97.15% 4ms
+class Solution {
     public boolean canJump(int[] nums) {
         if (nums.length < 2) return true;
 
@@ -83,4 +97,18 @@ public class Solution {
         return false;
     }
 }
+
+#100% 3ms
+class Solution {
+    public boolean canJump(int[] nums) {
+        int lastPos = nums.length - 1;
+        for (int i = nums.length - 1; i >= 0; i--) {
+            if (i + nums[i] >= lastPos) {
+                lastPos = i;
+            }
+        }
+        return lastPos == 0;
+    }
+}
+
 '''

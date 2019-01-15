@@ -1,9 +1,10 @@
-__source__ = 'https://github.com/kamyu104/LeetCode/blob/master/Python/matchsticks-to-square.py'
-# https://leetcode.com/problems/matchsticks-to-square/#/description
+__source__ = 'https://leetcode.com/problems/matchsticks-to-square/'
+# https://github.com/kamyu104/LeetCode/blob/master/Python/matchsticks-to-square.py
 # Time:  O(n * s * 2^n), s is the number of subset of which sum equals to side length.
 # Space: O(n * (2^n + s))
 #
-# Description:
+# Description: 473. Matchsticks to Square
+#
 # Remember the story of Little Match Girl? By now, you know exactly
 # what matchsticks the little match girl has, please find out a way
 # you can make one square by using up all those matchsticks.
@@ -33,6 +34,7 @@ __source__ = 'https://github.com/kamyu104/LeetCode/blob/master/Python/matchstick
 # Hide Tags Depth-first Search
 #
 import unittest
+# 1376ms 50.37%
 class Solution(object):
     def makesquare(self, nums):
         """
@@ -63,7 +65,6 @@ class Solution(object):
                         if valid_half_subsets[fullset ^ valid_half_subset]:
                             return True
                 used_subsets.append(subset)
-
         return False
 
 class TestMethods(unittest.TestCase):
@@ -71,11 +72,12 @@ class TestMethods(unittest.TestCase):
         nums = [5969561,8742425,2513572,3352059,9084275,2194427,1017540,2324577,6810719,8936380,7868365,2755770,9954463,9912280,4713511]
         self.assertFalse(Solution().makesquare(nums), False)
 
-
 if __name__ == '__main__':
     unittest.main()
 
 Java = '''
+# Thought: https://leetcode.com/problems/matchsticks-to-square/solution/
+#
 NP-Hard
 #Thought: https://discuss.leetcode.com/topic/72569/java-dfs-solution-with-various-optimizations-sorting-sequential-partition-dp
 Java DFS Solution with Explanation
@@ -91,8 +93,9 @@ The length of the given matchstick array will not exceed 15.
 
 Sounds like the input will not be very large... Then why not just do DFS? In fact, DFS solution passed judges.
 
-1. DFS: 16.93%
-public class Solution {
+1. DFS: 
+# 9ms 96.16%
+class Solution {
     public boolean makesquare(int[] nums) {
         if (nums == null || nums.length < 4) return false;
         int sum = 0;
@@ -119,15 +122,17 @@ public class Solution {
         return false;
     }
 }
+
 Thanks @benjamin19890721 for pointing out a very good optimization:
 Sorting the input array DESC will make the DFS process run much faster.
 Reason behind this is we always try to put the next matchstick in the first subset.
 If there is no solution, trying a longer matchstick first will get to negative conclusion earlier.
 Following is the updated code. Runtime is improved from more than 1000ms to around 40ms. A big improvement.
 
-2. DFS with sorting desc #67.56%
+2. DFS with sorting desc 
+# 23ms 80.55%
 //Arrays.sort default ascending
-public class Solution {
+class Solution {
     public boolean makesquare(int[] nums) {
         if (nums == null || nums.length < 4) return false;
         int sum = 0;

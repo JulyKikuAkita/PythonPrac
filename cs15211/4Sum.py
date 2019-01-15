@@ -1,7 +1,9 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/4sum/description/'
 # Time:  O(n^2) ~ O(n^4) O(n^(k-1))
 # Space: O(n^2)
 # Hash table
+#
+# Description: Leetcode # 18. 4Sum
 #
 # Given an array S of n integers,
 # are there elements a, b, c, and d in S such that a + b + c + d = target?
@@ -17,9 +19,12 @@ __author__ = 'July'
 #    (-2, -1, 1, 2)
 #    (-2,  0, 0, 2)
 #
+# Related Topics
 # Array Hash Table Two Pointers
-# Hide Similar Problems (E) Two Sum (M) 3Sum
-
+# Similar Questions
+# Two Sum 3Sum 4Sum II
+#
+import unittest
 class Solution:
         # @return a list of lists of length 4, [[val1,val2,val3,val4]]
     def fourSum(self, nums, target):
@@ -77,7 +82,6 @@ class Solution:
 
         return sorted(result)
 
-
 # result is set()
 class Solution2:
     # http://chaoren.is-programmer.com/posts/45308.html
@@ -107,43 +111,23 @@ class Solution2:
 
         return[list(i) for i in res]
 
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+        arr1 = [-3,-2,-1,0,0,1,2,3]
+        arr2 = [1, 0, -1, 0, -2, 2]
+        print Solution().fourSum(arr1, 0)
+        print Solution().fourSumif(arr1, 0)
+        print Solution2().fourSum(arr1, 0)
+        #print javaSolution().fourSum(arr1, 0) #not runable
 
-# java solution
-# http://www.programcreek.com/2013/02/leetcode-4sum-java/
-class javaSolution:
-    # http://chaoren.is-programmer.com/posts/45308.html
-    # @return a list of lists of length 4, [[val1,val2,val3,val4]]
-    def fourSum(self, num, target):
-        num.sort()
-        dict, result = {}, []
+if __name__ == '__main__':
+    unittest.main()
 
-        for i in xrange(len(num)):
-            for j in xrange(i+1, len(num)):
-                k = j+1
-                l = len(num) - 1
-
-                while k < l:
-                    sum = num[i] + num[j] + num[k] + num[l]
-                    if sum > target:
-                        l -= 1
-                    elif sum < target:
-                        k += 1
-                    elif sum == target:
-                        tmp = (num[i], num[j], num[k], num[l])
-                        if not dict[tmp]:  # fail, cannot add list to dict
-                            dict[tmp] = True
-                            result.append(tmp)
-        return result
-
-if __name__ == "__main__":
-    arr1 = [-3,-2,-1,0,0,1,2,3]
-    arr2 = [1, 0, -1, 0, -2, 2]
-    print Solution().fourSum(arr1, 0)
-    print Solution().fourSumif(arr1, 0)
-    print Solution2().fourSum(arr1, 0)
-    #print javaSolution().fourSum(arr1, 0) #not runable
-
-js1 = ''' 100%
+Java = '''
+# Thought:
+#
+# 75.11% 37ms
 public class Solution {
     public List<List<Integer>> fourSum(int[] nums, int target) {
         List<List<Integer>> result = new ArrayList<>();
@@ -182,9 +166,42 @@ public class Solution {
     }
 }
 
-O(n^3) time complexity, O(1) extra space complexity.
+#97.42% 24ms
+class Solution {
+    public List<List<Integer>> fourSum(int[] nums, int target) {
+        List<List<Integer>> res = new ArrayList<>();
+        if (nums.length < 4) return res;
+        Arrays.sort(nums);
+        int n = nums.length;
+        for (int i = 0; i < n - 3; i++) {
+            if (nums[i] + nums[i+1] + nums[i+2] + nums[i+3] > target) break;
+            if (nums[i] + nums[n-1] + nums[n-2] + nums[n-3] < target) continue;
+            if (i > 0 && nums[i] == nums[i-1]) continue;
+            for (int j = i+1; j < n - 2; j++) {
+                if (nums[i] + nums[j] + nums[j+1] + nums[j+2] > target) break;
+                if (nums[i] + nums[j] + nums[n-2] + nums[n-1] < target) continue;
+                if (j > i + 1 && nums[j] == nums[j-1]) continue;
+                int low = j + 1, high = n - 1;
+                while (low < high) {
+                    int sum = nums[i] + nums[j] + nums[low] + nums[high];
+                    if (sum == target) {
+                        res.add(Arrays.asList(nums[i], nums[j], nums[low], nums[high]));
+                        while (low < high && nums[low] == nums[low+1]) low++;
+                        while (low < high && nums[high] == nums[high-1]) high--;
+                        low++;
+                        high--;
+                    }
+                    else if (sum > target) high--;
+                    else low++;
+                }
+            }
+        }
+        return res;
+    }
+}
 
-public class Solution {
+#15ms 97.56%
+class Solution {
    public List<List<Integer>> fourSum(int[] nums, int target) {
 		ArrayList<List<Integer>> res = new ArrayList<List<Integer>>();
 		int len = nums.length;

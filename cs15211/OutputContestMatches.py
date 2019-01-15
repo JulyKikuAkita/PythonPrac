@@ -1,9 +1,15 @@
-__source__ = ''
+__source__ = 'https://leetcode.com/problems/output-contest-matches/'
 # Time:  O()
 # Space: O()
 #
-# Description:
-# During the NBA playoffs, we always arrange the rather strong team to play with the rather weak team, like make the rank 1 team play with the rank nth team, which is a good strategy to make the contest more interesting. Now, you're given n teams, you need to output their final contest matches in the form of a string.
+# Description: 544. Output Contest Matches
+#
+# During the NBA playoffs,
+# we always arrange the rather strong team to play with the rather weak team,
+# like make the rank 1 team play with the rank nth team,
+# which is a good strategy to make the contest more interesting.
+# Now, you're given n teams,
+# you need to output their final contest matches in the form of a string.
 #
 # The n teams are given in the form of positive integers from 1 to n, which represents their initial rank.
 # (Rank 1 is the strongest team and Rank n is the weakest team.) We'll use parentheses('(', ')') and commas(',')
@@ -21,9 +27,11 @@ __source__ = ''
 # Input: 4
 # Output: ((1,4),(2,3))
 # Explanation:
-# In the first round, we pair the team 1 and 4, the team 2 and 3 together, as we need to make the strong team and weak team together.
+# In the first round, we pair the team 1 and 4, the team 2 and 3 together,
+# as we need to make the strong team and weak team together.
 # And we got (1,4),(2,3).
-# In the second round, the winners of (1,4) and (2,3) need to play again to generate the final winner, so you need to add the paratheses outside them.
+# In the second round, the winners of (1,4) and (2,3) need to play again to generate the final winner,
+# so you need to add the paratheses outside them.
 # And we got the final answer ((1,4),(2,3)).
 # Example 3:
 # Input: 8
@@ -38,8 +46,9 @@ __source__ = ''
 # We ensure that the input n can be converted into the form 2k, where k is a positive integer.
 # Hide Company Tags Google
 # Hide Tags Recursion String
-
+#
 import unittest
+# 28ms 25.17%
 class Solution(object):
     def findContestMatch(self, n):
         """
@@ -61,8 +70,9 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
-public class Solution {
+# Thought: https://leetcode.com/problems/output-contest-matches/solution/
+# 4ms 64.62%
+class Solution {
     public String findContestMatch(int n) {
         List<String> matches = new ArrayList<>();
         for (int i = 1; i <= n; i++) {

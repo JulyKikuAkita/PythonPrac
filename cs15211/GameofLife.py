@@ -1,8 +1,10 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/game-of-life/description/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/game-of-life.py
 # Time:  O(m * n)
 # Space: O(1)
-
+#
+# Description: Leetcode # 289. Game of Life
+#
 # According to the Wikipedia's article:
 # "The Game of Life, also known simply as Life,
 # is a cellular automaton devised by the British
@@ -36,10 +38,15 @@ __author__ = 'July'
 #   when the active area encroaches the border of the array.
 #   How would you address these problems?
 #
-# Google TinyCo
-
-
-
+# Companies
+# Google Snapchat Dropbox Two Sigma
+# Related Topics
+# Array
+# Similar Questions
+# Set Matrix Zeroes
+#
+import unittest
+# 32ms 13.72%
 class Solution(object):
     def gameOfLife(self, board):
         """
@@ -71,10 +78,83 @@ class Solution(object):
             for j in xrange(n):
                 board[i][j] >>= 1 # Update to the next state
 
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
 
-# java
-js = '''
-public class Solution {
+if __name__ == '__main__':
+    unittest.main()
+
+Java = '''
+# Thought:
+
+To solve it in place, we use 2 bits to store 2 states:
+
+[2nd bit, 1st bit] = [next state, current state]
+
+- 00  dead (next) <- dead (current)
+- 01  dead (next) <- live (current)
+- 10  live (next) <- dead (current)
+- 11  live (next) <- live (current)
+In the beginning, every cell is either 00 or 01.
+Notice that 1st state is independent of 2nd state.
+Imagine all cells are instantly changing from the 1st to the 2nd state, at the same time.
+Let's count # of neighbors from 1st state and set 2nd state bit.
+Since every 2nd state is by default dead, no need to consider transition 01 -> 00.
+In the end, delete every cell's 1st state by doing >> 1.
+For each cell's 1st bit, check the 8 pixels around itself, and set the cell's 2nd bit.
+
+Transition 01 -> 11: when board == 1 and lives >= 2 && lives <= 3.
+Transition 00 -> 10: when board == 0 and lives == 3.
+To get the current state, simply do
+
+board[i][j] & 1
+To get the next state, simply do
+
+board[i][j] >> 1
+
+# 1ms 100%
+class Solution {
+    public void gameOfLife(int[][] board) {
+        if (board == null || board.length == 0) return;
+        int m = board.length, n = board[0].length;
+
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                int lives = liveNeighbors(board, m, n, i, j);
+
+                // In the beginning, every 2nd bit is 0;
+                // So we only need to care about when will the 2nd bit become 1.
+                if (board[i][j] == 1 && lives >= 2 && lives <= 3) {
+                    board[i][j] = 3; // Make the 2nd bit 1: 01 ---> 11
+                }
+                if (board[i][j] == 0 && lives == 3) {
+                    board[i][j] = 2; // Make the 2nd bit 1: 00 ---> 10
+                }
+            }
+        }
+
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                board[i][j] >>= 1;  // Get the 2nd state.
+            }
+        }
+    }
+
+    public int liveNeighbors(int[][] board, int m, int n, int i, int j) {
+        int lives = 0;
+        for (int x = Math.max(i - 1, 0); x <= Math.min(i + 1, m - 1); x++) {
+            for (int y = Math.max(j - 1, 0); y <= Math.min(j + 1, n - 1); y++) {
+                lives += board[x][y] & 1;
+            }
+        }
+        lives -= board[i][j] & 1;
+        return lives;
+    }
+}
+
+# 2ms 55.44%
+class Solution {
     public void gameOfLife(int[][] board) {
         if (board == null || board.length == 0 || board[0].length == 0) {
             return;
@@ -114,7 +194,8 @@ public class Solution {
     }
 
     private int isLive(int[][] board, int row, int col) {
-        if (row >= 0 && row < board.length && col >= 0 && col < board[0].length && (board[row][col] == 1 || board[row][col] == 2)) {
+        if (row >= 0 && row < board.length && col >= 0 && col < board[0].length
+        && (board[row][col] == 1 || board[row][col] == 2)) {
             return 1;
         } else {
             return 0;
@@ -122,7 +203,8 @@ public class Solution {
     }
 }
 
-public class Solution {
+# 2ms 55.44%
+class Solution {
     public void gameOfLife(int[][] board) {
         int m = board.length;
         int n = board[0].length;
@@ -133,7 +215,6 @@ public class Solution {
                 for(int x = Math.max(0, i-1); x < Math.min(m, i+2) ; x++){
                     for(int y = Math.max(0, j-1); y < Math.min(n, j+2) ; y++){
                         count += board[x][y] & 1;
-
                     }
                 }
 
@@ -146,7 +227,6 @@ public class Solution {
         for(int i = 0; i < m; i++){
             for(int j = 0; j < n; j++){
                 board[i][j] >>= 1;
-
             }
 
         }

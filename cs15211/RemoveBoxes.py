@@ -1,9 +1,11 @@
-__source__ = 'https://leetcode.com/problems/remove-boxes/#/description'
-# 3-d DP
-# From the bottom-up solution, the time complexity will be O(n^4) and the space complexity will be O(n^3).
+__source__ = 'https://leetcode.com/problems/remove-boxes/'
 # Time:  O(n^4)
 # Space: O(n^3)
-# Description:
+# 3-d DP
+# From the bottom-up solution, the time complexity will be O(n^4) and the space complexity will be O(n^3).
+#
+# Description: Leetcode # 546. Remove Boxes
+#
 # Given several boxes with different colors represented by different positive numbers.
 # You may experience several rounds to remove boxes until there is no box left.
 # Each time you can choose some continuous boxes with the same color
@@ -24,8 +26,12 @@ __source__ = 'https://leetcode.com/problems/remove-boxes/#/description'
 # ----> [] (2*2=4 points)
 # Note: The number of boxes n would not exceed 100.
 #
-# Hide Company Tags Tencent
-# Hide Tags Dynamic Programming Depth-first Search
+# Companies
+# Tencent
+# Related Topics
+# Dynamic Programming Depth-first Search
+# Similar Questions
+# Strange Printer
 #
 import unittest
 
@@ -53,6 +59,7 @@ import unittest
 # The "i, k = m, k + m - i" part skips order (m-i)*(j-i) calls to dp,
 # and is necessary to get this kind of solution to pass in Python.
 #
+# 352ms 46.41%
 class Solution(object):
     def removeBoxes(self, boxes):
         """
@@ -85,7 +92,7 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/articles/remove-boxes/
+# Thought: https://leetcode.com/problems/remove-boxes/solution/
 
 1. Java DP + Memorization 60ms
 When facing this problem, I am keeping thinking how to simulate the case
@@ -99,7 +106,8 @@ The transformation function is as below
 dp[i][j][k] = max(dp[i+1][m-1][1] + dp[m][j][k+1]) when box[i] = box[m]
 So the Java code with memorization is as below. Kindly ask me any questions.
 
-public class Solution {
+# 142ms 14.20%
+class Solution {
     public int removeBoxes(int[] boxes) {
         if (boxes == null || boxes.length == 0) {
             return 0;
@@ -226,8 +234,9 @@ Finally here are the two solutions, one for top-down DP and the other for bottom
 From the bottom-up solution, the time complexity will be O(n^4) and the space complexity will be O(n^3).
 
 
-Topdown DP:
-public class Solution {
+# Topdown DP:
+# 123ms 20.99%
+class Solution {
     public int removeBoxes(int[] boxes) {
     int n = boxes.length;
     int[][][] dp = new int[n][n][n];
@@ -251,8 +260,9 @@ public class Solution {
     }
 }
 
-Bottom-up DP:
-public class Solution {
+# Bottom-up DP:
+# 123ms 20.99%
+class Solution {
     public int removeBoxes(int[] boxes) {
         int n = boxes.length;
         int[][][] dp = new int[n][n][n];
@@ -280,8 +290,85 @@ public class Solution {
         	    }
         	}
         }
-
-    return (n == 0 ? 0 : dp[0][n - 1][0]);
+        return (n == 0 ? 0 : dp[0][n - 1][0]);
     }
+}
+
+# 19ms 70.37%
+import java.util.*;
+class Solution {
+    static long[][] k = new long[33][3];
+    static long[] res2 = new long[33];
+
+    private static  Map<Integer, Integer> c ;
+
+    public int removeBoxes(int[] boxes) {
+        c = new HashMap<>(boxes.length * boxes.length);
+        return removeBoxes(boxes, 0, boxes.length, 0);
+    }
+
+    private int removeBoxes(int[] boxes, int start, int end, int count) {
+        if (start == end)return 0;
+        if (start == end - 1) return (count + 1) * (count + 1);
+        if (boxes[start] == boxes[start + 1]) {
+            return removeBoxes(boxes, start + 1, end, count + 1);
+        }
+
+        int x = start * 101 * 101 + end * 101 + count;
+        Integer val  = c.get(x);
+        if (val != null) return val;
+
+        int max = removeBoxes(boxes, start + 1, end, 0) + (count + 1) * (count + 1);
+        for (int i = start + 1; i < end ; i++) {
+            if (boxes[i] == boxes[start]) {
+                int cur = removeBoxes(boxes, start + 1, i, 0) + removeBoxes(boxes, i, end, count + 1);
+                max = Math.max(cur, max);
+            }
+        }
+        c.put(x, max);
+        return max;
+    }
+}
+
+# DP
+# 13ms 82.10%
+class Solution {
+	public int removeBoxes(int[] boxes) {
+		int n = boxes.length;
+		int[] dp = new int[n * n * n];
+		return dfs(boxes, 0, n - 1, 1, dp);
+	}
+
+	private int dfs(int[] boxes, int i, int j, int k, int[] dp) {
+		if (i > j) {
+			return 0;
+		} else if (i == j) {
+			return k * k;
+		}
+
+		// map 3 dimensions (i,j,k) to single index(pos) in 1d array
+		int pos = i + boxes.length * (j + boxes.length * k);
+
+		if (dp[pos] != 0) {
+			return dp[pos];
+		}
+
+		int p = k, q = i;
+
+		while (q <= j && boxes[q] == boxes[i]) {
+			p++;
+			q++;
+		}
+
+		int res = (p - 1) * (p - 1) + dfs(boxes, q, j, 1, dp);
+
+		for (int m = q + 1; m <= j; m++) {
+			if (boxes[i] == boxes[m] && boxes[i] != boxes[m - 1]) {
+				res = Math.max(res, dfs(boxes, q, m - 1, 1, dp) + dfs(boxes, m, j, p, dp));
+			}
+		}
+		dp[pos] = res;
+		return res;
+	}
 }
 '''

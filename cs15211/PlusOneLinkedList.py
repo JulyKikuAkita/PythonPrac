@@ -1,26 +1,35 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/plus-one-linked-list/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/plus-one-linked-list.py
 # Time:  O(n)
 # Space: O(1)
-'''Given a non-negative number represented as a singly linked list of digits, plus one to the number.
+#
+# Description: Leetcode # 369. Plus One Linked List
+#
+# Given a non-negative number represented as a singly linked list of digits, plus one to the number.
+#
+# The digits are stored such that the most significant digit is at the head of the list.
+#
+# Example:
+# Input:
+# 1->2->3
+#
+# Output:
+# 1->2->4
+#
+# Companies
+# Google
+# Related Topics
+# Linked List
+# Similar Questions
+# Plus One
+#
 
-The digits are stored such that the most significant digit is at the head of the list.
-
-Example:
-Input:
-1->2->3
-
-Output:
-1->2->4
-Hide Company Tags Google
-Hide Tags Linked List
-Hide Similar Problems (E) Plus One
-'''
+import unittest
 # Definition for singly-linked list.
-# class ListNode(object):
-#     def __init__(self, x):
-#         self.val = x
-#         self.next = None
+class ListNode(object):
+    def __init__(self, x):
+        self.val = x
+        self.next = None
 
 # Two pointers solution.
 class Solution(object):
@@ -49,9 +58,7 @@ class Solution(object):
             while right:
                 right.val = 0
                 right = right.next
-
         return dummy if dummy.val else dummy.next
-
 
 # Time:  O(n)
 # Space: O(1)
@@ -67,7 +74,6 @@ class Solution2(object):
             while curr:
                 dummy.next, curr.next, curr = curr, dummy.next, curr.next
             return dummy.next
-
         rev_head = reverseList(head)
         curr, carry = rev_head, 1
         while curr and carry:
@@ -77,11 +83,19 @@ class Solution2(object):
             if carry and curr.next is None:
                 curr.next = ListNode(0)
             curr = curr.next
-
         return reverseList(rev_head)
 
-#java
-js = '''
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+
+if __name__ == '__main__':
+    unittest.main()
+
+Java = '''
+# Thought:
+#
+
 /**
  * Definition for singly-linked list.
  * public class ListNode {
@@ -90,7 +104,9 @@ js = '''
  *     ListNode(int x) { val = x; }
  * }
  */
-public class Solution {
+
+# 0ms 100%
+class Solution {
     public ListNode plusOne(ListNode head) {
         ListNode result = new ListNode(0);
         result.next = head;

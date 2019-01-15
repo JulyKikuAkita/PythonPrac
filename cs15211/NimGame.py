@@ -1,8 +1,9 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/nim-game/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/nim-game.py
-
 # Time:  O(1)
 # Space: O(1)
+#
+# Description: # 292. Nim Game
 #
 # You are playing the following Nim Game with your friend:
 # There is a heap of stones on the table, each time one of
@@ -18,7 +19,16 @@ __author__ = 'July'
 # never win the game: no matter 1, 2, or 3 stones you remove,
 # the last stone will always be removed by your friend.
 #
+# Companies
+# Adobe
+# Related Topics
+# Brainteaser
+# Similar Questions
+# Flip Game II
+#
 
+import unittest
+# 24ms 30.30%
 class Solution(object):
     def canWinNim(self, n):
         """
@@ -26,3 +36,23 @@ class Solution(object):
         :rtype: bool
         """
         return n % 4 != 0
+
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+
+
+if __name__ == '__main__':
+    unittest.main()
+
+Java = '''
+# Thought: https://leetcode.com/problems/nim-game/solution/
+
+# 0ms 100%
+class Solution {
+    public boolean canWinNim(int n) {
+        return n % 4 != 0;
+    }
+}
+
+'''

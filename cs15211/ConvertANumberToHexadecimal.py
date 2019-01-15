@@ -1,10 +1,12 @@
-__source__ = 'https://github.com/kamyu104/LeetCode/blob/master/Python/convert-a-number-to-hexadecimal.py'
+__source__ = ''
+# https://github.com/kamyu104/LeetCode/blob/master/Python/convert-a-number-to-hexadecimal.py
 # Time:  O(logn)
 # Space: O(1)
 #
 # Description:
+#
 # Given an integer, write an algorithm to convert it to hexadecimal.
-# For negative integer, two’s complement method is used.
+# For negative integer, two's complement method is used.
 #
 # IMPORTANT:
 # You must not use any method provided by the library which converts/formats
@@ -38,6 +40,7 @@ __source__ = 'https://github.com/kamyu104/LeetCode/blob/master/Python/convert-a-
 #  Bit Manipulation
 
 import unittest
+# 20ms 98.60%
 class Solution(object):
     def toHex(self, num):
         return ''.join('0123456789abcdef'[(num >> 4 * i) & 15]
@@ -72,12 +75,14 @@ if __name__ == '__main__':
 
 Java = '''
 # https://ratchapong.com/algorithm-practice/leetcode/convert-a-number-to-hexadecimal
-#Thought: each time we take a look at the last four digits of
+
+# Thought: each time we take a look at the last four digits of
             binary verion of the input, and maps that to a hex char
             shift the input to the right by 4 bits, do it again
             until input becomes 0.
 
-public class Solution {
+# 3ms 100%
+class Solution {
     public String toHex(int num) {
         if (num == 0) return "0";
         char[] map = new char[]{'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'};
@@ -105,8 +110,8 @@ For Integer.MAX_VALUE or Integer.MIN_VALUE or any input
 with 8 Hexadecimal characters where the iterations would last the longest.
 For Integer.MAX_VALUE the algorithm will run for at most log base16 (2^31 - 1) +1 = 8 times
 
-
-public class Solution {
+# 3ms 100%
+class Solution {
     public String toHex(int num) {
         long n = num & 0x00000000ffffffffL;
         char[] map = new char[]{'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'};

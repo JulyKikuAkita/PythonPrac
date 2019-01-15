@@ -1,10 +1,10 @@
-import collections
-
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/brick-wall/description/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/brick-wall.py
 # Time:  O(n), n is the total number of the bricks
 # Space: O(m), m is the total number different widths
-
+#
+# Description: Leetcode # 554. Brick Wall
+#
 # There is a brick wall in front of you. The wall is rectangular and has several rows of bricks.
 # The bricks have the same height but different width. You want to draw a vertical line from
 # the top to the bottom and cross the least bricks.
@@ -33,9 +33,16 @@ __author__ = 'July'
 # The number of bricks in each row is in range [1,10,000].
 # The height of wall is in range [1,10,000].
 # Total number of bricks of the wall won't exceed 20,000.
-#  Facebook
-#  Hash Table
+#
+# Companies
+# Facebook
+# Related Topics
+# Hash Table
+#
+import unittest
+import collections
 
+# 52ms 54.86%
 class Solution(object):
     def leastBricks(self, wall):
         """
@@ -52,7 +59,17 @@ class Solution(object):
                 result = min(result, len(wall) - widths[width]);
         return result
 
-java = '''
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+
+if __name__ == '__main__':
+    unittest.main()
+
+Java = '''
+# Thought: https://leetcode.com/problems/brick-wall/solution/
+
+# 28ms 37.38%
 public class Solution {
     public int leastBricks(List<List<Integer>> wall) {
         if(wall.size() == 0) return 0;
@@ -67,6 +84,37 @@ public class Solution {
             }
         }
         return wall.size() - count;
+    }
+}
+
+#16ms 97.98%
+public class Solution {
+    public int leastBricks(List<List<Integer>> wall) {
+        if (wall == null || wall.size() == 0 || wall.get(0).size() == 0) {
+            return 0;
+        }
+
+        HashMap<Integer, Integer> map = new HashMap<>();
+        int max = 0;
+        for (List<Integer> row: wall) {
+            int pos = 0;
+            for (int i = 0; i < row.size() - 1; i++) {
+                pos += row.get(i);
+                if (!map.containsKey(pos)) {
+                    map.put(pos, 1);
+                    if (max == 0) {
+                        max = 1;
+                    }
+                } else {
+                    int val = map.get(pos);
+                    map.put(pos, val + 1);
+                    max = Math.max(val + 1, max);
+                }
+            }
+        }
+
+      //  System.out.println(max);
+        return wall.size() - max;
     }
 }
 '''

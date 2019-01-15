@@ -1,15 +1,23 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/multiply-strings/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/multiply-strings.py
 # Time:  O(m * n)
 # Space: O(m + n)
 # String
 #
+# Description: Leetcode # 346. Moving Average from Data Stream
+#
 # Given two numbers represented as strings, return multiplication of the numbers as a string.
 #
 # Note: The numbers can be arbitrarily large and are non-negative.
 #
+# Companies
 # Facebook Twitter
-
+# Related Topics
+# Math String
+# Similar Questions
+# Add Two Numbers Plus One Add Binary Add Strings
+#
+import unittest
 class Solution:
     # @param num1, a string
     # @param num2, a string
@@ -32,9 +40,6 @@ class Solution:
             del num3[0]
 
         return ''.join(num3)
-
-if __name__ == "__main__":
-    print Solution().multiply("123", "1000")
 
 class SolutionOther:
     # @param num1, a string
@@ -64,12 +69,21 @@ class SolutionOther:
         return ''.join(ans)
 
 #test
-test = SolutionOther()
-print test.multiply("1", "200")
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        print Solution().multiply("123", "1000")
+        test = SolutionOther()
+        print test.multiply("1", "200")
 
-#java
-js = '''
-public class Solution {
+if __name__ == '__main__':
+    unittest.main()
+
+Java = '''
+# Thought: 
+# https://discuss.leetcode.com/topic/30508/easiest-java-solution-with-graph-explanation with pic
+
+# 13ms 93.57%
+class Solution {
     public String multiply(String num1, String num2) {
         int len1 = num1.length();
         int len2 = num2.length();
@@ -95,10 +109,10 @@ public class Solution {
         }
         return sb.toString();
     }
-
 }
 
-public class Solution {
+# 16ms 68.27%
+class Solution {
     public String multiply(String num1, String num2) {
         int n1 = num1.length();
         int n2 = num2.length();

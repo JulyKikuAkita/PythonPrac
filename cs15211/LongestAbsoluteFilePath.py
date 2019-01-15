@@ -1,7 +1,10 @@
+__source__ = 'https://leetcode.com/problems/longest-absolute-file-path/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/longest-absolute-file-path.py
 # Time:  O(n)
 # Space: O(d), d is the max depth of the paths
-
+#
+# Description: Leetcode # 388. Longest Absolute File Path
+#
 # Suppose we abstract our file system by a string in the following manner:
 #
 # The string "dir\n\tsubdir1\n\tsubdir2\n\t\tfile.ext" represents:
@@ -41,6 +44,7 @@
 # Notice that a/aa/aaa/file1.txt is not the longest file path, if there is
 # another path aaaaaaaaaaaaaaaaaaaaa/sth.png.
 #  Google
+#
 
 # ex: "dir\n\tsubdir1\n\tsubdir2\n\t\tfile.ext"
 class Solution(object):
@@ -69,6 +73,7 @@ class Solution(object):
                 path_len[depth + 1] = path_len[depth] + len(name) + 1
         return max_len
 
+# 20ms 99.28%
 class Solution(object):
     def lengthLongestPath(self, input):
         """
@@ -86,17 +91,21 @@ class Solution(object):
                 pathlen[depth + 1] = pathlen[depth] + len(name) + 1
         return max_len
 
-java = '''
+Java = '''
+# Thought:
+
 The depth of the directory/file is calculated by counting how many "\t"s are there.
 The time complexity is O(n) because each substring in the input string only goes into the stack once,
 and pops out from the stack once.
 
-public int lengthLongestPath(String input) {
+# 4ms 35.33%
+class Solution {
+    public int lengthLongestPath(String input) {
         Deque<Integer> stack = new ArrayDeque<>();
         stack.push(0); // "dummy" length
         int maxLen = 0;
         for(String s:input.split("\n")){
-            int lev = s.lastIndexOf("\t")+1; // number of "\t"
+            int lev = s.lastIndexOf("\t")+1; // number of "\t", "\t" counts one char
             while(lev+1<stack.size()) stack.pop(); // find parent
             int len = stack.peek()+s.length()-lev+1; // remove "/t", add"/"
             stack.push(len);
@@ -105,9 +114,12 @@ public int lengthLongestPath(String input) {
         }
         return maxLen;
     }
+}
+
 An even shorter and faster solution using array instead of stack:
 
-public class Solution {
+# 2ms 98.80%
+class Solution {
     public int lengthLongestPath(String input) {
         String[] paths = input.split("\n");
         int[] stack = new int[paths.length + 1];
@@ -123,4 +135,12 @@ public class Solution {
         return res;
     }
 }
+
+# "\t" counts one char length
+# note if print "dir\n\tsubdir1\n\tsubdir2\n\t\tfile.ext".split("\n") and string length();
+dir 3
+        subdir1 8
+        subdir2 8
+                file.ext 10
+# note, if print "\tdir".lastIndexOf("\t"), return 0;, if not found, return -1;
 '''

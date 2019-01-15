@@ -1,8 +1,10 @@
-__source__ = 'https://leetcode.com/problems/nested-list-weight-sum/#/description'
+__source__ = 'https://leetcode.com/problems/nested-list-weight-sum/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/nested-list-weight-sum.py
 # Time:  O(n)
 # Space: O(h)
-# Description:
+#
+# Description: Leetcode # 339. Nested List Weight Sum
+#
 # Given a nested list of integers, return the sum of all integers in the list weighted by their depth.
 #
 # Each element is either an integer, or a list -- whose elements may also be integers or other lists.
@@ -12,6 +14,7 @@ __source__ = 'https://leetcode.com/problems/nested-list-weight-sum/#/description
 #
 # Example 2:
 # Given the list [1,[4,[6]]], return 27. (one 1 at depth 1, one 4 at depth 2, and one 6 at depth 3; 1 + 4*2 + 6*3 = 27)
+#
 # Companies
 # LinkedIn
 # Related Topics
@@ -23,6 +26,8 @@ __source__ = 'https://leetcode.com/problems/nested-list-weight-sum/#/description
 # This is the interface that allows for creating nested lists.
 # You should not implement it, or speculate about its implementation
 # """
+import unittest
+# 20ms 100%
 class NestedInteger(object):
    def isInteger(self):
        """
@@ -60,9 +65,15 @@ class Solution(object):
             return res
         return depthSumHelper(nestedList, 1)
 
-#Java
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+
+if __name__ == '__main__':
+    unittest.main()
+
 Java = '''
-Thought: https://leetcode.com/articles/nested-list-weight-sum/
+Thought: https://leetcode.com/problems/nested-list-weight-sum/solution/
 
 /**
  * // This is the interface that allows for creating nested lists.
@@ -82,8 +93,9 @@ Thought: https://leetcode.com/articles/nested-list-weight-sum/
  * }
  */
 
- 1. DFS 18%
-public class Solution {
+ 1. DFS
+# 2ms 97%
+class Solution {
     public int depthSum(List<NestedInteger> nestedList) {
         return dfs(nestedList, 1);
     }
@@ -97,8 +109,32 @@ public class Solution {
     }
 }
 
-2. BFS 18%
-public class Solution {
+# 2ms 97%
+class Solution {
+    public int depthSum(List<NestedInteger> nestedList) {
+        int sum = 0;
+        for (NestedInteger ni : nestedList) {
+            sum += depthSum(ni, 1);
+        }
+        return sum;
+    }
+
+    private int depthSum(NestedInteger ni, int depth) {
+        if (ni.isInteger()) {
+            return ni.getInteger() * depth;
+        } else {
+            int sum = 0;
+            for (NestedInteger n : ni.getList()) {
+                sum += depthSum(n, depth + 1);
+            }
+            return sum;
+        }
+    }
+}
+
+2. BFS
+# 2ms 97%
+class Solution {
     public int depthSum(List<NestedInteger> nestedList) {
         int sum = 0;
         Queue<NestedInteger> queue = new LinkedList<>();

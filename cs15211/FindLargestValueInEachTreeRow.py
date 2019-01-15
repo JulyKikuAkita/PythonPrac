@@ -1,8 +1,11 @@
-__source__ = 'https://leetcode.com/problems/find-largest-value-in-each-tree-row/#/description'
-#You need to find the largest value in each row of a binary tree.
+__source__ = 'https://leetcode.com/problems/find-largest-value-in-each-tree-row/'
+# Time:  O(n)
+# Space: O(h)
 #
+# Description: Leetcode # 515. Find Largest Value in Each Tree Row
 #
-#Example:
+# You need to find the largest value in each row of a binary tree.
+# Example:
 # Input:
 #
 #          1
@@ -11,18 +14,19 @@ __source__ = 'https://leetcode.com/problems/find-largest-value-in-each-tree-row/
 #       / \   \
 #      5   3   9
 #
-#Output: [1, 3, 9]
-#Hide Company Tags LinkedIn
-#Hide Tags Tree Depth-first Search Breadth-first Search
+# Output: [1, 3, 9]
+# Hide Company Tags LinkedIn
+# Hide Tags Tree Depth-first Search Breadth-first Search
 #
+
 # Definition for a binary tree node.
-from TreeSerizalize import drawtree, deserialize
 class TreeNode(object):
      def __init__(self, x):
          self.val = x
          self.left = None
          self.right = None
 
+# 76ms 9.94%
 class Solution(object):
     def largestValues(self, root):
         """
@@ -46,7 +50,7 @@ class Solution(object):
         self.helper(root.left, depth + 1)
         self.helper(root.right, depth + 1)
 
-
+# 68ms 17.06%
 class SolutionFastest(object):
     def largestValues(self, root):
         """
@@ -86,13 +90,15 @@ class Solution2(object):
 if __name__ == "__main__":
     #root1 = drawtree(deserialize('[1,2,3,null,null,4,null,null,5]'))
     #root2 = drawtree(deserialize('[1,3,2,5,3,null,9]'))
-
     print Solution().largestValues(drawtree(deserialize('[0,-1]')))
     #print Solution().largestValues(root2)
 
 Java = '''
-# 39%
-public class Solution {
+Thought:
+
+# DFS
+# 7ms 51.45%
+class Solution {
     public List<Integer> largestValues(TreeNode root) {
         List<Integer> res = new ArrayList<Integer>();
         helper(root, res, 0);
@@ -119,9 +125,9 @@ Verbose Java Solution, Binary tree level order traversal, again.
 Alright, two binary tree level order traversal problems in one contest. 
 This time, mission is to find the max of each level
 
-#BFS
-75%
-public class Solution {
+# BFS
+# 4ms 100%
+class Solution {
     public List<Integer> largestValues(TreeNode root) {
         List<Integer> res = new ArrayList<>();
         if (root == null) return res;

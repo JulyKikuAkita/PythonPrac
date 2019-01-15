@@ -1,8 +1,10 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/find-median-from-data-stream/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/find-median-from-data-stream.py
 # Time:  O(nlogn) for total n addNums, O(logn) per addNum, O(1) per findMedian.
 # Space: O(n), total space
-
+#
+# Description: Leetcode # 295. Find Median from Data Stream
+#
 # Median is the middle value in an ordered integer list.
 # If the size of the list is even, there is no middle value.
 # So the median is the mean of the two middle value.
@@ -23,12 +25,17 @@ __author__ = 'July'
 # findMedian() -> 1.5
 # add(3)
 # findMedian() -> 2
+#
+# Companies
 # Google
-#Heap design
-
+# Related Topics
+# Heap Design
+# Similar Questions
+# Sliding Window Median
+#
 # Heap solution.
 from heapq import heappush, heappop
-
+import unittest
 class MedianFinder:
     def __init__(self):
         """
@@ -36,7 +43,6 @@ class MedianFinder:
         """
         self.__max_heap = []
         self.__min_heap = []
-
 
     def addNum(self, num):
         """
@@ -123,8 +129,17 @@ class MedianFinder:
 # mf.addNum(1)
 # mf.findMedian()
 
-#java
-js = '''
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+
+if __name__ == '__main__':
+    unittest.main()
+
+Java = '''
+# Thought: https://leetcode.com/problems/find-median-from-data-stream/solution/
+
+# 209ms 17.98%
 class MedianFinder {
     PriorityQueue<Integer> minHeap = new PriorityQueue<>();
     PriorityQueue<Integer> maxHeap = new PriorityQueue<>(Collections.reverseOrder());
@@ -165,7 +180,7 @@ class MedianFinder {
 // mf.addNum(1);
 // mf.findMedian();
 
-
+# 130ms 95.34%
 class MedianFinder {
     private PriorityQueue<Integer> minHeap;
     private PriorityQueue<Integer> maxHeap;
@@ -207,59 +222,39 @@ class MedianFinder {
     }
 };
 
-// Your MedianFinder object will be instantiated and called as such:
-// MedianFinder mf = new MedianFinder();
-// mf.addNum(1);
-// mf.findMedian();
-
+# 126ms 98.34%
 class MedianFinder {
-    private PriorityQueue<Integer> minHeap;
-    private PriorityQueue<Integer> maxHeap;
-    private int ttl;
+    private PriorityQueue<Integer> minHeap = new PriorityQueue<>();
+    private PriorityQueue<Integer> maxHeap = new PriorityQueue<>(10, new Comparator<Integer>() {
+        @Override
+        public int compare(Integer i1, Integer i2) {
+            return Integer.compare(i2, i1);
+        }
+    });
     private double median;
-
-    public MedianFinder(){
-        minHeap = new PriorityQueue<Integer>();
-        maxHeap = new PriorityQueue<Integer>();
-        //maxHeap = new PriorityQueue<Integer>(Collections.reverseORder());
-        ttl = 0;
-        median = -1;
-    }
 
     // Adds a number into the data structure.
     public void addNum(int num) {
-        if(ttl == 0){
-            minHeap.offer(num);
-        }else{
-            if(num < median){
-                maxHeap.offer(-num);
-            }else{
-                minHeap.offer(num);
+        if (!minHeap.isEmpty()) {
+            if (num <= median) {
+                maxHeap.add(num);
+                if (maxHeap.size() - minHeap.size() == 2) {
+                    minHeap.add(maxHeap.poll());
+                }
+            } else {
+                minHeap.add(num);
+                if (minHeap.size() - maxHeap.size() == 2) {
+                    maxHeap.add(minHeap.poll());
+                }
             }
-        }
-
-        while(Math.abs(minHeap.size() - maxHeap.size()) > 1){
-            if(minHeap.size() > maxHeap.size()){
-                maxHeap.offer(-minHeap.poll());
-            }else{
-                minHeap.offer(-maxHeap.poll());
+            if (((minHeap.size() + maxHeap.size()) & 1) == 0) {
+                median = ((double) minHeap.peek() + maxHeap.peek()) / 2;
+            } else {
+                median = minHeap.size() > maxHeap.size() ? minHeap.peek() : maxHeap.peek();
             }
-        }
-        ttl++;
-        setMedian();
-    }
-
-    private void setMedian(){
-        if(ttl % 2 == 1){
-            if(minHeap.size() > maxHeap.size()){
-                median = minHeap.peek();
-            }else{
-                median = -maxHeap.peek();
-            }
-        }else{
-            int fir = minHeap.peek();
-            int sec = -maxHeap.peek();
-            median = (double) (fir + sec) / 2;
+        } else {
+            minHeap.add(num);
+            median = num;
         }
     }
 

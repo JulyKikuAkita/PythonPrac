@@ -2,7 +2,8 @@ __source__ = 'https://leetcode.com/problems/valid-square/#/description'
 # Time:  O(1)
 # Space: O(1)
 #
-# Description:
+# Description: 593. Valid Square
+#
 # Given the coordinates of four points in 2D space, return whether the four points could construct a square.
 #
 # The coordinate (x,y) of a point is represented by an integer array with two integers.
@@ -21,6 +22,7 @@ __source__ = 'https://leetcode.com/problems/valid-square/#/description'
 import unittest
 import collections
 
+#24ms 100%
 class Solution(object):
     def validSquare(self, p1, p2, p3, p4):
         """
@@ -50,13 +52,15 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/articles/valid-square/
+# Thought: https://leetcode.com/problems/valid-square/solution/
 Just find the square of lenghts, and validate that
 
 1.
 There are only two equal longest lenghts.
 The non longest lengths are all equal.
-public class Solution {
+
+# 8ms 94.14%
+class Solution {
     public boolean validSquare(int[] p1, int[] p2, int[] p3, int[] p4) {
         long[] lengths = {length(p1, p2), length(p2, p3), length(p3, p4),
             length(p4, p1), length(p1, p3),length(p2, p4)}; // all 6 sides
@@ -84,7 +88,8 @@ public class Solution {
 }
 
 2. Using Sorting [Accepted]
-public class Solution {
+# 44ms 19.09%
+class Solution {
     public double dist(int[] p1, int[] p2) {
         return (p2[1] - p1[1]) * (p2[1] - p1[1]) + (p2[0] - p1[0]) * (p2[0] - p1[0]);
     }

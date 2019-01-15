@@ -1,8 +1,9 @@
-__source__ = ''
+__source__ = 'https://leetcode.com/problems/erect-the-fence/'
 # Time:  O()
 # Space: O()
 #
-# Description:
+# Description: 587. Erect the Fence
+#
 # There are some trees, where each tree is represented by (x,y) coordinate in a two-dimensional garden.
 # Your job is to fence the entire garden using the minimum length of rope as it is expensive.
 # The garden is well fenced only if all the trees are enclosed.
@@ -45,7 +46,8 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
+# Thought: https://leetcode.com/problems/erect-the-fence/solution/
+
 There are couple of ways to solve Convex Hull problem. https://en.wikipedia.org/wiki/Convex_hull_algorithms
 The following code implements Gift wrapping aka Jarvis march algorithm
 https://en.wikipedia.org/wiki/Gift_wrapping_algorithm and also added logic to handle
@@ -66,15 +68,26 @@ The reference point (bottom left point) is (0, 0)
 In the begin positions (0, 0) collinear with (2, 0), (3, 0) sorted by distance to reference point in ascending order.
 In the end positions (0, 0) collinear with (0, 2), (0, 1) sorted by distance to reference point in descending order.
 
-public class Solution {
+/**
+ * Definition for a point.
+ * class Point {
+ *     int x;
+ *     int y;
+ *     Point() { x = 0; y = 0; }
+ *     Point(int a, int b) { x = a; y = b; }
+ * }
+ */
+
+# 12ms 99.07%
+class Solution {
     public List<Point> outerTrees(Point[] points) {
         Set<Point> result = new HashSet<>();
-
         // Find the leftmost point
+
         Point first = points[0];
         int firstIndex = 0;
         for (int i = 1; i < points.length; i++) {
-            if (points[i].x < first.x) {
+            if (points[i].x < first.x) { //get the smallest x
                 first = points[i];
                 firstIndex = i;
             }
@@ -83,7 +96,7 @@ public class Solution {
 
         Point cur = first;
         int curIndex = firstIndex;
-        do {
+         do {
             Point next = points[0];
             int nextIndex = 0;
             for (int i = 1; i < points.length; i++) {
@@ -125,7 +138,8 @@ public class Solution {
     }
 
     private int distance(Point p1, Point p2) {
-        return (p1.x - p2.x) * (p1.x - p2.x) + (p1.y - p2.y) * (p1.y - p2.y);
+        return (p1.x - p2.x) * (p1.x -p2.x) + (p1.y - p2.y) * (p1.y - p2.y);
     }
+
 }
 '''

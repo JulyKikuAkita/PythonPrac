@@ -1,8 +1,10 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/unique-paths/description/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/unique-paths.py
 # Time:  O(m * n)
 # Space: O(m + n)
 # DP
+#
+# Description: Leetcode # 62. Unique Paths
 #
 # A robot is located at the top-left corner of a m x n grid (marked 'Start' in the diagram below).
 #
@@ -12,8 +14,14 @@ __author__ = 'July'
 # How many possible unique paths are there?
 #
 # Note: m and n will be at most 100.
+# Companies
+# Bloomberg
+# Related Topics
+# Array Dynamic Programming
+# Similar Questions
+# Unique Paths II Minimum Path Sum Dungeon Game
 #
-
+import unittest
 class Solution:
     # @return an integer
     def uniquePaths(self, m, n):
@@ -88,26 +96,46 @@ class SolutionLeetcodeBackTrackMemoization:
             mat[r][c+1] = self.backtrackM(r, c+1, m ,n ,mat)
         return mat[r+1][c] + mat[r][c+1]
 
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
 
-#test
+        #print Fraction(10-4, 4+1)
+        #print Solution().uniquePaths(5,1)
+        #print Solution().uniquePaths(2,1)
+        print SolutionMATHcombintaion().uniquePaths(5,3)
+        print SolutionLeetcode().uniquePaths(5,3)
+        print SolutionLeetcodeBackTrack().uniquePaths(5,3)
+        print SolutionLeetcodeBackTrackMemoization().uniquePaths(5,3)
+
+        for n in range(4):
+            print '_'.join('%1d'%SolutionMATHcombintaion().combination(n,k) for k in range(n+1)).center(50)
+
+        #print SolutionMATHcombintaion().permutation(5,3)
+
 if __name__ == '__main__':
-    #print Fraction(10-4, 4+1)
-    #print Solution().uniquePaths(5,1)
-    #print Solution().uniquePaths(2,1)
-    print SolutionMATHcombintaion().uniquePaths(5,3)
-    print SolutionLeetcode().uniquePaths(5,3)
-    print SolutionLeetcodeBackTrack().uniquePaths(5,3)
-    print SolutionLeetcodeBackTrackMemoization().uniquePaths(5,3)
+    unittest.main()
 
+Java = '''
+# Thought:
 
-    for n in range(4):
-        print '_'.join('%1d'%SolutionMATHcombintaion().combination(n,k) for k in range(n+1)).center(50)
+This is a fundamental DP problem. First of all, let's make some observations.
 
-    #print SolutionMATHcombintaion().permutation(5,3)
+Since the robot can only move right and down, when it arrives at a point, there are only two possibilities:
 
-#java
-js = '''
-public class Solution {
+It arrives at that point from above (moving down to that point);
+It arrives at that point from left (moving right to that point).
+Thus, we have the following state equations:
+suppose the number of paths to arrive at a point (i, j) is denoted as P[i][j],
+it is easily concluded that P[i][j] = P[i - 1][j] + P[i][j - 1].
+
+The boundary conditions of the above equation occur at the leftmost column (P[i][j - 1] does not exist)
+and the uppermost row (P[i - 1][j] does not exist). These conditions can be handled by initialization
+(pre-processing) --- initialize P[0][j] = 1, P[i][0] = 1 for all valid i, j. Note the initial value is 1 instead of 0!
+
+# DP
+# 0ms 100%
+class Solution {
     public int uniquePaths(int m, int n) {
         int[] dp = new int[n];
         Arrays.fill(dp, 1);
@@ -120,7 +148,59 @@ public class Solution {
     }
 }
 
+# DP
+# 0ms 100%
+class Solution {
+    public int uniquePaths(int m, int n) {
+        int[][] dp = new int[m][n];
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j <n ;j ++) {
+                if (i ==0 | j== 0) dp[i][j] = 1;
+                else dp[i][j] = dp[i-1][j] + dp[i][j-1];
+            }
+        }
+        return dp[m-1][n-1];
+    }
+}
+
+# 0ms 100%
+class Solution {
+    public int uniquePaths(int m, int n) {
+        int[][] matrix = new int[m][n];
+        for (int i = 0; i < m; i++) {
+            matrix[i][0] = 1;
+        }
+        for (int i = 0; i < n; i++) {
+            matrix[0][i] = 1;
+        }
+        for (int i = 1; i < m; i++) {
+            for (int j = 1; j < n; j++) {
+                matrix[i][j] = matrix[i-1][j] + matrix[i][j-1];
+            }
+        }
+
+        return matrix[m-1][n-1];
+    }
+}
+
+# dfs
+# 0ms 100%
 public class Solution {
+    public int uniquePaths(int m, int n) {
+        Integer[][]map = map = new Integer[m][n];
+        return dfs(m - 1, n - 1, map);
+    }
+
+    private int dfs(int m, int n, Integer[][] map) {
+        if (m == 0 || n == 0) return 1;
+        if (map[m][n] != null) return map[m][n];
+        int sum = dfs(m-1, n, map) + dfs(m, n-1, map);
+        return map[m][n] = sum;
+    }
+}
+
+# 0ms 100%
+class Solution {
     public int uniquePaths(int m, int n) {
         int[][] dp = new int[m+1][n+1];
         for(int[] row: dp)
@@ -138,4 +218,31 @@ public class Solution {
 
     }
 }
+
+# Math:
+(m + n) ! / m! n1
+
+# 0ms 100%
+class Solution {
+    public int uniquePaths(int m, int n) {
+        if(m == 1 || n == 1)
+            return 1;
+        m--;
+        n--;
+        if(m < n) {              // Swap, so that m is the bigger number
+            m = m + n;
+            n = m - n;
+            m = m - n;
+        }
+        long res = 1;
+        int j = 1;
+        for(int i = m+1; i <= m+n; i++, j++){       // Instead of taking factorial, keep on multiply & divide
+            res *= i;
+            res /= j;
+        }
+
+        return (int)res;
+    }
+}
+
 '''

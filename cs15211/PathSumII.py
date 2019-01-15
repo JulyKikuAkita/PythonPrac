@@ -1,8 +1,10 @@
-__source__ = 'https://leetcode.com/problems/path-sum-ii/#/description'
+__source__ = 'https://leetcode.com/problems/path-sum-ii/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/path-sum-ii.py
 # Time:  O(n)
 # Space: O(h), h is height of binary tree
 # DFS
+#
+# Description: Leetcode # 113. Path Sum II
 #
 # Given a binary tree and a sum, find all root-to-leaf paths where each path's sum equals the given sum.
 #
@@ -21,14 +23,15 @@ __source__ = 'https://leetcode.com/problems/path-sum-ii/#/description'
 #    [5,8,4,5]
 # ]
 #
-# Topics:
-# Tree Depth-first Search
-# You might like:
-# (E) Path Sum (E) Binary Tree Paths (E) Path Sum III
-# Company:
-# Bloomberg
 #
-
+# Companies
+# Bloomberg
+# Related Topics
+# Tree Depth-first Search
+# Similar Questions
+# Path Sum Binary Tree Paths Path Sum III
+#
+import unittest
 # Definition for a  binary tree node
 class TreeNode:
     def __init__(self, x):
@@ -57,7 +60,6 @@ class Solution:
         cur.pop()
         return result
 
-
 class Solution2:
     # @param root, a tree node
     # @param sum, an integer
@@ -79,18 +81,23 @@ class Solution2:
         self.pathSumRecu(result, cur + [root.val], root.right, sum - root.val)
         return result
 
-if __name__ == "__main__":
-    root = TreeNode(5)
-    root.left = TreeNode(4)
-    root.right = TreeNode(8)
-    root.left.left = TreeNode(11)
-    root.left.left.left = TreeNode(7)
-    root.left.left.right = TreeNode(2)
-    print Solution().pathSum(root, 22)
-    print Solution2().pathSum(root, 77)
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+        root = TreeNode(5)
+        root.left = TreeNode(4)
+        root.right = TreeNode(8)
+        root.left.left = TreeNode(11)
+        root.left.left.left = TreeNode(7)
+        root.left.left.right = TreeNode(2)
+        print Solution().pathSum(root, 22)
+        print Solution2().pathSum(root, 77)
 
-#Java
-java = '''
+if __name__ == '__main__':
+    unittest.main()
+
+Java = '''
+# Thought:
 /**
  * Definition for a binary tree node.
  * public class TreeNode {
@@ -100,30 +107,99 @@ java = '''
  *     TreeNode(int x) { val = x; }
  * }
  */
-
- #48%
-public class Solution {
+# DFS
+# 2ms 61.15%
+class Solution {
     public List<List<Integer>> pathSum(TreeNode root, int sum) {
         List<List<Integer>> result = new ArrayList<>();
         if (root == null) {
             return result;
         }
-        dfs(root, sum, result, new ArrayList<>());
+        pathSum(root, sum, result, new ArrayList<>());
         return result;
     }
 
-    public void dfs(TreeNode root, int sum, List<List<Integer>> res, List<Integer> tmp) {
-        if ( root == null) return;
-        if (root.left == null && root.right == null && root.val == sum){
-            tmp.add(root.val);
-            res.add(new ArrayList<>(tmp));  //add new list, otherwise only save pointers and thus empty list
-            tmp.remove(tmp.size() - 1);
+    private void pathSum(TreeNode root, int sum, List<List<Integer>> result, List<Integer> list) {
+        sum -= root.val;
+        list.add(root.val);
+        if (root.left == null && root.right == null) {
+            if (sum == 0) {
+                result.add(new ArrayList<>(list));
+            }
+        } else {
+            if (root.left != null) {
+                pathSum(root.left, sum, result, list);
+            }
+            if (root.right != null) {
+                pathSum(root.right, sum, result, list);
+            }
+        }
+        list.remove(list.size() - 1);
+    }
+}
+
+# 2ms 61.15%
+class Solution {
+    public List<List<Integer>> pathSum(TreeNode root, int sum) {
+        List<List<Integer>> res = new ArrayList<>();
+        List<Integer> path = new ArrayList<>();
+        dfs(root, sum, res, path);
+        return res;
+    }
+
+    public void dfs(TreeNode root, int sum, List<List<Integer>> res, List<Integer> path){
+        if(root==null) return;
+        path.add(root.val);
+
+        if(root.left==null && root.right==null ){
+            if(root.val==sum)
+                res.add(new ArrayList<Integer>(path));
             return;
         }
-        tmp.add(root.val);
-        dfs(root.left, sum - root.val, res, tmp);
-        dfs(root.right, sum - root.val, res, tmp);
-        tmp.remove(tmp.size() - 1);
+        if(root.left!=null) {
+            dfs(root.left,sum-root.val,res,path);
+            path.remove(path.size()-1);
+        }
+        if(root.right!=null) {
+            dfs(root.right,sum-root.val,res,path);
+            path.remove(path.size()-1);
+        }
+
+    }
+}
+
+# BFS
+# 6ms 9.98%
+class Solution {
+    public List<List<Integer>> pathSum(TreeNode root, int sum) {
+        List<List<Integer>> res = new ArrayList<>();
+        List<Integer> path = new ArrayList<>();
+        Stack<TreeNode> stack = new Stack<TreeNode>();
+        int SUM = 0;
+        TreeNode cur = root;
+        TreeNode pre = null;
+        while(cur!=null || !stack.isEmpty()){
+            while(cur!=null){
+                stack.push(cur);
+                path.add(cur.val);
+                SUM+=cur.val;
+                cur=cur.left;
+            }
+            cur = stack.peek();
+            if(cur.right!=null && cur.right!=pre){
+                cur = cur.right;
+                continue;
+            }
+            if(cur.left==null && cur.right==null && SUM==sum)
+                res.add(new ArrayList<Integer>(path));
+
+            pre = cur;
+            stack.pop();
+            path.remove(path.size()-1);
+            SUM-=cur.val;
+            cur = null;
+        }
+        return res;
     }
 }
 '''

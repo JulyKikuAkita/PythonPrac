@@ -1,8 +1,10 @@
-__source__ = 'https://github.com/kamyu104/LeetCode/blob/master/Python/longest-repeating-character-replacement.py'
+__source__ = 'https://leetcode.com/problems/longest-repeating-character-replacement/'
+# https://github.com/kamyu104/LeetCode/blob/master/Python/longest-repeating-character-replacement.py
 # Time:  O(n)
 # Space: O(1)
 #
-# Description:
+# Description: 424. Longest Repeating Character Replacement
+#
 # Given a string that consists of only uppercase English letters,
 # you can replace any letter in the string with another letter at most k times.
 # Find the length of a longest substring containing all repeating letters
@@ -34,9 +36,11 @@ __source__ = 'https://github.com/kamyu104/LeetCode/blob/master/Python/longest-re
 # The substring "BBBB" has the longest repeating letters, which is 4.
 #
 # Pocket Gems
-#Hide Similar Problems (H) Longest Substring with At Most K Distinct Characters
+# Hide Similar Problems (H) Longest Substring with At Most K Distinct Characters
 #
 import unittest
+import collections
+# 396ms 23.64%
 class Solution(object):
     def characterReplacement(self, s, k):
         """
@@ -77,12 +81,12 @@ class TestMethods(unittest.TestCase):
     def test_Local(self):
         self.assertEqual(1, 1)
 
-
 if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
+# Thought:
+
 There's no edge case for this question.
 The initial step is to extend the window to its limit,
 that is, the longest we can get to with maximum number of modifications.
@@ -103,7 +107,8 @@ length of the entire string - number of times of the maximum occurring character
 Given this, we can apply the at most k changes constraint and maintain a sliding window such that
 (length of substring - number of times of the maximum occurring character in the substring) <= k
 
-public class Solution {
+# 7ms 79.95%
+class Solution {
     public int characterReplacement(String s, int k) {
         int len = s.length();
         int[] count = new int[26];

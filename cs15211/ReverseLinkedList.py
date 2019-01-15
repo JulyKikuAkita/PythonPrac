@@ -1,7 +1,9 @@
-__source__ = 'https://leetcode.com/problems/reverse-linked-list/#/solutions'
+__source__ = 'https://leetcode.com/problems/reverse-linked-list/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/reverse-linked-list.py
 # Time:  O(n)
 # Space: O(1)
+#
+# Description: Leetcode # 206. Reverse Linked List
 #
 # Reverse a singly linked list.
 #
@@ -9,12 +11,13 @@ __source__ = 'https://leetcode.com/problems/reverse-linked-list/#/solutions'
 #
 # Hint:
 # A linked list can be reversed either iteratively or recursively. Could you implement both?
-#Topics:
-# Linked List
-# You might like:
-# (M) Reverse Linked List II (M) Binary Tree Upside Down (E) Palindrome Linked List
-# Company:
+#
+# Companies
 # Uber Facebook Twitter Zenefits Amazon Microsoft Snapchat Apple Yahoo Bloomberg Yelp Adobe
+# Related Topics
+# Linked List
+# Similar Questions
+# Reverse Linked List II Binary Tree Upside Down Palindrome Linked List
 #
 
 # Definition for singly-linked list.
@@ -40,6 +43,7 @@ class Solution(unittest.TestCase):
 
     def test(self):
         self.assertEqual()
+
 # Time:  O(n)
 # Space: O(n)
 # Recursive solution.
@@ -60,37 +64,34 @@ class Solution2:
             return [begin, head]
         else:
             return [head, head]
-# java solution
-# iterative and recursion
-# http://www.programcreek.com/2014/05/leetcode-reverse-linked-list-java/
-class Solution3:
-    # @param {ListNode} head
-    # @return {ListNode}
-    def reverseList(self, head):
-        if not head or not head.next:
-            return head
-        #get 2nd Node
-        second = head.next
-        # set the first's next to null
-        head.next = None
 
-        rest = self.reverseList(second)
-        second.next = head
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+        head = ListNode(1)
+        head.next = ListNode(2)
+        head.next.next = ListNode(3)
+        head.next.next.next = ListNode(4)
+        head.next.next.next.next = ListNode(5)
 
-        return rest
+if __name__ == '__main__':
+    unittest.main()
 
+Java = '''
+# Thought: https://leetcode.com/problems/reverse-linked-list/solution/
 
-if __name__ == "__main__":
-    head = ListNode(1)
-    head.next = ListNode(2)
-    head.next.next = ListNode(3)
-    head.next.next.next = ListNode(4)
-    head.next.next.next.next = ListNode(5)
-    print Solution3().reverseList(head)
+# Recursion
+# # 0ms 100%
+class Solution {
+    public ListNode reverseList(ListNode head) {
+        if (head == null || head.next == null) return head;
+        ListNode p = reverseList(head.next);
+        head.next.next = head;
+        head.next = null;
+        return p;
+    }
+}
 
-#java
-java = '''
-thought: https://leetcode.com/articles/reverse-linked-list/
 /**
  * Definition for singly-linked list.
  * public class ListNode {
@@ -99,56 +100,44 @@ thought: https://leetcode.com/articles/reverse-linked-list/
  *     ListNode(int x) { val = x; }
  * }
  */
-
-// recursion
+# 0ms 100%
+class Solution {
     public ListNode reverseList(ListNode head) {
         if ( head == null) return head;
+        //return dfs(head);
         return dfs2(head, null);
-        //return dfs1(head);
     }
-
-    public ListNode dfs1(ListNode head) {
-        if ( head.next == null) return head;
-            ListNode prev = head.next;
-            head.next = null;
-            ListNode node = dfs1(prev);
-            prev.next = head;
-            return node;
+    # 0ms 100%
+    private ListNode dfs(ListNode head) {
+        if (head.next == null) return head;
+        ListNode next = head.next;
+        head.next = null;
+        ListNode newHead = dfs(next);
+        next.next = head; //reverse
+        return newHead;
     }
-
+    # 0ms 100%
     private ListNode dfs2(ListNode head, ListNode newHead) {
-        if (head == null)
-            return newHead;
+        if (head == null) return newHead;
         ListNode next = head.next;
         head.next = newHead;
         return dfs2(next, head);
     }
+}
 
-//iteration
+# Iteration
+# 0ms 100%
+class Solution {
     public ListNode reverseList(ListNode head) {
-        if( head == null || head.next == null) return head;
+        if (head == null || head.next == null) return head;
         ListNode dummy = null;
-        ListNode tmp;
         while (head != null) {
-            tmp = head.next;
+            ListNode next = head.next;
             head.next = dummy;
             dummy = head;
-            head = tmp;
+            head = next;
         }
         return dummy;
     }
-
-
-// import org.junit.*;
-// StringBuilder sb = new StringBuilder();
-/*
-ListNode head = new ListNode()[1,2,3];
-*/
-// ListNode testhead = sol.reverseList(head);
-// While( testhead != null){
-//    sb.append(testhead.val);
-//    testhead = testhead.next;
-// }
-//
-//Assert.assertequals("[3,2,1]", sb.toString());
+}
 '''

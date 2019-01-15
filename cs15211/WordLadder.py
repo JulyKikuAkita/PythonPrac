@@ -1,10 +1,13 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/word-ladder/tabs/description'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/word-ladder.py
 # Time:  O(n * d), n is length of string, d is size of dictionary
 # Space: O(d)
 # BFS
 #
-# Given two words (start and end), and a dictionary, find the length of shortest transformation sequence from start to end, such that:
+# Description: Leetcode # 127. Word Ladder
+#
+# Given two words (start and end), and a dictionary,
+# find the length of shortest transformation sequence from start to end, such that:
 #
 # Only one letter can be changed at a time
 # Each intermediate word must exist in the dictionary
@@ -21,8 +24,16 @@ __author__ = 'July'
 # Return 0 if there is no such transformation sequence.
 # All words have the same length.
 # All words contain only lowercase alphabetic characters.
-# Linkedln
+# You may assume no duplicates in the word list.
+# You may assume beginWord and endWord are non-empty and are not the same.
+# UPDATE (2017/1/20):
+# The wordList parameter had been changed to a list of strings (instead of a set of strings).
+# Please reload the code definition to get the latest changes.
 #
+# Companies
+# Amazon LinkedIn Snapchat Facebook Yelp
+#
+import unittest
 #DFS #OT # not a goodway as it is asking for shortest path
 class SolutionDFS(object):
     def ladderLength(self, beginWord, endWord, wordList):
@@ -48,8 +59,7 @@ class SolutionDFS(object):
         return cnt if cnt != float("INF") else 0
 
 # below BFS
-
-#	185 ms
+# 185 ms
 class SolutionFatest(object):
     def ladderLength(self, beginWord, endWord, wordList):
         """
@@ -105,7 +115,6 @@ class Solution:
             cur = next
         return 0
 
-
 class Solution2(object):
     def ladderLength(self, beginWord, endWord, wordList):
         wordList.add(endWord)
@@ -148,89 +157,150 @@ class Naive: #wrong answer
                         return ans
         return ans
 
-
-
-
 #test
-test = Solution()
-dict1 = {"hot","dot","dog","lot","log"}
-#print test.ladderLength("hit", "cog", dict1)
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+        test = Solution()
+        dict1 = {"hot","dot","dog","lot","log"}
+        #print test.ladderLength("hit", "cog", dict1)
 
-if __name__ == "__main__":
-    print Solution().ladderLength("hit", "cog", set(["hot","dot","dog","lot","log"]))
-    print Solution2().ladderLength("hit", "cog", set(["hot","dot","dog","lot","log"]))
-    print Naive().ladderLength("hit", "cog", set(["ait","dot","dog","lot","log"]))
+        print Solution().ladderLength("hit", "cog", set(["hot","dot","dog","lot","log"]))
+        print Solution2().ladderLength("hit", "cog", set(["hot","dot","dog","lot","log"]))
+        print Naive().ladderLength("hit", "cog", set(["ait","dot","dog","lot","log"]))
 
-#java
-#double ended BFS
-js = '''
-public class Solution {
-    public int ladderLength(String beginWord, String endWord, Set<String> wordList) {
-        Set<String> beginSet = new HashSet<>();
-        Set<String> endSet = new HashSet<>();
-        Set<String> visitedSet = new HashSet<>();
-        int count = 2;
-        int len = beginWord.length();
-        beginSet.add(beginWord);
-        endSet.add(endWord);
-        visitedSet.add(beginWord);
-        while (!beginSet.isEmpty() && !endSet.isEmpty()) {
-            if (beginSet.size()  > endSet.size()) {
-                Set<String> tmpSet = beginSet;
-                beginSet = endSet;
-                endSet = tmpSet;
-            }
-            Set<String> curSet = new HashSet<>();
-            for (String word : beginSet) {
-                char[] arr = word.toCharArray();
-                for (int j = 0; j < len; j++) {
-                    char c = arr[j];
-                    for (char k = 'a'; k <= 'z'; k++) {
-                        arr[j] = k;
-                        String cur = new String(arr);
-                        if (endSet.contains(cur)) {
-                            return count;
-                        } else if (wordList.contains(cur) && !visitedSet.contains(cur)) {
-                            visitedSet.add(cur);
-                            curSet.add(cur);
+if __name__ == '__main__':
+    unittest.main()
+
+Java = '''
+#Thought:
+
+# Java Solution using Dijkstra's algorithm, with explanation
+# 82.77% 63ms
+class Solution {
+    public int ladderLength(String beginWord, String endWord, List<String> wordList) {
+        if (!wordList.contains(endWord)) return 0;
+
+        Set<String> reached = new HashSet<String>();
+        Set<String> wordDict = new HashSet<String>(wordList);
+        reached.add(beginWord);
+        wordDict.add(endWord);
+        int distance = 1;
+        while (!reached.contains(endWord)) {
+            Set<String> toAdd = new HashSet<String>();
+            for (String each : reached) {
+                for (int i = 0; i < each.length(); i++) {
+                    char[] chars = each.toCharArray();
+                    for (char ch = 'a'; ch <= 'z'; ch++) {
+                        if (chars[i] == ch) continue;
+                        chars[i] = ch;
+                        String word = new String(chars);
+                        if (wordDict.contains(word)) {
+                            toAdd.add(word);
+                            wordDict.remove(word);
                         }
                     }
-                    arr[j] = c;
                 }
             }
-            beginSet = curSet;
-            count++;
+            distance++;
+            if (toAdd.size() == 0) return 0;
+            reached = toAdd;
         }
-        return 0;
+        return distance;
     }
 }
 
-# https://linchicoding.wordpress.com/2014/10/13/leetcode-word-ladder/
-#DFS: #OT
-public class SolutionDFS {
-    public int ladderLength(String start, String end, Set<String> dict) {
-        if(start.equals(end)) return 1;
-        char[] arr = start.toCharArray();
-        int min = Integer.MAX_VALUE;
-        for(int i = 0; i <start.length(); i++){
-            char temp = arr[i];
-            for(char ch = 'a'; ch <='z'; ch++){
-                if(ch != temp){
-                    arr[i] = ch;
-                    String nxt = new String(arr);
-                    if(end.equals(nxt))
-                        return 2;
-                    else if(dict.contains(nxt)){
-                        dict.remove(nxt);
-                        min = Math.min(min, 1+ ladderLength(nxt, end, dict));
-                        dict.add(nxt);
-                    }
-                }
-            }
-            arr[i] = temp;
-        }
-        return min==Integer.MAX_VALUE ? 0:min;
+# 93.86 % 26ms
+class Solution {
+    public int ladderLength(String beginWord, String endWord, List<String> wordList) {
+        Set<String> dict = new HashSet<>(wordList);
+        if (!dict.contains(endWord)) return 0;
+        Set<String> startSet = new HashSet<String>() {{ add(beginWord); }};
+        Set<String> endSet = new HashSet<String>() {{ add(endWord); }};
+        return helper(dict, startSet, endSet, 1);
     }
 
+     private int helper(Set<String> dict, Set<String> startSet, Set<String> endSet, int level) {
+        if (startSet.isEmpty()) return 0;
+
+        if (startSet.size() > endSet.size()) return helper(dict, endSet, startSet, level);
+
+        // remove words from both ends
+        for (String word : startSet) { dict.remove(word); };
+        for (String word : endSet) { dict.remove(word); };
+
+        // the set for next level
+        Set<String> set = new HashSet<>();
+
+        // for each string in the current level
+        for (String str: startSet) {
+            for (int i = 0; i < str.length(); i++) {
+                char[] chars = str.toCharArray();
+
+                for (char ch = 'a'; ch <= 'z'; ch++) {
+                    if (chars[i] == ch) continue;
+                    chars[i] = ch;
+                    String word = new String(chars);
+                     // found the word in other end(set)
+                    if (endSet.contains(word)) return level + 1;
+                    // if not, add to the next level
+                    if (dict.contains(word)) set.add(word);
+                }
+            }
+        }
+        return helper(dict, endSet, set, level + 1);
+     }
+
+}
+
+#14ms 99.93%
+class Solution {
+    public int ladderLength(String beginWord, String endWord, List<String> wordList) {
+        Set<String> wordset = new HashSet<String>(wordList);
+        Set<String> start = new HashSet<String>();
+        Set<String> end = new HashSet<String>();
+
+        if(!wordset.contains(endWord)) {
+            return 0;
+        }
+        start.add(beginWord);
+        end.add(endWord);
+        return helper(start, end, wordset, 1);
+    }
+
+    public int helper(Set<String> start, Set<String> end, Set<String> wordset, int level) {
+        if(start.size() > end.size()) {
+            return helper(end, start, wordset, level);
+        }
+        wordset.removeAll(start);
+        wordset.removeAll(end);
+        Set<String> next = new HashSet<String>();
+        for(String s : start) {
+            char[] arr = s.toCharArray();
+            for(int i = 0; i< arr.length; i++){
+                char temp = arr[i];
+                for(char c = 'a'; c <= 'z';c++) {
+                    if(c == arr[i]) {
+                        continue;
+                    }
+                    arr[i] = c;
+                    String newWord = new String(arr);
+                    if(end.contains(newWord)) {
+                        return level+1;
+                    }
+                    if(wordset.contains(newWord)) {
+                        next.add(newWord);
+
+                    }
+                    arr[i] = temp;
+                }
+            }
+        }
+        if(next.isEmpty()) {
+            return 0;
+        }
+        return helper(end, next, wordset, level+1);
+
+    }
 }
 '''

@@ -1,8 +1,10 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/trapping-rain-water/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/trapping-rain-water.py
 # Time:  O(n)
 # Space: O(1)
 # Greedy
+#
+# Description: Leetcode # 42. Trapping Rain Water
 #
 # Given n non-negative integers representing an elevation map where the width of each bar is 1,
 #  compute how much water it is able to trap after raining.
@@ -13,9 +15,14 @@ __author__ = 'July'
 # The above elevation map is represented by array [0,1,0,2,1,0,1,3,2,1,2,1].
 # In this case, 6 units of rain water (blue section) are being trapped.
 #
-#  Google Twitter Zenefits Amazon Apple Bloomberg
-# Hide Tags Array Stack Two Pointers
-
+# Companies
+# Google Twitter Zenefits Amazon Apple Bloomberg
+# Related Topics
+# Array Stack Two Pointers
+# Similar Questions
+# Container With Most Water Product of Array Except Self Trapping Rain Water II
+#
+import unittest
 class Solution:
     # @param A, a list of integers
     # @return an integer
@@ -80,21 +87,49 @@ class Solution2:
                 rightmax = A[i]
             if min(rightmax, leftmosthigh[i]) > A[i]:
                 sum += min(rightmax, leftmosthigh[i]) - A[i]
-
         return sum
 
 #test
-#test = Solution2()
-A= [0,1,0,2,1,0,1,3,2,1,2,1]
-A2 = [1,2,3,2,2,1]
-#print test.trap(A)
-if __name__ == '__main__':
-    print Solution().trap(A2)
-    #print Solution2_github().trap(A)
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        #test = Solution2()
+        A= [0,1,0,2,1,0,1,3,2,1,2,1]
+        A2 = [1,2,3,2,2,1]
+        #print test.trap(A)
+        print Solution().trap(A2)
+        #print Solution2_github().trap(A)
 
-#java
-js = '''
-public class Solution {
+if __name__ == '__main__':
+    unittest.main()
+
+Java = '''
+Thought: https://leetcode.com/problems/trapping-rain-water/solution/
+
+# Two pointers
+# 14ms 39.58%
+class Solution {
+    public int trap(int[] height) {
+        if (height == null || height.length == 0) return 0;
+        int left = 0, right = height.length - 1;
+        int leftMax = 0, rightMax = 0, res = 0;
+        while (left < right) {
+            leftMax = Math.max(leftMax, height[left]);
+            rightMax = Math.max(rightMax, height[right]);
+            if (leftMax > rightMax) {
+                res += rightMax - height[right];
+                right--;
+            } else {
+                res += leftMax - height[left];
+                left++;
+            }
+        }
+        return res;
+    }
+}
+
+# better naive
+# 14ms 39.58%
+class Solution {
     public int trap(int[] height) {
         int len = height.length;
         int[] leftMax = new int[len];
@@ -112,4 +147,40 @@ public class Solution {
         return result;
     }
 }
+
+# Stack based, important technique
+A stack based solution for reference, inspired by Histogram
+Indeed this question can be solved in one pass and O(1) space,
+but it's probably hard to come up with in a short interview.
+If you have read the stack O(n) solution for Largest Rectangle in Histogram,
+you will find this solution is very very similar.
+
+The main idea is : if we want to find out how much water on a bar(bot),
+we need to find out the left larger bar's index (il), and right larger bar's index(ir),
+so that the water is (min(A[il],A[ir])-A[bot])*(ir-il-1), use min since only the lower boundary can hold water,
+and we also need to handle the edge case that there is no il.
+
+To implement this we use a stack that store the indices with decreasing bar height,
+once we find a bar who's height is larger, then let the top of the stack be bot,
+the cur bar is ir, and the previous bar is il.
+
+# 22ms 12.13%
+class Solution {
+    public int trap(int[] height) {
+        if (height == null) return 0;
+        Stack<Integer> s = new Stack<Integer>();
+        int i = 0, res = 0, maxBotWater = 0;
+        while (i < height.length) {
+            if (s.isEmpty() || height[i] <= height[s.peek()]) {
+                s.push(i++);
+            } else {
+                int bot = s.pop();
+                maxBotWater = s.isEmpty() ? 0 : (Math.min(height[s.peek()], height[i]) - height[bot]) * ( i - s.peek() - 1);
+                res += maxBotWater;
+            }
+        }
+        return res;
+    }
+}
+
 '''

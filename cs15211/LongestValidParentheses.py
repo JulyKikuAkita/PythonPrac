@@ -1,8 +1,10 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/longest-valid-parentheses/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/longest-valid-parentheses.py
 # Time:  O(n)
 # Space: O(1)
 # Stack
+#
+# Description: Leetcode # 32. Longest Valid Parentheses
 #
 # Given a string containing just the characters '(' and ')',
 # find the length of the longest valid (well-formed) parentheses substring.
@@ -11,7 +13,12 @@ __author__ = 'July'
 #
 # Another example is ")()())", where the longest valid parentheses substring is "()()", which has length = 4.
 #
+# Related Topics
 # Dynamic Programming String
+# Similar Questions
+# Valid Parentheses
+#
+import unittest
 class Solution:
     # @param s, a string
     # @return an integer
@@ -45,7 +52,6 @@ class Solution:
                     longest = max(longest, start - i)
         return longest
 
-
 # Time:  O(n)
 # Space: O(n)
 class Solution2:
@@ -68,17 +74,6 @@ class Solution2:
                 else:
                     longest = max(longest, i - stack[-1])  # if stack not empty, only count succeed parentheses
         return longest
-
-
-if __name__ == "__main__":
-    print Solution().longestValidParentheses("(()")
-    print Solution().longestValidParentheses(")()())")
-    print Solution().longestValidParentheses("()(()")
-    print Solution2().longestValidParentheses("(()")
-    print Solution2().longestValidParentheses(")()())")
-    print Solution2().longestValidParentheses("()(()")
-
-
 
 class SolutionOther:
     # @param s, a string
@@ -117,17 +112,29 @@ class SolutionOther:
                 stack.append((i, s[i]))
         return maxLen
 
-# Java Solution
-# http://www.programcreek.com/2014/06/leetcode-longest-valid-parentheses-java/
-#test
-s = SolutionOther()
-#print s.longestValidParentheses("()(()")
-#print s.longestValidParentheses('(()()')
-print s.longestValidParentheses(')()())')
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+        s = SolutionOther()
+        #print s.longestValidParentheses("()(()")
+        #print s.longestValidParentheses('(()()')
+        print s.longestValidParentheses(')()())')
 
-#java
-js = '''
-public class Solution {
+        print Solution().longestValidParentheses("(()")
+        print Solution().longestValidParentheses(")()())")
+        print Solution().longestValidParentheses("()(()")
+        print Solution2().longestValidParentheses("(()")
+        print Solution2().longestValidParentheses(")()())")
+        print Solution2().longestValidParentheses("()(()")
+
+if __name__ == '__main__':
+    unittest.main()
+
+Java = '''
+# Thought: https://leetcode.com/problems/longest-valid-parentheses/solution/
+#
+# 12ms 78.01%
+class Solution {
     public int longestValidParentheses(String s) {
         int len = s.length();
         if (len < 2) {
@@ -151,34 +158,78 @@ public class Solution {
     }
 }
 
-
-public class Solution {
+# 8ms 99.55%
+class Solution {
     public int longestValidParentheses(String s) {
-        if( s == null || s.length() < 2){
-            return 0;
+        int maxans = 0;
+        int dp[] = new int[s.length()];
+        for (int i = 1; i < s.length(); i++) {
+            if (s.charAt(i) == ')') {
+                if (s.charAt(i - 1) == '(') {
+                    dp[i] = ( i >= 2 ? dp[i - 2] : 0) + 2;
+                } else if ( i - dp[i - 1] > 0 && s.charAt(i - dp[i - 1] - 1) == '(') {
+                    dp[i] = dp [i - 1] + ((i - dp[i - 1]) >= 2 ? dp[i - dp[i - 1] - 2] : 0) + 2;
+                }
+                maxans = Math.max(maxans, dp[i]);
+            }
         }
+        return maxans;
+    }
+}
 
+# https://leetcode.windliang.cc/leetCode-32-Longest-Valid-Parentheses.html
+# Ex: "((())"
+# 9ms 93.91%
+class Solution {
+    public int longestValidParentheses(String s) {
+        int left = 0, right = 0, maxlength = 0;
+        for (int i = 0; i < s.length(); i++) {
+            if (s.charAt(i) == '(') {
+                left++;
+            } else {
+                right++;
+            }
+            if (left == right) {
+                maxlength = Math.max(maxlength, 2 * right);
+            } else if (right >= left) {
+                left = right = 0;
+            }
+        }
+        left = right = 0;
+        for (int i = s.length() - 1; i >= 0; i--) {
+            if (s.charAt(i) == '(') {
+                left++;
+            } else {
+                right++;
+            }
+            if (left == right) {
+                maxlength = Math.max(maxlength, 2 * left);
+            } else if (left >= right) {
+                left = right = 0;
+            }
+        }
+        return maxlength;
+    }
+}
+
+# 17ms 47.36%
+class Solution {
+    public int longestValidParentheses(String s) {
+        if( s == null || s.length() < 2) return 0;
+        int maxans = 0;
         Stack<Integer> stack = new Stack<>();
-        int start = 0;
-        int maxLen = 0;
-
-        for( int i = 0; i < s.length(); i++){
-            if(s.charAt(i) == '('){
-                stack.push(i);
-            }else{
-                if(stack.isEmpty()){
-                    start = i + 1;
-                }else{
-                    stack.pop();
-                    if(stack.isEmpty()){
-                        maxLen = Math.max(maxLen, i - start + 1);
-                    }else{
-                        maxLen = Math.max(maxLen, i - stack.peek() );
-                    }
+        stack.push(-1);
+        for (int i = 0; i < s.length(); i++) {
+            if (s.charAt(i) == '(') stack.push(i);
+            else {
+                stack.pop();
+                if (stack.isEmpty()) stack.push(i);
+                else {
+                    maxans = Math.max(maxans, i - stack.peek());
                 }
             }
         }
-        return maxLen;
+        return maxans;
     }
 }
 '''

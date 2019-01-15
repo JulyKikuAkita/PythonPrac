@@ -1,8 +1,10 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/h-index/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/h-index.py
 # Time:  O(n)
 # Space: O(n)
-
+#
+# Description: Leetcode # 274. H-Index
+#
 # Given an array of citations (each citation is a non-negative integer)
 # of a researcher, write a function to compute the researcher's h-index.
 #
@@ -19,7 +21,14 @@ __author__ = 'July'
 #
 # Note: If there are several possible values for h, the maximum one is taken as the h-index.
 #
-
+# Companies
+# Bloomberg Google Facebook
+# Related Topics
+# Hash Table Sort
+# Similar Questions
+# H-Index II
+#
+import unittest
 # Counting sort.
 class Solution(object):
     def hIndex(self, citations):
@@ -68,3 +77,69 @@ class Solution3(object):
         :rtype: int
         """
         return sum(x >= i + 1 for i, x  in enumerate(sorted(citations, reverse=True)))
+
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+
+if __name__ == '__main__':
+    unittest.main()
+
+Java = '''
+# Thought: https://leetcode.com/problems/h-index/solution/
+
+citations[index] >= length(citations) - index
+
+1. Comparison sort based
+# Time:  O(n log n)
+# Space: O(1)
+# 5ms 69.09%
+class Solution {
+    public int hIndex(int[] citations) {
+        // sorting the citations in ascending order
+        Arrays.sort(citations);
+        // finding h-index by linear search
+        int i = 0;
+        while (i < citations.length && citations[citations.length - 1 - i] > i) {
+            i++;
+        }
+        return i; // after the while loop, i = i' + 1
+    }
+}
+
+2. counting sort
+# 5ms 69.09%
+class Solution {
+    public int hIndex(int[] citations) {
+        int n = citations.length;
+        int[] papers = new int[n + 1];
+        // counting papers for each citation number
+        for (int c: citations)
+            papers[Math.min(n, c)]++;
+        // finding the h-index
+        int k = n;
+        for (int s = papers[n]; k > s; s += papers[k])
+            k--;
+        return k;
+    }
+}
+
+3. bucket sort: 94 % - 50%
+# 3ms 100%
+class Solution {
+    public int hIndex(int[] citations) {
+        int n = citations.length;
+        int[] bucket = new int[n + 1];
+        for(int c : citations) {
+            if(c >= n) bucket[n]++;
+            else bucket[c]++;
+        }
+        int count = 0;
+        for(int i=n; i>= 0; i--) {
+            count += bucket[i];
+            if(count >= i) return i;
+        }
+        return 0;
+    }
+}
+'''

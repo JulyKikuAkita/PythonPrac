@@ -1,4 +1,8 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/target-sum/'
+# Time:  O(l * n)
+# Space: O(n)
+#
+# Description: Leetcode # 494. Target Sum
 #
 # You are given a list of non-negative integers, a1, a2, ..., an, and a target, S.
 # Now you have 2 symbols + and -. For each integer, you should choose one from + and - as its new symbol.
@@ -24,6 +28,9 @@ __author__ = 'July'
 #  Hide Company Tags Google Facebook
 # Hide Tags Depth-first Search Dynamic Programming
 # Hide Similar Problems (H) Expression Add Operators
+#
+import unittest
+# 376ms 33.28%
 class Solution(object):
     def findTargetSumWays(self, nums, S):
         """
@@ -42,11 +49,21 @@ class Solution(object):
             dic = tdic
         return dic.get(S, 0)
 
-java = '''
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+
+if __name__ == '__main__':
+    unittest.main()
+
+Java = '''
+# Thought: https://leetcode.com/problems/target-sum/solution/
+
 This is a pretty easy problem. Just do DFS and try both "+" and "-" at every position.
 Easy version of Expression Add Operators https://leetcode.com/problems/expression-add-operators/
 
-public class Solution {
+# 556ms 23.33%
+class Solution {
     int result = 0;
 
     public int findTargetSumWays(int[] nums, int S) {
@@ -91,19 +108,25 @@ For detailed explanation on how to solve subset sum problem, you may refer to Pa
 
 Here is Java solution (15 ms)
 
-    public int findTargetSumWays(int[] nums, int s) {
+# 6ms 99.45%
+class Solution {
+    public int findTargetSumWays(int[] nums, int S) {
         int sum = 0;
-        for (int n : nums)
+        for (int n : nums) {
             sum += n;
-        return sum < s || (s + sum) % 2 > 0 ? 0 : subsetSum(nums, (s + sum) >>> 1);
+        }
+        return sum < S || (S + sum) % 2 > 0 ? 0 : subsetSum(nums, (S + sum) >>>1);
     }
 
     public int subsetSum(int[] nums, int s) {
-        int[] dp = new int[s + 1];
+        int[] dp = new int[s +1];
         dp[0] = 1;
-        for (int n : nums)
-            for (int i = s; i >= n; i--)
+        for (int n : nums) {
+            for(int i = s; i >= n; i--) {
                 dp[i] += dp[i - n];
+            }
+        }
         return dp[s];
     }
+}
 '''

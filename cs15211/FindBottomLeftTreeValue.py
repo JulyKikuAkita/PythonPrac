@@ -1,8 +1,9 @@
-__source__ = 'https://leetcode.com/problems/find-bottom-left-tree-value/#/description'
+__source__ = 'https://leetcode.com/problems/find-bottom-left-tree-value/'
 # Time:  O(n)
 # Space: O(n)
 #
-# Description:
+# Description: 513. Find Bottom Left Tree Value
+#
 # Given a binary tree, find the leftmost value in the last row of the tree.
 #
 # Example 1:
@@ -42,6 +43,7 @@ import unittest
 #         self.left = None
 #         self.right = None
 
+# 56ms 20.16%
 class Solution(object):
     def findBottomLeftValue(self, root):
         """
@@ -62,7 +64,7 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
+# Thought:
 Doing BFS right-to-left means we can simply return the last node's value
 and don't have to keep track of the first node in the current row or
 even care about rows at all.
@@ -80,8 +82,10 @@ I just took that further.
  *     TreeNode(int x) { val = x; }
  * }
  */
- BFS:
-public class Solution {
+
+# BFS:
+# 7ms 31.01%
+class Solution {
     public int findBottomLeftValue(TreeNode root) {
         if (root == null) return -1;
         LinkedList<TreeNode> queue = new LinkedList<>();
@@ -100,8 +104,9 @@ public class Solution {
     }
 }
 
-DFS: 96%
-public class Solution {
+# DFS:
+# 3ms 99.93%
+class Solution {
     public int findBottomLeftValue(TreeNode root) {
          if (root == null) return -1;
          int[] res = new int[]{0, root.val}; //res[0] = depth, res[1] = leftNode.val
@@ -119,8 +124,9 @@ public class Solution {
     }
 }
 
-BFS with idea of depth: 55.54%
-public class Solution {
+# BFS with idea of depth:
+# 4ms 90.66%
+class Solution {
     public int findLeftMostNode(TreeNode root) {
         if (root == null) return 0;
 

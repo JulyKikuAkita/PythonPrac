@@ -1,8 +1,9 @@
-__source__ = 'https://leetcode.com/problems/permutation-in-string/#/description'
+__source__ = 'https://leetcode.com/problems/permutation-in-string/'
 # Time:  O(n!) //brute force
 # Space: O(n2)
 #
-# Description:
+# Description: 567. Permutation in String
+#
 # Given two strings s1 and s2, write a function to return true if s2 contains the permutation of s1.
 # In other words, one of the first string's permutations is the substring of the second string.
 #
@@ -32,6 +33,8 @@ import unittest
 # when it gets larger than len(s1). After, we only need to check if
 # it is equal to the target. Working with list values of [0, 1,..., 25]
 # instead of 'a'-'z' makes it easier to count later.
+#
+# 52ms 76.04%
 class Solution(object):
     def checkInclusion(self, s1, s2):
         A = [ord(x) - ord('a') for x in s1]
@@ -61,7 +64,8 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
+# Thought: https://leetcode.com/problems/permutation-in-string/solution/
+#
 https://leetcode.com/articles/short-permutation-in-a-long-string/
 Java Solution, Sliding Window
 How do we know string p is a permutation of string s? Easy,
@@ -75,7 +79,8 @@ we add 1 to that character count. So once we see all zeros in the map,
 meaning equal numbers of every characters between s1 and the substring in the sliding window,
 we know the answer is true.
 
-public class Solution {
+# 8ms 98.88%
+class Solution {
     public boolean checkInclusion(String s1, String s2) {
         int len1 = s1.length(), len2 = s2.length();
         if (len1 > len2) return false;

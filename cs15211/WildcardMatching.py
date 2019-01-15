@@ -4,6 +4,8 @@ __source__ = 'https://leetcode.com/problems/wildcard-matching/#/description'
 # Space: O(1)
 # Greedy
 #
+# Description: Leetcode # 44. Wildcard Matching
+#
 # Implement wildcard pattern matching with support for '?' and '*'.
 #
 # '?' Matches any single character.
@@ -22,11 +24,16 @@ __source__ = 'https://leetcode.com/problems/wildcard-matching/#/description'
 # isMatch("aa", "a*") -> true
 # isMatch("ab", "?*") -> true
 # isMatch("aab", "c*a*b") -> false
-#  Google Snapchat Two Sigma Facebook Twitter
-# Hide Tags Dynamic Programming Backtracking Greedy String
-# Hide Similar Problems (H) Regular Expression Matching
-
+#
+# Companies
+# Google Snapchat Two Sigma Facebook Twitter
+# Related Topics
+# Dynamic Programming Backtracking Greedy String
+# Similar Questions
+# Regular Expression Matching
+#
 # iteration
+import unittest
 class Solution:
     # @param s, an input string
     # @param p, a pattern string
@@ -116,8 +123,6 @@ class Solution4:
                 s = s[1:]
             return self.isMatch(s, p[1:])
 
-
-
 # http://chaoren.is-programmer.com/posts/42771.html
 # http://www.cnblogs.com/zuoyuan/p/3781872.html
 class SolutionOther:
@@ -155,96 +160,128 @@ class SolutionOther:
         return False
 
 #test
-test = SolutionOther()
-#print test.isMatch("a", "aa") # false
-#print test.isMatch("aa","a") # false
-#print test.isMatch("aa","aa") # true
-#print test.isMatch("aaa","aa") # false
-#print test.isMatch("aa", "*") # true
-#print test.isMatch("aa", "a*") # true
-#print test.isMatch("ab", "?*") # true
-#print test.isMatch("aab", "c*a*b")
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        test = SolutionOther()
+        #print test.isMatch("a", "aa") # false
+        #print test.isMatch("aa","a") # false
+        #print test.isMatch("aa","aa") # true
+        #print test.isMatch("aaa","aa") # false
+        #print test.isMatch("aa", "*") # true
+        #print test.isMatch("aa", "a*") # true
+        #print test.isMatch("ab", "?*") # true
+        #print test.isMatch("aab", "c*a*b")
 
-if __name__ =='__main__':
-    #print Solution().isMatch("aaaabaaaab","a*b*b")
-    #print Solution().isMatch("aaaaaaaaaaaaab", "a*a*a*a*a*a*a*a*a*a*c")
-    #print Solution().isMatch("aa","a")
-    #print Solution().isMatch("aa","aa")
-    #print Solution().isMatch("aaa","aa")
-    #print Solution().isMatch("aa", "a*")
-    #print Solution().isMatch("aa", "?*")
-    #print Solution().isMatch("ab", "?*")
-    print Solution2().isMatch("aab", "c*a*b")
+        #print Solution().isMatch("aaaabaaaab","a*b*b")
+        #print Solution().isMatch("aaaaaaaaaaaaab", "a*a*a*a*a*a*a*a*a*a*c")
+        #print Solution().isMatch("aa","a")
+        #print Solution().isMatch("aa","aa")
+        #print Solution().isMatch("aaa","aa")
+        #print Solution().isMatch("aa", "a*")
+        #print Solution().isMatch("aa", "?*")
+        #print Solution().isMatch("ab", "?*")
+        print Solution2().isMatch("aab", "c*a*b")
 
-#JAVA
-java = '''
+if __name__ == '__main__':
+    unittest.main()
+
+Java = '''
 Thought:
-1. I found this solution from http://yucoding.blogspot.com/2013/02/leetcode-question-123-wildcard-matching.html
+1. DP:
+(i) p == s or p == ? : T
+(ii) p == char != s : F
+(iii) p == * : p = dp[i+1][j] || dp[i][j+1]
+
+# 57ms 69.30%
+class Solution {
+    public boolean isMatch(String s, String p) {
+        boolean[][] dp = new boolean[s.length() + 1][p.length() + 1];
+        dp[s.length()][p.length()] = true;
+        for (int i = p.length() - 1; i >= 0; i--) {
+            if (p.charAt(i) == '*') dp[s.length()][i] = true;
+            else break;
+        }
+        
+        for (int i = s.length() - 1; i >= 0; i--) {
+            for (int j = p.length() - 1; j >= 0; j--) {
+                if (s.charAt(i) == p.charAt(j) || p.charAt(j) == '?') {
+                    dp[i][j] = dp[i+ 1][j+1];
+                } else if (p.charAt(j) == '*') {
+                    dp[i][j] = dp[i + 1][j] || dp[i][j + 1];
+                } else {
+                    dp[i][j] = false;
+                }       
+            }
+        }
+        return dp[0][0];
+    }
+}
+
+2. Thought:
+I found this solution from http://yucoding.blogspot.com/2013/02/leetcode-question-123-wildcard-matching.html
 
 The basic idea is to have one pointer for the string and one pointer for the pattern.
 This algorithm iterates at most length(string) + length(pattern) times, for each iteration,
 at least one pointer advance one step.
 
-
-boolean comparison(String str, String pattern) {
-        int s = 0, p = 0, match = 0, starIdx = -1;
-        while (s < str.length()){
+# 94.68% 29ms
+class Solution {
+    public boolean isMatch(String s, String p) {
+        int lenS = 0;
+        int lenP = 0;
+        int match = 0, starIdx = -1;
+        while (lenS < s.length()){
             // advancing both pointers
-            if (p < pattern.length()  && (pattern.charAt(p) == '?' || str.charAt(s) == pattern.charAt(p))){
-                s++;
-                p++;
+            if (lenP < p.length()  && (p.charAt(lenP) == '?' || s.charAt(lenS) == p.charAt(lenP))){
+                lenS++;
+                lenP++;
             }
             // * found, only advancing pattern pointer
-            else if (p < pattern.length() && pattern.charAt(p) == '*'){
-                starIdx = p;
-                match = s;
-                p++;
+            else if (lenP < p.length() && p.charAt(lenP) == '*'){
+                starIdx = lenP;
+                match = lenS;
+                lenP++;
             }
            // last pattern pointer was *, advancing string pointer
             else if (starIdx != -1){
-                p = starIdx + 1;
+                lenP = starIdx + 1;
                 match++;
-                s = match;
+                lenS = match;
             }
            //current pattern pointer is not star, last patter pointer was not *
-          //characters do not match
+           //characters do not match
             else return false;
         }
 
         //check for remaining characters in pattern
-        while (p < pattern.length() && pattern.charAt(p) == '*')
-            p++;
+        while (lenP < p.length() && p.charAt(lenP) == '*') lenP++;
 
-        return p == pattern.length();
-}
-
-2. DP:
-(i) p == s or p == ? : T
-(ii) p == char != s : F
-(iii) p == * : p = dp[i+1][j] || dp[i][j+1]
-
-public class Solution {
-    public boolean isMatch(String s, String p) {
-        boolean[][] match=new boolean[s.length()+1][p.length()+1];
-        match[s.length()][p.length()]=true;
-        for(int i=p.length()-1;i>=0;i--){
-            if(p.charAt(i)!='*')
-                break;
-            else
-                match[s.length()][i]=true;
-        }
-        for(int i=s.length()-1;i>=0;i--){
-            for(int j=p.length()-1;j>=0;j--){
-                if(s.charAt(i)==p.charAt(j)||p.charAt(j)=='?')
-                        match[i][j]=match[i+1][j+1];
-                else if(p.charAt(j)=='*')
-                        match[i][j]=match[i+1][j]||match[i][j+1];
-                else
-                    match[i][j]=false;
-            }
-        }
-        return match[0][0];
+        return lenP == p.length();
     }
 }
 
+# 43ms 96.23%
+class Solution {
+    public boolean isMatch(String s, String p) {
+        int i = 0, j = 0, starIdx = -1, iIdx = -1;
+        while (i < s.length()) {
+            if (j < p.length() && (p.charAt(j) == '?' || p.charAt(j) == s.charAt(i))) {
+                i++;
+                j++;
+            } else if (j < p.length() && p.charAt(j) == '*') {
+                starIdx = j;
+                iIdx = i;
+                j++;
+            } else if (starIdx != -1) {
+                j = starIdx + 1;
+                i = iIdx + 1;
+                iIdx++;
+            } else {
+                return false;
+            }
+        }
+        while (j < p.length() && p.charAt(j) == '*') j++;
+        return j == p.length();
+    }
+}
 '''

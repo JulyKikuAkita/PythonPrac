@@ -1,9 +1,11 @@
-__source__ = 'https://leetcode.com/problems/sum-of-square-numbers/#/description'
+__source__ = 'https://leetcode.com/problems/sum-of-square-numbers/'
 # Time:  O(sqrt(c) * log(c))
 # Space: O(1)
 #
-# Description:
-# Given a non-negative integer c, your task is to decide whether there're two integers a and b such that a2 + b2 = c.
+# Description: 633. Sum of Square Numbers
+#
+# Given a non-negative integer c,
+# your task is to decide whether there're two integers a and b such that a2 + b2 = c.
 #
 # Example 1:
 # Input: 5
@@ -28,6 +30,8 @@ import unittest
 #
 # Let's try each 0 <= a <= sqrt(c). For each choice of a, we must have b*b = c - a*a.
 # There will be a solution if and only if the right-hand-side is a perfect square.
+#
+# 212ms 37.03%
 class Solution(object):
     def judgeSquareSum(self, c):
         """
@@ -44,24 +48,25 @@ class TestMethods(unittest.TestCase):
     def test_Local(self):
         self.assertEqual(1, 1)
 
-
 if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/articles/sum-of-square-numbers/
+# Thought: https://leetcode.com/problems/sum-of-square-numbers/solution/
 
 1.
 Time complexity : O(c).
-The total number of times the sumsum is updated is: 1+2+3+...(sqrt(c) times) = sqrt(c) * (sqrt(c)+1)/2 = O(c)
+The total number of times the sumis updated is: 
+1+2+3+...(sqrt(c) times) = sqrt(c) * (sqrt(c)+1)/2 = O(c)
 Space complexity : O(1). Constant extra space is used.
 
-Now, to determine, if the number c - a^2 is a perfect square or not, we can make use of the following theorem:
+Now, to determine, if the number c - a^2 is a perfect square or not, 
+we can make use of the following theorem:
 "The square of n^th positive integer can be represented as a sum of first n odd positive integers."
-Or in mathematical terms:
-n^2 = 1 + 3 + 5 + ... + (2 * n - 1)
+Or in mathematical terms: n^2 = 1 + 3 + 5 + ... + (2 * n - 1)
 
-public class Solution {
+# TLE
+class Solution {
     public boolean judgeSquareSum(int c) {
         for (long a = 0; a * a <= c; a++) {
             int b =  c - (int)(a * a);
@@ -77,10 +82,12 @@ public class Solution {
     }
 }
 
-2. Sqrt 44%
+2. 
 Time complexity : O(sqrt(c) * log(c)).
 Space complexity : O(1).
-public class Solution {
+# Sqrt
+# 9ms 72.69%
+class Solution {
     public boolean judgeSquareSum(int c) {
         for (long a = 0; a * a <= c; a++) {
             double b = Math.sqrt(c - a * a);
@@ -91,11 +98,12 @@ public class Solution {
     }
 }
 
-3. Using Binary Search 15.75%
+3. Using Binary Search
 Time complexity : O(sqrt(c) * log(c)).
 Space complexity : O(log(c)).
 
-public class Solution {
+# 64ms 15.93%
+class Solution {
     public boolean judgeSquareSum(int c) {
         for (long a = 0; a * a <= c; a++) {
             int b = c - (int)(a * a);
@@ -116,8 +124,9 @@ public class Solution {
     }
 }
 
-4. Two pointers 81%
-public class Solution {
+4. Two pointers
+# 7ms 91.02%
+class Solution {
     public boolean judgeSquareSum(int c) {
         int lo = 0, hi = (int)Math.sqrt(c);
         while (lo <= hi) {

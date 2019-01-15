@@ -2,7 +2,8 @@ __source__ = 'https://leetcode.com/problems/add-one-row-to-tree/#/description'
 # Time:  O(n)
 # Space: O(n)
 #
-# Description:
+# Description: 623. Add One Row to Tree
+#
 # Given the root of a binary tree, then value v and depth d,
 # you need to add a row of nodes with value v at the given depth d. The root node is at depth 1.
 #
@@ -79,8 +80,8 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/articles/add-one-row-in-a-tree/
-1. DFS:
+#Thought: https://leetcode.com/problems/add-one-row-to-tree/solution/
+// 1. DFS:
 /**
  * Definition for a binary tree node.
  * public class TreeNode {
@@ -90,7 +91,9 @@ Java = '''
  *     TreeNode(int x) { val = x; }
  * }
  */
-public class Solution {
+
+#4ms 100%
+class Solution {
 	public TreeNode addOneRow(TreeNode root, int v, int d) {
 		if (d == 1) {
 			TreeNode newRoot = new TreeNode(v);
@@ -122,8 +125,9 @@ public class Solution {
 	}
 }
 
-2. BFS:
-public class Solution {
+// 2. BFS:
+#11ms 5.7%
+class Solution {
     class Node{
         Node(TreeNode n,int d){
             node=n;

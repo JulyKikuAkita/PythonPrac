@@ -2,15 +2,18 @@ __source__ = 'https://leetcode.com/problems/word-abbreviation/#/description'
 # Time:  O()
 # Space: O()
 #
-# Description:
+# Description: 527. Word Abbreviation
+#
 # Given an array of n distinct non-empty strings, you need to generate minimal possible abbreviations
 # for every word following rules below.
-# Begin with the first character and then the number of characters abbreviated,
+# 1. Begin with the first character and then the number of characters abbreviated,
 # which followed by the last character.
-# If there are any conflict, that is more than one words share the same abbreviation,
+# 2. If there are any conflict, that is more than one words share the same abbreviation,
 # a longer prefix is used instead of only the first character until making the map
-# from word to abbreviation become unique. In other words, a final abbreviation cannot map to more than one original words.
-# If the abbreviation doesn't make the word shorter, then keep it as original.
+# from word to abbreviation become unique. In other words,
+# a final abbreviation cannot map to more than one original words.
+# 3. If the abbreviation doesn't make the word shorter, then keep it as original.
+#
 # Example:
 # Input: ["like", "god", "internal", "me", "internet", "interval", "intension", "face", "intrusion"]
 # Output: ["l2e","god","internal","me","i6t","interval","inte4n","f2e","intr4n"]
@@ -35,6 +38,7 @@ import collections
 # It must be the case that the longest common prefix of W with any other word X in G
 # must occur with words adjacent to W, so we only need to check those.
 #
+# 64ms 100%
 class Solution(object):
     def wordsAbbreviation(self, dict):
         """
@@ -80,11 +84,13 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
+#Thought: https://leetcode.com/problems/word-abbreviation/solution/
+
 Make abbreviation for each word.
 Then, check each word, if there are some strings which have same abbreviation with it, increase the prefix.
 
-public class Solution {
+# 52ms 38.13%
+class Solution {
     public List<String> wordsAbbreviation(List<String> dict) {
         int len = dict.size();
         String[] ans = new String[len];

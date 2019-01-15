@@ -1,7 +1,9 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/happy-number/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/happy-number.py
 # Time:  O(k), where k is the steps to be happy number
 # Space: O(k)
+#
+# Description: Leetcode # 202. Happy Number
 #
 # Write an algorithm to determine if a number is "happy".
 #
@@ -19,7 +21,14 @@ __author__ = 'July'
 # 6^2 + 8^2 = 100
 # 1^2 + 0^2 + 0^2 = 1
 #
-# Uber
+# Companies
+# Uber Airbnb Twitter
+# Related Topics
+# Hash Table Math
+# Similar Questions
+# Add Digits Ugly Number
+#
+import unittest
 class Solution:
     # @param {integer} n
     # @return {boolean}
@@ -36,13 +45,19 @@ class Solution:
             new += int(char) ** 2
         return new
 
-#test
-if __name__ == "__main__":
-    print Solution().isHappy(19)
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
 
-# java
-js = '''
-public class Solution {
+if __name__ == '__main__':
+    unittest.main()
+
+Java = '''
+# Thought:
+non-happy number will definitely generate a loop
+
+# 2ms 76.39%
+class Solution {
     public boolean isHappy(int n) {
         Set<Integer> cache = new HashSet<>();
         cache.add(n);
@@ -67,6 +82,47 @@ public class Solution {
             n /= 10;
         }
         return result;
+    }
+}
+
+# 1ms 97.75%
+class Solution {
+    public boolean isHappy(int n) {
+        Set<Integer> set = new HashSet<Integer>();
+        int squareSum, remain;
+        while( set.add(n) ) {
+            squareSum = 0;
+            while (n > 0) {
+                remain = n % 10;
+                squareSum +=  remain * remain;
+                n /= 10;
+            }
+            if (squareSum == 1) return true;
+            else n = squareSum;
+        }
+        return false;
+    }
+}
+
+# 1ms 97.75%
+class Solution {
+    public boolean isHappy(int n) {
+        int slow = n, fast = n;
+        do {
+            slow = getSquareSum(slow);
+            fast = getSquareSum(getSquareSum(fast));
+        } while (slow != fast);
+        return slow == 1;
+    }
+
+    private int getSquareSum(int n) {
+        int squareSum = 0, remain = 0;
+        while (n > 0) {
+            remain = n % 10;
+            squareSum += remain * remain;
+            n /= 10;
+        }
+        return squareSum;
     }
 }
 '''

@@ -2,7 +2,8 @@ __source__ = 'https://leetcode.com/problems/beautiful-arrangement/#/description'
 # Time complexity : O(k). k refers to the number of valid permutations.
 # Space complexity : O(n). visited array of size nn is used.
 #
-# Description:
+# Description: 526. Beautiful Arrangement
+#
 # Suppose you have N integers from 1 to N.
 # We define a beautiful arrangement as an array that is constructed by these N numbers successfully
 # if one of the following is true for the ith position (1 <= i <= N) in this array:
@@ -64,14 +65,15 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-https://leetcode.com/articles/beautiful-arrangement/
-#Thought: Just try every possible number at each position...
+#Thought: https://leetcode.com/problems/beautiful-arrangement/solution/
+Just try every possible number at each position...
 1. backtracking template(same as permutation) 35.77%
 Time complexity : O(k). k refers to the number of valid permutations.
 Space complexity : O(n). visited array of size nn is used.
 The depth of recursion tree will also go upto n. Here, nn refers to the given integer n.
 
-public class Solution {
+# 79ms 57.65%
+class Solution {
     int count = 0;
     public int countArrangement(int N) {
         if ( N <= 0) return 0;
@@ -101,7 +103,8 @@ The back tracking start from the back so that each search won't go too deep befo
 because smaller numbers have higher chance to be divisible among themselves.
 Also I don't use "visited" boolean array but use swap of an array of 1~N to avoid duplication.
 
-public class Solution {
+# 3ms 99.73%
+class Solution {
     int count = 0;
     public int countArrangement(int N) {
         if ( N <= 0) return 0;

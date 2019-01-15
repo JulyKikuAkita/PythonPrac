@@ -3,7 +3,8 @@ __source__ = 'https://github.com/kamyu104/LeetCode/blob/master/Python/battleship
 # Space: O(1)
 #
 #
-# Description:
+# Description: 419. Battleships in a Board
+#
 # Given an 2D board, count how many different battleships are in it.
 # The battleships are represented with 'X's, empty slots are represented with '.'s.
 # You may assume the following rules:
@@ -32,7 +33,7 @@ __source__ = 'https://github.com/kamyu104/LeetCode/blob/master/Python/battleship
 # Hide Company Tags Microsoft
 
 import unittest
-
+# 32ms 94.99%
 class Solution(object):
     def countBattleships(self, board):
         """
@@ -64,7 +65,8 @@ Going over all cells, we can count only those that are the "first" cell of the b
 First cell will be defined as the most top-left cell. We can check for first cells by only counting cells
 that do not have an 'X' to the left and do not have an 'X' above them.
 
-public class Solution {
+#2ms 100%
+class Solution {
     public int countBattleships(char[][] board) {
         if (board == null || board.length == 0) return 0;
         int m = board.length, n = board[0].length;

@@ -1,6 +1,11 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/design-in-memory-file-system/'
 # https://leetcode.com/problems/design-in-memory-file-system/#/description
-#Design an in-memory file system to simulate the following functions:
+# Time:  O()
+# Space: O()
+#
+# Description: Leetcode # 588. Design In-Memory File System
+#
+# Design an in-memory file system to simulate the following functions:
 #
 # ls: Given a path in string format. If it is a file path,
 # return a list that only contains this file's name.
@@ -38,8 +43,21 @@ __author__ = 'July'
 # Hide Company Tags Baidu
 # Hide Tags Design
 # Hide Similar Problems (H) LRU Cache (H) LFU Cache
-java = '''
-public class FileSystem {
+#
+import unittest
+class Solution(object):
+    pass  # your function here
+
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+
+
+Java = '''
+# Thought: https://leetcode.com/problems/design-in-memory-file-system/solution/
+
+# 97ms 89.14%
+class FileSystem {
      class File{
         boolean isFile = false;
         Map<String, File> children = new HashMap<>();

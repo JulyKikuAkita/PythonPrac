@@ -1,8 +1,9 @@
-__source__ = 'https://leetcode.com/problems/longest-line-of-consecutive-one-in-matrix/#/description'
+__source__ = 'https://leetcode.com/problems/longest-line-of-consecutive-one-in-matrix/'
 # Time:  O(m*n*4)
 # Space: O(m*n*4)
 #
-# Description:
+# Description: 562. Longest Line of Consecutive One in Matrix
+#
 # Given a 01 matrix M, find the longest line of consecutive one in the matrix.
 # The line could be horizontal, vertical, diagonal or anti-diagonal.
 #
@@ -16,13 +17,11 @@ __source__ = 'https://leetcode.com/problems/longest-line-of-consecutive-one-in-m
 #
 # Hide Company Tags Google
 # Hide Tags Array
-
+#
 import unittest
-
 
 class Solution(object):
     pass  # your function here
-
 
 class TestMethods(unittest.TestCase):
     def test_Local(self):
@@ -33,11 +32,14 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
-1. DP 67%
+# Thought: https://leetcode.com/problems/longest-line-of-consecutive-one-in-matrix/solution/
+
+1.
 Note that each cell of the DP table only depends on the current row or previous row
 so you can easily optimize the above algorithm to use only O(m) space.
-public class Solution {
+# DP
+# 25ms 22.15%
+class Solution {
     public int longestLine(int[][] M) {
         int m = M.length, max = 0;
         if (m == 0) return max;
@@ -59,8 +61,9 @@ public class Solution {
     }
 }
 
-2. 8.39%
-public class Solution {
+2. 
+# 207ms 4.75%
+class Solution {
     int[][] DIRS = new int[][]{{1,0},{0,1},{1,1}, {1,-1}};
     public int longestLine(int[][] M) {
 

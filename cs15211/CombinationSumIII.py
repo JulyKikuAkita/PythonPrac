@@ -1,7 +1,9 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/combination-sum-iii/description/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/combination-sum-iii.py
 # Time:  O(C(n, k))
 # Space: O(k)
+#
+# Description: Leetcode # 216. Combination Sum III
 #
 # Find all possible combinations of k numbers that add up to a number n,
 # given that only numbers from 1 to 9 can be used and each combination should be a unique set of numbers.
@@ -25,10 +27,12 @@ __author__ = 'July'
 #
 # [[1,2,6], [1,3,5], [2,3,4]]
 #
+# Related Topics
 # Array Backtracking
-# Hide Similar Problems (M) Combination Sum
+# Similar Questions
+# Combination Sum
 #
-
+import unittest
 class Solution:
     # @param {integer} k
     # @param {integer} n
@@ -49,12 +53,19 @@ class Solution:
             intermediate.pop()
             start += 1
 
-if __name__ == "__main__":
-    print Solution().combinationSum3(3, 9)
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+        print Solution().combinationSum3(3, 9)
 
-#Java
-java = '''
-public class Solution {
+if __name__ == '__main__':
+    unittest.main()
+
+Java = '''
+# Thought:
+
+# 1ms 78.19%
+class Solution {
     public List<List<Integer>> combinationSum3(int k, int n) {
          List<List<Integer>> result = new ArrayList<>();
          backtrack(result, new ArrayList<Integer>(), k, n, 1);
@@ -72,11 +83,11 @@ public class Solution {
             backtrack(list, tempList, k, remain - i, i + 1);
             tempList.remove(tempList.size() - 1);
         }
-
     }
 }
 
-public class Solution {
+# 1ms 78.19%
+class Solution {
     public List<List<Integer>> combinationSum3(int k, int n) {
         List<List<Integer>> result = new ArrayList<>();
         if (k < 0 || k > 9 || n <= 0) {
@@ -103,5 +114,30 @@ public class Solution {
         combinationSum3(k - 1, n - cur, cur + 1, result, list);
         list.remove(list.size() - 1);
     }
+}
+
+# 0ms 100%
+class Solution {
+    public List<List<Integer>> combinationSum3(int k, int n) {
+        List<List<Integer>> results = new ArrayList<>();
+        backtrack(results, new ArrayList<Integer>(), k, n, 1);
+        return results;
+    }
+
+    private void backtrack(List<List<Integer>> results, List<Integer> comb, int cnt, int total, int start) {
+        if (total < 0) return;
+        if (comb.size() == cnt && total == 0) {
+            List<Integer> single = new ArrayList<>(comb);
+            results.add(single);
+            return;
+        }
+        if (comb.size() == cnt || total == 0) return;
+        for (int i = start; i < 10; i++) {
+            comb.add(i);
+            backtrack(results, comb, cnt, total - i, i + 1);
+            comb.remove(comb.size() - 1);
+        }
+    }
+
 }
 '''

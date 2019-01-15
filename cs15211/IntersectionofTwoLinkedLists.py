@@ -1,11 +1,12 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/intersection-of-two-linked-lists/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/intersection-of-two-linked-lists.py
 # Time:  O(m + n)
 # Space: O(1)
 # LinkedList
 #
-# Write a program to find the node at which the intersection of two singly linked lists begins.
+# Description: Leetcode # 160. Intersection of Two Linked Lists
 #
+# Write a program to find the node at which the intersection of two singly linked lists begins.
 #
 # For example, the following two linked lists:
 #
@@ -24,10 +25,14 @@ __author__ = 'July'
 # You may assume there are no cycles anywhere in the entire linked structure.
 # Your code should preferably run in O(n) time and use only O(1) memory.
 #
-#  Amazon Microsoft Bloomberg
-
-
-
+# Companies
+# Amazon Microsoft Bloomberg Airbnb
+# Related Topics
+# Linked List
+# Similar Questions
+# Minimum Index Sum of Two Lists
+#
+import unittest
 # Definition for singly-linked list.
 class ListNode:
     def __init__(self, x):
@@ -61,9 +66,7 @@ class Solution:
                 curB = headA
             else:
                 break
-
         return None
-
 
 # http://blog.csdn.net/lilong_dream/article/details/41683563
 class SolutionOther:
@@ -96,24 +99,107 @@ class SolutionOther:
 
         return curA
 
-#test
-test = SolutionOther()
-headA = ListNode(1)
-headB = ListNode(2)
-n = [1,3,5,7,9,11,13,15,17,19,21]
-h1 = ListNode(3) ; h2 = ListNode(5); h3 = ListNode(7) ; h4 = ListNode(9) ; h5 = ListNode(11) ;
-h7 = ListNode(13) ; h8 = ListNode(15); h9 = ListNode(17) ; h10 = ListNode(19) ; h11 = ListNode(21) ;
-headA.next = h1; h1.next = h2; h2.next = h3; h3.next = h4; h4.next = h5; h5.next = h7; h7.next = h8
-h8.next = h9; h9.next = h10; h10.next = h11;
+# test
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+        test = SolutionOther()
+        headA = ListNode(1)
+        headB = ListNode(2)
+        h1 = ListNode(3) ; h2 = ListNode(5); h3 = ListNode(7) ; h4 = ListNode(9) ; h5 = ListNode(11) ;
+        h7 = ListNode(13) ; h8 = ListNode(15); h9 = ListNode(17) ; h10 = ListNode(19) ; h11 = ListNode(21) ;
+        headA.next = h1; h1.next = h2; h2.next = h3; h3.next = h4; h4.next = h5; h5.next = h7; h7.next = h8
+        h8.next = h9; h9.next = h10; h10.next = h11;
 
-ans = test.getIntersectionNode(headA, headB)
-print "None" if ans == None else ans.val
+        ans = test.getIntersectionNode(headA, headB)
+        print "None" if ans == None else ans.val
 
-if __name__ == "__main__":
-    headA = ListNode(10)
-    headB = ListNode(20)
-    h1 = ListNode(11) ; h2 = ListNode(12); h3 = ListNode(30) ;h5 = ListNode(31) ;
-    h4 = ListNode(21) ;
-    headA.next = h1 ; h1.next = h2 ; h2.next = h3 ; h3.next = h5
-    headB.next = h4 ; h4.next = h3 ;
-    print Solution().getIntersectionNode(headA,headB)
+        headA = ListNode(10)
+        headB = ListNode(20)
+        h1 = ListNode(11) ; h2 = ListNode(12); h3 = ListNode(30) ;h5 = ListNode(31) ;
+        h4 = ListNode(21) ;
+        headA.next = h1 ; h1.next = h2 ; h2.next = h3 ; h3.next = h5
+        headB.next = h4 ; h4.next = h3 ;
+        print Solution().getIntersectionNode(headA,headB)
+
+if __name__ == '__main__':
+    unittest.main()
+
+Java = '''
+# Thought: https://leetcode.com/problems/intersection-of-two-linked-lists/solution/
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) {
+ *         val = x;
+ *         next = null;
+ *     }
+ * }
+ */
+
+1, Get the length of the two lists.
+2, Align them to the same start point.
+3, Move them together until finding the intersection point, or the end null
+
+# 1ms 100%
+class Solution {
+    public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
+        int lenA = getLength(headA);
+        int lenB = getLength(headB);
+        while (lenA > lenB) {
+            headA = headA.next;
+            lenA--;
+        }
+        while (lenB > lenA) {
+            headB = headB.next;
+            lenB--;
+        }
+        while (headA != null) {
+            if (headA == headB) {
+                return headA;
+            } else {
+                headA = headA.next;
+                headB = headB.next;
+            }
+        }
+        return null;
+    }
+
+    private int getLength(ListNode head) {
+        int count = 0;
+        while (head != null) {
+            head = head.next;
+            count++;
+        }
+        return count;
+    }
+}
+
+Thought:
+Maintain two pointers pA and pB initialized at the head of A and B, respectively.
+Then let them both traverse through the lists, one node at a time.
+When pA reaches the end of a list, then redirect it to the head of B (yes, B, that's right.);
+similarly when pB reaches the end of a list, redirect it the head of A.
+If at any point pA meets pB, then pA/pB is the intersection node.
+
+# 2ms 38.83%
+class Solution {
+    public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
+        //boundary check
+        if(headA == null || headB == null) return null;
+
+        ListNode a = headA;
+        ListNode b = headB;
+
+        //if a & b have different len, then we will stop the loop after second iteration
+        while( a != b){
+            //for the end of first iteration, we just reset the pointer to the head of another linkedlist
+            a = a == null? headB : a.next;
+            b = b == null? headA : b.next;
+        }
+        return a;
+    }
+}
+'''

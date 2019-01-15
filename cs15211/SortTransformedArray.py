@@ -1,30 +1,35 @@
-__author__ = 'July'
+__author__ = 'https://leetcode.com/problems/sort-transformed-array/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/sort-transformed-array.py
-'''
-Given a sorted array of integers nums and integer values a, b and c. Apply a function of the form f(x) = ax2 + bx + c to each element x in the array.
-
-The returned array must be in sorted order.
-
-Expected time complexity: O(n)
-
-Example:
-nums = [-4, -2, 2, 4], a = 1, b = 3, c = 5,
-
-Result: [3, 9, 15, 33]
-
-nums = [-4, -2, 2, 4], a = -1, b = 3, c = 5
-
-Result: [-23, -5, 1, 7]
-Credits:
-Special thanks to @elmirap for adding this problem and creating all test cases.
-
-Hide Company Tags Google
-Hide Tags Math Two Pointers
-
-'''
 # Time:  O(n)
 # Space: O(1)
-
+#
+# Description: Leetcode # 360. Sort Transformed Array
+#
+# Given a sorted array of integers nums and integer values a, b and c.
+#
+# Apply a function of the form f(x) = ax2 + bx + c to each element x in the array.
+#
+# The returned array must be in sorted order.
+#
+# Expected time complexity: O(n)
+#
+# Example:
+# nums = [-4, -2, 2, 4], a = 1, b = 3, c = 5,
+#
+# Result: [3, 9, 15, 33]
+#
+# nums = [-4, -2, 2, 4], a = -1, b = 3, c = 5
+#
+# Result: [-23, -5, 1, 7]
+#
+# Companies
+# Google
+# Related Topics
+# Math Two Pointers
+#
+import unittest
+# Time:  O(n)
+# Space: O(1)
 class Solution(object):
     def sortTransformedArray(self, nums, a, b, c):
         """
@@ -49,13 +54,42 @@ class Solution(object):
             else:
                 result.append(f(nums[right], a, b, c))
                 right -= 1
-
         return result[::d]
 
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
 
-#Java
-js ='''
-public class Solution {
+if __name__ == '__main__':
+    unittest.main()
+
+Java = '''
+# Thought:
+
+# 6ms 32.30%
+class Solution {
+    public int[] sortTransformedArray(int[] nums, int a, int b, int c) {
+        int n = nums.length;
+        int[] sorted = new int[n];
+        int i = 0, j = n - 1;
+        int index = a >= 0 ? n - 1 : 0;
+        while (i <= j) {
+            if (a >= 0) {
+                sorted[index--] = quad(nums[i], a, b, c) >= quad(nums[j], a, b, c) ? quad(nums[i++], a, b, c) : quad(nums[j--], a, b, c);
+            } else {
+                sorted[index++] = quad(nums[i], a, b, c) >= quad(nums[j], a, b, c) ? quad(nums[j--], a, b, c) : quad(nums[i++], a, b, c);
+            }
+        }
+        return sorted;
+    }
+
+    private int quad(int x, int a, int b, int c) {
+        return a * x * x + b * x + c;
+    }
+}
+
+# 6ms 32.30%
+class Solution {
     public int[] sortTransformedArray(int[] nums, int a, int b, int c) {
         if (nums.length == 0) {
             return nums;

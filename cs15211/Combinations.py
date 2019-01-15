@@ -1,8 +1,10 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/combinations/description/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/combinations.py
 # Time:  O(n!)
 # Space: O(n)
 # DFS
+#
+# Description: Leetcode # 77. Combinations
 #
 # Given two integers n and k, return all possible combinations of k numbers out of 1 ... n.
 #
@@ -17,12 +19,14 @@ __author__ = 'July'
 #   [1,3],
 #   [1,4],
 # ]
-# # Snapchat Uber
-# Hide Tags Array Backtracking
-# Hide Similar Problems (M) Letter Combinations of a Phone Number (M) Combination Sum II
-# (M) Combinations (M) Combination Sum III (M) Factor Combinations (M) Combination Sum IV
-
-
+#
+# Snapchat Uber
+# Related Topics
+# Backtracking
+# Similar Questions
+# Combination Sum Permutations
+# #
+import unittest
 class Solution:
     # @return a list of lists of integers
     def combine(self, n, k):
@@ -41,8 +45,6 @@ class Solution:
             intermediate.append(i + 1)
             self.combineRecu(n, result, i + 1, intermediate, k - 1)
             intermediate.pop()
-
-
 
 class cc150:
     def combin(self, n, k):
@@ -63,11 +65,6 @@ class cc150:
             if len(tmp) == k:
                 result.append(tmp)
         return result
-
-if __name__ == "__main__":
-    print Solution().combine(4, 2)
-    print cc150().combin(4,2)
-
 
 class SolutionOther:
     # @return a list of lists of integers
@@ -102,37 +99,40 @@ class SolutionOther:
             recursive_help(n, k, [], 1)
             return answer
 
-
 def flatten(lists):
-
     for s in lists:
-
         if isinstance(s, list):
             flatten(s)
         else:
             print (s)
 
 
-
-
-#test
-
-
-my_test = SolutionOther()
-#my_test.combine(4, 2)
-#print my_test.combine(1, 0)
-#print my_test.combine(1, 2)
-#print my_test.combine(2, 2)
-#print my_test.combine(4, 2)
-#print my_test.combine(6, 4)
-
-
 #flatten(my_test.combine(4, 2))
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+        #test
+        print Solution().combine(4, 2)
+        print cc150().combin(4,2)
 
-#java
-js = '''
-//template, 39.12% without optimize i <= n - k +!
-public class Solution {
+        my_test = SolutionOther()
+        #my_test.combine(4, 2)
+        #print my_test.combine(1, 0)
+        #print my_test.combine(1, 2)
+        #print my_test.combine(2, 2)
+        #print my_test.combine(4, 2)
+        #print my_test.combine(6, 4)
+
+
+if __name__ == '__main__':
+    unittest.main()
+
+Java = '''
+# Thought:
+
+//template,
+# 14ms 68.80% without optimize i <= n - k +!
+class Solution {
     public List<List<Integer>> combine(int n, int k) {
         List<List<Integer>> result = new ArrayList<>();
         backtrack(result, new ArrayList<Integer>(), n, k, 1);
@@ -154,8 +154,15 @@ public class Solution {
     }
 }
 
-//100% , optimize by n - k + 1
-public class Solution {
+# For anyone stumped by why this change is necessary, 
+# it's because you should not continue exploring (recursing) 
+# when you know that there won't be enough numbers left until n to fill the needed k slots. 
+# If n = 10, k = 5, and you're in the outermost level of recursion, you choose only i = 1...6 , 
+# because if you pick i=7 and go into backTracking() you only have 8,9,10 to pick from, 
+# so at most you will get [7,8,9,10]... but we need 5 elements!
+#
+# 2ms 99.89%  , optimize by n - k + 1
+class Solution {
     public List<List<Integer>> combine(int n, int k) {
         List<List<Integer>> result = new ArrayList<>();
         if (k <= 0 || n < k) {
@@ -179,8 +186,8 @@ public class Solution {
     }
 }
 
-//100%
-public class Solution {
+# 2ms 99.89% , optimize by n - k + 1
+class Solution {
     public List<List<Integer>> combine(int n, int k) {
         List<List<Integer>> result = new ArrayList<>();
         if (k <= 0 || n < k) {
@@ -201,6 +208,29 @@ public class Solution {
         cur.add(index);
         combine(n, k - 1, index + 1, result, cur);
         cur.remove(cur.size() - 1);
+    }
+}
+
+# https://leetcode.com/problems/combinations/discuss/27019/A-short-recursive-Java-solution-based-on-C(nk)C(n-1k-1)%2BC(n-1k)
+# C(n,k)=C(n-1,k-1)+C(n-1,k)
+# Here C(n,k) is divided into two situations. 
+# Situation one, number n is selected, so we only need to select k-1 from n-1 next. 
+# Situation two, number n is not selected, and the rest job is selecting k from n-1.
+
+# 82ms 12.28%
+class Solution {
+    public List<List<Integer>> combine(int n, int k) {
+        if (k == n || k == 0) {
+            List<Integer> row = new LinkedList<>();
+            for (int i = 1; i <= k; i++) {
+                row.add(i);
+            }
+            return new LinkedList<>(Arrays.asList(row));
+        }
+        List<List<Integer>> result = this.combine(n - 1, k - 1);
+        result.forEach(e -> e.add(n));
+        result.addAll(this.combine(n - 1, k));
+        return result;
     }
 }
 '''

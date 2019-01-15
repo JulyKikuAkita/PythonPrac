@@ -1,7 +1,9 @@
-__source__ = 'https://leetcode.com/problems/implement-queue-using-stacks/#/description'
+__source__ = 'https://leetcode.com/problems/implement-queue-using-stacks/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/implement-queue-using-stacks.py
 # Time:  O(1), amortized
 # Space: O(n)
+#
+# Description: Leetcode # 232. Implement Queue using Stacks
 #
 # Implement the following operations of a queue using stacks.
 #
@@ -19,14 +21,14 @@ __source__ = 'https://leetcode.com/problems/implement-queue-using-stacks/#/descr
 # You may assume that all operations are valid
 # (for example, no pop or peek operations will be called on an empty queue).
 #
-# Topics:
-# Stack Design
-# You might like:
-# (E) Implement Stack using Queues
-# Company:
+# Companies
 # Microsoft Bloomberg
+# Related Topics
+# Stack Design
+# Similar Questions
+# Implement Stack using Queues
 #
-
+import unittest
 class Queue:
     # initialize your data structure here.
     def __init__(self):
@@ -36,7 +38,6 @@ class Queue:
     # @return nothing
     def push(self, x):
         self.A.append(x)
-
 
     # @return nothing
     def pop(self):
@@ -50,17 +51,22 @@ class Queue:
                 self.B.append(self.A.pop())
         return self.B[-1]
 
-
     # @return an boolean
     def empty(self):
         return not self.A and not self.B
 
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
 
-#java
-java='''
-Thought: https://leetcode.com/articles/implement-queue-using-stacks/
+if __name__ == '__main__':
+    unittest.main()
 
-public class MyQueue {
+Java = '''
+# Thought: https://leetcode.com/problems/implement-queue-using-stacks/solution/
+
+# 75ms 26.49%
+class MyQueue {
     Stack<Integer> input;
     Stack<Integer> output;
     /** Initialize your data structure here. */
@@ -96,6 +102,48 @@ public class MyQueue {
     }
 }
 
+# 55ms 90.38%
+class MyQueue {
+    Stack<Integer> orig;
+    Stack<Integer> bucket;
+
+    /** Initialize your data structure here. */
+    public MyQueue() {
+        orig=new Stack();
+    }
+
+    /** Push element x to the back of queue. */
+    public void push(int x) {
+        if(orig.empty()){
+            orig.push(x);
+        }
+        else{
+            bucket=new Stack();
+            while(!orig.empty()){
+                bucket.push(orig.pop());
+            }
+            orig.push(x);
+            while(!bucket.empty()){
+                orig.push(bucket.pop());
+            }
+        }
+    }
+
+    /** Removes the element from in front of queue and returns that element. */
+    public int pop() {
+        return (int)orig.pop();
+    }
+
+    /** Get the front element. */
+    public int peek() {
+        return orig.peek();
+    }
+
+    /** Returns whether the queue is empty. */
+    public boolean empty() {
+        return orig.empty();
+    }
+}
 /**
  * Your MyQueue object will be instantiated and called as such:
  * MyQueue obj = new MyQueue();

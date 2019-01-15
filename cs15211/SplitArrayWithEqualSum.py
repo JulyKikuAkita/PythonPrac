@@ -1,9 +1,11 @@
-__source__ = 'https://leetcode.com/problems/split-array-with-equal-sum/#/description'
+__source__ = 'https://leetcode.com/problems/split-array-with-equal-sum/'
 # Time:  O(n^2)
 # Space: O(n^2)
 #
-# Description:
-# Given an array with n integers, you need to find if there are triplets (i, j, k) which satisfies following conditions:
+# Description: 548. Split Array with Equal Sum
+#
+# Given an array with n integers, you need to find if there are triplets (i, j, k)
+# which satisfies following conditions:
 # 0 < i, i + 1 < j, j + 1 < k < n - 1
 # Sum of subarrays (0, i - 1), (i + 1, j - 1), (j + 1, k - 1) and (k + 1, n - 1) should be equal.
 # where we define that subarray (L, R) represents a slice of the original array starting
@@ -24,7 +26,7 @@ __source__ = 'https://leetcode.com/problems/split-array-with-equal-sum/#/descrip
 # Hide Tags Array
 
 import unittest
-
+import collections
 # Let A be the array. As in most problems involving querying the sum of contiguous elements of an array,
 # let P[x] = sum(A[:x]) be the prefix sums of A, which can be found in linear time.
 #
@@ -33,6 +35,8 @@ import unittest
 # so let's iterate over those indices first.
 # This gives us the advantage that since we are iterating over a sorted list of candidate indices i,
 # we can break when i >= j.
+#
+# 1940ms 34.09%
 class Solution(object):
     def splitArray(self, nums):
         """
@@ -61,13 +65,14 @@ class TestMethods(unittest.TestCase):
     def test_Local(self):
         self.assertEqual(1, 1)
 
-
 if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/articles/split-array-with-equal-sum/
-public class Solution {
+# Thought: https://leetcode.com/problems/split-array-with-equal-sum/solution/
+#
+# 126ms 13.23%
+class Solution {
     public boolean splitArray(int[] nums) {
         if (nums.length < 7)
             return false;

@@ -1,8 +1,10 @@
-__source__ = 'https://github.com/kamyu104/LeetCode/blob/master/Python/largest-bst-subtree.py'
+__source__ = 'https://leetcode.com/problems/largest-bst-subtree/'
+# https://github.com/kamyu104/LeetCode/blob/master/Python/largest-bst-subtree.py
 # Time:  O(n)
 # Space: O(h)
 #
-# Description:
+# Description: 333. Largest BST Subtree
+#
 # # Given a binary tree, find the largest subtree which is a Binary Search Tree (BST),
 # where largest means subtree with largest number of nodes in it.
 #
@@ -14,14 +16,17 @@ __source__ = 'https://github.com/kamyu104/LeetCode/blob/master/Python/largest-bs
 #    5  15
 #   / \   \
 #  1   8   7
+#
 # The Largest BST Subtree in this case is the highlighted one.
 # The return value is the subtree's size, which is 3.
 # Follow up:
 # Can you figure out ways to solve it with O(n) time complexity?
 #
-# Hide Company Tags Microsoft
-# Hide Tags Tree
-
+# Companies
+# Microsoft
+# Related Topics
+# Tree
+#
 import unittest
 # Definition for a binary tree node.
 class TreeNode(object):
@@ -68,6 +73,7 @@ class Solution(object):
 # N is the size of the largest BST in the tree.
 # If the tree is a BST, then n is the number of nodes, otherwise it's -infinity.
 # If the tree is a BST, then min and max are the minimum/maximum value in the tree.
+    # 68ms 8.41%
     def largestBSTSubtree2(self, root):
         """
         :type root: TreeNode
@@ -86,7 +92,6 @@ class TestMethods(unittest.TestCase):
     def test_Local(self):
         self.assertEqual(1, 1)
 
-
 if __name__ == '__main__':
     unittest.main()
 
@@ -104,8 +109,8 @@ Java = '''
  * }
  */
 
-#64%
-public class Solution {
+# 4ms 55.84%
+class Solution {
     private int maxSize;
 
     public int largestBSTSubtree(TreeNode root) {
@@ -145,26 +150,30 @@ public class Solution {
     }
 }
 
-#64.79%
-public int largestBSTSubtree(TreeNode root) {
-    if (root == null) return 0;
-    if (root.left == null && root.right == null) return 1;
-    if (isValid(root, null, null)) return countNode(root);
-    return Math.max(largestBSTSubtree(root.left), largestBSTSubtree(root.right));
-    // return largestBSTSubtree(root); //fail
-    // stack overflow with [10,5,15,1,8,null,7]
+# 3ms 100%
+class Solution {
+    public int largestBSTSubtree(TreeNode root) {
+        if (root == null) return 0;
+        if (root.left == null && root.right == null) return 1;
+        if (isValid(root, null, null)) return countNode(root);
+        return Math.max(largestBSTSubtree(root.left), largestBSTSubtree(root.right));
+        // return largestBSTSubtree(root); //fail
+        // stack overflow with [10,5,15,1,8,null,7]
+    }
+
+    public boolean isValid(TreeNode root, Integer min, Integer max) {
+        if (root == null) return true;
+        if (min != null && min >= root.val) return false;
+        if (max != null && max <= root.val) return false;
+        return isValid(root.left, min, root.val) && isValid(root.right, root.val, max);
+    }
+
+    public int countNode(TreeNode root) {
+        if (root == null) return 0;
+        if (root.left == null && root.right == null) return 1;
+        return 1 + countNode(root.left) + countNode(root.right);
+    }
 }
 
-public boolean isValid(TreeNode root, Integer min, Integer max) {
-    if (root == null) return true;
-    if (min != null && min >= root.val) return false;
-    if (max != null && max <= root.val) return false;
-    return isValid(root.left, min, root.val) && isValid(root.right, root.val, max);
-}
 
-public int countNode(TreeNode root) {
-    if (root == null) return 0;
-    if (root.left == null && root.right == null) return 1;
-    return 1 + countNode(root.left) + countNode(root.right);
-}
 '''

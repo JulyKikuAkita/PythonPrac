@@ -1,5 +1,9 @@
-__author__ = 'July'
-# https://leetcode.com/problems/super-washing-machines/#/description
+__source__ = 'https://leetcode.com/problems/super-washing-machines/'
+# Time:  O()
+# Space: O()
+#
+# Description: Leetcode # 517. Super Washing Machines
+
 # You have n super washing machines on a line. Initially, each washing machine has some dresses or is empty.
 #
 # For each move, you could choose any m (1 ≤ m ≤ n) washing machines, and pass one dress of each washing machine
@@ -48,22 +52,34 @@ __author__ = 'July'
 #  toRight: the number of cloths moved to right from this machine
 # toLeft and toRight may be negative but it's okay.
 
-def findMinMoves(self, machines):
-    if sum(machines) % len(machines) == 0:
-        target = sum(machines) / len(machines)
-    else:
-        return -1
-    toLeft = 0
-    res = 0
-    for i in range(len(machines)):
-        toRight =  machines[i]- target - toLeft
-        res = max(res, toLeft, toRight, toLeft + toRight)
-        toLeft = -toRight
-    return res
+import unittest
+class Solution(object):
+    def findMinMoves(self, machines):
+        if sum(machines) % len(machines) == 0:
+            target = sum(machines) / len(machines)
+        else:
+            return -1
+        toLeft = 0
+        res = 0
+        for i in range(len(machines)):
+            toRight =  machines[i]- target - toLeft
+            res = max(res, toLeft, toRight, toLeft + toRight)
+            toLeft = -toRight
+        return res
 
-java = '''
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+
+if __name__ == '__main__':
+    unittest.main()
+
+Java = '''
+# Thought:
 1. # https://discuss.leetcode.com/topic/79938/super-short-easy-java-o-n-solution
-public class Solution {
+
+# 8ms 38.41%
+class Solution {
     public int findMinMoves(int[] machines) {
         int total = 0;
         for(int i: machines) total+=i;
@@ -76,6 +92,7 @@ public class Solution {
         return max;
     }
 }
+
 Let me use an example to briefly explain this. For example, your machines[] is [0,0,11,5]. So your total is 16 and
 the target value for each machine is 4. Convert the machines array to a kind of gain/lose array, we get: [-4,-4,7,1].
 Now what we want to do is go from the first one and try to make all of them 0.
@@ -92,7 +109,8 @@ machines: [0,3,0]; gain/lose array: [-1,2,-1]; max = 2, cnt = 0, -1, 1, 0, its a
 machines: [1,0,5]; gain/lose array: [-1,-2,3]; max = 3, cnt = 0, -1, -3, 0, its abs peak is 3. So result is 3.
 
 2. Java O(n) DP Solution
-public class Solution {
+# 5ms 99.34%
+class Solution {
     public int findMinMoves(int[] machines) {
         int total = 0, target = 0, result = 0, n = machines.length;
         for (int d : machines) total += d;

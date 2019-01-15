@@ -1,4 +1,10 @@
+__source__ = 'https://tekmarathon.com/2013/05/14/algorithm-to-find-substring-in-a-string-kmp-algorithm/'
 # http://www.geeksforgeeks.org/searching-for-patterns-set-2-kmp-algorithm/
+# Time:  O(n)
+# Space: O(n)
+#
+# Description: KMP implementation
+#
 
 import unittest
 # Python program for KMP Algorithm
@@ -82,14 +88,77 @@ class FooTest(unittest.TestCase):
     def test_foo(self):
         self.assertEqual(1, 1)
 
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
 
 if __name__ == '__main__':
-    # run all tests
     unittest.main()
-
     # run one test
     #unittest.main(defaultTest='FooTest.test_foo', warnings='ignore')
-java = '''
+
+Java = '''
+//https://tekmarathon.com/2013/05/14/algorithm-to-find-substring-in-a-string-kmp-algorithm/
+/**
+     * Based on the pre processed array, search for the pattern in the text
+     *
+     * @param text
+     *            text over which search happens
+     * @param ptrn
+     *            pattern that is to be searched
+     */
+    public void searchSubString(char[] text, char[] ptrn) {
+        int i = 0, j = 0;
+        // pattern and text lengths
+        int ptrnLen = ptrn.length;
+        int txtLen = text.length;
+
+        // initialize new array and preprocess the pattern
+        int[] b = preProcessPattern(ptrn);
+
+        while (i < txtLen) {
+            while (j >= 0 && text[i] != ptrn[j]) {
+                j = b[j];
+            }
+            i++;
+            j++;
+
+            // a match is found
+            if (j == ptrnLen) {
+                System.out.println("found substring at index:" + (i - ptrnLen));
+                j = b[j];
+            }
+        }
+    }
+
+/**
+ * Pre processes the pattern array based on proper prefixes and proper
+ * suffixes at every position of the array
+ *
+ * @param ptrn
+ *            word that is to be searched in the search string
+ * @return partial match table which indicates
+ */
+public int[] preProcessPattern(char[] ptrn) {
+    int i = 0, j = -1;
+    int ptrnLen = ptrn.length;
+    int[] b = new int[ptrnLen + 1];
+
+    b[i] = j;
+    while (i < ptrnLen) {
+            while (j >= 0 && ptrn[i] != ptrn[j]) {
+            // if there is mismatch consider the next widest border
+            // The borders to be examined are obtained in decreasing order from
+            //  the values b[i], b[b[i]] etc.
+            j = b[j];
+        }
+        i++;
+        j++;
+        b[i] = j;
+    }
+    return b;
+}
+
 // JAVA program for implementation of KMP pattern
 // searching algorithm
 

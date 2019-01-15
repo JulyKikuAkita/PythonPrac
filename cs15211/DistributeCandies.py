@@ -1,5 +1,11 @@
-__author__ = 'July'
-# Given an integer array with even length, where different numbers in this array represent different kinds of candies.
+__source__ = 'https://leetcode.com/problems/distribute-candies/'
+# Time:  O(n)
+# Space: O(n)
+#
+# Description: Leetcode # 575. Distribute Candies
+#
+# Given an integer array with even length,
+# where different numbers in this array represent different kinds of candies.
 # Each number means one candy of the corresponding kind.
 # You need to distribute these candies equally in number to brother and sister.
 # Return the maximum number of kinds of candies the sister could gain.
@@ -31,7 +37,8 @@ __author__ = 'July'
 #
 # For example, if there are 5 unique candies, then if she is picking 4 candies,
 # she will take 4 unique ones. If she is picking 7 candies, then she will only take 5 unique ones.
-
+#
+# 104ms 68.21%
 class Solution(object):
     def distributeCandies(self, candies):
         """
@@ -40,8 +47,11 @@ class Solution(object):
         """
         return min(len(candies) / 2, len(set(candies)))
 
-java = '''
-public class Solution {
+Java = '''
+# Thought: https://leetcode.com/problems/distribute-candies/solution/
+
+# 85ms 32.39%
+class Solution {
     public int distributeCandies(int[] candies) {
         Set<Integer> set = new HashSet<>();
         for (int candy : candies) {
@@ -51,7 +61,8 @@ public class Solution {
     }
 }
 
-public class Solution2 {
+# 109ms 13.92%
+class Solution {
     public int distributeCandies(int[] candies) {
         return Math.min(candies.length / 2, IntStream.of(candies).boxed().collect(Collectors.toSet()).size());
     }

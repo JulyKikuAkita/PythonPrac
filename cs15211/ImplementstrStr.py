@@ -1,19 +1,27 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/implement-strstr/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/implement-strstr.py
 # Time:  O(n + m)
 # Space: O(m)
 # String - KMP algo
+#
+# Description: Leetcode # 28. Implement strStr()
 #
 # Implement strStr().
 #
 # Returns a pointer to the first occurrence of needle in haystack,
 #  or null if needle is not part of haystack.
 #
-# Microsoft Facebook
+# Companies
+# Pocket Gems Microsoft Apple Facebook Google
+# Related Topics
+# Two Pointers String
+# Similar Questions
+# Shortest Palindrome Repeated Substring Pattern
 
 # Wiki of KMP algorithm:
 # http://en.wikipedia.org/wiki/Knuth-Morris-Pratt_algorithm
 # Easy explanation: http://jakeboxer.com/blog/2009/12/13/the-knuth-morris-pratt-algorithm-in-my-own-words/
+import unittest
 class Solution:
     # @param haystack, a string
     # @param needle, a string
@@ -138,8 +146,7 @@ class Naive:
                 else:
                     break
         return -1
-# Java Solution
-# http://www.programcreek.com/2012/12/leetcode-implement-strstr-java/
+
 
 t1=SolutionOther()
 #print t1.strStr("haystackneedle","needle")
@@ -158,7 +165,148 @@ t1=SolutionOther()
 #print t1.strStrKMP("mississippi", "a")
 #print t1.strStrKMP("mississippi", "issip")
 
-if __name__ == "__main__":
-    print Solution2().strStr("a", "")
-    print Solution2().strStr("abababcdab", "ababcdx")
-    print Naive().strStr("abababcdab", "ababcdx")
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+        print Solution2().strStr("a", "")
+        print Solution2().strStr("abababcdab", "ababcdx")
+        print Naive().strStr("abababcdab", "ababcdx")
+
+if __name__ == '__main__':
+    unittest.main()
+
+Java = '''
+# Thought:
+# http://www.programcreek.com/2012/12/leetcode-implement-strstr-java/
+
+# 3ms 99.64%
+class Solution {
+    public int strStr(String haystack, String needle) {
+        return haystack.indexOf(needle);
+    }
+}
+
+# 7ms 44.59%
+class Solution {
+    public int strStr(String haystack, String needle) {
+      for (int i = 0; ; i++) {
+        for (int j = 0; ; j++) {
+          if (j == needle.length()) return i;
+          if (i + j == haystack.length()) return -1;
+          if (needle.charAt(j) != haystack.charAt(i + j)) break;
+        }
+      }
+    }
+}
+
+
+# 3ms 99.64%
+class Solution {
+    public int strStr(String haystack, String needle) {
+        if (needle.length() == 0) {
+            return 0;
+        }
+        for (int i = 0; i <= haystack.length() - needle.length(); i++) {
+            if (haystack.charAt(i) == needle.charAt(0) && valid(haystack, i + 1, needle)) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    private boolean valid(String haystack, int start, String needle) {
+        for (int i = 1; i < needle.length(); i++) {
+            if (needle.charAt(i) != haystack.charAt(start++)) {
+                return false;
+            }
+        }
+        return true;
+    }
+}
+
+3 KMP
+# 7ms 44.59%
+class Solution {
+     public int strStr(String haystack, String needle) {
+        if(haystack == null || needle == null) return -1;
+        int hLen = haystack.length();
+        int nLen = needle.length();
+        if(hLen < nLen) return -1;
+        if(nLen == 0) return 0;
+
+        int[] next = next(needle);
+        int i = 0, j = 0;
+        while(i < hLen && j < nLen) {
+            if(j == -1 || haystack.charAt(i) == needle.charAt(j)) {
+                i++; j++;
+            } else {
+                j = next[j];
+            }
+
+            if(j == nLen) return i - nLen;
+        }
+        return -1;
+    }
+
+    int[] next(String needle) {
+        int len = needle.length();
+        char[] cs = needle.toCharArray();
+        int i = -1, j = 0;
+        int[] next = new int[len];
+        next[0] = -1;
+
+        while(j < len-1) {
+            if(i == -1 || cs[i] == cs[j]) {
+                i++; j++;
+                next[j] = i;
+            } else i = next[i];
+        }
+        return next;
+    }
+}
+
+# KMP
+# 68ms 12,21%
+class Solution {
+    public int strStr(String haystack, String needle) {
+        if(haystack == null || needle == null) return -1;
+        int hLen = haystack.length();
+        int nLen = needle.length();
+        if(hLen < nLen) return -1;
+        if(nLen == 0) return 0;
+        int[] lps = getLPS(needle);
+        for( int n : lps) {
+            System.out.print(n + " ");
+        }
+
+        int i = 0, j  = 0; //note j != -1
+        while ( i < haystack.length()) {
+            while (j >= 0 && haystack.charAt(i) != needle.charAt(j)) {
+                j = lps[j];
+            }
+            i++;
+            j++;
+            if (j == needle.length()) {
+                return i - j;
+                //j = lps[j];
+            }
+        }
+        return -1;
+    }
+
+    int[] getLPS(String needle) {
+        int[] lps = new int[needle.length() + 1];
+        int j = -1, i = 0;
+        lps[0] = j;
+        while (i < needle.length()) {
+            while ( j >= 0 && needle.charAt(i) != needle.charAt(j)) {
+                j = lps[j];
+            }
+            i++;
+            j++;
+            lps[i] = j;
+        }
+        return lps;
+    }
+}
+'''

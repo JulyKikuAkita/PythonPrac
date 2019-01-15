@@ -1,8 +1,10 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/palindrome-partitioning-ii/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/palindrome-partitioning-ii.py
 # Time:  O(n^2)
 # Space: O(n^2)
 # DP
+#
+# Description: Leetcode # 132. Palindrome Partitioning II
 #
 # Given a string s, partition s such that every substring of the partition is a palindrome.
 #
@@ -11,10 +13,12 @@ __author__ = 'July'
 # For example, given s = "aab",
 # Return 1 since the palindrome partitioning ["aa","b"] could be produced using 1 cut.
 #
+# Related Topics
 # Dynamic Programming
-#Hide Similar Problems (M) Palindrome Partitioning
+# Similar Questions
+# Palindrome Partitioning
 #
-
+import unittest
 class Solution:
     # @param s, a string
     # @return an integer
@@ -30,7 +34,6 @@ class Solution:
                 #print i, j, lookup, mincut
 
         return mincut[0]
-
 
 # http://www.programcreek.com/2014/04/leetcode-palindrome-partitioning-ii-java/
 class SolutionJava:
@@ -49,9 +52,7 @@ class SolutionJava:
                         mincut[j] = min(mincut[j], mincut[i - 1] + 1)
                     else:
                         mincut[j] = 0  # if [0...j] is palindrome, no need to cut
-
         return mincut[j]
-
 
 class SolutionOther:
     # @param s, a string
@@ -74,15 +75,19 @@ class SolutionOther:
         #            print i, j, p, dp
         return dp[0]-1
 
-#test
-#test = SolutionOther()
-#print test.minCut("aab")
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+        #print Solution().partition("aab")
+        #print DP().partition("aab")
+        print Solution().minCut("aab")
+        print SolutionJava().minCut("aab")
 
-if __name__ == "__main__":
-    print Solution().minCut("aab")
-    print SolutionJava().minCut("aab")
+if __name__ == '__main__':
+    unittest.main()
 
-java = '''
+Java = '''
+# Thought:
 
 Easiest Java DP Solution (97.36%)
 This can be solved by two points:
@@ -97,29 +102,29 @@ a   b   a   |   c  c
    cut(j-1) +  1
 Hope it helps!
 
-public class Solution {
+# 9ms 79.58%
+class Solution {
     public int minCut(String s) {
         char[] c = s.toCharArray();
-        int n = c.length;
-        int[] cut = new int[n];
-        boolean[][] pal = new boolean[n][n];
+        int[] cut = new int[c.length];
+        boolean[][] dp = new boolean[c.length][c.length];
 
-        for (int i = 0; i < n ; i++) {
+        for (int i = 0; i < c.length ;i++) {
             int min = i;
-            for(int j = 0; j <= i; j++) {
-                  if(c[j] == c[i] && (j + 1 > i - 1 || pal[j + 1][i - 1])) {
-                      pal[j][i] = true;
-                      min = j == 0 ? 0: Math.min(min, cut[j-1] + 1);
-                  }
+            for (int j = 0; j <= i; j++) {
+                if (c[j] == c[i] && ((j + 1 > i - 1 || dp[j+1][i-1]))) {
+                    dp[j][i] = true;
+                    min = j == 0? 0 : Math.min(min, cut[j - 1] + 1);
+                }
             }
             cut[i] = min;
         }
-        return cut[n-1];
+        return cut[c.length - 1];
     }
 }
 
-//80.5%
-public class Solution {
+# 9ms 79.58%
+class Solution {
     public int minCut(String s) {
         int[] dp = new int[s.length() + 1];
         for (int i = 0; i <= s.length(); i++) {
@@ -137,7 +142,9 @@ public class Solution {
     }
 }
 
-public class Solution {
+# Expand from center
+# 2ms 98.41%
+class Solution {
     public int minCut(String s) {
         int cut = 0;
         int[] cuts = new int[s.length() + 1];

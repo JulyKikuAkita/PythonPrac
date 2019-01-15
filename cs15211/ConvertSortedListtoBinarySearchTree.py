@@ -1,14 +1,22 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/convert-sorted-list-to-binary-search-tree/description/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/convert-sorted-list-to-binary-search-tree.py
-
 # Time:  O(n)
 # Space: O(logn)
 # Divide and Conquer
 #
+# Description: Leetcode # 109. Convert Sorted List to Binary Search Tree
+#
 # Given a singly linked list where elements are sorted in ascending order,
 # convert it to a height balanced BST.
 #
-
+# Companies
+# Zenefits
+# Related Topics
+# Depth-first Search Linked List
+# Similar Questions
+# Convert Sorted Array to Binary Search Tree
+#
+import unittest
 # Definition for a  binary tree node
 class TreeNode:
     def __init__(self, x):
@@ -45,15 +53,6 @@ class Solution:
         self.head = self.head.next
         current.right = self.sortedListToBSTRecu(mid + 1, end)
         return current
-
-if __name__ == "__main__":
-    head = ListNode(1)
-    head.next = ListNode(2)
-    head.next.next = ListNode(3)
-    result = Solution().sortedListToBST(head)
-    print result.val
-    print result.left.val
-    print result.right.val
 
 class SolutionOther:
     # @param head, a list node
@@ -102,38 +101,21 @@ class SolutionOther:
         preorder(p,allnodes)
         return allnodes
 
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        head = ListNode(1)
+        head.next = ListNode(2)
+        head.next.next = ListNode(3)
+        result = Solution().sortedListToBST(head)
+        print result.val
+        print result.left.val
+        print result.right.val
 
-#test
-#creating sort list#
-n0 = ListNode(0)
-n1 = ListNode(1)
-n2 = ListNode(2)
-n3 = ListNode(3)
-n4 = ListNode(4)
-n5 = ListNode(5)
-n6 = ListNode(6)
-n0.next = n1
-n1.next = n2
-n2.next = n3
-n3.next = n4
-n4.next = n5
-p0 = ListNode(0)
-p1 = ListNode(1)
-p2 = ListNode(2)
-p3 = ListNode(3)
-p0.next = p1
-p1.next = p2
-p2.next = p3
-#end of creating sort list#
-test = Solution()
+if __name__ == '__main__':
+    unittest.main()
 
-#node = test.sortedListToBST(n0)
-#print test.preorderTraversal1(node)
-nodep = test.sortedListToBST(p0)
-#print test.preorderTraversal1(nodep)
-
-#java
-js = '''
+Java = '''
+# Thought: https://leetcode.com/problems/convert-sorted-list-to-binary-search-tree/solution/
 /**
  * Definition for singly-linked list.
  * public class ListNode {
@@ -151,7 +133,9 @@ js = '''
  *     TreeNode(int x) { val = x; }
  * }
  */
-public class Solution {
+
+# 0ms 100%
+class Solution {
     private ListNode node;
 
     public TreeNode sortedListToBST(ListNode head) {
@@ -184,6 +168,32 @@ public class Solution {
             head = head.next;
         }
         return length;
+    }
+}
+
+# 1ms 99.61%
+public class Solution {
+    public TreeNode sortedListToBST(ListNode head) {
+        if (head == null) {
+            return null;
+        }
+        return toBST(head, null);
+    }
+
+    private TreeNode toBST(ListNode head, ListNode tail) {
+        ListNode slow = head;
+        ListNode fast = head;
+        if (head == tail) {
+            return null;
+        }
+        while (fast != tail && fast.next != tail) {
+            fast = fast.next.next;
+            slow = slow.next;
+        }
+        TreeNode thead = new TreeNode(slow.val);
+        thead.left = toBST(head, slow);
+        thead.right = toBST(slow.next, tail);
+        return thead;
     }
 }
 '''

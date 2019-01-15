@@ -1,9 +1,10 @@
-__author__ = 'July'
-#
+__source_ = 'https://leetcode.com/problems/insert-delete-getrandom-o1/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/insert-delete-getrandom-o1.py
 # Time:  O(1)
 # Space: O(n)
-
+#
+# Description: Leetcode # 380. Insert Delete GetRandom O(1)
+#
 # Design a data structure that supports all following operations in O(1) time.
 #
 # insert(val): Inserts an item val to the set if not already present.
@@ -36,10 +37,17 @@ __author__ = 'July'
 #
 # // Since 1 is the only number in the set, getRandom always return 1.
 # randomSet.getRandom();
-
-
+#
+# Companies
+# Google Facebook Amazon Uber Twitter Yelp Pocket Gems
+# Related Topics
+# Array Hash Table Design
+# Similar Questions
+# Insert Delete GetRandom O(1) - Duplicates allowed
+#
 from random import randint
-
+import unittest
+# 88ms 82.03%
 class RandomizedSet(object):
 
     def __init__(self):
@@ -96,16 +104,28 @@ class RandomizedSet(object):
 # param_2 = obj.remove(val)
 # param_3 = obj.getRandom()
 
-var = '''
-HashMap<Integer, Integer> map;
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+
+if __name__ == '__main__':
+    unittest.main()
+
+Java = '''
+# Thought:
+
+# 67ms 96.36%
+class RandomizedSet {
+    //considering use Pair?
+   HashMap<Integer, Integer> map;
     ArrayList<Integer> list;
-    
+
     /** Initialize your data structure here. */
     public RandomizedSet() {
         map = new HashMap<Integer, Integer>();
         list = new ArrayList<Integer>();
     }
-    
+
     /** Inserts a value to the set. Returns true if the set did not already contain the specified element. */
     public boolean insert(int val) {
         if(map.containsKey(val)) {
@@ -116,7 +136,7 @@ HashMap<Integer, Integer> map;
             return true;
         }
     }
-    
+
     /** Removes a value from the set. Returns true if the set contained the specified element. */
     public boolean remove(int val) {
         if(!map.containsKey(val)) {
@@ -131,21 +151,81 @@ HashMap<Integer, Integer> map;
             return true;
         }
     }
-    
+
     /** Get a random element from the set. */
     public int getRandom() {
         Random random = new Random();
         return list.get( random.nextInt(list.size()) );
     }
-    
+}
+
+/**
+ * Your RandomizedSet object will be instantiated and called as such:
+ * RandomizedSet obj = new RandomizedSet();
+ * boolean param_1 = obj.insert(val);
+ * boolean param_2 = obj.remove(val);
+ * int param_3 = obj.getRandom();
+ */
+
+# 64ms 99.36%
+class RandomizedSet {
+    private List<Integer> list = new ArrayList<Integer>();
+    private HashMap<Integer, Integer> map = new HashMap<Integer, Integer>();
+    private int size = 0;
+    Random gen = new Random();
+    /** Initialize your data structure here. */
+    public RandomizedSet() {
+
+    }
+
+    /** Inserts a value to the set. Returns true if the set did not already contain the specified element. */
+    public boolean insert(int val) {
+        if (!map.containsKey(val)) {
+            map.put(val, size);
+            list.add(val);
+            size++;
+            return true;
+        }
+
+        return false;
+    }
+
+    /** Removes a value from the set. Returns true if the set contained the specified element. */
+    public boolean remove(int val) {
+        if (map.containsKey(val)){
+            int last = list.get(size-1);
+            int i = map.get(val);
+
+            if (size != 1) {
+                list.set(i, last);
+                map.put(last, i);
+            }
+
+            list.remove(size-1);
+            map.remove(val);
+            size--;
+            return true;
+        }
+        return false;
+    }
+
+    /** Get a random element from the set. */
+    public int getRandom() {
+        int ran = gen.nextInt(size);
+        return list.get(ran);
+    }
+}
+
+
 '''
 
-notAccept=''' not able to fifure out why
-#tc:
+notAccept=''' not able to figure out why
+# tc:
 ["RandomizedSet","insert","insert","getRandom","getRandom","insert","remove","getRandom","getRandom","insert","remove"]
 [[],[3],[3],[],[],[1],[3],[],[],[0],[0]]
 
 https://discuss.leetcode.com/topic/53216/java-solution-using-a-hashmap-and-an-arraylist-along-with-a-follow-up-131-ms/5
+
 public class RandomizedSet {
 
         ArrayList<Integer> nums;

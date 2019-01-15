@@ -1,8 +1,10 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/bulls-and-cows/description/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/bulls-and-cow.py
 # Time:  O(n)
 # Space: O(10) = O(1)
-
+#
+# Description: Leetcode # 299. Bulls and Cows
+#
 # You are playing the following Bulls and Cows game with your friend:
 # You write a 4-digit secret number and ask your friend to guess it,
 # each time your friend guesses a number, you give a hint, the hint
@@ -15,6 +17,7 @@ __author__ = 'July'
 #
 # Secret number:  1807
 # Friend's guess: 7810
+#
 # Hint: 1 bull and 3 cows. (The bull is 8, the cows are 0, 1 and 7.)
 # According to Wikipedia: "Bulls and Cows (also known as Cows and Bulls
 # or Pigs and Bulls or Bulls and Cleots) is an old code-breaking mind or
@@ -30,11 +33,13 @@ __author__ = 'July'
 # You may assume that the secret number and your friend's guess only contain
 # digits, and their lengths are always equal.
 #
-
+# Related Topics
+# Hash Table
+#
 # One pass solution.
 from collections import defaultdict
 from itertools import izip
-
+import unittest
 class Solution(object):
     def getHint(self, secret, guess):
         """
@@ -61,7 +66,6 @@ class Solution(object):
 
         return "%dA%dB" % (A, B)
 
-
 # Two pass solution.
 # imap: https://pymotw.com/2/itertools/
 # The imap() function returns an iterator that calls a function on the values in the input iterators,
@@ -80,14 +84,22 @@ class Solution2(object):
         :type guess: str
         :rtype: str
         """
-
         A = sum(imap(operator.eq, secret, guess))
         B = sum((Counter(secret) & Counter(guess)).values()) - A
         return "%dA%dB" % (A, B)
 
-#java
-js = '''
-public class Solution {
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+
+if __name__ == '__main__':
+    unittest.main()
+
+Java = '''
+# Thought:
+
+# 1ms 100%
+class Solution {
     public String getHint(String secret, String guess) {
         // assume not null and equal length
         int bull = 0;
@@ -116,6 +128,55 @@ public class Solution {
         }
 
         return "" + bull + "A" + cow + "B";
+    }
+}
+
+# 1ms 100%
+class Solution {
+    public String getHint(String secret, String guess) {
+        char[] seChar = secret.toCharArray();
+        char[] guChar = guess.toCharArray();
+        int[] countOfNum = new int[10];
+        int bulls = 0;
+        for(int i = 0; i < secret.length(); i++){
+            if(secret.charAt(i) == guess.charAt(i))
+                bulls++;
+            countOfNum[seChar[i]-'0']++;
+            countOfNum[guChar[i]-'0']--;
+        }
+
+        int sum = 0;
+        for(int x : countOfNum){
+            if(x > 0) sum += x;
+        }
+
+
+        return bulls + "A" + (secret.length() - sum - bulls) + "B";
+    }
+}
+
+# 1ms 100%
+class Solution {
+    public String getHint(String secret, String guess) {
+        int[] secretArr = new int[10];
+        int[] guessArr = new int[10];
+        int bulls = 0;
+        int cows = 0;
+        for (int i = 0; i < secret.length(); i++) {
+            char sChar = secret.charAt(i);
+            char gChar = guess.charAt(i);
+            if (sChar == gChar) {
+                bulls++;
+            }
+            secretArr[sChar - '0']++;
+            guessArr[gChar - '0']++;
+        }
+        for (int i = 0; i < 10; i++) {
+            cows += Math.min(secretArr[i], guessArr[i]);
+        }
+        cows -= bulls;
+        StringBuilder sb = new StringBuilder();
+        return sb.append(bulls).append('A').append(cows).append('B').toString();
     }
 }
 '''

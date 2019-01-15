@@ -1,8 +1,9 @@
-__source__ = 'https://leetcode.com/problems/longest-uncommon-subsequence-ii/#/description'
-# Time:  O()
-# Space: O()
+__source__ = 'https://leetcode.com/problems/longest-uncommon-subsequence-ii/'
+# Time:  O(x * n^2) where nn is the number of strings and xx is the average length of the strings.
+# Space: O(1) Constant space required.
 #
-# Description:
+# Description: Leetcode # 522. Longest Uncommon Subsequence II
+#
 # Given a list of strings, you need to find the longest uncommon subsequence among them.
 # The longest uncommon subsequence is defined as the longest subsequence of one of these strings
 # and this subsequence should not be any subsequence of the other strings.
@@ -41,9 +42,15 @@ __source__ = 'https://leetcode.com/problems/longest-uncommon-subsequence-ii/#/de
 # so we check candidates in descending order of length.
 # When we find a suitable one, we know it must be the best global answer.
 #
-
+# Companies
+# Google
+# Related Topics
+# String
+# Similar Questions
+# Longest Uncommon Subsequence I
+#
 import unittest
-
+# 24ms 79.75%
 class Solution(object):
     def findLUSlength(self, strs):
         """
@@ -86,34 +93,38 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/articles/longest-uncommon-subsequence-ii/
+# Thought: https://leetcode.com/problems/longest-uncommon-subsequence-ii/solution/
 
+Approach #1 Brute Force[Accepted]
 1) We simply maintain a map of all subsequence frequencies and
 get the subsequence with frequency 1 that has longest length.
 Time complexity : O(n*2^x). where x is the average length of the strings and nn is the total number of given strings
 Space complexity : O(n*2^x). Hashmap of size n*2^x  is used.
 
-public int findLUSlength(String[] strs) {
-    Map<String, Integer> subseqFreq = new HashMap<>();
-    for (String s : strs)
-        for (String subSeq : getSubseqs(s))
-            subseqFreq.put(subSeq, subseqFreq.getOrDefault(subSeq, 0) + 1);
-    int longest = -1;
-    for (Map.Entry<String, Integer> entry : subseqFreq.entrySet())
-        if (entry.getValue() == 1) longest = Math.max(longest, entry.getKey().length());
-    return longest;
-}
-
-public static Set<String> getSubseqs(String s) {
-    Set<String> res = new HashSet<>();
-    if (s.length() == 0) {
-         res.add("");
-         return res;
+# 162ms 2.31%
+class Solution {
+    public int findLUSlength(String[] strs) {
+        Map<String, Integer> subseqFreq = new HashMap<>();
+        for (String s : strs) 
+            for (String subSeq : getSubseqs(s))
+                subseqFreq.put(subSeq, subseqFreq.getOrDefault(subSeq, 0) + 1);
+        int longest = -1;
+        for (Map.Entry<String, Integer> entry : subseqFreq.entrySet()) 
+            if (entry.getValue() == 1) longest = Math.max(longest, entry.getKey().length());
+        return longest;
     }
-    Set<String> subRes = getSubseqs(s.substring(1)); //index 1 to s.length()-1
-    res.addAll(subRes);
-    for (String seq : subRes) res.add(s.charAt(0) + seq);
-    return res;
+
+    public static Set<String> getSubseqs(String s) {
+        Set<String> res = new HashSet<>();
+        if (s.length() == 0) {
+             res.add("");
+             return res;
+        }
+        Set<String> subRes = getSubseqs(s.substring(1));
+        res.addAll(subRes);
+        for (String seq : subRes) res.add(s.charAt(0) + seq);
+        return res;
+    }
 }
 
 NOTE: This solution does not take advantage of the fact that the optimal length
@@ -121,10 +132,11 @@ subsequence (if it exists) is always going to be the length of some string in th
 Thus, the time complexity of this solution is non-optimal.
 See https://discuss.leetcode.com/topic/85044/python-simple-explanation for optimal solution.
 
+2. Approach #2 Checking Subsequence [Accepted]
 Time complexity : O(x*n^2). where nn is the number of strings and x is the average length of the strings.
 Space complexity : O(1)O(1). Constant space required.
-
-public class Solution {
+# 4ms 10%%
+class Solution {
     public boolean isSubsequence(String x, String y) {
         int j = 0;
         for (int i = 0; i < y.length() && j < x.length(); i++)
@@ -149,11 +161,11 @@ public class Solution {
 }
 
 
-Same thinking as below:
-
-public int findLUSlength(String[] strs) {
+Approach #3 Sorting and Checking Subsequence [Accepted]
+# 7ms 55%
+class Solution {
+    public int findLUSlength(String[] strs) {
         int len = strs.length;
-
         // reverse sorting array with length
         Arrays.sort(strs, new Comparator<String>() {
             public int compare(String s1, String s2) {
@@ -168,7 +180,6 @@ public int findLUSlength(String[] strs) {
                     missMatchCount --;
                 }
             }
-
             // strs[i] is not a sub sequence of any other entry
             if(missMatchCount == 0){
                 return strs[i].length();
@@ -185,7 +196,36 @@ public int findLUSlength(String[] strs) {
                 idx++;
             }
         }
-
         return idx == s1.length();
     }
+}
+
+# toCharArray always very fast ...
+# noted for the usage of label
+# 6ms 70.38%
+class Solution {
+    public int findLUSlength(String[] strs) {
+        int ret = -1;
+        label: for (int i = 0; i < strs.length; i ++) {
+            if (strs[i].length() <= ret) continue;
+            int j = 0;
+            for ( ; j < strs.length; j ++) {
+                if (j == i) continue;
+                if (isSubseq(strs[i], strs[j])) continue label;
+            }
+            if (strs[i].length() > ret) ret = strs[i].length();
+        }
+        return ret;
+    }
+    public boolean isSubseq(String s1, String s2) {
+        if (s1.length() > s2.length()) return false;
+        if (s1.length() == s2.length()) return s1.equals(s2);
+        char[] chars1 = s1.toCharArray(), chars2 = s2.toCharArray();
+        int j = 0;
+        for (int i = 0; i < chars2.length && j < chars1.length; i ++) {
+            if (chars1[j] == chars2[i]) j ++;
+        }
+        return j == chars1.length;
+    }
+}
 '''

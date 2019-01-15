@@ -1,8 +1,9 @@
-__source__ = 'https://github.com/kamyu104/LeetCode/blob/master/Python/non-overlapping-intervals.py'
+__source__ = 'https://leetcode.com/problems/non-overlapping-intervals/'
 # Time:  O(nlogn)
 # Space: O(1)
 #
-# Description:
+# Description: 435. Non-overlapping Intervals
+#
 # Given a collection of intervals, find the minimum number of intervals
 # you need to remove to make the rest of the intervals non-overlapping.
 #
@@ -27,9 +28,9 @@ __source__ = 'https://github.com/kamyu104/LeetCode/blob/master/Python/non-overla
 # Output: 0
 #
 # Explanation: You don't need to remove any of the intervals since they're already non-overlapping.
-#  Greedy
-#Hide Similar Problems (M) Minimum Number of Arrows to Burst Balloons
-
+# Greedy
+# Hide Similar Problems (M) Minimum Number of Arrows to Burst Balloons
+#
 import unittest
 # Sort the intervals by their start time. If two intervals overlap,
 # the interval with larger end time will be removed so
@@ -43,7 +44,7 @@ import unittest
 
 
 class Solution(object):
-    #72%
+    # 36ms 67.34%
     def eraseOverlapIntervals(self, intervals):
         """
         :type intervals: List[Interval]
@@ -60,7 +61,7 @@ class Solution(object):
                 prev = i
         return result
 
-    #97%
+    # 36ms 67.34%
     def eraseOverlapIntervals2(self, intervals):
         """
         :type intervals: List[Interval]
@@ -86,7 +87,8 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/articles/non-overlapping-intervals/
+# Thought: https://leetcode.com/problems/non-overlapping-intervals/solution/
+#
 Actually, the problem is the same as "Given a collection of intervals,
 find the maximum number of intervals that are non-overlapping."
 (the classic Greedy problem: Interval Scheduling).
@@ -106,7 +108,8 @@ Total is O(nlogn).
  * }
  */
  1. sort by end
-public class Solution {
+ # 62ms 12.04%
+class Solution {
     public int eraseOverlapIntervals(Interval[] intervals) {
             if (intervals.length == 0)  return 0;
             Arrays.sort(intervals, (a,b) -> a.end - b.end); //sort by end
@@ -124,7 +127,8 @@ public class Solution {
 }
 
 2. sort by start
-public class Solution {
+# 40ms 44.70%
+class Solution {
     public int eraseOverlapIntervals(Interval[] intervals) {
             if (intervals.length == 0)  return 0;
             Arrays.sort(intervals, (a,b) -> a.start - b.start); //sort by start

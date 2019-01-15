@@ -1,18 +1,22 @@
-__source__ = 'https://leetcode.com/problems/minimum-depth-of-binary-tree/#/description'
+__source__ = 'https://leetcode.com/problems/minimum-depth-of-binary-tree/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/minimum-depth-of-binary-tree.py
 # Time:  O(n)
 # Space: O(h), h is height of binary tree
 # divide and conquer
 #
+# Description: Leetcode # 111. Minimum Depth of Binary Tree
+#
 # Given a binary tree, find its minimum depth.
 #
 # The minimum depth is the number of nodes along the shortest path from the root node down to the nearest leaf node.
+#
 # Related Topics
-# Tree, Depth-first Search, Breadth-first Search
+# Tree Depth-first Search Breadth-first Search
 # Similar Questions
 # Binary Tree Level Order Traversal Maximum Depth of Binary Tree
 #
-#
+
+import  unittest
 # Definition for a  binary tree node
 class TreeNode:
     def __init__(self, x):
@@ -32,7 +36,6 @@ class Solution:
             return self.minDepth(root.left) + 1
         return min(self.minDepth(root.left), self.minDepth(root.right)) + 1
 
-
 class Solution2:
     # @param root, a tree node
     # @return an integer
@@ -43,31 +46,6 @@ class Solution2:
             return min(self.minDepth(root.left), self.minDepth(root.right)) + 1
         else:
             return max(self.minDepth(root.left), self.minDepth(root.right)) + 1
-
-# http://www.programcreek.com/2013/02/leetcode-minimum-depth-of-binary-tree-java/
-class javaSolution:
-    # @param root, a tree node
-    # @return an integer
-    def minDepth(self, root):
-        if not root:
-            return 0
-        nodes = [(root, 1)]
-        while nodes:
-            (cur, count) = nodes.pop()
-            if cur.left != None:
-                nodes.insert(0, (cur.left, count + 1))
-            if cur.right != None:
-                nodes.insert(0, (cur.right, count + 1))
-            if cur.left == None and cur.right == None:
-                return count
-        return 0
-
-if __name__ == "__main__":
-    root = TreeNode(1)
-    root.left = TreeNode(2)
-    print Solution().minDepth(root)  # answer = 2
-    print Solution2().minDepth(root)  # answer = 2
-    print javaSolution().minDepth(root)
 
 class SolutionOther:
     # @param root, a tree node
@@ -105,9 +83,20 @@ tree2.right=tree6
 test = SolutionOther()
 #print test.minDepth(root0)
 
-#Java
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+        root = TreeNode(1)
+        root.left = TreeNode(2)
+        print Solution().minDepth(root)  # answer = 2
+        print Solution2().minDepth(root)  # answer = 2
+
+if __name__ == '__main__':
+    unittest.main()
+
 Java = '''
-#DFS 16.84%
+# Thought: https://leetcode.com/problems/minimum-depth-of-binary-tree/solution/
+
 /**
  * Definition for a binary tree node.
  * public class TreeNode {
@@ -117,7 +106,10 @@ Java = '''
  *     TreeNode(int x) { val = x; }
  * }
  */
-public class Solution {
+
+# DFS
+# 0ms 100%
+class Solution {
     public int minDepth(TreeNode root) {
         if (root == null) return 0;
         int left = minDepth(root.left);
@@ -126,7 +118,19 @@ public class Solution {
     }
 }
 
-public class Solution {
+# 0ms 100%
+class Solution {
+    public int minDepth(TreeNode root) {
+        if (root == null) return 0;
+        if (root.left == null && root.right == null) return 1;
+        if (root.right == null) return 1 + minDepth(root.left);
+        if (root.left == null) return 1 + minDepth(root.right);
+        return 1 + Math.min(minDepth(root.left), minDepth(root.right));
+    }
+}
+
+# 0ms 100%
+class Solution {
     public int minDepth(TreeNode root) {
         if(root==null)        
             return 0;
@@ -141,8 +145,9 @@ public class Solution {
     }
 }
 
-#BFS: 16%
-public class Solution {
+# BFS:
+# 1ms 33.76%
+class Solution {
     public int minDepth(TreeNode root) {
         if (root == null) {
             return 0;

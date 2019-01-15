@@ -1,8 +1,10 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/subsets/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/subsets.py
 # Time:  O(n * 2^n)
 # Space: O(1)
 # Brute Force Search
+#
+# Description: Leetcode # 78. Subsets
 #
 # Given a set of distinct integers, S, return all possible subsets.
 #
@@ -23,11 +25,14 @@ __author__ = 'July'
 #   []
 # ]
 #
-#  Amazon Uber Facebook
-# Hide Tags Array Backtracking Bit Manipulation
-# Hide Similar Problems (M) Generalized Abbreviation
-
-
+# Companies
+# Amazon Uber Facebook
+# Related Topics
+# Array Backtracking Bit Manipulation
+# Similar Questions
+# Generalized Abbreviation
+#
+import unittest
 #combination way
 class SolutionCC150:
     # @param S, a list of integer
@@ -74,8 +79,6 @@ class Solution2:
         if not S:
             return [cur]
         return self.subsetsRecu(cur, S[1:]) + self.subsetsRecu(cur + [S[0]], S[1:])
-
-
 
 class SolutionOther:
     # @param S, a list of integer
@@ -128,8 +131,6 @@ class Solution3(object):
         return res
 
     def dfs(self, nums, idx, res, cur):
-
-
         if idx >= len(nums):
             res.append(cur + [])
             return
@@ -159,13 +160,6 @@ class Solution4(object):
             self.dfs(nums, i+1, res, cur, depth +1)
             cur.pop()
 
-
-
-if __name__ == "__main__":
-    #print SolutionCC150().subsets([1, 2, 3])
-    #print Solution().subsets([1, 2, 3])
-    print Solution3().subsets([1, 2])
-
 #print 3 & 0  #0
 
 #for i in range(2**len(S)):
@@ -176,15 +170,29 @@ if __name__ == "__main__":
 #        else:
 #            print  "x =",x,"binary =" , i >> x & 1 , "no value"
 
-#java
-java = '''
-public class Solution {
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        #print SolutionCC150().subsets([1, 2, 3])
+        #print Solution().subsets([1, 2, 3])
+        print Solution3().subsets([1, 2])
+
+if __name__ == '__main__':
+    unittest.main()
+
+Java = '''
+# Thought: 
+
+General approach for perm/comb
+https://discuss.leetcode.com/topic/46159/a-general-approach-to-backtracking-questions-in-java-subsets-permutations-combination-sum-palindrome-partitioning
+
+# 1ms 100%
+class Solution {
     public List<List<Integer>> subsets(int[] nums) {
         List<List<Integer>> list = new ArrayList<>();
         backtrack(list, new ArrayList<>(), nums, 0);
         return list;
     }
-    private void backtrack(List<List<Integer>> list , List<Integer> tempList, int [] nums, int start){
+    private void backtrack(List<List<Integer>> list, List<Integer> tempList, int [] nums, int start){
         list.add(new ArrayList<>(tempList));
         //Set<Integer> s = new HashSet<>();
         for (int i = start ; i < nums.length; i++) {
@@ -198,7 +206,8 @@ public class Solution {
     }
 }
 
-public class Solution {
+# 1ms 100%
+class Solution {
     public List<List<Integer>> subsets(int[] nums) {
         List<List<Integer>> list = new ArrayList<>();
         backtrack(list, new ArrayList<>(), nums, 0);
@@ -209,15 +218,16 @@ public class Solution {
             list.add(new ArrayList<>(tempList));
             return;
         }
-
-        backtrack(list, tempList, nums, start + 1); //[]
+        backtrack(list, tempList, nums, start + 1);
         tempList.add(nums[start]);
         backtrack(list, tempList, nums, start + 1);
         tempList.remove(tempList.size() - 1);
     }
 }
 
-public class Solution {
+# BFS
+# 1ms 100%
+class Solution {
     public List<List<Integer>> subsets(int[] nums) {
         List<List<Integer>> result = new ArrayList<>();
         int max = 1;
@@ -233,7 +243,7 @@ public class Solution {
                 if ((cur & 1) == 1) {
                     list.add(nums[index]);
                 }
-                cur >>>= 1;
+                cur >>>= 1; //>>> is unsigned-shift; it'll insert 0. >> is signed, and will extend the sign bit.
                 index++;
             }
             result.add(list);

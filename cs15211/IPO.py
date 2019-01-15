@@ -3,7 +3,9 @@ __source__ = 'https://leetcode.com/problems/ipo/#/description'
 # Space: O(nlogn)
 #
 # TODO:// https://en.wikipedia.org/wiki/Knapsack_problem
-# Description:
+#
+# Description: 502. IPO
+#
 # Suppose LeetCode will start its IPO soon. In order to sell a good price of its shares to Venture Capital,
 # LeetCode would like to work on some projects to increase its capital before the IPO.
 # Since it has limited resources, it can only finish at most k distinct projects before the IPO.
@@ -36,6 +38,7 @@ __source__ = 'https://leetcode.com/problems/ipo/#/description'
 import unittest
 import heapq
 
+#336ms 57.14%
 class Solution(object):
     def findMaximizedCapital(self, k, W, Profits, Capital):
         """
@@ -63,7 +66,7 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
+# Thought:
 The idea is each time we find a project with max profit and within current capital capability.
 Algorithm:
 
@@ -76,8 +79,8 @@ Repeat step 2 and 3 till finish k steps or no suitable project (pqPro.isEmpty())
 Time Complexity: For worst case, each project will be inserted and polled from both PriorityQueues once,
 so the overall runtime complexity should be O(NlgN), N is number of projects.
 
-
-public class Solution {
+# 66ms 74.42%
+class Solution {
     public int findMaximizedCapital(int k, int W, int[] Profits, int[] Capital) {
         PriorityQueue<int[]> pqCap = new PriorityQueue<>((a, b) -> (a[0] - b[0]));
         PriorityQueue<int[]> pqPro  = new PriorityQueue<>((a, b) -> (b[1] - a[1]));

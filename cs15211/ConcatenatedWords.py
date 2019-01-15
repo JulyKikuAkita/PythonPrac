@@ -3,7 +3,8 @@ __source__ = 'https://github.com/kamyu104/LeetCode/blob/master/Python/concatenat
 # Time:  O(n * l^2)
 # Space: O(n * l)
 #
-# Description:
+# Description: Leetcode #472. Concatenated Words
+#
 # Given a list of words, please write a program that returns
 # all concatenated words in the given list of words.
 #
@@ -28,6 +29,7 @@ __source__ = 'https://github.com/kamyu104/LeetCode/blob/master/Python/concatenat
 # Hide Similar Problems (H) Word Break II
 #
 import unittest
+# 1280ms 37.40%
 class Solution(object):
     def findAllConcatenatedWordsInADict(self, words):
         """
@@ -61,9 +63,115 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: Trie + DFS
 
-public class Solution {
+# Thought:
+1.
+# Do you still remember how did you solve this problem? https://leetcode.com/problems/word-break/
+#
+# If you do know one optimized solution for above question is using DP,
+# this problem is just one more step further.
+# We iterate through each word and see if it can be formed by using other words.
+#
+# Of course it is also obvious that a word can only be formed by words shorter than it.
+# So we can first sort the input by length of each word,
+# and only try to form one word by using words in front of it.
+# DP
+# 341ms 25.80%
+class Solution {
+    public List<String> findAllConcatenatedWordsInADict(String[] words) {
+        List<String> result = new ArrayList<>();
+        Set<String> preWords = new HashSet<>();
+        Arrays.sort(words, ((String s1, String s2) -> s1.length() - s2.length()));
+        /* lambda for
+        Arrays.sort(words, new Comparator<String>() {
+            public int compare (String s1, String s2) {
+                return s1.length() - s2.length();
+            }
+        });
+        */
+
+        for (int i = 0; i < words.length; i++) {
+            if (canForm(words[i], preWords)) {
+                result.add(words[i]);
+            }
+            preWords.add(words[i]);
+        }
+        return result;
+    }
+
+    private static boolean canForm(String word, Set<String> dict) {
+        if (dict.isEmpty()) return false;
+        boolean[] dp = new boolean[word.length() + 1];
+        dp[0] = true;
+        for (int i = 0 ; i <= word.length(); i++) {
+            for (int j = 0; j < i; j++) {
+                if (!dp[j]) continue;
+                if (dict.contains(word.substring(j, i))) {
+                    dp[i] = true;
+                    break;
+                }
+            }
+        }
+        return dp[word.length()];
+    }
+}
+
+2.
+# Trie
+# 65ms 81.02%
+class Solution {
+    private final static int R = 26;
+    private Node mRoot = new Node();
+
+    public List<String> findAllConcatenatedWordsInADict(String[] words) {
+        List<String> res = new ArrayList<>();
+        if (words == null || words.length == 0) return res;
+        for (String word: words) { addWords(word);}
+        for (String word : words) {
+            if (isConcatenated(word, 0, 0)) res.add(word);
+        }
+        return res;
+    }
+
+    private boolean isConcatenated(String word, int idx, int counts) {
+        Node node = mRoot;
+
+        for (int i = idx; i < word.length() ;i++) {
+            char c = word.charAt(i);
+            if (node.mKey[c - 'a'] == null) return false;
+            if (node.mKey[c - 'a'].mIsWord) {
+                if ( i == word.length() - 1) return counts >= 1;
+                if (isConcatenated(word, i + 1, counts + 1)) return true;
+            }
+            node = node.mKey[c - 'a'];
+        }
+        return false;
+    }
+
+    private void addWords(String word) {
+        Node node = mRoot;
+        for (char c : word.toCharArray()) {
+            if (node.mKey[c - 'a'] == null) {
+                node.mKey[c - 'a'] = new Node();
+            }
+            node = node.mKey[c - 'a'];
+        }
+        node.mIsWord = true;
+    }
+
+    class Node{
+        boolean mIsWord;
+        Node[] mKey;
+        public Node() {
+            mIsWord = false;
+            mKey = new Node[R];
+        }
+    }
+}
+
+# Trie + DFS
+# 59ms 89.13%
+class Solution {
     private TrieNode root;
     private List<String> result;
 
@@ -130,52 +238,4 @@ public class Solution {
     }
 }
 
-# Do you still remember how did you solve this problem? https://leetcode.com/problems/word-break/
-#
-# If you do know one optimized solution for above question is using DP,
-# this problem is just one more step further.
-# We iterate through each word and see if it can be formed by using other words.
-#
-# Of course it is also obvious that a word can only be formed by words shorter than it.
-# So we can first sort the input by length of each word,
-# and only try to form one word by using words in front of it.
-
-public class Solution {
-    public List<String> findAllConcatenatedWordsInADict(String[] words) {
-        List<String> result = new ArrayList<>();
-        Set<String> preWords = new HashSet<>();
-        Arrays.sort(words, ((String s1, String s2) -> s1.length() - s2.length()));
-        /* lambda for
-        Arrays.sort(words, new Comparator<String>() {
-            public int compare (String s1, String s2) {
-                return s1.length() - s2.length();
-            }
-        });
-        */
-
-        for (int i = 0; i < words.length; i++) {
-            if (canForm(words[i], preWords)) {
-                result.add(words[i]);
-            }
-            preWords.add(words[i]);
-        }
-        return result;
-    }
-
-    private static boolean canForm(String word, Set<String> dict) {
-        if (dict.isEmpty()) return false;
-        boolean[] dp = new boolean[word.length() + 1];
-        dp[0] = true;
-        for (int i = 0 ; i <= word.length(); i++) {
-            for (int j = 0; j < i; j++) {
-                if (!dp[j]) continue;
-                if (dict.contains(word.substring(j, i))) {
-                    dp[i] = true;
-                    break;
-                }
-            }
-        }
-        return dp[word.length()];
-    }
-}
 '''

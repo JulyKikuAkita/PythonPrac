@@ -1,8 +1,10 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/remove-duplicates-from-sorted-list/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/remove-duplicates-from-sorted-list.py
 # Time:  O(n)
 # Space: O(1)
 # LinkedList
+#
+# Description: Leetcode # 83. Remove Duplicates from Sorted List
 #
 # Given a sorted linked list, delete all duplicates such that each element appear only once.
 #
@@ -10,7 +12,10 @@ __author__ = 'July'
 # Given 1->1->2, return 1->2.
 # Given 1->1->2->3->3, return 1->2->3.
 #
-
+# Related Topics
+# Linked List
+#
+import unittest
 # Definition for singly-linked list.
 class ListNode:
     def __init__(self, x):
@@ -54,16 +59,6 @@ class Solutionif:
                 cur = cur.next
         return dummy.next
 
-if __name__ == "__main__":
-    head, head.next, head.next.next = ListNode(1), ListNode(1), ListNode(2)
-    head.next.next.next, head.next.next.next.next = ListNode(3), ListNode(3)
-    print Solution().deleteDuplicates(head)
-
-
-
-
-
-
     def printList(self, head):
         curr = head
         count = 1
@@ -98,77 +93,46 @@ if __name__ == "__main__":
                 curr = curr.next
                 nextnode = curr.next
 
-
-
         # list has only 2 node
         if nextnode != None and nextnode.next == None:
            if curr.val == nextnode.val :
                     curr.next = None
                     nextnode.val =None
                     nextnode.next=None
-
         return head
 
-
-
-
-
-
-
-
-
 # test
-c1 = ListNode(1)
-c2 = ListNode(1)
-c3 = ListNode(1)
-#c4 = ListNode(1)
-#c5 = ListNode(1)
-#c6 = ListNode(2)
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        head, head.next, head.next.next = ListNode(1), ListNode(1), ListNode(2)
+        head.next.next.next, head.next.next.next.next = ListNode(3), ListNode(3)
+        print Solution().deleteDuplicates(head)
 
-a1 = ListNode(1)
-a2 = ListNode(3)
-a3 = ListNode(3)
-a4 = ListNode(4)
+if __name__ == '__main__':
+    unittest.main()
 
-b1= ListNode("")
+Java = '''
+# Thought: https://leetcode.com/problems/remove-duplicates-from-sorted-list/solution/
 
-d1 = ListNode(1)
-d2 = ListNode(1)
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) { val = x; }
+ * }
+ */
+# Recursion
+# 0ms 100%
+class Solution {
+    public ListNode deleteDuplicates(ListNode head) {
+        if(head == null || head.next == null)return head;
+        head.next = deleteDuplicates(head.next);
+        return head.val == head.next.val ? head.next : head;
+    }
+}
 
-c1.next = c2
-c2.next = c3
-#c3.next = c4
-#c4.next = c5
-#c5.next = c6
-
-a1.next = a2
-a2.next = a3
-a3.next = a4
-a4.next = None
-
-d1.next = d2
-d2.next = None
-
-
-## tc
-t1 = Solution()
-print t1.deleteDuplicates(c1)
-#print t1.printList(c1)
-
-
-#print t1.deleteDuplicates(a1)
-#print t1.printList(a1)
-
-
-#print t1.deleteDuplicates(b1)
-#print t1.printList(b1)
-
-#print t1.deleteDuplicates(d1)
-#print t1.printList(d1)
-
-#java
-js = '''
-public class Solution {
+# 0ms 100%
+class Solution {
     public ListNode deleteDuplicates(ListNode head) {
         ListNode cur = head;
         while (cur != null && cur.next != null) {
@@ -182,7 +146,8 @@ public class Solution {
     }
 }
 
-public class Solution {
+# 0ms 100%
+class Solution {
     public ListNode deleteDuplicates(ListNode head) {
         if ( head == null || head.next == null) return head;
         ListNode cur = head.next;

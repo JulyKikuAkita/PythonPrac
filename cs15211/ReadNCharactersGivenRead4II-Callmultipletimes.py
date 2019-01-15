@@ -1,22 +1,29 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/read-n-characters-given-read4-ii-call-multiple-times/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/read-n-characters-given-read4-ii-call-multiple-times.py
 # Time:  O(n)
 # Space: O(1)
 #
+# Description: Leetcode # 158. Read N Characters Given Read4 II - Call multiple times
+#
 # The API: int read4(char *buf) reads 4 characters at a time from a file.
 #
-# The return value is the actual number of characters read. For example, it returns 3 if there is only 3 characters left in the file.
+# The return value is the actual number of characters read. For example,
+# it returns 3 if there is only 3 characters left in the file.
 #
 # By using the read4 API, implement the function int read(char *buf, int n) that reads n characters from the file.
 #
 # Note:
 # The read function may be called multiple times.
+# Companies
+# Bloomberg Google Facebook
+# Related Topics
+# String
+# Similar Questions
+# Read N Characters Given Read4
 #
 # The read4 API is already defined for you.
-# @param buf, a list of characters
-# @return an integer
-#  Bloomberg Google Facebook
-
+#
+import unittest
 def read4(buf):
     global file_content
     i = 0
@@ -58,20 +65,56 @@ class Solution:
             read_bytes += bytes
         return read_bytes
 
-#test
-test = Solution()
-global file_content
+# Test
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+        test = Solution()
+        global file_content
 
-buf = ['' for _ in xrange(100)]
-file_content = "ab"
-print buf[:test.read(buf,1)]
-print buf[:test.read(buf,2)]
+        buf = ['' for _ in xrange(100)]
+        file_content = "ab"
+        print buf[:test.read(buf,1)]
+        print buf[:test.read(buf,2)]
 
-#java
-js = '''/* The read4 API is defined in the parent class Reader4.
+if __name__ == '__main__':
+    unittest.main()
+
+Java = '''
+# Thought:
+
+/* The read4 API is defined in the parent class Reader4.
       int read4(char[] buf); */
 
-public class Solution extends Reader4 {
+# 1ms 100%
+class Solution extends Reader4 {
+    /**
+     * @param buf Destination buffer
+     * @param n   Maximum number of characters to read
+     * @return    The number of characters read
+     */
+    private int buffPtr = 0;
+    private int buffCnt = 0;
+    private char[] buff = new char[4];
+
+    public int read(char[] buf, int n) {
+        int ptr = 0;
+        while (ptr < n) {
+            if (buffPtr == 0) {
+                buffCnt = read4(buff);
+            }
+            if (buffCnt == 0) break;
+            while (ptr < n && buffPtr < buffCnt) {
+                buf[ptr++] = buff[buffPtr++];
+            }
+            if (buffPtr >= buffCnt) buffPtr = 0;
+        }
+        return ptr;
+    }
+}
+
+# 1ms 100%
+class Solution extends Reader4 {
     /**
      * @param buf Destination buffer
      * @param n   Maximum number of characters to read
@@ -102,45 +145,33 @@ public class Solution extends Reader4 {
 }
 
 
-/* The read4 API is defined in the parent class Reader4.
-      int read4(char[] buf); */
-
-public class Solution extends Reader4 {
+# Queue
+# 3ms 3.29%
+class Solution extends Reader4 {
     /**
      * @param buf Destination buffer
      * @param n   Maximum number of characters to read
      * @return    The number of characters read
      */
-     char[] cache = new char[4];
-     int index = 4;
-     int size = 0;
+    // queue
+    // each time read n, so when there is no character in queue or reach to n each time, break
+    Queue<Character> q = new LinkedList<>();
 
     public int read(char[] buf, int n) {
-        int bytesRead = 0;
-        boolean isReadFinished = false;
-
-        while (!isReadFinished && bytesRead < n) {
-            if (index < size) {
-                buf[bytesRead] = cache[index];
-                index ++;
-                bytesRead ++;
-                continue;
+        int total = 0;
+        while(true) {
+            char [] temp = new char[4];
+            int num = read4(temp);
+            for(int i = 0; i < num; i ++) {
+                q.offer(temp[i]);
             }
-
-            int count = read4(cache);
-            if ( count < 4) {
-                isReadFinished = true;
+            num = Math.min(q.size(), n - total);
+            if(num == 0)  break;
+            for(int i = 0; i < num; i ++) {
+                buf[total++] = q.poll();
             }
-
-            int tmp = Math.min(count, n - bytesRead);
-            for (int i = 0; i < tmp ; i++){
-                buf[bytesRead + i] = cache[i];
-            }
-            bytesRead += tmp;
-            index = tmp;
-            size = count;
         }
-        return bytesRead;
+        return total;
     }
 }
 '''

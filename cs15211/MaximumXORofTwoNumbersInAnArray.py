@@ -1,8 +1,9 @@
-__source__ = 'https://leetcode.com/problems/maximum-xor-of-two-numbers-in-an-array/#/description'
+__source__ = 'https://leetcode.com/problems/maximum-xor-of-two-numbers-in-an-array/'
 # Time:  O(n)
 # Space: O(n)
 #
-# Description:
+# Description: 421. Maximum XOR of Two Numbers in an Array
+#
 # Given a non-empty array of numbers, a0, a1, a2,...,an-1, where 0 <= ai < 2^31.
 #
 # Find the maximum result of ai XOR aj, where 0 <= i, j < n.
@@ -26,7 +27,8 @@ import unittest
 # Well it's that maximal seven-bits prefix followed by 0 or 1.
 # Append 0 and then try to create the 1 one (i.e., answer ^ 1)
 # from two eight-bits prefixes from nums. If we can, then change that 0 to 1.
-
+#
+# 68ms 94.88%
 class Solution(object):
     def findMaximumXOR(self, nums):
         """
@@ -44,14 +46,15 @@ class TestMethods(unittest.TestCase):
     def test_Local(self):
         self.assertEqual(1, 1)
 
-
 if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
+# Thought:
+#
 1. Java O(n) solution using bit manipulation and HashMap
-public class Solution {
+# 63ms 38.36%
+class Solution {
     public int findMaximumXOR(int[] nums) {
         int max = 0, mask = 0;
         for(int i = 31; i >= 0; i--){

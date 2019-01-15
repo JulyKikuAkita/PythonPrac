@@ -3,6 +3,8 @@ __source__ = 'https://leetcode.com/problems/count-of-range-sum/#/description'
 # Time:  O(nlogn)
 # Space: O(n)
 #
+# Description: Leetcode # 327. Count of Range Sum
+#
 # Given an integer array nums, return the number of range
 # sums that lie in [lower, upper] inclusive.
 # Range sum S(i, j) is defined as the sum of the elements
@@ -16,12 +18,15 @@ __source__ = 'https://leetcode.com/problems/count-of-range-sum/#/description'
 # Return 3.
 # The three ranges are : [0, 0], [2, 2], [0, 2] and
 # their respective sums are: -2, -1, 2.
-#  Google
-# Hide Tags Divide and Conquer Binary Search Tree
-# Hide Similar Problems (H) Count of Smaller Numbers After Self (H) Reverse Pairs
 #
-
-
+# Companies
+# Google
+# Related Topics
+# Divide and Conquer Binary Search Tree
+# Similar Questions
+# Count of Smaller Numbers After Self Reverse Pairs
+#
+import unittest
 # Divide and Conquer solution.
 class Solution(object):
     def countRangeSum(self, nums, lower, upper):
@@ -60,7 +65,6 @@ class Solution(object):
         for i in xrange(len(nums)):
             sums[i + 1] = sums[i] + nums[i]
         return countAndMergeSort(sums, 0, len(sums), lower, upper)
-
 
 # Divide and Conquer solution.
 class Solution2(object):
@@ -103,8 +107,16 @@ class Solution2(object):
             sums[i + 1] = sums[i] + nums[i]
         return countAndMergeSort(sums, 0, len(sums) - 1, lower, upper)
 
-#java
-java = '''
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+
+if __name__ == '__main__':
+    unittest.main()
+
+Java = '''
+# Thought:
+
 # Able to use Segment Tree as well
 Thought: https://discuss.leetcode.com/topic/33738/share-my-solution
 Recall count smaller number after self where we encountered the problem
@@ -134,7 +146,9 @@ Because the indices k, j, t will only increase but not decrease, each of them wi
 the right half once at most. The total time complexity of this divide and conquer solution is then O(n log n).
 
 One other concern is that the sums may overflow integer. So we use long instead.
-public class Solution {
+
+# 9ms 93.23%
+class Solution {
     public int countRangeSum(int[] nums, int lower, int upper) {
         int len = nums.length;
         long[] sums = new long[len + 1];
@@ -172,6 +186,87 @@ public class Solution {
         for (int i = 0; i < cacheIndex; i++) {
             nums[start + i] = cache[i];
         }
+        return count;
+    }
+}
+
+# 16ms 46.62%
+class Solution {
+    public int countRangeSum(int[] nums, int lower, int upper) {
+        long[] sum = new long[nums.length + 1];
+        for(int i = 0; i < nums.length; i++) {
+            sum[i + 1] = sum[i] + nums[i];
+        }
+
+        long[] tmp = new long[nums.length + 1];
+        int total = mergeSort(sum, tmp, 0, nums.length, lower, upper);
+        return total;
+    }
+
+    private int mergeSort(long[] nums, long[] tmp, int left, int right, int lower, int upper) {
+        if(left >= right) {
+            return 0;
+        }
+
+        int mid = left + (right - left) / 2;
+        int total = mergeSort(nums, tmp, left, mid, lower, upper) + mergeSort(nums, tmp, mid + 1, right, lower, upper);
+
+        return total + merge(nums, tmp, left, mid, right, lower, upper);
+    }
+
+    private int merge(long[] nums, long[] tmp, int left, int mid, int right, long lower, long upper) {
+        int j = mid + 1, k = mid + 1, l = mid + 1, index = left;
+        int total = 0;
+        for(int i = left; i <= mid; i++) {
+            while(j <= right && nums[j] - nums[i] < lower) {
+                j++;
+            }
+            while(k <= right && nums[k] - nums[i] <= upper) {
+                k++;
+            }
+            while(l <= right && nums[l] < nums[i]) {
+                tmp[index++] = nums[l++];
+            }
+            tmp[index++] = nums[i];
+            total += k - j;
+        }
+        while(l <= right) {
+            tmp[index++] = nums[l++];
+        }
+
+        for(int i = left; i <= right; i++) {
+            nums[i] = tmp[i];
+        }
+
+        return total;
+    }
+}
+
+# 8ms 97.74%
+class Solution {
+    public int countRangeSum(int[] nums, int lower, int upper) {
+    int n = nums.length;
+    long[] sums = new long[n + 1];
+    for (int i = 0; i < n; ++i)
+        sums[i + 1] = sums[i] + nums[i];
+    return countWhileMergeSort(sums, 0, n + 1, lower, upper);
+    }
+
+    private int countWhileMergeSort(long[] sums, int start, int end, int lower, int upper) {
+        if (end - start <= 1) return 0;
+        int mid = (start + end) / 2;
+        int count = countWhileMergeSort(sums, start, mid, lower, upper)
+                  + countWhileMergeSort(sums, mid, end, lower, upper);
+        int j = mid, k = mid, t = mid;
+        long[] cache = new long[end - start];
+        for (int i = start, r = 0; i < mid; ++i, ++r) {
+            while (k < end && sums[k] - sums[i] < lower) k++;
+            while (j < end && sums[j] - sums[i] <= upper) j++;
+            while (t < end && sums[t] < sums[i]) cache[r++] = sums[t++];
+            cache[r] = sums[i];
+            count += j - k;
+        }
+        System.arraycopy(cache, 0, sums, start, t - start);
         return count;
     }
 }

@@ -1,8 +1,9 @@
-__source__ = 'https://leetcode.com/problems/longest-harmonious-subsequence/#/description'
+__source__ = 'https://leetcode.com/problems/longest-harmonious-subsequence/'
 # Time:  O()
 # Space: O()
 #
-# Description:
+# Description: https://leetcode.com/problems/longest-harmonious-subsequence/solution/
+#
 # We define a harmonious array is an array where the difference between its maximum value and its minimum value is exactly 1.
 #
 # Now, given an integer array,
@@ -24,7 +25,7 @@ __source__ = 'https://leetcode.com/problems/longest-harmonious-subsequence/#/des
 
 import unittest
 import collections
-
+# 104ms 73.,79%
 class Solution(object):
     def findLHS(self, nums):
         """
@@ -47,11 +48,14 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: The idea is to keep a count of all the numbers, and eventually for each of the numbers,
+# Thought: https://leetcode.com/problems/longest-harmonious-subsequence/solution/
+
+The idea is to keep a count of all the numbers, and eventually for each of the numbers,
 check if there's any adjacent number. If it's present, then add the count of both -
 since these two numbers form subsequence in the array.
 
-public class Solution {
+# 67ms 37.91%
+class Solution {
     public int findLHS(int[] nums) {
         Map<Long, Integer> map = new HashMap<>();
         for (long num : nums) {

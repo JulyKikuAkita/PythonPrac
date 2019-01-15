@@ -1,7 +1,9 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/longest-consecutive-sequence/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/longest-consecutive-sequence.py
 # Time:  O(n)
 # Space: O(n)
+#
+# Description: Leetcode # 128. Longest Consecutive Sequence
 #
 # Given an unsorted array of integers, find the length of the longest consecutive elements sequence.
 #
@@ -10,10 +12,14 @@ __author__ = 'July'
 # The longest consecutive elements sequence is [1, 2, 3, 4]. Return its length: 4.
 #
 # Your algorithm should run in O(n) complexity.
-#  Google Facebook
-# Hide Tags Array Union Find
-# Hide Similar Problems (M) Binary Tree Longest Consecutive Sequence
-
+# Companies
+# Google Facebook
+# Related Topics
+# Array Union Find
+# Similar Questions
+# Binary Tree Longest Consecutive Sequence
+#
+import unittest
 class Solution:
     # @param num, a list of integer
     # @return an integer
@@ -27,9 +33,7 @@ class Solution:
                 left, right = lengths.get(i-1, 0), lengths.get(i+1, 0) # dict.get(key. default=NOne)
                 length = 1 + left + right
                 result, lengths[i - left], lengths[i + right] = max(result, length), length, length
-
         return result
-
 
 class Solution2:
     # @param num, a list of integer
@@ -55,21 +59,61 @@ class Solution2:
 
         return maxLen
 
-# java solution
-# http://www.programcreek.com/2013/01/leetcode-longest-consecutive-sequence-java/
-
 #test
-test = Solution()
-seq1 = [100, 4, 200, 1, 3, 2]
-#print test.longestConsecutive(seq1)
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        test = Solution()
+        seq1 = [100, 4, 200, 1, 3, 2]
+        #print test.longestConsecutive(seq1)
+        print Solution().longestConsecutive([1, 4, 3,2,2,2,0 , -1])
 
-if __name__ =="__main__":
-    # print Solution().longestConsecutive([100, 4, 200, 1, 3, 2])
-    print Solution().longestConsecutive([1, 4, 3,2,2,2,0 , -1])
+if __name__ == '__main__':
+    unittest.main()
 
-#java
-js = '''
-public class Solution {
+Java = '''
+# Thought: https://leetcode.com/problems/longest-consecutive-sequence/solution/
+
+We will use HashMap. The key thing is to keep track of the sequence length and
+store that in the boundary points of the sequence. For example, as a result,
+for sequence {1, 2, 3, 4, 5}, map.get(1) and map.get(5) should both return 5.
+
+Whenever a new element n is inserted into the map, do two things:
+
+See if n - 1 and n + 1 exist in the map, and if so, it means there is an existing sequence next to n.
+Variables left and right will be the length of those two sequences,
+while 0 means there is no sequence and n will be the boundary point later.
+Store (left + right + 1) as the associated value to key n into the map.
+Use left and right to locate the other end of the sequences to the left and right of n respectively,
+and replace the value with the new length.
+Everything inside the for loop is O(1) so the total time is O(n). Please comment if you see something wrong. Thanks.
+1)
+# 3ms 96.24%
+class Solution {
+    public int longestConsecutive(int[] nums) {
+        if (nums.length <= 1) return nums.length;
+        Arrays.sort(nums);
+        int max = 1, len = 1;
+        int min = nums[0];
+        for (int i = 1; i < nums.length; i++) {
+            if (nums[i] - min == 1) {
+                len++;
+                min = nums[i];
+            } else if (nums[i] - min > 1) {
+                len = 1;
+                min = nums[i];
+            }
+            max = Math.max(max, len);
+        }
+        return max;
+    }
+}
+
+2)
+Using a set to collect all elements that hasn't been visited.
+search element will be O(1) and eliminates visiting element again.
+
+# 9ms 50.78%
+class Solution {
     public int longestConsecutive(int[] nums) {
         if(nums == null || nums.length == 0) return 0;
 
@@ -82,8 +126,8 @@ public class Solution {
                 int y = x + 1;
                 while( set.contains(y)){
                     y++;
-                }
-                max = Math.max(max, y -x);
+                }  //additional++ when exist while loop
+                max = Math.max(max, y - x);
             }
         }
         return max;

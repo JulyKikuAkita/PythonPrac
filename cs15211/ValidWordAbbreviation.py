@@ -32,6 +32,7 @@ import re
 
 class Solution(object):
 
+    # 48ms 3.78%
     def validWordAbbreviation2(self, word, abbr):
         """
         :type word: str
@@ -39,6 +40,7 @@ class Solution(object):
         :rtype: bool
         """
         return bool(re.match(re.sub('([1-9]\d*)', r'.{\1}', abbr) + '$', word))
+
     def validWordAbbreviation(self, word, abbr):
         """
         :type word: str
@@ -76,14 +78,17 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
-public class Solution {
+# Thought:
+
+# 21ms 4.52%
+class Solution {
     public boolean validWordAbbreviation(String word, String abbr) {
         return word.matches(abbr.replaceAll("[1-9]\\d*", ".{$0}"));
     }
 }
 
-public class Solution {
+# 15ms 21.86%
+class Solution {
     public boolean validWordAbbreviation(String word, String abbr) {
         int i =0, j = 0;
         while (i < word.length() && j < abbr.length()) {

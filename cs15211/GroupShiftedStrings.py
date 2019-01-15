@@ -1,28 +1,36 @@
-__author__ = 'July'
-'''
-Given a string, we can "shift" each of its letter to its successive letter, for example: "abc" -> "bcd".
-We can keep "shifting" which forms the sequence:
-
-"abc" -> "bcd" -> ... -> "xyz"
-Given a list of strings which contains only lowercase alphabets,
-group all strings that belong to the same shifting sequence.
-
-For example, given: ["abc", "bcd", "acef", "xyz", "az", "ba", "a", "z"],
-Return:
-
-[
-  ["abc","bcd","xyz"],
-  ["az","ba"],
-  ["acef"],
-  ["a","z"]
-]
-Note: For the return value, each inner list's elements must follow the lexicographic order.
-
-Show Company Tags: google, uber
-'''
+__source__ = 'https://leetcode.com/problems/group-shifted-strings/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/group-shifted-strings.py
 # Time:  O(nlogn)
 # Space: O(n)
+#
+# Description: Leetcode # 249. Group Shifted Strings
+#
+# Given a string, we can "shift" each of its letter to its successive letter, for example: "abc" -> "bcd".
+# We can keep "shifting" which forms the sequence:
+#
+# "abc" -> "bcd" -> ... -> "xyz"
+# Given a list of strings which contains only lowercase alphabets,
+# group all strings that belong to the same shifting sequence.
+#
+# For example, given: ["abc", "bcd", "acef", "xyz", "az", "ba", "a", "z"],
+# Return:
+#
+# [
+#   ["abc","bcd","xyz"],
+#   ["az","ba"],
+#   ["acef"],
+#   ["a","z"]
+# ]
+# Note: For the return value, each inner list's elements must follow the lexicographic order.
+#
+# Companies
+# Google Uber
+# Related Topics
+# Hash Table String
+# Similar Questions
+# Group Anagrams
+#
+import unittest
 import collections
 class Solution:
     # @param {string[]} strings
@@ -39,8 +47,6 @@ class Solution:
             result.append(sorted(val))
         return result
 
-
-
     def hashStr(self, s):
         base = ord(s[0])
         hashcode = ""
@@ -51,6 +57,7 @@ class Solution:
             hashcode += unichr(ord('a') + ((ord(s[i]) - base + 26) % 26))
         return hashcode
 
+# 36ms 19.72%
 class Solution2(object):
     def groupStrings(self, strings):
         """
@@ -64,12 +71,85 @@ class Solution2(object):
 
         return map(sorted, d.values())
 
+# TEST
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+        in1 = \
+        ["abc", "txb", "def" , "i", \
+        "d", "nw", "e", "g", "h"]
+        print Solution().groupStrings(in1)
 
-#TEST
-in1 = \
-["abc", "txb", "def" , "i", \
-"d", "nw", "e", "g", "h"]
-print Solution().groupStrings(in1)
+if __name__ == '__main__':
+    unittest.main()
 
-# java:
-# http://blog.csdn.net/pointbreak1/article/details/48780345
+Java = '''
+# Thought:
+
+The basic idea is to set a key for each group:
+the sum of the difference between the adjacent chars in one string.
+Then we can easily group the strings belonging to the same shifting sequence with the same key.
+
+# 61ms 1.94%
+class Solution {
+    public List<List<String>> groupStrings(String[] strings) {
+        return new ArrayList(Stream.of(strings).collect(Collectors.groupingBy(
+            s -> s.chars().mapToObj(c -> (c - s.charAt(0) + 26) % 26)
+                  .collect(Collectors.toList())
+        )).values());
+    }
+}
+
+# 61ms 1.94%
+class Solution {
+    public List<List<String>> groupStrings(String[] strs) {
+        HashMap<String, ArrayList<String>> map = new HashMap<String, ArrayList<String>>();
+        Arrays.sort(strs);
+        for (String s : strs) {
+            String key = "";
+            for (int i = 1; i < s.length(); i++)
+                //Difference from the previous char.
+                key += String.format("%2d", (s.charAt(i) - s.charAt(i-1) + 26) % 26);
+            if (!map.containsKey(key)) map.put(key, new ArrayList<String>());
+            map.get(key).add(s);
+        }
+        return new ArrayList<List<String>>(map.values());
+    }
+}
+
+# 1ms 100%
+class Solution {
+    public List<List<String>> groupStrings(String[] strings) {
+        List<List<String>> result = new ArrayList<>();
+        Map<String, List<String>> map = new HashMap<>();
+
+        for (int j = 0; j < strings.length; j++) {
+            char[] arr = strings[j].toCharArray();
+            int difference = arr[0] - 'a';
+            arr[0] = 'a';
+
+            for (int i = 1; i < arr.length; i++) {
+                if (arr[i] - difference - 'a' > 0) {
+                    arr[i] = (char)(arr[i] - difference);
+                } else {
+                    int diff = arr[i] - difference - 'a' + 1;
+                    arr[i] = (char)('z' + diff);
+                }
+            }
+
+            String normalized = new String(arr);
+
+            if (map.containsKey(normalized)) {
+                map.get(normalized).add(strings[j]);
+            } else {
+                List<String> list = new ArrayList<>();
+                list.add(strings[j]);
+                result.add(list);
+                map.put(normalized, list);
+            }
+        }
+
+        return result;
+    }
+}
+'''

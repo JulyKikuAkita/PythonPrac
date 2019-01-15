@@ -2,7 +2,8 @@ __source__ = 'https://github.com/kamyu104/LeetCode/blob/master/Python/validate-i
 # Time:  O(1)
 # Space: O(1)
 #
-# Description:
+# Description: 468. Validate IP Address
+#
 # Write a function to check whether an input string is a valid IPv4 address or IPv6 address or neither.
 #
 # IPv4 addresses are canonically represented in dot-decimal notation,
@@ -48,6 +49,7 @@ __source__ = 'https://github.com/kamyu104/LeetCode/blob/master/Python/validate-i
 # Hide Tags String
 
 import unittest
+# 20ms 100%
 class Solution(object):
     def validIPAddress(self, IP):
         """
@@ -84,7 +86,8 @@ Java = '''
 #Thought:
 
 1. Regex:
-public class Solution {
+# 10ms 14.19%
+class Solution {
     public String validIPAddress(String IP) {
         if(IP.matches("(([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])"))return "IPv4";
         if(IP.matches("(([0-9a-fA-F]{1,4}):){7}([0-9a-fA-F]{1,4})"))return "IPv6";
@@ -93,7 +96,8 @@ public class Solution {
 }
 
 2.
-public class Solution {
+# 6ms 45.16%
+class Solution {
     public String validIPAddress(String IP) {
         if (isValidIPv4(IP)) return "IPv4";
     	else if (isValidIPv6(IP)) return "IPv6";

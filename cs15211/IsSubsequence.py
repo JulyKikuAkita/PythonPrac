@@ -1,9 +1,10 @@
-__source__ = 'https://github.com/kamyu104/LeetCode/blob/master/Python/is-subsequence.py'
-# https://leetcode.com/problems/is-subsequence/#/solutions
+__source__ = 'https://leetcode.com/problems/is-subsequence/description/'
+# https://github.com/kamyu104/LeetCode/blob/master/Python/is-subsequence.py
 # Time:  O(n)
 # Space: O(1)
 #
-# Description:
+# Description: Leetcode # 392. Is Subsequence
+#
 # Given a string s and a string t, check if s is subsequence of t.
 #
 # You may assume that there is only lower case English letters in both s and t.
@@ -24,13 +25,20 @@ __source__ = 'https://github.com/kamyu104/LeetCode/blob/master/Python/is-subsequ
 #
 # Return false.
 #
+# Follow up:
+# If there are lots of incoming S, say S1, S2, ... , Sk where k >= 1B,
+# and you want to check one by one to see if T has its subsequence.
+# In this scenario, how would you change your code?
+#
+# Companies
 # Pinterest
-# Hide Tags Binary Search Dynamic Programming Greedy
-
-
+# Related Topics
+# Binary Search Dynamic Programming Greedy
+#
 import unittest
 
 # Greedy solution.
+# 128ms 75.77%
 class Solution(object):
     def isSubsequence(self, s, t):
         """
@@ -68,8 +76,11 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
-public class Solution {
+# Thought:
+
+# two pointers:
+# 17ms 77.84%
+class Solution {
     public boolean isSubsequence(String s, String t) {
         if (s.length() == 0) return true;
         int indexS = 0, indexT = 0;
@@ -83,6 +94,72 @@ public class Solution {
         return false;
     }
 }
+
+# 1ms 100%
+class Solution {
+    public boolean isSubsequence(String s, String t) {
+        if (s.length() == 0) return true;
+
+        int prev = t.indexOf(s.charAt(0));
+        if (prev == -1) return false;
+
+        for (int i = 1; i < s.length(); i++) {
+            prev = t.indexOf(s.charAt(i), prev + 1);
+            if (prev == -1) return false;
+        }
+        return true;
+    }
+}
+
+# 1ms 100%
+class Solution {
+    public boolean isSubsequence(String s, String t) {
+        int[] a = new int[s.length() + 1];
+		a[0] = -1;
+		for (int i = 0; i < s.length(); i++) {
+			int index = t.indexOf(s.charAt(i), a[i] + 1);
+			if (index == -1) {
+				return false;
+			}
+			a[i + 1] = index;
+		}
+        return true;
+    }
+}
+
+# quick examples fro java Collections.binarySearch(list, key)
+# http://www.geeksforgeeks.org/collections-binarysearch-java-examples/
+// Returns index of key in sorted list sorted in
+// ascending order
+public static int binarySearch(List slist, T key)
+
+// Returns index of key in sorted list sorted in
+// order defined by Comparator c.
+public static int binarySearch(List slist, T key, Comparator c)
+
+If key is not present, the it returns "(-(insertion point) - 1)".
+The insertion point is defined as the point at which the key
+would be inserted into the list.
+
+public static void main(String[] args)
+    {
+        List al = new ArrayList();
+        al.add(1);
+        al.add(2);
+        al.add(3);
+        al.add(10);
+        al.add(20);
+
+        // 10 is present at index 3.
+        int index = Collections.binarySearch(al, 10);
+        System.out.println(index);
+
+        // 13 is not present. 13 would have been inserted
+        // at position 4. So the function returns (-4-1)
+        // which is -5.
+        index = Collections.binarySearch(al, 15);
+        System.out.println(index);
+    }
 
 Binary search solution for follow-up with detailed comments
 Re: Java binary search using TreeSet got TLE
@@ -103,6 +180,9 @@ ability which is a little overkill for this problem. Here is my solution.
     //  i=0 ('a'): prev=1
     //  i=1 ('b'): prev=6
     //  i=2 ('c'): prev=? (return false)
+
+# 49ms 18.85%
+class Solution {
     public boolean isSubsequence(String s, String t) {
         List<Integer>[] idx = new List[256]; // Just for clarity
         for (int i = 0; i < t.length(); i++) {
@@ -121,4 +201,6 @@ ability which is a little overkill for this problem. Here is my solution.
         }
         return true;
     }
+}
+
 '''

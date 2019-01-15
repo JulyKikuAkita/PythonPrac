@@ -2,8 +2,9 @@ __source__ = 'https://github.com/kamyu104/LeetCode/blob/master/Python/valid-word
 # Time:  O(m * n)
 # Space: O(1)
 #
-# Description:
-#Given a sequence of words, check whether it forms a valid word square.
+# Description: 422. Valid Word Square
+#
+# Given a sequence of words, check whether it forms a valid word square.
 # A sequence of words forms a valid word square if the kth row and column read the exact same string,
 # where 0 <= k < max(numRows, numColumns).
 #
@@ -86,6 +87,7 @@ class Solution(object):
         t = map(None, *words)
         return t == map(None, *t)
 
+    # 60ms 50.43%
     def validWordSquare(self, words):
         """
         :type words: List[str]
@@ -109,7 +111,9 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
+# Thought:
+
+#16ms 56.33%
 public class Solution {
     public boolean validWordSquare(List<String> words) {
         if (words == null || words.size() == 0) return true;

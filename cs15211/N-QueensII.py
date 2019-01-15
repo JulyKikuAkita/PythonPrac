@@ -1,15 +1,23 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/n-queens-ii/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/n-queens-ii.py
 # Time:  O(n!)
 # Space: O(n)
 # DFS
 #
+# Description: Leetcode # 52. N-Queens II
+#
 # Follow up for N-Queens problem.
 #
 # Now, instead outputting board configurations, return the total number of distinct solutions.
 #
+# Companies
 # Zenefits
-# quick solution for checking if it is diagonally legal
+# Related Topics
+# Backtracking
+# Similar Questions
+# N-Queens
+#
+import unittest
 class Solution:
     # @return an integer
     def totalNQueens(self, n):
@@ -68,7 +76,6 @@ class SolutionCC150:
                 return False
         return True
 
-
 class SolutionOther:
     # @return an integer
     # http://chaoren.is-programmer.com/posts/43590.html
@@ -123,49 +130,61 @@ class SolutionOther:
             row += 1
         return sum
 
-
     def check(self, k, j):  # check if the kth queen can be put in column j!
         for i in range(k):
             if self.board[i] == j or abs(k - i) == abs(self.board[i] - j):
                 return False
         return True
 
-
-class SolutionJS:
-    # @return an integer
-    def totalNQueens(self, n):
-
-        return self.totalNQueensRecu([], 0, n)
-
-    def totalNQueensRecu(self, solution, row, n):
-        if row == n:
-            return 1
-        result = 0
-        for i in xrange(n):
-            if self.isValid(solution + [i], row):
-                result += self.totalNQueensRecu(solution + [i], row + 1 ,n)
-        return result
-
-    def isValid(self, res, row):
-        for i in xrange(row):
-            if res[i] == res[row]:
-                return False
-            if abs(res[i] - res[row]) == abs( i - row):
-                return False
-        return True
 #test
-test = SolutionOther()
-#print test.totalNQueens(4)
-#print test.totalNQueens_iterative(4)
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        test = SolutionOther()
+        #print test.totalNQueens(4)
+        #print test.totalNQueens_iterative(4)
 
-if __name__ == "__main__":
-    print Solution().totalNQueens(8)
-    print Solution2().totalNQueens(8)
-    print SolutionCC150().totalNQueens(8)
+        print Solution().totalNQueens(8)
+        print Solution2().totalNQueens(8)
+        print SolutionCC150().totalNQueens(8)
 
-#java
-js = '''
-public class Solution {
+if __name__ == '__main__':
+    unittest.main()
+
+Java = '''
+# Thought:
+
+This is a classic backtracking problem.
+Start row by row, and loop through columns. At each decision point, 
+skip unsafe positions by using three boolean arrays.
+Start going back when we reach row n.
+Just FYI, if using HashSet, running time will be at least 3 times slower!
+
+# 2ms 87.63%
+class Solution {
+    public int totalNQueens(int n) {
+        boolean[] cols = new boolean[n];     // columns   |
+        boolean[] d1 = new boolean[2 * n];   // diagonals \
+        boolean[] d2 = new boolean[2 * n];   // diagonals /
+        return backtracking(0, cols, d1, d2, n);
+    }
+
+    public int backtracking(int row, boolean[] cols, boolean[] d1, boolean []d2, int n) {
+        if (row == n) return 1;
+        int count = 0;
+        for (int i = 0; i < n ;i++) {
+            int id1 = i + row;
+            int id2 = i - row + n;
+            if( cols[i] || d1[id1] ||d2[id2]) continue;
+            cols[i] = d1[id1] = d2[id2] = true;
+            count +=  backtracking(row + 1, cols, d1, d2, n);
+            cols[i] = d1[id1] = d2[id2] = false;
+        }
+        return count;
+    }
+}
+
+# 2ms 87.63%
+class Solution {
     public int totalNQueens(int n) {
         return totalNQueens(new int[n], 0);
     }
@@ -191,6 +210,29 @@ public class Solution {
             }
         }
         return true;
+    }
+}
+
+# 1ms 99.52%
+class Solution {
+    public int totalNQueens(int n) {
+        if (n < 1) return 0;
+        int upLimit = (1 << n) - 1;
+        int result = solve(upLimit, 0, 0 ,0);
+        return result;
+    }
+
+    private int solve(int upLimit, int colLimit, int leftLimit, int rightLimit) {
+        if (upLimit == colLimit) return 1;
+        int pos = upLimit & (~(colLimit | leftLimit | rightLimit)), count = 0;
+        while (pos != 0) {
+            int mostRightOne = pos & (~pos + 1);
+            pos -= mostRightOne;
+            count += solve(upLimit, colLimit | mostRightOne,
+                          (leftLimit | mostRightOne) << 1,
+                          (rightLimit | mostRightOne) >>> 1);
+        }
+        return count;
     }
 }
 '''

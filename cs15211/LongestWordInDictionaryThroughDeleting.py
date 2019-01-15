@@ -1,8 +1,9 @@
-__source__ = 'https://leetcode.com/problems/longest-word-in-dictionary-through-deleting/#/description'
+__source__ = 'https://leetcode.com/problems/longest-word-in-dictionary-through-deleting/'
 # Time:  O(nlogn + n*x), Sorting takes O(nlogn) and isSubsequence takes O(x)
 # Space: O(logn) Sorting takes O(logn) space in average case.
 #
-# Description:
+# Description: 524. Longest Word in Dictionary through Deleting
+#
 # Given a string and a string dictionary, find the longest string in the dictionary
 # that can be formed by deleting some characters of the given string.
 # If there are more than one possible results, return the longest word with the smallest lexicographical order.
@@ -27,7 +28,7 @@ __source__ = 'https://leetcode.com/problems/longest-word-in-dictionary-through-d
 # The length of all the strings in the input won't exceed 1,000.
 # Hide Company Tags Google
 # Hide Tags Two Pointers Sort
-
+#
 import unittest
 # Let's check whether each word is a subsequence of S individually by "best" order
 # (largest size, then lexicographically smallest.) Then if we find a match,
@@ -40,7 +41,8 @@ import unittest
 # still remains to be matched to S at this point in time. Whenever word[i] matches the current character in S,
 # we only have to match word[i+1:], so we increment i. At the end of this process, i == len(word)
 # if and only if we've matched every character in word to some character in S in order of our walk.
-
+#
+# 584ms 19.60%
 class Solution(object):
     def findLongestWord(self, s, d):
         """
@@ -62,17 +64,16 @@ class TestMethods(unittest.TestCase):
     def test_Local(self):
         self.assertEqual(1, 1)
 
-
 if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/articles/longest-word-in-dictionary-through-deletion/
+# Thought: https://leetcode.com/problems/longest-word-in-dictionary-through-deleting/solution/
 1.
 An alternate, more efficient solution which avoids sorting the dictionary:
 
-#80.93$
-public class Solution {
+# 33ms 65.40%
+class Solution {
     public String findLongestWord(String s, List<String> d) {
         String res = "";
         for (String key : d) {
@@ -90,11 +91,12 @@ public class Solution {
     }
 }
 
-2. 15.12%
+2.
 Idea is sort the dictionary d first by length DESC then lexicographical ASC
 and test if p is SubSequence of s. The first match is the answer.
 
-public class Solution {
+# 106ms 4.57%
+class Solution {
     public String findLongestWord(String s, List<String> d) {
         if (s.length() == 0 || d.size() == 0) return "";
 

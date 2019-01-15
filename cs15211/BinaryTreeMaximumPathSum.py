@@ -4,6 +4,8 @@ __source__ = 'https://leetcode.com/problems/binary-tree-maximum-path-sum/#/descr
 # Space: O(h), h is height of binary tree
 # Divide and Conquer
 #
+# Description: Leetcode # 124. Binary Tree Maximum Path Sum
+#
 # Given a binary tree, find the maximum path sum.
 #
 # The path may start and end at any node in the tree.
@@ -17,15 +19,14 @@ __source__ = 'https://leetcode.com/problems/binary-tree-maximum-path-sum/#/descr
 # Return 6.
 #
 #
-# Topics:
-# Tree Depth-first Search
-# You might like:
-# (E) Path Sum (M) Sum Root to Leaf Numbers
-# Company:
+# Companies
 # Microsoft Baidu
-
-
-
+# Related Topics
+# Tree Depth-first Search
+# Similar Questions
+# Path Sum Sum Root to Leaf Numbers
+#
+import unittest
 # Definition for a  binary tree node
 class TreeNode:
      def __init__(self, x):
@@ -48,7 +49,6 @@ class Solution:
         right = max(0, self.maxPathSumRecu(root.right))
         self.maxSum = max(self.maxSum, root.val + left + right)
         return root.val + max( left, right)
-
 
 class SolutionOther:
     # @param root, a tree node
@@ -79,21 +79,26 @@ class SolutionOther:
         return max(root.val, max(root.val+lmax, root.val+rmax))
 
 #test
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+        root = TreeNode(1)
+        root.left = TreeNode(2)
+        root.right = TreeNode(3)
+        result = Solution().maxPathSum(root)
+        print result
 
-if __name__ == "__main__":
-    root = TreeNode(1)
-    root.left = TreeNode(2)
-    root.right = TreeNode(3)
-    result = Solution().maxPathSum(root)
-    print result
+if __name__ == '__main__':
+    unittest.main()
 
-# http://www.programcreek.com/2013/02/leetcode-binary-tree-maximum-path-sum-java/
+Java = '''
+# Thought:
+http://www.programcreek.com/2013/02/leetcode-binary-tree-maximum-path-sum-java/
 # Analysis
 # 1) Recursively solve this problem
 # 2) Get largest left sum and right sum
 # 3) Compare to the stored maximum
-#java
-java = '''
+
 Thought: Here's my ideas:
 A path from start to end, goes up on the tree for 0 or more steps,
 then goes down for 0 or more steps. Once it goes down, it can't go up.
@@ -111,7 +116,9 @@ A recursive method maxPathDown(TreeNode node)
  *     TreeNode(int x) { val = x; }
  * }
  */
-public class Solution {
+
+# 1ms 99.42%
+class Solution {
     public int maxPathSum(TreeNode root) {
         int[] res = new int[1];
         res[0] = Integer.MIN_VALUE;
@@ -127,7 +134,9 @@ public class Solution {
     }
 }
 
-#with global var
+# https://leetcode.com/problems/binary-tree-maximum-path-sum/discuss/212993/Detailed-Explanation-on-%40wei-bung's-code-on-Max-Path-Sum
+# 1ms 99.42%
+# with global var
 public class Solution {
    int maxValue;
 

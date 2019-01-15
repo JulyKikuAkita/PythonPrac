@@ -1,8 +1,10 @@
-__source__ = 'https://leetcode.com/problems/populating-next-right-pointers-in-each-node-ii/#/description'
+__source__ = 'https://leetcode.com/problems/populating-next-right-pointers-in-each-node-ii/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/populating-next-right-pointers-in-each-node-ii.py
 # Time:  O(n)
 # Space: O(1)
 # BFS
+#
+# Description: Leetcode # 117. Populating Next Right Pointers in Each Node II
 #
 # Follow up for problem "Populating Next Right Pointers in Each Node".
 #
@@ -25,14 +27,14 @@ __source__ = 'https://leetcode.com/problems/populating-next-right-pointers-in-ea
 #      / \    \
 #     4-> 5 -> 7 -> NULL
 #
-#
-# Topics:
-# Tree Depth-first Search
-# You might like:
-# (M) Populating Next Right Pointers in Each Node
-# Company:
+# Companies
 # Microsoft Bloomberg Facebook
-
+# Related Topics
+# Tree Depth-first Search
+# Similar Questions
+# Populating Next Right Pointers in Each Node
+#
+import unittest
 # Definition for a  binary tree node
 class TreeNode:
      def __init__(self, x):
@@ -46,8 +48,7 @@ class TreeNode:
              return "Nil"
          else:
              return "{} -> {}".format(self.val, repr(self.next))
-
-
+# 84ms 18.10%
 class Solution:
     # @param root, a tree node
     # @return nothing
@@ -74,7 +75,6 @@ class Solution:
                 cur = cur.next
             head = next_head
 
-
 class SolutionOther:
     # @param root, a tree node
     # @return nothing
@@ -99,23 +99,28 @@ class SolutionOther:
 
             curr = firstNodeInNextLevel
 
-#create Tree
-root, root.left, root.right = TreeNode(1), TreeNode(2), TreeNode(3)
-root.left.left, root.left.right, root.right.right = TreeNode(4), TreeNode(5), TreeNode(7)
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+        #create Tree
+        root, root.left, root.right = TreeNode(1), TreeNode(2), TreeNode(3)
+        root.left.left, root.left.right, root.right.right = TreeNode(4), TreeNode(5), TreeNode(7)
+        #test
+        test = SolutionOther()
+        test.connect(root)
+        Solution().connect(root)
+        print root
+        print root.left
+        print root.left.left
 
-#test
-test = SolutionOther()
-test.connect(root)
+if __name__ == '__main__':
+    unittest.main()
 
-if __name__ == "__main__":
-    Solution().connect(root)
-    print root
-    print root.left
-    print root.left.left
+Java = '''
+# Thought:
 
-#java
-java = '''
-public class Solution {
+# 1ms 86.28%
+class Solution {
     //hint to have pre point at root.left
     public void connect(TreeLinkNode root) {
         TreeLinkNode dummyHead = new TreeLinkNode(0);
@@ -139,36 +144,26 @@ public class Solution {
     }
 }
 
-public class Solution {
+/**
+ * Definition for binary tree with next pointer.
+ * public class TreeLinkNode {
+ *     int val;
+ *     TreeLinkNode left, right, next;
+ *     TreeLinkNode(int x) { val = x; }
+ * }
+ */
+# 0ms 100%
+class Solution {
     public void connect(TreeLinkNode root) {
-        if (root == null) {
-            return;
-        }
-        TreeLinkNode leftMost = null;
-        TreeLinkNode prev = null;
-        while (root != null) {
-            if (leftMost == null) {
-                leftMost = root.left != null ? root.left : root.right;
-            }
-            if (root.left != null) {
-                if (prev != null) {
-                    prev.next = root.left;
-                }
-                prev = root.left;
-            }
-            if (root.right != null) {
-                if (prev != null) {
-                    prev.next = root.right;
-                }
-                prev = root.right;
-            }
-            if (root.next != null) {
+        while(root != null){
+            TreeLinkNode tempChild = new TreeLinkNode(0);
+            TreeLinkNode currentChild = tempChild;
+            while(root!=null){
+                if(root.left != null) { currentChild.next = root.left; currentChild = currentChild.next;}
+                if(root.right != null) { currentChild.next = root.right; currentChild = currentChild.next;}
                 root = root.next;
-            } else {
-                root = leftMost;
-                leftMost = null;
-                prev = null;
             }
+            root = tempChild.next;
         }
     }
 }

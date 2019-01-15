@@ -1,8 +1,10 @@
-__source__ = 'https://leetcode.com/problems/kth-smallest-element-in-a-bst/#/description'
+__source__ = 'https://leetcode.com/problems/kth-smallest-element-in-a-bst/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/kth-smallest-element-in-a-bst.py
 # Time:  O(max(h, k))
 # Space: O(h)
-
+#
+# Description: Leetcode # 217. Contains Duplicate
+#
 # Given a binary search tree, write a function kthSmallest to find the kth smallest element in it.
 #
 # Note:
@@ -11,11 +13,12 @@ __source__ = 'https://leetcode.com/problems/kth-smallest-element-in-a-bst/#/desc
 # Follow up:
 # What if the BST is modified (insert/delete operations) often and
 # you need to find the kth smallest frequently? How would you optimize the kthSmallest routine?
-# Companines
+#
+# Companies
 # Bloomberg Uber Google
 # Related Topics
 # Binary Search Tree
-# Similar question
+# Similar Questions
 # Binary Tree Inorder Traversal
 #
 
@@ -25,7 +28,7 @@ __source__ = 'https://leetcode.com/problems/kth-smallest-element-in-a-bst/#/desc
 #         self.val = x
 #         self.left = None
 #         self.right = None
-
+import unittest
 class Solution:
     # @param {TreeNode} root
     # @param {integer} k
@@ -67,6 +70,7 @@ class Solution:
             return 0
         return 1 + self.count(root.left) + self.count(root.right)
 
+    # 80ms 12.27%
     def kthSmallest3(self, root, k):
         """
         :type root: TreeNode
@@ -85,8 +89,9 @@ class Solution:
         count.append(node.val)
         self.helper(node.right, count)
 
-#Java
 Java = '''
+# Thought:
+#
 1. InOrder with BFS/DFS, and Binary search (most preferably)
 /**
  * Definition for a binary tree node.
@@ -97,45 +102,30 @@ Java = '''
  *     TreeNode(int x) { val = x; }
  * }
  */
-public class Solution {
-    int dfsCnt = 0;
-    int result = Integer.MIN_VALUE;
 
+# 0ms 100%
+class Solution {
+    TreeNode res = null;
+    int count = 0;
     public int kthSmallest(TreeNode root, int k) {
-        //dfs(root,k);
-        //return result;
-        //return bfs(root, k);
-        return bs(root, k);
+        count = k;
+        find(root);
+        return res.val;
     }
 
-    #49% binary seach
-    public int bs(TreeNode root, int k) {
-        int count = countNodes(root.left);
-       if (k == cnt + 1) {
-            return root.val;
-        } else if (k <= cnt) {
-            return bs(root.left, k);
-        } else{ // k > cnt + 1
-            return bs(root.right, k - cnt - 1);
-        }
+    void find(TreeNode root) {
+        if (root == null || res != null) return;
+        find(root.left);
+        count--;
+        if (count == 0) res = root;
+        find(root.right);
     }
+}
 
-    public int countNodes(TreeNode node) {
-        if (node == null) return 0;
-        return countNodes(node.left) + countNodes(node.right) + 1;
-    }
-
-    # dfs 49%
-    public void dfs(TreeNode root, int k) {
-        if (root == null) return;
-        dfs(root.left, k); //cannot use k--
-        dfsCnt ++;
-        if(dfsCnt == k) result = root.val;
-        dfs(root.right, k);
-    }
-
-    # bfs 22%
-    public int bfs(TreeNode root, int k) {
+# BFS
+# 2ms 22.23%
+class Solution {
+    public int kthSmallest(TreeNode root, int k) {
         Stack<TreeNode> stack = new Stack<TreeNode>();
         TreeNode p = root;
         int count = 0;
@@ -152,4 +142,43 @@ public class Solution {
         }
         return Integer.MIN_VALUE;
     }
-}'''
+}
+
+# Binary Search
+# 1ms 63.43%
+class Solution {
+    public int kthSmallest(TreeNode root, int k) {
+        int cnt = countNodes(root.left);
+        if (k == cnt + 1) {
+            return root.val;
+        } else if (k <= cnt) {
+            return kthSmallest(root.left, k);
+        } else{ // k > cnt + 1
+            return kthSmallest(root.right, k - cnt - 1);
+        }
+    }
+
+    public int countNodes(TreeNode node) {
+        if (node == null) return 0;
+        return 1 + countNodes(node.left) + countNodes(node.right);
+    }
+}
+
+#45.07% 1ms
+class Solution {
+    int dfsCnt = 0;
+    int result = Integer.MIN_VALUE;
+
+    public int kthSmallest(TreeNode root, int k) {
+        dfs(root, k);
+        return result;
+    }
+    public void dfs(TreeNode root, int k) {
+        if (root == null) return;
+        dfs(root.left, k); //cannot use k--
+        dfsCnt ++;
+        if(dfsCnt == k) result = root.val;
+        dfs(root.right, k);
+    }
+}
+'''

@@ -1,8 +1,9 @@
-__source__ = 'https://leetcode.com/problems/detect-capital/#/description'
+__source__ = 'https://leetcode.com/problems/detect-capital/'
 # Time:  O()
 # Space: O()
 #
-# Description:
+# Description: 520. Detect Capital
+#
 # Given a word, you need to judge whether the usage of capitals in it is right or not.
 #
 # We define the usage of capitals in a word to be right when one of the following cases holds:
@@ -23,6 +24,7 @@ __source__ = 'https://leetcode.com/problems/detect-capital/#/description'
 # Hide Tags String
 
 import unittest
+# 24ms 100%
 class Solution(object):
     def detectCapitalUse(self, word):
         """
@@ -43,8 +45,10 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
-public class Solution {
+# Thought:
+
+# 13ms 86.84%
+class Solution {
     public boolean detectCapitalUse(String word) {
         int cnt = 0;
         for(char c: word.toCharArray()) if('Z' - c >= 0) cnt++;
@@ -52,7 +56,8 @@ public class Solution {
     }
 }
 
-public class Solution {
+# 21ms 41.31%
+class Solution {
     public boolean detectCapitalUse(String word) {
         return word.equals(word.toUpperCase()) ||
                word.equals(word.toLowerCase()) ||
@@ -61,7 +66,8 @@ public class Solution {
     }
 }
 
-public class Solution {
+# 21ms 41.31%
+class Solution {
     public boolean detectCapitalUse(String word) {
         return word.matches("[A-Z]+|[a-z]+|[A-Z][a-z]+");
     }

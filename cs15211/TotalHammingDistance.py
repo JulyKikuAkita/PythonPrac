@@ -1,9 +1,10 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/total-hamming-distance/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/total-hamming-distance.py
-
 # Time:  O(n)
 # Space: O(1)
-
+#
+# Description: Leetcode # 477. Total Hamming Distance
+#
 # The Hamming distance between two integers is the number of positions
 # at which the corresponding bits are different.
 #
@@ -21,7 +22,15 @@ __author__ = 'July'
 # Elements of the given array are in the range of 0 to 10^9
 # Length of the array will not exceed 10^4.
 # brute force: O(n^2)
-
+#
+# Companies
+# Facebook
+# Related Topics
+# Bit Manipulation
+# Similar Questions
+# Hamming Distance
+#
+import unittest
 class Solution(object):
     #http://stackoverflow.com/questions/21388448/sum-of-xor-values-of-all-pairs
     '''
@@ -44,6 +53,7 @@ class Solution(object):
 
        This can be done in O(kn) time, where k is the number of bits in the given values.
     '''
+    # 280ms 63.10%
     def totalHammingDistance(self, nums):
         """
         :type nums: List[int]
@@ -64,8 +74,23 @@ class Solution(object):
         """
         return sum(b.count('0') * b.count('1') for b in zip(*map('{:032b}'.format, nums)))
 
-'''
-public class Solution {
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+
+if __name__ == '__main__':
+    unittest.main()
+
+Java = '''
+# Thought: https://leetcode.com/problems/total-hamming-distance/solution/
+
+For each bit position 1-32 in a 32-bit integer,
+we count the number of integers in the array which have that bit set.
+Then, if there are n integers in the array and k of them have a particular bit set and (n-k) do not,
+then that bit contributes k*(n-k) hamming distance to the total.
+
+# 21ms 62.19%
+class Solution {
     public int totalHammingDistance(int[] nums) {
         int res = 0;
         for (int i = 0; i < 32; i++) {

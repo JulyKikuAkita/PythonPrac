@@ -1,8 +1,10 @@
-__source__ = 'https://github.com/kamyu104/LeetCode/blob/master/Python/path-sum-iii.py'
+__source__ = 'https://leetcode.com/problems/path-sum-iii/'
+# https://github.com/kamyu104/LeetCode/blob/master/Python/path-sum-iii.py
 # Time:  O(n^2)
 # Space: O(h)
 #
-# Description:
+# Description: 437. Path Sum III
+#
 # You are given a binary tree in which each node contains an integer value.
 #
 # Find the number of paths that sum to a given value.
@@ -43,7 +45,7 @@ __source__ = 'https://github.com/kamyu104/LeetCode/blob/master/Python/path-sum-i
 
 import unittest
 
-# https://leetcode.com/problems/path-sum-iii/#/solutions
+# 1012ms 19.38%
 class Solution(object):
     def pathSum(self, root, sum):
         """
@@ -78,7 +80,8 @@ class Solution(object):
 class SolutionBruteForce(object):
     def find_paths(self, root, target):
         if root:
-            return int(root.val == target) + self.find_paths(root.left, target-root.val) + self.find_paths(root.right, target-root.val)
+            return int(root.val == target) + self.find_paths(root.left, target-root.val) \
+                   + self.find_paths(root.right, target-root.val)
         return 0
 
     def pathSum(self, root, sum):
@@ -101,6 +104,8 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
+# Thought:
+
 Typical recursive DFS.
 Space: O(n) due to recursion.
 Time: O(n^2) in worst case (no branching); O(nlogn) in best case (balanced tree).
@@ -114,7 +119,9 @@ Time: O(n^2) in worst case (no branching); O(nlogn) in best case (balanced tree)
  *     TreeNode(int x) { val = x; }
  * }
  */
-public class Solution {
+
+# 23ms 22.46%
+class Solution {
     public int pathSum(TreeNode root, int sum) {
         if (root == null) return 0;
         return dfs(root, sum) //path sum from root
@@ -129,15 +136,17 @@ public class Solution {
         + dfs(node.right, sum - node.val);
     }
 }
-O(n)
-#Thought: So the idea is similar as Two sum, using HashMap to store
+
+Thought: So the idea is similar as Two sum, using HashMap to store
 ( key : the prefix sum, value : how many ways get to this prefix sum) ,
 and whenever reach a node, we check if prefix sum - target exists in hashmap or not,
 if it does, we added up the ways of prefix sum - target into res.
 For instance : in one path we have 1,2,-1,-1,2, then the prefix sum will be: 1, 3, 2, 1, 3,
 let's say we want to find target sum is 2, then we will have{2}, {1,2,-1}, {2,-1,-1,2} and {2}ways.
 
-public class Solution {
+# O(n)
+# 11ms 77.54%
+class Solution {
     public int pathSum(TreeNode root, int sum) {
         HashMap<Integer, Integer> preSum = new HashMap<>();
         preSum.put(0, 1);

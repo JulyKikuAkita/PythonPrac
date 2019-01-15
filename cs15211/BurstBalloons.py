@@ -2,7 +2,9 @@ __source__ = 'https://leetcode.com/problems/different-ways-to-add-parentheses/#/
 # https://github.com/kamyu104/LeetCode/blob/master/Python/burst-balloons.py
 # Time:  O(n^3)
 # Space: O(n^2)
-
+#
+# Description: Leetcode # 312. Burst Balloons
+#
 # Given n balloons, indexed from 0 to n-1.
 # Each balloon is painted with a number on it
 # represented by array nums.
@@ -27,15 +29,17 @@ __source__ = 'https://leetcode.com/problems/different-ways-to-add-parentheses/#/
 #
 # Return 167
 #
-#     nums = [3,1,5,8] --> [3,5,8] -->   [3,8]   -->  [8]  --> []
+#   nums = [3,1,5,8] --> [3,5,8] -->   [3,8]   -->  [8]  --> []
 #   coins =  3*1*5      +  3*5*8    +  1*3*8      + 1*8*1   = 167
 #
 # dp[l][r] = max(dp[l][r], nums[l] * nums[m] * nums[r] + dp[l][m] + dp[m][r])
 #
-#  Google Snapchat
-#Hide Tags Dynamic Programming Divide and Conquer
+# Companies
+# Google Snapchat
+# Related Topics
+# Divide and Conquer Dynamic Programming
 #
-
+import unittest
 # https://leetcode.com/discuss/72216/share-some-analysis-and-explanations
 class Solution(object):
     def maxCoins(self, nums):
@@ -73,11 +77,21 @@ class Solution2(object):
         if dp[i][j] > 0:
             return dp[i][j]
         for k in xrange(i, j +1):
-            dp[i][j] = max(dp[i][j], nums[i-1] * nums[k] * nums[j+1] + self.dfs(i, k-1, dp, nums) + self.dfs(k+1, j, dp,nums))
+            dp[i][j] = max(dp[i][j], nums[i-1] * nums[k] * nums[j+1]
+                                     + self.dfs(i, k-1, dp, nums) + self.dfs(k+1, j, dp,nums))
         return dp[i][j]
 
-#java
-java = '''
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+        print Solution().containsDuplicate([12344555,12344555])
+
+if __name__ == '__main__':
+    unittest.main()
+
+Java = '''
+#Thought: http://algobox.org/burst-balloons/
+
 https://discuss.leetcode.com/topic/30746/share-some-analysis-and-explanations/6
 Side notes: In case you are curious, for the problem "leetcode 312. Burst Balloons",
 the external information to subarray nums[i, j] is the two numbers (denoted as left and right)
@@ -145,7 +159,8 @@ Here comes the final solutions. Note that we put 2 balloons with 1 as boundaries
 and also burst all the zero balloons in the first round since they won't give any coins.
 The algorithm runs in O(n^3) which can be easily seen from the 3 loops in dp solution.
 
-#DP 41%
+# DP
+# 6ms 89.19%
 public class Solution {
     public int maxCoins(int[] nums) {
         int[] newNums = new int[nums.length + 2];
@@ -184,8 +199,9 @@ DP table: if use [3,1,5,8]
 0 0 0  0   0   0
 
 
-# 64%  Java D&C with Memoization
-public class Solution {
+# Java D&C with Memoization
+# 99.18%
+class Solution {
     public int maxCoins(int[] nums) {
         int[] newNums = new int[nums.length + 2];
 	    int n = 1;

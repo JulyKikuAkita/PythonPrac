@@ -1,11 +1,15 @@
-__author__ = 'July'
+# coding=utf-8
+__source__ = 'https://leetcode.com/problems/regular-expression-matching/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/regular-expression-matching.py
 # Time:  O(m * n)
 # Space: O(n)
 # DP
 # "*" cannot be the first char?
 #
-# Implement regular expression matching with support for '.' and '*'.
+# Description: Leetcode # 10. Regular Expression Matching
+#
+# Given an input string (s) and a pattern (p),
+# implement regular expression matching with support for '.' and '*'.
 #
 # '.' Matches any single character.
 # '*' Matches zero or more of the preceding element.
@@ -23,6 +27,12 @@ __author__ = 'July'
 # isMatch("aa", ".*") -> true
 # isMatch("ab", ".*") -> true
 # isMatch("aab", "c*a*b") -> true  #wildcard matching return False
+# Companies
+# Google Uber Airbnb Facebook Twitter
+# Related Topics
+# Dynamic Programming Backtracking String
+# Similar Questions
+# Wildcard Matching
 #
 import unittest
 # dp with rolling window
@@ -127,64 +137,45 @@ class Solution4:
 
         return p_ptr == len(p)
 
-'''
-First of all, this is one of the most difficulty problems. It is hard to handle many cases.
 
-The problem should be simplified to handle 2 basic cases:
+# First of all, this is one of the most difficulty problems. It is hard to handle many cases.
+#
+# The problem should be simplified to handle 2 basic cases:
+#
+# the second char of pattern is "*"
+# the second char of pattern is not "*"
+# For the 1st case, if the first char of pattern is not ".",
+# the first char of pattern and string should be the same. Then continue to match the left part.
+#
+# For the 2nd case, if the first char of pattern is "." or first char of pattern == the first i char of string,
+# continue to match the left.
+#
+# Be careful about the offset.
+# 2376ms 12.40%
+class Solution(object):
+    def isMatch(self, text, pattern):
+        """
+        :type s: str
+        :type p: str
+        :rtype: bool
+        """
+        if not pattern:
+            return not text
 
-the second char of pattern is "*"
-the second char of pattern is not "*"
-For the 1st case, if the first char of pattern is not ".", the first char of pattern and string should be the same. Then continue to match the left part.
+        first_match = bool(text) and pattern[0] in {text[0], '.'}
 
-For the 2nd case, if the first char of pattern is "." or first char of pattern == the first i char of string, continue to match the left.
-
-Be careful about the offset.
-
-
-'''
-#http://www.programcreek.com/2012/12/leetcode-regular-expression-matching-in-java/
-class java_readable:
-    # @return a boolean
-    def isMatch(self, s, p):
-        #base case
-        if len(p) == 0:
-            return len(s) == 0
-        #special case
-        if len(p) == 1:
-            # // if the length of s is 0, return false
-            if len(s) < 1:
-                return False
-            # if the first does not match, return false
-            elif p[0] != s[0] and p[0] != '.':
-                return False
-            # otherwise, compare the rest of the string of s and p.
-            else:
-                return self.isMatch(s[1:], p[1:])
-
-        #case 1: when the second char of p is not '*'
-        if p[1] != '*':
-            if len(s) < 1:
-                return False
-            if p[0] != s[0] and p[0] != '.':
-                return False
-            else:
-                return self.isMatch(s[1:], p[1:])
-
-        # case 2: when the second char of p is '*', complex case.
+        if len(pattern) >= 2 and pattern[1] == '*':
+            return (self.isMatch(text, pattern[2:]) or
+                    first_match and self.isMatch(text[1:], pattern))
         else:
-            # case 2.1: a char & '*' can stand for 0 element
-            if self.isMatch(s, p[2:]):
-                return True
-            # case 2.2: a char & '*' can stand for 1 or more preceding element,
-		        # so try every sub string
-            i = 0
-            while i < len(s) and s[i] == p[0] or p[0] == '.':
-                if self.isMatch(s[i+1:], p[2:]):
-                    return True
-                i += 1
-            return False
+            return first_match and self.isMatch(text[1:], pattern[1:])
 
-
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        pass
+        #test = SolutionOther()
+        #print test.isMatch("aaaaaaaaaaaaab", "a*a*a*a*a*a*a*a*a*a*c")
+        #print test.isMatchTLE("aaaaaaaaaaaaab", "a*a*a*a*a*a*a*a*a*a*c")
 
 if __name__ == "__main__":
     #print Solution().isMatch("abcd","d*")
@@ -198,51 +189,74 @@ if __name__ == "__main__":
     print Solution().isMatch("aab", "c*a*b")
     print Solution4().isMatch("aab", "c*a*b")
 
-# http://www.cnblogs.com/zuoyuan/p/3781773.html
-class SolutionOther:
-    # @return a boolean
-    #dp
-    def isMatch(self, s, p):
-        dp = [[False for i in range(len(p) + 1)] for j in range(len(s) +1)]
-        dp[0][0] = True
-        for i in range(1, len(p)+1):
-            if p[i-1] == '*':
-                if i >= 2:
-                    dp[0][i] = dp[0][i-2]
-        for i in range(1, len(s)+1):
-            for j in range(1, len(p)+1):
-                if p[j-1] == '.':
-                    dp[i][j] = dp[i-1][j-1]
-                elif p[j-1] == '*':
-                    dp[i][j] = dp[i][j-1] or dp[i][j-2] or (dp[i-1][j] and (s[i-1] == p[j-2] or p[j-2] == '.'))
-                else:
-                    dp[i][j] = dp[i-1][j-1] and s[i-1] == p[j-1]
-        return dp[len(s)][len(p)]
+Java = '''
+# Thought: https://leetcode.com/problems/regular-expression-matching/solution/
+# Approach 1: Recursion
+Complexity Analysis
+Time Complexity: Let T, P be the lengths of the text and the pattern respectively. 
+In the worst case, a call to match(text[i:], pattern[2j:]) will be made Choose (i + j) over i times, 
+and strings of the order O(T−i) and O(P − 2 * j) will be made. 
+Thus, the complexity has the order ∑ i=0T∑ j=0 P/2(i over i+j)O(T+P−i−2j). 
+With some effort outside the scope of this article, we can show this is bounded by O((T+P)* 2^(T + P/ 2)) 
+Space Complexity: For every call to match, we will create those strings as described above, 
+possibly creating duplicates. If memory is not freed, this will also take a total of O((T+P)* 2^(T + P/ 2))
+space, even though there are only order O(T^2 + P^2) unique suffixes of P and T that are actually required. 
 
+# 149ms 11.38%
+class Solution {
+    public boolean isMatch(String s, String p) {
+        if (p.isEmpty()) return s.isEmpty();
+        boolean first_match = (!s.isEmpty() &&
+                               (p.charAt(0) == s.charAt(0) || p.charAt(0) == '.'));
+        if (p.length() >= 2 && p.charAt(1) == '*') {
+            return isMatch(s, p.substring(2)) || (first_match && isMatch(s.substring(1), p));
+        } else {
+            return first_match && isMatch(s.substring(1), p.substring(1));
+        }
+    }
+}
 
-    # Time Limit Exceeded
-    def isMatchTLE(self, s, p):
-        if len(p) == 0 : return len(s) == 0
-        if len(p) == 1 or p[1] != '*' :
-            if len(s) == 0 or (s[0] != p[0] and p[0] != '.'):
-                return False
-            return self.isMatchTLE(s[1:],p[1:])
-        else:
-            i = -1
-            length = len(s)
-            while i < length and (i<0 or p[0] == '.' or p[0] == s[i]):
-                if self.isMatchTLE(s[i+1:], p[2:]): return True
-                i += 1
-            return False
+# Bottom-Up Variation
+# Complexity Analysis
+# Time Complexity: Let T, P be the lengths of the text and the pattern respectively. 
+# The work for every call to dp(i, j) for i=0, ... ,T; j=0,...,P is done once, and it is O(1) work. 
+# Hence, the time complexity is O(TP).
+# Space Complexity: The only memory we use is the O(TP) boolean entries in our cache. 
+# Hence, the space complexity is O(TP).
 
-#test
-#test = SolutionOther()
-#print test.isMatch("aaaaaaaaaaaaab", "a*a*a*a*a*a*a*a*a*a*c")
-#print test.isMatchTLE("aaaaaaaaaaaaab", "a*a*a*a*a*a*a*a*a*a*c")
+# 26ms 59.91%
+class Solution {
+    public boolean isMatch(String s, String p) {
+        boolean[][] dp = new boolean[s.length() + 1][p.length() + 1];
+        dp[s.length()][p.length()] = true;
+        for (int i = s.length(); i >= 0; i--) {
+            for (int j = p.length() - 1; j >= 0; j--) {
+                boolean first_match = (i < s.length() && (p.charAt(j) == s.charAt(i) || p.charAt(j) == '.'));
+                if (j + 1 < p.length() && p.charAt(j + 1) == '*') {
+                    dp[i][j] = dp[i][j + 2] || first_match && dp[i + 1][j];
+                } else {
+                    dp[i][j] = first_match && dp[i + 1][j + 1];
+                }
+            }
+        }
+        return dp[0][0];
+    }
+}
 
-#java
-js = '''
-public class Solution {
+https://discuss.leetcode.com/topic/40371/easy-dp-java-solution-with-detailed-explanation
+This Solution use 2D DP. beat 90% solutions, very simple.
+Here are some conditions to figure out, then the logic can be very straightforward.
+1, If p.charAt(j) == s.charAt(i) :  dp[i][j] = dp[i-1][j-1];
+2, If p.charAt(j) == '.' : dp[i][j] = dp[i-1][j-1];
+3, If p.charAt(j) == '*':
+   here are two sub conditions:
+               1   if p.charAt(j-1) != s.charAt(i) : dp[i][j] = dp[i][j-2]  //in this case, a* only counts as empty
+               2   if p.charAt(i-1) == s.charAt(i) or p.charAt(i-1) == '.':
+                              dp[i][j] = dp[i-1][j]    //in this case, a* counts as multiple a
+                           or dp[i][j] = dp[i][j-1]   // in this case, a* counts as single a
+                           or dp[i][j] = dp[i][j-2]   // in this case, a* counts as empty
+# 27ms 54.48%
+class Solution {
     public boolean isMatch(String s, String p) {
         int lenS = s.length();
         int lenP = p.length();
@@ -251,15 +265,51 @@ public class Solution {
         for (int i = 0; i <= lenS; i++) {
             for (int j = 1; j <= lenP; j++) {
                 if (p.charAt(j - 1) == '.') {
-                    dp[i][j] = i > 0 && dp[i - 1][j - 1];
+                    dp[i][j] = i > 0 && dp[i-1][j - 1];
                 } else if (p.charAt(j - 1) == '*') {
-                    dp[i][j] = j > 1 && (dp[i][j - 2] || dp[i][j - 1] || (i > 0 && dp[i - 1][j] && (p.charAt(j - 2) == '.' || p.charAt(j - 2) == s.charAt(i - 1))));
+                    dp[i][j] = j - 1 > 0 && 
+                    (dp[i][j - 2] || dp[i][j - 1] || 
+                    (i > 0 && dp[i - 1][j] && (p.charAt(j - 2) == '.' || p.charAt(j - 2) == s.charAt(i - 1))));
                 } else {
                     dp[i][j] = i > 0 && dp[i - 1][j - 1] && s.charAt(i - 1) == p.charAt(j - 1);
                 }
             }
         }
         return dp[lenS][lenP];
+    }
+}
+
+# 24ms 80.27% 
+class Solution {
+    public boolean isMatch(String s, String p) {
+        if (s == null || p == null) {
+            return false;
+        }
+        boolean[][] dp = new boolean[s.length()+1][p.length()+1];
+        dp[0][0] = true;
+        for (int i = 0; i < p.length(); i++) {
+            if (p.charAt(i) == '*' && dp[0][i-1]) {
+                dp[0][i+1] = true;
+            }
+        }
+        for (int i = 0 ; i < s.length(); i++) {
+            for (int j = 0; j < p.length(); j++) {
+                if (p.charAt(j) == '.') {
+                    dp[i+1][j+1] = dp[i][j];
+                }
+                if (p.charAt(j) == s.charAt(i)) {
+                    dp[i+1][j+1] = dp[i][j];
+                }
+                if (p.charAt(j) == '*') {
+                    if (p.charAt(j-1) != s.charAt(i) && p.charAt(j-1) != '.') {
+                        dp[i+1][j+1] = dp[i+1][j-1];
+                    } else {
+                        dp[i+1][j+1] = (dp[i+1][j] || dp[i][j+1] || dp[i+1][j-1]);
+                    }
+                }
+            }
+        }
+        return dp[s.length()][p.length()];
     }
 }
 '''

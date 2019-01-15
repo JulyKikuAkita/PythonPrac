@@ -1,34 +1,41 @@
-__author__ = 'July'
+__author__ = 'https://leetcode.com/problems/sparse-matrix-multiplication/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/sparse-matrix-multiplication.py
-'''
-Given two sparse matrices A and B, return the result of AB.
-
-You may assume that A's column number is equal to B's row number.
-
-Example:
-
-A = [
-  [ 1, 0, 0],
-  [-1, 0, 3]
-]
-
-B = [
-  [ 7, 0, 0 ],
-  [ 0, 0, 0 ],
-  [ 0, 0, 1 ]
-]
-
-
-     |  1 0 0 |   | 7 0 0 |   |  7 0 0 |
-AB = | -1 0 3 | x | 0 0 0 | = | -7 0 3 |
-                  | 0 0 1 |
-Hide Company Tags LinkedIn
-
-'''
+# Time:  O(m * n * l), A is m x n matrix, B is n x l matrix
+# Space: O(m * l)
+#
+# Description: Leetcode # 311. Sparse Matrix Multiplication
+#
+# Given two sparse matrices A and B, return the result of AB.
+#
+# You may assume that A's column number is equal to B's row number.
+#
+# Example:
+#
+# A = [
+#   [ 1, 0, 0],
+#   [-1, 0, 3]
+# ]
+#
+# B = [
+#   [ 7, 0, 0 ],
+#   [ 0, 0, 0 ],
+#   [ 0, 0, 1 ]
+# ]
+#
+#
+#      |  1 0 0 |   | 7 0 0 |   |  7 0 0 |
+# AB = | -1 0 3 | x | 0 0 0 | = | -7 0 3 |
+#                   | 0 0 1 |
+# Companies
+# Facebook LinkedIn
+# Related Topics
+# Hash Table
+#
 
 # Time:  O(m * n * l), A is m x n matrix, B is n x l matrix
 # Space: O(m * l)
-
+import unittest
+# 92ms 73.21%
 class Solution(object):
     def multiply(self, A, B):
         """
@@ -36,7 +43,6 @@ class Solution(object):
         :type B: List[List[int]]
         :rtype: List[List[int]]
         """
-
         m, n , l = len(A), len(B), len(B[0])
         res = [[0 for _ in xrange(l)] for _ in xrange(m)]
         for i in xrange(m):
@@ -46,9 +52,18 @@ class Solution(object):
                         res[i][j] += A[i][k] * B[k][j]
         return res
 
-#java
-js = '''
-public class Solution {
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+
+if __name__ == '__main__':
+    unittest.main()
+
+Java = '''
+# Thought:
+#
+# 28ms 97.85%
+class Solution {
     public int[][] multiply(int[][] A, int[][] B) {
         if (A.length == 0 || B.length == 0) {
             return new int[0][0];
@@ -67,8 +82,8 @@ public class Solution {
     }
 }
 
-
-public class Solution {
+# 90ms 36.69%
+class Solution {
     public int[][] multiply(int[][] A, int[][] B) {
         if (A == null || A.length == 0 || A[0].length == 0 || B.length == 0 || B[0].length == 0 || A[0].length != B.length) {
             return new int[0][0];

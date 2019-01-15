@@ -1,8 +1,10 @@
-__source__ = 'https://github.com/kamyu104/LeetCode/blob/master/Python/optimal-account-balancing.py'
+__source__ = 'https://leetcode.com/problems/optimal-account-balancing/'
+# https://github.com/kamyu104/LeetCode/blob/master/Python/optimal-account-balancing.py
 # Time:  O(n * 2^n), n is the size of the debt.
 # Space: O(n * 2^n)
 #
-# Description:
+# Description: 465. Optimal Account Balancing
+#
 # A group of friends went on holiday and sometimes lent each other money.
 # For example, Alice paid for Bill's lunch for $10. Then later Chris gave Alice $5 for a taxi ride.
 # We can model each transaction as a tuple (x, y, z) which means person x gave person y $z.
@@ -48,7 +50,7 @@ __source__ = 'https://github.com/kamyu104/LeetCode/blob/master/Python/optimal-ac
 
 import unittest
 import collections
-
+# 44ms 76.22%
 class Solution(object):
     def minTransfers(self, transactions):
         """
@@ -94,7 +96,8 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://discuss.leetcode.com/topic/68948/easy-java-solution-with-explanation
+# Thought:
+https://discuss.leetcode.com/topic/68948/easy-java-solution-with-explanation
 With all the given transactions, in the end, each person with ID = id will have an overall balance bal[id].
 Note that the id value or any person coincidentally with 0 balance is irrelevant to debt settling count,
 so we can simply use an array debt[] to store all non-zero balances, where
@@ -140,7 +143,8 @@ P.S: May be there are other elegant and exact solutions and this solution doesn'
 but it is quite reasonable. The more random shuffles you do, the more probability of hitting the answer.
 For that test cases 1000 is enough, may be less
 
-public class Solution {
+# 44ms 32.84%
+class Solution {
     public int minTransfers(int[][] transactions) {
         if(transactions == null || transactions.length == 0) return 0;
         Map<Integer, Integer> acc = new HashMap<>();

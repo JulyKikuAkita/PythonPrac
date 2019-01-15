@@ -1,8 +1,10 @@
-__source__ = 'https://leetcode.com/problems/min-stack/#/solutions'
+__source__ = 'https://leetcode.com/problems/min-stack/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/min-stack.py
 # Time:  O(n)
 # Space: O(1)
 # Stack
+#
+# Description: Leetcode # 155. Min Stack
 #
 # Design a stack that supports push, pop, top, and retrieving the minimum element in constant time.
 #
@@ -10,15 +12,24 @@ __source__ = 'https://leetcode.com/problems/min-stack/#/solutions'
 # pop() -- Removes the element on top of the stack.
 # top() -- Get the top element.
 # getMin() -- Retrieve the minimum element in the stack.
+# Example:
+# MinStack minStack = new MinStack();
+# minStack.push(-2);
+# minStack.push(0);
+# minStack.push(-3);
+# minStack.getMin();   --> Returns -3.
+# minStack.pop();
+# minStack.top();      --> Returns 0.
+# minStack.getMin();   --> Returns -2.
 #
-# Topics:
-# Stack Design
-# You might like:
-# (H) Sliding Window Maximum
-# Company:
+# Companies
 # Google Uber Zenefits Amazon Snapchat Bloomberg
+# Related Topics
+# Stack Design
+# Similar Questions
+# Sliding Window Maximum
 #
-
+import unittest
 class MinStack:
     def __init__(self):
         self.min = None
@@ -53,13 +64,6 @@ class MinStack:
     def getMin(self):
         return self.min
 
-if __name__ == "__main__":
-    stack = MinStack()
-    stack.push(1)
-    stack.push(15)
-    stack.push(3)
-    print [stack.top(), stack.getMin()]
-
 class MinStackOther:
     def __init__(self):
         self.stack = []
@@ -90,45 +94,67 @@ class MinStackOther:
     def getMin(self):
         return self.minStack[-1]
 
-#Java
-java = '''
-//use only one stack:
-//pop min twice
-public class MinStack {
-    int min;
-    Stack<Integer> s;
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+        stack = MinStack()
+        stack.push(1)
+        stack.push(15)
+        stack.push(3)
+        print [stack.top(), stack.getMin()]
+
+if __name__ == '__main__':
+    unittest.main()
+
+Java = '''
+# Thought:
+
+Input:
+["MinStack","push","push","push","getMin","pop","getMin"]
+[[],[0],[1],[0],[],[],[]]
+Output:
+[null,null,null,null,0,null,1]
+Expected:
+[null,null,null,null,0,null,0]
+
+# use only one stack:
+# pop min twice
+# 54ms 100%
+class MinStack {
+    private Stack<Integer> stack;
+    private int min;
 
     /** initialize your data structure here. */
     public MinStack() {
-        s = new Stack();
+        stack = new Stack<>();
         min = Integer.MAX_VALUE;
     }
-
+    
     public void push(int x) {
-        if ( x <= min) {
-            s.push(min);
+        if (x <= min) {
+            stack.push(min);
             min = x;
         }
-        s.push(x);
+        stack.push(x);
     }
-
+    
     public void pop() {
-        if (s.pop() == min) {
-            min = s.pop();
+        if (min == stack.pop()) {
+            min = stack.pop();
         }
     }
-
+    
     public int top() {
-        return s.peek();
+        return stack.peek();
     }
-
+    
     public int getMin() {
         return min;
     }
 }
 
-
-public class MinStack {
+# 71ms 49.15%
+class MinStack {
     Stack<Integer> dataStack;
     Stack<Integer> minStack;
 
@@ -168,4 +194,41 @@ public class MinStack {
  * int param_3 = obj.top();
  * int param_4 = obj.getMin();
  */
+
+# 73ms 45.84%
+class MinStack {
+    Stack<Integer> stack;
+    Stack<Integer> min;
+
+    /** initialize your data structure here. */
+    public MinStack() {
+        this.stack = new Stack<Integer>();
+        this.min = new Stack<Integer>();
+    }
+
+    public void push(int x) {
+        this.stack.push(x);
+
+        if (this.min.isEmpty() || this.min.peek() >= x) {
+            this.min.push(x);
+        }
+    }
+
+    public void pop() {
+        int val = this.stack.pop();
+
+        if (this.min.peek() == val) {
+            this.min.pop();
+        }
+    }
+
+    public int top() {
+        return this.stack.peek();
+    }
+
+    public int getMin() {
+        return this.min.peek();
+    }
+}
+
 '''

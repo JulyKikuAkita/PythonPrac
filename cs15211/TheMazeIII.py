@@ -1,8 +1,9 @@
-__source__ = 'https://leetcode.com/problems/the-maze-iii/#/description'
+__source__ = 'https://leetcode.com/problems/the-maze-iii/'
 # Time:  O()
 # Space: O()
 #
-# Description:
+# Description: 499. The Maze III
+#
 # There is a ball in a maze with empty spaces and walls.
 # The ball can go through empty spaces by rolling up (u), down (d), left (l) or right (r),
 # but it won't stop rolling until hitting a wall.
@@ -60,7 +61,8 @@ __source__ = 'https://leetcode.com/problems/the-maze-iii/#/description'
 # Note:
 # There is only one ball and one hole in the maze.
 # Both the ball and hole exist on an empty space, and they will not be at the same position initially.
-# The given maze does not contain border (like the red rectangle in the example pictures), but you could assume the border of the maze are all walls.
+# The given maze does not contain border (like the red rectangle in the example pictures),
+# but you could assume the border of the maze are all walls.
 # The maze contains at least 2 empty spaces, and the width and the height of the maze won't exceed 30.
 # Hide Tags Depth-first Search Breadth-first Search
 # Hide Similar Problems (M) The Maze (M) The Maze II
@@ -83,7 +85,8 @@ import heapq
 #  If during this simulation we reach the hole prematurely, we should also stop.
 # If after searching with our algorithm it is the case that we never reached the hole,
 # then the task is impossible.
-
+#
+# 32ms 90.12%
 class Solution(object):
     def findShortestWay(self, maze, ball, hole):
         """
@@ -127,8 +130,10 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
-public class Solution {
+# Thought:
+
+# 10ms 81.74%
+class Solution {
   public class Element {
     int direction;
     int row, col;
@@ -191,7 +196,8 @@ public class Solution {
   }
 }
 
-public class Solution {
+# 15ms 50%
+class Solution {
     class Point implements Comparable<Point> {
         int x,y,l;
         String s;
@@ -235,7 +241,8 @@ Each time, first add the direction to the path, and then go with that direction,
 checking for hole along the way. When hit a wall, try to turn, and go with the new direction.
 For the starting point, don't "go", jump directly to "turn" part.
 
-public class Solution {
+# 6ms 98.40%
+class Solution {
     int min; //min distance to hole
     String minS; //min distance's path string
     int[] hole;

@@ -4,6 +4,8 @@ __source__ = 'https://github.com/kamyu104/LeetCode/blob/master/Python/the-skylin
 # Time:  O(nlogn)
 # Space: O(n)
 #
+# Description: Leetcode # 218. The Skyline Problem
+#
 # A city's skyline is the outer contour of the silhouette formed
 # by all the buildings in that city when viewed from a distance.
 # Now suppose you are given the locations and height of all the
@@ -34,10 +36,12 @@ __source__ = 'https://github.com/kamyu104/LeetCode/blob/master/Python/the-skylin
 # in the final output as such: [...[2 3], [4 5], [12 7], ...]
 #
 #
+# Companies
 # Microsoft Google Facebook Twitter Yelp
+# Related Topics
 # Binary Indexed Tree Segment Tree Heap Divide and Conquer
 #
-
+import unittest
 # Divide and conquer solution.
 start, end, height = 0, 1, 2
 class Solution:
@@ -120,41 +124,6 @@ class Solution:
                 b_idx += 1
         return a_idx, b_idx
 
-#TLE
-import heapq
-class Solution(object):
-    def getSkyline(self, buildings):
-        """
-        :type buildings: List[List[int]]
-        :rtype: List[List[int]]
-        """
-
-        if not buildings:
-            return [[]]
-        res = []
-        heights = []
-        for b in buildings:
-            heights.append([b[0], b[2]])
-            heights.append([b[1], -b[2]])
-        heights.sort(key = lambda h1 : (h1[0], -(h1[1])))
-
-        pq = [0]
-        prev = 0
-        for h in heights:
-            y = h[1];
-            if y >= 0:
-                pq.append(y)
-                heapq.heapify(pq)
-            else:
-                pq.remove(-y)
-            cur = pq[-1]
-            if prev != cur:
-                res.append([h[0], cur])
-                prev = cur
-
-        return res
-
-
 #If need to create own heapq:
 # http://stackoverflow.com/questions/8875706/python-heapq-with-custom-compare-predicate
 import heapq
@@ -174,11 +143,20 @@ class MyHeap(object):
    def pop(self):
        return heapq.heappop(self._data)[1]
 
-#java
-java = '''
-Thought: https://briangordon.github.io/2014/08/the-skyline-problem.html
 
-public class Solution {
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+
+if __name__ == '__main__':
+    unittest.main()
+
+Java = '''
+# Thought:
+# https://briangordon.github.io/2014/08/the-skyline-problem.html
+
+# 19ms 90.85%
+class Solution {
     public List<int[]> getSkyline(int[][] buildings) {
         List<int[]> result = new ArrayList<>();
         int len = buildings.length;
@@ -222,53 +200,10 @@ public class Solution {
 }
 
 
-public class Solution {
-    public List<int[]> getSkyline(int[][] buildings) {
-        List<int[]> result = new ArrayList<>();
-        int len = buildings.length;
-        if (len == 0) {
-            return result;
-        }
-        List<int[]> heights = new ArrayList<>();
-        for (int i = 0; i < len; i++) {
-            heights.add(new int[] {buildings[i][0], buildings[i][2]});
-            heights.add(new int[] {buildings[i][1], -buildings[i][2]});
-        }
-        Collections.sort(heights, new Comparator<int[]>() {
-            @Override
-            public int compare(int[] height1, int[] height2) {
-                return height1[0] != height2[0] ?
-                    Integer.compare(height1[0], height2[0]) : -Integer.compare(height1[1], height2[1]);
-            }
-        });
-        PriorityQueue<Integer> pq = new PriorityQueue<>(len, new Comparator<Integer>() {
-            @Override
-            public int compare(Integer height1, Integer height2) {
-                return -Integer.compare(height1, height2);
-            }
-        });
-        int prevHeight = 0;
-        pq.add(0);
-        for (int[] height : heights) {
-            if (height[1] >= 0) {
-                pq.add(height[1]);
-            } else {
-                pq.remove(-height[1]);
-            }
-            int curHeight = pq.peek();
-            if (prevHeight != curHeight) {
-                result.add(new int[] {height[0], curHeight});
-                prevHeight = curHeight;
-            }
-        }
-        return result;
-    }
-}
-
-89%:
+# 18ms 91.37%
 import java.util.SortedMap;
 
-public class Solution {
+class Solution {
     public List<int[]> getSkyline(int[][] buildings) {
         List<int[]> result = new ArrayList<>();
         Wall[] walls = new Wall[buildings.length << 1];
@@ -324,8 +259,63 @@ public class Solution {
     }
 }
 
-100%
-public class Solution {
+# Divide and conquer:
+# 6ms 98.07%
+class Solution {
+	public List<int[]> getSkyline(int[][] buildings) {
+		if (buildings.length == 0)
+			return new LinkedList<int[]>();
+		return recurSkyline(buildings, 0, buildings.length - 1);
+	}
+
+	private LinkedList<int[]> recurSkyline(int[][] buildings, int p, int q) {
+		if (p < q) {
+			int mid = p + (q - p) / 2;
+			return merge(recurSkyline(buildings, p, mid),
+					recurSkyline(buildings, mid + 1, q));
+		} else {
+			LinkedList<int[]> rs = new LinkedList<int[]>();
+			rs.add(new int[] { buildings[p][0], buildings[p][2] });
+			rs.add(new int[] { buildings[p][1], 0 });
+			return rs;
+		}
+	}
+
+	private LinkedList<int[]> merge(LinkedList<int[]> l1, LinkedList<int[]> l2) {
+		LinkedList<int[]> rs = new LinkedList<int[]>();
+		int h1 = 0, h2 = 0;
+		while (l1.size() > 0 && l2.size() > 0) {
+			int x = 0, h = 0;
+			if (l1.getFirst()[0] < l2.getFirst()[0]) {
+				x = l1.getFirst()[0];
+				h1 = l1.getFirst()[1];
+				h = Math.max(h1, h2);
+				l1.removeFirst();
+			} else if (l1.getFirst()[0] > l2.getFirst()[0]) {
+				x = l2.getFirst()[0];
+				h2 = l2.getFirst()[1];
+				h = Math.max(h1, h2);
+				l2.removeFirst();
+			} else {
+				x = l1.getFirst()[0];
+				h1 = l1.getFirst()[1];
+				h2 = l2.getFirst()[1];
+				h = Math.max(h1, h2);
+				l1.removeFirst();
+				l2.removeFirst();
+			}
+			if (rs.size() == 0 || h != rs.getLast()[1]) {
+				rs.add(new int[] { x, h });
+			}
+		}
+		rs.addAll(l1);
+		rs.addAll(l2);
+		return rs;
+	}
+}
+
+# 2ms 100%
+class Solution {
     class KeyPoint {
         public int key;
         public int height;
@@ -390,63 +380,54 @@ public class Solution {
     }
 }
 
-
-Divide and conquer:
-public class Solution {
-	public List<int[]> getSkyline(int[][] buildings) {
-		if (buildings.length == 0)
-			return new LinkedList<int[]>();
-		return recurSkyline(buildings, 0, buildings.length - 1);
-	}
-
-	private LinkedList<int[]> recurSkyline(int[][] buildings, int p, int q) {
-		if (p < q) {
-			int mid = p + (q - p) / 2;
-			return merge(recurSkyline(buildings, p, mid),
-					recurSkyline(buildings, mid + 1, q));
-		} else {
-			LinkedList<int[]> rs = new LinkedList<int[]>();
-			rs.add(new int[] { buildings[p][0], buildings[p][2] });
-			rs.add(new int[] { buildings[p][1], 0 });
-			return rs;
-		}
-	}
-
-	private LinkedList<int[]> merge(LinkedList<int[]> l1, LinkedList<int[]> l2) {
-		LinkedList<int[]> rs = new LinkedList<int[]>();
-		int h1 = 0, h2 = 0;
-		while (l1.size() > 0 && l2.size() > 0) {
-			int x = 0, h = 0;
-			if (l1.getFirst()[0] < l2.getFirst()[0]) {
-				x = l1.getFirst()[0];
-				h1 = l1.getFirst()[1];
-				h = Math.max(h1, h2);
-				l1.removeFirst();
-			} else if (l1.getFirst()[0] > l2.getFirst()[0]) {
-				x = l2.getFirst()[0];
-				h2 = l2.getFirst()[1];
-				h = Math.max(h1, h2);
-				l2.removeFirst();
-			} else {
-				x = l1.getFirst()[0];
-				h1 = l1.getFirst()[1];
-				h2 = l2.getFirst()[1];
-				h = Math.max(h1, h2);
-				l1.removeFirst();
-				l2.removeFirst();
-			}
-			if (rs.size() == 0 || h != rs.getLast()[1]) {
-				rs.add(new int[] { x, h });
-			}
-		}
-		rs.addAll(l1);
-		rs.addAll(l2);
-		return rs;
-	}
+# using PQ
+# 159ms 60.43%
+class Solution {
+    public List<int[]> getSkyline(int[][] buildings) {
+        List<int[]> result = new ArrayList<>();
+        int len = buildings.length;
+        if (len == 0) {
+            return result;
+        }
+        List<int[]> heights = new ArrayList<>();
+        for (int i = 0; i < len; i++) {
+            heights.add(new int[] {buildings[i][0], buildings[i][2]});
+            heights.add(new int[] {buildings[i][1], -buildings[i][2]});
+        }
+        Collections.sort(heights, new Comparator<int[]>() {
+            @Override
+            public int compare(int[] height1, int[] height2) {
+                return height1[0] != height2[0] ?
+                    Integer.compare(height1[0], height2[0]) : -Integer.compare(height1[1], height2[1]);
+            }
+        });
+        PriorityQueue<Integer> pq = new PriorityQueue<>(len, new Comparator<Integer>() {
+            @Override
+            public int compare(Integer height1, Integer height2) {
+                return -Integer.compare(height1, height2);
+            }
+        });
+        int prevHeight = 0;
+        pq.add(0);
+        for (int[] height : heights) {
+            if (height[1] >= 0) {
+                pq.add(height[1]);
+            } else {
+                pq.remove(-height[1]);
+            }
+            int curHeight = pq.peek();
+            if (prevHeight != curHeight) {
+                result.add(new int[] {height[0], curHeight});
+                prevHeight = curHeight;
+            }
+        }
+        return result;
+    }
 }
 
-24%
-public List<int[]> getSkyline(int[][] buildings) {
+# 188ms 52.43%
+class Solution {
+    public List<int[]> getSkyline(int[][] buildings) {
     List<int[]> result = new ArrayList<>();
     List<int[]> height = new ArrayList<>();
     for(int[] b:buildings) {

@@ -1,8 +1,10 @@
-__source__ = 'https://leetcode.com/problems/text-justification/#/description'
+__source__ = 'https://leetcode.com/problems/text-justification/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/text-justification.py
 # Time:  O(n)
 # Space: O(1)
 # String
+#
+# Description: Leetcode # 68. Text Justification
 #
 # Given an array of words and a length L, format the text such that each line has exactly L characters
 # and is fully (left and right) justified.
@@ -28,12 +30,14 @@ __source__ = 'https://leetcode.com/problems/text-justification/#/description'
 #    "justification.  "
 # ]
 # Note: Each word is guaranteed not to exceed L in length.
+#
 # Companies
-# LinkedIn Airbnb Facebook
+# LinkedIn Airbnb Facebook Lyft
 # Related Topics
 # String
 #
 
+import unittest
 class Solution:
     # @param words, a list of strings
     # @param L, an integer
@@ -84,14 +88,6 @@ class Solution:
             result.append(s)
         return result
 
-if __name__ == "__main__":
-    #print Solution().fullJustify(["This", "is", "an", "example", "of", "text", "justification."], 16)
-    #print Solution().fullJustify(["What","must","be","shall","be."], 12)
-    print Solution().fullJustify(["What","must","be","shall","be."], 12)
-    #print Solution().fullJustify(['012','34','56','7890'] , 6)
-
-
-
 # http://www.cnblogs.com/zuoyuan/p/3782107.html
 class SolutionOther:
     # @param words, a list of strings
@@ -131,14 +127,26 @@ class SolutionOther:
             res.append(s)
         return res
 
-#test
-test = SolutionOther()
-words = ["This", "is", "an", "example", "of", "text", "justification."]
-#print test.fullJustify(words, 16)
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        #print Solution().fullJustify(["This", "is", "an", "example", "of", "text", "justification."], 16)
+        #print Solution().fullJustify(["What","must","be","shall","be."], 12)
+        print Solution().fullJustify(["What","must","be","shall","be."], 12)
+        #print Solution().fullJustify(['012','34','56','7890'] , 6)
 
-#java
+        #test
+        test = SolutionOther()
+        words = ["This", "is", "an", "example", "of", "text", "justification."]
+        #print test.fullJustify(words, 16)
+
+if __name__ == '__main__':
+    unittest.main()
+
 Java = '''
-public class Solution {
+# Thought:
+
+# 0ms 100%
+class Solution {
     public List<String> fullJustify(String[] words, int maxWidth) {
         List<String> res = new ArrayList<>();
         int start = 0, end = 0, wc = words.length;
@@ -183,11 +191,10 @@ public class Solution {
             sb.append(' ');
         }
     }
-
 }
 
-
-public class Solution {
+# 1ms 36.40%
+class Solution {
     public List<String> fullJustify(String[] words, int maxWidth) {
         List<String> res = new ArrayList<>();
         int start = 0;

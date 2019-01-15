@@ -1,11 +1,12 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/clone-graph/description/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/clone-graph.py
 # Time:  O(n)
 # Space: O(n)
 # BFS
 #
-# Clone an undirected graph. Each node in the graph contains a label and a list of its neighbors.
+# Description: Leetcode # 133. Clone Graph
 #
+# Clone an undirected graph. Each node in the graph contains a label and a list of its neighbors.
 #
 # OJ's undirected graph serialization:
 # Nodes are labeled uniquely.
@@ -28,8 +29,14 @@ __author__ = 'July'
 #          \_/
 #
 #
-# Facebook
-
+# Companies
+# Pocket Gems Google Uber Facebook
+# Related Topics
+# Depth-first Search Breadth-first Search Graph
+# Similar Questions
+# Copy List with Random Pointer
+#
+import unittest
 # Definition for a undirected graph node
 class UndirectedGraphNode:
      def __init__(self, x):
@@ -55,8 +62,6 @@ class Solution:
                 cloned[current].neighbors.append(cloned[neighbor])
         return cloned[node]
 
-
-
 class SolutionOther:
     # @param node, a undirected graph node
     # @return a undirected graph node
@@ -75,9 +80,7 @@ class SolutionOther:
 
         for neighbor in node.neighbors:
             newNode.neighbors.append(self.dfs(neighbor, nodemap))
-
         return newNode
-
 
     def cloneGraphUsingBFS(self, node):
         if node == None:
@@ -101,9 +104,15 @@ class SolutionOther:
                     map[curr].neighbors.append(map[neighbor])
         return head
 #test
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
 
-#java
-js = '''
+if __name__ == '__main__':
+    unittest.main()
+
+Java = '''
+# Thought:
 /**
  * Definition for undirected graph.
  * class UndirectedGraphNode {
@@ -112,7 +121,31 @@ js = '''
  *     UndirectedGraphNode(int x) { label = x; neighbors = new ArrayList<UndirectedGraphNode>(); }
  * };
  */
-public class Solution {
+# Note: Need to use map to pass cloned object reference during recursion
+# DFS:
+# 2ms 100%
+class Solution {
+    public UndirectedGraphNode cloneGraph(UndirectedGraphNode node) {
+        HashMap<Integer, UndirectedGraphNode> map = new HashMap<>();
+        return clone(node, map);
+    }
+
+    private UndirectedGraphNode clone(UndirectedGraphNode node, Map<Integer, UndirectedGraphNode> map) {
+        if (node == null) return null;
+        if (map.containsKey(node.label)) return map.get(node.label);
+        UndirectedGraphNode clone = new UndirectedGraphNode(node.label);
+        map.put(clone.label, clone);
+
+        for (UndirectedGraphNode neighbor: node.neighbors) {
+            clone.neighbors.add(clone(neighbor, map));
+        }
+        return clone;
+    }
+}
+
+# BFS:
+# 5ms 42.74%
+class Solution {
     public UndirectedGraphNode cloneGraph(UndirectedGraphNode node) {
         if (node == null) {
             return null;
@@ -135,6 +168,31 @@ public class Solution {
             }
         }
         return newGraphMap.get(node);
+    }
+}
+
+# 4ms 62.42%
+class Solution {
+    public UndirectedGraphNode cloneGraph(UndirectedGraphNode node) {
+        if (node == null) return null;
+        UndirectedGraphNode clone = new UndirectedGraphNode(node.label);
+        HashMap<Integer, UndirectedGraphNode> map = new HashMap(); //store visited nodes
+        map.put(clone.label, clone); //add first node to HashMap
+
+        LinkedList<UndirectedGraphNode> queue = new LinkedList(); //to store **original** nodes need to be visited
+        queue.add(node); //add first **original** node to queue
+        while(!queue.isEmpty()) {
+            UndirectedGraphNode n = queue.pop();
+            for(UndirectedGraphNode neighbor : n.neighbors) {
+                if (!map.containsKey(neighbor.label)) {
+                    map.put(neighbor.label, new UndirectedGraphNode(neighbor.label));
+                    queue.add(neighbor); // only add to queue if not visited
+                }
+                map.get(n.label).neighbors.add(map.get(neighbor.label));
+                // queue.add(neighbor); // DONT, created an infinite loop if graph has loop{0,0,0}
+            }
+        }
+        return clone;
     }
 }
 

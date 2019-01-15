@@ -4,6 +4,8 @@ __source__ = 'https://leetcode.com/problems/binary-tree-right-side-view/#/descri
 # Space: O(h)
 # DFS
 #
+# Description: Leetcode # 199. Binary Tree Right Side View
+#
 # Given a binary tree, imagine yourself standing on the right side of it,
 # return the values of the nodes you can see ordered from top to bottom.
 #
@@ -23,14 +25,13 @@ __source__ = 'https://leetcode.com/problems/binary-tree-right-side-view/#/descri
 # Similar Questions
 # Populating Next Right Pointers in Each Node Boundary of Binary Tree
 #
-
+import unittest
 # Definition for a  binary tree node
 class TreeNode:
     def __init__(self, x):
         self.val = x
         self.left = None
         self.right = None
-
 
 class Solution:
     # @param root, a tree node
@@ -72,19 +73,23 @@ class Solution2:
             cur = next_level
         return result
 
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+        root = TreeNode(1)
+        root.left = TreeNode(2)
+        root.right = TreeNode(3)
+        root.left.right = TreeNode(5)
+        root.right.right = TreeNode(4)
+        result = Solution().rightSideView(root)
+        print result
 
-if __name__ == "__main__":
-    root = TreeNode(1)
-    root.left = TreeNode(2)
-    root.right = TreeNode(3)
-    root.left.right = TreeNode(5)
-    root.right.right = TreeNode(4)
-    result = Solution().rightSideView(root)
-    print result
+if __name__ == '__main__':
+    unittest.main()
 
-#Java
-#Java =
-'''
+Java = '''
+# Thought: https://leetcode.com/problems/binary-tree-right-side-view/solution/
+
 Thought:
 The core idea of this algorithm:
 1.Each depth of the tree only select one node.
@@ -99,50 +104,54 @@ The core idea of this algorithm:
  *     TreeNode(int x) { val = x; }
  * }
  */
+
 # DFS
-public class Solution {
+# 2ms
+class Solution {
     public List<Integer> rightSideView(TreeNode root) {
-        List<Integer> result = new ArrayList<>();
-        rightSideView(root, result, 0);
-        return result;
+        List<Integer> res = new ArrayList<>();
+        dfs(root, res, 0);
+        return res;
     }
     
-    #loop left tree first, need to reset every node val
-    #74%
-    private void rightSideView(TreeNode root, List<Integer> result, int depth) {
-        if (root == null) {
-            return;
-        }
-        if (result.size() == depth) {
-            result.add(root.val);
-        } else {
-            result.set(depth, root.val);
-        }
-        rightSideView(root.left, result, depth + 1);
-        rightSideView(root.right, result, depth + 1);
-    }
-        
-    # loop right tree first  
-    # 74%
-    private void dfs2(TreeNode root, List<Integer> res, int currDepth){
+    private void dfs(TreeNode root, List<Integer> res, int level){ 
         if (root == null) return;
-        if (res.size() == currDepth) {
-            res.add(root.val);
-        }
-        dfs2(root.right, res, currDepth + 1);
-        dfs2(root.left, res, currDepth + 1);
+        if (res.size() == level) res.add(root.val);
+        dfs(root.right, res, level + 1);
+        dfs(root.left, res, level + 1);
     }
 }
 
+# DFS
+# 2ms
+class Solution {
+    public List<Integer> rightSideView(TreeNode root) {
+        List<Integer> res = new ArrayList<>();
+        dfs(root, res, 0);
+        return res;
+    }
+    
+    private void dfs(TreeNode root, List<Integer> res, int level){ 
+        if (root == null) return;
+        if (res.size() == level) res.add(root.val);
+        else {
+            res.set(level, root.val);
+        }
+        dfs(root.left, res, level + 1);
+        dfs(root.right, res, level + 1);
+    }
+}
 
 # BFS
-# 31 % loop to right child first
-public List<Integer> rightSideViewBFS(TreeNode root) {
+# 1ms 81.06%
+# loop to right child first
+class Solution {
+    public List<Integer> rightSideView(TreeNode root) {
         List<Integer> res = new ArrayList<Integer>();
         if (root == null) return res;
         Queue<TreeNode> q = new LinkedList<>();
         q.add(root);
-        
+
         while(!q.isEmpty()) {
             int len = q.size();
             for (int i = 0; i < len; i++) {
@@ -154,37 +163,6 @@ public List<Integer> rightSideViewBFS(TreeNode root) {
         }
         return res;
     }
-
-
-#31%
-# loopto left child first
-public class Solution {
-    public List<Integer> rightSideView(TreeNode root) {
-        List<Integer> result = new ArrayList<>();
-        if (root == null) {
-            return result;
-        }
-        Queue<TreeNode> queue = new LinkedList<>();
-        queue.add(root);
-        while (!queue.isEmpty()) {
-            int size = queue.size();
-            for (int i = 0; i < size - 1; i++) {
-                traverse(queue, queue.poll());
-            }
-            TreeNode cur = queue.poll();
-            result.add(cur.val);
-            traverse(queue, cur);
-        }
-        return result;
-    }
-    
-    private void traverse(Queue<TreeNode> queue, TreeNode cur) {
-        if (cur.left != null) {
-            queue.add(cur.left);
-        }
-        if (cur.right != null) {
-            queue.add(cur.right);
-        }
-    }
 }
+
 '''

@@ -1,7 +1,9 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/jump-game-ii/description/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/jump-game-ii.py
 # Time:  O(n^2)
 # Space: O(1)
+#
+# Description: Leetcode # 45. Jump Game II
 #
 # Given an array of non-negative integers, you are initially positioned at the first index of the array.
 #
@@ -12,10 +14,13 @@ __author__ = 'July'
 # For example:
 # Given array A = [2,3,1,1,4]
 #
-# The minimum number of jumps to reach the last index is 2. (Jump 1 step from index 0 to 1, then 3 steps to the last index.)
+# The minimum number of jumps to reach the last index is 2.
+# (Jump 1 step from index 0 to 1, then 3 steps to the last index.)
 #
-#  Array Greedy
-
+# Related Topics
+# Array Greedy
+#
+import unittest
 class Solution:
     # @param A, a list of integers
     # @return an integer
@@ -46,7 +51,6 @@ class Solution2:
                 reachable = max(reachable, i + length)
         return -1
 
-
 class Solution3:
     # @param A, a list of integers
     # @return an integer
@@ -60,31 +64,37 @@ class Solution3:
                 jumpdis, count = min_nextdis, count +1
         return count
 #test
-test = Solution2()
-A1 = [2,3,1,1,4]
-A2 = [3,2,1,0,4]
-#print test.jump(A1)
-#print test.jump(A2)
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        test = Solution2()
+        A1 = [2,3,1,1,4]
+        A2 = [3,2,1,0,4]
+        #print test.jump(A1)
+        #print test.jump(A2)
+
+        print Solution().jump([2,3,1,1,4])
+        print Solution().jump([3,2,1,0,4])
 
 if __name__ == '__main__':
-    print Solution().jump([2,3,1,1,4])
-    print Solution().jump([3,2,1,0,4])
+    unittest.main()
 
-#Java
-js = '''
+Java = '''
+#Thought:
+
 The main idea is based on greedy. Let's say the range of the current jump is [curBegin, curEnd],
 curFarthest is the farthest point that all points in [curBegin, curEnd] can reach.
 Once the current point reaches curEnd, then trigger another jump,
 and set the new curEnd with curFarthest,
 then keep the above steps, as the following:
 
-public class Solution {
+# 5ms 95.95%
+class Solution {
     public int jump(int[] nums) {
         if ( nums.length < 2 ) return 0;
         int count = 0;
         int current_max = 0;
         int cur_end = 0;
-        for (int i = 0; i < nums.length -1; i++) { //note:  i < nums.length -1, notworking if set if( cur_end >= nums.length) return count;
+        for (int i = 0; i < nums.length - 1; i++) {
             current_max = Math.max(current_max, i + nums[i]);
             if (i == cur_end) {
                 count++;
@@ -95,7 +105,8 @@ public class Solution {
     }
 }
 
-public class Solution {
+# 4ms 100%
+class Solution {
     public int jump(int[] nums) {
         if ( nums.length < 2) return 0;
         int level = 0, currentMax = 0, moveSteps = 0, nextMax = 0;
@@ -108,6 +119,46 @@ public class Solution {
             currentMax = nextMax;
         }
         return 0;
+    }
+}
+
+# 4ms 100%
+class Solution {
+    public int jump(int[] nums) {
+        int start = 0;
+        int end = 0;
+        int round = 0;
+        int len = nums.length;
+        while (end < len - 1) {
+            int next = end;
+            for (int i = start; i <= end; i++) {
+                next = Math.max(next, i + nums[i]);
+            }
+            start = end + 1;
+            end = next;
+            round++;
+        }
+        return round;
+    }
+}
+
+# 4ms 100%
+class Solution {
+    public int jump(int[] nums) {
+        if (nums == null || nums.length == 0) { return -1;}
+        int start = 0, end = 0, jumps = 0;
+        while (end < nums.length - 1) {
+            jumps ++;
+            int farthest = end;
+            for (int i = start; i <= end; i++) {
+                if (nums[i] + i > farthest) {
+                    farthest = nums[i] + i;
+                }
+            }
+            start = end + 1;
+            end = farthest;
+        }
+        return jumps;
     }
 }
 '''

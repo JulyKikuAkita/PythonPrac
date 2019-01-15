@@ -1,8 +1,10 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/russian-doll-envelopes/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/russian-doll-envelopes.py
 # Time:  O(nlogn + nlogk) = O(nlogn), k is the length of the result.
 # Space: O(1)
-
+#
+# Description: Leetcode # 354. Russian Doll Envelopes
+#
 # You have a number of envelopes with widths and heights given
 # as a pair of integers (w, h). One envelope can fit into another
 # if and only if both the width and height of one envelope is greater
@@ -14,6 +16,14 @@ __author__ = 'July'
 # Example:
 # Given envelopes = [[5,4],[6,4],[6,7],[2,3]], the maximum number
 # of envelopes you can Russian doll is 3 ([2,3] => [5,4] => [6,7]).
+#
+# Companies
+# Google
+# Related Topics
+# Binary Search Dynamic Programming
+# Similar Questions
+# Longest Increasing Subsequence
+#
 import unittest
 class Solution(unittest.TestCase):
     def maxEnvelopes(self, envelopes):
@@ -52,7 +62,6 @@ class Solution2(object):
         :type envelopes: List[List[int]]
         :rtype: int
         """
-
         def bin_search(target):
             left, right = 0, len(res) - 1
             while left + 1 < right:
@@ -73,46 +82,53 @@ class Solution2(object):
         for envelope in envelopes:
             bin_search(envelope[1])
         return len(res)
-#java
-js = '''
-public class Solution {
-    public int maxEnvelopes(int[][] envelopes) {
-        if (envelopes.length < 2) {
-            return envelopes.length;
-        }
-        int[] arr = new int[envelopes.length];
-        int tail = -1;
-        Arrays.sort(envelopes, new Comparator<int[]>() {
-            @Override
-            public int compare(int[] e1, int[] e2) {
-                return e1[0] != e2[0] ? Integer.compare(e1[0], e2[0]) : Integer.compare(e2[1], e1[1]);
-            }
-        });
-        for (int[] envelope : envelopes) {
-            if (tail == - 1 || arr[tail] < envelope[1]) {
-                arr[++tail] = envelope[1];
-            } else {
-                int index = findFirstLargerOrEqual(arr, 0, tail, envelope[1]);
-                arr[index] = envelope[1];
-            }
-        }
-        return tail + 1;
-    }
 
-    private int findFirstLargerOrEqual(int[] arr, int start, int end, int num) {
-        while (start + 1 < end) {
-            int mid = start + (end - start) / 2;
-            if (arr[mid] < num) {
-                start = mid;
-            } else {
-                end = mid;
-            }
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+
+if __name__ == '__main__':
+    unittest.main()
+
+Java = '''
+# Thought:
+#
+Sort the array. Ascend on width and descend on height if width are same.
+Find the longest increasing subsequence based on height.
+Since the width is increasing, we only need to consider height.
+[3, 4] cannot contains [3, 3], so we need to put [3, 4]
+before [3, 3] when sorting otherwise it will be counted as an increasing number if the order is [3, 3], [3, 4]
+
+# 11ms 99.65%
+class Solution {
+    public int maxEnvelopes(int[][] envelopes) {
+        if(envelopes == null || envelopes.length == 0
+           || envelopes[0] == null || envelopes[0].length != 2)
+            return 0;
+        Arrays.sort(envelopes, new Comparator<int[]>(){
+            public int compare(int[] arr1, int[] arr2){
+                if(arr1[0] == arr2[0])
+                    return arr2[1] - arr1[1];
+                else
+                    return arr1[0] - arr2[0];
+           }
+        });
+        int dp[] = new int[envelopes.length];
+        int len = 0;
+        for(int[] envelope : envelopes){
+            int index = Arrays.binarySearch(dp, 0, len, envelope[1]);
+            if(index < 0)
+                index = -(index + 1);
+            dp[index] = envelope[1];
+            if(index == len)
+                len++;
         }
-        return arr[start] < num ? end : start;
+        return len;
     }
 }
 
-public class Solution {
+# 52ms 66.38%
+class Solution {
     public int maxEnvelopes(int[][] envelopes) {
         if ( envelopes.length < 2) return envelopes.length;
         int[] arr = new int[envelopes.length];

@@ -1,10 +1,10 @@
-
-__source__ = 'https://github.com/kamyu104/LeetCode/blob/master/Python/heaters.py'
-# https://leetcode.com/problems/heaters/#/description
+__source__ = 'https://leetcode.com/problems/heaters/'
+# https://github.com/kamyu104/LeetCode/blob/master/Python/heaters.py
 # Time:  O((m + n) * logn), m is the number of the houses, n is the number of the heaters.
 # Space: O(1)
 #
-# Description:
+# Description: 475. Heaters
+#
 # Winter is coming! Your first job during the contest is to
 # design a standard heater with fixed warm radius to warm all the houses.
 #
@@ -31,7 +31,7 @@ __source__ = 'https://github.com/kamyu104/LeetCode/blob/master/Python/heaters.py
 # then all the houses can be warmed.
 import unittest
 import bisect
-
+# 96ms 46.23%
 class Solution(object):
     def findRadius(self, houses, heaters):
         """
@@ -61,16 +61,21 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
+# Thought:
+
 The idea is to leverage decent Arrays.binarySearch() function provided by Java.
 
-For each house, find its position between those heaters (thus we need the heaters array to be sorted).
-Calculate the distances between this house and left heater and right heater, get a MIN value of those two values.
+For each house, find its position between those heaters
+(thus we need the heaters array to be sorted).
+Calculate the distances between this house and left heater and right heater,
+get a MIN value of those two values.
 Corner cases are there is no left or right heater.
 Get MAX value among distances in step 2. It's the answer.
-Time complexity: max(O(nlogn), O(mlogn)) - m is the length of houses, n is the length of heaters.
+Time complexity: max(O(nlogn), O(mlogn)) - m is the length of houses,
+n is the length of heaters.
 
-public class Solution {
+# 16ms 69.43%
+class Solution {
     public int findRadius(int[] houses, int[] heaters) {
         Arrays.sort(heaters);
         int result = Integer.MIN_VALUE;
@@ -93,7 +98,8 @@ public class Solution {
 Based on 2 pointers, the idea is to find the nearest heater for each house,
 by comparing the next heater with the current heater.
 
-public class Solution {
+# 15ms 76.22%
+class Solution {
     public int findRadius(int[] houses, int[] heaters) {
         Arrays.sort(houses);
         Arrays.sort(heaters);

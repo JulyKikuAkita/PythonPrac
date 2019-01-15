@@ -1,7 +1,9 @@
-__source__ = 'https://leetcode.com/problems/meeting-rooms-ii/#/description'
+__source__ = 'https://leetcode.com/problems/meeting-rooms-ii/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/meeting-rooms-ii.py
 # Time:  O(nlogn)
 # Space: O(n)
+#
+# Description: Leetcode # 253. Meeting Rooms II
 #
 # Given an array of meeting time intervals consisting of start and end times [[s1,e1],[s2,e2],...] (si < ei),
 # find the minimum number of conference rooms required.
@@ -10,20 +12,21 @@ __source__ = 'https://leetcode.com/problems/meeting-rooms-ii/#/description'
 # Given [[0, 30],[5, 10],[15, 20]],
 # return 2.
 #
-#Topics:
-# Heap Greedy Sort
-# You might like:
-# (M) Merge Intervals (E) Meeting Rooms (M) Minimum Number of Arrows to Burst Balloons
-# Company:
+# Companies
 # Google Snapchat Facebook
+# Related Topics
+# Heap Greedy Sort
+# Similar Questions
+# Merge Intervals Meeting Rooms Minimum Number of Arrows to Burst Balloons
 #
-
 # Definition for an interval.
 # class Interval:
 #     def __init__(self, s=0, e=0):
 #         self.start = s
 #         self.end = e
-
+#
+import unittest
+# 40ms 81.38%
 class Solution:
     # @param {Interval[]} intervals
     # @return {integer}
@@ -50,9 +53,16 @@ class Solution:
                 cnt_rooms -= 1 # Release a room
                 e +=1
         return min_rooms
-#
-# Java :
-java = '''
+
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+
+if __name__ == '__main__':
+    unittest.main()
+
+Java = '''
+# Thought: https://leetcode.com/problems/meeting-rooms-ii/solution/
 /**
  * Definition for an interval.
  * public class Interval {
@@ -62,38 +72,37 @@ java = '''
  *     Interval(int s, int e) { start = s; end = e; }
  * }
  */
- 80.43%
-public class Solution {
+# 
+# 2ms 100%
+class Solution {
     public int minMeetingRooms(Interval[] intervals) {
-        int len = intervals.length;
-        int[] starts = new int[len];
-        int[] ends = new int[len];
-        for (int i = 0; i < len; i++) {
-            starts[i] = intervals[i].start;
-            ends[i] = intervals[i].end;
+        if (intervals == null || intervals.length == 0) return 0;
+        int n = intervals.length, index = 0;
+        int[] begins = new int[n];
+        int[] ends = new int[n];
+        for (Interval i: intervals) {
+            begins[index] = i.start;
+            ends[index] = i.end;
+            index++;
         }
-        Arrays.sort(starts);
+        Arrays.sort(begins);
         Arrays.sort(ends);
-        int startIndex = 0;
-        int endIndex = 0;
-        int result = 0;
-        int cur = 0;
-        while (startIndex < len) {
-            if (starts[startIndex] < ends[endIndex]) {
-                cur++;
-                result = Math.max(result, cur);
-                startIndex++;
-            } else {
-                cur--;
-                endIndex++;
+        int rooms = 0, pre = 0;
+        for (int i = 0; i < n; i++) {
+            rooms++;
+
+            // room is released
+            if (begins[i] >= ends[pre]) {
+                rooms--;
+                pre++;
             }
         }
-        return result;
+        return rooms;
     }
 }
 
-53.4%
-public class Solution {
+# 7ms 75.98%
+class Solution {
     public int minMeetingRooms(Interval[] intervals) {
          if (intervals == null || intervals.length == 0)
             return 0;
@@ -123,17 +132,16 @@ public class Solution {
                 // otherwise, this meeting needs a new room
                 heap.offer(intervals[i]);
             }
-
             // don't forget to put the meeting room back
             heap.offer(interval);
         }
-
         return heap.size();
         }
 }
 
-same as above
-public class Solution {
+# same as above
+# 48ms 18.04%
+class Solution {
     public int minMeetingRooms(Interval[] intervals) {
          if (intervals == null || intervals.length == 0)
             return 0;
@@ -152,13 +160,13 @@ public class Solution {
             }
             heap.offer(intervals[i]);
         }
-
         return heap.size();
         }
 }
 
-47% //sort only intervals.end
-public class Solution {
+# sort intervals.end only 
+# 42ms 30.99%
+class Solution {
     public int minMeetingRooms(Interval[] intervals) {
         if(intervals == null || intervals.length == 0) return 0;
         Arrays.sort(intervals, (Interval a, Interval b) -> a.start - b.start);

@@ -1,10 +1,13 @@
-__author__ = 'July'
-#https://github.com/kamyu104/LeetCode/blob/master/Python/minimum-window-substring.py
+__source__ = 'https://leetcode.com/problems/minimum-window-substring/'
+# https://github.com/kamyu104/LeetCode/blob/master/Python/minimum-window-substring.py
 # Time:  O(n)
 # Space: O(k), k is the number of different characters
 # Hashtable
 #
-# Given a string S and a string T, find the minimum window in S which will contain all the characters in T in complexity O(n).
+# Description: Leetcode # 76. Minimum Window Substring
+#
+# Given a string S and a string T, find the minimum window in S
+# which will contain all the characters in T in complexity O(n).
 #
 # For example,
 # S = "ADOBECODEBANC"
@@ -15,8 +18,14 @@ __author__ = 'July'
 # If there is no such window in S that covers all characters in T, return the emtpy string "".
 #
 # If there are multiple such windows, you are guaranteed that there will always be only one unique minimum window in S.
-# Linkedln, Uber, Favebook
-# HashTable, TwoPointer, String
+# Companies
+# LinkedIn Snapchat Uber Facebook
+# Related Topics
+# Hash Table Two Pointers String
+# Similar Questions
+# Substring with Concatenation of All Words Minimum Size Subarray Sum
+# Sliding Window Maximum Permutation in String Smallest Range
+#
 import unittest
 import collections
 class Solution:
@@ -87,21 +96,19 @@ class Solution2:
                 s_idx += 1
         return res
 
-class test(unittest.TestCase):
-
-    def test(self):
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
         self.assertEqual("BANC", Solution2().minWindow("ADOBECODEBANC", "ABC"))
         self.assertEqual("BANC", Solution().minWindow("ADOBECODEBANC", "ABC"))
 
-
-
-if __name__ == "__main__":
+if __name__ == '__main__':
     unittest.main()
 
-
-#java
-js = '''
-public class Solution {
+Java = '''
+# Thought: https://leetcode.com/problems/minimum-window-substring/solution/
+# 25ms 52.80%
+class Solution {
     public String minWindow(String s, String t) {
         String res = "";
         if(s == null || t == null || s.length() == 0 || t.length() == 0) return res;
@@ -139,55 +146,85 @@ public class Solution {
                     prev ++;
                 }
             }
-
         }
         return res;
-
     }
 }
 
-public class Solution {
+#76.01% 7ms
+class Solution {
     public String minWindow(String s, String t) {
-        int len_s = s.length();
-        int len_t = t.length();
-        if(len_s == 0 || len_t == 0){
+        int lenS = s.length();
+        int lenT = t.length();
+        if (lenS == 0 || lenT == 0) {
             return "";
         }
-
-        int[] s_count = new int[128];
-        int[] t_count = new int[128];
-        int cnt = len_t;
-        int[] res = new int[]{-1, -1};
-
+        int[] sCount = new int[128];
+        int[] tCount = new int[128];
+        int count = lenT;
+        int[] result = new int[] {-1, -1};
         int start = 0;
-        for(int i = 0; i < len_t; i++){
-            t_count[t.charAt(i)]++;
+        for (int i = 0; i < lenT; i++) {
+            tCount[t.charAt(i)]++;
         }
-
-        for(int i = 0; i < len_s; i++){
+        for (int i = 0; i < lenS; i++) {
             char c = s.charAt(i);
-            s_count[c]++;
-            if(s_count[c] <= t_count[c]){
-                cnt--;
+            sCount[c]++;
+            if (sCount[c] <= tCount[c]) {
+                count--;
             }
-            if(cnt == 0){
-                while(true){
+            if (count == 0) {
+                while (true) {
                     char remove = s.charAt(start);
-                    if(s_count[remove] <= t_count[remove]){
+                    if (sCount[remove] <= tCount[remove]) {
                         break;
                     }
-                    s_count[remove]--;
-                    start ++;
+                    sCount[remove]--;
+                    start++;
                 }
-                if(res[0] < 0 || res[1] - res[0] > i + 1 - start){
-                    res[0] = start;
-                    res[1] = i + 1;
+                if (result[0] < 0 || result[1] - result[0] > i + 1 - start) {
+                    result[0] = start;
+                    result[1] = i + 1;
                 }
-                s_count[s.charAt(start++)]--;
-                cnt ++;
+                sCount[s.charAt(start++)]--;
+                count++;
             }
         }
-        return res[0] < 0 ? "" : s.substring(res[0], res[1]);
+        return result[0] < 0 ? "" : s.substring(result[0], result[1]);
+    }
+}
+
+# 4ms 96.63%
+class Solution {
+    public String minWindow(String s, String t) {
+        if (s == null || t == null || s.length() == 0 || t.length() == 0) {
+            return null;
+        }
+        int start = -1;
+        int end = s.length() + 1;
+        int left = 0;
+        int windowSize = 0;
+        int[] count = new int[256];
+        for (char c : t.toCharArray()) {
+            count[c]++;
+        }
+        for (int i = 0; i < s.length(); ++i) {
+            if(--count[s.charAt(i)] >= 0) {
+                windowSize++;
+            }
+            if (windowSize == t.length()) {
+                while (++count[s.charAt(left)] <= 0) {
+                    left++;
+                }
+                if (i - left < end - start) {
+                    start = left;
+                    end = i;
+                }
+                left++;
+                windowSize--;
+            }
+        }
+        return start == -1 ? "" : s.substring(start, end + 1);
     }
 }
 '''

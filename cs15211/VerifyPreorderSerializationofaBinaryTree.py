@@ -1,8 +1,10 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/verify-preorder-serialization-of-a-binary-tree/description/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/verify-preorder-serialization-of-a-binary-tree.py
 # Time:  O(n)
 # Space: O(1)
-
+#
+# Description: Leetcode # 331. Verify Preorder Serialization of a Binary Tree
+#
 # One way to serialize a binary tree is to use pre-oder traversal.
 # When we encounter a non-null node, we record the node's value.
 # If it is a null node, we record using a sentinel value such as #.
@@ -39,9 +41,11 @@ __author__ = 'July'
 # "9,#,#,1"
 # Return false
 #
-#
+# Companies
 # Google
+# Related Topics
 # Stack
+#
 import unittest
 class Solution(object):
     def isValidSerialization(self, preorder):
@@ -91,9 +95,38 @@ class Solution2(unittest.TestCase):
     def test(self):
         self.assertTrue(self.isValidSerialization("9,3,4,#,#,1,#,#,2,#,6,#,#"))
 
-#java
-js = '''
-public class Solution {
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+
+if __name__ == '__main__':
+    unittest.main()
+
+Java = '''
+# Thought:
+
+# 5ms 91.15%
+class Solution {
+    public boolean isValidSerialization(String preorder) {
+        String[] tokens = preorder.split(",");
+        int count = 0;
+        int index = 0;
+        while (index < tokens.length) {
+            if (tokens[index++].equals("#")) {
+                count--;
+                if (count < 0) {
+                    break;
+                }
+            } else {
+                count++;
+            }
+        }
+        return count == -1 && index == tokens.length;
+    }
+}
+
+# 5ms 91.15%
+class Solution {
     public boolean isValidSerialization(String preorder) {
         String[] nodes = preorder.split(",");
         int count = 0;
@@ -108,6 +141,27 @@ public class Solution {
             }
         }
         return count == -1;
+    }
+}
+
+# 2ms 98.93%
+class Solution {
+    public boolean isValidSerialization(String preorder) {
+        Deque<Character> stack = new ArrayDeque();
+        char[] preArr = preorder.toCharArray();
+        for (int i = 0; i < preArr.length - 1; i++) {
+            char c = preArr[i];
+            if (c == ',') { continue; }
+            if (c != '#') {
+                stack.push(c);
+                while (i < preArr.length - 1 && c != ',') { c = preArr[++i]; }
+            } else {
+                if (stack.isEmpty()) { return false; }
+                stack.pop();
+            }
+        }
+
+        return stack.isEmpty() && preArr[preArr.length - 1] == '#';
     }
 }
 '''

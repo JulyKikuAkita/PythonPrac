@@ -1,26 +1,32 @@
-__source__ = 'https://leetcode.com/problems/inorder-successor-in-bst/#/description'
+__source__ = 'https://leetcode.com/problems/inorder-successor-in-bst/'
+# https://github.com/kamyu104/LeetCode/blob/master/Python/inorder-successor-in-bst.py
 # Time:  O(h)
 # Space: O(1)
 #
-# Description:
+# Description: 285. Inorder Successor in BST
 #
 # Given a binary search tree and a node in it, find the in-order successor of that node in the BST.
 #
 # Note: If the given node has no in-order successor in the tree, return null.
 #
-# Hide Company Tags Pocket Gems Microsoft Facebook
-# Hide Tags Tree
-# Hide Similar Problems (M) Binary Tree Inorder Traversal (M) Binary Search Tree Iterator
+# Companies
+# Facebook Microsoft Pocket Gems
+# Related Topics
+# Tree
+# Similar Questions
+# Binary Tree Inorder Traversal Binary Search Tree Iterator
 #
-
+#
 # Definition for a binary tree node.
 # class TreeNode(object):
 #     def __init__(self, x):
 #         self.val = x
 #         self.left = None
 #         self.right = None
-
+#
+import unittest
 class Solution(object):
+    # 76ms 24%
     def inorderSuccessor(self, root, p):
         succ = None
         while root:
@@ -31,6 +37,7 @@ class Solution(object):
                 root = root.right
         return succ
 
+    # 96ms 8.48%
     def inorderSuccessor2(self, root, p):
         """
         :type root: TreeNode
@@ -52,15 +59,23 @@ class Solution(object):
                 root = root.left
             else:
                 root = root.right
-
         return successor
 
-#java
-java = '''
-Thought:
-The idea is to compare root's value with p's value if root is not null, and consider the following two cases:
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
 
-root.val > p.val. In this case, root can be a possible answer, so we store the root node first and call it res.
+if __name__ == '__main__':
+    unittest.main()
+
+Java = '''
+# Thought:
+
+The idea is to compare root's value with p's value if root is not null,
+and consider the following two cases:
+
+root.val > p.val. In this case, root can be a possible answer,
+so we store the root node first and call it res.
 However, we don't know if there is anymore node on root's left that is larger than p.val.
 So we move root to its left and check again.
 
@@ -80,8 +95,51 @@ We continuously move root until exhausted. To this point, we only need to return
  * }
  */
 
+# BFS:
+# 2ms 99.66%
+class Solution {
+    public TreeNode inorderSuccessor(TreeNode root, TreeNode p) {
+        if (p.right != null) {
+            p = p.right;
+            while (p.left != null) {
+                p = p.left;
+            }
+            return p;
+        } else {
+            TreeNode parent = null;
+            while (root != p) {
+                if (root.val > p.val) {
+                    parent = root;
+                    root = root.left;
+                } else { //root.val < p.val go right to find p
+                        //root.val == p.val go right to find smallest node which is > p.val
+                    root = root.right;
+                }
+            }
+            return parent;
+        }
+    }
+}
+
+# DFS
+# 3ms 35.33%
+class Solution {
+    public TreeNode inorderSuccessor(TreeNode root, TreeNode p) {
+        if (root == null) return null;
+        if (root.val <= p.val) {
+            return inorderSuccessor(root.right, p);
+        } else {
+            TreeNode left = inorderSuccessor(root.left, p);
+            return left != null ? left : root;
+        }
+    }
+}
+
+General idea:
+
 Successor
-public class Solution {
+# 2ms 99.66%
+class Solution {
      public TreeNode inorderSuccessorBFS(TreeNode root, TreeNode p) {
         TreeNode res = null;
         while (root != null) {

@@ -1,8 +1,10 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/ransom-note/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/ransom-note.py
 # Time:  O(n)
 # Space: O(1)
-
+#
+# Description: Leetcode # 383. Ransom Note
+#
 # Given an arbitrary ransom note string and another string containing letters
 # from all the magazines, write a function that will return true if
 # the ransom  note can be constructed from the magazines ;
@@ -16,7 +18,13 @@ __author__ = 'July'
 # canConstruct("a", "b") -> false
 # canConstruct("aa", "ab") -> false
 # canConstruct("aa", "aab") -> true
-
+#
+# Companies
+# Apple
+# Related Topics
+# String
+#
+import unittest
 class Solution(object):
     def canConstruct(self, ransomNote, magazine):
         """
@@ -54,10 +62,18 @@ class Solution2(object):
         """
         return not Counter(ransomNote) - Counter(magazine)
 
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
 
-#Java
-js = '''
-public class Solution {
+if __name__ == '__main__':
+    unittest.main()
+
+Java = '''
+# Thought:
+
+# 10ms 85.04%
+class Solution {
     public boolean canConstruct(String ransomNote, String magazine) {
         int[] count = new int[128];
         for (char c : magazine.toCharArray()) {

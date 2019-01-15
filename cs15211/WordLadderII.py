@@ -1,10 +1,13 @@
-__author__ = 'July'
-
+__source__ = 'https://leetcode.com/problems/word-ladder-ii/description/'
+# https://github.com/kamyu104/LeetCode/blob/master/Python/word-ladder-ii.py
 # Time:  O(n * d), n is length of string, d is size of dictionary
 # Space: O(d)
 # Back_Track + BFS
 #
-# Given two words (start and end), and a dictionary, find all shortest transformation sequence(s) from start to end, such that:
+# Description: Leetcode # 126. Word Ladder II
+#
+# Given two words (start and end), and a dictionary,
+# find all shortest transformation sequence(s) from start to end, such that:
 #
 # Only one letter can be changed at a time
 # Each intermediate word must exist in the dictionary
@@ -19,11 +22,23 @@ __author__ = 'July'
 #     ["hit","hot","dot","dog","cog"],
 #     ["hit","hot","lot","log","cog"]
 #   ]
+#
 # Note:
+# Return an empty list if there is no such transformation sequence.
 # All words have the same length.
 # All words contain only lowercase alphabetic characters.
+# You may assume no duplicates in the word list.
+# You may assume beginWord and endWord are non-empty and are not the same.
+# UPDATE (2017/1/20):
+# The wordList parameter had been changed to a list of strings (instead of a set of strings).
+# Please reload the code definition to get the latest changes.
 #
-
+# Companies
+# Amazon Yelp
+# Related Topics
+# Array Backtracking Breadth-first Search String
+#
+import unittest
 # BFS
 class Solution:
     # @param start, a string
@@ -62,17 +77,12 @@ class Solution:
 
         return result
 
-
     def backtrack(self, result, trace, path, word):
         if not trace[word]:
             result.append([word] + path)
         else:
             for prev in trace[word]:
                 self.backtrack(result, trace, [word] + path, prev)
-
-if __name__ == "__main__":
-    print Solution().findLadders("hit", "cog", set(["hot","dot","dog","lot","log"]))
-
 
 # http://www.cnblogs.com/zuoyuan/p/3697045.html
 class SolutionOther:
@@ -128,7 +138,6 @@ class SolutionOther:
 
         return self.result
 
-
     def buildpath(self, path, word):
             if len(self.prevMap[word]) == 0:
                 path.append(word)
@@ -143,16 +152,23 @@ class SolutionOther:
                 self.buildpath(path, iter)
             path.pop()
 
+# Test
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+        dict1 = [ "hot","dot","dog","lot","log" ]
+        dict2 = ["a","b","c"]
+        test = SolutionOther()
+        #print test.findLadders("hit", "cog", dict1)
+        #print test.findLadders("a", "b", dict2)
+        print Solution().findLadders("hit", "cog", set(["hot","dot","dog","lot","log"]))
 
-#test
-dict1 = [ "hot","dot","dog","lot","log" ]
-dict2 = ["a","b","c"]
-test = SolutionOther()
-#print test.findLadders("hit", "cog", dict1)
-#print test.findLadders("a", "b", dict2)
+if __name__ == '__main__':
+    unittest.main()
 
-#Java
-js = '''
+Java = '''
+#Thought:
+
 public class Solution {
     public List<List<String>> findLadders(String beginWord, String endWord, Set<String> wordList) {
         Set<String> unvisited = new HashSet<>(wordList);
@@ -236,7 +252,6 @@ public class Solution {
         path.remove(path.size() - 1);
     }
 }
-
 
 public class Solution {
     public List<List<String>> findLadders(String beginWord, String endWord, Set<String> wordList) {
@@ -326,6 +341,95 @@ class LevelString {
     public LevelString(String string, int level) {
         this.string = string;
         this.level = level;
+    }
+}
+
+'''
+
+# below is for 2017 version
+Leecode2017 = '''
+#29ms 94.81%
+public class Solution {
+        boolean isConnected = false;
+        public List<List<String>> findLadders(String beginWord, String endWord, List<String> wordList){
+            List<List<String>> result = new ArrayList<List<String>>();
+            Set<String> dict = new HashSet<>(wordList);
+            if(!dict.contains(endWord)){
+                return result;
+            }
+            Set<String> fwd = new HashSet<String>();
+            fwd.add(beginWord);
+            Set<String> bwd = new HashSet<String>();
+            bwd.add(endWord);
+
+            Map<String, List<String>> hs = new HashMap<String, List<String>>();
+            BFS(fwd, bwd, dict, false, hs);
+
+            if (!isConnected) return result;
+
+            List<String> temp = new ArrayList<String>();
+            temp.add(beginWord);
+
+            DFS(result, temp, beginWord, endWord, hs);
+
+            return result;
+        }
+
+    public void BFS (Set<String> forward, Set<String> backward, Set<String> dict, boolean swap, Map<String, List<String>> hs){
+        if (forward.isEmpty() || backward.isEmpty()){
+            return;
+        }
+        if (forward.size() > backward.size()){
+            BFS(backward, forward, dict, !swap, hs);
+            return;
+        }
+        dict.removeAll(forward);
+        dict.removeAll(backward);
+
+        Set<String> set3 = new HashSet<String>();
+
+        for (String str : forward){
+            for (int i = 0; i < str.length(); i++){
+                char[] ary = str.toCharArray();
+                for (char j = 'a'; j <= 'z'; j++){
+                    ary[i] = j;
+                    String temp = new String(ary);
+                    if(!backward.contains(temp) && !dict.contains(temp)){
+                        continue;
+                    }
+
+                    String key = !swap ? str : temp;
+                    String val = !swap ? temp : str;
+
+                    if (!hs.containsKey(key)) hs.put(key, new ArrayList<String>());
+                    if (backward.contains(temp)){
+                        hs.get(key).add(val);
+                        isConnected = true;
+                    }
+                    if (!isConnected && dict.contains(temp)){
+                        hs.get(key).add(val);
+                        set3.add(temp);
+                    }
+                }
+            }
+        }
+        if (!isConnected){
+            BFS(set3, backward, dict, swap, hs);
+        }
+    }
+
+    public void DFS (List<List<String>> result, List<String> temp, String start, String end, Map<String, List<String>> hs){
+        if(start.equals(end)){
+            result.add(new ArrayList<String>(temp));
+            return;
+        }
+        if (!hs.containsKey(start)) return;
+
+        for (String s : hs.get(start)){
+            temp.add(s);
+            DFS(result, temp, s, end, hs);
+            temp.remove(temp.size() - 1);
+        }
     }
 }
 '''

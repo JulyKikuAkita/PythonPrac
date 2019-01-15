@@ -1,8 +1,10 @@
-__source__ = 'https://github.com/kamyu104/LeetCode/blob/master/Python/ones-and-zeroes.py'
+__source__ = 'https://leetcode.com/problems/ones-and-zeroes/'
+# https://github.com/kamyu104/LeetCode/blob/master/Python/ones-and-zeroes.py
 # Time:  O(s * m * n), s is the size of the array.
 # Space: O(m * n)
 #
-# Description:
+# Description: 474. Ones and Zeroes
+#
 # In the computer world, use restricted resource you have to
 # generate maximum benefit is what we always want to pursue.
 #
@@ -26,7 +28,8 @@ __source__ = 'https://github.com/kamyu104/LeetCode/blob/master/Python/ones-and-z
 # Output: 2
 #
 # Explanation: You could form "10", but then you'd have nothing left. Better form "0" and "1".
-#  Google
+#
+# Google
 # Hide Tags Dynamic Programming
 # Hide Similar Problems (H) Non-negative Integers without Consecutive Ones
 #
@@ -34,12 +37,15 @@ import unittest
 # This question is very similar to a 0-1 knapsack, the transition function is
 #
 # dp(k, x, y) = max(dp(k-1, x-z, y-o) + 1, dp(k-1, x, y))   (z is zeroes in strs[k], o is ones in strs[k])
-# dp(k, x, y) is the maximum strs we can include when we have x zeros, y ones and only the first k strs are considered.
+# dp(k, x, y) is the maximum strs we can include when we have x zeros,
+# y ones and only the first k strs are considered.
 #
 # dp(len(strs), M, N) is the answer we are looking for
 #
 # I first implemented a dfs + memoization, which gets MLE, so I created a bottom up style dp.
 # With bottom up, we can use something called "rolling array" to optimize space complexity from O(KMN) to O(MN)
+#
+# 3592ms 27.34%
 class Solution(object):
     def findMaxForm(self, strs, m, n):
         """
@@ -85,10 +91,11 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/problems/ones-and-zeroes/#/solutions
+# Thought: https://leetcode.com/problems/ones-and-zeroes/solution/
 
 This problem is a typical 0-1 knapsack problem,
-we need to pick several strings in provided strings to get the maximum number of strings using limited number 0 and 1.
+we need to pick several strings in provided strings
+to get the maximum number of strings using limited number 0 and 1.
 We can create a three dimensional array, in which dp[i][j][k] means the maximum number of strings
 we can get from the first i argument strs using limited j number of '0's and k number of '1's.
 
@@ -96,7 +103,8 @@ For dp[i][j][k], we can get it by fetching the current string i or discarding th
 which would result in dp[i][j][k] = dp[i-1][j-numOfZero(strs[i])][i-numOfOnes(strs[i])] and dp[i][j][k]
 = dp[i-1][j][k]; We only need to treat the larger one in it as the largest number for dp[i][j][k].
 
-public class Solution {
+# 54ms 42.98%
+class Solution {
     public int findMaxForm(String[] strs, int m, int n) {
         int[][] dp = new int[m+1][n+1];
         for (String s : strs) {

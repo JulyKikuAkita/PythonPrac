@@ -2,7 +2,9 @@ __source__ = 'https://leetcode.com/problems/top-k-frequent-elements/#/descriptio
 # https://github.com/kamyu104/LeetCode/blob/master/Python/top-k-frequent-elements.py
 # Time:  O(n) ~ O(n^2), O(n) on average.
 # Space: O(n)
-
+#
+# Description: Leetcode # 347. Top K Frequent Elements
+#
 # Given a non-empty array of integers,
 # return the k most frequent elements.
 #
@@ -14,16 +16,18 @@ __source__ = 'https://leetcode.com/problems/top-k-frequent-elements/#/descriptio
 # 1 <= k <= number of unique elements.
 # Your algorithm's time complexity must be better
 # than O(n log n), where n is the array's size.
-#Topics:
-# Hash Table Heap
-# You might like:
-# (M) Word Frequency (M) Kth Largest Element in an Array (M) Sort Characters By Frequency
-# Company:
+#
+# Companies
 # Pocket Gems Yelp
+# Related Topics
+# Hash Table Heap
+# Similar Questions
+# Word Frequency Kth Largest Element in an Array Sort Characters By Frequency
 #
 
 from random import randint
 import collections
+import unittest
 class Solution(object):
     def topKFrequent(self, nums, k):
         """
@@ -44,7 +48,6 @@ class Solution(object):
         for i in xrange(k):
             result.append(p[i][1])
         return result
-
 
     def kthElement(self, nums, k):
         def PartitionAroundPivot(left, right, pivot_idx, nums):
@@ -70,7 +73,6 @@ class Solution(object):
             else:  # new_pivot_idx < k - 1.
                 left = new_pivot_idx + 1
 
-
 # Time:  O(nlogk)
 # Space: O(n)
 class Solution2(object):
@@ -82,9 +84,18 @@ class Solution2(object):
         """
         return [key for key, _ in collections.Counter(nums).most_common(k)]
 
-#Java
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+
+if __name__ == '__main__':
+    unittest.main()
+
 Java = '''
+# Thought: https://leetcode.com/problems/top-k-frequent-elements/solution/
 // use an array to save numbers into different bucket whose index is the frequency
+
+# 21ms 56.55%
 public class Solution {
     public List<Integer> topKFrequent(int[] nums, int k) {
         Map<Integer, Integer> map = new HashMap<>();
@@ -93,7 +104,7 @@ public class Solution {
         }
 
         // corner case: if there is only one number in nums, we need the bucket has index 1.
-        List<Integer>[] bucket = new List[nums.length+1];
+        List<Integer>[] bucket = new List[nums.length+1]; //compile err if declare as new ArrayList<>[nums.length + 1];
         for(int n:map.keySet()){
             int freq = map.get(n);
             if(bucket[freq]==null)
@@ -104,20 +115,17 @@ public class Solution {
         List<Integer> res = new LinkedList<>();
         for(int i=bucket.length-1; i>0 && k>0; --i){ //bucket.length = nums.length + 1
             if(bucket[i]!=null){
-                List<Integer> list = bucket[i];
-                res.addAll(list);
-                k-= list.size();
+                res.addAll(bucket[i]);
+                k-= bucket[i].size();
             }
         }
-
         return res;
     }
 }
 
-
-
 // use maxHeap. Put entry into maxHeap so we can always poll a number with largest frequency
-public class Solution {
+# 81ms 7.51%
+class Solution {
     public List<Integer> topKFrequent(int[] nums, int k) {
         Map<Integer, Integer> map = new HashMap<>();
         for(int n: nums){
@@ -139,10 +147,9 @@ public class Solution {
     }
 }
 
-
-
 // use treeMap. Use freqncy as the key so we can get all freqencies in order
-public class Solution {
+# 15ms 74.38%
+class Solution {
     public List<Integer> topKFrequent(int[] nums, int k) {
         Map<Integer, Integer> map = new HashMap<>();
         for(int n: nums){
@@ -164,6 +171,44 @@ public class Solution {
             res.addAll(entry.getValue());
         }
         return res;
+    }
+}
+
+# 12ms 93.53%
+class Solution {
+    public List<Integer> topKFrequent(int[] nums, int k) {
+        Map<Integer, Integer> map = new HashMap<>();
+        for (int num : nums) {
+            Integer val = map.get(num);
+            map.put(num, val == null ? 1 : val + 1);
+        }
+        int max = 0;
+        for (int val : map.values()) {
+            max = Math.max(max, val);
+        }
+        List<List<Integer>> list = new ArrayList<>();
+        for (int i = 0; i <= max; i++) {
+            list.add(new ArrayList<>());
+        }
+        for (Map.Entry<Integer, Integer> entry : map.entrySet()) {
+            list.get(entry.getValue()).add(entry.getKey());
+        }
+        List<Integer> result = new ArrayList<>();
+        int index = max;
+        while (k > 0) {
+            while (index >= 0 && list.get(index).isEmpty()) {
+                index--;
+            }
+            if (index < 0) {
+                break;
+            }
+            Iterator<Integer> iter = list.get(index--).iterator();
+            while (k > 0 && iter.hasNext()) {
+                result.add(iter.next());
+                k--;
+            }
+        }
+        return result;
     }
 }
 '''

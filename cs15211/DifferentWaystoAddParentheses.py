@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/different-ways-to-add-parentheses/#/description'
+__source__ = 'https://leetcode.com/problems/different-ways-to-add-parentheses/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/different-ways-to-add-parentheses.py
 # Time:  O(n * 4^n / n^(3/2)) ~= n * Catalan numbers = n * (C(2n, n) - C(2n, n - 1)),
 #                                due to the size of the results is Catalan numbers,
@@ -6,10 +6,11 @@ __source__ = 'https://leetcode.com/problems/different-ways-to-add-parentheses/#/
 #                                so the time complexity is at most n * Catalan numbers.
 # Space: O(n * 4^n / n^(3/2)), the cache size of lookup is at most n * Catalan numbers.
 #
+# Description: Leetcode # 241. Different Ways to Add Parentheses
+#
 # Given a string of numbers and operators, return all possible
 # results from computing all the different possible ways to
 # group numbers and operators. The valid operators are +, - and *.
-#
 #
 # Example 1
 # Input: "2-1-1".
@@ -30,11 +31,14 @@ __source__ = 'https://leetcode.com/problems/different-ways-to-add-parentheses/#/
 # Output: [-34, -14, -10, -10, 10]
 #
 # Cryptic Studios
-#  Divide and Conquer
-# Hide Similar Problems (M) Unique Binary Search Trees II (H) Basic Calculator (H) Expression Add Operators
+# Related Topics
+# Divide and Conquer
+# Similar Questions
+# Unique Binary Search Trees II Basic Calculator Expression Add Operators
 #
 import re
 import operator
+import unittest
 class Solution:
     # @param {string} input
     # @return {integer[]}
@@ -54,13 +58,6 @@ class Solution:
                                                 for y in diffWaysToComputeRecu(i + 1, right)]
             return lookup[left][right]
         return diffWaysToComputeRecu(0, len(nums) - 1)
-if __name__ == '__main__':
-    input = "2-1+3"
-    token = re.split('(\D)', input)
-    nums = map(int, token[::2])
-    print token
-    print nums
-    print Solution().diffWaysToCompute(input)
 
 class Solution2:
     # @param {string} input
@@ -86,10 +83,24 @@ class Solution2:
 
         return diffWaysToComputeRecu(0, len(input))
 
-#java
-java = '''
-1. 91%
-public class Solution {
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+        input = "2-1+3"
+        token = re.split('(\D)', input)
+        nums = map(int, token[::2])
+        print token
+        print nums
+        print Solution().diffWaysToCompute(input)
+
+if __name__ == '__main__':
+    unittest.main()
+
+Java = '''
+# Thought:
+
+1. 1ms 100%
+class Solution {
     public List<Integer> diffWaysToCompute(String input) {
         return diffWaysToCompute(input, new HashMap<>());
     }
@@ -133,8 +144,48 @@ public class Solution {
 }
 
 # Separate compute part, easier to read:
-# 91%
-public class Solution {
+
+# 1ms 100%
+class Solution {
+    Map<String, List<Integer>> map = new HashMap<>();
+
+    public List<Integer> diffWaysToCompute(String input) {
+        if (map.containsKey(input)) return map.get(input);
+
+        List<Integer> list = new ArrayList<>();
+
+        for (int i = 0; i < input.length(); i++) {
+            char c = input.charAt(i);
+            if (c == '+' || c == '-' || c == '*') {
+                List<Integer> listLeft = diffWaysToCompute(input.substring(0, i));
+                List<Integer> listRight = diffWaysToCompute(input.substring(i+1));
+                for (int j : listLeft) {
+                    for (int k : listRight) {
+                        switch(c) {
+                            case '+':
+                                list.add(j+k);
+                                break;
+                            case '-':
+                                list.add(j-k);
+                                break;
+                            case '*':
+                                list.add(j*k);
+                                break;
+                        }
+                    }
+                }
+            }
+
+        }
+
+        if (list.isEmpty()) list.add(Integer.parseInt(input));
+        map.put(input, list);
+        return list;
+    }
+}
+
+# 1ms 100%
+class Solution {
     public List<Integer> diffWaysToCompute(String input) {
         return diffWaysToCompute(input, new HashMap<>());
     }
@@ -142,17 +193,19 @@ public class Solution {
     private List<Integer> diffWaysToCompute(String input, Map<String, List<Integer>> cache) {
         if (input.length() == 0) {
             return new ArrayList<>();
-        } else if (cache.containsKey(input)) {
+        }
+        if (cache.containsKey(input)){
             return cache.get(input);
         }
         List<Integer> result = new ArrayList<>();
-        for (int i = 1; i < input.length() - 1; i++) {
+        // "2*3-4*5"
+        for (int i = 0; i < input.length() - 1; i++){
             char c = input.charAt(i);
-            if (!Character.isDigit(c)) {
+            if (!Character.isDigit(c)){
                 List<Integer> leftList = diffWaysToCompute(input.substring(0, i), cache);
                 List<Integer> rightList = diffWaysToCompute(input.substring(i + 1), cache);
                 for (int left : leftList) {
-                    for (int right : rightList) {
+                    for (int right: rightList) {
                         result.add(compute(left, right, c));
                     }
                 }
@@ -182,28 +235,27 @@ public class Solution {
 #similar question:
 # Give a integer array, return all possible ans of +, -, * operation
 '''
- private Set<Integer> helper (int[] nums, int leftIndex, int rightIndex){
-           Set<Integer> res = new HashSet<Integer>();
 
-           if(leftIndex == rightIndex){
-               res.add(nums[leftIndex]);
-               return res;
-           }
+private Set<Integer> helper (int[] nums, int leftIndex, int rightIndex){
+    Set<Integer> res = new HashSet<Integer>();
 
-           for(int i = leftIndex; i<rightIndex; i++){
-               Set<Integer> leftSet = helper(nums, leftIndex, i);
-               Set<Integer> rightSet = helper(nums, i+1, rightIndex);
+    if(leftIndex == rightIndex){
+        res.add(nums[leftIndex]);
+        return res;
+    }
 
-               for(int left : leftSet){
-                   for(int right : rightSet){
-                       res.add(left + right);
-                       res.add(left * right);
-                       res.add(left - right);
-                   }
-               }
-           }
+    for(int i = leftIndex; i<rightIndex; i++){
+        Set<Integer> leftSet = helper(nums, leftIndex, i);
+        Set<Integer> rightSet = helper(nums, i+1, rightIndex);
 
-          return res;
-
-       }
+        for(int left : leftSet){
+            for(int right : rightSet){
+                res.add(left + right);
+                res.add(left * right);
+                res.add(left - right);
+                }
+            }
+        }
+        return res;
+}
 '''

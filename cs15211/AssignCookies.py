@@ -1,7 +1,10 @@
+__source__ = 'https://leetcode.com/problems/assign-cookies/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/assign-cookies.py
-#  Time:  O(nlogn)
+# Time:  O(nlogn)
 # Space: O(1)
-
+#
+# Description: Leetcode # 455. Assign Cookies
+#
 # Assume you are an awesome parent and want to give your children some cookies.
 # But, you should give each child at most one cookie. Each child i has a greed factor gi,
 # which is the minimum size of a cookie that the child will be content with;
@@ -30,6 +33,8 @@
 # Explanation: You have 2 children and 3 cookies. The greed factors of 2 children are 1, 2.
 # You have 3 cookies and their sizes are big enough to gratify all of the children,
 # You need to output 2.
+#
+import unittest
 
 class Solution(object):
     def findContentChildren(self, g, s):
@@ -50,16 +55,58 @@ class Solution(object):
                 i += 1
         return result
 
-'''
-Arrays.sort(g);
-Arrays.sort(s);
-int i = 0;
-for(int j=0;i<g.length && j<s.length;j++) {
-	if(g[i]<=s[j]) i++;
-}
-return i;
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
 
-public static int findContentChildren(int[] g, int[] s) {
+
+if __name__ == '__main__':
+    unittest.main()
+
+Java = '''
+#Thought:
+
+#15ms 41.1%
+class Solution {
+   public static int findContentChildren(int[] g, int[] s) {
+    if(g == null || s == null){ return 0; }
+        Arrays.sort(g);
+        Arrays.sort(s);
+        int i = 0;
+        for (int j = 0; i < g.length && j < s.length; j++) {
+            if (g[i] <= s[j]) {
+                i++;
+            }
+        }
+        return i;
+    }
+}
+
+#10ms 99.66%
+class Solution {
+   public static int findContentChildren(int[] g, int[] s) {
+    //if(g == null || s == null){ return 0; }
+        Arrays.sort(g);
+        Arrays.sort(s);
+        int result = 0;
+        int l = 0, r = 0;
+        while(l < g.length && r < s.length){
+        	if(s[r] >= g[l]){
+        		++ result;
+        		++ l;
+        		++ r;
+        	}else{
+        		++ r;
+        	}
+        }
+        return result;
+    }
+}
+
+# TreeMap
+# 30ms 8.67%
+class Solution {
+   public static int findContentChildren(int[] g, int[] s) {
     	int count = 0;
     	TreeMap<Integer,Integer> tree = new TreeMap<>();
     	for(int temp : s){
@@ -83,4 +130,5 @@ public static int findContentChildren(int[] g, int[] s) {
     	}
         return count;
     }
+}
 '''

@@ -1,9 +1,10 @@
-__source__ = 'https://github.com/kamyu104/LeetCode/blob/master/Python/k-th-smallest-in-lexicographical-order.py'
+__source__ = 'https://leetcode.com/problems/k-th-smallest-in-lexicographical-order/'
+# https://github.com/kamyu104/LeetCode/blob/master/Python/k-th-smallest-in-lexicographical-order.py
 # Time:  O(logn)
 # Space: O(logn)
-
 #
-# Description:
+# Description: 440. K-th Smallest in Lexicographical Order
+#
 # Given integers n and k, find the lexicographically k-th smallest integer in the range from 1 to n.
 #
 # Note: 1 <= k <= n <= 109.
@@ -20,8 +21,9 @@ __source__ = 'https://github.com/kamyu104/LeetCode/blob/master/Python/k-th-small
 # The lexicographical order is [1, 10, 11, 12, 13, 2, 3, 4, 5, 6, 7, 8, 9],
 # so the second smallest number is 10.
 #  Hulu
-
+#
 import unittest
+# 28ms 21.43%
 class Solution(object):
     def findKthNumber(self, n, k):
         """
@@ -115,7 +117,9 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://discuss.leetcode.com/topic/64624/concise-easy-to-understand-java-5ms-solution-with-explaination
+# Thought:
+https://discuss.leetcode.com/topic/64624/concise-easy-to-understand-java-5ms-solution-with-explaination
+
 Initially, image you are at node 1 (variable: curr),
 the goal is move (k - 1) steps to the target node x. (substract steps from k after moving)
 when k is down to 0, curr will be finally at node x, there you get the result.
@@ -147,7 +151,8 @@ else if n2 > n, what means n (the biggest node) is on the path between n1 to n2,
 
 organize this flow to "steps += Math.min(n + 1, n2) - n1; n1 *= 10; n2 *= 10;"
 
-public class Solution {
+# 3ms 96.08%
+class Solution {
     public int findKthNumber(int n, int k) {
         int curr = 1;
         k = k - 1;

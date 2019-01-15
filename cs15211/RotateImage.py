@@ -1,8 +1,10 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/rotate-image/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/rotate-image.py
 # Time:  O(n^2)
 # Space: O(1)
 # Array
+#
+# Description: Leetcode # 48. Rotate Image
 #
 # You are given an n x n 2D matrix representing an image.
 #
@@ -10,12 +12,16 @@ __author__ = 'July'
 #
 # Follow up:
 # Could you do this in-place?
-#  Amazon Microsoft Apple
-# Hide Tags Array
-
+#
+# Companies
+# Amazon Microsoft Apple
+# Related Topics
+# Array
+#
 # https://discuss.leetcode.com/topic/15295/seven-short-solutions-1-to-7-lines
 # Python 7 solutions
 
+import unittest
 # Time:  O(n^2)
 # Space: O(1)
 class Solution:
@@ -44,15 +50,12 @@ class Solution:
 
 # Time:  O(n^2)
 # Space: O(n^2)
+# 32ms 26.15%
 class Solution2:
     # @param matrix, a list of lists of integers
     # @return a list of lists of integers
     def rotate(self, matrix):
         return list.reverse(x for x in zip(*matrix))
-
-if __name__ == "__main__":
-    matrix = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
-    print Solution().rotate(matrix)
 
 class SolutionOther:
     # @param matrix, a list of lists of integers
@@ -70,18 +73,23 @@ class SolutionOther:
                 print "y=", y, matrix
         return matrix
 
-
-
-
-
 #test
-test = SolutionOther()
-#print test.rotate([[1,2],[3,4]])
-print test.rotate([[1,2,3],[4,5,6], [7,8,9]])
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        test = SolutionOther()
+        #print test.rotate([[1,2],[3,4]])
+        print test.rotate([[1,2,3],[4,5,6], [7,8,9]])
+        matrix = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+        print Solution().rotate(matrix)
 
-# https://leetcode.com/problems/rotate-image/#/solutions
-java= '''
-public class Solution {
+if __name__ == '__main__':
+    unittest.main()
+
+Java = '''
+# Thought: https://leetcode.com/problems/rotate-image/solution/
+
+# 2ms 32.93%
+class Solution {
     public void rotate(int[][] matrix) {
         int n = matrix.length;
         for (int i = 0; i < (n + 1) / 2; i++) {
@@ -96,22 +104,55 @@ public class Solution {
     }
 }
 
-public void rotate(int[][] matrix) {
-    int n = matrix.length;
-    // Reverse
-    for (int i = 0; i < n / 2; ++i) {
-        int j = n - 1 - i;
-        int[] cache = matrix[i];
-        matrix[i] = matrix[j];
-        matrix[j] = cache;
-    }
-    // Transpose
-    for (int i = 0; i < n; ++i) {
-        for (int j = i + 1; j < n; ++j) {
-            int cache = matrix[i][j];
-            matrix[i][j] = matrix[j][i];
-            matrix[j][i] = cache;
+# 1ms 100%
+class Solution {
+    public void rotate(int[][] matrix) {
+        int n = matrix.length;
+        // Reverse row
+        for (int i = 0; i < n / 2; ++i) {
+            int j = n - 1 - i;
+            int[] cache = matrix[i];
+            matrix[i] = matrix[j];
+            matrix[j] = cache;
         }
+        // Transpose
+        for (int i = 0; i < n; ++i) {
+            for (int j = i + 1; j < n; ++j) {
+                int cache = matrix[i][j];
+                matrix[i][j] = matrix[j][i];
+                matrix[j][i] = cache;
+            }
+        }
+    }
+}
+
+/*
+ * clockwise rotate
+ * first reverse up to down, then swap the symmetry
+ * 1 2 3     7 8 9     7 4 1
+ * 4 5 6  => 4 5 6  => 8 5 2
+ * 7 8 9     1 2 3     9 6 3
+*/
+void rotate(vector<vector<int> > &matrix) {
+    reverse(matrix.begin(), matrix.end());
+    for (int i = 0; i < matrix.size(); ++i) {
+        for (int j = i + 1; j < matrix[i].size(); ++j)
+            swap(matrix[i][j], matrix[j][i]);
+    }
+}
+
+/*
+ * anticlockwise rotate
+ * first reverse left to right, then swap the symmetry
+ * 1 2 3     3 2 1     3 6 9
+ * 4 5 6  => 6 5 4  => 2 5 8
+ * 7 8 9     9 8 7     1 4 7
+*/
+void anti_rotate(vector<vector<int> > &matrix) {
+    for (auto vi : matrix) reverse(vi.begin(), vi.end());
+    for (int i = 0; i < matrix.size(); ++i) {
+        for (int j = i + 1; j < matrix[i].size(); ++j)
+            swap(matrix[i][j], matrix[j][i]);
     }
 }
 '''

@@ -1,7 +1,9 @@
-__source__ = 'https://leetcode.com/problems/serialize-and-deserialize-bst/#/description'
+__source__ = 'https://leetcode.com/problems/serialize-and-deserialize-bst/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/serialize-and-deserialize-bst.py
 # Time:  O(n)
 # Space: O(h)
+#
+# Description: Leetcode # 449. Serialize and Deserialize BST
 #
 # Serialization is the process of converting a data structure or
 # object into a sequence of bits so that it can be stored in a file or
@@ -26,6 +28,7 @@ __source__ = 'https://leetcode.com/problems/serialize-and-deserialize-bst/#/desc
 # Serialize and Deserialize Binary Tree
 
 import collections
+import unittest
 # Definition for a binary tree node.
 class TreeNode(object):
      def __init__(self, x):
@@ -34,10 +37,8 @@ class TreeNode(object):
          self.right = None
 
 class Codec:
-
     def serialize(self, root):
         """Encodes a tree to a single string.
-
         :type root: TreeNode
         :rtype: str
         """
@@ -49,13 +50,10 @@ class Codec:
 
         vals = []
         serializeHelper(root, vals)
-
         return ' '.join(map(str, vals))
-
 
     def deserialize(self, data):
         """Decodes your encoded data to tree.
-
         :type data: str
         :rtype: TreeNode
         """
@@ -73,16 +71,22 @@ class Codec:
                 return None
 
         vals = collections.deque([int(val) for val in data.split()])
-
         return deserializeHelper(float('-inf'), float('inf'), vals)
-
 
 # Your Codec object will be instantiated and called as such:
 # codec = Codec()
 # codec.deserialize(codec.serialize(root))
 
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+
+if __name__ == '__main__':
+    unittest.main()
+
 Java = '''
-Java PreOrder + Queue solution
+# Thought:
+
 Hi all, I think my solution is pretty straightforward and easy to understand,
 not that efficient though. And the serialized tree is compact.
 Pre order traversal of BST will output root node first, then left children, then right.
@@ -92,19 +96,24 @@ If we look at the value of the pre-order traversal we get this:
 
 rootValue (<rootValue) (<rootValue) (<rootValue) |separate line| (>rootValue) (>rootValue)
 Because of BST's property: before the |separate line| all the node values are less than root value,
-all the node values after |separate line| are greater than root value. We will utilize this to build left and right tree.
+all the node values after |separate line| are greater than root value. 
+We will utilize this to build left and right tree.
 
 Pre-order traversal is BST's serialized string. I am doing it iteratively.
 To deserialized it, use a queue to recursively get root node, left subtree and right subtree.
 
 I think time complexity is O(NlogN).
-Errr, my bad, as @ray050899 put below, worst case complexity should be O(N^2), when the tree is really unbalanced.
+Errr, my bad, as @ray050899 put below, worst case complexity should be O(N^2), 
+when the tree is really unbalanced.
 
 My implementation
 
-public class Codec {
+# PreOrder + Queue solution
+# 11ms 60.21%
+class Codec {
     private static final String SEP = ",";
     private static final String NULL = "null";
+    
     // Encodes a tree to a single string.
     public String serialize(TreeNode root) {
         StringBuilder sb = new StringBuilder();

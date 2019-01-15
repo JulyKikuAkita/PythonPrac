@@ -1,11 +1,12 @@
-__source__ = ''
+__source__ = 'https://leetcode.com/problems/range-sum-query-2d-mutable/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/range-sum-query-2d-mutable.py
 # Time:  ctor:   O(m * n)
 #        update: O(logm * logn)
 #        query:  O(logm * logn)
 # Space: O(m * n)
 #
-# Description:
+# Description: Leetcode # 308. Range Sum Query 2D - Mutable
+#
 # Given a 2D matrix matrix, find the sum of the elements inside the rectangle
 # defined by its upper left corner (row1, col1) and lower right corner (row2, col2).
 # (ignore jpg)
@@ -29,14 +30,17 @@ __source__ = ''
 # The matrix is only modifiable by the update function.
 # You may assume the number of calls to update and sumRegion function is distributed evenly.
 # You may assume that row1 <= row2 and col1 <= col2.
-# Hide Company Tags Google
-# Hide Tags Binary Indexed Tree Segment Tree
-# Hide Similar Problems (M) Range Sum Query 2D - Immutable (M) Range Sum Query - Mutable
 #
+# Companies
+# Google
+# Related Topics
+# Binary Indexed Tree Segment Tree
+# Similar Questions
+# Range Sum Query 2D - Immutable Range Sum Query - Mutable
 #
 import unittest
-
 # Binary Indexed Tree (BIT) solution.
+# 212ms 34.86%
 class NumMatrix(object):
     def __init__(self, matrix):
         """
@@ -113,26 +117,26 @@ class NumMatrix(object):
 # numMatrix.update(1, 1, 10)
 # numMatrix.sumRegion(1, 2, 3, 4)
 
-
 class TestMethods(unittest.TestCase):
     def test_Local(self):
         self.assertEqual(1, 1)
-
 
 if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
-1. BIT
-// time should be O(log(m) * log(n))
-Explanation of Binary Indexed Tree :
+# Thought: 
 https://www.topcoder.com/community/data-science/data-science-tutorials/binary-indexed-trees/
-// Using 2D Binary Indexed Tree, 2D BIT Def:
-// bit[i][j] saves the rangeSum of [i-(i&-i), i] x [j-(j&-j), j]
-// note bit index == matrix index + 1
-public class NumMatrix {
 
+1.
+# time should be O(log(m) * log(n))
+# Using 2D Binary Indexed Tree, 2D BIT Def:
+# bit[i][j] saves the rangeSum of [i-(i&-i), i] x [j-(j&-j), j]
+# note bit index == matrix index + 1
+#
+# BIT
+# 242ms 48.48%
+class NumMatrix {
     int[][] tree;
     int[][] nums;
     int m;
@@ -178,155 +182,193 @@ public class NumMatrix {
     }
 }
 
-2. Segment tree:
+2.
+# Segment tree:
+# 243ms 47.84%
 
-TreeNode root;
-public NumMatrix(int[][] matrix) {
-    if (matrix.length == 0) {
-        root = null;
-    } else {
-        root = buildTree(matrix, 0, 0, matrix.length-1, matrix[0].length-1);
-    }
-}
-
-public void update(int row, int col, int val) {
-    update(root, row, col, val);
-}
-
-private void update(TreeNode root, int row, int col, int val) {
-    if (root.row1 == root.row2 && root.row1 == row && root.col1 == root.col2 && root.col1 == col) {
-        root.sum = val;
-        return;
-    }
-    int rowMid = (root.row1 + root.row2) / 2;
-    int colMid = (root.col1 + root.col2) / 2;
-    TreeNode next;
-    if (row <= rowMid) {
-        if (col <= colMid) {
-            next = root.c1;
+class NumMatrix {
+    TreeNode root;
+    public NumMatrix(int[][] matrix) {
+        if (matrix.length == 0) {
+            root = null;
         } else {
-            next = root.c2;
-        }
-    } else {
-        if (col <= colMid) {
-            next = root.c3;
-        } else {
-            next = root.c4;
+            root = buildTree(matrix, 0, 0, matrix.length-1, matrix[0].length-1);
         }
     }
-    root.sum -= next.sum;
-    update(next, row, col, val);
-    root.sum += next.sum;
-}
 
-public int sumRegion(int row1, int col1, int row2, int col2) {
-    return sumRegion(root, row1, col1, row2, col2);
-}
+    public void update(int row, int col, int val) {
+        update(root, row, col, val);
+    }
 
-private int sumRegion(TreeNode root, int row1, int col1, int row2, int col2) {
-    if (root.row1 == row1 && root.col1 == col1 && root.row2 == row2 && root.col2 == col2)
-        return root.sum;
-    int rowMid = (root.row1 + root.row2) / 2;
-    int colMid = (root.col1 + root.col2) / 2;
-    if (rowMid >= row2) {
-        if (colMid >= col2) {
-            return sumRegion(root.c1, row1, col1, row2, col2);
-        } else if (colMid + 1 <= col1) {
-            return sumRegion(root.c2, row1, col1, row2, col2);
-        } else {
-            return sumRegion(root.c1, row1, col1, row2, colMid) + sumRegion(root.c2, row1, colMid+1, row2, col2);
+    private void update(TreeNode root, int row, int col, int val) {
+        if (root.row1 == root.row2 && root.row1 == row && root.col1 == root.col2 && root.col1 == col) {
+            root.sum = val;
+            return;
         }
-    } else if (rowMid + 1 <= row1) {
-        if (colMid >= col2) {
-            return sumRegion(root.c3, row1, col1, row2, col2);
-        } else if (colMid + 1 <= col1) {
-            return sumRegion(root.c4, row1, col1, row2, col2);
+        int rowMid = (root.row1 + root.row2) / 2;
+        int colMid = (root.col1 + root.col2) / 2;
+        TreeNode next;
+        if (row <= rowMid) {
+            if (col <= colMid) {
+                next = root.c1;
+            } else {
+                next = root.c2;
+            }
         } else {
-            return sumRegion(root.c3, row1, col1, row2, colMid) + sumRegion(root.c4, row1, colMid+1, row2, col2);
+            if (col <= colMid) {
+                next = root.c3;
+            } else {
+                next = root.c4;
+            }
         }
-    } else {
-        if (colMid >= col2) {
-            return sumRegion(root.c1, row1, col1, rowMid, col2) + sumRegion(root.c3, rowMid+1, col1, row2, col2);
-        } else if (colMid + 1 <= col1) {
-            return sumRegion(root.c2, row1, col1, rowMid, col2) + sumRegion(root.c4, rowMid+1, col1, row2, col2);
+        root.sum -= next.sum;
+        update(next, row, col, val);
+        root.sum += next.sum;
+    }
+
+    public int sumRegion(int row1, int col1, int row2, int col2) {
+        return sumRegion(root, row1, col1, row2, col2);
+    }
+
+    private int sumRegion(TreeNode root, int row1, int col1, int row2, int col2) {
+        if (root.row1 == row1 && root.col1 == col1 && root.row2 == row2 && root.col2 == col2)
+            return root.sum;
+        int rowMid = (root.row1 + root.row2) / 2;
+        int colMid = (root.col1 + root.col2) / 2;
+        if (rowMid >= row2) {
+            if (colMid >= col2) {
+                return sumRegion(root.c1, row1, col1, row2, col2);
+            } else if (colMid + 1 <= col1) {
+                return sumRegion(root.c2, row1, col1, row2, col2);
+            } else {
+                return sumRegion(root.c1, row1, col1, row2, colMid) + sumRegion(root.c2, row1, colMid+1, row2, col2);
+            }
+        } else if (rowMid + 1 <= row1) {
+            if (colMid >= col2) {
+                return sumRegion(root.c3, row1, col1, row2, col2);
+            } else if (colMid + 1 <= col1) {
+                return sumRegion(root.c4, row1, col1, row2, col2);
+            } else {
+                return sumRegion(root.c3, row1, col1, row2, colMid) + sumRegion(root.c4, row1, colMid+1, row2, col2);
+            }
         } else {
-            return sumRegion(root.c1, row1, col1, rowMid, colMid) + sumRegion(root.c2, row1, colMid+1, rowMid, col2) + sumRegion(root.c3, rowMid+1, col1, row2, colMid) + sumRegion(root.c4, rowMid+1, colMid+1, row2, col2);
+            if (colMid >= col2) {
+                return sumRegion(root.c1, row1, col1, rowMid, col2) + sumRegion(root.c3, rowMid+1, col1, row2, col2);
+            } else if (colMid + 1 <= col1) {
+                return sumRegion(root.c2, row1, col1, rowMid, col2) + sumRegion(root.c4, rowMid+1, col1, row2, col2);
+            } else {
+                return sumRegion(root.c1, row1, col1, rowMid, colMid) + sumRegion(root.c2, row1, colMid+1, rowMid, col2) + sumRegion(root.c3, rowMid+1, col1, row2, colMid) + sumRegion(root.c4, rowMid+1, colMid+1, row2, col2);
+            }
         }
     }
-}
 
-private TreeNode buildTree(int[][] matrix, int row1, int col1, int row2, int col2) {
-    if (row2 < row1 || col2 < col1)
-        return null;
-    TreeNode node = new TreeNode(row1, col1, row2, col2);
-    if (row1 == row2 && col1 == col2) {
-        node.sum = matrix[row1][col1];
+    private TreeNode buildTree(int[][] matrix, int row1, int col1, int row2, int col2) {
+        if (row2 < row1 || col2 < col1)
+            return null;
+        TreeNode node = new TreeNode(row1, col1, row2, col2);
+        if (row1 == row2 && col1 == col2) {
+            node.sum = matrix[row1][col1];
+            return node;
+        }
+        int rowMid = (row1 + row2) / 2;
+        int colMid = (col1 + col2) / 2;
+        node.c1 = buildTree(matrix, row1, col1, rowMid, colMid);
+        node.c2 = buildTree(matrix, row1, colMid+1, rowMid, col2);
+        node.c3 = buildTree(matrix, rowMid+1, col1, row2, colMid);
+        node.c4 = buildTree(matrix, rowMid+1, colMid+1, row2, col2);
+        node.sum += node.c1 != null ? node.c1.sum : 0;
+        node.sum += node.c2 != null ? node.c2.sum : 0;
+        node.sum += node.c3 != null ? node.c3.sum : 0;
+        node.sum += node.c4 != null ? node.c4.sum : 0;
         return node;
     }
-    int rowMid = (row1 + row2) / 2;
-    int colMid = (col1 + col2) / 2;
-    node.c1 = buildTree(matrix, row1, col1, rowMid, colMid);
-    node.c2 = buildTree(matrix, row1, colMid+1, rowMid, col2);
-    node.c3 = buildTree(matrix, rowMid+1, col1, row2, colMid);
-    node.c4 = buildTree(matrix, rowMid+1, colMid+1, row2, col2);
-    node.sum += node.c1 != null ? node.c1.sum : 0;
-    node.sum += node.c2 != null ? node.c2.sum : 0;
-    node.sum += node.c3 != null ? node.c3.sum : 0;
-    node.sum += node.c4 != null ? node.c4.sum : 0;
-    return node;
-}
 
-public class TreeNode {
-    int row1, row2, col1, col2, sum;
-    TreeNode c1, c2, c3, c4;
-    public TreeNode (int row1, int col1, int row2, int col2) {
-        this.row1 = row1;
-        this.col1 = col1;
-        this.row2 = row2;
-        this.col2 = col2;
-        this.sum = 0;
+    public class TreeNode {
+        int row1, row2, col1, col2, sum;
+        TreeNode c1, c2, c3, c4;
+        public TreeNode (int row1, int col1, int row2, int col2) {
+            this.row1 = row1;
+            this.col1 = col1;
+            this.row2 = row2;
+            this.col2 = col2;
+            this.sum = 0;
+        }
     }
 }
 
-3. different thinking:
+3. Different thinking:
 We use colSums[i][j] = the sum of ( matrix[0][j], matrix[1][j], matrix[2][j],......,matrix[i - 1][j] ).
-private int[][] colSums;
-private int[][] matrix;
+# 166ms 87.97%
+class NumMatrix {
+    private int[][] colSums;
+    private int[][] matrix;
 
-public NumMatrix(int[][] matrix) {
-    if(   matrix           == null
-       || matrix.length    == 0
-       || matrix[0].length == 0   ){
-        return;
-     }
-
-     this.matrix = matrix;
-
-     int m   = matrix.length;
-     int n   = matrix[0].length;
-     colSums = new int[m + 1][n];
-     for(int i = 1; i <= m; i++){
-         for(int j = 0; j < n; j++){
-             colSums[i][j] = colSums[i - 1][j] + matrix[i - 1][j];
+    public NumMatrix(int[][] matrix) {
+        if(   matrix           == null
+           || matrix.length    == 0
+           || matrix[0].length == 0   ){
+            return;
          }
-     }
+
+         this.matrix = matrix;
+
+         int m   = matrix.length;
+         int n   = matrix[0].length;
+         colSums = new int[m + 1][n];
+         for(int i = 1; i <= m; i++){
+             for(int j = 0; j < n; j++){
+                 colSums[i][j] = colSums[i - 1][j] + matrix[i - 1][j];
+             }
+         }
+    }
+    //time complexity for the worst case scenario: O(m)
+    public void update(int row, int col, int val) {
+        for(int i = row + 1; i < colSums.length; i++){
+            colSums[i][col] = colSums[i][col] - matrix[row][col] + val;
+        }
+
+        matrix[row][col] = val;
+    }
+    //time complexity for the worst case scenario: O(n)
+    public int sumRegion(int row1, int col1, int row2, int col2) {
+        int ret = 0;
+
+        for(int j = col1; j <= col2; j++){
+            ret += colSums[row2 + 1][j] - colSums[row1][j];
+        }
+
+        return ret;
+    }
 }
-//time complexity for the worst case scenario: O(m)
-public void update(int row, int col, int val) {
-    for(int i = row + 1; i < colSums.length; i++){
-        colSums[i][col] = colSums[i][col] - matrix[row][col] + val;
+
+# 207ms 66.85%
+class NumMatrix {
+    private int[][] matrix, sum;
+    public NumMatrix(int[][] matrix) {
+        int m = matrix.length, n = m == 0 ? 0 : matrix[0].length;
+        this.matrix = matrix;
+        sum = new int[m][n+1];
+        for(int i=0; i<m; i++) {
+            for(int j=0; j<n; j++) {
+                sum[i][j+1] = matrix[i][j] + sum[i][j];
+            }
+        }
     }
 
-    matrix[row][col] = val;
-}
-//time complexity for the worst case scenario: O(n)
-public int sumRegion(int row1, int col1, int row2, int col2) {
-    int ret = 0;
-
-    for(int j = col1; j <= col2; j++){
-        ret += colSums[row2 + 1][j] - colSums[row1][j];
+    public void update(int row, int col, int val) {
+        int diff = val - matrix[row][col];
+        matrix[row][col] = val;
+        for(int j=col+1; j<sum[row].length; j++) {
+            sum[row][j] += diff;
+        }
     }
 
-    return ret;
+    public int sumRegion(int row1, int col1, int row2, int col2) {
+        int res = 0;
+        for(int i=row1; i<=row2; i++) {
+            res += (sum[i][col2 + 1] - sum[i][col1]);
+        }
+        return res;
+    }
 }
 '''

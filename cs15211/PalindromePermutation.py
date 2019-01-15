@@ -1,7 +1,9 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/palindrome-permutation/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/palindrome-permutation.py
 # Time:  O(n)
 # Space: O(1)
+#
+# Description: Leetcode # 266. Palindrome Permutation
 #
 # Given a string, determine if a permutation of the string could form a palindrome.
 #
@@ -12,15 +14,20 @@ __author__ = 'July'
 #
 # Consider the palindromes of odd vs even length. What difference do you notice?
 # Count the frequency of each character.
-# If each character occurs even number of times, then it must be a palindrome. How about character which occurs odd number of times?
+# If each character occurs even number of times,
+# then it must be a palindrome. How about character which occurs odd number of times?
 #
 # #count of  odd number char < 2
-#  Google Uber Bloomberg
-# Hide Tags Hash Table
-# Hide Similar Problems (M) Longest Palindromic Substring (E) Valid Anagram (M) Palindrome Permutation II (E) Longest Palindrome
+# Companies
+# Google Uber Bloomberg
+# Related Topics
+# Hash Table
+# Similar Questions
+# Longest Palindromic Substring Valid Anagram Palindrome Permutation II Longest Palindrome
 #
-
+import unittest
 import collections
+# 20ms 99.07%
 class Solution(object):
     def canPermutePalindrome(self, s):
         """
@@ -30,7 +37,7 @@ class Solution(object):
         #         print collections.Counter(s).values()
         return sum(v % 2 for v in collections.Counter(s).values()) < 2
 
-
+# 20ms 99.07%
 from collections import defaultdict
 class Solution2(object):
     def canPermutePalindrome(self, s):
@@ -51,9 +58,17 @@ class Solution2(object):
 
         return True
 
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+
+if __name__ == '__main__':
+    unittest.main()
+
 # Java solution
-java = '''
-https://leetcode.com/articles/palindrome-permutation/
+Java = '''
+# Thought: https://leetcode.com/problems/palindrome-permutation/solution/
+#
 Time complexity : O(n). We traverse over the string ss of length nn once only.
 Space complexity : O(n). The setset can grow upto a maximum size of nn in case of all distinct elements.
 
@@ -64,7 +79,8 @@ When the iteration is finished, just return set.size()==0 || set.size()==1.
 set.size()==0 corresponds to the situation when there are even number of any character in the string, and
 set.size()==1 corresponsds to the fact that there are even number of any character except one.
 
-public class Solution {
+# 1ms 65.75%
+class Solution {
     public boolean canPermutePalindrome(String s) {
         Set<Character> set=new HashSet<Character>();
         for(int i=0; i<s.length(); ++i){
@@ -77,15 +93,32 @@ public class Solution {
     }
 }
 
-public boolean canPermutePalindrome(String s) {
-    BitSet bs = new BitSet();
-    for (byte b : s.getBytes())
-        bs.flip(b);
-    return bs.cardinality() < 2;
+# same as above
+class Solution {
+    public boolean canPermutePalindrome(String s) {
+        Set<Character> set = new HashSet();
+        for (int i = 0; i < s.length(); i++) {
+            if (!set.add(s.charAt(i))) {
+                set.remove(s.charAt(i));
+            }
+        }
+        return set.size() <= 1;
+    }
 }
 
-#count char with boolean[128]
-public class Solution {
+# 1ms 65.75%
+class Solution {
+    public boolean canPermutePalindrome(String s) {
+        BitSet bs = new BitSet();
+        for (byte b : s.getBytes())
+            bs.flip(b);
+        return bs.cardinality() < 2;
+        }
+}
+
+# count char with boolean[128]
+# 0ms 100%
+class Solution {
     public boolean canPermutePalindrome(String s) {
         boolean[] arr = new boolean[128];
         for (int i = 0; i < s.length(); i++) {
@@ -95,7 +128,7 @@ public class Solution {
         boolean odd = false;
         for (int i = 0; i < 128; i++) {
             if (arr[i]) {
-                if (odd) {
+                if (odd) { //2 occurrence of odd char count
                     return false;
                 } else {
                     odd = true;
@@ -106,5 +139,22 @@ public class Solution {
     }
 }
 
+# 0ms 100%
+class Solution {
+    public boolean canPermutePalindrome(String s) {
+        if (s == null || s.length() == 0) return true;
+        int[] map = new int[128]; //or use 256 depending on encoding
+        int count = 0;
+        for (int i = 0; i < s.length(); i++) {
+            map[s.charAt(i)]++;
+            if ( (map[s.charAt(i)] & 1) == 0) { //%2 ==0
+                count--;
+            } else {
+                count++;
+            }
+        }
+        return count <= 1;
+    }
+}
 '''
 

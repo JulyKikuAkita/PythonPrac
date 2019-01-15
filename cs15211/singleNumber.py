@@ -1,24 +1,30 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/single-number/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/single-number.py
 # Time:  O(n)
 # Space: O(1)
 # Bit Manipulation
+#
+# Description: Leetcode # 136. Single Number
+#
 # Given an array of integers, every element appears twice except for one. Find that single one.
 #
 # Note:
 # Your algorithm should have a linear runtime complexity. Could you implement it without using extra memory?
 #
-
+# Companies
+# Palantir Airbnb
+# Related Topics
+# Hash Table Bit Manipulation
+# Similar Questions
+# Single Number II Single Number III Missing Number Find the Duplicate Number Find the Difference
+#
 import operator
-
+import unittest
 class Solution:
     # @param A, a list of integer
     # @return an integer
     def singleNumber(self, A):
         return reduce(operator.xor, A)
-
-if __name__ == '__main__':
-    print Solution().singleNumber([1, 1, 2, 2, 3])
 
 class SolutionOther:
     # @param A, a list of integer
@@ -61,27 +67,34 @@ class SolutionOther:
             res *= -1
         return res
 
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+        # test case
+        my_test = SolutionOther()
+        #print my_test.singleNumber([2,2,4,5,4])
+        #print my_test.singleNumber([-2,-2,4,5,4])
 
+        #print my_test.singleNumber2([2,2,2,4,4,5,4])
+        #print my_test.singleNumber2([-2,-2,-2,4,5,4, 4])
 
+        print my_test.genericSingleNumber([-2,-2,1,1,-3,1,-3,-3,-4,-2],3)
+        #print my_test.genericSingleNumber([2,2,2,4,4,5,4], 3)
+        #print my_test.genericSingleNumber([-1,-5,-5], 2)
+        #print my_test.genericSingleNumber([-5,-5, -5, 1], 3)
+        #print my_test.genericSingleNumber([1,5,5], 2)
+        #print my_test.genericSingleNumber([1], 2)
 
-# test case
-my_test = SolutionOther()
-#print my_test.singleNumber([2,2,4,5,4])
-#print my_test.singleNumber([-2,-2,4,5,4])
+        print Solution().singleNumber([1, 1, 2, 2, 3])
 
-#print my_test.singleNumber2([2,2,2,4,4,5,4])
-#print my_test.singleNumber2([-2,-2,-2,4,5,4, 4])
+if __name__ == '__main__':
+    unittest.main()
 
-print my_test.genericSingleNumber([-2,-2,1,1,-3,1,-3,-3,-4,-2],3)
-#print my_test.genericSingleNumber([2,2,2,4,4,5,4], 3)
-#print my_test.genericSingleNumber([-1,-5,-5], 2)
-#print my_test.genericSingleNumber([-5,-5, -5, 1], 3)
-#print my_test.genericSingleNumber([1,5,5], 2)
-#print my_test.genericSingleNumber([1], 2)
+Java = '''
+# Thought: https://leetcode.com/problems/single-number/solution/
 
-#java
-js = '''
-public class Solution {
+# 0ms 100%
+class Solution {
     public int singleNumber(int[] nums) {
         int cur = 0;
         for (int num : nums) {

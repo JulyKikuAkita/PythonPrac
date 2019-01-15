@@ -1,9 +1,13 @@
-__source__ = 'https://leetcode.com/problems/edit-distance/#/solutions'
+__source__ = 'https://leetcode.com/problems/edit-distance/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/edit-distance.py
+# Thought: https://web.stanford.edu/class/cs124/lec/med.pdf
+#
 # Time:  O(n * m)
 # Space: O(n + m)
 # DP
-# ?
+#
+# Description: Leetcode # 72. Edit Distance
+#
 # In computer science, edit distance is a way of quantifying how dissimilar two strings
 # (e.g., words) are to one another by counting the minimum number of operations required to transform one string into the other.
 #
@@ -15,12 +19,14 @@ __source__ = 'https://leetcode.com/problems/edit-distance/#/solutions'
 # a) Insert a character
 # b) Delete a character
 # c) Replace a character
-#Related Topics
+#
+# Related Topics
 # Dynamic Programming String
 # Similar Questions
 # One Edit Distance Delete Operation for Two Strings
 #
 '''
+Thought:
 Let dp[i][j] stands for the edit distance between two strings with length i and j, i.e., word1[0,...,i-1] and word2[0,...,j-1].
 There is a relation between dp[i][j] and dp[i-1][j-1].
 Let's say we transform from one string to another. The first string has length i and it's last character is "x";
@@ -34,7 +40,7 @@ When x!=y, dp[i][j] is the min of the three situations.
 Initial condition:
 dp[i][0] = i, dp[0][j] = j
 '''
-
+import unittest
 class Solution:
     # @return an integer
     def minDistance(self, word1, word2):
@@ -78,7 +84,6 @@ class Solution2:
                 distance[i].append(min(insert,delete,replace))
         return distance[-1][-1]
 
-
 class SolutionOther:
     # @return an integer
     def minDistance(self, word1, word2):
@@ -108,56 +113,26 @@ class SolutionOther:
         else:
             return 1
 
-# http://www.programcreek.com/2013/12/edit-distance-in-java/
-class SolutionJava:
-    # @return an integer
-    def minDistance(self, word1, word2):
-        m = len(word1)
-        n = len(word2)
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+        #test case
+        test = SolutionOther()
+        print "start testing"
+        #print test.minDistance("Rabbit", "Rabket")
+        #print test.minDistance("a", "b")
+        #print test.minDistance("abc", "b")
 
-        #  len1+1, len2+1, because finally return dp[len1][len2]
-        dp = [[0 for j in xrange(n+1)] for i in xrange(m+1) ]
+        print Solution().minDistance("Rabbit", "Racket")
+        #print Solution2().minDistance("Rabbit", "Rabket")
+        #print Solution().minDistance("Rabbit", "Rabbitt")
 
-        for i in xrange(m+1):
-            dp[i][0]= i
+if __name__ == '__main__':
+    unittest.main()
 
-        for j in range(n+1):
-            dp[0][j]=j
-
-        # 	//iterate though, and check last char
-
-        for i in xrange(m):
-            c1 = word1[i]
-            for j in xrange(n):
-                c2 = word2[j]
-                if c1 == c2:
-                    dp[i+1][j+1] = dp[i][j]
-                else:
-                    replace = dp[i][j] + 1
-                    insert = dp[i][j+1] + 1
-                    delete = dp[i+1][j] + 1
-                    dp[i+1][j+1] = min(insert,delete,replace)
-
-        return dp[m][n]
-
-
-#test case
-test = SolutionOther()
-print "start testing"
-#print test.minDistance("Rabbit", "Rabket")
-#print test.minDistance("a", "b")
-#print test.minDistance("abc", "b")
-
-
-if __name__ == "__main__":
-    print Solution().minDistance("Rabbit", "Racket")
-    print SolutionJava().minDistance("Rabbit", "Racket")
-    #print Solution2().minDistance("Rabbit", "Rabket")
-    #print Solution().minDistance("Rabbit", "Rabbitt")
-
-#java
 Java = '''
-Thought:
+Thought: https://leetcode.com/problems/edit-distance/solution/
+https://web.stanford.edu/class/cs124/lec/med.pdf
 This is a classic problem of Dynamic Programming. We define the state dp[i][j]
 to be the minimum number of operations to convert word1[0..i - 1] to word2[0..j - 1].
 The state equations have two cases: the boundary case and the general case.
@@ -223,7 +198,8 @@ f(0, k) = f(k, 0) = k
 Below is the direct bottom-up translation of this recurrent relation.
 t is only important to take care of 0-based index with actual code :-
 
-public class Solution {
+#18.42% 13ms
+class Solution {
     public int minDistance(String word1, String word2) {
         int len1 = word1.length();
         int len2 = word2.length();
@@ -248,7 +224,8 @@ public class Solution {
     }
 }
 
-public class Solution {
+#75.64% 7ms
+class Solution {
     public int minDistance(String word1, String word2) {
         int len1 = word1.length();
         int len2 = word2.length();
@@ -271,6 +248,96 @@ public class Solution {
             }
         }
         return dp[len1][len2];
+    }
+}
+
+Initalizalization:
+D(i,0) = i
+D(0,j) = j
+
+ Recurrence Relation:
+For each i = 1 ...M
+    For each j = 1...N
+
+                D(i-1,j) + 1
+ D(i,j)= min    D(i,j-1) + 1
+                D(i-1,j-1) + 2: if X(i) != Y(j)
+                             0; if X(i) == Y(j)
+Terminaiton: D(N,M) is distance
+
+#95.04% 6ms
+class Solution {
+    public int minDistance(String word1, String word2) {
+        int m = word1.length();
+        int n = word2.length();
+
+        int[][] dp = new int[m+1][n+1];
+        for (int i = 0 ; i <= m; i++) {
+            dp[i][0] = i;
+        }
+        for (int j = 1; j <= n; j++) {
+            dp[0][j] = j;
+        }
+
+        for (int i = 0; i < m ; i++) {
+            for (int j = 0; j < n; j++) {
+                if (word1.charAt(i) == word2.charAt(j)) {
+                    dp[i+1][j+1] = dp[i][j];
+                } else {
+                    int a = dp[i][j];
+                    int b = dp[i][j+1];
+                    int c = dp[i + 1][j];
+                    dp[i+1][j+1] = a < b ? (a < c ? a : c) : (b < c ? b : c);
+                    dp[i+1][j+1]++;
+                }
+            }
+        }
+        return dp[m][n];
+    }
+}
+
+# dfs with memorization
+# 99.62% 4ms
+class Solution {
+    private String word1;
+    private String word2;
+    private Integer[][] cache;
+
+    public int minDistance(String word1, String word2) {
+        if (word1.isEmpty()) {
+            return word2.length();
+        }
+        if (word2.isEmpty()) {
+            return word1.length();
+        }
+        this.word1 = word1;
+        this.word2 = word2;
+        cache = new Integer[word1.length()][word2.length()];
+        return 1 + dfs(word1.length() - 1, word2.length() - 1);
+    }
+
+    private int dfs(int m, int n) {
+        if (m < 0) {
+            return n;
+        }
+        if (n < 0) {
+            return m;
+        }
+        if (cache[m][n] != null) {
+            return cache[m][n];
+        }
+        int dist = 0;
+        if (word1.charAt(m) == word2.charAt(n)) {
+            dist = dfs(m - 1, n - 1);
+        } else {
+            dist = 1 + min(dfs(m, n - 1), dfs(m - 1, n), dfs(m - 1, n - 1));
+        }
+        cache[m][n] = dist;
+        return dist;
+    }
+
+    private int min(int a, int b, int c) {
+        return Math.min(Math.min(a, b), c);
     }
 }
 '''

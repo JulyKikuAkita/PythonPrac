@@ -2,17 +2,20 @@ __source__ = 'https://leetcode.com/problems/count-primes/#/solutions'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/count-primes.py
 # Time:  O(n)
 # Space: O(n)
-# Description:
+#
+# Description: Leetcode # 204. Count Primes
 #
 # Count the number of prime numbers less than a non-negative number, n
 #
 # Hint: The number n could be in the order of 100,000 to 5,000,000.
 #
-#  Amazon Microsoft
-# Hide Tags Hash Table Math
-# Hide Similar Problems (E) Ugly Number (M) Ugly Number II (M) Perfect Squares
-#
-
+# Companies
+# Amazon Microsoft
+# Related Topics
+# Hash Table Math
+# Similar Questions
+# Ugly Number Ugly Number II Perfect Squares
+import unittest
 from math import sqrt
 class Solution:
     # @param {integer} n
@@ -30,10 +33,7 @@ class Solution:
                     is_prime[j] = False
         return num
 
-if __name__ == "__main__":
-    print Solution().countPrimes(7)
-
-class Solution(object):
+class Solution2(object):
     def countPrimes(self, n):
         """
         :type n: int
@@ -54,9 +54,19 @@ class Solution(object):
 
         return isPrime.count(True) - 2 # don't count 0, 1
 
-#java
-js = '''
-public class Solution {
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+        print Solution().countPrimes(7)
+
+if __name__ == '__main__':
+    unittest.main()
+
+Java = '''
+# Thought:
+
+# 12ms 93.47%
+class Solution {
     public int countPrimes(int n) {
         if (n < 3) {
             return 0;
@@ -79,10 +89,33 @@ public class Solution {
     }
 }
 
+# 12ms 93.47%
+class Solution {
+    public int countPrimes(int n) {
+        if (n < 2) {
+            return 0;
+        }
+        boolean[] isNotPrime = new boolean[n];
+        int count = n - 2;
+        for (int i = 2; i * i < n; i++) {
+            if (!isNotPrime[i]) {
+                for (int j = i * i; j < n; j += i) {
+                    if (!isNotPrime[j]) {
+                        isNotPrime[j] = true;
+                        count--;
+                    }
+                }
+            }
+        }
+        return count;
+    }
+}
+
 The accurate time complexity is O(n\log{\log{n}}) which is not trivial to show.
 But, it is easy to show a complexity of O(n\log{n}).
 
-public class Solution {
+# 13ms 90.43%
+class Solution {
     public int countPrimes(int n) {
         boolean[] isPrime = new boolean[n];
         for (int i = 2; i < n; ++i) isPrime[i] = true;
@@ -96,9 +129,10 @@ public class Solution {
     }
 }
 
-#98%
-#Note, prime number % 6 will either be 1 or 5
-public class Solution {
+# Note, prime number % 6 will either be 1 or 5
+
+# 7ms 99.50%
+class Solution {
     public int countPrimes(int n) {
         if (n <= 2) {
             return 0;
@@ -114,6 +148,30 @@ public class Solution {
                     is[j] = true;
                     count--;
                 }
+            }
+        }
+        return count;
+    }
+}
+
+# 11ms 95.70%
+class Solution {
+    public int countPrimes(int n) {
+        if (n < 3) {
+            return 0;
+        }
+        boolean[] flags = new boolean[n - 2];
+        for (int i = 0; i < Math.sqrt(n) - 2; i++) {
+            if (!flags[i]) {
+                for (int j = (i + 2) * (i + 2); j < n; j += i + 2) {
+                    flags[j - 2] = true;
+                }
+            }
+        }
+        int count = 0;
+        for (boolean flag : flags) {
+            if (!flag) {
+                count++;
             }
         }
         return count;

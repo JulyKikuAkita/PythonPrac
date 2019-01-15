@@ -4,6 +4,8 @@ __source__ = 'https://leetcode.com/problems/path-sum/#/description'
 # Space: O(h), h is height of binary tree
 # DFS
 #
+# Description: Leetcode # 112. Path Sum
+#
 # Given a binary tree and a sum, determine if the tree has a root-to-leaf path
 # such that adding up all the values along the path equals the given sum.
 #
@@ -18,14 +20,14 @@ __source__ = 'https://leetcode.com/problems/path-sum/#/description'
 #         7    2      1
 # return true, as there exist a root-to-leaf path 5->4->11->2 which sum is 22.
 #
-# Topics:
-# Tree Depth-first Search
-# You might like:
-# (M) Path Sum II (H) Binary Tree Maximum Path Sum (M) Sum Root to Leaf Numbers (E) Path Sum III
-# Company:
+# Companies
 # Microsoft
+# Related Topics
+# Tree Depth-first Search
+# Similar Questions
+# Path Sum II Binary Tree Maximum Path Sum Sum Root to Leaf Numbers Path Sum III
 #
-
+import unittest
 # Definition for a  binary tree node
 class TreeNode:
     def __init__(self, x):
@@ -45,7 +47,6 @@ class Solution:
             return True
 
         return self.hasPathSum(root.left, sum - root.val) or self.hasPathSum(root.right, sum - root.val)
-
 
 # http://www.programcreek.com/2013/01/leetcode-path-sum/
 # breadth first search(BFS) problem with queue
@@ -68,17 +69,22 @@ class javaSolution:
                 nodes.insert(0, (cur.right, cur.right.val + sumValue))
         return False
 
-if __name__ == "__main__":
-    root = TreeNode(5)
-    root.left = TreeNode(4)
-    root.right = TreeNode(8)
-    root.left.left = TreeNode(11)
-    root.left.left.right = TreeNode(2)
-    print Solution().hasPathSum(root, 22)
-    print javaSolution().hasPathSum(root, 22)
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+        root = TreeNode(5)
+        root.left = TreeNode(4)
+        root.right = TreeNode(8)
+        root.left.left = TreeNode(11)
+        root.left.left.right = TreeNode(2)
+        print Solution().hasPathSum(root, 22)
+        print javaSolution().hasPathSum(root, 22)
 
-#Java
-java = '''
+if __name__ == '__main__':
+    unittest.main()
+
+Java = '''
+# Thought: https://leetcode.com/problems/path-sum/solution/
 /**
  * Definition for a binary tree node.
  * public class TreeNode {
@@ -88,13 +94,30 @@ java = '''
  *     TreeNode(int x) { val = x; }
  * }
  */
-public class Solution {
+
+# 0ms 100%
+class Solution {
     public boolean hasPathSum(TreeNode root, int sum) {
         if ( root == null) return false;
         if (root.left == null && root.right == null){
             return root.val == sum;
         }
            return hasPathSum(root.left, sum - root.val) || hasPathSum(root.right, sum - root.val);
+    }
+}
+
+# 0ms 100%
+class Solution {
+    public boolean hasPathSum(TreeNode root, int sum) {
+        if (root == null) {
+            return false;
+        }
+        sum -= root.val;
+        if (root.left == null && root.right == null) {
+            return sum == 0;
+        } else {
+            return hasPathSum(root.left, sum) || hasPathSum(root.right, sum);
+        }
     }
 }
 '''

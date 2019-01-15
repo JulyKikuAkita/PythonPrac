@@ -1,4 +1,9 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/k-diff-pairs-in-an-array/'
+# Time:  O(n)
+# Space: O(n)
+#
+# Description: 532. K-diff Pairs in an Array
+#
 # Given an array of integers and an integer k, you need to find the number of unique k-diff pairs in the array.
 # Here a k-diff pair is defined as an integer pair (i, j),
 # where i and j are both numbers in the array and their absolute difference is k.
@@ -24,12 +29,14 @@ __author__ = 'July'
 # Hide Tags Two Pointers Array
 # Hide Similar Problems (E) Minimum Absolute Difference in BST
 #
+import collections
 class Solution(object):
     #1-liner in Python, O(n) time
     def findPairs(self, nums, k):
        return len(set(nums)&{n+k for n in nums}) if k>0 else sum(v>1 for v in collections.Counter(nums).values()) if k==0 else 0
 
     # which is equivalent to:
+    # 32ms 94.99%
     def findPairs(self, nums, k):
         """
         :type nums: List[int]
@@ -43,13 +50,16 @@ class Solution(object):
         else:
             return 0
 
-java = '''
+Java = '''
+# Thought:
+
 Two-pointer Approach
 The problem is just a variant of 2-sum.
 Update: Fixed a bug that can cause integer subtraction overflow.
 Update: The code runs in O(n log n) time, using O(1) space.
 
-public class Solution {
+# 14ms 88.24%
+class Solution {
     public int findPairs(int[] nums, int k) {
         int ans = 0;
         Arrays.sort(nums);
@@ -63,7 +73,8 @@ public class Solution {
 }
 
 Java O(n) solution - one Hashmap, easy to understand
-public class Solution {
+# 29ms 24.31%
+class Solution {
     public int findPairs(int[] nums, int k) {
         if (nums == null || nums.length == 0 || k < 0)   return 0;
 

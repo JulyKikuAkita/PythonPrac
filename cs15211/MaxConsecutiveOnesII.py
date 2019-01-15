@@ -1,8 +1,9 @@
-__source__ = 'https://leetcode.com/problems/max-consecutive-ones-ii/#/description'
+__source__ = 'https://leetcode.com/problems/max-consecutive-ones-ii/'
 # Time:  O()
 # Space: O()
 #
-# Description:
+# Description: 487. Max Consecutive Ones II
+#
 # Given a binary array, find the maximum number of consecutive 1s in this array if you can flip at most one 0.
 #
 # Example 1:
@@ -22,13 +23,24 @@ __source__ = 'https://leetcode.com/problems/max-consecutive-ones-ii/#/descriptio
 # Hide Company Tags Google
 # Hide Tags Two Pointers
 # Hide Similar Problems (E) Max Consecutive Ones
-
+#
 import unittest
 
-
+# 72ms 53.37%
 class Solution(object):
-    pass  # your function here
-
+    def findMaxConsecutiveOnes(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        nums.append(0)
+        lo1, lo2 = 0, 0
+        ret = 0
+        for hi,n in enumerate(nums):
+            if n==0:
+                ret = max(ret, hi-lo1)
+                lo1, lo2 = lo2, hi+1
+        return ret
 
 class TestMethods(unittest.TestCase):
     def test_Local(self):
@@ -39,12 +51,15 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://discuss.leetcode.com/topic/75445/java-clean-solution-easily-extensible-to-flipping-k-zero-and-follow-up-handled
+# Thought: 
+#
+https://discuss.leetcode.com/topic/75445/java-clean-solution-easily-extensible-to-flipping-k-zero-and-follow-up-handled
 The idea is to keep a window [l, h] that contains at most k zero
 
 The following solution does not handle follow-up, because nums[l] will need to access previous input stream
 Time: O(n) Space: O(1)
-public class Solution {
+# 5ms 89.60%
+class Solution {
     public int findMaxConsecutiveOnes(int[] nums) {
          int max = 0, zero = 0, k = 1; // flip at most k zero
          for (int l = 0, h = 0; h < nums.length; h++) {
@@ -63,7 +78,6 @@ public class Solution {
     }
 }
 
-
 Followup: with infinite stream
 Now let's deal with follow-up, we need to store up to k indexes of zero within the window [l, h]
 so that we know where to move l next when the window contains more than k zero.
@@ -72,7 +86,8 @@ then the output could be extremely large because there could be super long conse
 In that case we can use BigInteger for all indexes. For simplicity, here we will use int
 
 Time: O(n) Space: O(k)
-public class Solution {
+# 12ms 7.80%
+class Solution {
     public int findMaxConsecutiveOnes(int[] nums) {
         int max = 0, k = 1; // flip at most k zero
         Queue<Integer> zeroIndex = new LinkedList<>();
@@ -86,6 +101,5 @@ public class Solution {
         return max;
     }
 }
-
 
 '''

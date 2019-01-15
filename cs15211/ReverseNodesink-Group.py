@@ -1,8 +1,10 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/reverse-nodes-in-k-group/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/reverse-nodes-in-k-group.py
 # Time:  O(n)
 # Space: O(1)
 # LinkedList
+#
+# Description: Leetcode # 25. Reverse Nodes in k-Group
 #
 # Given a linked list, reverse the nodes of a linked list k at a time and return its modified list.
 #
@@ -18,7 +20,13 @@ __author__ = 'July'
 # For k = 2, you should return: 2->1->4->3->5
 #
 # For k = 3, you should return: 3->2->1->4->5
+#
+# Companies
 # Microsoft Facebook
+# Related Topics
+# Linked List
+# Similar Questions
+# Swap Nodes in Pairs
 
 import unittest
 # Definition for singly-linked list.
@@ -26,7 +34,6 @@ class ListNode(object):
      def __init__(self, x):
          self.val = x
          self.next = None
-
 
 class Solution(object, unittest.TestCase):
     def reverseKGroup(self, head, k):
@@ -51,10 +58,7 @@ class Solution(object, unittest.TestCase):
             cur.next = self.reverse(nextHead)
             nextHead.next = nextNextHead
             cur = nextHead
-
-
         return dummy.next
-
 
     def reverse(self, head):
         prev = None
@@ -67,19 +71,6 @@ class Solution(object, unittest.TestCase):
 
     def test(self):
         self.assertTrue()
-
-
-
-if __name__ == "__main__":
-    head = ListNode(1)
-    head.next = ListNode(2)
-    head.next.next = ListNode(3)
-    head.next.next.next = ListNode(4)
-    head.next.next.next.next = ListNode(5)
-    print Solution().reverseKGroup(head, 4)
-    #print Solution().reverseKGroupif(head, 1)
-
-
 
 # http://www.cnblogs.com/zuoyuan/p/3785555.html
 class SolutionOther:
@@ -95,7 +86,6 @@ class SolutionOther:
             tmp.next = newhead.next
             newhead.next = tmp
         return (end, start)
-
 
     def reverseKGroup(self, head, k):
         if head == None:
@@ -128,15 +118,22 @@ l7 = ListNode(7)
 l8 = ListNode(8)
 l1.next = l2; l2.next = l3 ; l3.next = l4 ; l4.next = l5 ; l5.next = l6 ; l6.next = l7 ; l7.next = l8
 
-#test
-#test = SolutionOther()
-#nh = test.reverseKGroup(l1, 3)
-#while nh:
-#    print nh.val
-#    nh = nh.next
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+        head = ListNode(1)
+        head.next = ListNode(2)
+        head.next.next = ListNode(3)
+        head.next.next.next = ListNode(4)
+        head.next.next.next.next = ListNode(5)
+        print Solution().reverseKGroup(head, 4)
+        #print Solution().reverseKGroupif(head, 1)
 
-#java
-js = '''
+if __name__ == '__main__':
+    unittest.main()
+
+Java = '''
+# Thought:
 /**
  * Definition for singly-linked list.
  * public class ListNode {
@@ -145,7 +142,9 @@ js = '''
  *     ListNode(int x) { val = x; }
  * }
  */
-public class Solution {
+
+# 5ms 44.94%
+class Solution {
     public ListNode reverseKGroup(ListNode head, int k) {
         if (k < 2) {
             return head;
@@ -181,6 +180,31 @@ public class Solution {
             head = next;
         }
         return prev;
+    }
+}
+
+# 10ms 4.78%
+class Solution {
+    public ListNode reverseKGroup(ListNode head, int k) {
+        ListNode curr = head;
+        int count = 0;
+        while (curr != null && count != k) { // find the k+1 node
+            curr = curr.next;
+            count++;
+        }
+        if (count == k) { // if k+1 node is found
+            curr = reverseKGroup(curr, k); // reverse list with k+1 node as head
+            // head - head-pointer to direct part,
+            // curr - head-pointer to reversed part;
+            while (count-- > 0) { // reverse current k-group:
+                ListNode tmp = head.next; // tmp - next head in direct part
+                head.next = curr; // preappending "direct" head to the reversed list
+                curr = head; // move head of reversed part to a new node
+                head = tmp; // move "direct" head to the next node in direct part
+            }
+            head = curr;
+        }
+        return head;
     }
 }
 '''

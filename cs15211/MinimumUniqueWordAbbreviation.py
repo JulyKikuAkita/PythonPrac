@@ -1,8 +1,10 @@
-__source__ = 'https://github.com/kamyu104/LeetCode/blob/master/Python/minimum-unique-word-abbreviation.py'
+__source__ = 'https://leetcode.com/problems/minimum-unique-word-abbreviation/'
+# https://github.com/kamyu104/LeetCode/blob/master/Python/minimum-unique-word-abbreviation.py
 # Time:  O(2^n)
 # Space: O(n)
 #
-# Description:
+# Description: 411. Minimum Unique Word Abbreviation
+#
 # A string such as "word" contains the following abbreviations:
 #
 # ["word", "1ord", "w1rd", "wo1d", "wor1", "2rd", "w2d", "wo2", "1o1d", "1or1", "w1r1", "1o2", "2r1", "3d", "w3", "4"]
@@ -71,6 +73,7 @@ import unittest
 # For remaining keys in distinct, take required as base mask and then pick up 1 optional bit from each key recursively,
 # and check the length of the abbreviation.
 #
+# 192ms 11.11%
 class Solution(object):
     def minAbbreviation(self, target, dictionary):
         """
@@ -109,7 +112,6 @@ class Solution(object):
 
         return "".join(abbr)
 
-#73.91%
 # If the target is apple and the dictionary contains apply, then the abbreviation must include the e as the letter e,
 # not in a number. It's the only letter distinguishing these two words. Similarly, if the dictionary contains tuple,
 # then the abbreviation must include the a or the first p as a letter.
@@ -133,7 +135,8 @@ class Solution(object):
 # First I turn it into a string
 # where each 1-bit is turned into the corresponding letter of the target and each 0-bit is turned into #.
 # Then I replace streaks of # into numbers.
-#
+
+# 100ms 11.11%
 class Solution(object):
     def minAbbreviation(self, target, dictionary):
         """
@@ -154,20 +157,19 @@ class Solution(object):
         print s
         return re.sub('#+', lambda m : str(len(m.group())), s)
 
-
-
 class TestMethods(unittest.TestCase):
     def test_Local(self):
         self.assertEqual(1, 1)
-
 
 if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
+# Thought:
+
+# 5ms 100%
 1. Bitmask + backtracking
-public class Solution {
+class Solution {
     int n, cand, bn, minLen, minab;
     List<Integer> dict = new ArrayList<>();
 
@@ -234,13 +236,15 @@ public class Solution {
 }
 
 
-Java DFS+Trie+Binary Search 90ms
 Abbreviation number is pretty like wild card and it can match all the characters appearing in the trie.
 There's 3 functions:
 addTrie: add string to the trie
 search: search a string to determine if that's the one in the trie (wild card mode)
 abbrGenerator: generate all the possible abbreviations given certain length (which is num parameter).
-public class Solution {
+
+# Java DFS+Trie+Binary Search
+# 84ms 36.43%
+class Solution {
     class Node{ // Trie Node
         Node[] nodes;
         boolean isWord;
@@ -332,6 +336,73 @@ public class Solution {
             }
         }
         return ret;
+    }
+}
+
+# 5ms 100%
+class Solution {
+    int n, cand, bn, minLen, minab;
+    List<Integer> dict = new ArrayList<>();
+    
+    public String minAbbreviation(String target, String[] dictionary) {
+        n = target.length(); bn = 1 << n; cand = 0; minLen = Integer.MAX_VALUE;
+        StringBuilder res = new StringBuilder();
+        for (String s : dictionary) {
+            int word = 0;
+            if (s.length() != n) continue;
+            for (int i = 0; i < n; i++) {
+                if (target.charAt(i) != s.charAt(i)) {
+                    word |= 1 << i;
+                }
+            }
+            dict.add(word);
+            cand |= word;
+        }
+        dfs(1, 0);  // DFS : 1 -> 1010 -> 10101
+                    //                 -> 10100
+                    //         -> 1011 -> 10110
+        
+        for (int i = 0; i < n; ) {
+            if ((minab & (1 << i)) != 0) {
+                res.append(target.charAt(i++));
+            }else {
+               int j = i;
+               while (i < n && (minab & (1 <<i)) == 0) i++;
+               res.append(i-j);
+            }
+        }
+        return res.toString();
+    }
+    
+    // Abbreviation for one digit is meaningless, thus at least two digits are used for abbreviation.
+    private int abbrLen(int mask){
+        int count = n;
+        for (int b = 3; b < bn; b <<= 1) {
+            if ((mask & b) == 0) count--;
+        }
+        return count;
+    }
+
+    private void dfs(int bit, int mask){
+        int len = abbrLen(mask);
+        if ( len >= minLen) return;
+        boolean match = true;
+        for (Integer d : dict) {
+            if ((mask & d) == 0) {
+                match = false;
+                break;
+            }
+        }
+        if (match) {  // a mask which can cover all differences, no need to find more.
+            minLen = len;
+            minab = mask;
+        } else {  // No ? Then has to add more masks to cover all differences.
+            for (int b = bit; b < bn; b <<= 1) {
+                if ((cand & b) != 0) {
+                    dfs(b << 1, mask + b);
+                }
+            }
+        }
     }
 }
 '''

@@ -1,9 +1,12 @@
-__source__ = 'https://leetcode.com/problems/find-leaves-of-binary-tree/#/description'
+__source__ = 'https://leetcode.com/problems/find-leaves-of-binary-tree/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/find-leaves-of-binary-tree.py
 # Time:  O(n)
 # Space: O(h)
 #
-# Given a binary tree, collect a tree's nodes as if you were doing this: Collect and remove all leaves, repeat until the tree is empty.
+# Description: Leetcode # 366. Find Leaves of Binary Tree
+#
+# Given a binary tree, collect a tree's nodes as if you were doing this: Collect and remove all leaves,
+# repeat until the tree is empty.
 #
 # Example:
 # Given binary tree
@@ -28,20 +31,19 @@ __source__ = 'https://leetcode.com/problems/find-leaves-of-binary-tree/#/descrip
 #           []
 # Returns [4, 5, 3], [2], [1].
 #
-# Credits:
-# Special thanks to @elmirap for adding this problem and creating all test cases.
 #
-# Hide Company Tags LinkedIn
-# Hide Tags Tree Depth-first Search
+# Companies
+# LinkedIn
+# Related Topics
+# Tree Depth-first Search
 #
-
 # Definition for a binary tree node.
 # class TreeNode(object):
 #     def __init__(self, x):
 #         self.val = x
 #         self.left = None
 #         self.right = None
-
+import unittest
 class Solution(object):
     def findLeaves(self, root):
         """
@@ -62,8 +64,16 @@ class Solution(object):
         findLeavesHelper(root, result)
         return result
 
-#Java
-jJava = '''
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+
+if __name__ == '__main__':
+    unittest.main()
+
+Java = '''
+# Thought:
+
 Thought: For this question we need to take bottom-up approach. 
 The key is to find the height of each node. Here the definition of height is:
 The height of a node is the number of edges from the node to the deepest leaf. 
@@ -77,7 +87,6 @@ The height of a node is also the its index in the result list (res).
 For example, leaves, whose heights are 0, are stored in res[0]. 
 Once we find the height of a node, we can put it directly into the result.
 
-
 /**
  * Definition for a binary tree node.
  * public class TreeNode {
@@ -87,7 +96,9 @@ Once we find the height of a node, we can put it directly into the result.
  *     TreeNode(int x) { val = x; }
  * }
  */
-public class Solution {
+
+# 0ms 100%
+class Solution {
     public List<List<Integer>> findLeaves(TreeNode root) {
         List<List<Integer>> result = new ArrayList<>();
         findLeaves(result, root);
@@ -107,4 +118,20 @@ public class Solution {
     }
 }
 
+# 0ms 100%
+class Solution {
+    public List<List<Integer>> findLeaves(TreeNode root) {
+        List<List<Integer>> res = new ArrayList<>();
+        dfs(root, res);
+        return res;
+    }
+
+    private int dfs(TreeNode node, List<List<Integer>> res){
+        if (node == null) return -1;
+        int level = 1 + Math.max(dfs(node.left, res), dfs(node.right, res));
+        if (res.size() <= level ) res.add(new ArrayList<>());
+        res.get(level).add(node.val);
+        return level;
+    }
+}
 '''

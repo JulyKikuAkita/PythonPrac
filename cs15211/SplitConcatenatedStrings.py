@@ -1,8 +1,9 @@
-__source__ = 'https://leetcode.com/problems/split-concatenated-strings/#/description'
+__source__ = 'https://leetcode.com/problems/split-concatenated-strings/'
 # Time:  O(n^2)
 # Space: O(n)
 #
-# Description:
+# Description: 555. Split Concatenated Strings
+#
 # Given a list of strings, you could concatenate these strings together into a loop,
 # where for each string you could choose to reverse it or not. Among all the possible loops,
 # you need to find the lexicographically biggest string after cutting the loop,
@@ -33,11 +34,13 @@ import unittest
 #
 # For every starting direction and letter,
 # let's determine the best string we can make.
-# For subsequent fragments we encounter, we always want them flipped in the orientation that makes them largest.
+# For subsequent fragments we encounter,
+# we always want them flipped in the orientation that makes them largest.
 #
 # Thus, for every token, for every starting direction, for every starting letter in the token,
 # we can compute the candidate string directly. We take the maximum of these.
 #
+# 204ms 0%
 class Solution(object):
     def splitLoopedString(self, strs):
         """
@@ -56,13 +59,14 @@ class TestMethods(unittest.TestCase):
     def test_Local(self):
         self.assertEqual(1, 1)
 
-
 if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
-public class Solution {
+# Thought: https://leetcode.com/problems/split-concatenated-strings/solution/
+
+# 111ms 45.45%
+class Solution {
     public String splitLoopedString(String[] strs) {
         for (int i = 0; i < strs.length; i++) {
             String rev = new StringBuilder(strs[i]).reverse().toString();

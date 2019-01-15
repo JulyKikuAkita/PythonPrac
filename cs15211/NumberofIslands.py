@@ -1,9 +1,11 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/number-of-islands/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/number-of-islands.py
 # Time:  O(m * n)
 # Space: O(m * n)
 # DFS
 # Floodfill Algorithm
+#
+# Description: Leetcode # 200. Number of Islands
 #
 # Given a 2d grid map of '1's (land) and '0's (water), count the number of islands.
 # An island is surrounded by water and is formed by connecting adjacent lands horizontally
@@ -25,12 +27,15 @@ __author__ = 'July'
 # 00011
 # Answer: 3
 #
+# Companies
 # Amazon Microsoft Google Facebook Zenefits
-# Hide Tags Depth-first Search Breadth-first Search Union Find
-# Hide Similar Problems (M) Surrounded Regions (M) Walls and Gates
-# (H) Number of Islands II (M) Number of Connected Components in an Undirected Graph
+# Related Topics
+# Depth-first Search Breadth-first Search Union Find
+# Similar Questions
+# Surrounded Regions Walls and Gates Number of Islands II Number of Connected Components in an Undirected Graph
 
 #idea is to merge individual islands
+import unittest
 class Solution:
     # @param grid, a list of list of characters
     # @return an integer
@@ -101,6 +106,7 @@ class Solution2:
         #if j != len(grid[0]) - 1:
         self.mergeIsland(grid, i , j+1)
 
+# 172ms 9.08%
 class Solution3(object):
     def numIslands(self, grid):
         """
@@ -121,54 +127,62 @@ grid = [
     ['0', '0', '1', '0', '0'],
     ['0', '0', '0', '1', '1']
 ]
-if __name__ == "__main__":
-    print Solution().numIslands(grid)
-    print Solution2().numIslands(grid)
-java = '''
-public class Solution {
-    private static final int[][] DIRECTIONS = new int[][] {{0, -1}, {0, 1}, {-1, 0}, {1, 0}};
 
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+        print Solution().numIslands(grid)
+        print Solution2().numIslands(grid)
+
+if __name__ == '__main__':
+    unittest.main()
+
+Java = '''
+# Thought: https://leetcode.com/problems/number-of-islands/solution/
+
+# Approach #2: BFS [Accepted]
+# Complexity Analysis
+# Time complexity : O(M x N) where M is the number of rows and N is the number of columns.
+# Space complexity : O(min(M,N)) because in worst case where the grid is filled with lands, 
+# the size of queue can grow up to min(M,N).
+# 13ms 16.89%
+class Solution {
+    static int[][] dirs = {{0,1}, {1,0}, {-1,0}, {0, -1}};
     public int numIslands(char[][] grid) {
-        int result = 0;
-        int m = grid.length;
-        int n = m == 0 ? 0 : grid[0].length;
-        if (m == 0 || n == 0) {
-            return 0;
-        }
-        for (int i = 0; i < m; i++) {
-            for (int j = 0; j < n; j++) {
+        int cnt = 0;
+        for(int i = 0; i < grid.length; i++) {
+            for (int j = 0; j < grid[0].length; j++) {
                 if (grid[i][j] == '1') {
+                    cnt ++;
                     grid[i][j] = '2';
-                    bfs(grid, i, j);
-                    result++;
+                    Queue<Integer> queue = new LinkedList<>();
+                    queue.add(i * grid[0].length + j);
+                    while (!queue.isEmpty()) {
+                        int cur = queue.poll();
+                        int curI = cur / grid[0].length;
+                        int curJ = cur % grid[0].length;
+                        for (int[] dir : dirs) {
+                            int x = curI + dir[0];
+                            int y = curJ + dir[1];
+                            if (x >= 0 && x < grid.length && y >= 0 && y <grid[0].length && grid[x][y] == '1') {
+                                grid[x][y] = '2';
+                                queue.add(x * grid[0].length + y);
+                            }
+                        }
+                    }
                 }
             }
         }
-        return result;
-    }
-
-    private void bfs(char[][] grid, int i, int j) {
-        Queue<Integer> queue = new LinkedList<>();
-        queue.add(i * grid[0].length + j);
-        while (!queue.isEmpty()) {
-            int cur = queue.poll();
-            int curI = cur / grid[0].length;
-            int curJ = cur % grid[0].length;
-            for (int[] direction : DIRECTIONS) {
-                int newI = curI + direction[0];
-                int newJ = curJ + direction[1];
-                if (newI >= 0 && newI < grid.length && newJ >= 0 && newJ < grid[0].length && grid[newI][newJ] == '1') {
-                    grid[newI][newJ] = '2';
-                    queue.add(newI * grid[0].length + newJ);
-                }
-            }
-        }
+        return cnt;
     }
 }
 
-
-2. DFS:
-public class Solution {
+# Approach #1 DFS [Accepted]
+# Complexity Analysis
+# Time complexity : O(M x N) where M is the number of rows and N is the number of columns.
+# Space complexity : worst case O(M x N) in case that the grid map is filled with lands where DFS goes by M x N deep.
+# 4ms 78.12%
+class Solution {
     private static final int[][] DIRECTIONS = new int[][] {{0, -1}, {0, 1}, {-1, 0}, {1, 0}};
 
     public int numIslands(char[][] grid) {
@@ -202,8 +216,14 @@ public class Solution {
     }
 }
 
-//Union Find
-public class Solution {
+# Approach #3: Union Find (aka Disjoint Set) [Accepted]
+# Complexity Analysis
+# Time complexity : O(M x N) where M is the number of rows and NN is the number of columns. 
+# Note that Union operation takes essentially constant time^1 
+# when UnionFind is implemented with both path compression and union by rank.
+# Space complexity : O(M x N) as required by UnionFind data structure.
+# 7ms 28.60%
+class Solution {
     public int numIslands(char[][] grid) {
         if(grid.length == 0 || grid[0].length == 0) return 0;
         int m = grid.length, n = grid[0].length;
@@ -273,6 +293,36 @@ public class Solution {
             id[pRoot] = qRoot;
             count--;
         }
+    }
+}
+
+# 3ms 100%
+class Solution {
+    public int numIslands(char[][] grid) {
+        if (grid == null || grid.length == 0 || grid[0].length == 0) {
+            return 0;
+        }
+        int count = 0;
+        for (int i = 0; i < grid.length; i++) {
+            for (int j = 0; j < grid[0].length; j++) {
+                if (grid[i][j] == '1') {
+                    count++;
+                    fill(grid, i, j);
+                }
+            }
+        }
+        return count;
+    }
+
+    private void fill(char[][] grid, int row, int col) {
+        if (row < 0 || row >= grid.length || col < 0 || col >= grid[0].length || grid[row][col] == '0') {
+            return;
+        }
+        grid[row][col] = '0';
+        fill(grid, row - 1, col);
+        fill(grid, row + 1, col);
+        fill(grid, row, col - 1);
+        fill(grid, row, col + 1);
     }
 }
 '''

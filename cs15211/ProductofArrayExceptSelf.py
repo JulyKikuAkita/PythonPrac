@@ -1,8 +1,10 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/product-of-array-except-self/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/product-of-array-except-self.py
 # https://leetcode.com/problems/product-of-array-except-self/#/description
 # Time:  O(n)
 # Space: O(1)
+#
+# Description: Leetcode # 238. Product of Array Except Self
 #
 # Given an array of n integers where n > 1, nums,
 # return an array output such that output[i] is equal to
@@ -18,10 +20,14 @@ __author__ = 'July'
 # (Note: The output array does not count as extra space
 # for the purpose of space complexity analysis.)
 #
-#  Amazon LinkedIn Apple Facebook Microsoft
-# Hide Tags Array
-# Hide Similar Problems (H) Trapping Rain Water (M) Maximum Product Subarray (H) Paint House II
-
+# Companies
+# Amazon LinkedIn Apple Facebook Microsoft
+# Related Topics
+# Array
+# Similar Questions
+# Trapping Rain Water Maximum Product Subarray Paint House II
+#
+import unittest
 class Solution:
     # @param {integer[]} nums
     # @return {integer[]}
@@ -37,18 +43,27 @@ class Solution:
         for i in xrange(len(nums) - 2, -1, -1):
             right_product *= nums[i + 1]
             left_product[i] = left_product[i] * right_product
-
         return left_product
 
-java = '''
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+
+if __name__ == '__main__':
+    unittest.main()
+
+Java = '''
+# Thought:
+
 The idea is simply.
 The product basically is calculated using the numbers before the current number
 and the numbers after the current number. Thus, we can scan the array twice.
-First, we calcuate the running product of the part before the current number.
+First, we calculate the running product of the part before the current number.
 Second, we calculate the running product of the part after the current number
 through scanning from the end of the array.
 
-public class Solution {
+# 2ms 39.37%
+class Solution {
     public int[] productExceptSelf(int[] nums) {
         int n = nums.length;
         int[] res = new int[n];
@@ -60,6 +75,24 @@ public class Solution {
         for (int i = n - 1; i >= 0; i--) {
             res[i] *= right;
             right *= nums[i];
+        }
+        return res;
+    }
+}
+
+# 2ms 51.31%
+class Solution {
+    public int[] productExceptSelf(int[] nums) {
+        int n = nums.length;
+        int[] res = new int[n];
+        for (int i = 0, tmp = 1; i < n; i++) {
+            res[i] = tmp;
+            tmp *= nums[i];
+        }
+        
+        for (int i = n - 1, tmp = 1; i >= 0; i--) {
+            res[i] *= tmp;
+            tmp *= nums[i];
         }
         return res;
     }

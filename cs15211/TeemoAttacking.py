@@ -2,7 +2,8 @@ __source__ = 'https://leetcode.com/problems/teemo-attacking/#/description'
 # Time:  O(n)
 # Space: O(1)
 #
-# Description:
+# Description: 495. Teemo Attacking
+#
 # In LLP world, there is a hero called Teemo and his attacking can make his enemy Ashe be in poisoned condition.
 # Now, given the Teemo's attacking ascending time series towards Ashe and the poisoning time duration
 # per Teemo's attacking, you need to output the total time that Ashe is in poisoned condition.
@@ -36,7 +37,7 @@ __source__ = 'https://leetcode.com/problems/teemo-attacking/#/description'
 
 import unittest
 
-
+# 60ms 40.45%
 class Solution(object):
     def findPoisonedDuration(self, timeSeries, duration):
         """
@@ -58,7 +59,7 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
+# Thought:
 O(n) Java Solution using same idea of merge intervals
 The same idea as https://leetcode.com/problems/merge-intervals/
 Algorithm:
@@ -68,7 +69,8 @@ If the start of new interval is greater than current end, meaning NO overlapping
 we can sum the current interval length to result and then update start and end.
 Otherwise just update the current end;
 
-public class Solution {
+# 3ms 100%
+class Solution {
     public int findPosisonedDuration(int[] timeSeries, int duration) {
         if (timeSeries == null || timeSeries.length == 0 || duration == 0) return 0;
 
@@ -87,7 +89,8 @@ public class Solution {
 }
 
 # Math
-public class Solution {
+# 4ms 98.40%
+class Solution {
     public int findPoisonedDuration(int[] timeSeries, int duration) {
         int ans = duration * timeSeries.length;
         for (int i = 1; i < timeSeries.length; i++) {

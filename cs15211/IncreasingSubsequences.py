@@ -2,7 +2,8 @@ __source__ = 'https://leetcode.com/problems/increasing-subsequences/#/descriptio
 # Time:  O(n!) [4,3,2,1] and return []
 # Space: O(1) stack
 #
-# Description:
+# Description: 491. Increasing Subsequences
+#
 # Given an integer array, your task is to find all the different possible increasing subsequences
 # of the given array, and the length of an increasing subsequence should be at least 2 .
 #
@@ -19,6 +20,7 @@ __source__ = 'https://leetcode.com/problems/increasing-subsequences/#/descriptio
 # Hide Tags Depth-first Search
 #
 import unittest
+# 644ms 18.67%
 class Solution(object):
     def findSubsequences(self, nums):
         """
@@ -39,12 +41,13 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
+# Thought:
 #dfs template 93%
 #if nums has duplicate, use set, otherwise get duplicated result
 #remember when to have i start with 0 or start; use 0 if can reuse nums[i]
 
-public class Solution {
+# 12ms 87.80%
+class Solution {
     public List<List<Integer>> findSubsequences(int[] nums) {
         List<List<Integer>> res = new ArrayList<>();
         backtracking(res, new ArrayList<>(), nums, 0);

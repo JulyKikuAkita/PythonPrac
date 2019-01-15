@@ -2,19 +2,22 @@ __source__ = 'https://leetcode.com/problems/count-complete-tree-nodes/#/descript
 # https://github.com/kamyu104/LeetCode/blob/master/Python/count-complete-tree-nodes.py
 # Time:  O(h * logn) = O((logn)^2)
 # Space: O(1)
-
+#
+# Description: Leetcode # 222. Count Complete Tree Nodes
+#
 # Given a complete binary tree, count the number of nodes.
 #
 # In a complete binary tree every level, except possibly the last,
 # is completely filled, and all nodes in the last level are as far
 # left as possible. It can have between 1 and 2h nodes inclusive at
 # the last level h.
-#Topics:
+#
+# Related Topics
 # Tree Binary Search
-# You might like:
-# (E) Closest Binary Search Tree Value
-
-
+# Similar Questions
+# Closest Binary Search Tree Value
+#
+import unittest
 # Definition for a binary tree node.
 class TreeNode:
      def __init__(self, x):
@@ -60,9 +63,16 @@ class Solution:
             k >>= 1
         return node is not None
 
-#Java
-# http://bookshadow.com/weblog/2015/06/06/leetcode-count-complete-tree-nodes/
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+        print Solution().containsDuplicate([12344555,12344555])
+
+if __name__ == '__main__':
+    unittest.main()
+
 Java = '''
+# Thought: http://bookshadow.com/weblog/2015/06/06/leetcode-count-complete-tree-nodes/
 /**
  * Definition for a binary tree node.
  * public class TreeNode {
@@ -73,8 +83,9 @@ Java = '''
  * }
  */
 
-#DFS #47%
-public class Solution {
+# DFS
+# 74ms 61.04%
+class Solution {
     public int countNodes(TreeNode root) {
         int h = height(root);
         return h < 0 ? 0 :
@@ -87,8 +98,9 @@ public class Solution {
     }
 }
 
-# BFS # 96%
-public class Solution {
+# BFS
+# 29ms 93.46%
+class Solution {
     private int depth(TreeNode root) {
         int ans = 0;
         while (root != null) {
@@ -112,4 +124,72 @@ public class Solution {
         }
         return count;
     }
-}'''
+}
+
+# 54ms 77.49%
+class Solution {
+    public int countNodes(TreeNode root) {
+        if (root == null) {
+            return 0;
+        }
+        int index = 1;
+        while (root.left != null || root.right != null) {
+            int left = countLeftDepth(root.left);
+            int right = countLeftDepth(root.right);
+            if (left == right) {
+                index = index * 2 + 1;
+                root = root.right;
+            } else {
+                index = index * 2;
+                root = root.left;
+            }
+        }
+        return index;
+    }
+
+    private int countLeftDepth(TreeNode root) {
+        int count = 0;
+        while (root != null) {
+            root = root.left;
+            count++;
+        }
+        return count;
+    }
+}
+
+# DFS
+# 75ms 59.18%
+class Solution {
+    public int countNodes(TreeNode root) {
+
+        int leftDepth = leftDepth(root);
+        int rightDepth = rightDepth(root);
+
+        if (leftDepth == rightDepth)
+            return (1 << leftDepth) - 1;
+        else
+            return 1+countNodes(root.left) + countNodes(root.right);
+
+    }
+
+    private int rightDepth(TreeNode root) {
+        // TODO Auto-generated method stub
+        int dep = 0;
+        while (root != null) {
+            root = root.right;
+            dep++;
+        }
+        return dep;
+    }
+
+    private int leftDepth(TreeNode root) {
+        // TODO Auto-generated method stub
+        int dep = 0;
+        while (root != null) {
+            root = root.left;
+            dep++;
+        }
+        return dep;
+    }
+}
+'''

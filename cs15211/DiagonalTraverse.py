@@ -1,8 +1,9 @@
-__source__ = 'https://leetcode.com/problems/diagonal-traverse/#/description'
+__source__ = 'https://leetcode.com/problems/diagonal-traverse/'
 # Time:  O(m * n)
 # Space: O(1)
 #
-# Description:
+# Description: 498. Diagonal Traverse
+#
 # Given a matrix of M x N elements (M rows, N columns),
 # return all elements of the matrix in diagonal order as shown in the below image.
 #
@@ -21,7 +22,7 @@ __source__ = 'https://leetcode.com/problems/diagonal-traverse/#/description'
 # Hide Company Tags Google
 #
 import unittest
-
+# 132ms 65.40%
 class Solution(object):
     def findDiagonalOrder(self, matrix):
         """
@@ -42,7 +43,7 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
+# Thought:
 Walk patterns:
 
 If out of bottom border (row >= m) then row = m - 1; col += 2; change walk direction.
@@ -53,7 +54,8 @@ Otherwise, just go along with the current direction.
 Time complexity: O(m * n), m = number of rows, n = number of columns.
 Space complexity: O(1).
 
-public class Solution {
+# 7ms 30.05%
+class Solution {
     public int[] findDiagonalOrder(int[][] matrix) {
         if (matrix == null || matrix.length == 0) return new int[0];
         int m = matrix.length, n = matrix[0].length;

@@ -1,8 +1,10 @@
-__source__ = 'https://leetcode.com/problems/letter-combinations-of-a-phone-number/#/description'
+__source__ = 'https://leetcode.com/problems/letter-combinations-of-a-phone-number/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/letter-combinations-of-a-phone-number.py
 # Time:  O(n * 4^n)
 # Space: O(n)
 # Brute Force Search
+#
+# Description: Leetcode # 17. Letter Combinations of a Phone Number
 #
 # Given a digit string, return all possible letter combinations that the number could represent.
 #
@@ -15,13 +17,14 @@ __source__ = 'https://leetcode.com/problems/letter-combinations-of-a-phone-numbe
 # Note:
 # Although the above answer is in lexicographical order, your answer could be in any order you want.
 #
-# Topics:
-# Backtracking String
-# You might like:
-# (M) Generate Parentheses (M) Combination Sum (E) Binary Watch
-# Company:
+# Companies
 # Amazon Dropbox Google Uber Facebook
+# Related Topics
+# Backtracking String
+# Similar Questions
+# Generate Parentheses Combination Sum Binary Watch
 #
+import unittest
 class Solution:
     # @return a list of strings, [s1, s2]
     def letterCombinations(self, digits):
@@ -98,48 +101,54 @@ class SolutionOther:
             self.dfs(digits,p+1, tmp)
             tmp.pop()
 
-#test
-test = SolutionOther()
-#print test.letterCombinations("23")
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+        #print test.letterCombinations("23")
 
-# ord('3')- ord('0')  # an easy way to stoi
-# any iterable will do for extend (not just list)
-# extend outperforms append, as the loop is implemented in C.
-# [].extend("string") will give you ["s", "t", "r", "i", "n", "g"]
-# [].append("string") will give you ["string"]
-# [].extend("") = []
+        # ord('3')- ord('0')  # an easy way to stoi
+        # any iterable will do for extend (not just list)
+        # extend outperforms append, as the loop is implemented in C.
+        # [].extend("string") will give you ["s", "t", "r", "i", "n", "g"]
+        # [].append("string") will give you ["string"]
+        # [].extend("") = []
 
-#java
+if __name__ == '__main__':
+    unittest.main()
+
 Java = '''
-Recursion:
-public class Solution {
-    private static final String[] PHONE_NUMBERS = new String[] {"abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
+# Thought:
+
+# Recursion:
+# 2ms 84.14%
+class Solution {
+    public static String[] dict = new String[] {null, null, "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
 
     public List<String> letterCombinations(String digits) {
-        List<String> result = new ArrayList<>();
-        if (digits.length() == 0) {
-            return result;
-        }
-        letterCombinations(digits, 0, result, new StringBuilder());
-        return result;
+        LinkedList<String> res = new LinkedList<>();
+        if (digits == null || digits.length() == 0) return res;
+        dfs(digits, 0, new StringBuilder(), res);
+        return res;
     }
 
-    private void letterCombinations(String digits, int index, List<String> result, StringBuilder sb) {
-        if (index == digits.length()) {
-            result.add(sb.toString());
+    private void dfs(String digits, int idx, StringBuilder sb, List<String> res) {
+        if (sb.length() == digits.length()) {
+            res.add(sb.toString());
             return;
         }
-        for (char c : PHONE_NUMBERS[digits.charAt(index) - '2'].toCharArray()) {
+        String cur = dict[digits.charAt(idx) - '0'];
+        for (char c : cur.toCharArray()) {
             sb.append(c);
-            letterCombinations(digits, index + 1, result, sb);
+            dfs(digits, idx + 1, sb, res);
             sb.setLength(sb.length() - 1);
         }
     }
 }
 
-Iteration:
- public class Solution {
-        public static String[] dict = new String[] {null, null, "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
+# Iteration:
+# 3ms 37.73%
+class Solution {
+    public static String[] dict = new String[] {null, null, "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
 
     public List<String> letterCombinations(String digits) {
         LinkedList<String> res = new LinkedList<>();
@@ -157,6 +166,61 @@ Iteration:
             }
         }
         return res;
+    }
+}
+
+# Recursion
+# 2ms 84.14%
+class Solution {
+    public List<String> letterCombinations(String digits) {
+        if(digits.length() == 0){return new ArrayList<String>();}
+        String[] letters = new String[digits.length()];
+
+        for(int i = 0; i < letters.length; i++){
+            if(digits.charAt(i) == '2'){
+                letters[i] = "abc";
+            }
+            else if(digits.charAt(i) == '3'){
+                letters[i] = "def";
+            }
+            else if(digits.charAt(i) == '4'){
+                letters[i] = "ghi";
+            }
+            else if(digits.charAt(i) == '5'){
+                letters[i] = "jkl";
+            }
+            else if(digits.charAt(i) == '6'){
+                letters[i] = "mno";
+            }
+            else if(digits.charAt(i) == '7'){
+                letters[i] = "pqrs";
+            }
+            else if(digits.charAt(i) == '8'){
+                letters[i] = "tuv";
+            }
+            else if(digits.charAt(i) == '9'){
+                letters[i] = "wxyz";
+            }
+        }
+
+        List<String> result = new ArrayList<String>();
+        helper(letters, result, new char[digits.length()], 0);
+
+        return result;
+    }
+
+    private void helper(String[] letters, List<String> result, char[] current, int index){
+        if(index == letters.length){
+            result.add(new String(current));
+            return;
+        }
+
+        String s = letters[index];
+
+        for(int j = 0; j < s.length(); j++){
+            current[index] = s.charAt(j);
+            helper(letters, result, current, index+1);
+        }
     }
 }
 '''

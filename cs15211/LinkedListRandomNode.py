@@ -1,9 +1,10 @@
-__source__ = 'https://leetcode.com/problems/linked-list-random-node/#/description'
+__source__ = 'https://leetcode.com/problems/linked-list-random-node/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/linked-list-random-node.py
 # Time:  O(n) Reservoir sampling
 # Space: O(1)
 #
-# Description:
+# Description: 382. Linked List Random Node
+#
 # Given a singly linked list, return a random node's value from the linked list.
 # Each node must have the same probability of being chosen.
 #
@@ -23,14 +24,17 @@ __source__ = 'https://leetcode.com/problems/linked-list-random-node/#/descriptio
 # Each element should have equal probability of returning.
 # solution.getRandom();
 #
-#  Google
-# Hide Tags Reservoir Sampling
-# Hide Similar Problems (M) Random Pick Index
+# Companies
+# Google
+# Related Topics
+# Reservoir Sampling
+# Similar Questions
+# Random Pick Index
 #
+
 import unittest
-
 from random import randint
-
+# 236ms 13.73%
 class Solution(object):
 
     def __init__(self, head):
@@ -65,12 +69,13 @@ class TestMethods(unittest.TestCase):
     def test_Local(self):
         self.assertEqual(1, 1)
 
-
 if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: http://blog.jobbole.com/42550
+# Thought: 
+
+http://blog.jobbole.com/42550
 
 After I read this one: http://blog.jobbole.com/42550/,
 
@@ -112,7 +117,8 @@ ReservoirSample(S[1..n], R[1..k])
  *     ListNode(int x) { val = x; }
  * }
  */
-public class Solution {
+# 102ms 16.69%
+class Solution {
     ListNode mHead;
     Random random;
 
@@ -141,5 +147,32 @@ public class Solution {
  * int param_1 = obj.getRandom();
  */
 
+# 83ms 36.04%
+class Solution {
+    ListNode myHead;
+    int len = 0;
+    Random r = new Random();
 
- '''
+    /** @param head The linked list's head.
+        Note that the head is guaranteed to be not null, so it contains at least one node. */
+    public Solution(ListNode head) {
+        myHead = head;
+        while(head != null) {
+            head = head.next;
+            len++;
+        }
+    }
+
+    /** Returns a random node's value. */
+    public int getRandom() {
+        int i = r.nextInt(len);
+        ListNode head = myHead;
+        while(i > 0 && head != null) {
+            i--;
+            head = head.next;
+        }
+        return head.val;
+    }
+}
+
+'''

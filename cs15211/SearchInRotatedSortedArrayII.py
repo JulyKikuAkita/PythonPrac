@@ -1,15 +1,25 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/search-in-rotated-sorted-array-ii/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/search-in-rotated-sorted-array-ii.py
-# Time:  O(logn)
+# Time:  O(logn) When there are duplicates, the worst case is O(n).
 # Space: O(1)
 # Binary Search
 #
+# Description: Leetcode # 34. Search for a Range
+#
 # Follow up for "Search in Rotated Sorted Array":
 # What if duplicates are allowed?
+# Suppose an array sorted in ascending order is rotated at some pivot unknown to you beforehand.
 #
-# Would this affect the run-time complexity? How and why?
+# (i.e., 0 1 2 4 5 6 7 might become 4 5 6 7 0 1 2).
 #
 # Write a function to determine if a given target is in the array.
+#
+# The array may contain duplicates.
+#
+# Related Topics
+# Array Binary Search
+# Similar Questions
+# Search in Rotated Sorted Array
 #
 import unittest
 class Solution:
@@ -40,13 +50,11 @@ class Solution:
 
 # below Fail
 class SolutionCC150: # fail at [1,3,1,1,1], 3
-
     # @param A, a list of integers
     # @param target, an integer to be searched
     # @return an integer
     def search(self, A, target):
         low, high = 0, len(A) - 1
-
         while low <= high:
             mid = (low + high) / 2
             if A[mid] == target:
@@ -68,17 +76,6 @@ class SolutionCC150: # fail at [1,3,1,1,1], 3
             else:
                 low += 1
         return False
-
-if __name__ == "__main__":
-    print Solution().search([3, 5, 1], 3)
-    print Solution().search([2, 2, 3, 3, 4, 1], 1)
-    print Solution().search([4, 4, 5, 6, 7, 0, 1, 2], 5)
-    print Solution().search([1,3,1,1,1], 3)
-
-    print SolutionCC150().search([3, 5, 1], 3)
-    print SolutionCC150().search([2, 2, 3, 3, 4, 1], 1)
-    print SolutionCC150().search([4, 4, 5, 6, 7, 0, 1, 2], 5)
-    print SolutionCC150().search([1,3,1,1,1], 3)
 
 class SolutionOther:
     # @param A a list of integers
@@ -118,9 +115,27 @@ class SolutionBM(unittest.TestCase):
     def test(self):
         self.assertEqual(1, self.search([1,3,1,1,1], 3))
 
-#java
-js = '''
-public class Solution {
+
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        print Solution().search([3, 5, 1], 3)
+        print Solution().search([2, 2, 3, 3, 4, 1], 1)
+        print Solution().search([4, 4, 5, 6, 7, 0, 1, 2], 5)
+        print Solution().search([1,3,1,1,1], 3)
+
+        print SolutionCC150().search([3, 5, 1], 3)
+        print SolutionCC150().search([2, 2, 3, 3, 4, 1], 1)
+        print SolutionCC150().search([4, 4, 5, 6, 7, 0, 1, 2], 5)
+        print SolutionCC150().search([1,3,1,1,1], 3)
+
+if __name__ == '__main__':
+    unittest.main()
+
+Java = '''
+# Thought:
+
+# 1ms 46.84%
+class Solution {
     public boolean search(int[] nums, int target) {
         int start = 0;
         int end = nums.length;
@@ -145,46 +160,45 @@ public class Solution {
                 start++;
             }
         }
-
         return false;
     }
 }
 
-public class Solution {
+# DFS:
+# 0ms 100%
+class Solution {
     public boolean search(int[] nums, int target) {
-        if (nums == null || nums.length == 0) {
-            return false;
-        }
         return search(nums, target, 0, nums.length - 1);
     }
 
     private boolean search(int[] nums, int target, int start, int end) {
-        while (start <= end) {
-            int mid = start + (end - start) / 2;
-            if (nums[mid] == target) {
-                return true;
-            }
-            if (nums[start] == nums[mid] || nums[mid] == nums[end]) {
-                return search(nums, target, start, mid - 1) || search(nums, target, mid + 1, end);
-            } else if (nums[start] < nums[mid]) {
-                if (nums[start] <= target && target < nums[mid]) {
-                    end = mid - 1;
-                } else {
-                    start = mid + 1;
-                }
+        if (start > end) {
+            return false;
+        }
+        int mid = start + (end - start) / 2;
+        if (nums[mid] == target) {
+            return true;
+        }
+        if (nums[start] == nums[mid] || nums[mid] == nums[end]) {
+            return search(nums, target, start, mid - 1) || search(nums, target, mid + 1, end);
+        } else if (nums[start] < nums[mid]) {
+            if (nums[start] <= target && target < nums[mid]) {
+                return search(nums, target, start, mid - 1);
             } else {
-                if (nums[mid] < target && target <= nums[end]) {
-                    start = mid + 1;
-                } else {
-                    end = mid - 1;
-                }
+                return search(nums, target, mid + 1, end);
+            }
+        } else {
+            if (nums[mid] < target && target <= nums[end]) {
+                return search(nums, target, mid + 1, end);
+            } else {
+                return search(nums, target, start, mid - 1);
             }
         }
-        return false;
     }
 }
 
-public class Solution {
+# 0ms 100%
+class Solution {
     public boolean search(int[] nums, int target) {
         if(nums == null || nums.length < 1) return false;
         int start = 0;
@@ -193,7 +207,7 @@ public class Solution {
             int mid = start + ( end - start )  / 2;
             if( nums[mid] == target) return true;
 
-            while( start < mid && end > mid && nums[start] == nums[mid] && nums[end] == nums[mid]){
+            while( start < mid && end > mid && nums[start] == nums[mid] && nums[end] == nums[mid]){ //with dup
                 start ++;
                 end --;
             }

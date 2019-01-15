@@ -1,5 +1,12 @@
 __source__ = 'https://leetcode.com/problems/alien-dictionary/#/description'
-# # https://github.com/kamyu104/LeetCode/blob/master/Python/alien-dictionary.py
+# https://github.com/kamyu104/LeetCode/blob/master/Python/alien-dictionary.py
+# Time:  O(n)
+# Space: O(|V|+|E|) = O(26 + 26^2) = O(1)
+#
+# Topological Sort
+#
+# Description: Leetcode # 269. Alien Dictionary
+#
 # There is a new alien language which uses the latin alphabet.
 # However, the order among letters are unknown to you.
 # You receive a list of non-empty words from the dictionary,
@@ -42,17 +49,17 @@ __source__ = 'https://leetcode.com/problems/alien-dictionary/#/description'
 # You may assume that if a is a prefix of b, then a must appear before b in the given dictionary.
 # If the order is invalid, return an empty string.
 # There may be multiple valid order of letters, return any one of them is fine.
-# Hide Company Tags Google Airbnb Facebook Twitter Snapchat Pocket Gems
-# Hide Tags Graph Topological Sort
-# Hide Similar Problems (M) Course Schedule II
 #
-
+# Companies
+# Google Airbnb Facebook Twitter Snapchat Pocket Gems
+# Related Topics
+# Graph Topological Sort
+# Similar Questions
+# Course Schedule II
+#
 import sets
 import collections
-
-# Time:  O(n)
-# Space: O(|V|+|E|) = O(26 + 26^2) = O(1)
-
+import unittest
 # BFS solution.
 class Solution(object):
     def alienOrder(self, words):
@@ -151,11 +158,19 @@ class Solution2(object):
             return True
         return False
 
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
 
-#java
-js = '''
+if __name__ == '__main__':
+    unittest.main()
+
+Java = '''
+#Thought: https://leetcode.com/problems/contains-duplicate/solution/
+
 //dfs
-public class Solution {
+#56.22% 9ms
+class Solution {
     public String alienOrder(String[] words) {
         if (words == null || words.length == 0) {
             return "";
@@ -216,7 +231,8 @@ public class Solution {
     }
 }
 //BFS
-public class Solution {
+# 35.76% 10ms
+class Solution {
     public String alienOrder(String[] words) {
         Map<Character, Set<Character>> map=new HashMap<Character, Set<Character>>();
         Map<Character, Integer> degree=new HashMap<Character, Integer>();
@@ -262,6 +278,173 @@ public class Solution {
         }
         if(result.length()!=degree.size()) return "";
         return result;
+    }
+}
+
+#81.02% 7ms
+class Solution {
+    public String alienOrder(String[] words) {
+        StringBuilder sb = new StringBuilder();
+        int[] degrees = new int[26];
+        List<List<Integer>> graph = new ArrayList<>();
+        Queue<Integer> queue = new LinkedList<>();
+
+        buildGraph(words, graph, degrees);
+        for (int i = 0; i < 26; i++) {
+            if (degrees[i] == 0) {
+                queue.add(i);
+                degrees[i]--;
+            }
+        }
+        while (!queue.isEmpty()) {
+            int cur = queue.poll();
+            sb.append((char) (cur + 'a'));
+            for (int next : graph.get(cur)) {
+                degrees[next]--;
+                if (degrees[next] == 0) {
+                    queue.add(next);
+                    degrees[next]--;
+                }
+            }
+        }
+        for (int i = 0; i < 26; i++) {
+            if (degrees[i] > 0) {
+                return "";
+            } else if (degrees[i] == 0) {
+                sb.append((char) (i + 'a'));
+            }
+        }
+        return sb.toString();
+    }
+
+    private void buildGraph(String[] words, List<List<Integer>> graph, int[] degrees) {
+        for (int i = 0; i < 26; i++) {
+            graph.add(new ArrayList<>());
+        }
+        Arrays.fill(degrees, -1);
+        for (String word : words) {
+            for (int i = 0; i < word.length(); i++) {
+                degrees[word.charAt(i) - 'a'] = 0;
+            }
+        }
+        for (int i = 1; i < words.length; i++) {
+            for (int j = 0; j < Math.min(words[i - 1].length(), words[i].length()); j++) {
+                int index1 = words[i - 1].charAt(j) - 'a';
+                int index2 = words[i].charAt(j) - 'a';
+                if (index1 != index2) {
+                    graph.get(index1).add(index2);
+                    degrees[index2]++;
+                    break;
+                }
+            }
+        }
+    }
+}
+
+#1ms 100%
+class Solution {
+   private final int N = 26;
+    public String alienOrder(String[] words) {
+        boolean[][] adj = new boolean[N][N];
+        int[] visited = new int[N];
+        buildGraph(words, adj, visited);
+
+        StringBuilder sb = new StringBuilder();
+        for(int i = 0; i < N; i++) {
+            if(visited[i] == 0) {                 // unvisited
+                if(!dfs(adj, visited, sb, i)) return "";
+            }
+        }
+        return sb.reverse().toString();
+    }
+
+    public boolean dfs(boolean[][] adj, int[] visited, StringBuilder sb, int i) {
+        visited[i] = 1;                            // 1 = visiting
+        for(int j = 0; j < N; j++) {
+            if(adj[i][j]) {                        // connected
+                if(visited[j] == 1) return false;  // 1 => 1, cycle
+                if(visited[j] == 0) {              // 0 = unvisited
+                    if(!dfs(adj, visited, sb, j)) return false;
+                }
+            }
+        }
+        visited[i] = 2;                           // 2 = visited
+        sb.append((char) (i + 'a'));
+        return true;
+    }
+
+    public void buildGraph(String[] words, boolean[][] adj, int[] visited) {
+        Arrays.fill(visited, -1);                 // -1 = not even existed
+        for(int i = 0; i < words.length; i++) {
+            for(char c : words[i].toCharArray()) visited[c - 'a'] = 0;
+            if(i > 0) {
+                String w1 = words[i - 1], w2 = words[i];
+                int len = Math.min(w1.length(), w2.length());
+                for(int j = 0; j < len; j++) {
+                    char c1 = w1.charAt(j), c2 = w2.charAt(j);
+                    if(c1 != c2) {
+                        adj[c1 - 'a'][c2 - 'a'] = true;
+                        break;
+                    }
+                }
+            }
+        }
+    }
+}
+
+#1ms 100%
+class Solution {
+    int N = 26;
+    public String alienOrder(String[] words) {
+
+        boolean[][] adj = new boolean[N][N];
+        int[] visited = new int[N];   //-1 nonexist, 0 exist, 1 visiting, 2 visited
+
+        for (int i=0; i<N; i++){
+            visited[i] = -1;
+        }
+        for (String w: words){
+            for (char c: w.toCharArray()){
+                visited[c-'a'] = 0;
+            }
+        }
+        for (int i=0; i<words.length-1; i++){
+            String first = words[i];
+            String second = words[i+1];
+            for (int j=0; j<Math.min(first.length(), second.length()); j++){
+                if (first.charAt(j) != second.charAt(j)){
+                    adj[first.charAt(j)-'a'][second.charAt(j)-'a'] = true;
+                    break;
+                }
+            }
+        }
+        StringBuilder sb = new StringBuilder();
+
+        for (int i=0; i<N; i++){
+            if (visited[i]==0){
+                if (!dfs(adj, visited, sb, i))
+                    return "";
+            }
+
+        }
+        return sb.reverse().toString();
+    }
+
+    public boolean dfs(boolean[][] adj, int[] visited, StringBuilder sb, int i){
+        visited[i] = 1;
+        for (int j=0; j<N; j++){
+            if (adj[i][j]){
+                if (visited[j]==0){
+                    if (!dfs(adj, visited, sb, j))
+                        return false;
+                } else if (visited[j]==1){
+                    return false;
+                }
+            }
+        }
+        visited[i] = 2;
+        sb.append((char)(i+'a'));
+        return true;
     }
 }
 '''

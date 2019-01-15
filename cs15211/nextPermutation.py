@@ -1,8 +1,11 @@
-__author__ = 'July'
+# coding=utf-8
+__source__ = 'https://leetcode.com/problems/next-permutation/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/next-permutation.py
 # Time:  O(n)
 # Space: O(1)
 # Array
+#
+# Description: Leetcode # 31. Next Permutation
 #
 # Implement next permutation, which rearranges numbers into the lexicographically next greater permutation of numbers.
 #
@@ -15,10 +18,15 @@ __author__ = 'July'
 # 3,2,1 -> 1,2,3
 # 1,1,5 -> 1,5,1
 #
-#  Google
-# Hide Tags Array
-# Hide Similar Problems (M) Permutations (M) Permutations II (M) Permutation Sequence (M) Palindrome Permutation II
-
+# Companies
+# Google
+# Related Topics
+# Array
+# Similar Questions
+# Permutations Permutations II Permutation Sequence Palindrome Permutation II
+# similar with https://leetcode.com/problems/next-greater-element-iii/description/
+#
+import unittest
 class Solution:
     # @param num, a list of integer
     # @return a list of integer
@@ -41,20 +49,6 @@ class Solution:
         num[k], num[l] = num[l], num[k]
         print num, k , l, num[:k+1], num[:k:-1]
         return num[:k+1] + num[:k:-1]
-
-if __name__ == "__main__":
-    num = [1, 4, 3, 2]
-    #num = Solution().nextPermutation(num)
-    #print num
-    #num = Solution().nextPermutation(num)
-    #print num
-    #num = Solution().nextPermutation(num)
-    #print num
-
-    test = [1,2,3]
-    #print test[:0:-1]
-    #print test[:1]
-    print Solution().nextPermutation(test)
 
 class SolutionOther:
     # @param num, a list of integer
@@ -81,16 +75,38 @@ class SolutionOther:
         return num
 
 #test
-test = SolutionOther()
-print test.nextPermutation([6,7,5,3,5,6,2,9,1,2,7,0,9])
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+        test = SolutionOther()
+        print test.nextPermutation([6,7,5,3,5,6,2,9,1,2,7,0,9])
 
-#java
-js = '''
+        num = [1, 4, 3, 2]
+        #num = Solution().nextPermutation(num)
+        #print num
+        #num = Solution().nextPermutation(num)
+        #print num
+        #num = Solution().nextPermutation(num)
+        #print num
+
+        test = [1,2,3]
+        #print test[:0:-1]
+        #print test[:1]
+        print Solution().nextPermutation(test)
+
+if __name__ == '__main__':
+    unittest.main()
+
+Java = '''
+Thought: https://leetcode.com/problems/next-permutation/solution/
+
 My idea is for an array:
 
-Start from its last element, traverse backward to find the first one with index i that satisfy num[i-1] < num[i].
+Start from its last element, traverse backward to find the first one with index i 
+that satisfy num[i-1] < num[i].
 So, elements from num[i] to num[n-1] is reversely sorted.
-To find the next permutation, we have to swap some numbers at different positions, to minimize the increased amount,
+To find the next permutation, we have to swap some numbers at different positions, 
+to minimize the increased amount,
 we have to make the highest changed position as high as possible.
 Notice that index larger than or equal to i is not possible as num[i,n-1] is reversely sorted.
 So, we want to increase the number at index i-1, clearly,
@@ -100,8 +116,8 @@ The last step is to make the remaining higher position part as small as possible
 we just have to reversely sort the num[i,n-1]
 The following is my code:
 
-100%
-public class Solution {
+# 13ms 32.79%
+class Solution {
     public void nextPermutation(int[] nums) {
         if (nums == null || nums.length < 2) {
             return;
@@ -136,7 +152,6 @@ public class Solution {
         nums[right] = tmp;
     }
 }
-'''
 #
 # 在当前序列中，从尾端往前寻找两个相邻元素，前一个记为first，后一个记为second，并且满足first 小于 second。
 # 然后再从尾端寻找另一个元素number，如果满足first 小于number，即将第first个元素与number元素对调，并将second元素之后（
@@ -149,3 +164,33 @@ public class Solution {
 # 交换4和7，即上面的swap函数，此时序列变成6，3，7，9，8，4，1
 # 再将second＝9以及以后的序列重新排序，让其从小到大排序，使得整体最小，即reverse一下（因为此时肯定是递减序列）
 # 得到最终的结果：6，3，7，1，4，8，9
+
+
+# 8ms 98.66%
+class Solution {
+    public void nextPermutation(int[] nums) {
+        int left = nums.length-1;
+        int right = nums.length-1;
+        while(left>0 && nums[left]<=nums[left-1]) {
+            left--;
+        }
+        int index=left-1;
+        if(index>=0) {
+            while(left<nums.length && nums[left]>nums[index]) {
+                left++;
+            }
+            swap(nums, index, left-1);
+        }
+        left=index+1;
+        while(left<right) {
+            swap(nums, left++, right--);
+        }
+    }
+    private void swap(int[] nums, int a, int b) {
+        int temp = nums[a];
+        nums[a] = nums[b];
+        nums[b] = temp;
+    }
+}
+'''
+

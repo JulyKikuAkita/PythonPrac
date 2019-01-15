@@ -1,15 +1,24 @@
+__source__ = 'https://leetcode.com/problems/longest-substring-without-repeating-characters/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/longest-substring-without-repeating-characters.py
 # Time:  O(n)
 # Space: O(1)
 # Hash table
 #
+# Description: Leetcode # 3. Longest Substring Without Repeating Characters
+#
 # Given a string, find the length of the longest substring without repeating characters.
-# For example, the longest substring without repeating letters for "abcabcbb" is "abc", which the length is 3.
+# For example, the longest substring without repeating letters for "abcabcbb" is "abc",
+# which the length is 3.
 # For "bbbbb" the longest substring is "b", with the length of 1.
+#
+# Companies
 # Amazon Adobe Bloomberg Yelp
-# Hide Tags Hash Table Two Pointers String
-# Hide Similar Problems (H) Longest Substring with At Most Two Distinct Characters
-
+# Related Topics
+# Hash Table Two Pointers String
+# Similar Questions
+# Longest Substring with At Most Two Distinct Characters
+#
+import unittest
 class Solution:
     # Time:  O(2n)
     # @return an integer
@@ -42,7 +51,6 @@ class Solution:
             dict[s[i]] = i
         return candidate
 
-
 class SolutionOther:
     # @return an integer
     def lengthOfLongestSubstring(self, s):
@@ -61,10 +69,7 @@ class SolutionOther:
                     dict.pop(s[p1])
                     p1 += 1
                 p1 = p + 1
-
         return ans
-
-
 
     def lengthOfLongestSubstring2(self, s):
         lastRepeating = -1 # so that len for s[0] = 1,
@@ -79,29 +84,36 @@ class SolutionOther:
             positions[s[i]] = i
         return ans
 
-#test
-test = SolutionOther()
-#print test.lengthOfLongestSubstring("aab")
-#print test.lengthOfLongestSubstring("abcabcbb")
-#print test.lengthOfLongestSubstring2("abcabcbb")
-#print test.lengthOfLongestSubstring("bbbbb")
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        test = SolutionOther()
+        #print test.lengthOfLongestSubstring("aab")
+        #print test.lengthOfLongestSubstring("abcabcbb")
+        #print test.lengthOfLongestSubstring2("abcabcbb")
+        #print test.lengthOfLongestSubstring("bbbbb")
 
-if __name__ == "__main__":
-    s1 = "dvdfghij"
-    s2 = "abcabcbb"
-    s3 = "bbbbb"
-    s4 = "tmmzuxt"
-    s5 = "qwert"
-    print Solution().lengthOfLongestSubstring(s1)
-    print Solution().lengthOfLongestSubstringif(s1)
-    print SolutionOther().lengthOfLongestSubstring2(s1)
-java = '''
+        s1 = "dvdfghij"
+        s2 = "abcabcbb"
+        s3 = "bbbbb"
+        s4 = "tmmzuxt"
+        s5 = "qwert"
+        print Solution().lengthOfLongestSubstring(s1)
+        print Solution().lengthOfLongestSubstringif(s1)
+        print SolutionOther().lengthOfLongestSubstring2(s1)
+
+if __name__ == '__main__':
+    unittest.main()
+
+Java = '''
+# Thought: https://leetcode.com/problems/longest-substring-without-repeating-characters/solution/
+
 # the basic idea is, keep a hashmap which stores the characters in string as keys and their positions as values,
 and keep two pointers which define the max substring. move the right pointer to scan through the string ,
 and meanwhile update the hashmap. If the character is already in the hashmap, then move the left pointer
 to the right of the same character last found. Note that the two pointers can only move forward.
 
-  public class Solution {
+# 28ms 74.27%
+class Solution {
     public int lengthOfLongestSubstring(String s) {
         if (s.length() == 0) return 0;
         HashMap<Character, Integer> map = new HashMap<Character, Integer>();
@@ -138,7 +150,8 @@ to the right of the same character last found. Note that the two pointers can on
  * If characters are all in ASCII, we could use array to mimic hashmap.
  */
 
-public class Solution {
+# 19ms 96.13%
+class Solution {
     public int lengthOfLongestSubstring(String s) {
         if (s.length() == 0) return 0;
         // for ASCII char sequence, use this as a hashmap
@@ -158,24 +171,45 @@ public class Solution {
     }
 }
 
+# 19ms 96.13%
+class Solution {
+    public int lengthOfLongestSubstring(String s) {
+        int[] lastIndex = new int[128];
+        int start = 0;
+        int result = 0;
+        for (int i = 0; i < s.length(); i++) {
+            char c = s.charAt(i);
+            if (lastIndex[c] - 1 >= start) {
+                result = Math.max(result, i - start);
+                start = lastIndex[c];
+            }
+            lastIndex[c] = i + 1;
+        }
+        result = Math.max(result, s.length() - start);
+        return result;
+    }
+}
+
 The idea is use a hash set to track the longest substring without repeating characters so far,
 use a fast pointer j to see if character j is in the hash set or not, if not, great, add it to the hash set,
 move j forward and update the max length, otherwise, delete from the head by using a slow pointer i until
 we can put character j to the hash set.
 
-public int lengthOfLongestSubstring(String s) {
-    int i = 0, j = 0, max = 0;
-    Set<Character> set = new HashSet<>();
-
-    while (j < s.length()) {
-        if (!set.contains(s.charAt(j))) {
-            set.add(s.charAt(j++));
-            max = Math.max(max, set.size());
-        } else {
-            set.remove(s.charAt(i++));
+# 25ms 84.48%
+class Solution {
+    public int lengthOfLongestSubstring(String s) {
+        int i = 0, j = 0, max = 0;
+        Set<Character> set = new HashSet<>();
+        while (j < s.length()) {
+            if (!set.contains(s.charAt(j))) {
+                set.add(s.charAt(j++));
+                max = Math.max(max, set.size());
+            } else {
+                set.remove(s.charAt(i++));
+            }
         }
+        return max;
     }
-
-    return max;
 }
+
 '''

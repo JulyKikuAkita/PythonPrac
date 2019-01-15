@@ -2,7 +2,8 @@ __source__ = 'https://leetcode.com/problems/can-place-flowers/#/description'
 # Time:  O(m) m = len(flowerbed)
 # Space: O(1)
 #
-# Description:
+# Description: 605. Can Place Flowers
+#
 # Suppose you have a long flowerbed in which some of the plots are planted and some are not. However,
 # flowers cannot be planted in adjacent plots - they would compete for water and both would die.
 #
@@ -41,6 +42,7 @@ __source__ = 'https://leetcode.com/problems/can-place-flowers/#/description'
 # AND the right neighbor is 0 (or we are on the right edge).
 
 import unittest
+# 36ms 84.6%
 class Solution(object):
     def canPlaceFlowers(self, flowerbed, n):
         """
@@ -64,10 +66,12 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/articles/can-place-flowers/
+# Thought: https://leetcode.com/problems/can-place-flowers/solution/
+#
 Greedily place a flower at every vacant spot encountered from left to right!
 
-public class Solution {
+# 6ms 92.14%
+class Solution {
     public boolean canPlaceFlowers(int[] flowerbed, int n) {
         int count = 0;
         for(int i = 0; i < flowerbed.length && count < n; i++) {

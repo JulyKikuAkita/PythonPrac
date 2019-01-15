@@ -1,8 +1,10 @@
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/longest-substring-with-at-most-two-distinct-characters/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/longest-substring-with-at-most-two-distinct-characters.py
 # Time:  O(n^2)
 # Space: O(1)
 # Hashtable
+#
+# Description: Leetcode # 159. Longest Substring with At Most Two Distinct Characters
 #
 # Given a string, find the length of the longest substring T
 # that contains at most 2 distinct characters.
@@ -10,11 +12,17 @@ __author__ = 'July'
 # For example, Given s = "eceba",
 #
 # T is "ece" which its length is 3.
-#  Google
-# Hide Tags Hash Table Two Pointers String
-# Hide Similar Problems (M) Longest Substring Without Repeating Characters (H) Sliding Window Maximum
-# (H) Longest Substring with At Most K Distinct Characters
-
+#
+# Companies
+# Google
+# Related Topics
+# Hash Table Two Pointers String
+# Similar Questions
+# Longest Substring Without Repeating Characters
+# Sliding Window Maximum
+# Longest Substring with At Most K Distinct Characters
+#
+import unittest
 class Solution:
     # @param s, a string
     # @return an integer
@@ -54,18 +62,44 @@ class Solution:
                 longest = max(longest, i - lastStart)
                 lastStart = j + 1
             j = i - 1
-
         return max(longest, len(s) - lastStart)
 
+# Test
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+        print Solution().lengthOfLongestSubstringTwoDistinct("eceba")
+        print Solution().lengthOfLongestSubstringTwoDistinctleetcode("eceba")
 
-#test
+if __name__ == '__main__':
+    unittest.main()
 
-if __name__ =="__main__":
-    print Solution().lengthOfLongestSubstringTwoDistinct("eceba")
-    print Solution().lengthOfLongestSubstringTwoDistinctleetcode("eceba")
+Java = '''
+#Thought:
 
-java = '''
-public class Solution {
+# 3ms 78.85%
+class Solution {
+    public int lengthOfLongestSubstringTwoDistinct(String s) {
+        if (s == null || s.length() == 0) return 0;
+        int[] counts = new int[256];
+        int start = 0, end = 0, k = 0, maxLen = 0;
+        while(end < s.length()) {
+            if (counts[s.charAt(end)]++ == 0) k++;
+            end++;
+            while (k > 2) {
+                if(counts[s.charAt(start)]-- == 1) {
+                  k--;
+                }
+                start++;
+            }
+            maxLen = Math.max(maxLen, end - start);
+        }
+        return maxLen;
+    }
+}
+
+# 4ms 74.10%
+class Solution {
     public int lengthOfLongestSubstringTwoDistinct(String s) {
         int i = 0, j = -1;
         int maxLen = 0;
@@ -82,7 +116,8 @@ public class Solution {
 }
 
 # https://discuss.leetcode.com/topic/71662/sliding-window-algorithm-template-to-solve-all-the-leetcode-substring-search-problem
-public class Solution {
+# 10ms 63.04%
+class Solution {
     public int lengthOfLongestSubstringTwoDistinct(String s) {
         if(s.length() < 1) return 0;
         HashMap<Character,Integer> index = new HashMap<Character,Integer>();
@@ -109,8 +144,9 @@ public class Solution {
         return maxLength;
     }
 }
-97.12%
-public class Solution {
+
+# 2ms 91.03%
+class Solution {
     public int lengthOfLongestSubstringTwoDistinct(String s) {
         int len = s.length();
         if (len == 0) {

@@ -1,9 +1,13 @@
-__source__ = 'https://leetcode.com/problems/out-of-boundary-paths/#/description'
+__source__ = 'https://leetcode.com/problems/out-of-boundary-paths/'
 # Time:  O(N * m * n)
 # Space: O(N * m * n)
 #
-# Description:
-# There is an m by n grid with a ball. Given the start coordinate (i,j) of the ball, you can move the ball to adjacent cell or cross the grid boundary in four directions (up, down, left, right). However, you can at most move N times. Find out the number of paths to move the ball out of grid boundary. The answer may be very large, return it after mod 109 + 7.
+# Description: 576. Out of Boundary Paths
+#
+# There is an m by n grid with a ball. Given the start coordinate (i,j) of the ball,
+# you can move the ball to adjacent cell or cross the grid boundary in four directions (up, down, left, right).
+# However, you can at most move N times. Find out the number of paths to move the ball out of grid boundary.
+# The answer may be very large, return it after mod 109 + 7.
 #
 # Example 1:
 # Input:m = 2, n = 2, N = 2, i = 0, j = 0
@@ -30,6 +34,8 @@ import unittest
 # A ball at (r, c) at time t, can move in one of four directions.
 # If it stays on the board, then it contributes to a path that takes t+1 moves.
 # If it falls off the board, then it contributes to the final answe
+#
+# 292ms 29.73%
 class Solution(object):
     def findPaths(self, m, n, N, i, j):
         """
@@ -59,7 +65,6 @@ class Solution(object):
                             ans %= MOD
 
         return ans
-
 class TestMethods(unittest.TestCase):
     def test_Local(self):
         self.assertEqual(1, 1)
@@ -69,7 +74,8 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/articles/out-of-boundary-paths/
+# Thought: https://leetcode.com/problems/out-of-boundary-paths/solution/
+#
 # Approach #2 Recursion with memoization [Accepted]
 # We can remove this redundancy by making use of a memoization array, memomemo.
 # memo[i][j][k]memo[i][j][k] is used to store the number of possible moves leading to a path
@@ -80,8 +86,9 @@ Java = '''
 # resulting in pruning of the search space.
 #
 
-#DFS
-public class Solution {
+# DFS
+# 13ms 71.57%
+class Solution {
     int M=1000000007;
     public int findPaths(int m, int n, int N, int i, int j) {
         int[][][] memo=new int[m][n][N+1];
@@ -97,13 +104,17 @@ public class Solution {
             return 0;
         if(memo[i][j][N]>=0)
             return memo[i][j][N];
-        memo[i][j][N]=((findPaths(m,n,N-1,i-1,j,memo)+findPaths(m,n,N-1,i+1,j,memo))%M+(findPaths(m,n,N-1,i,j-1,memo)+findPaths(m,n,N-1,i,j+1,memo))%M)%M;
+        memo[i][j][N]=((findPaths(m,n,N-1,i-1,j,memo)
+        +findPaths(m,n,N-1,i+1,j,memo))%M
+        +(findPaths(m,n,N-1,i,j-1,memo)
+        +findPaths(m,n,N-1,i,j+1,memo))%M)%M;
         return memo[i][j][N];
     }
 }
 
-#DP:
-public class Solution {
+# DP:
+# 22ms 30.67%
+class Solution {
     public int findPaths(int m, int n, int N, int x, int y) {
         int M = 1000000000 + 7;
         int dp[][] = new int[m][n];
@@ -121,7 +132,8 @@ public class Solution {
                         count = (count + dp[i][j]) % M;
                     if (j == 0)
                         count = (count + dp[i][j]) % M;
-                    temp[i][j] = (((i > 0 ? dp[i - 1][j] : 0) + (i < m - 1 ? dp[i + 1][j] : 0)) % M + ((j > 0 ? dp[i][j - 1] : 0) + (j < n - 1 ? dp[i][j + 1] : 0)) % M) % M;
+                    temp[i][j] = (((i > 0 ? dp[i - 1][j] : 0) + (i < m - 1 ? dp[i + 1][j] : 0)) % M
+                    + ((j > 0 ? dp[i][j - 1] : 0) + (j < n - 1 ? dp[i][j + 1] : 0)) % M) % M;
                 }
             }
             dp = temp;

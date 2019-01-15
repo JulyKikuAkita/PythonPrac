@@ -1,8 +1,10 @@
-__source__ = 'https://leetcode.com/problems/zigzag-conversion/#/description'
+__source__ = 'https://leetcode.com/problems/binary-tree-zigzag-level-order-traversal/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/binary-tree-zigzag-level-order-traversal.py
 # Time:  O(n)
 # Space: O(n)
 # BFS
+#
+# Description: Leetcode # 103. Binary Tree Zigzag Level Order Traversal
 #
 # Given a binary tree, return the zigzag level order traversal of its nodes' values.
 # (ie, from left to right, then right to left for the next level and alternate between).
@@ -14,6 +16,7 @@ __source__ = 'https://leetcode.com/problems/zigzag-conversion/#/description'
 #   9  20
 #     /  \
 #    15   7
+#
 # return its zigzag level order traversal as:
 # [
 #   [3],
@@ -21,16 +24,20 @@ __source__ = 'https://leetcode.com/problems/zigzag-conversion/#/description'
 #   [15,7]
 # ]
 #
+# Companies
 # LinkedIn Bloomberg Microsoft
-
-
+# Related Topics
+# Tree Breadth-first Search Stack
+# Similar Questions
+# Binary Tree Level Order Traversal
+#
+import unittest
 # Definition for a  binary tree node
 class TreeNode:
      def __init__(self, x):
          self.val = x
          self.left = None
          self.right = None
-
 
 class Solution:
     # @param root, a tree node
@@ -56,7 +63,6 @@ class Solution:
             level += 1
             cur = next_level
         return result
-
 
 #don't like this
 class SolutionOther:
@@ -87,25 +93,27 @@ class SolutionOther:
         if root.right:
             self.dfs(root.right, level +1)
 
-
 #test
-if __name__ == "__main__":
-    root = TreeNode(3)
-    root.left = TreeNode(4)
-    root.right = TreeNode(5)
-    root.right.left = TreeNode(-7)
-    root.right.right = TreeNode(-6)
-    root.right.left.left = TreeNode(-7)
-    root.right.right.left = TreeNode(-5)
-    root.right.left.left.left = TreeNode(-4)
-    result = Solution().zigzagLevelOrder(root)
-    #result2 = SolutionFail().zigzagLevelOrder(root)
-    print result
-    #print result2
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        root = TreeNode(3)
+        root.left = TreeNode(4)
+        root.right = TreeNode(5)
+        root.right.left = TreeNode(-7)
+        root.right.right = TreeNode(-6)
+        root.right.left.left = TreeNode(-7)
+        root.right.right.left = TreeNode(-5)
+        root.right.left.left.left = TreeNode(-4)
+        result = Solution().zigzagLevelOrder(root)
+        #result2 = SolutionFail().zigzagLevelOrder(root)
+        print result
+        #print result2
 
+if __name__ == '__main__':
+    unittest.main()
 
-#java
-js = '''
+Java = '''
+# Thought:
 /**
  * Definition for a binary tree node.
  * public class TreeNode {
@@ -115,7 +123,9 @@ js = '''
  *     TreeNode(int x) { val = x; }
  * }
  */
- #BFS 40%
+
+# BFS
+# 1ms 94.17%
 public class Solution {
     public List<List<Integer>> zigzagLevelOrder(TreeNode root) {
          List<List<Integer>> res = new ArrayList<>();
@@ -130,7 +140,7 @@ public class Solution {
                 TreeNode cur = q.poll();
                 if (cur.left != null) q.offer(cur.left);
                 if (cur.right != null) q.offer(cur.right);
-                if (fromRight) {
+                if (fromRight) { //res.size() % 2 == 0
                     tmp.add(0, cur.val);
                 } else {
                     tmp.add(cur.val);
@@ -143,9 +153,9 @@ public class Solution {
     }
 }
 
-#40%
-#DFS:
-public class Solution {
+# DFS:
+# 1ms 94.17%
+class Solution {
     public List<List<Integer>> zigzagLevelOrder(TreeNode root) {
         List<List<Integer>> res = new ArrayList<>();
         dfs(root, res, 0);
@@ -173,4 +183,23 @@ public class Solution {
     }
 }
 
+# 1ms 94.17%
+class Solution {
+    public List<List<Integer>> zigzagLevelOrder(TreeNode root) {
+        List<List<Integer>> res = new ArrayList<>();
+        dfs(root, res, 0);
+        for (int i = 1; i < res.size(); i += 2) {
+            Collections.reverse(res.get(i));
+        }
+        return res;
+    }
+    
+    private void dfs(TreeNode root, List<List<Integer>> res, int level) {
+        if (root == null) return;
+        if (res.size() == level) res.add(new ArrayList());
+        res.get(level).add(root.val);
+        dfs(root.left, res, level+1);
+        dfs(root.right, res, level+1);
+    }
+}
 '''

@@ -2,10 +2,12 @@ __source__ = 'https://leetcode.com/problems/word-break/#/description'
 # Time:  O(n^2)
 # Space: O(n)
 # DP
-# still not understand
 #
-# Given a string s and a dictionary of words dict,
+# Description: Leetcode # 139. Word Break
+#
+# Given a non-empty string s and a dictionary wordDict containing a list of non-empty words,
 # determine if s can be segmented into a space-separated sequence of one or more dictionary words.
+# You may assume the dictionary does not contain duplicate words.
 #
 # For example, given
 # s = "leetcode",
@@ -13,14 +15,18 @@ __source__ = 'https://leetcode.com/problems/word-break/#/description'
 #
 # Return true because "leetcode" can be segmented as "leet code".
 #
-# Topics:
-# Dynamic Programming
-# You might like:
-# (H) Word Break II
-# Company:
-# Google Uber Facebook Amazon Yahoo Bloomberg Pocket Gems
+# UPDATE (2017/1/4):
+# The wordDict parameter had been changed to a list of strings (instead of a set of strings).
+# Please reload the code definition to get the latest changes.
 #
-
+# Companies
+# Google Uber Facebook Amazon Yahoo Bloomberg Pocket Gems
+# Related Topics
+# Dynamic Programming
+# Similar Questions
+# Word Break II
+#
+import unittest
 class Solution2:
     # @param s, a string
     # @param dict, a set of string
@@ -99,20 +105,21 @@ class javaDP:
                     dp[end] = True
         return dp[len(s)]
 
+#Test
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        test = Solution2()
+        #print test.wordBreak("leetcode", ["leet", "code"])
 
-#test
-test = Solution2()
-#print test.wordBreak("leetcode", ["leet", "code"])
+        #print Solution().wordBreak("leetcode", ["leet", "code"])
+        print Naive().wordBreak("programcreek", ["programcree","program","creek"])
+        print javaDP().wordBreak("programcreek", ["programcree","program","creek"])
 
-if __name__ == "__main__":
-    #print Solution().wordBreak("leetcode", ["leet", "code"])
-    print Naive().wordBreak("programcreek", ["programcree","program","creek"])
-    print javaDP().wordBreak("programcreek", ["programcree","program","creek"])
+if __name__ == '__main__':
+    unittest.main()
 
-
-#java
-js = '''
-Thought: https://leetcode.com/articles/word-break/
+Java = '''
+Thought: https://leetcode.com/problems/word-break/solution/
 
 public class Solution {
     public boolean wordBreak(String s, List<String> wordDict) {
@@ -124,6 +131,7 @@ public class Solution {
     }
 
     // Time" O(n^n) considering "aaaaa", Space:O(n)
+    // TLE
     public boolean dfs(String s, Set<String> wordDict, int start) {
         if (start == s.length()) return true;
         for (int i = start + 1; i <= s.length(); i++) {
@@ -134,6 +142,7 @@ public class Solution {
     }
 
      // Time" O(n^2), Space:O(n)  26%
+     // 47.51% 16ms
     public boolean dfsMemo(String s, Set<String> wordDict, int start, Boolean[] memo) {
         if (start == s.length()) return true;
         if (memo[start] != null) return memo[start];
@@ -146,6 +155,7 @@ public class Solution {
     }
 
     //BFS // Time" O(n^2), Space:O(n)
+    # 24.39% 19ms
     public boolean bfs(String s, List<String> wordDict) {
         Set<String> wordDictSet=new HashSet(wordDict);
         Queue<Integer> queue = new LinkedList<>();
@@ -166,7 +176,8 @@ public class Solution {
         return false;
     }
 
-    //DP: Time" O(n^2), Space:O(n) 45%
+    //DP: Time" O(n^2), Space:O(n)
+    //30.67% 18ms
     public boolean dp(String s, List<String> wordDict) {
         Set<String> wordDictSet=new HashSet(wordDict);
         boolean[] dp = new boolean[s.length() + 1];
@@ -181,7 +192,8 @@ public class Solution {
         return dp[s.length()];
     }
 
-    //DP: Time" O(n^2), Space:O(n)  93%
+    //DP: Time" O(n^2), Space:O(n)
+    //94.69% 7ms
     public boolean dpLen(String s, List<String> wordDict) {
         Set<String> wordDictSet=new HashSet(wordDict);
         int len = s.length();

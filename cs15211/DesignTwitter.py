@@ -1,10 +1,12 @@
-__source__ = 'https://leetcode.com/problems/design-twitter/#/submissions/1'
+__source__ = 'https://leetcode.com/problems/design-twitter/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/design-twitter.py
 # Time:  O(klogu), k is most recently number of tweets,
 #                  u is the number of the user's following.
 # Space: O(t + f), t is the total number of tweets,
 #                  f is the total number of followings.
-
+#
+# Description: Leetcode # 355. Design Twitter
+#
 # Design a simplified version of Twitter where users can post tweets,
 # follow/unfollow another user and is able to see the 10 most recent
 # tweets in the user's news feed. Your design should support the following methods:
@@ -41,8 +43,15 @@ __source__ = 'https://leetcode.com/problems/design-twitter/#/submissions/1'
 # // User 1's news feed should return a list with 1 tweet id -> [5],
 # // since user 1 is no longer following user 2.
 # twitter.getNewsFeed(1);
+#
+# Companies
+# Amazon Twitter
+# Related Topics
+# Hash Table Heap Design
+#
 import collections
 import heapq
+import unittest
 class Twitter(object):
 
     def __init__(self):
@@ -115,9 +124,18 @@ class Twitter(object):
 # obj.follow(followerId,followeeId)
 # obj.unfollow(followerId,followeeId)
 
-#java
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+
+if __name__ == '__main__':
+    unittest.main()
+
 Java = '''
-public class Twitter {
+# Thought:
+
+# 80ms 96.33%
+class Twitter {
     private static int timeStamp=0;
 
     // easy to find if user exist
@@ -136,7 +154,6 @@ public class Twitter {
             next=null;
         }
     }
-
 
     // OO design so User can follow, unfollow and post itself
     public class User{
@@ -159,7 +176,6 @@ public class Twitter {
             followed.remove(id);
         }
 
-
         // everytime user post a new tweet, add it to the head of tweet list.
         public void post(int id){
             Tweet t = new Tweet(id);
@@ -168,9 +184,6 @@ public class Twitter {
         }
     }
 
-
-
-
     /** Initialize your data structure here. */
     public Twitter() {
         userMap = new HashMap<Integer, User>();
@@ -178,29 +191,26 @@ public class Twitter {
 
     /** Compose a new tweet. */
     public void postTweet(int userId, int tweetId) {
-        if(!userMap.containsKey(userId)){
+        if (!userMap.containsKey(userId)) {
             User u = new User(userId);
             userMap.put(userId, u);
         }
         userMap.get(userId).post(tweetId);
-
     }
 
-
-
+    /** Retrieve the 10 most recent tweet ids in the user's news feed. Each item in the news feed must be posted by users who the user followed or by the user herself. Tweets must be ordered from most recent to least recent. */
+    public List<Integer> getNewsFeed(int userId) {
     // Best part of this.
     // first get all tweets lists from one user including itself and all people it followed.
     // Second add all heads into a max heap. Every time we poll a tweet with
     // largest time stamp from the heap, then we add its next tweet into the heap.
     // So after adding all heads we only need to add 9 tweets at most into this
     // heap before we get the 10 most recent tweet.
-    public List<Integer> getNewsFeed(int userId) {
         List<Integer> res = new LinkedList<>();
-
         if(!userMap.containsKey(userId))   return res;
 
         Set<Integer> users = userMap.get(userId).followed;
-        PriorityQueue<Tweet> q = new PriorityQueue<Tweet>(users.size(), (a,b)->(b.time-a.time));
+        PriorityQueue<Tweet> q = new PriorityQueue<Tweet>(users.size(), (a,b)->(b.time-a.time)); //desc
         for(int user: users){
             Tweet t = userMap.get(user).tweet_head;
             // very imporant! If we add null to the head we are screwed.
@@ -208,17 +218,17 @@ public class Twitter {
                 q.add(t);
             }
         }
-        int n=0;
-        while(!q.isEmpty() && n<10){
-          Tweet t = q.poll();
-          res.add(t.id);
-          n++;
-          if(t.next!=null)
-            q.add(t.next);
+
+        int n = 0;
+        while(!q.isEmpty() && n < 10){
+            Tweet t = q.poll();
+            res.add(t.id);
+            n++;
+            if (t.next != null) {
+                q.add(t.next);
+            }
         }
-
         return res;
-
     }
 
     /** Follower follows a followee. If the operation is invalid, it should be a no-op. */
@@ -236,15 +246,24 @@ public class Twitter {
 
     /** Follower unfollows a followee. If the operation is invalid, it should be a no-op. */
     public void unfollow(int followerId, int followeeId) {
-        if(!userMap.containsKey(followerId) || followerId==followeeId)
+        if(!userMap.containsKey(followerId) || followerId == followeeId)
             return;
         userMap.get(followerId).unfollow(followeeId);
+
     }
 }
 
+/**
+ * Your Twitter object will be instantiated and called as such:
+ * Twitter obj = new Twitter();
+ * obj.postTweet(userId,tweetId);
+ * List<Integer> param_2 = obj.getNewsFeed(userId);
+ * obj.follow(followerId,followeeId);
+ * obj.unfollow(followerId,followeeId);
+ */
 
-
-public class Twitter {
+# 83ms 91.04%
+class Twitter {
     Map<Integer, User> userMap;
     Counter counter;
 

@@ -1,8 +1,9 @@
-__source__ = 'https://leetcode.com/problems/smallest-good-base/#/description'
+__source__ = 'https://leetcode.com/problems/smallest-good-base/'
 # Time:  O(nlogn)
 # Space: O(1)
 #
-# Description:
+# Description: 483. Smallest Good Base
+#
 # # For an integer n, we call k>=2 a good base of n, if all digits of n base k are 1.
 #
 # Now given a string representing n, you should return the smallest good base of n in string format.
@@ -74,6 +75,7 @@ import unittest
 #
 # We also know that the smallest base is 2 so we can find our m must be between 2 and log2n else m is (n-1) [7]
 import math
+# 4ms 100%
 class Solution(object):
     def smallestGoodBase(self, n):
         """
@@ -87,22 +89,21 @@ class Solution(object):
             if (k**(m+1)-1)//(k-1) == n:
                 # Refer [3]
                 return str(k)
-
         return str(n-1)
-
 
 class TestMethods(unittest.TestCase):
     def test_Local(self):
         self.assertEqual(1, 1)
 
-
 if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
-Java Binary Search
-public class Solution {
+# Thought:
+# Java Binary Search
+
+# 4ms 100%
+class Solution {
     public String smallestGoodBase(String n) {
         long num = 0;
         for (char c : n.toCharArray()) num = num * 10 + c - '0';

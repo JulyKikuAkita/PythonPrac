@@ -1,5 +1,10 @@
-#https://leetcode.com/problems/boundary-of-binary-tree/#/solutions
-#Given a binary tree, return the values of its boundary in anti-clockwise direction starting from root.
+__source__ = 'https://leetcode.com/problems/boundary-of-binary-tree/'
+# Time:  O(N)
+# Space: O(N)
+#
+# Description: Leetcode # 545. Boundary of Binary Tree
+#
+# Given a binary tree, return the values of its boundary in anti-clockwise direction starting from root.
 # Boundary includes left boundary, leaves, and right boundary in order without duplicate nodes.
 #
 # Left boundary is defined as the path from root to the left-most node.
@@ -51,12 +56,13 @@
 # Hide Similar Problems (M) Binary Tree Right Side View
 #
 # Definition for a binary tree node.
-# class TreeNode(object):
-#     def __init__(self, x):
-#         self.val = x
-#         self.left = None
-#         self.right = None
+class TreeNode(object):
+    def __init__(self, x):
+        self.val = x
+        self.left = None
+        self.right = None
 
+# 40ms 97.64%
 class Solution(object):
     def boundaryOfBinaryTree(self, root):
         """
@@ -98,29 +104,7 @@ class Solution(object):
         return boundary
 
 Java = '''
-1. Java Preorder Single Pass O(n) Solution
-We perform a single preorder traversal of the tree, keeping tracking of the left boundary and middle leaf nodes and
-the right boundary nodes in the process. A single flag is used to designate the type of node during the preorder traversal.
-Its values are:
-0 - root, 1 - left boundary node, 2 - right boundary node, 3 - middle node.
-
-public List<Integer> boundaryOfBinaryTree(TreeNode root) {
-    List<Integer> left = new LinkedList<>(), right = new LinkedList<>();
-    preorder(root, left, right, 0);
-    left.addAll(right);
-    return left;
-}
-
-public void preorder(TreeNode cur, List<Integer> left, List<Integer> right, int flag) {
-    if (cur == null) return;
-    if (flag == 2) right.add(0, cur.val);
-    else if (flag <= 1 || cur.left == null && cur.right == null) left.add(cur.val);
-    preorder(cur.left, left, right, flag <= 1 ? 1 : (flag == 2 && cur.right == null) ? 2 : 3);
-    preorder(cur.right, left, right, flag % 2 == 0 ? 2 : (flag == 1 && cur.left == null) ? 1 : 3);
-}
-
-
-2. Same w/ enum
+# Thought: https://leetcode.com/problems/boundary-of-binary-tree/solution/
 /**
  * Definition for a binary tree node.
  * public class TreeNode {
@@ -130,7 +114,37 @@ public void preorder(TreeNode cur, List<Integer> left, List<Integer> right, int 
  *     TreeNode(int x) { val = x; }
  * }
  */
-public class Solution {
+
+1. Java Preorder Single Pass O(n) Solution
+We perform a single preorder traversal of the tree,
+keeping tracking of the left boundary and middle leaf nodes and
+the right boundary nodes in the process. A
+ single flag is used to designate the type of node during the preorder traversal.
+Its values are:
+0 - root, 1 - left boundary node, 2 - right boundary node, 3 - middle node.
+
+# 6ms 80.07%
+class Solution {
+    public List<Integer> boundaryOfBinaryTree(TreeNode root) {
+        List<Integer> left = new LinkedList<>(), right = new LinkedList<>();
+        preorder(root, left, right, 0);
+        left.addAll(right);
+        return left;
+    }
+
+    public void preorder(TreeNode cur, List<Integer> left, List<Integer> right, int flag) {
+        if (cur == null) return;
+        if (flag == 2) right.add(0, cur.val);
+        else if (flag <= 1 || cur.left == null && cur.right == null) left.add(cur.val);
+        preorder(cur.left, left, right, flag <= 1 ? 1 : (flag == 2 && cur.right == null) ? 2 : 3);
+        preorder(cur.right, left, right, flag % 2 == 0 ? 2 : (flag == 1 && cur.left == null) ? 1 : 3);
+    }
+
+}
+
+2. Same w/ enum
+# 7ms 49.69%
+class Solution {
     public enum Flag{
         ROOT(0),
         LB_NODE(1),
@@ -167,39 +181,49 @@ public class Solution {
     }
 }
 
-3. Java(12ms) - left boundary, left leaves, right leaves, right boundary
-List<Integer> nodes = new ArrayList<>(1000);
-public List<Integer> boundaryOfBinaryTree(TreeNode root) {
-
-    if(root == null) return nodes;
-
-    nodes.add(root.val);
-    leftBoundary(root.left);
-    leaves(root.left);
-    leaves(root.right);
-    rightBoundary(root.right);
-
-    return nodes;
-}
-public void leftBoundary(TreeNode root) {
-    if(root == null || (root.left == null && root.right == null)) return;
-    nodes.add(root.val);
-    if(root.left == null) leftBoundary(root.right);
-    else leftBoundary(root.left);
-}
-public void rightBoundary(TreeNode root) {
-    if(root == null || (root.right == null && root.left == null)) return;
-    if(root.right == null)rightBoundary(root.left);
-    else rightBoundary(root.right);
-    nodes.add(root.val); // add after child visit(reverse)
-}
-public void leaves(TreeNode root) {
-    if(root == null) return;
-    if(root.left == null && root.right == null) {
+3. left boundary, left leaves, right leaves, right boundary
+# 5ms 98.88%
+class Solution {
+    List<Integer> nodes = new ArrayList<>(1000);
+    public List<Integer> boundaryOfBinaryTree(TreeNode root) {
+        if (root == null) return nodes;
         nodes.add(root.val);
-        return;
+        leftBound(root.left);
+        leaves(root.left);
+        leaves(root.right);
+        rightBound(root.right);
+        return nodes;
     }
-    leaves(root.left);
-    leaves(root.right);
+
+    public void leaves(TreeNode root) {
+        if (root == null) return;
+        if (root.left == null && root.right == null) {
+            nodes.add(root.val);
+            return;
+        }
+        leaves(root.left);
+        leaves(root.right);
+    }
+
+    public void leftBound(TreeNode root) {
+        if (root == null || (root.left == null && root.right == null)) return;
+        nodes.add(root.val);
+        if (root.left == null) {
+            leftBound(root.right);
+        }else {
+            leftBound(root.left);
+        }
+    }
+
+    public void rightBound(TreeNode root) {
+        if (root == null || (root.right == null && root.left == null)) return;
+        if (root.right == null) {
+            rightBound(root.left);
+        }else {
+            rightBound(root.right);
+        }
+        nodes.add(root.val);
+    }
 }
+
 '''

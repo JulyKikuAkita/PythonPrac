@@ -1,8 +1,9 @@
-__source__ = 'https://leetcode.com/problems/construct-string-from-binary-tree/#/description'
+__source__ = 'https://leetcode.com/problems/construct-string-from-binary-tree/'
 # Time:  O(n)
 # Space: O(n)
 #
-# Description:
+# Description: 606. Construct String from Binary Tree
+#
 # You need to construct a string consists of parenthesis and integers from a binary tree with the preorder traversing way.
 #
 # The null node needs to be represented by empty parenthesis pair "()".
@@ -54,6 +55,7 @@ import unittest
 #         self.left = None
 #         self.right = None
 
+# 48ms 54.17%
 class Solution(object):
     def tree2str(self, t):
         """
@@ -75,7 +77,7 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/articles/construct-string-from-binary-tree/
+# Thought: https://leetcode.com/problems/construct-string-from-binary-tree/solution/
 /**
  * Definition for a binary tree node.
  * public class TreeNode {
@@ -85,7 +87,8 @@ Java = '''
  *     TreeNode(int x) { val = x; }
  * }
  */
-public class Solution {
+# 6ms 100%
+class Solution {
     public String tree2str(TreeNode t) {
         StringBuilder sb = new StringBuilder();
         helper(sb,t);
@@ -111,7 +114,8 @@ public class Solution {
 Time complexity : O(n). n nodes are pushed and popped in a stack.
 Space complexity : O(n). stack size can grow upto n.
 
-public class Solution {
+# 14ms 72.72%
+class Solution {
     public String tree2str(TreeNode t) {
         if ( t == null) return "";
         Stack<TreeNode> stack = new Stack<>();

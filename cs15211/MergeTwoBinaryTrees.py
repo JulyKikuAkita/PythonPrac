@@ -1,13 +1,15 @@
-__source__ = 'https://leetcode.com/problems/merge-two-binary-trees/#/solutions'
+__source__ = 'https://leetcode.com/problems/merge-two-binary-trees/'
 # Time:  O(n)
 # Space: O(n)
 #
-# Description:
+# Description: Leetcode # 617. Merge Two Binary Trees
+#
 # Given two binary trees and imagine that when you put one of them to cover the other,
 # some nodes of the two trees are overlapped while the others are not.
 #
 # You need to merge them into a new binary tree. The merge rule is that if two nodes overlap,
-# then sum node values up as the new value of the merged node. Otherwise, the NOT null node will be used as the node of new tree.
+# then sum node values up as the new value of the merged node. Otherwise,
+# the NOT null node will be used as the node of new tree.
 #
 # Example 1:
 # Input:
@@ -28,7 +30,7 @@ __source__ = 'https://leetcode.com/problems/merge-two-binary-trees/#/solutions'
 #
 # Hide Company Tags Amazon
 # Hide Tags Tree
-
+#
 import unittest
 # Definition for a binary tree node.
 class TreeNode(object):
@@ -37,6 +39,7 @@ class TreeNode(object):
         self.left = None
         self.right = None
 
+# 68ms 68.16%
 class Solution(object):
     def mergeTrees(self, t1, t2):
         """
@@ -61,7 +64,7 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought: https://leetcode.com/articles/merge-two-binary-trees/
+# Thought: https://leetcode.com/problems/merge-two-binary-trees/solution/
 /**
  * Definition for a binary tree node.
  * public class TreeNode {
@@ -71,8 +74,9 @@ Java = '''
  *     TreeNode(int x) { val = x; }
  * }
  */
- # dfs 47%
-public class Solution {
+# DFS
+# 10ms 40.59%
+class Solution {
     public TreeNode mergeTrees(TreeNode t1, TreeNode t2) {
         if (t1 != null && t2 != null) {
             TreeNode root = new TreeNode(t1.val + t2.val);
@@ -87,8 +91,9 @@ public class Solution {
     }
 }
 
-#dfs 96%
-public class Solution {
+# DFS
+# 6ms 98.05%
+class Solution {
     public TreeNode mergeTrees(TreeNode t1, TreeNode t2) {
         if (t1 == null)
             return t2;
@@ -102,8 +107,9 @@ public class Solution {
 }
 
 
-#bfs" 13.02%
-public class Solution {
+# BFS
+# 8ms 69.45%
+class Solution {
     public TreeNode mergeTrees(TreeNode t1, TreeNode t2) {
         if (t1 == null)
             return t2;

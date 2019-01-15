@@ -1,10 +1,10 @@
-import collections
-
-__author__ = 'July'
+__source__ = 'https://leetcode.com/problems/sort-characters-by-frequency/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/sort-characters-by-frequency.py
 # Time:  O(n)
 # Space: O(n)
-
+#
+# Description: Leetcode # 451. Sort Characters By Frequency
+#
 # Input:
 # "tree"
 #
@@ -36,7 +36,10 @@ __author__ = 'July'
 # Explanation:
 # "bbaA" is also a valid answer, but "Aabb" is incorrect.
 # Note that 'A' and 'a' are treated as two different characters.
+import collections
+import unittest
 
+# 68ms 37.55%
 class Solution(object):
     def frequencySort(self, s):
         """
@@ -58,42 +61,59 @@ class Solution(object):
 
         return result
 
-java = '''
+class TestMethods(unittest.TestCase):
+    def test_Local(self):
+        self.assertEqual(1, 1)
+
+if __name__ == '__main__':
+    unittest.main()
+
+Java = '''
+# Thought:
 Super simple O(n) Bucket Sort based Java solution (11 ms). No fancy Data structure needed. Beats 96%.
 Could not find a simpler way to do this. I see people are using HashMap/TreeMap which are not at all required.
 If you know bucket sort then following solution will be easy to understand!
 
-public String frequencySort(String s) {
-        if(s.length() < 3)
-            return s;
-        int max = 0;
-        int[] map = new int[256];
-        for(char ch : s.toCharArray()) {
-            map[ch]++;
-            max = Math.max(max,map[ch]);
+# 28ms 64.93%
+class Solution {
+    public String frequencySort(String s) {
+        Map<Character, Integer> map = new HashMap<>();
+        for (char c : s.toCharArray()) {
+            if (map.containsKey(c)) {
+                map.put(c, map.get(c) + 1);
+            } else {
+                map.put(c, 1);
+            }
         }
-        String[] buckets = new String[max + 1]; // create max buckets
-        for(int i = 0 ; i < 256; i++) { // join chars in the same bucket
-            String str = buckets[map[i]];
-            if(map[i] > 0)
-                buckets[map[i]] = (str == null) ? "" + (char)i : (str + (char) i);
+        
+        PriorityQueue<Map.Entry<Character, Integer>> pq = new PriorityQueue<>(
+            new Comparator<Map.Entry<Character, Integer>>(){
+                @Override
+                public int compare(Map.Entry<Character, Integer> a, Map.Entry<Character, Integer> b) {
+                    return b.getValue() - a.getValue();
+                }
+            }
+        );
+        
+        pq.addAll(map.entrySet());
+        StringBuilder sb = new StringBuilder();
+        while(!pq.isEmpty()) {
+            Map.Entry e = pq.poll();
+            for (int i = 0; i < (int) e.getValue(); i++) {
+                sb.append(e.getKey());
+            }
         }
-        StringBuilder strb = new StringBuilder();
-        for(int i = max; i >= 0; i--) { // create string for each bucket.
-            if(buckets[i] != null)
-                for(char ch : buckets[i].toCharArray())
-                    for(int j = 0; j < i; j++)
-                        strb.append(ch);
-        }
-        return strb.toString();
+        return sb.toString();
     }
+}
 
 Java O(n) Bucket Sort Solution / O(nlogn) PriorityQueue Solution, easy to understand
 The logic is very similar to NO.347 and here we just use a map a count and according to the frequency
 to put it into the right bucket.
 Then we go through the bucket to get the most frequently character and append that to the final stringbuilder.
 
-public class Solution {
+# 21ms 80.80%
+class Solution {
     public String frequencySort(String s) {
         Map<Character, Integer> map = new HashMap<>();
         for (char c : s.toCharArray()) {
@@ -127,7 +147,8 @@ public class Solution {
 
 And we have normal way using PriorityQueue as follows:
 
-public class Solution {
+# 27ms 67.26%
+class Solution {
     public String frequencySort(String s) {
         Map<Character, Integer> map = new HashMap<>();
         for (char c : s.toCharArray()) {
@@ -156,4 +177,5 @@ public class Solution {
         return sb.toString();
     }
 }
+
 '''

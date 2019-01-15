@@ -1,9 +1,12 @@
-__source__ = 'https://leetcode.com/problems/perfect-rectangle/#/description'
+__source__ = 'https://leetcode.com/problems/perfect-rectangle/'
+# https://leetcode.com/problems/perfect-rectangle/#/description
 # Time:  O(n) or o(nlogn) for sweep line
 # Space: O(n) set
 #
-# Description:
-# Given N axis-aligned rectangles where N > 0, determine if they all together form an exact cover of a rectangular region.
+# Description: Leetcode # 391. Perfect Rectangle
+#
+# Given N axis-aligned rectangles where N > 0,
+# determine if they all together form an exact cover of a rectangular region.
 #
 # Each rectangle is represented as a bottom-left point and a top-right point.
 # For example, a unit square is represented as [1,1,2,2].
@@ -54,14 +57,46 @@ __source__ = 'https://leetcode.com/problems/perfect-rectangle/#/description'
 # ]
 #
 # Return false. Because two of the rectangles overlap with each other.
-# Hide Company Tags Google
-
+#
+# Companies
+# Google
+#
 import unittest
-
-
+# 140ms 45.65%
 class Solution(object):
-    pass  # your function here
+    def isRectangleCover(self, rectangles):
+        """
+        :type rectangles: List[List[int]]
+        :rtype: bool
+        """
+        def recordCorner(point):
+            if point in corners:
+                corners[point] += 1
+            else:
+                corners[point] = 1
 
+        corners = {}                                # record all corners
+        L, B, R, T, area = float('inf'), float('inf'), -float('inf'), -float('inf'), 0
+
+        for sub in rectangles:
+            L, B, R, T = min(L, sub[0]), min(B, sub[1]), max(R, sub[2]), max(T, sub[3])
+            ax, ay, bx, by = sub[:]
+            area += (bx-ax)*(by-ay)                 # sum up the area of each sub-rectangle
+            map(recordCorner, [(ax, ay), (bx, by), (ax, by), (bx, ay)])
+
+        if area != (T-B)*(R-L): return False        # check the area
+
+        big_four = [(L,B),(R,T),(L,T),(R,B)]
+
+        for bf in big_four:                         # check corners of big rectangle
+            if bf not in corners or corners[bf] != 1:
+                return False
+
+        for key in corners:                         # check existing "inner" points
+            if corners[key]%2 and key not in big_four:
+                return False
+
+        return True
 
 class TestMethods(unittest.TestCase):
     def test_Local(self):
@@ -72,7 +107,7 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
+# Thought:
 1.
 https://discuss.leetcode.com/topic/55923/o-n-solution-by-counting-corners-with-detailed-explaination with graph
 The right answer must satisfy two conditions:
@@ -81,7 +116,8 @@ the large rectangle area should be equal to the sum of small rectangles
 count of all the points should be even(green + red in graph),
 and that of all the four corner points(blue) should be one
 
-public class Solution {
+# 87ms 29.73%
+class Solution {
     public boolean isRectangleCover(int[][] rectangles) {
         if (rectangles == null || rectangles.length == 0 || rectangles[0].length == 0) return false;
 
@@ -132,7 +168,8 @@ Sort by x-coordinate.
 Insert y-interval into TreeSet, and check if there are intersections.
 Delete y-interval.
 
-public class Solution {
+# 62ms 59.01%
+class Solution {
     public boolean isRectangleCover(int[][] rectangles) {
         PriorityQueue<Event> pq = new PriorityQueue<Event>();
         // border of y-intervals
@@ -193,5 +230,93 @@ public class Solution {
     		else return this.rect[0] - that.rect[0];
     	}
     }
+}
+
+# 23ms 100%
+class Solution {
+     class Segment {
+        int start;
+        int end;
+        int height;
+        Segment(int start, int end, int height){
+            this.start = start;
+            this.end = end;
+            this.height = height;
+        }
+    }
+    public boolean isRectangleCover(int[][] rectangles) {
+        final boolean[] tag = {false};
+        Arrays.sort(rectangles, new Comparator<int[]>() {
+            @Override
+            public int compare(int[] o1, int[] o2) {
+                if (o1[1] == o2[1] && o1[0] == o2[0]) {
+                    tag[0] = true;
+                    return -1;
+                }else if (o1[1] == o2[1])return o1[0] - o2[0];
+                else return o1[1] - o2[1];
+            }
+        });
+        if (tag[0]) return false;
+        PriorityQueue<Segment> que = new PriorityQueue<>(new Comparator<Segment>() {
+            @Override
+            public int compare(Segment o1, Segment o2) {
+                if (o1.height == o2.height) {
+                    return o1.start - o2.start;
+                }
+                return o1.height - o2.height;
+            }
+        });
+
+        int i = solve (0, rectangles[0][0], -1, rectangles[0][1], rectangles, que);
+        if (i == -1) return false;
+        while (i < rectangles.length) {
+            Segment seg = que.poll();
+            while (!que.isEmpty()) {
+                Segment tmp = que.peek();
+                if (tmp.height != seg.height || tmp.start != seg.end) break;
+                seg.end = que.poll().end;
+            }
+            if (rectangles[i][0] != seg.start || rectangles[i][1] != seg.height) return false;
+            i = solve(i,seg.start,seg.end,seg.height,rectangles,que);
+            if (i == -1) return false;
+        }
+        Segment seg = que.poll();
+        while (!que.isEmpty()) {
+            Segment cur = que.poll();
+            if (cur.height != seg.height) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private int solve(int i, int start, int limit,int base, int[][] rectangles, PriorityQueue<Segment> que) {
+        int end = start;
+        int h = rectangles[i][3];
+        for (; i < rectangles.length; i ++) {
+            if (end == limit) break;
+            if (rectangles[i][1] != base) {
+                if (limit == -1) {
+                    if (rectangles[i][0] > end || rectangles[i][2] > end) return -1;
+                }else {
+                    return -1;
+                }
+                break;
+            }
+            if (rectangles[i][0] != end) return -1;
+            if (h == rectangles[i][3]) {
+                end = rectangles[i][2];
+            }else {
+                que.offer(new Segment(start, end, h));
+                start = rectangles[i][0];
+                end = rectangles[i][2];
+                h = rectangles[i][3];
+            }
+        }
+        if (limit != -1 && end != limit) return -1;
+        que.offer(new Segment(start, end, h));
+        return i;
+    }
+
 }
 '''
