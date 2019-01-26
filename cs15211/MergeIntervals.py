@@ -60,6 +60,15 @@ if __name__ == '__main__':
 Java = '''
 # Thought: https://leetcode.com/problems/merge-intervals/solution/
 
+# Approach 2: Sorting
+# Complexity Analysis
+# Time complexity : O(nlgn)
+# Other than the sort invocation, we do a simple linear scan of the list, 
+# so the runtime is dominated by the O(nlgn) complexity of sorting.
+# Space complexity : O(1)(or O(n))
+
+If we can sort intervals in place, we do not need more than constant additional space. 
+Otherwise, we must allocate linear space to store a copy of intervals and sort that.
 /**
  * Definition for an interval.
  * public class Interval {
@@ -87,7 +96,7 @@ class Solution {
                 start = cur.start;
                 end = cur.end;
             } else {
-                end = Math.max(end, cur.end);
+                end = Math.max(end, cur.end); // ex: [[1,4],[2,3]]
             }
         }
         result.add(new Interval(start, end));
@@ -119,6 +128,21 @@ class Solution {
         return res;
     }
 }
+
+# Approach 1: Connected Components
+# Complexity Analysis
+# Time complexity : O(n^2)
+# Building the graph costs O(V + E) = O(V) + O(E) = O(n) + O(n^2) = O(n^2) time, 
+# as in the worst case all intervals are mutually overlapping. 
+# Traversing the graph has the same cost (although it might appear higher at first) 
+# because our visited set guarantees that each node will be visited exactly once. 
+# Finally, because each node is part of exactly one component, 
+# the merge step costs O(V) = O(n) time. This all adds up as follows:
+# O(n^2) + O(n^2) + O(n) = O(n^2)
+# Space complexity : O(n^2)
+# As previously mentioned, in the worst case, all intervals are mutually overlapping, 
+# so there will be an edge for every pair of intervals. 
+# Therefore, the memory footprint is quadratic in the input size
 
 # Merge Sort
 # 48ms 42.89%

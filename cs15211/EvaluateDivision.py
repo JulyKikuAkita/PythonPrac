@@ -17,7 +17,7 @@ __source__ = 'https://leetcode.com/problems/evaluate-division/description/'
 # return [6.0, 0.5, -1.0, 1.0, -1.0 ].
 #
 # The input is:
-# vector<pair<string, string>> euqations, vector<double>& values, vector<pair<string, string>> query .
+# vector<pair<string, string>> equations, vector<double>& values, vector<pair<string, string>> query .
 #
 # where equations.size() == values.size(),the values are positive.
 # this represents the equations.return vector<double>. .
@@ -99,107 +99,46 @@ the reverse link is 1/k. Query is to find a path between two nodes.
 # 2ms 65.97%
 class Solution {
     public double[] calcEquation(String[][] equations, double[] values, String[][] queries) {
-        HashMap<String, ArrayList<String>> pairs = new HashMap<String, ArrayList<String>>();
-        HashMap<String, ArrayList<Double>> valuesPair = new HashMap<String, ArrayList<Double>>();
-        for (int i = 0; i < equations.length; i++) { //equations = [ ["a", "b"], ["b", "c"] ],
-            String[] equation = equations[i];
-            if (!pairs.containsKey(equation[0])) {
-                pairs.put(equation[0], new ArrayList<String>());
-                valuesPair.put(equation[0], new ArrayList<Double>());
-            }
-
-            if (!pairs.containsKey(equation[1])) {
-                pairs.put(equation[1], new ArrayList<String>());
-                valuesPair.put(equation[1], new ArrayList<Double>());
-            }
-
-            pairs.get(equation[0]).add(equation[1]);
-            pairs.get(equation[1]).add(equation[0]);
-            valuesPair.get(equation[0]).add(values[i]);
-            valuesPair.get(equation[1]).add(1 / values[i]);
-        }
-
-        //queries = [ ["a", "c"], ["b", "a"], ["a", "e"], ["a", "a"], ["x", "x"] ].
-        double[] res = new double[queries.length];
-        for (int i = 0; i < queries.length; i++) {
-            String[] query = queries[i];
-            res[i] = dfs(query[0], query[1], pairs, valuesPair, new HashSet<String>(), 1.0);
-            if (res[i] == 0.0) res[i] = -1.0;
-        }
-        return res;
-    }
-    private double dfs(String start, String end, HashMap<String, ArrayList<String>> pairs, HashMap<String, ArrayList<Double>> values, HashSet<String> set, double value) {
-        if (set.contains(start)) return 0.0;
-        if (!pairs.containsKey(start)) return 0.0;
-        if (start.equals(end)) return value;
-
-        set.add(start);
-        ArrayList<String> strList = pairs.get(start);
-        ArrayList<Double> valueList = values.get(start);
-        double tmp = 0.0;
-        for (int i = 0; i < strList.size(); i++) {
-            tmp = dfs(strList.get(i), end, pairs, values, set, value * valueList.get(i));
-            if (tmp != 0.0) break;
-        }
-
-        set.remove(start);
-        return tmp;
-    }
-}
-
-# 2ms 65.97%
-class Solution {
-    public double[] calcEquation(String[][] equations, double[] values, String[][] queries) {
         HashMap<String, HashMap<String, Double>> hm = initHashMap(equations, values);
         double[] res = new double[queries.length];
-
         for (int i = 0; i < queries.length; i++) {
             String f = queries[i][0];
             String s = queries[i][1];
             if (!hm.containsKey(f) || !hm.containsKey(s)) res[i] = -1.0d;
             else if (f.equals(s)) res[i] = 1.0d;
-            else res[i] = calcHelper(hm, f, s, new HashSet<String> ());
+            else res[i] = calcHelper(hm, f, s, new HashSet<String>());
         }
-
         return res;
     }
-
+    
     public double calcHelper(HashMap<String, HashMap<String, Double>> hm, String f, String s, HashSet<String> visited) {
-
         if (hm.get(f).containsKey(s)) {
             return hm.get(f).get(s);
         } else {
             for (Map.Entry<String, Double> entry : hm.get(f).entrySet()) {
-                if (visited.contains(entry.getKey())) continue;
-                visited.add(entry.getKey());
-                double res = calcHelper(hm, entry.getKey(), s, visited);
-                if (res != -1.0d) {
-                    return entry.getValue() * res;
-                }
+                String key = entry.getKey();
+                if (visited.contains(key)) continue;
+                visited.add(key);
+                double res = calcHelper(hm, key, s, visited);
+                if (res != -1.0d) return res * entry.getValue();
             }
             return -1.0d;
         }
     }
-
+    
     public HashMap<String, HashMap<String, Double>> initHashMap(String[][] equations, double[] values) {
-        HashMap<String, HashMap<String, Double>> hm = new HashMap<String, HashMap<String, Double>>();
+        HashMap<String, HashMap<String, Double>> hm = new HashMap();
         for (int i = 0; i < equations.length; i++) {
             String f = equations[i][0];
             String s = equations[i][1];
-            putInHashMap(hm, f, s, values[i]);
-            putInHashMap(hm, s, f, 1.0d / values[i]);
+            putInMap(hm, f, s, values[i]);
+            putInMap(hm, s, f, 1.0d / values[i]);
         }
         return hm;
     }
-
-    public void putInHashMap(HashMap<String, HashMap<String, Double>> hm, String f, String s, double values) {
-        if (hm.containsKey(f)) {
-            hm.get(f).put(s, values);
-        } else {
-            HashMap<String, Double> newPairs = new HashMap<String, Double> ();
-            newPairs.put(s, values);
-            hm.put(f, newPairs);
-        }
+    
+    public void putInMap(HashMap<String, HashMap<String, Double>> hm, String f, String s, double values) {
+            hm.computeIfAbsent(f, k -> new HashMap<String, Double>()).put(s, values);
     }
 }
 
@@ -253,5 +192,72 @@ class Solution {
         return tmp;
     }
 
+}
+
+# https://leetcode.com/problems/evaluate-division/discuss/224011/Java-Union-Find-Solution-(Beats-100)
+# Unioin Find
+# 1ms 100% 
+class Solution {
+    class DSU {
+        int[] parent;
+        double[] value;
+        
+        public DSU(int size) {
+            parent = new int[size];
+            value = new double[size];
+            for (int i = 0; i < size; i++) {
+                parent[i] = i;
+                value[i] = 1;
+            }
+        }
+        
+        public int find(int x) {
+            if (parent[x] != x ) {
+                int par = find(parent[x]);
+                value[x] = value[x] * value[parent[x]];
+                parent[x] = par;
+            }
+            return parent[x];
+        }
+        
+        public void union(int a, int b, double v) {
+            int x = find(a);
+            int y = find(b);
+            if (x == y) return;
+            parent[y] = x;
+            value[y] = value[a] * v / value[b];
+        }
+        
+        public double getValue(int a, int b) {
+            if (find(a) != find(b)) return -1;
+            return value[b] / value[a];
+        }
+    }
+    
+    public double[] calcEquation(String[][] equations, double[] values, String[][] queries) {
+        double[] ans = new double[queries.length];
+        Map<String, Integer> var2int = new HashMap();
+        int size = 0;
+        //map string to int
+        for (int i = 0; i < equations.length; i++) {
+            if (!var2int.containsKey(equations[i][0])) var2int.put(equations[i][0], size++);
+            if (!var2int.containsKey(equations[i][1])) var2int.put(equations[i][1], size++);
+        }
+        
+        DSU ds = new DSU(size);
+        for (int i = 0; i < equations.length; i++) {
+            ds.union(var2int.get(equations[i][0]), var2int.get(equations[i][1]), values[i]);
+        }
+        //if queries[i][0] and queries[i][1] are not in the same set, simply fill -1
+		//if they are in the same set, value = value of a->parent * value of parent->b 
+        for (int i = 0; i < queries.length; i++) {
+            if (!var2int.containsKey(queries[i][0]) || !var2int.containsKey(queries[i][1])) {
+                ans[i] = -1;
+            } else {
+                ans[i] = ds.getValue(var2int.get(queries[i][0]), var2int.get(queries[i][1]));
+            }
+        }
+        return ans;
+    }
 }
 '''

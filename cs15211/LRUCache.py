@@ -250,57 +250,39 @@ Java = '''
 # HashMap + doubly-linked list implementation:
 # Without dummyhead tail
 
-# 98ms 47.75%
-    private int capacityLeft;
-    private Map<Integer, DoublyLinkedNode<KeyValuePair>> keyElementMap;
+# 107ms 39.72%
+class LRUCache {
+    private int mCap;
+    private Map<Integer, DoublyLinkedNode<KeyValuePair>> mMap;
     private DoublyLinkedNode<KeyValuePair> first;
     private DoublyLinkedNode<KeyValuePair> last;
-
-    public LRUCache(int capacity) {
-        capacityLeft = capacity;
-        keyElementMap = new HashMap<>();
-    }
-
-    public int get(int key) {
-        DoublyLinkedNode<KeyValuePair> node = keyElementMap.get(key);
-        if (node == null) {
-            return -1;
-        } else {
-            removeNode(node);
-            addToFirst(node);
-            return node.element.value;
+    
+    class KeyValuePair {
+        int key;
+        int value;
+        public KeyValuePair(int k, int v) {
+            key = k;
+            value = v;
         }
     }
-
-    public void put(int key, int value) {
-        DoublyLinkedNode<KeyValuePair> node = keyElementMap.get(key);
-        if (node == null) {
-            DoublyLinkedNode<KeyValuePair> newNode = new DoublyLinkedNode<>(new KeyValuePair(key, value));
-            if (capacityLeft == 0) {
-                keyElementMap.remove(last.element.key);
-                removeNode(last);
-            } else {
-                capacityLeft--;
-            }
-            addToFirst(newNode);
-            keyElementMap.put(key, newNode);
-        } else {
-            node.element.value = value;
-            removeNode(node);
-            addToFirst(node);
-            keyElementMap.put(key, node);
+    
+    class DoublyLinkedNode<E> {
+        DoublyLinkedNode prev;
+        DoublyLinkedNode next;
+        E element;
+        public DoublyLinkedNode(E em) {
+            element = em;
         }
     }
-
+    
     private void removeNode(DoublyLinkedNode node) {
-        if (node == null) {
-            return;
-        }
+        if (node == null) return;
         if (node == first) {
             first = first.next;
         } else {
             node.prev.next = node.next;
         }
+        
         if (node == last) {
             last = last.prev;
         } else {
@@ -309,11 +291,9 @@ Java = '''
         node.prev = null;
         node.next = null;
     }
-
+    
     private void addToFirst(DoublyLinkedNode node) {
-        if (node == null) {
-            return;
-        }
+        if (node == null) return;
         if (first == null) {
             first = node;
             last = node;
@@ -323,31 +303,50 @@ Java = '''
             first = node;
         }
     }
-}
 
-class DoublyLinkedNode<E> {
-    DoublyLinkedNode prev;
-    DoublyLinkedNode next;
-    E element;
-
-    public DoublyLinkedNode(E element) {
-        this.element = element;
+    public LRUCache(int capacity) {
+        mCap = capacity;
+        mMap = new HashMap();
+    }
+    
+    public int get(int key) {
+        DoublyLinkedNode<KeyValuePair> node = mMap.get(key);
+        if (node == null) return -1;
+        removeNode(node);
+        addToFirst(node);
+        return node.element.value;
+    }
+    
+    public void put(int key, int value) {
+        DoublyLinkedNode<KeyValuePair> node = mMap.get(key);
+        if (node == null) {
+            node = new DoublyLinkedNode<>(new KeyValuePair(key, value));
+            if (mCap == 0) {
+                mMap.remove(last.element.key);
+                removeNode(last);
+            } else {
+                mCap--;
+            }
+            addToFirst(node);
+        } else {
+            node.element.value = value;
+            removeNode(node);
+            addToFirst(node);
+        }
+        mMap.put(key, node);
     }
 }
 
-class KeyValuePair {
-    int key;
-    int value;
+/**
+ * Your LRUCache object will be instantiated and called as such:
+ * LRUCache obj = new LRUCache(capacity);
+ * int param_1 = obj.get(key);
+ * obj.put(key,value);
+ */
 
-    public KeyValuePair(int key, int value) {
-        this.key = key;
-        this.value = value;
-    }
-}
-
-#https://discuss.leetcode.com/topic/43961/laziest-implementation-java-s-linkedhashmap-takes-care-of-everything
-This is the laziest implementation using Java's LinkedHashMap. In the real interview,
-however, it is definitely not what interviewer expected.
+# https://discuss.leetcode.com/topic/43961/laziest-implementation-java-s-linkedhashmap-takes-care-of-everything
+# This is the laziest implementation using Java's LinkedHashMap. In the real interview,
+# however, it is definitely not what interviewer expected.
 # LinkedHashMap
 # 84ms 77.58%
 import java.util.LinkedHashMap;
@@ -379,13 +378,8 @@ public class LRUCache {
     }
 }
 
-/**
- * Your LRUCache object will be instantiated and called as such:
- * LRUCache obj = new LRUCache(capacity);
- * int param_1 = obj.get(key);
- * obj.put(key,value);
- */
-
+# If use single linked list, remove takes O(n)
+# -> double linked list, remove takes O(1)
 # 126ms 24.69%
 class LRUCache {
     Node head = null;

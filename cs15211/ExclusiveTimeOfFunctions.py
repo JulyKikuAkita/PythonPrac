@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/exclusive-time-of-functions/description/'
+__source__ = 'https://leetcode.com/problems/exclusive-time-of-functions/'
 # Time:  O(n)
 # Space: O(n)
 #
@@ -143,6 +143,70 @@ if __name__ == '__main__':
 
 Java = '''
 # Thought: https://leetcode.com/problems/exclusive-time-of-functions/solution/
+# Approach #1 Using Stack [Time Limit Exceeded]
+# Complexity Analysis
+# Time complexity : O(t). We increment the time till all the functions are done with the execution. 
+# Here, t refers to the end time of the last function in the logs list.
+# Space complexity : O(n). The stackstack can grow upto a depth of at most n/2. 
+# Here, n refers to the number of elements in the given logs list.
+# TLE
+public class Solution {
+    public int[] exclusiveTime(int n, List < String > logs) {
+        Stack < Integer > stack = new Stack < > ();
+        int[] res = new int[n];
+        String[] s = logs.get(0).split(":");
+        stack.push(Integer.parseInt(s[0]));
+        int i = 1, time = Integer.parseInt(s[2]);
+        while (i < logs.size()) {
+            s = logs.get(i).split(":");
+            while (time < Integer.parseInt(s[2])) {
+                res[stack.peek()]++;
+                time++;
+            }
+            if (s[1].equals("start"))
+                stack.push(Integer.parseInt(s[0]));
+            else {
+                res[stack.peek()]++;
+                time++;
+                stack.pop();
+            }
+            i++;
+        }
+        return res;
+    }
+}
+
+# Approach #2 Better Approach [Accepted]
+# Complexity Analysis
+# Time complexity : O(n). We iterate over the entire logs array just once. 
+# Here, n refers to the number of elements in the logslogs list.
+# Space complexity : The stack can grow upto a depth of at most n/2. 
+# Here, n refers to the number of elements in the given logs list.
+# 39ms 82.71%
+public class Solution {
+    public int[] exclusiveTime(int n, List < String > logs) {
+        Stack < Integer > stack = new Stack < > ();
+        int[] res = new int[n];
+        String[] s = logs.get(0).split(":");
+        stack.push(Integer.parseInt(s[0]));
+        int i = 1, prev = Integer.parseInt(s[2]);
+        while (i < logs.size()) {
+            s = logs.get(i).split(":");
+            if (s[1].equals("start")) {
+                if (!stack.isEmpty())
+                    res[stack.peek()] += Integer.parseInt(s[2]) - prev;
+                stack.push(Integer.parseInt(s[0]));
+                prev = Integer.parseInt(s[2]);
+            } else {
+                res[stack.peek()] += Integer.parseInt(s[2]) - prev + 1;
+                stack.pop();
+                prev = Integer.parseInt(s[2]) + 1;
+            }
+            i++;
+        }
+        return res;
+    }
+}
 
 # 25ms 74.71%
 class Solution {

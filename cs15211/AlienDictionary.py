@@ -3,7 +3,7 @@ __source__ = 'https://leetcode.com/problems/alien-dictionary/#/description'
 # Time:  O(n)
 # Space: O(|V|+|E|) = O(26 + 26^2) = O(1)
 #
-# Topological Sort
+# Topological Sort with duplicates letters -> think about use hashset to build the graph
 #
 # Description: Leetcode # 269. Alien Dictionary
 #
@@ -168,25 +168,21 @@ if __name__ == '__main__':
 Java = '''
 #Thought: https://leetcode.com/problems/contains-duplicate/solution/
 
-//dfs
-#56.22% 9ms
+# DFS
+# 82ms 0.83%
 class Solution {
     public String alienOrder(String[] words) {
-        if (words == null || words.length == 0) {
-            return "";
-        }
+        if (words == null || words.length == 0)  return "";
         Map<Character, Set<Character>> graph = new HashMap<>();
         Stack<Character> stack = new Stack<>();
         Set<Character> visited = new HashSet<Character>();
         Set<Character> loop = new HashSet<Character>();
         // Read to graph
+        
         for (int i = 0; i < words.length; i++) {
             String word = words[i];
             for (int j = 0; j < word.length(); j++) {
-                char c = word.charAt(j);
-                if (!graph.containsKey(c)) {
-                    graph.put(c, new HashSet<Character>());
-                }
+                graph.computeIfAbsent(word.charAt(j), k -> new HashSet());
             }
             if (i > 0) {
                 String prev = words[i - 1];
@@ -198,90 +194,85 @@ class Solution {
                 }
             }
         }
-        // DFS
+        
         for (char c : graph.keySet()) {
-            if (!dfs(c, graph, stack, visited, loop)) {
-                return "";
-            }
+            if (!dfs(c, graph, stack, visited, loop)) return "";
         }
-        // Print result
+        
         StringBuilder sb = new StringBuilder();
-        while (!stack.empty()) {
-            sb.append(stack.pop());
-        }
+        while (!stack.isEmpty()) sb.append(stack.pop());
         return sb.toString();
     }
-
+    
     private boolean dfs(char c, Map<Character, Set<Character>> graph, Stack<Character> stack, Set<Character> visited, Set<Character> loop) {
-        if (visited.contains(c)) {
-            return true;
-        }
-        if (loop.contains(c)) {
-            return false;
-        }
+        if (visited.contains(c)) return true;
+        if (loop.contains(c)) return false;
         loop.add(c);
-        for (char next : graph.get(c)) {
-            if (!dfs(next, graph, stack, visited, loop)) {
-                return false;
-            }
+        for (char next: graph.get(c)) {
+            if (!dfs(next, graph, stack, visited, loop)) return false;
         }
         visited.add(c);
         stack.push(c);
         return true;
     }
 }
-//BFS
+
+# BFS
 # 35.76% 10ms
 class Solution {
     public String alienOrder(String[] words) {
-        Map<Character, Set<Character>> map=new HashMap<Character, Set<Character>>();
-        Map<Character, Integer> degree=new HashMap<Character, Integer>();
+        Map<Character, Set<Character>> map = new HashMap<Character, Set<Character>>();
+        Map<Character, Integer> degree = new HashMap<Character, Integer>();
         String result="";
-        if(words==null || words.length==0) return result;
-        for(String s: words){
+        if (words==null || words.length == 0) return result;
+        for (String s: words){
             for(char c: s.toCharArray()){
-                degree.put(c,0);
+                degree.put(c, 0);
             }
         }
-        for(int i=0; i<words.length-1; i++){
-            String cur=words[i];
-            String next=words[i+1];
-            int length=Math.min(cur.length(), next.length());
-            for(int j=0; j<length; j++){
-                char c1=cur.charAt(j);
-                char c2=next.charAt(j);
-                if(c1!=c2){
-                    Set<Character> set=new HashSet<Character>();
-                    if(map.containsKey(c1)) set=map.get(c1);
-                    if(!set.contains(c2)){
+        
+        for (int i = 0; i < words.length - 1; i++) {
+            String cur = words[i];
+            String next = words[i + 1];
+            int len = Math.min(cur.length(), next.length());
+            for (int j = 0; j < len; j++) {
+                char c1 = cur.charAt(j);
+                char c2 = next.charAt(j);
+                if (c1 != c2) {
+                    Set<Character> set;
+                    if (map.containsKey(c1)) set = map.get(c1);
+                    else set = new HashSet();                    
+                    if (!set.contains(c2)) {
                         set.add(c2);
                         map.put(c1, set);
-                        degree.put(c2, degree.get(c2)+1);
+                        degree.put(c2, degree.get(c2) + 1);
                     }
                     break;
                 }
             }
         }
-        Queue<Character> q=new LinkedList<Character>();
-        for(char c: degree.keySet()){
-            if(degree.get(c)==0) q.add(c);
+        Queue<Character> q = new LinkedList();
+        for (char c: degree.keySet()) {
+            if (degree.get(c) == 0) q.add(c);
         }
-        while(!q.isEmpty()){
-            char c=q.remove();
-            result+=c;
-            if(map.containsKey(c)){
-                for(char c2: map.get(c)){
-                    degree.put(c2,degree.get(c2)-1);
-                    if(degree.get(c2)==0) q.add(c2);
+        
+        while (!q.isEmpty()) {
+            char c = q.poll();
+            result += c;
+            if (map.containsKey(c)) {
+                for (char c2: map.get(c)) {
+                    degree.put(c2, degree.get(c2) - 1);
+                    if (degree.get(c2) == 0) q.add(c2);
                 }
             }
         }
-        if(result.length()!=degree.size()) return "";
+        
+        if (result.length() != degree.size()) return "";
         return result;
     }
 }
 
-#81.02% 7ms
+# 4ms 90.94%
 class Solution {
     public String alienOrder(String[] words) {
         StringBuilder sb = new StringBuilder();
@@ -296,6 +287,7 @@ class Solution {
                 degrees[i]--;
             }
         }
+        
         while (!queue.isEmpty()) {
             int cur = queue.poll();
             sb.append((char) (cur + 'a'));
@@ -303,37 +295,34 @@ class Solution {
                 degrees[next]--;
                 if (degrees[next] == 0) {
                     queue.add(next);
-                    degrees[next]--;
+                    degrees[next]--; //without this, got duplicates chars
                 }
             }
         }
+        
         for (int i = 0; i < 26; i++) {
-            if (degrees[i] > 0) {
-                return "";
-            } else if (degrees[i] == 0) {
-                sb.append((char) (i + 'a'));
-            }
-        }
+            if (degrees[i] > 0) return "";
+            else if (degrees[i] == 0) sb.append((char) (i + 'a'));
+        } 
+        
         return sb.toString();
     }
-
+    
     private void buildGraph(String[] words, List<List<Integer>> graph, int[] degrees) {
-        for (int i = 0; i < 26; i++) {
-            graph.add(new ArrayList<>());
-        }
+        for (int i = 0; i< 26; i++) graph.add(new ArrayList());
         Arrays.fill(degrees, -1);
         for (String word : words) {
-            for (int i = 0; i < word.length(); i++) {
-                degrees[word.charAt(i) - 'a'] = 0;
+            for (char c : word.toCharArray()) {
+                degrees[c - 'a'] = 0;
             }
         }
         for (int i = 1; i < words.length; i++) {
             for (int j = 0; j < Math.min(words[i - 1].length(), words[i].length()); j++) {
-                int index1 = words[i - 1].charAt(j) - 'a';
-                int index2 = words[i].charAt(j) - 'a';
-                if (index1 != index2) {
-                    graph.get(index1).add(index2);
-                    degrees[index2]++;
+                int ch1 = words[i - 1].charAt(j) - 'a';
+                int ch2 = words[i].charAt(j) - 'a';
+                if (ch1 != ch2) {
+                    graph.get(ch1).add(ch2);
+                    degrees[ch2]++;
                     break;
                 }
             }
@@ -341,7 +330,7 @@ class Solution {
     }
 }
 
-#1ms 100%
+# 1ms 100%
 class Solution {
    private final int N = 26;
     public String alienOrder(String[] words) {
@@ -392,59 +381,4 @@ class Solution {
     }
 }
 
-#1ms 100%
-class Solution {
-    int N = 26;
-    public String alienOrder(String[] words) {
-
-        boolean[][] adj = new boolean[N][N];
-        int[] visited = new int[N];   //-1 nonexist, 0 exist, 1 visiting, 2 visited
-
-        for (int i=0; i<N; i++){
-            visited[i] = -1;
-        }
-        for (String w: words){
-            for (char c: w.toCharArray()){
-                visited[c-'a'] = 0;
-            }
-        }
-        for (int i=0; i<words.length-1; i++){
-            String first = words[i];
-            String second = words[i+1];
-            for (int j=0; j<Math.min(first.length(), second.length()); j++){
-                if (first.charAt(j) != second.charAt(j)){
-                    adj[first.charAt(j)-'a'][second.charAt(j)-'a'] = true;
-                    break;
-                }
-            }
-        }
-        StringBuilder sb = new StringBuilder();
-
-        for (int i=0; i<N; i++){
-            if (visited[i]==0){
-                if (!dfs(adj, visited, sb, i))
-                    return "";
-            }
-
-        }
-        return sb.reverse().toString();
-    }
-
-    public boolean dfs(boolean[][] adj, int[] visited, StringBuilder sb, int i){
-        visited[i] = 1;
-        for (int j=0; j<N; j++){
-            if (adj[i][j]){
-                if (visited[j]==0){
-                    if (!dfs(adj, visited, sb, j))
-                        return false;
-                } else if (visited[j]==1){
-                    return false;
-                }
-            }
-        }
-        visited[i] = 2;
-        sb.append((char)(i+'a'));
-        return true;
-    }
-}
 '''

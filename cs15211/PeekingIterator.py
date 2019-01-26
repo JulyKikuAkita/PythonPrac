@@ -106,77 +106,35 @@ Java = '''
 
 # Java Iterator interface reference:
 # https://docs.oracle.com/javase/8/docs/api/java/util/Iterator.html
-# 55ms 99.21%
-class PeekingIterator implements Iterator<Integer> {
-    private Integer head;
-    private Iterator<Integer> iter;
 
-	public PeekingIterator(Iterator<Integer> iterator) {
-	    // initialize any member here.
-	    iter = iterator;
-	    head = null;
-	}
-
-    // Returns the next element in the iteration without advancing the iterator.
-	public Integer peek() {
-	    if (head != null) {
-	        return head;
-	    } else {
-	        if (iter.hasNext()) {
-	            head = iter.next();
-	        }
-	        return head;
-	    }
-	}
-
-	// hasNext() and next() should behave the same as in the Iterator interface.
-	// Override them if needed.
-	@Override
-	public Integer next() {
-	    if (head != null) {
-	        Integer result = head;
-	        head = null;
-	        return result;
-	    } else if (iter.hasNext()) {
-	        return iter.next();
-	    } else {
-	        return null;
-	    }
-	}
-
-	@Override
-	public boolean hasNext() {
-	    return head != null || iter.hasNext();
-	}
-}
 # 58ms 92.86%
 class PeekingIterator implements Iterator<Integer> {
     Iterator<Integer> iter;
     Integer value = null;
-	public PeekingIterator(Iterator<Integer> iterator) {
-	    // initialize any member here.
-	    iter = iterator;
+    public PeekingIterator(Iterator<Integer> iterator) {
+        // initialize any member here.
+        iter = iterator;
         if (iter != null) value = iter.next();
-	}
+    }
 
     // Returns the next element in the iteration without advancing the iterator.
-	public Integer peek() {
+    public Integer peek() {
         return value;
-	}
+    }
 
-	// hasNext() and next() should behave the same as in the Iterator interface.
-	// Override them if needed.
-	@Override
-	public Integer next() {
-	    Integer result = value;
+    // hasNext() and next() should behave the same as in the Iterator interface.
+    // Override them if needed.
+    @Override
+    public Integer next() {
+        Integer result = value;
         if (iter.hasNext()) value = iter.next();
         else value = null;
         return result;
-	}
+    }
 
-	@Override
-	public boolean hasNext() {
-	    return (value != null);
-	}
+    @Override
+    public boolean hasNext() {
+        return (value != null);
+    }
 }
 '''

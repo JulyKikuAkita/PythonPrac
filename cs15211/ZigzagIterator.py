@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/zigzag-iterator/#/description'
+__source__ = 'https://leetcode.com/problems/zigzag-iterator/'
 # # https://github.com/kamyu104/LeetCode/blob/master/Python/zigzag-iterator.py
 # Time:  O(n)
 # Space: O(k)
