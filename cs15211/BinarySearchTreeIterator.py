@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/binary-search-tree-iterator/#/description'
+__source__ = 'https://leetcode.com/problems/binary-search-tree-iterator/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/binary-search-tree-iterator.py
 # Time:  O(1)
 # Space: O(h), h is height of binary tree

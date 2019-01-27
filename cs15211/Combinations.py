@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/combinations/description/'
+__source__ = 'https://leetcode.com/problems/combinations/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/combinations.py
 # Time:  O(n!)
 # Space: O(n)

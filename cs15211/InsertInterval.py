@@ -133,71 +133,49 @@ class Solution {
 }
 
 # Binary search
-# 6ms 99.89%
+# 10ms 98.79%
 class Solution {
     public List<Interval> insert(List<Interval> intervals, Interval newInterval) {
-        if(intervals == null || newInterval == null) {
-            return intervals;
-        }
-
-        List<Interval> rst= new ArrayList<Interval>();
+        if(intervals == null || newInterval == null) return intervals;
+        List<Interval> res = new ArrayList<Interval>();
         int startPos = getStartPos(intervals, newInterval.start);
         int endPos = getEndPos(intervals, newInterval.end);
-        if(startPos > 0 && intervals.get(startPos-1).end >= newInterval.start) {
-            --startPos;
-        }
-        if(endPos == intervals.size() || intervals.get(endPos).start > newInterval.end) {
-            --endPos;
-        }
-
+        if(startPos > 0 && intervals.get(startPos - 1).end >= newInterval.start) --startPos;
+        if(endPos == intervals.size() || intervals.get(endPos).start > newInterval.end) --endPos;
         if(startPos <= endPos) {
-            newInterval = new Interval(Math.min(intervals.get(startPos).start, newInterval.start)
-            , Math.max(intervals.get(endPos).end, newInterval.end));
+            newInterval = new Interval(Math.min(intervals.get(startPos).start, newInterval.start), 
+                                       Math.max(intervals.get(endPos).end, newInterval.end));
         }
-
         int cur = 0;
-        while(cur < startPos) {
-            rst.add(intervals.get(cur++));
-        }
-        rst.add(newInterval);
-        cur = endPos+1;
-        while(cur < intervals.size()) {
-            rst.add(intervals.get(cur++));
-        }
-
-        return rst;
+        while(cur < startPos) res.add(intervals.get(cur++));
+        res.add(newInterval);
+        cur = endPos + 1;
+        while(cur < intervals.size()) res.add(intervals.get(cur++));
+        return res;
     }
-
+    
     private int getStartPos(List<Interval> intervals, int start) {
         int l = 0;
         int r = intervals.size()-1;
         while(l <= r) {
-            int m = (l+r)/2;
-            int cur = intervals.get(m).start;
-            if(cur == start) {
-                return m;
-            } else if(cur < start) {
-                l = m+1;
-            } else {
-                r = m-1;
-            }
+            int mid = l + (r - l) / 2 ;
+            int cur = intervals.get(mid).start;
+            if (cur > start) r = mid - 1;
+            else if (cur < start) l = mid + 1;
+            else return mid;
         }
         return l;
     }
-
+    
     private int getEndPos(List<Interval> intervals, int end) {
         int l = 0;
         int r = intervals.size()-1;
         while(l <= r) {
-            int m = (l+r)/2;
-            int cur = intervals.get(m).end;
-            if(cur == end) {
-                return m;
-            } else if(cur < end) {
-                l = m+1;
-            } else {
-                r = m-1;
-            }
+            int mid = l + (r - l) / 2 ;
+            int cur = intervals.get(mid).start;
+            if (cur > end) r = mid - 1;
+            else if (cur < end) l = mid + 1;
+            else return mid;
         }
         return l;
     }
