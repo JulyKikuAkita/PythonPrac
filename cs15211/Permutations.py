@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/permutations/description/'
+__source__ = 'https://leetcode.com/problems/permutations/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/permutations.py
 # Time:  O(n!) //n factorial
 # Space: O(n)

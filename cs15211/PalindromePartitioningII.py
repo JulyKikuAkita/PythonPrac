@@ -146,7 +146,6 @@ class Solution {
 # 2ms 98.41%
 class Solution {
     public int minCut(String s) {
-        int cut = 0;
         int[] cuts = new int[s.length() + 1];
         for (int i = 0; i <= s.length(); i++) {
             cuts[i] = i - 1;
@@ -164,6 +163,43 @@ class Solution {
             i--;
             j++;
         }
+    }
+}
+
+# bruteForce with 131. Palindrome Partitioning
+# input = "ababababababababababababcbabababababababababababa"
+# TLE
+class Solution {
+    int min = Integer.MAX_VALUE;
+    public int minCut(String s) {
+        List<List<String>> res = new ArrayList();
+        List<String> tmp = new ArrayList();
+        helper(res, tmp, 0, s);
+        return min;
+    }
+    public void helper(List<List<String>> res, List<String> tmp, int idx, String s) {
+        if (idx == s.length()) {
+            res.add(new ArrayList(tmp));
+            min = Math.min(min, tmp.size() - 1);
+            return;
+        }
+        
+        for (int i = idx; i < s.length(); i++) {
+            if (isValid(s, idx, i)) {
+                tmp.add(s.substring(idx, i + 1));
+                helper(res, tmp, i + 1, s);
+                tmp.remove(tmp.size() - 1);
+            }
+        }
+    }
+    
+    public boolean isValid(String s, int i, int j) {
+        while (i < j) {
+            if (s.charAt(i) != s.charAt(j)) return false;
+            i++;
+            j--;
+        }
+        return true;
     }
 }
 '''

@@ -3,7 +3,7 @@ __source__ = 'https://leetcode.com/problems/combination-sum/description/'
 # Time:  O(n^m)
 # Space: O(m)
 #
-# Description: Leetcode # 217. Contains Duplicate
+# Description: Leetcode # 39. Combination Sum
 #
 # Given a set of candidate numbers (C) and a target number (T),
 # find all unique combinations in C where the candidate numbers sums to T.
@@ -151,7 +151,7 @@ class Solution {
             return;
         }
         int size = cur.size();
-        for (int i = index; i < candidates.length && candidates[i] <= target; i++) { //need to sort arr (i)
+        for (int i = index; i < candidates.length && candidates[i] <= target; i++) { //need to sort arr (i) due to candidates[i] <= target
             cur.add(candidates[i]);
             combinationSum(candidates, target - candidates[i], i, result, cur);
             cur.remove(size);
