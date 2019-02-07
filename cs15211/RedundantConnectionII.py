@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/redundant-connection-ii/description/'
+__source__ = 'https://leetcode.com/problems/redundant-connection-ii/'
 # Time:  O(V) numbert of vertices
 # Space: O(V)
 #
@@ -102,13 +102,62 @@ if __name__ == '__main__':
 
 Java = '''
 # Thought: https://leetcode.com/problems/redundant-connection-ii/solution/
+# https://leetcode.com/problems/redundant-connection-ii/discuss/108058/one-pass-disjoint-set-solution-with-explai
+# https://leetcode.com/problems/redundant-connection-ii/discuss/218692/Swift-union-find-solution
+# summary:
+# 1) Check whether there is a node having two parents. 
+#     If so, store them as candidates A and B, and set the second edge invalid. 
+# 2) Perform normal union find. 
+#     If the tree is now valid 
+#            simply return candidate B
+#     else if candidates not existing 
+#            we find a circle, return current edge; 
+#     else 
+#            remove candidate A instead of B.
 #
+# In the following code,
+# last == -1 means "no cycle found" which is scenario 1 or 2
+# second != -1 && last != -1 means "one edge removed and the result tree has cycle" which is scenario 3
+# second == -1 means "no edge skipped or removed" which is scenario 4
+#
+# Union Find
+# 3ms 99.49%
+class Solution {
+    public int[] findRedundantDirectedConnection(int[][] edges) {
+        int[] roots = new int[edges.length + 1], ds = new int[edges.length + 1];
+        Arrays.fill(roots, -1);
+        int first = -1, second = -1, last = -1;
+       
+        for (int i = 0; i < edges.length; i++) {
+            int parent = edges[i][0];
+            int child = edges[i][1];
+            if (roots[child] != -1) {
+                first = roots[child];
+                second = i;
+                continue;
+            }
+            roots[child] = i;
+            
+            int x = find(ds, parent);
+            if (x == child) last = i;
+            else ds[child] = x;
+        }
+        if (last == -1) return edges[second];
+        if (second == -1) return edges[last];
+        return edges[first];
+        
+    }
+    
+    private int find(int[] ds, int x){
+        return ds[x] == 0 ? x : (ds[x] = find(ds, ds[x]));
+    }
+}
 Approach #1: Depth-First Search [Accepted]
 Complexity Analysis
 Time Complexity: O(N) where N is the number of vertices (and also the number of edges) in the graph. 
 We perform a depth-first search.
 Space Complexity: O(N), the size of the graph.
-# 23ms 6.62%
+# 11ms 12.82%
 class Solution {
     public int[] findRedundantDirectedConnection(int[][] edges) {
         int N = edges.length;
@@ -200,7 +249,7 @@ the graph is still valid. Thus, return the one that occurs last, that is, return
 Also, [[2,1],[3,1],[4,2],[1,4]] is a good example
 
 # Union Find
-# 5ms 95.59%%
+# 3ms 99.49%
 class Solution {
     public int[] findRedundantDirectedConnection(int[][] edges) {
         int[] ancestor = new int[edges.length + 1];
@@ -232,7 +281,7 @@ class Solution {
     }
 }
 # Union Find
-# 5ms 95.59%%
+# 3ms 99.49%
 class Solution {
     public int[] findRedundantDirectedConnection(int[][] edges) {
         int[] parent = new int[edges.length+1];
@@ -255,7 +304,7 @@ class Solution {
                     parent[y] = x;
             }
         }
-        // means we only got the multiparent problem, and the edges we recorded using parent so far are good, so juse return this one.
+        // means we only got the multiparent problem, and the edges we recorded using parent so far are good, so just return this one.
         if (cycleEdge == null)
             return mParent;
 
@@ -266,7 +315,7 @@ class Solution {
         // now, it means we have both cycle and multi-parent problem.
         // In my code, i didn't record an edge into parent if we think it's involved into the multi-parent problem,
         // but we are still getting the cycle problem. Since in this problem we can only have edges point to the same
-        // node, so, current mParent edge is the wrong one, we need to remove the other one pointint to the same
+        // node, so, current mParent edge is the wrong one, we need to remove the other one pointing to the same
         // dest as mParent ex: [[2,1],[3,1],[4,2],[1,4]]
         for (int[] edge : edges) {
             if (edge[1] == mParent[1])

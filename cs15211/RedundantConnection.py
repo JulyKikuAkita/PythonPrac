@@ -80,31 +80,8 @@ if __name__ == '__main__':
 
 Java = '''
 # Thought: https://leetcode.com/problems/redundant-connection/solution/
-
 # union find
-# 3ms 80.49%
-class Solution {
-    public int[] findRedundantConnection(int[][] edges) {
-        int[] parent = new int[2001];
-        for (int i = 0; i < parent.length; i++) parent[i] = i;
-
-        for (int[] edge: edges){
-            int f = edge[0], t = edge[1];
-            if (find(parent, f) == find(parent, t)) return edge;
-            else parent[find(parent, f)] = find(parent, t);
-        }
-        return new int[2];
-    }
-
-    private int find(int[] parent, int f) {
-        if (f != parent[f]) {
-          parent[f] = find(parent, parent[f]);
-        }
-        return parent[f];
-    }
-}
-
-# 3ms 80.49%
+# 2ms 100%
 class Solution {
     public int[] findRedundantConnection(int[][] edges) {
         int[] root = new int[1001];
@@ -123,6 +100,30 @@ class Solution {
             id = root[id];
         }
         return id;
+    }
+}
+
+# union find
+# 2ms 100%
+class Solution {
+    public int[] findRedundantConnection(int[][] edges) {
+        int[] root = new int[1001];
+        for (int i = 0; i < edges.length; i++) {
+            root[i] = i;
+        }
+        
+        for (int[] edge : edges) {
+            int x = find(root, edge[0]);
+            int y = find(root, edge[1]);
+            if (x == y) return edge;
+            root[x] = y;
+        }
+        throw new AssertionError();
+    }
+    
+    private int find(int[] root, int x) {
+        if (root[x] != x) root[x] = find(root, root[x]);
+        return root[x];
     }
 }
 

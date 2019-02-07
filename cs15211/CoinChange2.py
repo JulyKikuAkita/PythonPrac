@@ -114,4 +114,51 @@ class Solution {
     }
 }
 
+# DP
+# 4ms 84.21%
+class Solution {
+    public int change(int amount, int[] coins) {
+        int[] dp = new int[amount + 1];
+        dp[0] = 1;
+        for (int i = 0; i < coins.length; i++) {
+            for (int j = 0; j < amount && j + coins[i] <= amount; j++) {
+                dp[j + coins[i]] += dp[j];
+            }
+        }
+        return dp[amount];
+    }
+}
+
+# Backtracking
+# Note: 
+# Beware of duplication count when
+# When amount is 2 and the coin value is 5, it would be counted as 1 way.
+# When amount is 5 and the coin value is 2, the number of ways become 2.
+# The set is either case remains 1 coin of 2 and 1 coin of 5. But the first method adds it twice.
+# So we create use an outer loop of coins so that a combination once used cannot be used again.
+# 102ms 18.42%
+class Solution {
+    public int change(int amount, int[] coins) {
+        if (amount == 0) return 1;
+        int[][] memo = new int[amount + 1][coins.length];
+        for (int[] m : memo) {
+            Arrays.fill(m, -1);
+        }
+        return helper(amount, coins, memo, 0);
+    }
+    
+    private int helper(int amount, int[] coins, int[][] memo, int idx) {
+        if (amount < 0 || idx == coins.length) return 0;
+        if (amount == 0 ) return 1;
+        if (memo[amount][idx] != -1) return memo[amount][idx];
+        int count = 0;
+        for (int i = idx; i < coins.length; i++) {
+         count += helper(amount - coins[i], coins, memo, i); 
+        }
+        // same without iteration
+        //count = helper(amount - coins[idx], coins, memo, idx) + helper(amount, coins, memo, idx + 1);        
+        memo[amount][idx] = count;
+        return memo[amount][idx];
+    }
+}
 '''

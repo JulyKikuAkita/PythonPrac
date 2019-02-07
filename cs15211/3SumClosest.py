@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/3sum-closest/description/'
+__source__ = 'https://leetcode.com/problems/3sum-closest/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/3sum-closest.py
 # Time:  O(n^2)
 # Space: O(1)
@@ -172,29 +172,24 @@ class Solution {
     }
 }
 
-#8ms 99.74%
+# 6ms 100%
 class Solution {
     public int threeSumClosest(int[] nums, int target) {
+        Arrays.sort(nums);
         for(int i = 0;;i++){
-            if(hasSumOfTarget(nums, target + i)) return target + i;
-            if(hasSumOfTarget(nums, target - i)) return target - i;
+            if (hasSum(nums, target + i)) return target + i;
+            if (hasSum(nums, target - i)) return target - i;
         }
     }
-
-    public boolean hasSumOfTarget(int[] nums, int target){
-        if(nums == null || nums.length < 3) return false;
-        Arrays.sort(nums);
-        for(int i = 0; i < nums.length - 2; i++){
-            int j = i + 1;
-            int k = nums.length - 1;
-            while(j < k){
-                if((nums[j] + nums[k]) == (target - nums[i])){
-                    return true;
-                }else if((nums[j] + nums[k]) < (target - nums[i])){
-                    j++;
-                }else{
-                    k--;
-                }
+    
+    private boolean hasSum(int[] nums, int target) {
+        for (int i = 0; i < nums.length - 2; i++) {
+            if (i > 0 && nums[i] == nums[i - 1]) continue;
+            int j = i + 1, k = nums.length - 1;
+            while (j < k) {
+                if (nums[i] + nums[j] + nums[k] == target) return true;
+                else if (nums[i] + nums[j] + nums[k] < target) j++;
+                else k--;
             }
         }
         return false;

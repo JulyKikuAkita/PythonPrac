@@ -172,4 +172,73 @@ class Solution {
     }
 }
 
+# https://leetcode.com/problems/find-eventual-safe-states/discuss/120633/Java-Solution-(DFS-andand-Topological-Sort)
+# topological sort
+# 62ms 36.36%
+class Solution {
+    public List<Integer> eventualSafeNodes(int[][] graph) {
+        int n = graph.length;
+        int[] degree = new int [n];
+        Set<Integer>[] map = new HashSet[n];
+        for (int i = 0; i < n; i++) map[i] = new HashSet();
+        for (int i = 0; i < n; i++) {
+            for (int node : graph[i]) {
+                map[node].add(i);
+                degree[i]++;
+            }
+        }
+        Queue<Integer> queue = new LinkedList();
+        Set<Integer> set = new HashSet();
+        for (int i = 0; i < n; i++) {
+            if (degree[i] == 0) {
+                set.add(i);
+                queue.add(i);
+            }
+        }
+
+        while (!queue.isEmpty()) {
+            int node = queue.poll();
+            set.add(node);
+            for (int nei : map[node]) {
+                degree[nei]--;
+                if (degree[nei] == 0) {
+                    queue.add(nei);
+                }
+            }
+        }
+        
+        List<Integer> ans = new ArrayList(set);
+        Collections.sort(ans);
+        return ans;
+    }
+}
+
+# https://leetcode.com/problems/find-eventual-safe-states/discuss/119871/Straightforward-Java-solution-easy-to-understand!
+# 14ms 60.33%
+class Solution {
+    // value of color represents three states:
+    static int NOT_V = 0; // 0:have not been visited
+    static int SAFE = 1; // 1:safe
+    static int LOOP = 2; // 2:unsafe
+    public List<Integer> eventualSafeNodes(int[][] graph) {
+        List<Integer> res = new ArrayList();
+        int[] color = new int[graph.length];
+        for (int i = 0; i < graph.length; i++) {
+            if (dfs(graph, color, i)) res.add(i);
+        }
+        return res;
+            
+    }
+    
+    private boolean dfs(int[][] graph, int[] color, int start) {
+        if (color[start] == LOOP) return false;
+        if (color[start] == SAFE) return true;
+        color[start] = LOOP;
+        for (int nei : graph[start]) {
+            if (!dfs(graph, color, nei)) return false;
+        }
+        color[start] = SAFE;
+        return true;
+    }
+}
 '''

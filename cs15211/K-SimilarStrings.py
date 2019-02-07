@@ -303,4 +303,80 @@ class Solution {
         T[j] = tmp;
     }
 }
+
+# https://leetcode.com/problems/k-similar-strings/discuss/139872/Java-Backtracking-with-Memorization
+# backtracking
+# 69ms 36.39%
+class Solution {
+    public int kSimilarity(String A, String B) {
+        Map<String, Integer> map = new HashMap();
+        return bs(A.toCharArray(), B, map, 0);
+    }
+    
+    private int bs(char[] charA, String B, Map<String, Integer> map, int i) {
+        String A = new String(charA);
+
+        if (A.equals(B)) return 0;
+        if (map.containsKey(A)) return map.get(A);
+        int min = Integer.MAX_VALUE;
+        while (i < charA.length && charA[i] == B.charAt(i)) {
+            i++;
+        }
+        for (int j = i + 1; j < B.length(); j++) {
+            if (charA[j] == B.charAt(i)) {
+                swap(charA, j, i);
+                int next = bs(charA, B, map, i + 1);
+                if (next != Integer.MAX_VALUE) {
+                    min = Math.min(min, next + 1);
+                }
+                swap(charA, j, i);
+            }
+        }
+        map.put(A, min);
+        return min;
+    }
+    
+    public void swap(char[] cs, int i, int j) {
+        char tmp = cs[i];
+        cs[i] = cs[j];
+        cs[j] = tmp;
+    }
+}
+
+# https://leetcode.com/problems/k-similar-strings/discuss/140099/JAVA-BFS-32-ms-cleanconciseexplanationwhatever
+# BFS
+# 24ms 83.71%
+class Solution {
+    public int kSimilarity(String A, String B) {
+        if (A.equals(B)) return 0;
+        Set<String> set = new HashSet();
+        Queue<String> q = new LinkedList();
+        q.add(A);
+        set.add(A);
+        int res = 0;
+        while (!q.isEmpty()) {
+            res++;
+            for (int sz = q.size() - 1; sz >= 0; sz--) {
+                String s = q.poll();
+                int p = 0;
+                while (p < s.length() && s.charAt(p) == B.charAt(p)) p++;
+                for (int j = p + 1; j < s.length(); j++) {
+                    if (s.charAt(j) == B.charAt(j) || s.charAt(p) != B.charAt(j)) continue;
+                    String tmp = swap(s, p, j);
+                    if (tmp.equals(B)) return res;
+                    if (set.add(tmp)) q.add(tmp);
+                }
+            }
+        }
+        return res;  
+    }
+    
+    private String swap(String s, int i, int j) {
+        char[] chs = s.toCharArray();
+        char tmp = chs[i];
+        chs[i] = chs[j];
+        chs[j] = tmp;
+        return new String(chs);
+    }
+}
 '''

@@ -58,56 +58,48 @@ Complexity Analysis
 Time Complexity: O(N^2), where N is the length of A.
 Space Complexity: O(1)
 
-#67ms 46.95%
+# 81ms 40%
 class Solution {
     public int threeSumMulti(int[] A, int target) {
-        int MOD = 1_000_000_007;
-        long ans = 0;
         Arrays.sort(A);
-
-        for (int i = 0; i < A.length; ++i) {
-            // We'll try to find the number of i < j < k
-            // with A[j] + A[k] == T, where T = target - A[i].
-
+        long res = 0;
+        int MOD = 1_000_000_007;
+        for (int i = 0; i < A.length - 2; i++) {
+            int j = i + 1, k = A.length - 1;
             // The below is a "two sum with multiplicity".
-            int T = target - A[i];
-            int j = i+1, k = A.length - 1;
-
             while (j < k) {
-                 if (A[j] + A[k] < T)
-                    j++;
-                else if (A[j] + A[k] > T)
-                    k--;
-                else if (A[j] != A[k]) {// We have A[j] + A[k] == T.
-                    // Let's count "left": the number of A[j] == A[j+1] == A[j+2] == ...
-                    // And similarly for "right".
-                    int left = 1, right = 1;
-                    while (j + 1 < k && A[j] == A[j + 1]) {
-                        left++;
+                if (A[i] + A[j] + A[k] < target) j++;
+                else if (A[i] + A[j] + A[k] > target) k--;
+                else { // A[i] + A[j] + A[k] == target
+                    if (A[j] == A[k]) {
+                        // M = k - j + 1
+                        // We contributed M * (M-1) / 2 pairs.
+                        res += (k - j) * (k - j + 1) / 2;
+                        res %= MOD;
+                        break;
+                    } else {
+                        // Let's count "left": the number of A[j] == A[j+1] == A[j+2] == ...
+                        // And similarly for "right".
+                        int left = 1, right = 1;
+                        while (j + 1 < k && A[j] == A[j + 1]) {
+                            j++;
+                            left++;
+                        }
+                        while (k - 1 > j && A[k] == A[k - 1]) {
+                            k--;
+                            right++;
+                        }
+                        res += (left * right);
+                        res %= MOD;
                         j++;
-                    }
-                    while (k - 1 > j && A[k] == A[k - 1]) {
-                        right++;
                         k--;
                     }
-
-                    ans += left * right;
-                    ans %= MOD;
-                    j++;
-                    k--;
-                } else {
-                    // M = k - j + 1
-                    // We contributed M * (M-1) / 2 pairs.
-                    ans += (k - j + 1) * (k - j) / 2;
-                    ans %= MOD;
-                    break;
                 }
             }
         }
-        return (int) ans;
+        return (int) res;
     }
 }
-
 Approach 2: Counting with Cases
 Complexity Analysis
 Time Complexity: O(N + W^2), where N is the length of A, and W is the maximum possible value of A[i].
@@ -172,52 +164,98 @@ Complexity Analysis
 Time Complexity: O(N^2), where N is the length of A.
 Space Complexity: O(N)
 
-#5ms 99.94%
+# 5ms 99.94%
 class Solution {
     public int threeSumMulti(int[] A, int target) {
-        int MOD = 1_000_000_007;
+        long res = 0;
+        int MOD = (int) (1e9 + 7);; 
+        
+        // Initializing as long saves us the trouble of
+        // managing count[x] * count[y] * count[z] overflowing later.
         long[] count = new long[101];
         int uniq = 0;
-        for (int x : A) {
-            count[x]++;
-            if (count[x] == 1) uniq++;
+        for (int a : A) {
+            count[a]++;
+            if (count[a] == 1) uniq++;
         }
-
+        
         int[] keys = new int[uniq];
         int t = 0;
         for (int i = 0; i <= 100; i++) {
             if (count[i] > 0) keys[t++] = i;
         }
-
-        long ans = 0;
-        for (int i = 0; i < keys.length; i++) {
-            int x = keys[i];
-            int T = target - x;
-            int j = i, k = keys.length - 1;
+        
+        // Now, let's do a 3sum on "keys", for i <= j <= k.
+        // We will use count to add the correct contribution to ans.
+        for (int i = 0; i < uniq; i++) {
+            int j = i, k = uniq - 1;    
             while (j <= k) {
-                int y = keys[j], z = keys[k];
-                if (y + z < T) {
-                    j++;
-                } else if (y + z > T) {
-                    k--;
-                } else { // # x+y+z == T, now calc the size of the contribution
+                if (keys[i] + keys[j] + keys[k] < target) j++;
+                else if (keys[i] + keys[j] + keys[k] > target) k--;
+                else {
                     if (i < j && j < k) {
-                        ans += count[x] * count[y] * count[z];
-                    } else if (i == j && j < k) {
-                        ans += count[x] * (count[x] - 1) / 2 * count[z];
-                    } else if (i < j && j == k) {
-                        ans += count[x] * count[y] * (count[y] - 1) / 2;
-                    } else { // i == j == k // C 3 over 2
-                        ans += count[x] * ( count[x] - 1) * (count[x] - 2) / (2 * 3);
+                        res += count[keys[i]] * count[keys[j]] * count[keys[k]];
+                    } else if (i == j && j < k){
+                        res += (count[keys[i]] - 1) * count[keys[i]] / 2 * count[keys[k]];
+                    } else if (i < j && j == k){
+                        res += (count[keys[j]] - 1) * count[keys[j]] / 2 * count[keys[i]];
+                    } else { //i ==j == k
+                        res += (count[keys[i]] - 1) * (count[keys[i]] - 2) * count[keys[i]] / 6;
                     }
-                    ans %= MOD;
+                    res %= MOD;
                     j++;
                     k--;
                 }
             }
         }
-        return (int)ans;
+        return (int) res;
     }
 }
+
+# Simplified version
+# 5ms 98.67%
+class Solution {
+    public int threeSumMulti(int[] A, int target) {
+        long res = 0;
+        long[] count = new long[101];
+        for (int a : A) count[a]++;
+        
+        for (int i = 0; i <= 100; i++) {
+            for (int j = i; j <= 100; j++) {
+                int k = target - i - j;
+                if (k < 0 || k > 100) continue;
+                if ( i == j && j != k) {
+                    res += count[i] * (count[i] - 1) / 2 * count[k];
+                } else if (i == j && j == k) {
+                    res += count[i] * (count[i] - 1) * (count[i] - 2) / 6;
+                } else if (j < k) {
+                    res += count[i] * count[j] * count[k];
+                }
+            }
+        }
+        return (int) (res % (1e9 + 7));
+    }
+}
+
+# Map + 2 sum
+# 1003ms 7.33%
+class Solution {
+    public int threeSumMulti(int[] A, int target) {
+        int mod = (int) (1e9 + 7);
+        int res = 0;
+        
+        for (int i = 0; i < A.length - 2; i++) {
+            Map<Integer, Integer> map = new HashMap();
+            for (int j = i + 1; j < A.length; j++) {
+                if (map.containsKey(target - A[j])) res = (res + map.get(target - A[j])) % mod;
+                int val = A[i] + A[j];
+                map.put(val, map.getOrDefault(val, 0) + 1);
+            }
+        }
+        return (int) res;
+    }
+}
+
+# https://leetcode.com/problems/3sum-with-multiplicity/discuss/181131/C%2B%2BJavaPython-O(1012)
 
 '''

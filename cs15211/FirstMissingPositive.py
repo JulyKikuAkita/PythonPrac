@@ -73,16 +73,60 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-# Thought:
-match nums[i] with i //nums[index] = index + 1
+# Thought: https://leetcode.com/problems/first-missing-positive/solution/
+# https://leetcode.windliang.cc/leetCode-41-First-Missing-Positive.html
+# 5ms 100%
+class Solution {
+    public int firstMissingPositive(int[] nums) {
+        int n = nums.length;
+    
+        // 1. mark numbers (num < 0) and (num > n) with a special marker number (n+1) 
+        // (we can ignore those because if all number are > n then we'll simply return 1)
+        for (int i = 0; i < n; i++) {
+            if (nums[i] <= 0 || nums[i] > n) {
+                nums[i] = n + 1;
+            }
+        }
+        // note: all number in the array are now positive, and on the range 1..n+1
 
-# 7ms 61.24%
+        // 2. mark each cell appearing in the array, by converting the index for that number to negative
+        for (int i = 0; i < n; i++) {
+            int num = Math.abs(nums[i]);
+            if (num > n) {
+                continue;
+            }
+            num--; // -1 for zero index based array (so the number 1 will be at pos 0)
+            if (nums[num] > 0) { // prevents double negative operations
+                nums[num] = -1 * nums[num];
+            }
+        }
+
+        // 3. find the first cell which isn't negative (doesn't appear in the array)
+        for (int i = 0; i < n; i++) {
+            if (nums[i] >= 0) {
+                return i + 1;
+            }
+        }
+
+        // 4. no positive numbers were found, which means the array contains all numbers 1..n
+        return n + 1;
+    }
+}
+# https://leetcode.com/problems/first-missing-positive/discuss/17214/Java-simple-solution-with-documentation
+# Numbers greater then n can be ignored because the missing integer must be in the range 1..n+1
+# If each cell in the array were to contain positive integers only, 
+# we can use the negative of the stored number as a flag to mark something 
+# (in this case the flag indicates this index was found in some cell of the array)
+
+# match nums[i] with i //nums[index] = index + 1
+# index based swap
+# 5ms 100%
 class Solution {
     public int firstMissingPositive(int[] nums) {
         int index = 0;
         while (index < nums.length) {
-            if (nums[index] != index + 1 && nums[index] > 0 && nums[index] <= nums.length
-            && nums[index] != nums[nums[index] - 1]) {
+            if (nums[index] > 0 && nums[index] <= nums.length
+            && nums[index] != index + 1 && nums[index] != nums[nums[index] - 1]) {
                 swap(nums, index, nums[index] - 1);
             } else {
                 index++;
@@ -102,90 +146,62 @@ class Solution {
         nums[j] = tmp;
     }
 }
-
-
-# 5ms 99.22%
+# https://leetcode.com/problems/first-missing-positive/discuss/17126/Beat-100-Fast-Elegant-Java-Index-Based-Solution-with-Explanation
+# index based swap
+# 5ms 100%
 class Solution {
     public int firstMissingPositive(int[] nums) {
-        int i = 0;
-        while (i < nums.length) {
-            if (nums[i] == i + 1 || nums[i] <= 0 || nums[i] > nums.length) i++;
-            else if (nums[nums[i] - 1] != nums[i]) swap(nums, i, nums[i] - 1); //nums[index] = index + 1
-            else i++;
+        int i = 0, n = nums.length;
+        while (i < n) {
+            // If the current value is in the range of (0,length) and it's not at its correct position, 
+            // swap it to its correct position.
+            // Else just continue;
+            if (nums[i] >= 0 && nums[i] < n && nums[nums[i]] != nums[i])
+                swap(nums, i, nums[i]);
+            else
+                i++;
         }
-        i = 0;
-        while (i < nums.length && nums[i] == i + 1) i++;
-        return i+1;
+        int k = 1;
+
+        // Check from k=1 to see whether each index and value can be corresponding.
+        while (k < n && nums[k] == k) k++;
+
+        // If it breaks because of empty array or reaching the end. K must be the first missing number.
+        if (n == 0 || k < n)
+            return k;
+        else   // If k is hiding at position 0, K+1 is the number. 
+            return nums[0] == k ? k + 1 : k;
+
     }
 
     private void swap(int[] nums, int i, int j) {
-        int tmp = nums[i];
+        int temp = nums[i];
         nums[i] = nums[j];
-        nums[j] = tmp;
+        nums[j] = temp;
     }
 }
-
-
-The basic idea is for any k positive numbers (duplicates allowed),
-the first missing positive number must be within [1,k+1].
-The reason is like you put k balls into k+1 bins, there must be a bin empty,
-the empty bin can be viewed as the missing number.
-
-Unfortunately, there are 0 and negative numbers in the array,
-so firstly I think of using partition technique (used in quick sort) to put all positive numbers together in one side.
-This can be finished in O(n) time, O(1) space.
-
-After partition step, you get all the positive numbers lying within A[0,k-1].
-Now, According to the basic idea, I infer the first missing number must be within [1,k+1].
-I decide to use A[i] (0<=i<=k-1) to indicate whether the number (i+1) exists.
-But here I still have to main the original information A[i] holds.
-Fortunately, A[i] are all positive numbers, so I can set them to negative to indicate the existence of (i+1)
-and I can still use abs(A[i]) to get the original information A[i] holds.
-
-After step 2, I can again scan all elements between A[0,k-1] to find the first positive element A[i],
-that means (i+1) doesn't exist, which is what I want.
-
-# 7ms 61.24%
+# https://leetcode.com/problems/first-missing-positive/discuss/17135/Java-solution-with-integers-encode-trick-explained
+# encoding based swap
+# 8ms 21.53%
 class Solution {
-    public int firstMissingPositive(int[] A) {
-        int n=A.length;
-        if(n==0)
-            return 1;
-        int k=partition(A)+1;
-        int temp=0;
-        int first_missing_Index=k;
-        for(int i=0;i<k;i++){
-            temp=Math.abs(A[i]);
-            if(temp<=k)
-                A[temp-1]=(A[temp-1]<0)?A[temp-1]:-A[temp-1];
+    public int firstMissingPositive(int[] nums) {
+        int n = nums.length;
+        int m = n + 1;
+        
+        for (int i = 0; i < n; i++) {
+            if (nums[i] <= 0 || nums[i] > n) nums[i] = 0;
         }
-        for(int i=0;i<k;i++){
-            if(A[i]>0){
-                first_missing_Index=i;
-                break;
-            }
+        
+        for (int i = 0; i < n ; i++) {
+            int prev = nums[i] % m;
+            if (prev > 0) nums[prev - 1] = (prev * m) + nums[prev - 1] % m;
         }
-        return first_missing_Index+1;
-    }
-
-    public int partition(int[] A){
-        int n=A.length;
-        int q=-1;
-        for(int i=0;i<n;i++){
-            if(A[i]>0){
-                q++;
-                swap(A,q,i);
-            }
+        
+        for (int i = 0; i < n ; i++) {
+            if (nums[i] / m != i + 1) return i + 1;
         }
-        return q;
-    }
-
-    public void swap(int[] A, int i, int j){
-        if(i!=j){
-            A[i]^=A[j];
-            A[j]^=A[i];
-            A[i]^=A[j];
-        }
+        return m;
     }
 }
+
 '''

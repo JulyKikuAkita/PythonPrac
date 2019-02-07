@@ -66,6 +66,87 @@ if __name__ == '__main__':
 Java = '''
 # Thought: https://leetcode.com/problems/permutation-in-string/solution/
 #
+# Approach #1 Brute Force [Time Limit Exceeded]
+# Complexity Analysis
+# Time complexity : O(n!). We match all the permutations of the short string s1, of length s1, with s2. 
+# Here, n refers to the length of s1s1.
+# Space complexity : O(n^2). The depth of the recursion tree is n (n refers to the length of the short string s1). 
+# Every node of the recursion tree contains a string of max. length n.
+# 
+# Approach #2 Using sorting [Time Limit Exceeded]:
+# Complexity Analysis
+# Time complexity : O(l1 Log(l1) + (l2 - l1) l1 Log(l1)) 
+# where l1 is the length of string l1 and l2 is the length of string l2
+# Space complexity : O(l1). t array is used .
+# 
+# Approach #3 Using Hashmap [Time Limit Exceeded]
+# Complexity Analysis
+# Time complexity : O(l1 + 26*l1*(l2 - l1)). hashmap contains at most 26 keys. 
+# where l1 is the length of string l1 and l2 is the length of string l2
+# Space complexity : O(1). hashmap contains at most 26 key-value pairs.
+# 
+# Approach #4 Using Array [Accepted]
+# Complexity Analysis
+# Time complexity : O(l1 + 26*l1*(l2 - l1)), where l1 is the length of string l1 and l2 is the length of string l2
+# Space complexity : O(1). s1map and s2map of size 26 is used.
+# 80ms 14.93%
+class Solution {
+    public boolean checkInclusion(String s1, String s2) {
+        if (s1.length() > s2.length())
+            return false;
+        int[] s1map = new int[26];
+        for (int i = 0; i < s1.length(); i++)
+            s1map[s1.charAt(i) - 'a']++;
+        for (int i = 0; i <= s2.length() - s1.length(); i++) {
+            int[] s2map = new int[26];
+            for (int j = 0; j < s1.length(); j++) {
+                s2map[s2.charAt(i + j) - 'a']++;
+            }
+            if (matches(s1map, s2map))
+                return true;
+        }
+        return false;
+    }
+    public boolean matches(int[] s1map, int[] s2map) {
+        for (int i = 0; i < 26; i++) {
+            if (s1map[i] != s2map[i])
+                return false;
+        }
+        return true;
+    }
+}
+# Approach #5 Sliding Window [Accepted]:
+# Complexity Analysis
+# Time complexity : O(l1 + 26 * (l2 - l1)) where l1 is the length of string l1 and l2 is the length of string l2
+# Space complexity : O(1) Constant space is used.
+# 9ms 88.06%
+class Solution {
+    public boolean checkInclusion(String s1, String s2) {
+        if (s1.length() > s2.length())
+            return false;
+        int[] s1map = new int[26];
+        int[] s2map = new int[26];
+        for (int i = 0; i < s1.length(); i++) {
+            s1map[s1.charAt(i) - 'a']++;
+            s2map[s2.charAt(i) - 'a']++;
+        }
+        for (int i = 0; i < s2.length() - s1.length(); i++) {
+            if (matches(s1map, s2map))
+                return true;
+            s2map[s2.charAt(i + s1.length()) - 'a']++;
+            s2map[s2.charAt(i) - 'a']--;
+        }
+        return matches(s1map, s2map);
+    }
+    public boolean matches(int[] s1map, int[] s2map) {
+        for (int i = 0; i < 26; i++) {
+            if (s1map[i] != s2map[i])
+                return false;
+        }
+        return true;
+    }
+}
+
 https://leetcode.com/articles/short-permutation-in-a-long-string/
 Java Solution, Sliding Window
 How do we know string p is a permutation of string s? Easy,
@@ -79,6 +160,11 @@ we add 1 to that character count. So once we see all zeros in the map,
 meaning equal numbers of every characters between s1 and the substring in the sliding window,
 we know the answer is true.
 
+
+# Approach #6 Optimized Sliding Window [Accepted]:
+# Complexity Analysis
+# Time complexity : O(l1 + (l2 - l1)) where l1 is the length of string l1 and l2 is the length of string l2
+# Space complexity : O(1) Constant space is used.
 # 8ms 98.88%
 class Solution {
     public boolean checkInclusion(String s1, String s2) {
@@ -97,7 +183,6 @@ class Solution {
             count[s2.charAt(i - len1) - 'a']++;
             if (allZero(count)) return true;
         }
-
         return false;
     }
 

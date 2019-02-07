@@ -117,7 +117,8 @@ if __name__ == '__main__':
 
 Java = '''
 # Thought: https://leetcode.com/problems/regions-cut-by-slashes/solution/
-#
+# Visual: https://leetcode.com/problems/regions-cut-by-slashes/discuss/205674/C%2B%2B-with-picture-DFS-on-upscaled-grid
+
 Approach 1: Union-Find
 Complexity Analysis
 Time Complexity: O(N * N * α(N)), where N is the length of the grid, and α is the Inverse-Ackermann function 
@@ -178,8 +179,58 @@ class Solution {
     }
 }
 
+# https://leetcode.com/problems/regions-cut-by-slashes/discuss/205680/JavaC%2B%2BPython-Split-4-parts-and-Union-Find
 # Union Find
-# 16ms 57.68%
+# 11ms 86.96%
+class Solution {
+    int count, n;
+    int[] parent;
+    public int regionsBySlashes(String[] grid) {
+        n = grid.length;
+        parent = new int[n * n * 4];
+        count = n * n * 4;
+        for (int i = 0; i < n * n * 4; i++) {
+            parent[i] = i;
+        }
+        // let top is 0, right is 1, bottom is 2 left is 3.
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                if (i > 0) union(hash(i - 1, j, 2), hash(i, j, 0));
+                if (j > 0) union(hash(i, j - 1, 1), hash(i, j , 3));
+                if (grid[i].charAt(j) != '/') {
+                    union(hash(i, j, 0), hash(i, j, 1));
+                    union(hash(i, j, 2), hash(i, j, 3));
+                }
+                if (grid[i].charAt(j) != '\\') {
+                    union(hash(i, j, 0), hash(i, j, 3));
+                    union(hash(i, j, 1), hash(i, j, 2));
+                }
+            }
+        }
+        return count;
+    }
+    
+    private int find(int x) {
+        if (parent[x] != x) parent[x] = find(parent[x]);
+        return parent[x];
+    }
+    
+    private void union(int x, int y) {
+        int rootX = find(x);
+        int rootY = find(y);
+        if (rootX != rootY) {
+            parent[rootX] = rootY;
+            count--;
+        }
+    }
+    
+    private int hash(int i, int j, int k) {
+        return (i * n + j) * 4 + k;
+    }
+}
+
+# Union find
+# 9ms 100%
 class Solution {
     class DSU {
         int[] parent;
@@ -231,8 +282,81 @@ class Solution {
             }
         }
         return num_csg;
+    } 
+}
+
+# https://leetcode.com/problems/regions-cut-by-slashes/discuss/205719/Mark-the-boundary-and-then-the-problem-become-Number-of-Islands-(dfs-or-bfs)
+# First mark the boundary by painting [n * 3][m * 3] grid, 
+# then use the algorithm count number of island (leetcode200) using either bfs or dfs
+# Using a 3X3 array to represent '/' or '\'
+# 0 0 1
+# 0 1 0
+# 1 0 0
+# 
+# 1 0 0
+# 0 1 0
+# 0 0 1
+#
+# Why need to use 3x3 array to represent '/' or '\'? For example ["//","/ "]
+# use 1d: can't not distinct individual component
+# 1 1
+# 1 0
+#
+# use 2d: some connected area was isolated
+# 0 1 0 1
+# 1 0 1 0
+# 0 1 0 0
+# 1 0 0 0
+# 
+# use 3d:
+# 0 0 1 0 0 1
+# 0 1 0 0 1 0
+# 1 0 0 1 0 0
+# 0 0 1 0 0 0
+# 0 1 0 0 0 0
+# 1 0 0 0 0 0
+#
+# use 4d or more: it works, but not necessary
+# Backtracking
+# 13ms 67.39%
+lass Solution {
+    public int regionsBySlashes(String[] grid) {
+        int n = grid.length, m = grid[0].length();
+        int cnt = 0;
+        int[][] g = new int[n * 3][m * 3];
+        for (int i = 0; i < n; i++) { //paint boundry
+            for (int j = 0; j < m; j++) {
+                if (grid[i].charAt(j) == '/') {
+                    g[3 * i][3 * j + 2] = 1;
+                    g[3 * i + 1][3 * j + 1] = 1;
+                    g[3 * i + 2][3 * j] = 1;
+                } else if (grid[i].charAt(j) == '\\') {
+                    g[i * 3][j * 3] = 1;
+                    g[i * 3 + 1][j * 3 + 1] = 1;
+                    g[i * 3 + 2][j * 3 + 2] = 1;
+                }
+            }
+        }
+        
+        for (int i = 0; i < g.length; i++) {
+            for (int j = 0; j < g[0].length; j++) {
+                if (g[i][j] == 0) {
+                    backtrack(g, i, j);
+                    cnt++;
+                }
+            }
+        }
+        return cnt;
     }
     
+    private void backtrack(int[][] grid, int i, int j) {
+        if (i < 0 || i >= grid.length || j < 0 || j >= grid[0].length || grid[i][j] == 1) return;
+        grid[i][j] = 1;
+        for (int k = -1; k < 2; k += 2) {
+            backtrack(grid, i + k, j);
+            backtrack(grid, i, j + k);
+        }
+    }
 }
 
 # DFS

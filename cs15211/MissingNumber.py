@@ -91,19 +91,24 @@ class Solution {
 }
 
 # 1.XOR
+Complexity Analysis
+Time complexity : O(n)
+Space complexity : O(1)
 # 1ms 66.24%
 class Solution {
     public int missingNumber(int[] nums) {
-        int xor = 0, i = 0;
-        for (i = 0; i < nums.length; i++) {
-            xor = xor ^ i ^ nums[i];
+        int res = nums.length;
+        for (int i = 0; i < nums.length; i++) {
+            res ^= i ^ nums[i];
         }
-
-        return xor ^ i;
+        return res;
     }
 }
 
-2.SUM
+2.Approach #4 Gauss' Formula [Accepted]
+Complexity Analysis
+Time complexity : O(n)
+Space complexity : O(1)
 # 1ms 66.24%
 class Solution {
     public int missingNumber(int[] nums) { //sum
@@ -115,7 +120,10 @@ class Solution {
     }
 }
 
-3.Binary Search
+3.Binary Search/Sorting
+Complexity Analysis
+Time complexity : O(nlgn)
+Space complexity : O(1)(or O(n))
 # 7ms 21.05%
 class Solution {
     public int missingNumber(int[] nums) { //binary search
@@ -127,6 +135,34 @@ class Solution {
             else left = mid+1;
         }
         return left;
+    }
+}
+
+Approach #2 HashSet [Accepted]
+Complexity Analysis
+Time complexity : O(n)
+Space complexity : O(n)
+
+# Cycling swap
+# O(n) time and O(1) space
+# 1ms 46.12%
+class Solution {
+    public int missingNumber(int[] nums) {
+        int res = 0;
+        for (int i = 0; i < nums.length; i++) {
+            while (nums[i] < nums.length && nums[i] != i) {
+                int tmp = nums[i];
+                int idx = i;
+                int toSwap = nums[tmp];
+                nums[tmp] = nums[idx];
+                nums[idx] = toSwap;
+            }
+        }
+        for (int i = 0; i < nums.length; i++) {
+            if (nums[i] != res) break;
+            res++;
+        }
+        return res;
     }
 }
 '''

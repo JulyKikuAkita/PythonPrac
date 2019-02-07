@@ -75,9 +75,9 @@ if __name__ == '__main__':
     unittest.main()
 
 Java = '''
-#Thought:
-
-# 3ms 78.85%
+# Thought:
+# Sliding window with arr template
+# 2ms 93.49%%
 class Solution {
     public int lengthOfLongestSubstringTwoDistinct(String s) {
         if (s == null || s.length() == 0) return 0;
@@ -98,6 +98,74 @@ class Solution {
     }
 }
 
+# Sliding window with arr template [bad coding style]
+# 1ms 100%
+class Solution {
+    public int lengthOfLongestSubstringTwoDistinct(String s) {
+        int[] map =  new int[256];
+        int max = 0, cnt = 0;
+        for (int l = 0, r = 0; r < s.length(); r++) {
+            if (map[s.charAt(r)]++ == 0) cnt++;
+            while (cnt > 2) {
+                if (--map[s.charAt(l)] == 0) cnt--;
+                l++;
+            }
+            max = Math.max(max, r - l + 1);
+        }
+        return max;
+    }
+}
+
+# https://discuss.leetcode.com/topic/71662/sliding-window-algorithm-template-to-solve-all-the-leetcode-substring-search-problem
+# Sliding window with map template
+# 14ms 28.72%
+class Solution {
+    public int lengthOfLongestSubstringTwoDistinct(String s) {
+        if (s.length() < 1) return 0;
+        HashMap<Character,Integer> map = new HashMap();
+        int start = 0, end = 0;
+        int ans = 0;
+        while (end < s.length()) {
+            map.put(s.charAt(end), map.getOrDefault(s.charAt(end), 0) + 1);
+            end++;
+            while (map.size() > 2) {
+                map.put(s.charAt(start), map.get(s.charAt(start)) - 1);
+                if (map.get(s.charAt(start)) == 0) map.remove(s.charAt(start));
+                start++;
+            }
+            ans = Math.max(ans, end - start);
+        }
+        return ans;
+    }
+}
+
+# 4ms improvement
+# 10ms 63.04%
+class Solution {
+    public int lengthOfLongestSubstringTwoDistinct(String s) {
+        if (s.length() < 1) return 0;
+        HashMap<Character,Integer> map = new HashMap();
+        int lo = 0, hi = 0;
+        int maxLength = 0;
+        while (hi < s.length()) {
+            if (map.size() <= 2) {
+                map.put(s.charAt(hi), hi);
+                hi++;
+            }
+            if (map.size() > 2) {
+                int leftMost = s.length();
+                for (int i : map.values()) {
+                    leftMost = Math.min(leftMost, i);
+                }
+                char c = s.charAt(leftMost);
+                map.remove(c);
+                lo = leftMost + 1;
+            }
+            maxLength = Math.max(maxLength, hi - lo);
+        }
+        return maxLength;
+    }
+}
 # 4ms 74.10%
 class Solution {
     public int lengthOfLongestSubstringTwoDistinct(String s) {
@@ -112,81 +180,6 @@ class Solution {
             j = k - 1;
         }
         return maxLen > (s.length() - i) ? maxLen : s.length() - i;
-    }
-}
-
-# https://discuss.leetcode.com/topic/71662/sliding-window-algorithm-template-to-solve-all-the-leetcode-substring-search-problem
-# 10ms 63.04%
-class Solution {
-    public int lengthOfLongestSubstringTwoDistinct(String s) {
-        if(s.length() < 1) return 0;
-        HashMap<Character,Integer> index = new HashMap<Character,Integer>();
-        int lo = 0;
-        int hi = 0;
-        int maxLength = 0;
-        while(hi < s.length()) {
-            if(index.size() <= 2) {
-                char c = s.charAt(hi);
-                index.put(c, hi);
-                hi++;
-            }
-            if(index.size() > 2) {
-                int leftMost = s.length();
-                for(int i : index.values()) {
-                    leftMost = Math.min(leftMost,i);
-                }
-                char c = s.charAt(leftMost);
-                index.remove(c);
-                lo = leftMost+1;
-            }
-            maxLength = Math.max(maxLength, hi-lo);
-        }
-        return maxLength;
-    }
-}
-
-# 2ms 91.03%
-class Solution {
-    public int lengthOfLongestSubstringTwoDistinct(String s) {
-        int len = s.length();
-        if (len == 0) {
-            return 0;
-        }
-        char[] arr = s.toCharArray();
-        int start = 0;
-        int end = 1;
-        int result = 0;
-        char[] chars = new char[2];
-        int[] lastIndex = new int[2];
-        chars[0] = arr[0];
-        while (end < len && arr[end] == chars[0]) {
-            end++;
-        }
-        if (end == len) {
-            return len;
-        }
-        chars[1] = arr[end];
-        lastIndex[0] = end - 1;
-        lastIndex[1] = end;
-        while (++end < len) {
-            if (arr[end] == chars[0]) {
-                lastIndex[0] = end;
-            } else if (arr[end] == chars[1]) {
-                lastIndex[1] = end;
-            } else {
-                result = Math.max(result, end - start);
-                if (lastIndex[0] < lastIndex[1]) {
-                    start = lastIndex[0] + 1;
-                    chars[0] = arr[end];
-                    lastIndex[0] = end;
-                } else {
-                    start = lastIndex[1] + 1;
-                    chars[1] = arr[end];
-                    lastIndex[1] = end;
-                }
-            }
-        }
-        return Math.max(result, len - start);
     }
 }
 '''

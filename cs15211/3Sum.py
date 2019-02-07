@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/3sum/description/'
+__source__ = 'https://leetcode.com/problems/3sum/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/3sum.py
 # Time:  O(n^2)
 # Space: O(1)
