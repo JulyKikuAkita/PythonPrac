@@ -292,74 +292,72 @@ class Solution {
     }
 }
 
-#99.93%  11ms
-public class Solution {
+# 99.93%  11ms
+class Solution {
     class Node{
         Node[] child;
         Node parent;
         String s;
         int count;
-        public Node(){
-            this.child=new Node[26];
-            this.count=0;
+        public Node() {
+            child = new Node[26];
+            count = 0;
         }
     }
-    public void buildTrie(String s,Node root){
-        Node curr=root;
-        for(int i=0;i<s.length();i++){
-            curr.count++;
-            char ch=s.charAt(i);
-            if(curr.child[ch-'a']==null){
-                curr.child[ch-'a']=new Node();
-                curr.child[ch-'a'].parent=curr;
+    
+    public void buildTree(String s, Node root) {
+        Node cur = root;
+        for (int i = 0; i < s.length(); i++) {
+            cur.count++;
+            if (cur.child[s.charAt(i) - 'a'] == null) {
+                cur.child[s.charAt(i) - 'a'] = new Node();
+                cur.child[s.charAt(i) - 'a'].parent = cur;
             }
-            curr=curr.child[ch-'a'];
+            cur = cur.child[s.charAt(i) - 'a'];
         }
-        curr.s=s;
+        cur.s = s;
     }
-
+    
     public List<String> findWords(char[][] board, String[] words) {
-        Node root=new Node();
-        for(int i=0;i<words.length;i++){
-            buildTrie(words[i],root);
-        }
-        boolean[][] visited=new boolean[board.length][board[0].length];
-        List<String> res=new ArrayList<String>();
-        for(int i=0;i<board.length;i++){
-            for(int j=0;j<board[0].length;j++){
-                search(board,i,j,root,visited,res);
-            }
+        Node root = new Node();
+        for (int i = 0; i < words.length; i++) buildTree(words[i], root);
+        boolean[][] used = new boolean[board.length][board[0].length];
+        List<String> res = new ArrayList();
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board[0].length; j++) {
+                search(board, i, j, root, used, res);
+            } 
         }
         return res;
     }
-    public void search(char[][] board,int r,int c,Node curr,boolean[][] visited,List<String> res){
-        if(curr==null||curr.child[board[r][c]-'a']==null||curr.count==0){
-            return ;
-        }
-        if(curr.child[board[r][c]-'a'].s!=null){
-            res.add(curr.child[board[r][c]-'a'].s);
-            curr.child[board[r][c]-'a'].s=null;
-            Node temp=curr;
-            while(temp!=null){
-                temp.count--;
-                temp=temp.parent;
+    
+    public void search(char[][] board, int r, int c, Node cur, boolean[][] used, List<String> res){
+        if (cur == null || cur.child[board[r][c]- 'a'] == null || cur.count == 0) return;
+        if (cur.child[board[r][c]- 'a'].s != null) {
+            res.add(cur.child[board[r][c]- 'a'].s);
+            cur.child[board[r][c]- 'a'].s = null;
+            Node tmp = cur;
+            while (tmp != null) {
+                tmp.count--;
+                tmp = tmp.parent;
             }
         }
-        visited[r][c]=true;
-        curr=curr.child[board[r][c]-'a'];
-        if(r-1>=0&&!visited[r-1][c]){
-            search(board,r-1,c,curr,visited,res);
+        used[r][c] = true;
+        cur = cur.child[board[r][c]- 'a'];
+        if (r - 1 >= 0 && !used[r - 1][c]) {
+            search(board, r - 1, c, cur, used, res);
         }
-        if(r+1<board.length&&!visited[r+1][c]){
-            search(board,r+1,c,curr,visited,res);
+        if (r + 1 < board.length && !used[r + 1][c]) {
+            search(board, r + 1, c, cur, used, res);
         }
-        if(c-1>=0&&!visited[r][c-1]){
-            search(board,r,c-1,curr,visited,res);
+        if (c - 1 >= 0 && !used[r][c - 1]) {
+            search(board, r, c - 1 , cur, used, res);
         }
-        if(c+1<board[0].length&&!visited[r][c+1]){
-            search(board,r,c+1,curr,visited,res);
+        if (c + 1 < board[0].length && !used[r][c + 1]) {
+            search(board, r, c + 1, cur, used, res);
         }
-        visited[r][c]=false;
+
+        used[r][c] = false;
     }
 }
 '''

@@ -79,6 +79,12 @@ ACCCEEE 2
 3 identical chunks "CE", "CE CE CE" <-- this is a frame
 Begin to insert 'A' --> "CEACE CE" <-- result is (c[25] - 1) * (n + 1) + 25 -i = 2 * 3 + 2 = 8
 
+3 The final function is not easy to understand if written in the author's way. 
+I suggest chaing it to "(c[25] - 1) * n + c[25] + (25 - i - 1)".
+In this formula, "(c[25] - 1) * n" is the number of X in the Frame: "AXXXAXXXAXXXA"
+c[25] is the number of A in the Frame "AXXXAXXXAXXXA"
+"25 - i - 1" is the number that has to be added behind the Frame "AXXXAXXXAXXXA". 
+For example : in Frame "ABXXABXXABXXAB", we have to add 1 B behind the Fram, which is 25 - 23 - 1 = 1
 # 5ms 98.40%
 class Solution {
     public int leastInterval(char[] tasks, int n) {
