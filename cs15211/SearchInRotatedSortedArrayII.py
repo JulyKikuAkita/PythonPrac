@@ -200,36 +200,32 @@ class Solution {
 # 0ms 100%
 class Solution {
     public boolean search(int[] nums, int target) {
-        if(nums == null || nums.length < 1) return false;
-        int start = 0;
-        int end  = nums.length - 1;
-        while(start + 1 < end){
-            int mid = start + ( end - start )  / 2;
-            if( nums[mid] == target) return true;
-
-            while( start < mid && end > mid && nums[start] == nums[mid] && nums[end] == nums[mid]){ //with dup
-                start ++;
-                end --;
+        if (nums == null || nums.length < 1) return false;
+        int lo = 0;
+        int hi  = nums.length - 1;
+        while (lo + 1 < hi) {
+            int mid = lo + (hi - lo) / 2;
+            if (nums[mid] == target) return true;
+            while (lo < mid && mid < hi && nums[lo] == nums[mid] && nums[hi] == nums[mid]) {
+                lo++;
+                hi--;
             }
-
-            //System.out.printf("start: %d, end: %d \n", start, end);
-
-            if(nums[mid] >= nums[start]){
-                if(target >= nums[start] && target <= nums[mid]){
-                    end = mid;
-                }else{
-                    start = mid;
+            
+            if (nums[lo] <= nums[mid]) {
+                if (nums[lo] <= target && target <= nums[mid]) {
+                    hi = mid;
+                } else {
+                    lo = mid;
                 }
-            }else{
-                if(target >= nums[mid] && target <= nums[end]){
-                    start = mid;
-                }else{
-                    end = mid;
+            } else {
+                if (nums[mid] <= target && target <= nums[hi]) {
+                    lo = mid;
+                } else {
+                    hi = mid;
                 }
             }
         }
-        if(nums[start] == target || nums[end] == target) return true;
-
+        if (nums[lo] == target || nums[hi] == target) return true;
         return false;
     }
 }

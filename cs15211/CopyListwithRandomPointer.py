@@ -175,14 +175,14 @@ The algorithm is implemented as follows:
  * };
  */
 
-# 1ms 99.57$
+# 1ms 99.57%
 public class Solution {
     public RandomListNode copyRandomList(RandomListNode head) {
         if( head == null) return head;
         RandomListNode cur = head;
 
         // First round: make copy of each node,
-	    // and link them together side-by-side in a single list.
+        // and link them together side-by-side in a single list.
         while(cur != null){
             RandomListNode next = cur.next;
             RandomListNode newCur = new RandomListNode(cur.label);
@@ -195,7 +195,7 @@ public class Solution {
         cur = head;
         while(cur != null){
             if(cur.random != null){
-                cur.next.random = cur.random.next;
+                cur.next.random = cur.random.next; //next node of existing node always a cloned random node
             }
             cur = cur.next.next;
         }
@@ -239,24 +239,6 @@ public class Solution {
       }
 
       return map.get(head);
-    }
-}
-
-# pass the test but didn't create link for random node
-# 1ms 99.57$
-public class Solution {
-    public RandomListNode copyRandomList(RandomListNode head) {
-        RandomListNode dummy = new RandomListNode(-12345);
-        RandomListNode pre = dummy;
-        RandomListNode cur = head;
-        while(cur != null){
-        	RandomListNode a = new RandomListNode(cur.label);
-        	pre.next = a;
-        	a.random = cur.random == null ? null:new RandomListNode(cur.random.label);
-        	pre = pre.next;
-        	cur = cur.next;
-        }
-         return dummy.next;
     }
 }
 '''

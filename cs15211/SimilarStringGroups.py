@@ -50,6 +50,7 @@ if __name__ == '__main__':
 Java = '''
 # Thought: https://leetcode.com/problems/similar-string-groups/solution/
 #
+# if it is similar, the string can traverse to each other
 Approach #1: Piecewise [Accepted]
 Complexity Analysis
 Time Complexity: O(NWmin⁡(N,W^2)), where N is the length of A, and W is the length of each given word.
@@ -129,8 +130,120 @@ class DSU {
         parent[find(x)] = find(y);
     }
 }
+# https://leetcode.com/problems/similar-string-groups/discuss/132374/Short-C%2B%2B-solution-at-220ms-using-disjoint-set
+# Union Find
+# 211ms 92.16%
+class Solution {
+    class UF {
+        int count;
+        int[] parent;
+        public UF(int n) {
+            count = n;
+            parent = new int[n];
+            for (int i = 0; i < n; i++) parent[i] = i;
+        }
+        
+        public int find(int x) {
+            if (parent[x] != x) parent[x] = find(parent[x]);
+            return parent[x];
+        }
+        
+        public void union(int x, int y) {
+            int rootX = find(x);
+            int rootY = find(y);
+            if (rootX != rootY) {
+                count--;
+                parent[rootX] = rootY;
+            }
+        }
+    }
+    
+    public int numSimilarGroups(String[] A) {
+        UF uf = new UF(A.length);
+        for (int i = 0; i < A.length; i++) {
+            for (int j = i + 1; j < A.length; j++) {
+                if (isSimilar(A[i], A[j])) uf.union(i, j);
+            }
+        }
+        return uf.count;
+    }
+    
+    private boolean isSimilar(String s1, String s2) {
+        int diff = 0;
+        for (int i = 0; i < s1.length(); i++) {
+            if (s1.charAt(i) != s2.charAt(i) && ++diff > 2) return false;
+        }
+        return true;
+    }
+}
 
-# 240ms 81.69%
+# BFS
+# 556ms 35.29%
+class Solution {
+    public int numSimilarGroups(String[] A) {
+        int res = 0;
+        boolean[] seen = new boolean[A.length];
+        for (int i = 0; i < A.length; i++) {
+            if (seen[i]) continue;
+            res++;
+            Queue<String> q = new LinkedList();
+            q.offer(A[i]);
+            while (!q.isEmpty()) {
+                String cur = q.poll();
+                for (int j = 0; j < A.length; j++) {
+                    if (seen[j]) continue;
+                    String next = A[j];
+                    int diff = 0;
+                    for (int k = 0; k < cur.length(); k++) {
+                        if (cur.charAt(k) != next.charAt(k)) diff++;
+                    }
+                    //important here, "aaaaa", "aaaaa" should be grouped together
+                    if (diff == 2 || (diff == 0 && cur.length() >= 2)) { 
+                        seen[j] = true;
+                        q.add(next);
+                    }
+                    
+                }
+            }
+        }
+        return res;
+    }
+}
+
+# DFS
+# 475ms 37.25%
+class Solution {
+    public int numSimilarGroups(String[] A) {
+        int res = 0;
+        Set<String> set = new HashSet();
+        for (int i = 0; i < A.length; i++) {
+            if (!set.contains(A[i])) {
+                dfs(i, A, set);
+                res++;
+            }
+        }
+        return res;
+    }
+    
+    private void dfs(int k, String[] A, Set<String> set) {
+        String cur = A[k];
+        set.add(cur);    
+        for (int i = 0; i < A.length; i++) {
+            if (!set.contains(A[i]) && has2Diff(A[i], cur)) dfs(i, A, set);
+        }
+    }
+    
+    private boolean has2Diff(String s1, String s2) {
+        int diff = 0, i = 0;
+        while(i < s1.length() && diff <= 2) {
+            if (s1.charAt(i) != s2.charAt(i++)) diff++;
+        }
+        return diff == 2;
+    }
+}
+
+# DFS without using set
+# 188ms 100%
 class Solution {
     public int numSimilarGroups(String[] A) {
         if (A.length < 2) return A.length;

@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/combination-sum-iv/description/'
+__source__ = 'https://leetcode.com/problems/combination-sum-iv/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/combination-sum-iv.py
 # Time:  O(nlon + n * t), t is the value of target.
 # Space: O(t)

@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/container-with-most-water/description/'
+__source__ = 'https://leetcode.com/problems/container-with-most-water/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/container-with-most-water.py
 # Time:  O(n)
 # Space: O(1)
@@ -80,7 +80,26 @@ if __name__ == '__main__':
 
 Java = '''
 # Thought: https://leetcode.com/problems/container-with-most-water/solution/
-
+# Approach 1: Brute Force
+# Complexity Analysis
+# Time complexity : O(n^2). Calculating area for all n *( n - 1) / 2 height pairs.
+# Space complexity : O(1). Constant extra space is used. 
+# 244ms 21.59% 
+class Solution {
+    public int maxArea(int[] height) {
+        int maxarea = 0;
+        for (int i = 0; i < height.length; i++)
+            for (int j = i + 1; j < height.length; j++)
+                maxarea = Math.max(maxarea, Math.min(height[i], height[j]) * (j - i));
+        return maxarea;
+    }
+}
+# Proof: why we move inward the shorted line
+# https://leetcode.com/problems/container-with-most-water/discuss/6099/yet-another-way-to-see-what-happens-in-the-on-algorithm
+# Approach 2: Two Pointer Approach
+# Complexity Analysis
+# Time complexity : O(n). Single pass.
+# Space complexity : O(1). Constant space is used.
 # 3ms 100%
 class Solution {
     public int maxArea(int[] height) {

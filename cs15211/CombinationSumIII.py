@@ -1,4 +1,4 @@
-__source__ = 'https://leetcode.com/problems/combination-sum-iii/description/'
+__source__ = 'https://leetcode.com/problems/combination-sum-iii/'
 # https://github.com/kamyu104/LeetCode/blob/master/Python/combination-sum-iii.py
 # Time:  O(C(n, k))
 # Space: O(k)

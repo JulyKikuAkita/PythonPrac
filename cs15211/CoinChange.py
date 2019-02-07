@@ -5,6 +5,17 @@ __source__ = 'https://leetcode.com/problems/coin-change/description/'
 #
 # Description: Leetcode # 322. Coin Change
 #
+# Note:
+# Good to note that the name of the problem is the Change-Making problem
+# (https://en.wikipedia.org/wiki/Change-making_problem), the most common variation of Coin Change problem.
+# Change-Making problem is a variation of the Knapsack problem,
+# more precisely - the Unbounded Knapsack problem,
+# also known as the Complete Knapsack problem.
+# For me the problem name was a bit misleading (maybe done intentionally),
+# as Coin Change problem is slightly different - finding the ways of making a certain change.
+# More information about Knapsack problems in the book by Martello/Toth ->
+# http://www.or.deis.unibo.it/kp/KnapsackProblems.pdf
+#
 # You are given coins of different denominations and
 # a total amount of money amount. Write a function to
 # compute the fewest number of coins that you need to
@@ -127,8 +138,16 @@ class Solution {
         return minCount;
     }
 }
+#
+# Approach #2 (Dynamic programming - Top down) [Accepted]
+# Complexity Analysis
+# Time complexity : O(S * n). where S is the amount, n is denomination count. 
+# In the worst case the recursive tree of the algorithm has height of S 
+# and the algorithm solves only S subproblems because it caches precalculated solutions in a table. 
+# Each subproblem is computed with nn iterations, one by coin denomination. T
+# herefore there is O(S*n) time complexity.
+# Space complexity : O(S), where S is the amount to change We use extra space for the memoization table.
 
-Approach #2 (Dynamic programming - Top down) [Accepted]
 # 38ms 26.58%
 class Solution {
     public int coinChange(int[] coins, int amount) {
@@ -151,7 +170,11 @@ class Solution {
     }
 }
 
-Approach #3 (Dynamic programming - Bottom up) [Accepted]
+# Approach #3 (Dynamic programming - Bottom up) [Accepted]
+# Complexity Analysis
+# Time complexity : O(S * n). On each step the algorithm finds the next F(i) in nn iterations, 
+# where 1 <=  i <= S. Therefore in total the iterations are S * n.
+# Space complexity : O(S). We use extra space for the memoization table.
 # 19ms 80.04%
 class Solution {
     public int coinChange(int[] coins, int amount) {

@@ -1,6 +1,7 @@
 __source__ = 'https://leetcode.com/problems/fruit-into-baskets/'
 # Time:  O(N) where NN is the length of tree
 # Space: O(N)
+# Sliding Window : This problem is the same as 159 - Longest Substring with At Most Two Distinct Characters
 #
 # Description: Leetcode # 904. Fruit Into Baskets
 #
@@ -94,6 +95,9 @@ if __name__ == '__main__':
 Java = '''
 # Thought: https://leetcode.com/problems/fruit-into-baskets/solution/
 # Sliding Window : This problem is the same as 159 - Longest Substring with At Most Two Distinct Characters
+# Complexity Analysis
+# Time Complexity: O(N), where N is the length of tree.
+# Space Complexity: O(N) 
 # 10ms 99.65%
 class Solution {
     public int totalFruit(int[] tree) {
@@ -112,6 +116,45 @@ class Solution {
             }
         }
         return Math.max(count ,max);
+    }
+}
+
+# Using Sliding window map template:
+# 139ms 10.51%
+class Solution {
+    public int totalFruit(int[] tree) {
+        if (tree == null || tree.length == 0) return 0;
+        int start = 0, end = 0, max = 0;
+        Map<Integer, Integer> map = new HashMap<>();
+        while (end < tree.length) {
+            map.put(tree[end], map.getOrDefault(tree[end], 0) + 1);
+            end++;
+            while (map.size() > 2) {
+                map.put(tree[start], map.get(tree[start]) - 1);
+                if (map.get(tree[start]) == 0) map.remove(tree[start]);
+                start++;
+            }
+            max = Math.max(max, end - start);
+        }
+        return max;
+    }
+}
+
+# Using Sliding window array template: [bad coding style]
+# 13ms 72.53%
+class Solution {
+    public int totalFruit(int[] tree) {
+        int[] map = new int[40001];
+        int cnt = 0, max = 0;
+        for (int l = 0, r = 0; r < tree.length; r++) {
+            if (map[tree[r]]++ == 0) cnt++;
+            while (cnt > 2) {
+                if (--map[tree[l]] == 0) cnt--;
+                l++;
+            }
+            max = Math.max(max, r - l + 1);
+        }
+        return max;
     }
 }
 '''

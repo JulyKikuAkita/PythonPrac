@@ -1,8 +1,6 @@
-import collections
-
-__source__ = ' https://leetcode.com/problems/accounts-merge/description/'
-# Time:  O()
-# Space: O()
+__source__ = ' https://leetcode.com/problems/accounts-merge/'
+# Time:  O(AlogA), where A is the sum of all str length of accounts[i]
+# Space: O(A), the space used by our DSU structure.
 #
 # Description: Leetcode # 721. Accounts Merge
 #
@@ -41,7 +39,7 @@ __source__ = ' https://leetcode.com/problems/accounts-merge/description/'
 #
 #
 import unittest
-
+import collections
 class Solution(object):
     def accountsMerge(self, accounts):
         """
@@ -265,7 +263,7 @@ class Solution {
     }
 }
 
-#
+# Union find by id
 # 84ms 41.71%
 class Solution {
     public List<List<String>> accountsMerge(List<List<String>> accounts) {
@@ -316,4 +314,50 @@ class DSU {
     }
 }
 
+# https://leetcode.com/problems/accounts-merge/discuss/109157/JavaC%2B%2B-Union-Find
+# union find for Strings good example
+# 100ms 24.88%
+class Solution {
+    public List<List<String>> accountsMerge(List<List<String>> accounts) {
+        Map<String, String> roots = new HashMap();
+        Map<String, String> owner = new HashMap();
+        Map<String, TreeSet<String>> unions = new HashMap();
+        
+        for (List<String> acc : accounts) {
+            for (int i = 1; i < acc.size(); i++) {
+                roots.put(acc.get(i), acc.get(i));
+                owner.put(acc.get(i), acc.get(0));
+            }
+        }
+        
+        //union all emails in the same account list
+        for (List<String> acc : accounts) {
+            String x = find(acc.get(1), roots);
+            for (int i = 2; i < acc.size(); i++) {
+                roots.put(find(acc.get(i), roots), x);
+            }
+        }
+        
+        //union emails accros diff accounts
+        for (List<String> acc : accounts) {
+            String x = find(acc.get(1), roots);
+            unions.computeIfAbsent(x, k-> new TreeSet<String>());
+            for (int i = 1; i < acc.size(); i++) {
+                unions.get(x).add(acc.get(i));
+            }
+        }
+        
+        List<List<String>> res = new ArrayList();
+        for (String e : unions.keySet()) {
+            List<String> emails = new ArrayList(unions.get(e));
+            emails.add(0, owner.get(e));
+            res.add(emails);
+        }
+        return res;
+    }
+    
+    private String find(String x, Map<String, String> roots) {
+        return roots.get(x).equals(x) ? x : find(roots.get(x), roots);
+    }
+}
 '''

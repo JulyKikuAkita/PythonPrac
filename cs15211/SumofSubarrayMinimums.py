@@ -72,7 +72,7 @@ class Solution {
 
         // prev has i* - 1 in increasing order of A[i* - 1]
         // where i* is the answer to query j
-         Stack<Integer> stack = new Stack();
+        Stack<Integer> stack = new Stack();
         int[] prev = new int[N];
         for (int i = 0; i < N; ++i) {
             while (!stack.isEmpty() && A[i] <= A[stack.peek()]) stack.pop();
@@ -136,36 +136,69 @@ class RepInteger {
         count = c;
     }
 }    
-    
-# 22ms 92.43%
+
+# No stack:
+# 289ms 11.94%
 class Solution {
     public int sumSubarrayMins(int[] A) {
-        int MOD = 1_000_000_007;
-        int N = A.length;
-        long res = 0;
-        
-        int[] front = new int[N];
-        for (int i = 0; i < N; i++) {
-            int last = i - 1;
-            while (last >= 0 && A[last] >= A[i])
-                last = front[last];
-            front[i] = last;
+        long modulo = (long) (Math.pow(10, 9) + 7);
+        long sumOfMin = 0;
+        for (int i = 0; i < A.length; i++) {
+            int left = i - 1;
+            int right = i + 1;
+            while (left >= 0 && A[i] <= A[left]) left--;
+            while (right < A.length && A[i] < A[right]) right++;
+            sumOfMin += (i - left) * (right - i) * A[i]; 
+        }
+        return (int) (sumOfMin % modulo);
+    }
+}
+# https://leetcode.com/problems/sum-of-subarray-minimums/discuss/178876/stack-solution-with-very-detailed-explanation-step-by-step
+# monotone stack
+# 43ms 89.36%
+class Solution {
+    public int sumSubarrayMins(int[] A) {
+        Deque<Integer> stack = new LinkedList<>();
+        int[] left = new int[A.length], right = new int[A.length];
+        for (int i = 0; i < A.length; i++) left[i] = i + 1;
+        for (int i = 0; i < A.length; i++) right[i] = A.length - i;
+        for (int i = 0; i < A.length; i++) {
+            while (!stack.isEmpty() && A[stack.peekFirst()] > A[i]) stack.pollFirst();
+            left[i] = stack.isEmpty() ? i + 1: i - stack.peekFirst();
+            stack.offerFirst(i);
+        }
+        stack = new LinkedList();
+        for (int i = 0; i < A.length; i++) {
+            while (!stack.isEmpty() && A[stack.peekFirst()] > A[i]) {
+                right[stack.peekFirst()] = i - stack.peekFirst();
+                stack.pollFirst();
+            }
+            stack.offerFirst(i);
         }
         
-        int[] tail = new int[A.length];
-        for (int i = N - 1; i >= 0; i--) {
-            int last = i + 1;
-            while (last < N && A[last] > A[i])
-                last = tail[last];
-            tail[i] = last;
+        int ans = 0;
+        int mod = (int) 1e9 + 7;
+        for (int i = 0; i < A.length; i++) {
+            ans = (ans + left[i] * right[i] * A[i]) % mod;
         }
-    
-        
-        for (int i = 0; i < N; i++) {
-            res = (res + A[i] * (tail[i] - i) * (i - front[i])) % MOD;
+        return ans;
+    }
+}
+
+# https://leetcode.com/problems/sum-of-subarray-minimums/discuss/170750/C%2B%2BJavaPython-Stack-Solution
+class Solution {
+    public int sumSubarrayMins(int[] A) {
+        Stack<Integer> s = new Stack<>();
+        int n = A.length, res = 0, mod = (int)1e9 + 7, j,k;
+        for (int i = 0; i <= n; i++) {
+            while (!s.isEmpty() && A[s.peek()] > (i == n ? 0: A[i])) {
+                j = s.pop();
+                k = s.isEmpty() ? -1 : s.peek();
+                res = (res + A[j] * (i - j) * (j - k)) % mod;
+            }
+            s.push(i);
         }
-        
-        return (int) res;
+        return res;
     }
 }
 '''

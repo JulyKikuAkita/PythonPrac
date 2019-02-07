@@ -33,6 +33,8 @@ __source__ = 'https://leetcode.com/problems/longest-substring-with-at-least-k-re
 #
 # Recursive solution.
 import unittest
+
+
 # 20ms 100%
 class Solution(object):
     def longestSubstring(self, s, k):
@@ -41,6 +43,7 @@ class Solution(object):
         :type k: int
         :rtype: int
         """
+
         def longestSubstringHelper(s, k, start, end):
             count = [0] * 26
             for i in xrange(start, end):
@@ -62,6 +65,8 @@ class Solution(object):
             return max_len
 
         return longestSubstringHelper(s, k, 0, len(s))
+
+
 # If every character appears at least k times, the whole string is ok.
 # Otherwise split by a least frequent character
 # (because it will always be too infrequent and thus can't be part of any ok substring)
@@ -80,9 +85,11 @@ class Solution2(object):
                 return max(self.longestSubstring(t, k) for t in s.split(c))
         return len(s)
 
+
 class TestMethods(unittest.TestCase):
     def test_Local(self):
         self.assertEqual(1, 1)
+
 
 if __name__ == '__main__':
     unittest.main()
@@ -93,87 +100,69 @@ Java = '''
 Java divide and conquer(recursion) solution
 # 2ms 93.27%
 class Solution {
-   private int findLongestSub(String s, int k, int start, int end) {
-       //count frequency of char over [start, end]
-	   if (end < start) {
-		   return 0;
-	   }
-	   int[] countArray = new int[26];
-	   for (int i = start; i <= end; i++) {
-		   char c = s.charAt(i);
-		   int index = c- 'a';
-		   countArray[index]++;
-	   }
-
-	   //define a valid array isValid, isValid[i] = true if character c(i=c-'a')
-	   //has at least k occurences
-
-	   boolean[] isValid = new boolean[26];
-
-	   //boolean fullValid to flag whether all characters over [start, end]
-	   //have frequency >= k
-	   boolean fullValid = true;
-	   for (int i = 0; i < 26; i++) {
-		   if (countArray[i] > 0 && countArray[i] < k) {
-			   //find a character with freq < k
-			   isValid[i] = false;
-			   fullValid = false;
-		   }
-		   else {
-			   //the freq >= k
-			   isValid[i] = true;
-		   }
-
-	   }
-
-	   if (fullValid) {
-		   return end-start+1;
-	   }
-
-	   //start to check from start to end
-	   //if at index i, we find a character that has freq less than k
-	   // we treat it as a separator and check the left substring
-	   //from start up to
-	   //this character(exclusive)
-	   //and the right substring at i+1(i is the chr
-
-	   //define last start that will be the starting point
-
-	   int lastStart = start;
-	   int length = 0;
-	   for (int i = start; i <= end; i++) {
-		   char c = s.charAt(i);
-		   int index = c-'a';
-		   if (isValid[index] == false) {
-			   /*System.out.println("char is " + c);
-			   System.out.println("last start is " + lastStart);
-			   System.out.println("end is " + (i-1));*/
-			   length = Math.max(length, findLongestSub(s, k, lastStart, i-1));
-			   //update lastStart to be i+1 (start checking the right substring
-			   lastStart = i+1;
-		   }
-	   }
-
-	   //at the end if there is no invalid character
-	   //we get the length of the qualified string
-	   //note this step is important otherwise we will miss a qualified substring
-	   length = Math.max(length,  findLongestSub(s,k, lastStart, end));
-
-	   return length;
-   }
+    private int findLongestSub(String s, int k, int start, int end) {
+        //count frequency of char over [start, end]
+        if (end < start) return 0;
+        int[] countArray = new int[26];
+        for (int i = start; i <= end; i++) {
+            countArray[s.charAt(i) - 'a'] ++;
+        }
+        //define a valid array isValid, isValid[i] = true if character c(i=c-'a')
+        //has at least k occurences
+        boolean[] isValid = new boolean[26];
+        
+        //boolean fullValid to flag whether all characters over [start, end]
+        //have frequency >= k
+        boolean fullValid = true;
+        for (int i = 0; i < 26; i++) {
+            if (countArray[i] > 0 && countArray[i] < k) {
+                //find a character with freq < k
+                isValid[i] = false;
+                fullValid = false;
+            } else { //the freq >= k
+                isValid[i] = true;
+            }
+        }
+        
+        if (fullValid) return end - start + 1;
+        
+        // start to check from start to end
+        // if at index i, we find a character that has freq less than k
+        // we treat it as a separator and check the left substring
+        // from start up to this character(exclusive)
+        // and the right substring at i+1(i is the chr)
+        //define last start that will be the starting point
+        int lastStart = start;
+        int len = 0;
+        for (int i = start; i <= end; i++) {
+            char c = s.charAt(i);
+            int index = c - 'a';
+            if (isValid[index] == false) {
+                /*System.out.println("char is " + c);
+                System.out.println("last start is " + lastStart);
+                System.out.println("end is " + (i-1));*/
+                len = Math.max(len, findLongestSub(s, k, lastStart, i - 1));
+                //update lastStart to be i+1 (start checking the right substring
+                lastStart = i + 1;
+            }
+        }
+        //at the end if there is no invalid character
+        //we get the length of the qualified string
+        //note this step is important otherwise we will miss a qualified substring
+        len = Math.max(len, findLongestSub(s, k, lastStart, end));
+        return len;
+    }
    
    private int longestSubstring(String s, int k) {
-	   //store the frequency of each character in s
-	   //if a character has frequency that is less than k
-	   //we cannot include that character in our candidate substring
-	   //it must be excluded, treat that character as the separator and search within
-	   //the left substring[start, i) and right substring [i+1, end]
-	   //where i is the index of that separator
-	   //and compare the result length
-	   //a candidate string cannot contain characters with overall frequency < k
-
-
-	   return findLongestSub(s, k, 0, s.length()-1);
+        //store the frequency of each character in s
+        //if a character has frequency that is less than k
+        //we cannot include that character in our candidate substring
+        //it must be excluded, treat that character as the separator and search within
+        //the left substring[start, i) and right substring [i+1, end]
+        //where i is the index of that separator
+        //and compare the result length
+        //a candidate string cannot contain characters with overall frequency < k
+        return findLongestSub(s, k, 0, s.length()-1);
    }
 }
 
@@ -234,6 +223,7 @@ class Solution {
     }
 }
 
+# https://leetcode.com/problems/longest-substring-with-at-least-k-repeating-characters/discuss/170010/Java-O(n)-Solution-with-Detailed-Explanation-Sliding-Window
 # 1ms 100%
 class Solution {
     char[] cs;
@@ -271,54 +261,4 @@ class Solution {
     }
 }
 
-# 1ms 100%
-class Solution {
-   private int findLongestSub(String s, int k, int start, int end) {
-       //count frequency of char over [start, end]
-	   if (end < start) {
-		   return 0;
-	   }
-	   int[] countArray = new int[26];
-	   for (int i = start; i <= end; i++) {
-		   char c = s.charAt(i);
-		   int index = c- 'a';
-		   countArray[index]++;
-	   }
-	
-	   boolean[] isValid = new boolean[26];
-	   boolean fullValid = true;
-	   for (int i = 0; i < 26; i++) {
-		   if (countArray[i] > 0 && countArray[i] < k) {
-			   isValid[i] = false;
-			   fullValid = false;
-		   }
-		   else {
-			   isValid[i] = true;
-		   }
-		   
-	   }
-	   
-	   if (fullValid) {
-		   return end-start+1;
-	   }
-	   
-	   int lastStart = start;
-	   int length = 0;
-	   for (int i = start; i <= end; i++) {
-		   char c = s.charAt(i);
-		   int index = c-'a';
-		   if (isValid[index] == false) {
-			   length = Math.max(length, findLongestSub(s, k, lastStart, i-1));
-			   lastStart = i+1;
-		   }
-	   }
-	   
-	   length = Math.max(length,  findLongestSub(s,k, lastStart, end));
-	   return length;
-   }
-   
-   public int longestSubstring(String s, int k) {
-	   return findLongestSub(s, k, 0, s.length()-1);
-   }
-}
 '''

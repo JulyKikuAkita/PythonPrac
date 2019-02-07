@@ -100,24 +100,49 @@ class Solution {
     }
 }
 
-# 5ms 81.78%
+# https://leetcode.com/problems/keys-and-rooms/discuss/133855/Straight-Forward
+# DFS with stack + HashSet
+# 9ms 13.73%
 class Solution {
     public boolean canVisitAllRooms(List<List<Integer>> rooms) {
-        int len = rooms.size();
-        boolean[] flag = new boolean[len];
-        flag[0] = true;
-        int count = 0;
-        List<Integer> l1 = rooms.get(0);
-        for (int i = 0; i < l1.size(); i++) {
-            int j = l1.get(i);
-            if (flag[j] == false) {
-                count++;
-                flag[j] = true;
-                List<Integer> l2 = rooms.get(j);
-                l1.addAll(l2);
+        Set<Integer> set = new HashSet();
+        Stack<Integer> stack = new Stack();
+        stack.add(0);
+        set.add(0);
+        while (!stack.isEmpty()) {
+            int key = stack.pop();
+            for (int other : rooms.get(key)) {
+                if (!set.contains(other)) {
+                    stack.push(other);
+                    set.add(other);
+                }
             }
         }
-        return (count == len - 1) ? true :false;
+        return set.size() == rooms.size();
+    }
+
+    private void addKey(int room, List<List<Integer>> rooms, Set<Integer> visited) {
+        visited.add(room);
+        for (int key : rooms.get(room)) {
+            if (!visited.contains(key)) addKey(key, rooms, visited);
+        }
+    }
+}
+
+# HashSet
+# 6ms 49.80%
+class Solution {
+    public boolean canVisitAllRooms(List<List<Integer>> rooms) {
+        Set<Integer> visited = new HashSet<>();
+        addKey(0, rooms, visited);
+        return visited.size() == rooms.size();
+    }
+
+    private void addKey(int room, List<List<Integer>> rooms, Set<Integer> visited) {
+        visited.add(room);
+        for (int key : rooms.get(room)) {
+            if (!visited.contains(key)) addKey(key, rooms, visited);
+        }
     }
 }
 '''

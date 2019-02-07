@@ -106,7 +106,7 @@ class Solution {
             if ( !set.contains(nums[i])) {
                 tempList.add(nums[i]);
                 set.add(nums[i]);
-                backtrack(list, tempList, nums, remain - nums[i], i + 1); // not i + 1 because we can reuse same elements
+                backtrack(list, tempList, nums, remain - nums[i], i + 1);
                 tempList.remove(tempList.size() - 1);
             }
         }

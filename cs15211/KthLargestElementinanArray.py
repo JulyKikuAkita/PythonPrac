@@ -107,11 +107,12 @@ Java = '''
 # Thought:
 quick select or pivot
 
-# https://discuss.leetcode.com/topic/14597/solution-explained
-1)
-O(N lg N) running time + O(1) memory
-The simplest approach is to sort the entire input array and then access the element
-by it's index (which is O(1)) operation:
+# https://leetcode.com/problems/kth-largest-element-in-an-array/solution/
+# Approach 0: Sort
+# time complexity: O(Nlog(N))
+# space complexity: O(1) 
+# The simplest approach is to sort the entire input array and then access the element
+# by it's index (which is O(1)) operation:
 
 # 3ms 96.03%
 class Solution {
@@ -121,10 +122,15 @@ class Solution {
     }
 }
 
-2)
-O(N lg K) running time + O(K) memory
-Other possibility is to use a min oriented priority queue that will store the K-th largest values.
-The algorithm iterates over the whole input and maintains the size of priority queue.
+# Approach 1: Heap
+# This textbook algorthm has O(N) average time complexity. https://en.wikipedia.org/wiki/Quickselect
+# Like quicksort, it was developed by Tony Hoare, and is also known as Hoare's selection algorithm.
+# The approach is basically the same as for quicksort. 
+# For simplicity let's notice that kth largest element is the same as N - kth smallest element, 
+# hence one could implement kth smallest algorithm for this problem.
+# Complexity Analysis
+# Time complexity : O(Nlog(k)).
+# Space complexity : O(k) to store the heap elements. 
 
 # 8ms 63.39%
 class Solution {
@@ -141,22 +147,24 @@ class Solution {
     }
 }
 
-3)
-O(N) best case / O(N^2) worst case running time + O(1) memory
-The smart approach for this problem is to use the selection algorithm
-(based on the partion method - the same one as used in quicksort).
+# Approach 2: Quickselect
+# O(N) best case / O(N^2) worst case running time + O(1) memory
+# The smart approach for this problem is to use the selection algorithm
+# (based on the partion method - the same one as used in quicksort).
+# Time complexity : O(N) in the average case, O(N^2) in the worst case.
+# Space complexity : O(1).
 
 # BFS
 # 14ms 46.49% without shuffle nums
 # 4ms 86.43% with shuffle nums
 import java.util.Random;
-public class Solution {
+class Solution {
     public int findKthLargest(int[] nums, int k) {
-        return bfs(nums, k);
+        return qselect(nums, k);
     }
-
-    public int bfs(int[] nums, int kk) {
-        int start = 0, end = nums.length - 1, k = nums.length - kk;
+    
+    public int qselect(int[] nums, int k){
+        int start = 0, end = nums.length - 1, p = nums.length - k;
         shuffle(nums);
         while (start <= end) {
             int i = start, j = end;
@@ -167,9 +175,9 @@ public class Solution {
                 swap(nums, i, j);
             }
             swap(nums, i, end);
-            if (i < k) {
+            if (i < p) {
                 start = i + 1;
-            } else if (i > k) {
+            } else if (i > p) {
                 end = i - 1;
             } else {
                 return nums[i];
@@ -177,13 +185,13 @@ public class Solution {
         }
         return 0;
     }
-
-    private void swap(int[] nums, int i, int j) {
-        int tmp = nums[i];
-        nums[i] = nums[j];
-        nums[j] = tmp;
+    
+    public void swap(int[] nums, int i, int j){
+        int s = nums[i] + nums[j];
+        nums[i] = s - nums[i];
+        nums[j] = s - nums[j];
     }
-
+    
     private void shuffle(int[] nums) {
         Random random = new Random();
         for (int i = nums.length - 1; i >= 0; i--) {
@@ -194,39 +202,38 @@ public class Solution {
 
 # DFS
 # have to use pivot, not nums[high], stackoverflow
-# 2ms 99.99%
+# 4ms 99.08%
 class Solution {
     public int findKthLargest(int[] nums, int k) {
         return qselect(nums, k, 0, nums.length - 1);
     }
-
+    
     public static int qselect(int[] nums, int k, int low, int high){
-        if(low == high) return nums[high];
+        if (low == high) return nums[high];
         int i = low , j = high;
-        int middle = low+ (high-low)/2;
+        int middle = low + (high - low) / 2;
         int pivot = nums[middle];
-        while (i<=j){
-            while (nums[i] < pivot){ i ++;}
-            while (nums[j] > pivot){ j --;}
-            if(i<=j){
-                swap(nums,i,j);
+        while (i <= j){
+            while (nums[i] < pivot){ i++;}
+            while (nums[j] > pivot){ j--;}
+            if (i <= j){
+                swap(nums, i, j);
                 i++;
                 j--;
             }
         }
-        int bigLen = high - i +1;
-
-        if(bigLen >= k){
+        int bigLen = high - i + 1;
+        if (bigLen >= k){
             return qselect(nums, k, i, high);
-        }else{
-            return qselect(nums, k-bigLen, low, i-1);
+        } else {
+            return qselect(nums, k - bigLen, low, i - 1);
         }
-
     }
+    
     public static void swap(int[] nums, int i, int j){
-        int s = nums[i]+nums[j];
-        nums[i] = s-nums[i];
-        nums[j] = s-nums[j];
+        int s = nums[i] + nums[j];
+        nums[i] = s - nums[i];
+        nums[j] = s - nums[j];
     }
 }
 
@@ -284,5 +291,39 @@ class Solution {
 
 }
 
-
+# Bucket Sort
+# O(N) space and tiime
+# 12ms 61.53%
+class Solution {
+    public int findKthLargest(int[] nums, int k) {
+        int min = Integer.MAX_VALUE, max = Integer.MIN_VALUE;
+        for (int n : nums) {
+            if (n > max) max = n;
+            if (n < min) min = n;
+        }
+        
+        int b_size = max - min + 1;
+        List<Integer>[] bucket = new ArrayList[b_size + 1];
+        for (int n : nums) {
+            int idx = n - min + 1;
+            if (bucket[idx] == null) bucket[idx] = new ArrayList();
+            bucket[idx].add(n);
+        }
+        
+        // for (int i = b_size; i > 0; i--) {
+        //     System.out.println(bucket[i].toString());
+        // }
+        // Note. bucket[0] = null
+        for (int i = b_size; i >= 0; i--) {
+            if( bucket[i] == null) continue;
+            int count = bucket[i].size();
+            
+            if (k > count) k -= count;
+            else {
+                return bucket[i].get(k - 1); //arraylist index 0
+            }
+        }
+        return -1;
+    }
+}
 '''
